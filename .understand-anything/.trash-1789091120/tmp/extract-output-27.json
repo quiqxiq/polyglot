@@ -1,0 +1,5191 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/domain/skill/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 17,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/skill/frontmatter_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 66,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "TestBuildAndParseFrontmatter",
+          "startLine": 12,
+          "endLine": 38,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseFrontmatter_NoFrontmatter",
+          "startLine": 40,
+          "endLine": 46,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestValidateSkillName",
+          "startLine": 48,
+          "endLine": 56,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestValidateResourcePath",
+          "startLine": 58,
+          "endLine": 66,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestBuildAndParseFrontmatter",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseFrontmatter_NoFrontmatter",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "TestValidateSkillName",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "TestValidateResourcePath",
+          "line": 58,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "skill.BuildFrontmatter",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "skill.ParseFrontmatter",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "require.NoError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestBuildAndParseFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestParseFrontmatter_NoFrontmatter",
+          "callee": "skill.ParseFrontmatter",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestParseFrontmatter_NoFrontmatter",
+          "callee": "require.NoError",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestParseFrontmatter_NoFrontmatter",
+          "callee": "assert.Empty",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestParseFrontmatter_NoFrontmatter",
+          "callee": "assert.Equal",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "assert.NoError",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "skill.ValidateSkillName",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "assert.NoError",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "skill.ValidateSkillName",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "skill.ValidateSkillName",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "skill.ValidateSkillName",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "skill.ValidateSkillName",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestValidateSkillName",
+          "callee": "skill.ValidateSkillName",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "assert.NoError",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "skill.ValidateResourcePath",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "assert.NoError",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "skill.ValidateResourcePath",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "skill.ValidateResourcePath",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "skill.ValidateResourcePath",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "skill.ValidateResourcePath",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestValidateResourcePath",
+          "callee": "skill.ValidateResourcePath",
+          "lineNumber": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/skill/frontmatter.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 152,
+      "nonEmptyLines": 134,
+      "functions": [
+        {
+          "name": "BuildFrontmatter",
+          "startLine": 29,
+          "endLine": 52,
+          "params": [
+            "name",
+            "description",
+            "license",
+            "compatibility",
+            "allowedTools",
+            "metadata"
+          ]
+        },
+        {
+          "name": "ParseFrontmatter",
+          "startLine": 55,
+          "endLine": 77,
+          "params": [
+            "rawContent"
+          ]
+        },
+        {
+          "name": "parseFrontmatterFallback",
+          "startLine": 79,
+          "endLine": 127,
+          "params": [
+            "fmBlock"
+          ]
+        },
+        {
+          "name": "ValidateSkillName",
+          "startLine": 130,
+          "endLine": 139,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "ValidateResourcePath",
+          "startLine": 142,
+          "endLine": 152,
+          "params": [
+            "path"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SkillMetadata",
+          "startLine": 19,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Description",
+            "License",
+            "Compatibility",
+            "AllowedTools",
+            "Metadata"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SkillMetadata",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "BuildFrontmatter",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "ParseFrontmatter",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateSkillName",
+          "line": 130,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateResourcePath",
+          "line": 142,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 31
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 32
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 32
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 32
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 33
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 33
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 33
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 35
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 36
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 36
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 38
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 39
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 39
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 39
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "len",
+          "lineNumber": 41
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 42
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 44
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 44
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 44
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 44
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 47
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 48
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 48
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 48
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.WriteString",
+          "lineNumber": 50
+        },
+        {
+          "caller": "BuildFrontmatter",
+          "callee": "sb.String",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ParseFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ParseFrontmatter",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ParseFrontmatter",
+          "callee": "strings.TrimPrefix",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ParseFrontmatter",
+          "callee": "strings.Index",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ParseFrontmatter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 64
+        },
+        {
+          "caller": "ParseFrontmatter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 68
+        },
+        {
+          "caller": "ParseFrontmatter",
+          "callee": "yaml.Unmarshal",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ParseFrontmatter",
+          "callee": "parseFrontmatterFallback",
+          "lineNumber": 73
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "make",
+          "lineNumber": 81
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.Split",
+          "lineNumber": 82
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 86
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 87
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 92
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 92
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.SplitN",
+          "lineNumber": 93
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "len",
+          "lineNumber": 94
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 95
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.Trim",
+          "lineNumber": 96
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 96
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.SplitN",
+          "lineNumber": 104
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "len",
+          "lineNumber": 105
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.ToLower",
+          "lineNumber": 108
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 108
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.Trim",
+          "lineNumber": 109
+        },
+        {
+          "caller": "parseFrontmatterFallback",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ValidateSkillName",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ValidateSkillName",
+          "callee": "validSkillNameRegex.MatchString",
+          "lineNumber": 135
+        },
+        {
+          "caller": "ValidateResourcePath",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ValidateResourcePath",
+          "callee": "filepath.Clean",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ValidateResourcePath",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ValidateResourcePath",
+          "callee": "filepath.IsAbs",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ValidateResourcePath",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ValidateResourcePath",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 148
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/skill/skill.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 74,
+      "classes": [
+        {
+          "name": "Skill",
+          "startLine": 8,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Name",
+            "Description",
+            "Content",
+            "License",
+            "Compatibility",
+            "AllowedTools",
+            "Metadata",
+            "ReadOnly",
+            "SourceType",
+            "SourceURL",
+            "Version",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "SkillResource",
+          "startLine": 29,
+          "endLine": 37,
+          "methods": [],
+          "properties": [
+            "Path",
+            "Name",
+            "Type",
+            "Size",
+            "MimeType",
+            "Readable",
+            "Modified"
+          ]
+        },
+        {
+          "name": "ResourceContent",
+          "startLine": 40,
+          "endLine": 45,
+          "methods": [],
+          "properties": [
+            "Content",
+            "Encoding",
+            "MimeType",
+            "Size"
+          ]
+        },
+        {
+          "name": "GitRepoInfo",
+          "startLine": 48,
+          "endLine": 54,
+          "methods": [],
+          "properties": [
+            "ID",
+            "URL",
+            "Name",
+            "Enabled",
+            "LastSyncedAt"
+          ]
+        },
+        {
+          "name": "SkillInfo",
+          "startLine": 60,
+          "endLine": 64,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Description",
+            "Content"
+          ]
+        },
+        {
+          "name": "SkillMetadataRecord",
+          "startLine": 70,
+          "endLine": 81,
+          "methods": [],
+          "properties": [
+            "ID",
+            "UserID",
+            "Name",
+            "Definition",
+            "SourceType",
+            "SourceURL",
+            "Version",
+            "Enabled",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Skill",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "SkillResource",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "ResourceContent",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "GitRepoInfo",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "SkillInfo",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "SkillMetadataRecord",
+          "line": 70,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "internal/domain/subscription/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/subscription/provision_dedicated.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 16,
+      "classes": [
+        {
+          "name": "DedicatedQueueSpec",
+          "startLine": 4,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "QueueName",
+            "Target",
+            "MaxLimit",
+            "LimitAt",
+            "Priority",
+            "ParentQueue",
+            "Comment"
+          ]
+        },
+        {
+          "name": "DedicatedProvisionSpec",
+          "startLine": 15,
+          "endLine": 18,
+          "methods": [],
+          "properties": [
+            "PPPoE",
+            "Queue"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DedicatedQueueSpec",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "DedicatedProvisionSpec",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/subscription/provision_hotspot.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 33,
+      "classes": [
+        {
+          "name": "HotspotUserSpec",
+          "startLine": 4,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "Username",
+            "Password",
+            "Profile",
+            "Server",
+            "MacAddress",
+            "IPAddress",
+            "LimitUptime",
+            "LimitBytes",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "HotspotProfileSpec",
+          "startLine": 18,
+          "endLine": 30,
+          "methods": [],
+          "properties": [
+            "Name",
+            "RateLimit",
+            "AddressPool",
+            "AddressList",
+            "SharedUsers",
+            "ParentQueue",
+            "SessionTimeout",
+            "IdleTimeout",
+            "Comment",
+            "OnLogin",
+            "OnLogout"
+          ]
+        },
+        {
+          "name": "HotspotProvisionSpec",
+          "startLine": 33,
+          "endLine": 36,
+          "methods": [],
+          "properties": [
+            "User",
+            "Profile"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HotspotUserSpec",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotProfileSpec",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotProvisionSpec",
+          "line": 33,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/domain/subscription/provision_pppoe.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 31,
+      "classes": [
+        {
+          "name": "PPPoESecretSpec",
+          "startLine": 4,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "Username",
+            "Password",
+            "Profile",
+            "Service",
+            "LocalAddress",
+            "RemoteAddress",
+            "CallerID",
+            "Routes",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "PPPoEProfileSpec",
+          "startLine": 18,
+          "endLine": 28,
+          "methods": [],
+          "properties": [
+            "Name",
+            "RateLimit",
+            "RemoteAddressPool",
+            "LocalAddress",
+            "ParentQueue",
+            "AddressList",
+            "SessionTimeout",
+            "IdleTimeout",
+            "Comment"
+          ]
+        },
+        {
+          "name": "PPPoEProvisionSpec",
+          "startLine": 31,
+          "endLine": 34,
+          "methods": [],
+          "properties": [
+            "Secret",
+            "Profile"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PPPoESecretSpec",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "PPPoEProfileSpec",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "PPPoEProvisionSpec",
+          "line": 31,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/domain/subscription/subscriber.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 24,
+      "classes": [
+        {
+          "name": "SubscriberAccount",
+          "startLine": 4,
+          "endLine": 27,
+          "methods": [],
+          "properties": [
+            "Username",
+            "Password",
+            "Profile",
+            "RateLimit",
+            "Comment",
+            "AddressPool",
+            "ParentQueue",
+            "AddressList",
+            "SharedUsers",
+            "Price",
+            "SellingPrice",
+            "Validity",
+            "ExpireMode",
+            "LockUser",
+            "LockServer",
+            "BaseRateLimit",
+            "RemoteAddressPool",
+            "LocalAddress",
+            "DNSServer"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SubscriberAccount",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/subscription/subscription.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 97,
+      "nonEmptyLines": 87,
+      "classes": [
+        {
+          "name": "PPPoESubscriptionConfig",
+          "startLine": 40,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "LocalAddress",
+            "RemoteAddress",
+            "CallerID",
+            "Routes",
+            "RateLimit",
+            "RouterProfile"
+          ]
+        },
+        {
+          "name": "HotspotSubscriptionConfig",
+          "startLine": 50,
+          "endLine": 58,
+          "methods": [],
+          "properties": [
+            "Server",
+            "MacAddress",
+            "IPAddress",
+            "RateLimit",
+            "RouterProfile",
+            "LimitUptime",
+            "LimitBytes"
+          ]
+        },
+        {
+          "name": "Subscription",
+          "startLine": 62,
+          "endLine": 97,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "CustomerID",
+            "PlanID",
+            "DeviceID",
+            "ServiceType",
+            "RemoteUsername",
+            "RemotePassword",
+            "ProvisionStatus",
+            "BillingCycle",
+            "BillingDay",
+            "AutoIsolate",
+            "IsolationGraceDays",
+            "Status",
+            "StartDate",
+            "EndDate",
+            "CustomPrice",
+            "CurrentPeriodStart",
+            "CurrentPeriodEnd",
+            "Notes",
+            "DeletedAt",
+            "CreatedAt",
+            "UpdatedAt",
+            "PPPoE",
+            "Hotspot",
+            "LocalAddress",
+            "RemoteAddress",
+            "ParentQueue",
+            "RateLimit",
+            "RouterProfile"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PPPoESubscriptionConfig",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotSubscriptionConfig",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "Subscription",
+          "line": 62,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/driver/cisco/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 22,
+          "endLine": 29,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 32,
+          "endLine": 38,
+          "params": [
+            "op"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Classify",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/cisco/driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 46,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "NewDriver",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "ctx",
+            "target"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 29,
+          "endLine": 31,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 34,
+          "endLine": 36,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 39,
+          "endLine": 41,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 44,
+          "endLine": 46,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Driver",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Driver",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "NewDriver",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 44,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Classify",
+          "callee": "Classify",
+          "lineNumber": 35
+        },
+        {
+          "caller": "Translate",
+          "callee": "Translate",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/genericcli/catalog_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "TestCatalog_Classify",
+          "startLine": 12,
+          "endLine": 33,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestCatalog_Translate",
+          "startLine": 35,
+          "endLine": 53,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestCatalog_ZeroValueIsUsable",
+          "startLine": 55,
+          "endLine": 64,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestCatalog_Classify",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TestCatalog_Translate",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "TestCatalog_ZeroValueIsUsable",
+          "line": 55,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestCatalog_Classify",
+          "callee": "t.Run",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestCatalog_Classify",
+          "callee": "assert.Equal",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestCatalog_Classify",
+          "callee": "catalog.Classify",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestCatalog_Translate",
+          "callee": "t.Run",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestCatalog_Translate",
+          "callee": "catalog.Translate",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestCatalog_Translate",
+          "callee": "require.NoError",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestCatalog_Translate",
+          "callee": "assert.Equal",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestCatalog_Translate",
+          "callee": "t.Run",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestCatalog_Translate",
+          "callee": "catalog.Translate",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestCatalog_Translate",
+          "callee": "command.Operation",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestCatalog_Translate",
+          "callee": "require.Error",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestCatalog_ZeroValueIsUsable",
+          "callee": "assert.Equal",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestCatalog_ZeroValueIsUsable",
+          "callee": "catalog.Classify",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestCatalog_ZeroValueIsUsable",
+          "callee": "catalog.Translate",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestCatalog_ZeroValueIsUsable",
+          "callee": "require.Error",
+          "lineNumber": 63
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/genericcli/catalog.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 87,
+      "nonEmptyLines": 78,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 71,
+          "endLine": 78,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 81,
+          "endLine": 87,
+          "params": [
+            "op"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Catalog",
+          "startLine": 20,
+          "endLine": 66,
+          "methods": [
+            "Classify",
+            "Translate"
+          ],
+          "properties": [
+            "DestructivePrefixes",
+            "Operations",
+            "FailedWhenContains",
+            "ReadDelay",
+            "ReturnChar"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Catalog",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 81,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Classify",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 84
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/genericcli/session.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 261,
+      "nonEmptyLines": 231,
+      "functions": [
+        {
+          "name": "resolveDriver",
+          "startLine": 44,
+          "endLine": 53,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSession",
+          "startLine": 87,
+          "endLine": 117,
+          "params": [
+            "ctx",
+            "target",
+            "transportType",
+            "defaultPort",
+            "platformDef",
+            "catalog"
+          ]
+        },
+        {
+          "name": "dial",
+          "startLine": 123,
+          "endLine": 177,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 187,
+          "endLine": 217,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "sendWithReconnect",
+          "startLine": 227,
+          "endLine": 241,
+          "params": [
+            "ctx",
+            "raw"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 244,
+          "endLine": 246,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 249,
+          "endLine": 251,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 256,
+          "endLine": 261,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "cliDriver",
+          "startLine": 32,
+          "endLine": 36,
+          "methods": [
+            "Open",
+            "Close",
+            "SendCommand"
+          ],
+          "properties": []
+        },
+        {
+          "name": "Session",
+          "startLine": 64,
+          "endLine": 78,
+          "methods": [
+            "dial",
+            "Execute",
+            "sendWithReconnect",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "catalog",
+            "target",
+            "platformDef",
+            "transportType",
+            "defaultPort",
+            "opsTimeout",
+            "sem",
+            "driver"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Session",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "NewSession",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 187,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 244,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 249,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 256,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "resolveDriver",
+          "callee": "p.GetNetworkDriver",
+          "lineNumber": 45
+        },
+        {
+          "caller": "resolveDriver",
+          "callee": "p.GetGenericDriver",
+          "lineNumber": 48
+        },
+        {
+          "caller": "resolveDriver",
+          "callee": "fmt.Errorf",
+          "lineNumber": 50
+        },
+        {
+          "caller": "NewSession",
+          "callee": "make",
+          "lineNumber": 107
+        },
+        {
+          "caller": "NewSession",
+          "callee": "s.dial",
+          "lineNumber": 110
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithAuthUsername",
+          "lineNumber": 130
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithAuthPassword",
+          "lineNumber": 131
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithTransportType",
+          "lineNumber": 132
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithPort",
+          "lineNumber": 133
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithTimeoutOps",
+          "lineNumber": 134
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithAuthNoStrictKey",
+          "lineNumber": 139
+        },
+        {
+          "caller": "dial",
+          "callee": "len",
+          "lineNumber": 141
+        },
+        {
+          "caller": "dial",
+          "callee": "append",
+          "lineNumber": 142
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithFailedWhenContains",
+          "lineNumber": 142
+        },
+        {
+          "caller": "dial",
+          "callee": "append",
+          "lineNumber": 145
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithReadDelay",
+          "lineNumber": 145
+        },
+        {
+          "caller": "dial",
+          "callee": "append",
+          "lineNumber": 148
+        },
+        {
+          "caller": "dial",
+          "callee": "options.WithReturnChar",
+          "lineNumber": 148
+        },
+        {
+          "caller": "dial",
+          "callee": "platform.NewPlatform",
+          "lineNumber": 151
+        },
+        {
+          "caller": "dial",
+          "callee": "fmt.Errorf",
+          "lineNumber": 153
+        },
+        {
+          "caller": "dial",
+          "callee": "resolveDriver",
+          "lineNumber": 156
+        },
+        {
+          "caller": "dial",
+          "callee": "fmt.Errorf",
+          "lineNumber": 158
+        },
+        {
+          "caller": "dial",
+          "callee": "make",
+          "lineNumber": 164
+        },
+        {
+          "caller": "dial",
+          "callee": "func() { done <- driver.Open() }",
+          "lineNumber": 165
+        },
+        {
+          "caller": "dial",
+          "callee": "driver.Open",
+          "lineNumber": 165
+        },
+        {
+          "caller": "dial",
+          "callee": "ctx.Done",
+          "lineNumber": 168
+        },
+        {
+          "caller": "dial",
+          "callee": "fmt.Errorf",
+          "lineNumber": 169
+        },
+        {
+          "caller": "dial",
+          "callee": "ctx.Err",
+          "lineNumber": 169
+        },
+        {
+          "caller": "dial",
+          "callee": "fmt.Errorf",
+          "lineNumber": 172
+        },
+        {
+          "caller": "Execute",
+          "callee": "ctx.Done",
+          "lineNumber": 190
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 191
+        },
+        {
+          "caller": "Execute",
+          "callee": "ctx.Err",
+          "lineNumber": 191
+        },
+        {
+          "caller": "Execute",
+          "callee": "make",
+          "lineNumber": 198
+        },
+        {
+          "caller": "Execute",
+          "callee": "func() {\n\t\tresp, err := s.sendWithReconnect(ctx, cmd.Raw)\n\t\tdone <- outcome{resp, err}\n\t\t<-s.sem\n\t}",
+          "lineNumber": 199
+        },
+        {
+          "caller": "Execute",
+          "callee": "s.sendWithReconnect",
+          "lineNumber": 200
+        },
+        {
+          "caller": "Execute",
+          "callee": "ctx.Done",
+          "lineNumber": 206
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 207
+        },
+        {
+          "caller": "Execute",
+          "callee": "ctx.Err",
+          "lineNumber": 207
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 210
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 213
+        },
+        {
+          "caller": "sendWithReconnect",
+          "callee": "s.driver.SendCommand",
+          "lineNumber": 228
+        },
+        {
+          "caller": "sendWithReconnect",
+          "callee": "opoptions.WithTimeoutOps",
+          "lineNumber": 228
+        },
+        {
+          "caller": "sendWithReconnect",
+          "callee": "s.dial",
+          "lineNumber": 233
+        },
+        {
+          "caller": "sendWithReconnect",
+          "callee": "fmt.Errorf",
+          "lineNumber": 235
+        },
+        {
+          "caller": "sendWithReconnect",
+          "callee": "s.driver.Close",
+          "lineNumber": 237
+        },
+        {
+          "caller": "sendWithReconnect",
+          "callee": "s.driver.SendCommand",
+          "lineNumber": 240
+        },
+        {
+          "caller": "sendWithReconnect",
+          "callee": "opoptions.WithTimeoutOps",
+          "lineNumber": 240
+        },
+        {
+          "caller": "Classify",
+          "callee": "s.catalog.Classify",
+          "lineNumber": 245
+        },
+        {
+          "caller": "Translate",
+          "callee": "s.catalog.Translate",
+          "lineNumber": 250
+        },
+        {
+          "caller": "Close",
+          "callee": "func() { <-s.sem }",
+          "lineNumber": 258
+        },
+        {
+          "caller": "Close",
+          "callee": "s.driver.Close",
+          "lineNumber": 260
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 8,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/driver/genericssh/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 17,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 13,
+          "endLine": 15,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 19,
+          "endLine": 21,
+          "params": [
+            "op"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/genericssh/driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 91,
+      "functions": [
+        {
+          "name": "NewDriver",
+          "startLine": 67,
+          "endLine": 73,
+          "params": [
+            "ctx",
+            "target",
+            "platformDef",
+            "catalog"
+          ]
+        },
+        {
+          "name": "OpenTerminalSession",
+          "startLine": 79,
+          "endLine": 81,
+          "params": [
+            "ctx",
+            "cols",
+            "rows"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 85,
+          "endLine": 87,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 91,
+          "endLine": 93,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 97,
+          "endLine": 99,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 102,
+          "endLine": 104,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Driver",
+          "startLine": 39,
+          "endLine": 47,
+          "methods": [
+            "OpenTerminalSession",
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "session",
+            "target"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Driver",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "NewDriver",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "OpenTerminalSession",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 97,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 102,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewDriver",
+          "callee": "genericcli.NewSession",
+          "lineNumber": 68
+        },
+        {
+          "caller": "OpenTerminalSession",
+          "callee": "DialSSHPty",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Execute",
+          "callee": "d.session.Execute",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Classify",
+          "callee": "d.session.Classify",
+          "lineNumber": 92
+        },
+        {
+          "caller": "Translate",
+          "callee": "d.session.Translate",
+          "lineNumber": 98
+        },
+        {
+          "caller": "Close",
+          "callee": "d.session.Close",
+          "lineNumber": 103
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/genericssh/pty.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 166,
+      "nonEmptyLines": 141,
+      "functions": [
+        {
+          "name": "Stdin",
+          "startLine": 31,
+          "endLine": 33,
+          "params": []
+        },
+        {
+          "name": "Stdout",
+          "startLine": 35,
+          "endLine": 37,
+          "params": []
+        },
+        {
+          "name": "Resize",
+          "startLine": 39,
+          "endLine": 44,
+          "params": [
+            "cols",
+            "rows"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 46,
+          "endLine": 64,
+          "params": []
+        },
+        {
+          "name": "DialSSHPty",
+          "startLine": 67,
+          "endLine": 166,
+          "params": [
+            "ctx",
+            "target",
+            "cols",
+            "rows"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SSHPtySession",
+          "startLine": 20,
+          "endLine": 27,
+          "methods": [
+            "Stdin",
+            "Stdout",
+            "Resize",
+            "Close"
+          ],
+          "properties": [
+            "client",
+            "session",
+            "stdin",
+            "stdout",
+            "closeOnce"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SSHPtySession",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Stdin",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "Stdout",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "Resize",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "DialSSHPty",
+          "line": 67,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Resize",
+          "callee": "fmt.Errorf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "Resize",
+          "callee": "s.session.WindowChange",
+          "lineNumber": 43
+        },
+        {
+          "caller": "Close",
+          "callee": "s.closeOnce.Do",
+          "lineNumber": 48
+        },
+        {
+          "caller": "Close",
+          "callee": "s.session.Close",
+          "lineNumber": 50
+        },
+        {
+          "caller": "Close",
+          "callee": "errors.Is",
+          "lineNumber": 50
+        },
+        {
+          "caller": "Close",
+          "callee": "append",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Close",
+          "callee": "s.client.Close",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Close",
+          "callee": "append",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Close",
+          "callee": "len",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Close",
+          "callee": "fmt.Errorf",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Close",
+          "callee": "errors.Join",
+          "lineNumber": 61
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 69
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "strconv.Itoa",
+          "lineNumber": 74
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 82
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "ssh.InsecureIgnoreHostKey",
+          "lineNumber": 91
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "ssh.ParsePublicKey",
+          "lineNumber": 93
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "ssh.FixedHostKey",
+          "lineNumber": 97
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "ssh.Password",
+          "lineNumber": 103
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "net.JoinHostPort",
+          "lineNumber": 109
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "ssh.Dial",
+          "lineNumber": 110
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 112
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "client.NewSession",
+          "lineNumber": 115
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "client.Close",
+          "lineNumber": 117
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 118
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "session.RequestPty",
+          "lineNumber": 134
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "session.Close",
+          "lineNumber": 135
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "client.Close",
+          "lineNumber": 136
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 137
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "session.StdinPipe",
+          "lineNumber": 140
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "session.Close",
+          "lineNumber": 142
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "client.Close",
+          "lineNumber": 143
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 144
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "session.StdoutPipe",
+          "lineNumber": 147
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "session.Close",
+          "lineNumber": 149
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "client.Close",
+          "lineNumber": 150
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 151
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "session.Shell",
+          "lineNumber": 154
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "session.Close",
+          "lineNumber": 155
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "client.Close",
+          "lineNumber": 156
+        },
+        {
+          "caller": "DialSSHPty",
+          "callee": "fmt.Errorf",
+          "lineNumber": 157
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/generictelnet/driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 92,
+      "nonEmptyLines": 81,
+      "functions": [
+        {
+          "name": "NewDriver",
+          "startLine": 63,
+          "endLine": 69,
+          "params": [
+            "ctx",
+            "target",
+            "platformDef",
+            "catalog"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 73,
+          "endLine": 75,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 79,
+          "endLine": 81,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 85,
+          "endLine": 87,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 90,
+          "endLine": 92,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Driver",
+          "startLine": 48,
+          "endLine": 50,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "session"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Driver",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "NewDriver",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 90,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewDriver",
+          "callee": "genericcli.NewSession",
+          "lineNumber": 64
+        },
+        {
+          "caller": "Execute",
+          "callee": "d.session.Execute",
+          "lineNumber": 74
+        },
+        {
+          "caller": "Classify",
+          "callee": "d.session.Classify",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Translate",
+          "callee": "d.session.Translate",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Close",
+          "callee": "d.session.Close",
+          "lineNumber": 91
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/genieacs/client_http.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 252,
+      "nonEmptyLines": 225,
+      "functions": [
+        {
+          "name": "execGetDevice",
+          "startLine": 20,
+          "endLine": 49,
+          "params": [
+            "ctx",
+            "projection"
+          ]
+        },
+        {
+          "name": "postTask",
+          "startLine": 55,
+          "endLine": 87,
+          "params": [
+            "ctx",
+            "body",
+            "connectionRequest"
+          ]
+        },
+        {
+          "name": "waitForTask",
+          "startLine": 94,
+          "endLine": 110,
+          "params": [
+            "ctx",
+            "taskID"
+          ]
+        },
+        {
+          "name": "taskGone",
+          "startLine": 115,
+          "endLine": 133,
+          "params": [
+            "ctx",
+            "taskID"
+          ]
+        },
+        {
+          "name": "taskFaultDetail",
+          "startLine": 139,
+          "endLine": 164,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "fetchParamValues",
+          "startLine": 170,
+          "endLine": 177,
+          "params": [
+            "ctx",
+            "parameterNamesJSON"
+          ]
+        },
+        {
+          "name": "do",
+          "startLine": 182,
+          "endLine": 209,
+          "params": [
+            "ctx",
+            "method",
+            "path",
+            "query",
+            "body"
+          ]
+        },
+        {
+          "name": "projectionFromParamNames",
+          "startLine": 215,
+          "endLine": 231,
+          "params": [
+            "parameterNamesJSON"
+          ]
+        },
+        {
+          "name": "flattenJSON",
+          "startLine": 239,
+          "endLine": 252,
+          "params": [
+            "m",
+            "prefix",
+            "out"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execGetDevice",
+          "callee": "q.Set",
+          "lineNumber": 22
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 22
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "q.Set",
+          "lineNumber": 24
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "d.do",
+          "lineNumber": 27
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 29
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "func() { _ = resp.Body.Close() }",
+          "lineNumber": 31
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "resp.Body.Close",
+          "lineNumber": 31
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 34
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "json.NewDecoder(resp.Body).Decode",
+          "lineNumber": 39
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "json.NewDecoder",
+          "lineNumber": 39
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "len",
+          "lineNumber": 42
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 43
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "make",
+          "lineNumber": 46
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "len",
+          "lineNumber": 46
+        },
+        {
+          "caller": "execGetDevice",
+          "callee": "flattenJSON",
+          "lineNumber": 47
+        },
+        {
+          "caller": "postTask",
+          "callee": "url.PathEscape",
+          "lineNumber": 56
+        },
+        {
+          "caller": "postTask",
+          "callee": "q.Set",
+          "lineNumber": 59
+        },
+        {
+          "caller": "postTask",
+          "callee": "ctx.Deadline",
+          "lineNumber": 61
+        },
+        {
+          "caller": "postTask",
+          "callee": "q.Set",
+          "lineNumber": 62
+        },
+        {
+          "caller": "postTask",
+          "callee": "strconv.FormatInt",
+          "lineNumber": 62
+        },
+        {
+          "caller": "postTask",
+          "callee": "time.Until(deadline).Milliseconds",
+          "lineNumber": 62
+        },
+        {
+          "caller": "postTask",
+          "callee": "time.Until",
+          "lineNumber": 62
+        },
+        {
+          "caller": "postTask",
+          "callee": "d.do",
+          "lineNumber": 65
+        },
+        {
+          "caller": "postTask",
+          "callee": "fmt.Errorf",
+          "lineNumber": 67
+        },
+        {
+          "caller": "postTask",
+          "callee": "func() { _ = resp.Body.Close() }",
+          "lineNumber": 69
+        },
+        {
+          "caller": "postTask",
+          "callee": "resp.Body.Close",
+          "lineNumber": 69
+        },
+        {
+          "caller": "postTask",
+          "callee": "fmt.Errorf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "postTask",
+          "callee": "json.NewDecoder(resp.Body).Decode",
+          "lineNumber": 78
+        },
+        {
+          "caller": "postTask",
+          "callee": "json.NewDecoder",
+          "lineNumber": 78
+        },
+        {
+          "caller": "postTask",
+          "callee": "fmt.Errorf",
+          "lineNumber": 79
+        },
+        {
+          "caller": "postTask",
+          "callee": "fmt.Errorf",
+          "lineNumber": 84
+        },
+        {
+          "caller": "waitForTask",
+          "callee": "time.NewTicker",
+          "lineNumber": 95
+        },
+        {
+          "caller": "waitForTask",
+          "callee": "ticker.Stop",
+          "lineNumber": 96
+        },
+        {
+          "caller": "waitForTask",
+          "callee": "ctx.Done",
+          "lineNumber": 100
+        },
+        {
+          "caller": "waitForTask",
+          "callee": "d.taskGone",
+          "lineNumber": 103
+        },
+        {
+          "caller": "taskGone",
+          "callee": "q.Set",
+          "lineNumber": 117
+        },
+        {
+          "caller": "taskGone",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 117
+        },
+        {
+          "caller": "taskGone",
+          "callee": "d.do",
+          "lineNumber": 119
+        },
+        {
+          "caller": "taskGone",
+          "callee": "func() { _ = resp.Body.Close() }",
+          "lineNumber": 123
+        },
+        {
+          "caller": "taskGone",
+          "callee": "resp.Body.Close",
+          "lineNumber": 123
+        },
+        {
+          "caller": "taskGone",
+          "callee": "fmt.Errorf",
+          "lineNumber": 125
+        },
+        {
+          "caller": "taskGone",
+          "callee": "json.NewDecoder(resp.Body).Decode",
+          "lineNumber": 129
+        },
+        {
+          "caller": "taskGone",
+          "callee": "json.NewDecoder",
+          "lineNumber": 129
+        },
+        {
+          "caller": "taskGone",
+          "callee": "len",
+          "lineNumber": 132
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "q.Set",
+          "lineNumber": 142
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 142
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "d.do",
+          "lineNumber": 144
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "func() { _ = resp.Body.Close() }",
+          "lineNumber": 148
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "resp.Body.Close",
+          "lineNumber": 148
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "fmt.Errorf",
+          "lineNumber": 150
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "json.NewDecoder(resp.Body).Decode",
+          "lineNumber": 154
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "json.NewDecoder",
+          "lineNumber": 154
+        },
+        {
+          "caller": "taskFaultDetail",
+          "callee": "len",
+          "lineNumber": 157
+        },
+        {
+          "caller": "fetchParamValues",
+          "callee": "projectionFromParamNames",
+          "lineNumber": 171
+        },
+        {
+          "caller": "fetchParamValues",
+          "callee": "d.execGetDevice",
+          "lineNumber": 172
+        },
+        {
+          "caller": "do",
+          "callee": "d.baseURL.JoinPath",
+          "lineNumber": 183
+        },
+        {
+          "caller": "do",
+          "callee": "query.Encode",
+          "lineNumber": 185
+        },
+        {
+          "caller": "do",
+          "callee": "bytes.NewReader",
+          "lineNumber": 190
+        },
+        {
+          "caller": "do",
+          "callee": "http.NewRequestWithContext",
+          "lineNumber": 193
+        },
+        {
+          "caller": "do",
+          "callee": "u.String",
+          "lineNumber": 193
+        },
+        {
+          "caller": "do",
+          "callee": "fmt.Errorf",
+          "lineNumber": 195
+        },
+        {
+          "caller": "do",
+          "callee": "req.Header.Set",
+          "lineNumber": 198
+        },
+        {
+          "caller": "do",
+          "callee": "req.Header.Set",
+          "lineNumber": 201
+        },
+        {
+          "caller": "do",
+          "callee": "d.httpClient.Do",
+          "lineNumber": 204
+        },
+        {
+          "caller": "do",
+          "callee": "fmt.Errorf",
+          "lineNumber": 206
+        },
+        {
+          "caller": "projectionFromParamNames",
+          "callee": "json.Unmarshal",
+          "lineNumber": 220
+        },
+        {
+          "caller": "flattenJSON",
+          "callee": "flattenJSON",
+          "lineNumber": 247
+        },
+        {
+          "caller": "flattenJSON",
+          "callee": "fmt.Sprint",
+          "lineNumber": 249
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/genieacs/client_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 336,
+      "nonEmptyLines": 300,
+      "functions": [
+        {
+          "name": "newTestDriver",
+          "startLine": 27,
+          "endLine": 38,
+          "params": [
+            "t",
+            "srv",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "writeBody",
+          "startLine": 43,
+          "endLine": 46,
+          "params": [
+            "t",
+            "w",
+            "body"
+          ]
+        },
+        {
+          "name": "pingHandler",
+          "startLine": 49,
+          "endLine": 56,
+          "params": [
+            "t",
+            "w",
+            "r"
+          ]
+        },
+        {
+          "name": "TestNewDriver_MissingDeviceID",
+          "startLine": 58,
+          "endLine": 61,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewDriver_UnreachableNBI",
+          "startLine": 63,
+          "endLine": 72,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "mustPort",
+          "startLine": 75,
+          "endLine": 80,
+          "params": [
+            "t",
+            "u"
+          ]
+        },
+        {
+          "name": "TestNewDriver_ReachableDefaultsFields",
+          "startLine": 82,
+          "endLine": 99,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewDriver_CustomPollInterval",
+          "startLine": 101,
+          "endLine": 115,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_GetDevice",
+          "startLine": 117,
+          "endLine": 132,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_GetDevice_NotFound",
+          "startLine": 134,
+          "endLine": 144,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_UnsupportedTaskType",
+          "startLine": 146,
+          "endLine": 155,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_Reboot_200",
+          "startLine": 157,
+          "endLine": 175,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_Reboot_202_PollThenDone",
+          "startLine": 177,
+          "endLine": 204,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_202_CtxTimeout",
+          "startLine": 206,
+          "endLine": 227,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_TaskFault",
+          "startLine": 229,
+          "endLine": 247,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_GetParameterValues_200",
+          "startLine": 249,
+          "endLine": 276,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_ConnectionRequestFlag",
+          "startLine": 278,
+          "endLine": 302,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExecute_AuthHeader",
+          "startLine": 304,
+          "endLine": 323,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestClose_ReleasesIdleConnections",
+          "startLine": 325,
+          "endLine": 336,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestNewDriver_MissingDeviceID",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewDriver_UnreachableNBI",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewDriver_ReachableDefaultsFields",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewDriver_CustomPollInterval",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_GetDevice",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_GetDevice_NotFound",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_UnsupportedTaskType",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_Reboot_200",
+          "line": 157,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_Reboot_202_PollThenDone",
+          "line": 177,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_202_CtxTimeout",
+          "line": 206,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_TaskFault",
+          "line": 229,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_GetParameterValues_200",
+          "line": 249,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_ConnectionRequestFlag",
+          "line": 278,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecute_AuthHeader",
+          "line": 304,
+          "isDefault": false
+        },
+        {
+          "name": "TestClose_ReleasesIdleConnections",
+          "line": 325,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newTestDriver",
+          "callee": "t.Helper",
+          "lineNumber": 28
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "url.Parse",
+          "lineNumber": 29
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "require.NoError",
+          "lineNumber": 30
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "srv.Client",
+          "lineNumber": 34
+        },
+        {
+          "caller": "writeBody",
+          "callee": "t.Helper",
+          "lineNumber": 44
+        },
+        {
+          "caller": "writeBody",
+          "callee": "io.WriteString",
+          "lineNumber": 45
+        },
+        {
+          "caller": "pingHandler",
+          "callee": "t.Helper",
+          "lineNumber": 50
+        },
+        {
+          "caller": "pingHandler",
+          "callee": "writeBody",
+          "lineNumber": 52
+        },
+        {
+          "caller": "pingHandler",
+          "callee": "t.Errorf",
+          "lineNumber": 55
+        },
+        {
+          "caller": "pingHandler",
+          "callee": "r.URL.String",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestNewDriver_MissingDeviceID",
+          "callee": "NewDriver",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestNewDriver_MissingDeviceID",
+          "callee": "context.Background",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestNewDriver_MissingDeviceID",
+          "callee": "require.ErrorIs",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestNewDriver_UnreachableNBI",
+          "callee": "NewDriver",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestNewDriver_UnreachableNBI",
+          "callee": "context.Background",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestNewDriver_UnreachableNBI",
+          "callee": "require.Error",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestNewDriver_UnreachableNBI",
+          "callee": "assert.Contains",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestNewDriver_UnreachableNBI",
+          "callee": "err.Error",
+          "lineNumber": 71
+        },
+        {
+          "caller": "mustPort",
+          "callee": "t.Helper",
+          "lineNumber": 76
+        },
+        {
+          "caller": "mustPort",
+          "callee": "strconv.Atoi",
+          "lineNumber": 77
+        },
+        {
+          "caller": "mustPort",
+          "callee": "u.Port",
+          "lineNumber": 77
+        },
+        {
+          "caller": "mustPort",
+          "callee": "require.NoError",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "httptest.NewServer",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "pingHandler",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "srv.Close",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "url.Parse",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "NewDriver",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "context.Background",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "u.Hostname",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "mustPort",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "require.NoError",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "assert.Equal",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "assert.Equal",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "assert.Equal",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestNewDriver_ReachableDefaultsFields",
+          "callee": "assert.Equal",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "httptest.NewServer",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "pingHandler",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "srv.Close",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "url.Parse",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "NewDriver",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "context.Background",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "u.Hostname",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "mustPort",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "require.NoError",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestNewDriver_CustomPollInterval",
+          "callee": "assert.Equal",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "httptest.NewServer",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "require.Equal",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "assert.Equal",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "assert.Contains",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "r.URL.Query().Get",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "r.URL.Query",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "writeBody",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "srv.Close",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "newTestDriver",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "d.Execute",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "context.Background",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "require.NoError",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "require.Len",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "assert.Equal",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestExecute_GetDevice",
+          "callee": "assert.Equal",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "httptest.NewServer",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "writeBody",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "srv.Close",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "newTestDriver",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "d.Execute",
+          "lineNumber": 141
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "context.Background",
+          "lineNumber": 141
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "require.Error",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "assert.Contains",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestExecute_GetDevice_NotFound",
+          "callee": "err.Error",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "httptest.NewServer",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "t.Errorf",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "r.URL.String",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "srv.Close",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "newTestDriver",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "d.Execute",
+          "lineNumber": 153
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "context.Background",
+          "lineNumber": 153
+        },
+        {
+          "caller": "TestExecute_UnsupportedTaskType",
+          "callee": "require.ErrorIs",
+          "lineNumber": 154
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "httptest.NewServer",
+          "lineNumber": 158
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 158
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "w.WriteHeader",
+          "lineNumber": 161
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "writeBody",
+          "lineNumber": 162
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "writeBody",
+          "lineNumber": 164
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "t.Errorf",
+          "lineNumber": 166
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "r.URL.String",
+          "lineNumber": 166
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "srv.Close",
+          "lineNumber": 169
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "newTestDriver",
+          "lineNumber": 171
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "d.Execute",
+          "lineNumber": 172
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "context.Background",
+          "lineNumber": 172
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "require.NoError",
+          "lineNumber": 173
+        },
+        {
+          "caller": "TestExecute_Reboot_200",
+          "callee": "assert.Equal",
+          "lineNumber": 174
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "httptest.NewServer",
+          "lineNumber": 179
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 179
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "w.WriteHeader",
+          "lineNumber": 182
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "writeBody",
+          "lineNumber": 183
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "taskPolls.Add",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "writeBody",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "writeBody",
+          "lineNumber": 189
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "writeBody",
+          "lineNumber": 192
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "t.Errorf",
+          "lineNumber": 194
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "r.URL.String",
+          "lineNumber": 194
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "srv.Close",
+          "lineNumber": 197
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "newTestDriver",
+          "lineNumber": 199
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "d.Execute",
+          "lineNumber": 200
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "context.Background",
+          "lineNumber": 200
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "require.NoError",
+          "lineNumber": 201
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "assert.Equal",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "assert.GreaterOrEqual",
+          "lineNumber": 203
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "taskPolls.Load",
+          "lineNumber": 203
+        },
+        {
+          "caller": "TestExecute_Reboot_202_PollThenDone",
+          "callee": "int32",
+          "lineNumber": 203
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "httptest.NewServer",
+          "lineNumber": 207
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 207
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "w.WriteHeader",
+          "lineNumber": 210
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "writeBody",
+          "lineNumber": 211
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "writeBody",
+          "lineNumber": 213
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "t.Errorf",
+          "lineNumber": 215
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "r.URL.String",
+          "lineNumber": 215
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "srv.Close",
+          "lineNumber": 218
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "newTestDriver",
+          "lineNumber": 220
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "context.WithTimeout",
+          "lineNumber": 221
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "context.Background",
+          "lineNumber": 221
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "cancel",
+          "lineNumber": 222
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "d.Execute",
+          "lineNumber": 224
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "require.ErrorIs",
+          "lineNumber": 225
+        },
+        {
+          "caller": "TestExecute_202_CtxTimeout",
+          "callee": "assert.Equal",
+          "lineNumber": 226
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "httptest.NewServer",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "w.WriteHeader",
+          "lineNumber": 233
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "writeBody",
+          "lineNumber": 234
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "writeBody",
+          "lineNumber": 236
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "t.Errorf",
+          "lineNumber": 238
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "r.URL.String",
+          "lineNumber": 238
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "srv.Close",
+          "lineNumber": 241
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "newTestDriver",
+          "lineNumber": 243
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "d.Execute",
+          "lineNumber": 244
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "context.Background",
+          "lineNumber": 244
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "require.ErrorIs",
+          "lineNumber": 245
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "assert.Contains",
+          "lineNumber": 246
+        },
+        {
+          "caller": "TestExecute_TaskFault",
+          "callee": "err.Error",
+          "lineNumber": 246
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "httptest.NewServer",
+          "lineNumber": 250
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 250
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "w.WriteHeader",
+          "lineNumber": 253
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "writeBody",
+          "lineNumber": 254
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "writeBody",
+          "lineNumber": 256
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "assert.Contains",
+          "lineNumber": 258
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "r.URL.Query().Get",
+          "lineNumber": 258
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "r.URL.Query",
+          "lineNumber": 258
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "writeBody",
+          "lineNumber": 259
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "t.Errorf",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "r.URL.String",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "srv.Close",
+          "lineNumber": 264
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "newTestDriver",
+          "lineNumber": 266
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "d.Execute",
+          "lineNumber": 271
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "context.Background",
+          "lineNumber": 271
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "require.NoError",
+          "lineNumber": 272
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "assert.Equal",
+          "lineNumber": 273
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "require.Len",
+          "lineNumber": 274
+        },
+        {
+          "caller": "TestExecute_GetParameterValues_200",
+          "callee": "assert.Equal",
+          "lineNumber": 275
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "httptest.NewServer",
+          "lineNumber": 279
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 279
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "r.URL.Query",
+          "lineNumber": 282
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "assert.True",
+          "lineNumber": 283
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "w.WriteHeader",
+          "lineNumber": 284
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "writeBody",
+          "lineNumber": 285
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "writeBody",
+          "lineNumber": 287
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "t.Errorf",
+          "lineNumber": 289
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "r.URL.String",
+          "lineNumber": 289
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "srv.Close",
+          "lineNumber": 292
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "newTestDriver",
+          "lineNumber": 294
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "d.Execute",
+          "lineNumber": 299
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "context.Background",
+          "lineNumber": 299
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "require.NoError",
+          "lineNumber": 300
+        },
+        {
+          "caller": "TestExecute_ConnectionRequestFlag",
+          "callee": "assert.Equal",
+          "lineNumber": 301
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "httptest.NewServer",
+          "lineNumber": 305
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 305
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "assert.Equal",
+          "lineNumber": 306
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "r.Header.Get",
+          "lineNumber": 306
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "w.WriteHeader",
+          "lineNumber": 309
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "writeBody",
+          "lineNumber": 310
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "writeBody",
+          "lineNumber": 312
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "t.Errorf",
+          "lineNumber": 314
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "r.URL.String",
+          "lineNumber": 314
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "srv.Close",
+          "lineNumber": 317
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "newTestDriver",
+          "lineNumber": 319
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "d.Execute",
+          "lineNumber": 321
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "context.Background",
+          "lineNumber": 321
+        },
+        {
+          "caller": "TestExecute_AuthHeader",
+          "callee": "require.NoError",
+          "lineNumber": 322
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "httptest.NewServer",
+          "lineNumber": 326
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 326
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "writeBody",
+          "lineNumber": 327
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "srv.Close",
+          "lineNumber": 329
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "newTestDriver",
+          "lineNumber": 331
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "d.Execute",
+          "lineNumber": 333
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "context.Background",
+          "lineNumber": 333
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "require.NoError",
+          "lineNumber": 335
+        },
+        {
+          "caller": "TestClose_ReleasesIdleConnections",
+          "callee": "d.Close",
+          "lineNumber": 335
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 15,
+        "functionCount": 19,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/genieacs/commands_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 221,
+      "nonEmptyLines": 203,
+      "functions": [
+        {
+          "name": "TestClassify",
+          "startLine": 13,
+          "endLine": 35,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestTranslate",
+          "startLine": 37,
+          "endLine": 59,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestIsTaskCommand",
+          "startLine": 61,
+          "endLine": 79,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestBuildTaskBody",
+          "startLine": 81,
+          "endLine": 172,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestProjectionFromParamNames",
+          "startLine": 174,
+          "endLine": 190,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestFlattenJSON",
+          "startLine": 192,
+          "endLine": 221,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestClassify",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "TestTranslate",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "TestIsTaskCommand",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "TestBuildTaskBody",
+          "line": 81,
+          "isDefault": false
+        },
+        {
+          "name": "TestProjectionFromParamNames",
+          "line": 174,
+          "isDefault": false
+        },
+        {
+          "name": "TestFlattenJSON",
+          "line": 192,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestClassify",
+          "callee": "t.Run",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestClassify",
+          "callee": "assert.Equal",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestClassify",
+          "callee": "Classify",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "command.Operation",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "t.Run",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "Translate",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "require.Error",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "require.NoError",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "assert.Equal",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestIsTaskCommand",
+          "callee": "t.Run",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestIsTaskCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestIsTaskCommand",
+          "callee": "isTaskCommand",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "t.Run",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "buildTaskBody",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "json.Unmarshal",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.False",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.False",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "t.Run",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "buildTaskBody",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "json.Unmarshal",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "t.Run",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "buildTaskBody",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "json.Unmarshal",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.Len",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 117
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "t.Run",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "buildTaskBody",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "json.Unmarshal",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "t.Run",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "buildTaskBody",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "json.Unmarshal",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "t.Run",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "buildTaskBody",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.NoError",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "json.Unmarshal",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "assert.Equal",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "t.Run",
+          "lineNumber": 155
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "buildTaskBody",
+          "lineNumber": 160
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.Error",
+          "lineNumber": 161
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "t.Run",
+          "lineNumber": 164
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "buildTaskBody",
+          "lineNumber": 169
+        },
+        {
+          "caller": "TestBuildTaskBody",
+          "callee": "require.Error",
+          "lineNumber": 170
+        },
+        {
+          "caller": "TestProjectionFromParamNames",
+          "callee": "t.Run",
+          "lineNumber": 186
+        },
+        {
+          "caller": "TestProjectionFromParamNames",
+          "callee": "assert.Equal",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestProjectionFromParamNames",
+          "callee": "projectionFromParamNames",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "t.Run",
+          "lineNumber": 193
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "float64",
+          "lineNumber": 194
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "make",
+          "lineNumber": 195
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "flattenJSON",
+          "lineNumber": 196
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "assert.Equal",
+          "lineNumber": 197
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "assert.Equal",
+          "lineNumber": 198
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "assert.Equal",
+          "lineNumber": 199
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "t.Run",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "make",
+          "lineNumber": 210
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "flattenJSON",
+          "lineNumber": 211
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "assert.Equal",
+          "lineNumber": 212
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "t.Run",
+          "lineNumber": 215
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "make",
+          "lineNumber": 217
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "flattenJSON",
+          "lineNumber": 218
+        },
+        {
+          "caller": "TestFlattenJSON",
+          "callee": "assert.Equal",
+          "lineNumber": 219
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/genieacs/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 136,
+      "nonEmptyLines": 121,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 48,
+          "endLine": 53,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 56,
+          "endLine": 62,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "isTaskCommand",
+          "startLine": 68,
+          "endLine": 70,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "taskTypeKnown",
+          "startLine": 74,
+          "endLine": 81,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "buildTaskBody",
+          "startLine": 113,
+          "endLine": 136,
+          "params": [
+            "cmd"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "taskBody",
+          "startLine": 92,
+          "endLine": 98,
+          "methods": [],
+          "properties": [
+            "Name",
+            "ParameterNames",
+            "ParameterValues",
+            "ObjectName",
+            "File"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 56,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 59
+        },
+        {
+          "caller": "isTaskCommand",
+          "callee": "taskTypeKnown",
+          "lineNumber": 69
+        },
+        {
+          "caller": "buildTaskBody",
+          "callee": "json.Unmarshal",
+          "lineNumber": 117
+        },
+        {
+          "caller": "buildTaskBody",
+          "callee": "fmt.Errorf",
+          "lineNumber": 118
+        },
+        {
+          "caller": "buildTaskBody",
+          "callee": "json.Unmarshal",
+          "lineNumber": 123
+        },
+        {
+          "caller": "buildTaskBody",
+          "callee": "fmt.Errorf",
+          "lineNumber": 124
+        },
+        {
+          "caller": "buildTaskBody",
+          "callee": "json.Marshal",
+          "lineNumber": 131
+        },
+        {
+          "caller": "buildTaskBody",
+          "callee": "fmt.Errorf",
+          "lineNumber": 133
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/genieacs/driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 199,
+      "nonEmptyLines": 174,
+      "functions": [
+        {
+          "name": "NewDriver",
+          "startLine": 62,
+          "endLine": 109,
+          "params": [
+            "ctx",
+            "target"
+          ]
+        },
+        {
+          "name": "ping",
+          "startLine": 114,
+          "endLine": 126,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 140,
+          "endLine": 181,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 184,
+          "endLine": 186,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 189,
+          "endLine": 191,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 196,
+          "endLine": 199,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Driver",
+          "startLine": 38,
+          "endLine": 45,
+          "methods": [
+            "ping",
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "baseURL",
+            "deviceID",
+            "apiKey",
+            "httpClient",
+            "pollInterval",
+            "faultChannel"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Driver",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "NewDriver",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 184,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 189,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 196,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewDriver",
+          "callee": "time.ParseDuration",
+          "lineNumber": 80
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 93
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "d.ping",
+          "lineNumber": 105
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "fmt.Errorf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ping",
+          "callee": "q.Set",
+          "lineNumber": 116
+        },
+        {
+          "caller": "ping",
+          "callee": "d.do",
+          "lineNumber": 117
+        },
+        {
+          "caller": "ping",
+          "callee": "func() { _ = resp.Body.Close() }",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ping",
+          "callee": "resp.Body.Close",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ping",
+          "callee": "fmt.Errorf",
+          "lineNumber": 123
+        },
+        {
+          "caller": "Execute",
+          "callee": "d.execGetDevice",
+          "lineNumber": 142
+        },
+        {
+          "caller": "Execute",
+          "callee": "isTaskCommand",
+          "lineNumber": 145
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 146
+        },
+        {
+          "caller": "Execute",
+          "callee": "buildTaskBody",
+          "lineNumber": 149
+        },
+        {
+          "caller": "Execute",
+          "callee": "d.postTask",
+          "lineNumber": 155
+        },
+        {
+          "caller": "Execute",
+          "callee": "d.waitForTask",
+          "lineNumber": 161
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 162
+        },
+        {
+          "caller": "Execute",
+          "callee": "d.taskFaultDetail",
+          "lineNumber": 167
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 168
+        },
+        {
+          "caller": "Execute",
+          "callee": "d.fetchParamValues",
+          "lineNumber": 173
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 175
+        },
+        {
+          "caller": "Classify",
+          "callee": "Classify",
+          "lineNumber": 185
+        },
+        {
+          "caller": "Translate",
+          "callee": "Translate",
+          "lineNumber": 190
+        },
+        {
+          "caller": "Close",
+          "callee": "d.httpClient.CloseIdleConnections",
+          "lineNumber": 197
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/genieacs/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 22,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

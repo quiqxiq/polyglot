@@ -1,0 +1,5483 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/driver/huaweiolt/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 31,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 23,
+          "endLine": 28,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 31,
+          "endLine": 37,
+          "params": [
+            "op"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 31,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/huaweiolt/driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 38,
+      "functions": [
+        {
+          "name": "NewDriver",
+          "startLine": 25,
+          "endLine": 27,
+          "params": [
+            "ctx",
+            "target"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 30,
+          "endLine": 32,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 35,
+          "endLine": 37,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 40,
+          "endLine": 42,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 45,
+          "endLine": 47,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Driver",
+          "startLine": 18,
+          "endLine": 18,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Driver",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "NewDriver",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 45,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Classify",
+          "callee": "Classify",
+          "lineNumber": 36
+        },
+        {
+          "caller": "Translate",
+          "callee": "Translate",
+          "lineNumber": 41
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/commands_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 217,
+      "nonEmptyLines": 206,
+      "functions": [
+        {
+          "name": "TestClassify",
+          "startLine": 15,
+          "endLine": 31,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestTranslate",
+          "startLine": 33,
+          "endLine": 55,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestIsStreamingCommand",
+          "startLine": 57,
+          "endLine": 79,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestBuildArgs",
+          "startLine": 81,
+          "endLine": 126,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestToTransportCommand",
+          "startLine": 128,
+          "endLine": 186,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestToResult",
+          "startLine": 188,
+          "endLine": 217,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestClassify",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "TestTranslate",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "TestIsStreamingCommand",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "TestBuildArgs",
+          "line": 81,
+          "isDefault": false
+        },
+        {
+          "name": "TestToTransportCommand",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "TestToResult",
+          "line": 188,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestClassify",
+          "callee": "t.Run",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestClassify",
+          "callee": "assert.Equal",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestClassify",
+          "callee": "Classify",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "command.Operation",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "t.Run",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "Translate",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "require.Error",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "require.NoError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestTranslate",
+          "callee": "assert.Equal",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestIsStreamingCommand",
+          "callee": "t.Run",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestIsStreamingCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestIsStreamingCommand",
+          "callee": "isStreamingCommand",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestBuildArgs",
+          "callee": "t.Run",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestBuildArgs",
+          "callee": "buildArgs",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestBuildArgs",
+          "callee": "assert.ElementsMatch",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestToTransportCommand",
+          "callee": "t.Run",
+          "lineNumber": 181
+        },
+        {
+          "caller": "TestToTransportCommand",
+          "callee": "toTransportCommand",
+          "lineNumber": 182
+        },
+        {
+          "caller": "TestToTransportCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 183
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "t.Run",
+          "lineNumber": 189
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "toResult",
+          "lineNumber": 190
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "assert.Empty",
+          "lineNumber": 191
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "t.Run",
+          "lineNumber": 194
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "toResult",
+          "lineNumber": 200
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "require.Len",
+          "lineNumber": 201
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "assert.Equal",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "t.Run",
+          "lineNumber": 205
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "toResult",
+          "lineNumber": 213
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "require.Len",
+          "lineNumber": 214
+        },
+        {
+          "caller": "TestToResult",
+          "callee": "assert.Equal",
+          "lineNumber": 215
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 179,
+      "nonEmptyLines": 162,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 29,
+          "endLine": 34,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 37,
+          "endLine": 43,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "isStreamingCommand",
+          "startLine": 74,
+          "endLine": 99,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "buildArgs",
+          "startLine": 105,
+          "endLine": 127,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "toTransportCommand",
+          "startLine": 136,
+          "endLine": 164,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "toResult",
+          "startLine": 170,
+          "endLine": 179,
+          "params": [
+            "reply"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 37,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "isStreamingCommand",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 92
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "make",
+          "lineNumber": 106
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "len",
+          "lineNumber": 106
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "append",
+          "lineNumber": 107
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "append",
+          "lineNumber": 111
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 113
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "append",
+          "lineNumber": 115
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "append",
+          "lineNumber": 117
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "append",
+          "lineNumber": 120
+        },
+        {
+          "caller": "buildArgs",
+          "callee": "append",
+          "lineNumber": 122
+        },
+        {
+          "caller": "toTransportCommand",
+          "callee": "strings.LastIndex",
+          "lineNumber": 139
+        },
+        {
+          "caller": "toTransportCommand",
+          "callee": "strings.Split",
+          "lineNumber": 150
+        },
+        {
+          "caller": "toTransportCommand",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 151
+        },
+        {
+          "caller": "toTransportCommand",
+          "callee": "strings.TrimPrefix",
+          "lineNumber": 152
+        },
+        {
+          "caller": "toTransportCommand",
+          "callee": "append",
+          "lineNumber": 156
+        },
+        {
+          "caller": "toResult",
+          "callee": "make",
+          "lineNumber": 174
+        },
+        {
+          "caller": "toResult",
+          "callee": "len",
+          "lineNumber": 174
+        },
+        {
+          "caller": "toResult",
+          "callee": "append",
+          "lineNumber": 176
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/connect.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 151,
+      "nonEmptyLines": 128,
+      "functions": [
+        {
+          "name": "newManagedConn",
+          "startLine": 27,
+          "endLine": 29,
+          "params": [
+            "client",
+            "errC"
+          ]
+        },
+        {
+          "name": "get",
+          "startLine": 31,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "set",
+          "startLine": 37,
+          "endLine": 42,
+          "params": [
+            "client",
+            "errC"
+          ]
+        },
+        {
+          "name": "errChan",
+          "startLine": 44,
+          "endLine": 48,
+          "params": []
+        },
+        {
+          "name": "dialAndLogin",
+          "startLine": 64,
+          "endLine": 89,
+          "params": [
+            "ctx",
+            "target"
+          ]
+        },
+        {
+          "name": "portOrDefault",
+          "startLine": 91,
+          "endLine": 96,
+          "params": [
+            "target"
+          ]
+        },
+        {
+          "name": "superviseConnection",
+          "startLine": 102,
+          "endLine": 117,
+          "params": [
+            "conn"
+          ]
+        },
+        {
+          "name": "reconnectUntilSuccess",
+          "startLine": 123,
+          "endLine": 151,
+          "params": [
+            "conn"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "managedConn",
+          "startLine": 21,
+          "endLine": 25,
+          "methods": [
+            "get",
+            "set",
+            "errChan"
+          ],
+          "properties": [
+            "mu",
+            "client",
+            "errC"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "get",
+          "callee": "m.mu.RLock",
+          "lineNumber": 32
+        },
+        {
+          "caller": "get",
+          "callee": "m.mu.RUnlock",
+          "lineNumber": 33
+        },
+        {
+          "caller": "set",
+          "callee": "m.mu.Lock",
+          "lineNumber": 38
+        },
+        {
+          "caller": "set",
+          "callee": "m.mu.Unlock",
+          "lineNumber": 39
+        },
+        {
+          "caller": "errChan",
+          "callee": "m.mu.RLock",
+          "lineNumber": 45
+        },
+        {
+          "caller": "errChan",
+          "callee": "m.mu.RUnlock",
+          "lineNumber": 46
+        },
+        {
+          "caller": "dialAndLogin",
+          "callee": "context.WithTimeout",
+          "lineNumber": 68
+        },
+        {
+          "caller": "dialAndLogin",
+          "callee": "cancel",
+          "lineNumber": 69
+        },
+        {
+          "caller": "dialAndLogin",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 72
+        },
+        {
+          "caller": "dialAndLogin",
+          "callee": "portOrDefault",
+          "lineNumber": 72
+        },
+        {
+          "caller": "dialAndLogin",
+          "callee": "routeros.DialContext",
+          "lineNumber": 74
+        },
+        {
+          "caller": "dialAndLogin",
+          "callee": "fmt.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "dialAndLogin",
+          "callee": "client.AsyncContext",
+          "lineNumber": 86
+        },
+        {
+          "caller": "dialAndLogin",
+          "callee": "context.Background",
+          "lineNumber": 86
+        },
+        {
+          "caller": "superviseConnection",
+          "callee": "d.wg.Done",
+          "lineNumber": 103
+        },
+        {
+          "caller": "superviseConnection",
+          "callee": "conn.errChan",
+          "lineNumber": 109
+        },
+        {
+          "caller": "superviseConnection",
+          "callee": "d.reconnectUntilSuccess",
+          "lineNumber": 113
+        },
+        {
+          "caller": "reconnectUntilSuccess",
+          "callee": "dialAndLogin",
+          "lineNumber": 134
+        },
+        {
+          "caller": "reconnectUntilSuccess",
+          "callee": "context.Background",
+          "lineNumber": 134
+        },
+        {
+          "caller": "reconnectUntilSuccess",
+          "callee": "time.After",
+          "lineNumber": 139
+        },
+        {
+          "caller": "reconnectUntilSuccess",
+          "callee": "conn.set",
+          "lineNumber": 148
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/dhcp/commands_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "TestNewPrintLeasesCommand",
+          "startLine": 7,
+          "endLine": 20,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewStreamLeasesCommand",
+          "startLine": 22,
+          "endLine": 27,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewSetLeaseBlockCommand",
+          "startLine": 29,
+          "endLine": 40,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewPrintServersCommand",
+          "startLine": 42,
+          "endLine": 47,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestNewPrintLeasesCommand",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewStreamLeasesCommand",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewSetLeaseBlockCommand",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewPrintServersCommand",
+          "line": 42,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestNewPrintLeasesCommand",
+          "callee": "NewPrintLeasesCommand",
+          "lineNumber": 8
+        },
+        {
+          "caller": "TestNewPrintLeasesCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 10
+        },
+        {
+          "caller": "TestNewPrintLeasesCommand",
+          "callee": "len",
+          "lineNumber": 12
+        },
+        {
+          "caller": "TestNewPrintLeasesCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestNewPrintLeasesCommand",
+          "callee": "NewPrintLeasesCommand",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestNewPrintLeasesCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestNewStreamLeasesCommand",
+          "callee": "NewStreamLeasesCommand",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestNewStreamLeasesCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestNewSetLeaseBlockCommand",
+          "callee": "NewSetLeaseBlockCommand",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestNewSetLeaseBlockCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestNewSetLeaseBlockCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestNewPrintServersCommand",
+          "callee": "NewPrintServersCommand",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestNewPrintServersCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/dhcp/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 62,
+      "functions": [
+        {
+          "name": "NewPrintLeasesCommand",
+          "startLine": 10,
+          "endLine": 19,
+          "params": [
+            "macFilter"
+          ]
+        },
+        {
+          "name": "NewStreamLeasesCommand",
+          "startLine": 29,
+          "endLine": 38,
+          "params": [
+            "macFilter"
+          ]
+        },
+        {
+          "name": "NewSetLeaseBlockCommand",
+          "startLine": 45,
+          "endLine": 58,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewPrintServersCommand",
+          "startLine": 62,
+          "endLine": 67,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewPrintLeasesCommand",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamLeasesCommand",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetLeaseBlockCommand",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintServersCommand",
+          "line": 62,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/dhcp/operations.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 30,
+      "functions": [
+        {
+          "name": "ListLeases",
+          "startLine": 12,
+          "endLine": 19,
+          "params": [
+            "ctx",
+            "driver",
+            "exec",
+            "macFilter"
+          ]
+        },
+        {
+          "name": "SetLeaseBlock",
+          "startLine": 22,
+          "endLine": 25,
+          "params": [
+            "ctx",
+            "driver",
+            "exec",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "ListServers",
+          "startLine": 28,
+          "endLine": 35,
+          "params": [
+            "ctx",
+            "driver",
+            "exec"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListLeases",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "SetLeaseBlock",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "ListServers",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListLeases",
+          "callee": "NewPrintLeasesCommand",
+          "lineNumber": 13
+        },
+        {
+          "caller": "ListLeases",
+          "callee": "exec",
+          "lineNumber": 14
+        },
+        {
+          "caller": "ListLeases",
+          "callee": "fmt.Errorf",
+          "lineNumber": 16
+        },
+        {
+          "caller": "ListLeases",
+          "callee": "ParseLeases",
+          "lineNumber": 18
+        },
+        {
+          "caller": "SetLeaseBlock",
+          "callee": "NewSetLeaseBlockCommand",
+          "lineNumber": 23
+        },
+        {
+          "caller": "SetLeaseBlock",
+          "callee": "exec",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListServers",
+          "callee": "NewPrintServersCommand",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ListServers",
+          "callee": "exec",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListServers",
+          "callee": "fmt.Errorf",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ListServers",
+          "callee": "ParseServers",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/dhcp/parser_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 52,
+      "functions": [
+        {
+          "name": "TestParseLeases",
+          "startLine": 9,
+          "endLine": 35,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseServers",
+          "startLine": 37,
+          "endLine": 58,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestParseLeases",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseServers",
+          "line": 37,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestParseLeases",
+          "callee": "ParseLeases",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestParseLeases",
+          "callee": "len",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestParseLeases",
+          "callee": "t.Fatalf",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestParseLeases",
+          "callee": "len",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestParseLeases",
+          "callee": "t.Fatalf",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestParseServers",
+          "callee": "ParseServers",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestParseServers",
+          "callee": "len",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestParseServers",
+          "callee": "t.Fatalf",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestParseServers",
+          "callee": "len",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestParseServers",
+          "callee": "t.Fatalf",
+          "lineNumber": 56
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/dhcp/parser.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 54,
+      "nonEmptyLines": 50,
+      "functions": [
+        {
+          "name": "ParseLeases",
+          "startLine": 11,
+          "endLine": 32,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseServers",
+          "startLine": 36,
+          "endLine": 54,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ParseLeases",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "ParseServers",
+          "line": 36,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseLeases",
+          "callee": "make",
+          "lineNumber": 12
+        },
+        {
+          "caller": "ParseLeases",
+          "callee": "len",
+          "lineNumber": 12
+        },
+        {
+          "caller": "ParseLeases",
+          "callee": "append",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ParseLeases",
+          "callee": "strings.EqualFold",
+          "lineNumber": 27
+        },
+        {
+          "caller": "ParseServers",
+          "callee": "make",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ParseServers",
+          "callee": "len",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ParseServers",
+          "callee": "append",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ParseServers",
+          "callee": "strings.EqualFold",
+          "lineNumber": 50
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/dhcp/types.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "DHCPServer",
+          "startLine": 17,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Interface",
+            "AddressPool",
+            "LeaseTime",
+            "Disabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DHCPServer",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 271,
+      "nonEmptyLines": 238,
+      "functions": [
+        {
+          "name": "NewDriver",
+          "startLine": 78,
+          "endLine": 105,
+          "params": [
+            "ctx",
+            "target"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 124,
+          "endLine": 162,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Validate",
+          "startLine": 179,
+          "endLine": 212,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 215,
+          "endLine": 217,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 220,
+          "endLine": 222,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 229,
+          "endLine": 259,
+          "params": []
+        },
+        {
+          "name": "registerStream",
+          "startLine": 261,
+          "endLine": 265,
+          "params": [
+            "h"
+          ]
+        },
+        {
+          "name": "unregisterStream",
+          "startLine": 267,
+          "endLine": 271,
+          "params": [
+            "h"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Driver",
+          "startLine": 37,
+          "endLine": 60,
+          "methods": [
+            "Execute",
+            "Validate",
+            "Classify",
+            "Translate",
+            "Close",
+            "registerStream",
+            "unregisterStream"
+          ],
+          "properties": [
+            "target",
+            "exec",
+            "stream",
+            "execSem",
+            "streamSem",
+            "stopCh",
+            "wg",
+            "streamsMu",
+            "streams",
+            "closeOnce",
+            "closeErr"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Driver",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "NewDriver",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 124,
+          "isDefault": false
+        },
+        {
+          "name": "Validate",
+          "line": 179,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 215,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 220,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 229,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewDriver",
+          "callee": "dialAndLogin",
+          "lineNumber": 79
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "fmt.Errorf",
+          "lineNumber": 81
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "dialAndLogin",
+          "lineNumber": 84
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "execClient.Close",
+          "lineNumber": 86
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "fmt.Errorf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "newManagedConn",
+          "lineNumber": 92
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "newManagedConn",
+          "lineNumber": 93
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "make",
+          "lineNumber": 94
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "make",
+          "lineNumber": 95
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "make",
+          "lineNumber": 96
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "make",
+          "lineNumber": 97
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "d.wg.Add",
+          "lineNumber": 100
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "d.superviseConnection",
+          "lineNumber": 101
+        },
+        {
+          "caller": "NewDriver",
+          "callee": "d.superviseConnection",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Execute",
+          "callee": "isStreamingCommand",
+          "lineNumber": 125
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Execute",
+          "callee": "ctx.Done",
+          "lineNumber": 131
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 132
+        },
+        {
+          "caller": "Execute",
+          "callee": "ctx.Err",
+          "lineNumber": 132
+        },
+        {
+          "caller": "Execute",
+          "callee": "d.exec.get",
+          "lineNumber": 135
+        },
+        {
+          "caller": "Execute",
+          "callee": "buildArgs",
+          "lineNumber": 141
+        },
+        {
+          "caller": "Execute",
+          "callee": "make",
+          "lineNumber": 146
+        },
+        {
+          "caller": "Execute",
+          "callee": "func() {\n\t\treply, err := client.RunArgsContext(context.Background(), args)\n\t\tdone <- outcome{reply, err}\n\t\t<-d.execSem // released only once the wire operation truly finished — see doc comment above\n\t}",
+          "lineNumber": 147
+        },
+        {
+          "caller": "Execute",
+          "callee": "client.RunArgsContext",
+          "lineNumber": 148
+        },
+        {
+          "caller": "Execute",
+          "callee": "context.Background",
+          "lineNumber": 148
+        },
+        {
+          "caller": "Execute",
+          "callee": "ctx.Done",
+          "lineNumber": 154
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 155
+        },
+        {
+          "caller": "Execute",
+          "callee": "ctx.Err",
+          "lineNumber": 155
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 158
+        },
+        {
+          "caller": "Execute",
+          "callee": "toResult",
+          "lineNumber": 160
+        },
+        {
+          "caller": "Validate",
+          "callee": "isStreamingCommand",
+          "lineNumber": 180
+        },
+        {
+          "caller": "Validate",
+          "callee": "ctx.Done",
+          "lineNumber": 186
+        },
+        {
+          "caller": "Validate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 187
+        },
+        {
+          "caller": "Validate",
+          "callee": "ctx.Err",
+          "lineNumber": 187
+        },
+        {
+          "caller": "Validate",
+          "callee": "d.exec.get",
+          "lineNumber": 190
+        },
+        {
+          "caller": "Validate",
+          "callee": "toTransportCommand",
+          "lineNumber": 196
+        },
+        {
+          "caller": "Validate",
+          "callee": "make",
+          "lineNumber": 197
+        },
+        {
+          "caller": "Validate",
+          "callee": "func() {\n\t\tdone <- client.Validate(context.Background(), tc)\n\t\t<-d.execSem // released only once the wire operation truly finished — see Execute's doc comment\n\t}",
+          "lineNumber": 198
+        },
+        {
+          "caller": "Validate",
+          "callee": "client.Validate",
+          "lineNumber": 199
+        },
+        {
+          "caller": "Validate",
+          "callee": "context.Background",
+          "lineNumber": 199
+        },
+        {
+          "caller": "Validate",
+          "callee": "ctx.Done",
+          "lineNumber": 204
+        },
+        {
+          "caller": "Validate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 205
+        },
+        {
+          "caller": "Validate",
+          "callee": "ctx.Err",
+          "lineNumber": 205
+        },
+        {
+          "caller": "Validate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 210
+        },
+        {
+          "caller": "Classify",
+          "callee": "Classify",
+          "lineNumber": 216
+        },
+        {
+          "caller": "Translate",
+          "callee": "Translate",
+          "lineNumber": 221
+        },
+        {
+          "caller": "Close",
+          "callee": "d.closeOnce.Do",
+          "lineNumber": 230
+        },
+        {
+          "caller": "Close",
+          "callee": "d.streamsMu.Lock",
+          "lineNumber": 231
+        },
+        {
+          "caller": "Close",
+          "callee": "make",
+          "lineNumber": 232
+        },
+        {
+          "caller": "Close",
+          "callee": "len",
+          "lineNumber": 232
+        },
+        {
+          "caller": "Close",
+          "callee": "append",
+          "lineNumber": 234
+        },
+        {
+          "caller": "Close",
+          "callee": "d.streamsMu.Unlock",
+          "lineNumber": 236
+        },
+        {
+          "caller": "Close",
+          "callee": "h.Cancel",
+          "lineNumber": 238
+        },
+        {
+          "caller": "Close",
+          "callee": "close",
+          "lineNumber": 241
+        },
+        {
+          "caller": "Close",
+          "callee": "d.exec.get",
+          "lineNumber": 244
+        },
+        {
+          "caller": "Close",
+          "callee": "c.Close",
+          "lineNumber": 245
+        },
+        {
+          "caller": "Close",
+          "callee": "append",
+          "lineNumber": 246
+        },
+        {
+          "caller": "Close",
+          "callee": "fmt.Errorf",
+          "lineNumber": 246
+        },
+        {
+          "caller": "Close",
+          "callee": "d.stream.get",
+          "lineNumber": 249
+        },
+        {
+          "caller": "Close",
+          "callee": "c.Close",
+          "lineNumber": 250
+        },
+        {
+          "caller": "Close",
+          "callee": "append",
+          "lineNumber": 251
+        },
+        {
+          "caller": "Close",
+          "callee": "fmt.Errorf",
+          "lineNumber": 251
+        },
+        {
+          "caller": "Close",
+          "callee": "d.wg.Wait",
+          "lineNumber": 255
+        },
+        {
+          "caller": "Close",
+          "callee": "errors.Join",
+          "lineNumber": 256
+        },
+        {
+          "caller": "registerStream",
+          "callee": "d.streamsMu.Lock",
+          "lineNumber": 262
+        },
+        {
+          "caller": "registerStream",
+          "callee": "d.streamsMu.Unlock",
+          "lineNumber": 264
+        },
+        {
+          "caller": "unregisterStream",
+          "callee": "d.streamsMu.Lock",
+          "lineNumber": 268
+        },
+        {
+          "caller": "unregisterStream",
+          "callee": "delete",
+          "lineNumber": 269
+        },
+        {
+          "caller": "unregisterStream",
+          "callee": "d.streamsMu.Unlock",
+          "lineNumber": 270
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 21,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/firewall/commands_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 28,
+      "functions": [
+        {
+          "name": "TestFirewallCommands",
+          "startLine": 7,
+          "endLine": 32,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestFirewallCommands",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestFirewallCommands",
+          "callee": "NewAddFilterCommand",
+          "lineNumber": 8
+        },
+        {
+          "caller": "TestFirewallCommands",
+          "callee": "t.Fatalf",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestFirewallCommands",
+          "callee": "NewAddAddressListCommand",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestFirewallCommands",
+          "callee": "t.Fatalf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestFirewallCommands",
+          "callee": "NewPrintNATCommand",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestFirewallCommands",
+          "callee": "t.Fatalf",
+          "lineNumber": 30
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/firewall/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 166,
+      "nonEmptyLines": 150,
+      "functions": [
+        {
+          "name": "NewPrintFiltersCommand",
+          "startLine": 11,
+          "endLine": 18,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewAddFilterCommand",
+          "startLine": 21,
+          "endLine": 36,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetFilterCommand",
+          "startLine": 39,
+          "endLine": 49,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveFilterCommand",
+          "startLine": 52,
+          "endLine": 57,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewPrintAddressListCommand",
+          "startLine": 60,
+          "endLine": 65,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewAddAddressListCommand",
+          "startLine": 68,
+          "endLine": 76,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveAddressListCommand",
+          "startLine": 79,
+          "endLine": 84,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewPrintNATCommand",
+          "startLine": 87,
+          "endLine": 93,
+          "params": [
+            "chain",
+            "comment",
+            "srcAddressList"
+          ]
+        },
+        {
+          "name": "NewAddNATCommand",
+          "startLine": 96,
+          "endLine": 114,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetNATCommand",
+          "startLine": 117,
+          "endLine": 132,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveNATCommand",
+          "startLine": 135,
+          "endLine": 140,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewPrintPoolsCommand",
+          "startLine": 143,
+          "endLine": 149,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewPrintIPAddressesCommand",
+          "startLine": 152,
+          "endLine": 157,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewPrintIPRoutesCommand",
+          "startLine": 160,
+          "endLine": 166,
+          "params": [
+            "dstFilter"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewPrintFiltersCommand",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddFilterCommand",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetFilterCommand",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveFilterCommand",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintAddressListCommand",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddAddressListCommand",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveAddressListCommand",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintNATCommand",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddNATCommand",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetNATCommand",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveNATCommand",
+          "line": 135,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintPoolsCommand",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintIPAddressesCommand",
+          "line": 152,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintIPRoutesCommand",
+          "line": 160,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewPrintFiltersCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 13
+        },
+        {
+          "caller": "NewPrintFiltersCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 14
+        },
+        {
+          "caller": "NewPrintFiltersCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 15
+        },
+        {
+          "caller": "NewPrintFiltersCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 16
+        },
+        {
+          "caller": "NewAddFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewAddFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewAddFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewAddFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewAddFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewAddFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewSetFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 41
+        },
+        {
+          "caller": "NewSetFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 42
+        },
+        {
+          "caller": "NewSetFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 43
+        },
+        {
+          "caller": "NewSetFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewSetFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 45
+        },
+        {
+          "caller": "NewSetFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 46
+        },
+        {
+          "caller": "NewSetFilterCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 47
+        },
+        {
+          "caller": "NewPrintAddressListCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 62
+        },
+        {
+          "caller": "NewPrintAddressListCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 63
+        },
+        {
+          "caller": "NewAddAddressListCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 73
+        },
+        {
+          "caller": "NewAddAddressListCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 74
+        },
+        {
+          "caller": "NewPrintNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 89
+        },
+        {
+          "caller": "NewPrintNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 90
+        },
+        {
+          "caller": "NewPrintNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 91
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 101
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 102
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 103
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 104
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 105
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 106
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 107
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 108
+        },
+        {
+          "caller": "NewAddNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 109
+        },
+        {
+          "caller": "NewSetNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 119
+        },
+        {
+          "caller": "NewSetNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 120
+        },
+        {
+          "caller": "NewSetNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 121
+        },
+        {
+          "caller": "NewSetNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 122
+        },
+        {
+          "caller": "NewSetNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 123
+        },
+        {
+          "caller": "NewSetNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 124
+        },
+        {
+          "caller": "NewSetNATCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 125
+        },
+        {
+          "caller": "NewPrintIPAddressesCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 154
+        },
+        {
+          "caller": "NewPrintIPAddressesCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 155
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 14,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/firewall/gateway_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "TestEnsureIsolationFilter",
+          "startLine": 13,
+          "endLine": 43,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestEnsureIsolationFilter",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "context.Background",
+          "lineNumber": 14
+        },
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "t.Run",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "append",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "NewGateway",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "gw.EnsureIsolationFilter",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "require.NoError",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "append",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "assert.Contains",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestEnsureIsolationFilter",
+          "callee": "assert.Contains",
+          "lineNumber": 41
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/firewall/gateway.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 293,
+      "nonEmptyLines": 267,
+      "functions": [
+        {
+          "name": "NewGateway",
+          "startLine": 18,
+          "endLine": 20,
+          "params": [
+            "exec"
+          ]
+        },
+        {
+          "name": "FindIsolationRedirectRules",
+          "startLine": 26,
+          "endLine": 34,
+          "params": [
+            "rules"
+          ]
+        },
+        {
+          "name": "ListFirewallNATRules",
+          "startLine": 37,
+          "endLine": 43,
+          "params": [
+            "ctx",
+            "driver",
+            "chain",
+            "comment",
+            "srcAddressList"
+          ]
+        },
+        {
+          "name": "EnsureIsolationRedirect",
+          "startLine": 46,
+          "endLine": 86,
+          "params": [
+            "ctx",
+            "driver",
+            "cfg"
+          ]
+        },
+        {
+          "name": "EnsureIsolationFilter",
+          "startLine": 90,
+          "endLine": 187,
+          "params": [
+            "ctx",
+            "driver",
+            "srcAddressList",
+            "paymentHost"
+          ]
+        },
+        {
+          "name": "DisableIsolationRedirect",
+          "startLine": 190,
+          "endLine": 208,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "AddToAddressList",
+          "startLine": 211,
+          "endLine": 222,
+          "params": [
+            "ctx",
+            "driver",
+            "listName",
+            "address",
+            "comment"
+          ]
+        },
+        {
+          "name": "RemoveFromAddressList",
+          "startLine": 225,
+          "endLine": 240,
+          "params": [
+            "ctx",
+            "driver",
+            "listName",
+            "address"
+          ]
+        },
+        {
+          "name": "RemoveFromAddressListByComment",
+          "startLine": 243,
+          "endLine": 259,
+          "params": [
+            "ctx",
+            "driver",
+            "listName",
+            "commentContains"
+          ]
+        },
+        {
+          "name": "ListNATRules",
+          "startLine": 262,
+          "endLine": 268,
+          "params": [
+            "ctx",
+            "driver",
+            "chain",
+            "comment",
+            "srcAddressList"
+          ]
+        },
+        {
+          "name": "HasIsolationRedirect",
+          "startLine": 271,
+          "endLine": 282,
+          "params": [
+            "ctx",
+            "driver",
+            "srcAddressList"
+          ]
+        },
+        {
+          "name": "CountAddressListEntries",
+          "startLine": 285,
+          "endLine": 293,
+          "params": [
+            "ctx",
+            "driver",
+            "listName"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Gateway",
+          "startLine": 13,
+          "endLine": 15,
+          "methods": [
+            "ListFirewallNATRules",
+            "EnsureIsolationRedirect",
+            "EnsureIsolationFilter",
+            "DisableIsolationRedirect",
+            "AddToAddressList",
+            "RemoveFromAddressList",
+            "RemoveFromAddressListByComment",
+            "ListNATRules",
+            "HasIsolationRedirect",
+            "CountAddressListEntries"
+          ],
+          "properties": [
+            "exec"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Gateway",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewGateway",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "FindIsolationRedirectRules",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "ListFirewallNATRules",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "EnsureIsolationRedirect",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "EnsureIsolationFilter",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "DisableIsolationRedirect",
+          "line": 190,
+          "isDefault": false
+        },
+        {
+          "name": "AddToAddressList",
+          "line": 211,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveFromAddressList",
+          "line": 225,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveFromAddressListByComment",
+          "line": 243,
+          "isDefault": false
+        },
+        {
+          "name": "ListNATRules",
+          "line": 262,
+          "isDefault": false
+        },
+        {
+          "name": "HasIsolationRedirect",
+          "line": 271,
+          "isDefault": false
+        },
+        {
+          "name": "CountAddressListEntries",
+          "line": 285,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "FindIsolationRedirectRules",
+          "callee": "strings.Contains",
+          "lineNumber": 29
+        },
+        {
+          "caller": "FindIsolationRedirectRules",
+          "callee": "append",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListFirewallNATRules",
+          "callee": "g.exec",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ListFirewallNATRules",
+          "callee": "NewPrintNATCommand",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ListFirewallNATRules",
+          "callee": "fmt.Errorf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ListFirewallNATRules",
+          "callee": "ParseNATRules",
+          "lineNumber": 42
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "g.exec",
+          "lineNumber": 48
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "NewPrintNATCommand",
+          "lineNumber": 48
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "fmt.Errorf",
+          "lineNumber": 50
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "ParseNATRules",
+          "lineNumber": 53
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "len",
+          "lineNumber": 72
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "g.exec",
+          "lineNumber": 73
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "NewAddNATCommand",
+          "lineNumber": 73
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "fmt.Errorf",
+          "lineNumber": 75
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "g.exec",
+          "lineNumber": 81
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "NewSetNATCommand",
+          "lineNumber": 81
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "fmt.Errorf",
+          "lineNumber": 83
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 91
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "g.exec",
+          "lineNumber": 92
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "NewPrintFiltersCommand",
+          "lineNumber": 92
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 97
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "NewAddFilterCommand",
+          "lineNumber": 110
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "g.exec",
+          "lineNumber": 117
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 118
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "g.exec",
+          "lineNumber": 151
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 152
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "g.exec",
+          "lineNumber": 168
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 169
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "NewAddFilterCommand",
+          "lineNumber": 175
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "g.exec",
+          "lineNumber": 181
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 182
+        },
+        {
+          "caller": "DisableIsolationRedirect",
+          "callee": "g.exec",
+          "lineNumber": 191
+        },
+        {
+          "caller": "DisableIsolationRedirect",
+          "callee": "NewPrintNATCommand",
+          "lineNumber": 191
+        },
+        {
+          "caller": "DisableIsolationRedirect",
+          "callee": "fmt.Errorf",
+          "lineNumber": 193
+        },
+        {
+          "caller": "DisableIsolationRedirect",
+          "callee": "ParseNATRules",
+          "lineNumber": 195
+        },
+        {
+          "caller": "DisableIsolationRedirect",
+          "callee": "strings.Contains",
+          "lineNumber": 197
+        },
+        {
+          "caller": "DisableIsolationRedirect",
+          "callee": "g.exec",
+          "lineNumber": 202
+        },
+        {
+          "caller": "DisableIsolationRedirect",
+          "callee": "fmt.Errorf",
+          "lineNumber": 203
+        },
+        {
+          "caller": "AddToAddressList",
+          "callee": "NewAddAddressListCommand",
+          "lineNumber": 212
+        },
+        {
+          "caller": "AddToAddressList",
+          "callee": "g.exec",
+          "lineNumber": 217
+        },
+        {
+          "caller": "AddToAddressList",
+          "callee": "fmt.Errorf",
+          "lineNumber": 219
+        },
+        {
+          "caller": "RemoveFromAddressList",
+          "callee": "g.exec",
+          "lineNumber": 226
+        },
+        {
+          "caller": "RemoveFromAddressList",
+          "callee": "NewPrintAddressListCommand",
+          "lineNumber": 226
+        },
+        {
+          "caller": "RemoveFromAddressList",
+          "callee": "fmt.Errorf",
+          "lineNumber": 231
+        },
+        {
+          "caller": "RemoveFromAddressList",
+          "callee": "ParseAddressList",
+          "lineNumber": 233
+        },
+        {
+          "caller": "RemoveFromAddressList",
+          "callee": "g.exec",
+          "lineNumber": 235
+        },
+        {
+          "caller": "RemoveFromAddressList",
+          "callee": "NewRemoveAddressListCommand",
+          "lineNumber": 235
+        },
+        {
+          "caller": "RemoveFromAddressList",
+          "callee": "fmt.Errorf",
+          "lineNumber": 236
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "g.exec",
+          "lineNumber": 244
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "NewPrintAddressListCommand",
+          "lineNumber": 244
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "fmt.Errorf",
+          "lineNumber": 248
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "ParseAddressList",
+          "lineNumber": 250
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "strings.Contains",
+          "lineNumber": 252
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "g.exec",
+          "lineNumber": 253
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "NewRemoveAddressListCommand",
+          "lineNumber": 253
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "fmt.Errorf",
+          "lineNumber": 254
+        },
+        {
+          "caller": "ListNATRules",
+          "callee": "g.exec",
+          "lineNumber": 263
+        },
+        {
+          "caller": "ListNATRules",
+          "callee": "NewPrintNATCommand",
+          "lineNumber": 263
+        },
+        {
+          "caller": "ListNATRules",
+          "callee": "ParseNATRules",
+          "lineNumber": 267
+        },
+        {
+          "caller": "HasIsolationRedirect",
+          "callee": "g.ListNATRules",
+          "lineNumber": 272
+        },
+        {
+          "caller": "HasIsolationRedirect",
+          "callee": "strings.Contains",
+          "lineNumber": 277
+        },
+        {
+          "caller": "CountAddressListEntries",
+          "callee": "g.exec",
+          "lineNumber": 286
+        },
+        {
+          "caller": "CountAddressListEntries",
+          "callee": "NewPrintAddressListCommand",
+          "lineNumber": 286
+        },
+        {
+          "caller": "CountAddressListEntries",
+          "callee": "len",
+          "lineNumber": 292
+        },
+        {
+          "caller": "CountAddressListEntries",
+          "callee": "ParseAddressList",
+          "lineNumber": 292
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 13,
+        "functionCount": 12,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/firewall/parser_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 59,
+      "functions": [
+        {
+          "name": "TestParseFilters",
+          "startLine": 9,
+          "endLine": 27,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseAddressList",
+          "startLine": 29,
+          "endLine": 46,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseNATRules",
+          "startLine": 48,
+          "endLine": 67,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestParseFilters",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseAddressList",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseNATRules",
+          "line": 48,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestParseFilters",
+          "callee": "ParseFilters",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestParseFilters",
+          "callee": "len",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestParseFilters",
+          "callee": "t.Fatalf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestParseAddressList",
+          "callee": "ParseAddressList",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestParseAddressList",
+          "callee": "len",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestParseAddressList",
+          "callee": "t.Fatalf",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestParseNATRules",
+          "callee": "ParseNATRules",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestParseNATRules",
+          "callee": "len",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestParseNATRules",
+          "callee": "t.Fatalf",
+          "lineNumber": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/firewall/parser.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 147,
+      "nonEmptyLines": 139,
+      "functions": [
+        {
+          "name": "ParseFilters",
+          "startLine": 10,
+          "endLine": 32,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseAddressList",
+          "startLine": 35,
+          "endLine": 53,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseNATRules",
+          "startLine": 56,
+          "endLine": 81,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParsePools",
+          "startLine": 84,
+          "endLine": 101,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseIPAddresses",
+          "startLine": 104,
+          "endLine": 124,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseIPRoutes",
+          "startLine": 127,
+          "endLine": 147,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ParseFilters",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ParseAddressList",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "ParseNATRules",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "ParsePools",
+          "line": 84,
+          "isDefault": false
+        },
+        {
+          "name": "ParseIPAddresses",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "ParseIPRoutes",
+          "line": 127,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseFilters",
+          "callee": "make",
+          "lineNumber": 11
+        },
+        {
+          "caller": "ParseFilters",
+          "callee": "len",
+          "lineNumber": 11
+        },
+        {
+          "caller": "ParseFilters",
+          "callee": "append",
+          "lineNumber": 17
+        },
+        {
+          "caller": "ParseFilters",
+          "callee": "strings.EqualFold",
+          "lineNumber": 28
+        },
+        {
+          "caller": "ParseAddressList",
+          "callee": "make",
+          "lineNumber": 36
+        },
+        {
+          "caller": "ParseAddressList",
+          "callee": "len",
+          "lineNumber": 36
+        },
+        {
+          "caller": "ParseAddressList",
+          "callee": "append",
+          "lineNumber": 42
+        },
+        {
+          "caller": "ParseAddressList",
+          "callee": "strings.EqualFold",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ParseAddressList",
+          "callee": "strings.EqualFold",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ParseNATRules",
+          "callee": "make",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ParseNATRules",
+          "callee": "len",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ParseNATRules",
+          "callee": "append",
+          "lineNumber": 63
+        },
+        {
+          "caller": "ParseNATRules",
+          "callee": "strings.EqualFold",
+          "lineNumber": 77
+        },
+        {
+          "caller": "ParsePools",
+          "callee": "make",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ParsePools",
+          "callee": "len",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ParsePools",
+          "callee": "append",
+          "lineNumber": 92
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "make",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "len",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "append",
+          "lineNumber": 112
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "strings.EqualFold",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "strings.EqualFold",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "make",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "len",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "append",
+          "lineNumber": 135
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "strings.EqualFold",
+          "lineNumber": 140
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "strings.EqualFold",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "strings.EqualFold",
+          "lineNumber": 142
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/firewall/types.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 162,
+      "nonEmptyLines": 148,
+      "functions": [
+        {
+          "name": "BlockIPFilterParams",
+          "startLine": 138,
+          "endLine": 145,
+          "params": [
+            "customerIP",
+            "reason"
+          ]
+        },
+        {
+          "name": "BlockAddressListFilterParams",
+          "startLine": 148,
+          "endLine": 162,
+          "params": [
+            "chain",
+            "listName"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FirewallFilterParams",
+          "startLine": 4,
+          "endLine": 14,
+          "methods": [],
+          "properties": [
+            "Chain",
+            "Action",
+            "SrcAddress",
+            "SrcAddressList",
+            "DstAddress",
+            "Protocol",
+            "PlaceBefore",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "FirewallFilter",
+          "startLine": 17,
+          "endLine": 29,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Chain",
+            "Action",
+            "SrcAddress",
+            "SrcAddressList",
+            "DstAddress",
+            "Protocol",
+            "Bytes",
+            "Packets",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "FirewallFilterPrintParams",
+          "startLine": 32,
+          "endLine": 37,
+          "methods": [],
+          "properties": [
+            "Chain",
+            "SrcAddress",
+            "SrcAddressList",
+            "Action"
+          ]
+        },
+        {
+          "name": "NATRuleParams",
+          "startLine": 40,
+          "endLine": 53,
+          "methods": [],
+          "properties": [
+            "Chain",
+            "Action",
+            "ToAddresses",
+            "ToPorts",
+            "SrcAddress",
+            "SrcAddressList",
+            "DstAddress",
+            "Protocol",
+            "DstPort",
+            "PlaceBefore",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "NATRule",
+          "startLine": 56,
+          "endLine": 71,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Chain",
+            "Action",
+            "ToAddresses",
+            "ToPorts",
+            "SrcAddress",
+            "SrcAddressList",
+            "DstAddress",
+            "Protocol",
+            "DstPort",
+            "Bytes",
+            "Packets",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "AddressListParams",
+          "startLine": 74,
+          "endLine": 79,
+          "methods": [],
+          "properties": [
+            "List",
+            "Address",
+            "Timeout",
+            "Comment"
+          ]
+        },
+        {
+          "name": "AddressListEntry",
+          "startLine": 82,
+          "endLine": 90,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "List",
+            "Address",
+            "Timeout",
+            "Comment",
+            "Disabled",
+            "Dynamic"
+          ]
+        },
+        {
+          "name": "AddressListPrintParams",
+          "startLine": 93,
+          "endLine": 96,
+          "methods": [],
+          "properties": [
+            "List",
+            "Address"
+          ]
+        },
+        {
+          "name": "IPPool",
+          "startLine": 99,
+          "endLine": 105,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Ranges",
+            "NextPool",
+            "Comment"
+          ]
+        },
+        {
+          "name": "IPAddress",
+          "startLine": 108,
+          "endLine": 117,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Address",
+            "Network",
+            "Interface",
+            "ActualInterface",
+            "Disabled",
+            "Dynamic",
+            "Comment"
+          ]
+        },
+        {
+          "name": "IPAddressPrintParams",
+          "startLine": 120,
+          "endLine": 123,
+          "methods": [],
+          "properties": [
+            "Interface",
+            "Address"
+          ]
+        },
+        {
+          "name": "IPRoute",
+          "startLine": 126,
+          "endLine": 135,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "DstAddress",
+            "Gateway",
+            "Distance",
+            "Active",
+            "Dynamic",
+            "Static",
+            "Comment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FirewallFilterParams",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "FirewallFilter",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "FirewallFilterPrintParams",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "NATRuleParams",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "NATRule",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "AddressListParams",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "AddressListEntry",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "AddressListPrintParams",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "IPPool",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "IPAddress",
+          "line": 108,
+          "isDefault": false
+        },
+        {
+          "name": "IPAddressPrintParams",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "IPRoute",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "BlockIPFilterParams",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "BlockAddressListFilterParams",
+          "line": 148,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 2,
+        "classCount": 12
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/gateway.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 228,
+      "nonEmptyLines": 178,
+      "functions": [
+        {
+          "name": "NewGateway",
+          "startLine": 28,
+          "endLine": 36,
+          "params": [
+            "exec"
+          ]
+        },
+        {
+          "name": "NewQueueGateway",
+          "startLine": 39,
+          "endLine": 41,
+          "params": [
+            "exec"
+          ]
+        },
+        {
+          "name": "ListSecrets",
+          "startLine": 50,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "GetSecret",
+          "startLine": 54,
+          "endLine": 56,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "AddSecret",
+          "startLine": 58,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "UpdateSecret",
+          "startLine": 62,
+          "endLine": 64,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "RemoveSecret",
+          "startLine": 66,
+          "endLine": 68,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "SetSecretDisabled",
+          "startLine": 70,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "disabled"
+          ]
+        },
+        {
+          "name": "ListProfiles",
+          "startLine": 74,
+          "endLine": 76,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "GetProfile",
+          "startLine": 78,
+          "endLine": 80,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "AddProfile",
+          "startLine": 82,
+          "endLine": 84,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "UpdateProfile",
+          "startLine": 86,
+          "endLine": 88,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "RemoveProfile",
+          "startLine": 90,
+          "endLine": 92,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "ListActive",
+          "startLine": 94,
+          "endLine": 96,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "KickActive",
+          "startLine": 98,
+          "endLine": 100,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "ListInactive",
+          "startLine": 102,
+          "endLine": 104,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListPPPActive",
+          "startLine": 108,
+          "endLine": 110,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListPPPInactive",
+          "startLine": 112,
+          "endLine": 114,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "KickPPPSession",
+          "startLine": 116,
+          "endLine": 118,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "ListHotspotActive",
+          "startLine": 120,
+          "endLine": 122,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListHotspotInactiveUsers",
+          "startLine": 124,
+          "endLine": 138,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "KickHotspotSession",
+          "startLine": 140,
+          "endLine": 142,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "ListDHCPLeases",
+          "startLine": 144,
+          "endLine": 146,
+          "params": [
+            "ctx",
+            "driver",
+            "macFilter"
+          ]
+        },
+        {
+          "name": "SetDHCPLeaseBlock",
+          "startLine": 148,
+          "endLine": 153,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "blocked",
+            "comment"
+          ]
+        },
+        {
+          "name": "GetSystemResource",
+          "startLine": 157,
+          "endLine": 159,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GetSystemIdentity",
+          "startLine": 161,
+          "endLine": 167,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListInterfaces",
+          "startLine": 169,
+          "endLine": 171,
+          "params": [
+            "ctx",
+            "driver",
+            "typeFilter",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "MonitorTrafficOnce",
+          "startLine": 173,
+          "endLine": 175,
+          "params": [
+            "ctx",
+            "driver",
+            "ifaceName"
+          ]
+        },
+        {
+          "name": "EnsureIsolationRedirect",
+          "startLine": 180,
+          "endLine": 182,
+          "params": [
+            "ctx",
+            "driver",
+            "cfg"
+          ]
+        },
+        {
+          "name": "EnsureIsolationFilter",
+          "startLine": 185,
+          "endLine": 187,
+          "params": [
+            "ctx",
+            "driver",
+            "srcAddressList",
+            "paymentHost"
+          ]
+        },
+        {
+          "name": "DisableIsolationRedirect",
+          "startLine": 190,
+          "endLine": 192,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "HasIsolationRedirect",
+          "startLine": 195,
+          "endLine": 197,
+          "params": [
+            "ctx",
+            "driver",
+            "srcAddressList"
+          ]
+        },
+        {
+          "name": "CountAddressListEntries",
+          "startLine": 200,
+          "endLine": 202,
+          "params": [
+            "ctx",
+            "driver",
+            "listName"
+          ]
+        },
+        {
+          "name": "AddToAddressList",
+          "startLine": 204,
+          "endLine": 206,
+          "params": [
+            "ctx",
+            "driver",
+            "listName",
+            "address",
+            "comment"
+          ]
+        },
+        {
+          "name": "RemoveFromAddressList",
+          "startLine": 208,
+          "endLine": 210,
+          "params": [
+            "ctx",
+            "driver",
+            "listName",
+            "address"
+          ]
+        },
+        {
+          "name": "RemoveFromAddressListByComment",
+          "startLine": 212,
+          "endLine": 214,
+          "params": [
+            "ctx",
+            "driver",
+            "listName",
+            "commentContains"
+          ]
+        },
+        {
+          "name": "ListFirewallNATRules",
+          "startLine": 218,
+          "endLine": 220,
+          "params": [
+            "ctx",
+            "driver",
+            "chain",
+            "comment",
+            "srcAddressList"
+          ]
+        },
+        {
+          "name": "FindIsolationRedirectRules",
+          "startLine": 226,
+          "endLine": 228,
+          "params": [
+            "rules"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Gateway",
+          "startLine": 19,
+          "endLine": 25,
+          "methods": [
+            "ListSecrets",
+            "GetSecret",
+            "AddSecret",
+            "UpdateSecret",
+            "RemoveSecret",
+            "SetSecretDisabled",
+            "ListProfiles",
+            "GetProfile",
+            "AddProfile",
+            "UpdateProfile",
+            "RemoveProfile",
+            "ListActive",
+            "KickActive",
+            "ListInactive",
+            "ListPPPActive",
+            "ListPPPInactive",
+            "KickPPPSession",
+            "ListHotspotActive",
+            "ListHotspotInactiveUsers",
+            "KickHotspotSession",
+            "ListDHCPLeases",
+            "SetDHCPLeaseBlock",
+            "GetSystemResource",
+            "GetSystemIdentity",
+            "ListInterfaces",
+            "MonitorTrafficOnce",
+            "EnsureIsolationRedirect",
+            "EnsureIsolationFilter",
+            "DisableIsolationRedirect",
+            "HasIsolationRedirect",
+            "CountAddressListEntries",
+            "AddToAddressList",
+            "RemoveFromAddressList",
+            "RemoveFromAddressListByComment",
+            "ListFirewallNATRules"
+          ],
+          "properties": [
+            "exec",
+            "pppGW",
+            "fireGW",
+            "queueGW",
+            "hotGW"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Gateway",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "NewGateway",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "NewQueueGateway",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "ListSecrets",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "GetSecret",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "AddSecret",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateSecret",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveSecret",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "SetSecretDisabled",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "ListProfiles",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "GetProfile",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "AddProfile",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProfile",
+          "line": 86,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveProfile",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "ListActive",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "KickActive",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "ListInactive",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "ListPPPActive",
+          "line": 108,
+          "isDefault": false
+        },
+        {
+          "name": "ListPPPInactive",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "KickPPPSession",
+          "line": 116,
+          "isDefault": false
+        },
+        {
+          "name": "ListHotspotActive",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "ListHotspotInactiveUsers",
+          "line": 124,
+          "isDefault": false
+        },
+        {
+          "name": "KickHotspotSession",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "ListDHCPLeases",
+          "line": 144,
+          "isDefault": false
+        },
+        {
+          "name": "SetDHCPLeaseBlock",
+          "line": 148,
+          "isDefault": false
+        },
+        {
+          "name": "GetSystemResource",
+          "line": 157,
+          "isDefault": false
+        },
+        {
+          "name": "GetSystemIdentity",
+          "line": 161,
+          "isDefault": false
+        },
+        {
+          "name": "ListInterfaces",
+          "line": 169,
+          "isDefault": false
+        },
+        {
+          "name": "MonitorTrafficOnce",
+          "line": 173,
+          "isDefault": false
+        },
+        {
+          "name": "EnsureIsolationRedirect",
+          "line": 180,
+          "isDefault": false
+        },
+        {
+          "name": "EnsureIsolationFilter",
+          "line": 185,
+          "isDefault": false
+        },
+        {
+          "name": "DisableIsolationRedirect",
+          "line": 190,
+          "isDefault": false
+        },
+        {
+          "name": "HasIsolationRedirect",
+          "line": 195,
+          "isDefault": false
+        },
+        {
+          "name": "CountAddressListEntries",
+          "line": 200,
+          "isDefault": false
+        },
+        {
+          "name": "AddToAddressList",
+          "line": 204,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveFromAddressList",
+          "line": 208,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveFromAddressListByComment",
+          "line": 212,
+          "isDefault": false
+        },
+        {
+          "name": "ListFirewallNATRules",
+          "line": 218,
+          "isDefault": false
+        },
+        {
+          "name": "FindIsolationRedirectRules",
+          "line": 226,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewGateway",
+          "callee": "ppp.NewGateway",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewGateway",
+          "callee": "firewall.NewGateway",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewGateway",
+          "callee": "queue.NewGateway",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewGateway",
+          "callee": "hotspot.NewGateway",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewQueueGateway",
+          "callee": "queue.NewGateway",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ListSecrets",
+          "callee": "g.pppGW.ListSecrets",
+          "lineNumber": 51
+        },
+        {
+          "caller": "GetSecret",
+          "callee": "g.pppGW.GetSecret",
+          "lineNumber": 55
+        },
+        {
+          "caller": "AddSecret",
+          "callee": "g.pppGW.AddSecret",
+          "lineNumber": 59
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "g.pppGW.UpdateSecret",
+          "lineNumber": 63
+        },
+        {
+          "caller": "RemoveSecret",
+          "callee": "g.pppGW.RemoveSecret",
+          "lineNumber": 67
+        },
+        {
+          "caller": "SetSecretDisabled",
+          "callee": "g.pppGW.SetSecretDisabled",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "g.pppGW.ListProfiles",
+          "lineNumber": 75
+        },
+        {
+          "caller": "GetProfile",
+          "callee": "g.pppGW.GetProfile",
+          "lineNumber": 79
+        },
+        {
+          "caller": "AddProfile",
+          "callee": "g.pppGW.AddProfile",
+          "lineNumber": 83
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "g.pppGW.UpdateProfile",
+          "lineNumber": 87
+        },
+        {
+          "caller": "RemoveProfile",
+          "callee": "g.pppGW.RemoveProfile",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ListActive",
+          "callee": "g.pppGW.ListActive",
+          "lineNumber": 95
+        },
+        {
+          "caller": "KickActive",
+          "callee": "g.pppGW.KickActive",
+          "lineNumber": 99
+        },
+        {
+          "caller": "ListInactive",
+          "callee": "g.pppGW.ListInactive",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ListPPPActive",
+          "callee": "g.pppGW.ListActive",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ListPPPInactive",
+          "callee": "g.pppGW.ListInactive",
+          "lineNumber": 113
+        },
+        {
+          "caller": "KickPPPSession",
+          "callee": "g.pppGW.KickActive",
+          "lineNumber": 117
+        },
+        {
+          "caller": "ListHotspotActive",
+          "callee": "g.hotGW.ListActiveSessions",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ListHotspotInactiveUsers",
+          "callee": "g.exec",
+          "lineNumber": 125
+        },
+        {
+          "caller": "ListHotspotInactiveUsers",
+          "callee": "hotspot.NewPrintUsersCommand",
+          "lineNumber": 125
+        },
+        {
+          "caller": "ListHotspotInactiveUsers",
+          "callee": "hotspot.ParseUsers",
+          "lineNumber": 129
+        },
+        {
+          "caller": "ListHotspotInactiveUsers",
+          "callee": "g.exec",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ListHotspotInactiveUsers",
+          "callee": "hotspot.NewPrintActiveCommand",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ListHotspotInactiveUsers",
+          "callee": "hotspot.ParseActiveSessions",
+          "lineNumber": 135
+        },
+        {
+          "caller": "ListHotspotInactiveUsers",
+          "callee": "hotspot.FilterInactiveUsers",
+          "lineNumber": 137
+        },
+        {
+          "caller": "KickHotspotSession",
+          "callee": "g.hotGW.RemoveActiveSession",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ListDHCPLeases",
+          "callee": "dhcp.ListLeases",
+          "lineNumber": 145
+        },
+        {
+          "caller": "SetDHCPLeaseBlock",
+          "callee": "dhcp.SetLeaseBlock",
+          "lineNumber": 149
+        },
+        {
+          "caller": "GetSystemResource",
+          "callee": "system.GetSystemResource",
+          "lineNumber": 158
+        },
+        {
+          "caller": "GetSystemIdentity",
+          "callee": "system.GetSystemIdentity",
+          "lineNumber": 162
+        },
+        {
+          "caller": "ListInterfaces",
+          "callee": "iface.ListInterfaces",
+          "lineNumber": 170
+        },
+        {
+          "caller": "MonitorTrafficOnce",
+          "callee": "iface.MonitorTrafficOnce",
+          "lineNumber": 174
+        },
+        {
+          "caller": "EnsureIsolationRedirect",
+          "callee": "g.fireGW.EnsureIsolationRedirect",
+          "lineNumber": 181
+        },
+        {
+          "caller": "EnsureIsolationFilter",
+          "callee": "g.fireGW.EnsureIsolationFilter",
+          "lineNumber": 186
+        },
+        {
+          "caller": "DisableIsolationRedirect",
+          "callee": "g.fireGW.DisableIsolationRedirect",
+          "lineNumber": 191
+        },
+        {
+          "caller": "HasIsolationRedirect",
+          "callee": "g.fireGW.HasIsolationRedirect",
+          "lineNumber": 196
+        },
+        {
+          "caller": "CountAddressListEntries",
+          "callee": "g.fireGW.CountAddressListEntries",
+          "lineNumber": 201
+        },
+        {
+          "caller": "AddToAddressList",
+          "callee": "g.fireGW.AddToAddressList",
+          "lineNumber": 205
+        },
+        {
+          "caller": "RemoveFromAddressList",
+          "callee": "g.fireGW.RemoveFromAddressList",
+          "lineNumber": 209
+        },
+        {
+          "caller": "RemoveFromAddressListByComment",
+          "callee": "g.fireGW.RemoveFromAddressListByComment",
+          "lineNumber": 213
+        },
+        {
+          "caller": "ListFirewallNATRules",
+          "callee": "g.fireGW.ListFirewallNATRules",
+          "lineNumber": 219
+        },
+        {
+          "caller": "FindIsolationRedirectRules",
+          "callee": "firewall.FindIsolationRedirectRules",
+          "lineNumber": 227
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 39,
+        "functionCount": 38,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/binding.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 115,
+      "nonEmptyLines": 106,
+      "functions": [
+        {
+          "name": "ListIPBindings",
+          "startLine": 11,
+          "endLine": 36,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "CreateIPBinding",
+          "startLine": 39,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "UpdateIPBinding",
+          "startLine": 75,
+          "endLine": 106,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "DeleteIPBinding",
+          "startLine": 109,
+          "endLine": 115,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListIPBindings",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "CreateIPBinding",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateIPBinding",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteIPBinding",
+          "line": 109,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListIPBindings",
+          "callee": "g.exec",
+          "lineNumber": 13
+        },
+        {
+          "caller": "ListIPBindings",
+          "callee": "make",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ListIPBindings",
+          "callee": "len",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ListIPBindings",
+          "callee": "append",
+          "lineNumber": 33
+        },
+        {
+          "caller": "CreateIPBinding",
+          "callee": "g.exec",
+          "lineNumber": 71
+        },
+        {
+          "caller": "UpdateIPBinding",
+          "callee": "g.exec",
+          "lineNumber": 105
+        },
+        {
+          "caller": "DeleteIPBinding",
+          "callee": "g.exec",
+          "lineNumber": 114
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/cleaner.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 75,
+      "nonEmptyLines": 65,
+      "functions": [
+        {
+          "name": "DeleteUsersByFilter",
+          "startLine": 12,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "driver",
+            "mode",
+            "value"
+          ]
+        },
+        {
+          "name": "isUserExpired",
+          "startLine": 67,
+          "endLine": 75,
+          "params": [
+            "u"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeleteUsersByFilter",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "strings.ToLower",
+          "lineNumber": 14
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 17
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "g.ListUsers",
+          "lineNumber": 19
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 21
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 27
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "g.ListUsers",
+          "lineNumber": 29
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "g.ListUsers",
+          "lineNumber": 36
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 38
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "isUserExpired",
+          "lineNumber": 41
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "append",
+          "lineNumber": 42
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "fmt.Errorf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "len",
+          "lineNumber": 50
+        },
+        {
+          "caller": "DeleteUsersByFilter",
+          "callee": "g.RemoveUser",
+          "lineNumber": 59
+        },
+        {
+          "caller": "isUserExpired",
+          "callee": "strings.Contains",
+          "lineNumber": 71
+        },
+        {
+          "caller": "isUserExpired",
+          "callee": "strings.ToLower",
+          "lineNumber": 71
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 182,
+      "nonEmptyLines": 166,
+      "functions": [
+        {
+          "name": "NewPrintActiveCommand",
+          "startLine": 11,
+          "endLine": 20,
+          "params": [
+            "userFilter"
+          ]
+        },
+        {
+          "name": "NewStreamActiveCommand",
+          "startLine": 23,
+          "endLine": 35,
+          "params": [
+            "userFilter"
+          ]
+        },
+        {
+          "name": "NewStreamActiveStatsCommand",
+          "startLine": 38,
+          "endLine": 50,
+          "params": [
+            "interval"
+          ]
+        },
+        {
+          "name": "NewKickActiveCommand",
+          "startLine": 53,
+          "endLine": 58,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewPrintServersCommand",
+          "startLine": 61,
+          "endLine": 66,
+          "params": []
+        },
+        {
+          "name": "NewPrintUsersCommand",
+          "startLine": 69,
+          "endLine": 78,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewStreamUsersCommand",
+          "startLine": 81,
+          "endLine": 93,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewAddUserCommand",
+          "startLine": 96,
+          "endLine": 110,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetUserCommand",
+          "startLine": 113,
+          "endLine": 123,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveUserCommand",
+          "startLine": 126,
+          "endLine": 131,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewPrintUserProfilesCommand",
+          "startLine": 134,
+          "endLine": 143,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewAddUserProfileCommand",
+          "startLine": 146,
+          "endLine": 159,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetUserProfileCommand",
+          "startLine": 162,
+          "endLine": 174,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveUserProfileCommand",
+          "startLine": 177,
+          "endLine": 182,
+          "params": [
+            "rosID"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewPrintActiveCommand",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamActiveCommand",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamActiveStatsCommand",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "NewKickActiveCommand",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintServersCommand",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintUsersCommand",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamUsersCommand",
+          "line": 81,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddUserCommand",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetUserCommand",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveUserCommand",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintUserProfilesCommand",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddUserProfileCommand",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetUserProfileCommand",
+          "line": 162,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveUserProfileCommand",
+          "line": 177,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewAddUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 100
+        },
+        {
+          "caller": "NewAddUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 101
+        },
+        {
+          "caller": "NewAddUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 102
+        },
+        {
+          "caller": "NewAddUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 103
+        },
+        {
+          "caller": "NewAddUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 104
+        },
+        {
+          "caller": "NewAddUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 105
+        },
+        {
+          "caller": "NewSetUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 115
+        },
+        {
+          "caller": "NewSetUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 116
+        },
+        {
+          "caller": "NewSetUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 117
+        },
+        {
+          "caller": "NewSetUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 118
+        },
+        {
+          "caller": "NewSetUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 119
+        },
+        {
+          "caller": "NewSetUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 120
+        },
+        {
+          "caller": "NewSetUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 121
+        },
+        {
+          "caller": "NewAddUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 150
+        },
+        {
+          "caller": "NewAddUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 151
+        },
+        {
+          "caller": "NewAddUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 152
+        },
+        {
+          "caller": "NewAddUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 153
+        },
+        {
+          "caller": "NewAddUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 154
+        },
+        {
+          "caller": "NewAddUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 155
+        },
+        {
+          "caller": "NewAddUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 156
+        },
+        {
+          "caller": "NewAddUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 157
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 164
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 165
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 166
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 167
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 168
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 169
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 170
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 171
+        },
+        {
+          "caller": "NewSetUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 172
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 14,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/comment_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 126,
+      "nonEmptyLines": 104,
+      "functions": [
+        {
+          "name": "TestFormatPreLoginComment",
+          "startLine": 12,
+          "endLine": 29,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestBuildCreateUserComment",
+          "startLine": 31,
+          "endLine": 52,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestBuildUpdatedComment",
+          "startLine": 54,
+          "endLine": 75,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseMikhmonComment",
+          "startLine": 77,
+          "endLine": 106,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestIsExpired",
+          "startLine": 108,
+          "endLine": 126,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestFormatPreLoginComment",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TestBuildCreateUserComment",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "TestBuildUpdatedComment",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseMikhmonComment",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "TestIsExpired",
+          "line": 108,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "time.Date",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "t.Run",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "FormatPreLoginComment",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "assert.Equal",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "t.Run",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "FormatPreLoginComment",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "assert.Equal",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "t.Run",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "FormatPreLoginComment",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestFormatPreLoginComment",
+          "callee": "assert.Equal",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "time.Date",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "t.Run",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "BuildCreateUserComment",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "assert.True",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "ParseMikhmonComment",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "require.NoError",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "assert.Equal",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "assert.Equal",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "t.Run",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "BuildCreateUserComment",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "assert.True",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "t.Run",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "BuildCreateUserComment",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestBuildCreateUserComment",
+          "callee": "assert.Equal",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "time.Date",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "t.Run",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "assert.Equal",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "BuildUpdatedComment",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "t.Run",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "BuildUpdatedComment",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "assert.True",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "assert.Contains",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "t.Run",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "BuildUpdatedComment",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "assert.True",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "t.Run",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "assert.Equal",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestBuildUpdatedComment",
+          "callee": "BuildUpdatedComment",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "t.Run",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "ParseMikhmonComment",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "require.NoError",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.False",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "t.Run",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "ParseMikhmonComment",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "require.NoError",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.True",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.Equal",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "t.Run",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "ParseMikhmonComment",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestParseMikhmonComment",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "time.Date",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "t.Run",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "assert.False",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "IsExpired",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "t.Run",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "assert.True",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "IsExpired",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "t.Run",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "assert.False",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestIsExpired",
+          "callee": "IsExpired",
+          "lineNumber": 124
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    }
+  ]
+}

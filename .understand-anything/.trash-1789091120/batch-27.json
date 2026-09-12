@@ -1,0 +1,5537 @@
+{
+ "batchIndex": 27,
+ "nodes": [
+  {
+   "id": "file:internal/domain/skill/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/skill/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `skill` (19 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `skill` (19 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "skill",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/skill/frontmatter_test.go",
+   "type": "file",
+   "name": "frontmatter_test.go",
+   "filePath": "internal/domain/skill/frontmatter_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `skill` (66 baris, 4 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `skill` (66 baris, 4 fungsi, 0 tipe). Fungsi terbesar: TestBuildAndParseFrontmatter, TestValidateSkillName, TestValidateResourcePath, TestParseFrontmatter_NoFrontmatter. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "skill",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter_test.go:TestBuildAndParseFrontmatter",
+   "type": "function",
+   "name": "TestBuildAndParseFrontmatter",
+   "filePath": "internal/domain/skill/frontmatter_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestBuildAndParseFrontmatter (26 baris), parameter: t.",
+   "description": "Fungsi TestBuildAndParseFrontmatter (26 baris), parameter: t. Didefinisikan pada baris 12-38.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testbuildandparsefrontmatter"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter_test.go:TestParseFrontmatter_NoFrontmatter",
+   "type": "function",
+   "name": "TestParseFrontmatter_NoFrontmatter",
+   "filePath": "internal/domain/skill/frontmatter_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestParseFrontmatter_NoFrontmatter (6 baris), parameter: t.",
+   "description": "Fungsi TestParseFrontmatter_NoFrontmatter (6 baris), parameter: t. Didefinisikan pada baris 40-46.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testparsefrontmatter-nofrontmatter"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter_test.go:TestValidateSkillName",
+   "type": "function",
+   "name": "TestValidateSkillName",
+   "filePath": "internal/domain/skill/frontmatter_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestValidateSkillName (8 baris), parameter: t.",
+   "description": "Fungsi TestValidateSkillName (8 baris), parameter: t. Didefinisikan pada baris 48-56.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testvalidateskillname"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter_test.go:TestValidateResourcePath",
+   "type": "function",
+   "name": "TestValidateResourcePath",
+   "filePath": "internal/domain/skill/frontmatter_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestValidateResourcePath (8 baris), parameter: t.",
+   "description": "Fungsi TestValidateResourcePath (8 baris), parameter: t. Didefinisikan pada baris 58-66.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testvalidateresourcepath"
+   ]
+  },
+  {
+   "id": "file:internal/domain/skill/frontmatter.go",
+   "type": "file",
+   "name": "frontmatter.go",
+   "filePath": "internal/domain/skill/frontmatter.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `skill` (152 baris, 5 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `skill` (152 baris, 5 fungsi, 1 tipe). Tipe utama: SkillMetadata. Fungsi terbesar: parseFrontmatterFallback, BuildFrontmatter, ParseFrontmatter, ValidateResourcePath, ValidateSkillName.",
+   "tags": [
+    "go",
+    "domain",
+    "skill",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/skill/frontmatter.go:SkillMetadata",
+   "type": "class",
+   "name": "SkillMetadata",
+   "filePath": "internal/domain/skill/frontmatter.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillMetadata di frontmatter.go.",
+   "description": "Tipe SkillMetadata di frontmatter.go. Didefinisikan pada baris 19-26.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillmetadata"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter.go:BuildFrontmatter",
+   "type": "function",
+   "name": "BuildFrontmatter",
+   "filePath": "internal/domain/skill/frontmatter.go",
+   "complexity": "simple",
+   "summary": "Fungsi BuildFrontmatter (23 baris), parameter: name, description, license, compatibility, allowedTools.",
+   "description": "Fungsi BuildFrontmatter (23 baris), parameter: name, description, license, compatibility, allowedTools. Didefinisikan pada baris 29-52.",
+   "tags": [
+    "go",
+    "fungsi",
+    "buildfrontmatter"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter.go:ParseFrontmatter",
+   "type": "function",
+   "name": "ParseFrontmatter",
+   "filePath": "internal/domain/skill/frontmatter.go",
+   "complexity": "simple",
+   "summary": "Fungsi ParseFrontmatter (22 baris), parameter: rawContent.",
+   "description": "Fungsi ParseFrontmatter (22 baris), parameter: rawContent. Didefinisikan pada baris 55-77.",
+   "tags": [
+    "go",
+    "fungsi",
+    "parsefrontmatter"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter.go:parseFrontmatterFallback",
+   "type": "function",
+   "name": "parseFrontmatterFallback",
+   "filePath": "internal/domain/skill/frontmatter.go",
+   "complexity": "simple",
+   "summary": "Fungsi parseFrontmatterFallback (48 baris), parameter: fmBlock.",
+   "description": "Fungsi parseFrontmatterFallback (48 baris), parameter: fmBlock. Didefinisikan pada baris 79-127.",
+   "tags": [
+    "go",
+    "fungsi",
+    "parsefrontmatterfallback"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter.go:ValidateSkillName",
+   "type": "function",
+   "name": "ValidateSkillName",
+   "filePath": "internal/domain/skill/frontmatter.go",
+   "complexity": "simple",
+   "summary": "Fungsi ValidateSkillName (9 baris), parameter: name.",
+   "description": "Fungsi ValidateSkillName (9 baris), parameter: name. Didefinisikan pada baris 130-139.",
+   "tags": [
+    "go",
+    "fungsi",
+    "validateskillname"
+   ]
+  },
+  {
+   "id": "function:internal/domain/skill/frontmatter.go:ValidateResourcePath",
+   "type": "function",
+   "name": "ValidateResourcePath",
+   "filePath": "internal/domain/skill/frontmatter.go",
+   "complexity": "simple",
+   "summary": "Fungsi ValidateResourcePath (10 baris), parameter: path.",
+   "description": "Fungsi ValidateResourcePath (10 baris), parameter: path. Didefinisikan pada baris 142-152.",
+   "tags": [
+    "go",
+    "fungsi",
+    "validateresourcepath"
+   ]
+  },
+  {
+   "id": "file:internal/domain/skill/skill.go",
+   "type": "file",
+   "name": "skill.go",
+   "filePath": "internal/domain/skill/skill.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `skill` (81 baris, 0 fungsi, 6 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `skill` (81 baris, 0 fungsi, 6 tipe). Tipe utama: Skill, SkillResource, ResourceContent, GitRepoInfo, SkillInfo, ….",
+   "tags": [
+    "go",
+    "domain",
+    "skill",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/skill/skill.go:Skill",
+   "type": "class",
+   "name": "Skill",
+   "filePath": "internal/domain/skill/skill.go",
+   "complexity": "simple",
+   "summary": "Tipe Skill di skill.go.",
+   "description": "Tipe Skill di skill.go. Didefinisikan pada baris 8-23.",
+   "tags": [
+    "go",
+    "tipe",
+    "skill"
+   ]
+  },
+  {
+   "id": "class:internal/domain/skill/skill.go:SkillResource",
+   "type": "class",
+   "name": "SkillResource",
+   "filePath": "internal/domain/skill/skill.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillResource di skill.go.",
+   "description": "Tipe SkillResource di skill.go. Didefinisikan pada baris 29-37.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillresource"
+   ]
+  },
+  {
+   "id": "class:internal/domain/skill/skill.go:ResourceContent",
+   "type": "class",
+   "name": "ResourceContent",
+   "filePath": "internal/domain/skill/skill.go",
+   "complexity": "simple",
+   "summary": "Tipe ResourceContent di skill.go.",
+   "description": "Tipe ResourceContent di skill.go. Didefinisikan pada baris 40-45.",
+   "tags": [
+    "go",
+    "tipe",
+    "resourcecontent"
+   ]
+  },
+  {
+   "id": "class:internal/domain/skill/skill.go:GitRepoInfo",
+   "type": "class",
+   "name": "GitRepoInfo",
+   "filePath": "internal/domain/skill/skill.go",
+   "complexity": "simple",
+   "summary": "Tipe GitRepoInfo di skill.go.",
+   "description": "Tipe GitRepoInfo di skill.go. Didefinisikan pada baris 48-54.",
+   "tags": [
+    "go",
+    "tipe",
+    "gitrepoinfo"
+   ]
+  },
+  {
+   "id": "class:internal/domain/skill/skill.go:SkillInfo",
+   "type": "class",
+   "name": "SkillInfo",
+   "filePath": "internal/domain/skill/skill.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillInfo di skill.go.",
+   "description": "Tipe SkillInfo di skill.go. Didefinisikan pada baris 60-64.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillinfo"
+   ]
+  },
+  {
+   "id": "class:internal/domain/skill/skill.go:SkillMetadataRecord",
+   "type": "class",
+   "name": "SkillMetadataRecord",
+   "filePath": "internal/domain/skill/skill.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillMetadataRecord di skill.go.",
+   "description": "Tipe SkillMetadataRecord di skill.go. Didefinisikan pada baris 70-81.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillmetadatarecord"
+   ]
+  },
+  {
+   "id": "file:internal/domain/subscription/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/subscription/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (10 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (10 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "file",
+   "name": "provision_dedicated.go",
+   "filePath": "internal/domain/subscription/provision_dedicated.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (18 baris, 0 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (18 baris, 0 fungsi, 2 tipe). Tipe utama: DedicatedQueueSpec, DedicatedProvisionSpec.",
+   "tags": [
+    "go",
+    "domain",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/provision_dedicated.go:DedicatedQueueSpec",
+   "type": "class",
+   "name": "DedicatedQueueSpec",
+   "filePath": "internal/domain/subscription/provision_dedicated.go",
+   "complexity": "simple",
+   "summary": "Tipe DedicatedQueueSpec di provision_dedicated.go.",
+   "description": "Tipe DedicatedQueueSpec di provision_dedicated.go. Didefinisikan pada baris 4-12.",
+   "tags": [
+    "go",
+    "tipe",
+    "dedicatedqueuespec"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/provision_dedicated.go:DedicatedProvisionSpec",
+   "type": "class",
+   "name": "DedicatedProvisionSpec",
+   "filePath": "internal/domain/subscription/provision_dedicated.go",
+   "complexity": "simple",
+   "summary": "Tipe DedicatedProvisionSpec di provision_dedicated.go.",
+   "description": "Tipe DedicatedProvisionSpec di provision_dedicated.go. Didefinisikan pada baris 15-18.",
+   "tags": [
+    "go",
+    "tipe",
+    "dedicatedprovisionspec"
+   ]
+  },
+  {
+   "id": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "file",
+   "name": "provision_hotspot.go",
+   "filePath": "internal/domain/subscription/provision_hotspot.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (36 baris, 0 fungsi, 3 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (36 baris, 0 fungsi, 3 tipe). Tipe utama: HotspotUserSpec, HotspotProfileSpec, HotspotProvisionSpec.",
+   "tags": [
+    "go",
+    "domain",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/provision_hotspot.go:HotspotUserSpec",
+   "type": "class",
+   "name": "HotspotUserSpec",
+   "filePath": "internal/domain/subscription/provision_hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotUserSpec di provision_hotspot.go.",
+   "description": "Tipe HotspotUserSpec di provision_hotspot.go. Didefinisikan pada baris 4-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotuserspec"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/provision_hotspot.go:HotspotProfileSpec",
+   "type": "class",
+   "name": "HotspotProfileSpec",
+   "filePath": "internal/domain/subscription/provision_hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotProfileSpec di provision_hotspot.go.",
+   "description": "Tipe HotspotProfileSpec di provision_hotspot.go. Didefinisikan pada baris 18-30.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotprofilespec"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/provision_hotspot.go:HotspotProvisionSpec",
+   "type": "class",
+   "name": "HotspotProvisionSpec",
+   "filePath": "internal/domain/subscription/provision_hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotProvisionSpec di provision_hotspot.go.",
+   "description": "Tipe HotspotProvisionSpec di provision_hotspot.go. Didefinisikan pada baris 33-36.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotprovisionspec"
+   ]
+  },
+  {
+   "id": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "file",
+   "name": "provision_pppoe.go",
+   "filePath": "internal/domain/subscription/provision_pppoe.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (34 baris, 0 fungsi, 3 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (34 baris, 0 fungsi, 3 tipe). Tipe utama: PPPoESecretSpec, PPPoEProfileSpec, PPPoEProvisionSpec.",
+   "tags": [
+    "go",
+    "domain",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/provision_pppoe.go:PPPoESecretSpec",
+   "type": "class",
+   "name": "PPPoESecretSpec",
+   "filePath": "internal/domain/subscription/provision_pppoe.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPoESecretSpec di provision_pppoe.go.",
+   "description": "Tipe PPPoESecretSpec di provision_pppoe.go. Didefinisikan pada baris 4-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppoesecretspec"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/provision_pppoe.go:PPPoEProfileSpec",
+   "type": "class",
+   "name": "PPPoEProfileSpec",
+   "filePath": "internal/domain/subscription/provision_pppoe.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPoEProfileSpec di provision_pppoe.go.",
+   "description": "Tipe PPPoEProfileSpec di provision_pppoe.go. Didefinisikan pada baris 18-28.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppoeprofilespec"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/provision_pppoe.go:PPPoEProvisionSpec",
+   "type": "class",
+   "name": "PPPoEProvisionSpec",
+   "filePath": "internal/domain/subscription/provision_pppoe.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPoEProvisionSpec di provision_pppoe.go.",
+   "description": "Tipe PPPoEProvisionSpec di provision_pppoe.go. Didefinisikan pada baris 31-34.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppoeprovisionspec"
+   ]
+  },
+  {
+   "id": "file:internal/domain/subscription/subscriber.go",
+   "type": "file",
+   "name": "subscriber.go",
+   "filePath": "internal/domain/subscription/subscriber.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (27 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (27 baris, 0 fungsi, 1 tipe). Tipe utama: SubscriberAccount.",
+   "tags": [
+    "go",
+    "domain",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/subscriber.go:SubscriberAccount",
+   "type": "class",
+   "name": "SubscriberAccount",
+   "filePath": "internal/domain/subscription/subscriber.go",
+   "complexity": "simple",
+   "summary": "Tipe SubscriberAccount di subscriber.go.",
+   "description": "Tipe SubscriberAccount di subscriber.go. Didefinisikan pada baris 4-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "subscriberaccount"
+   ]
+  },
+  {
+   "id": "file:internal/domain/subscription/subscription.go",
+   "type": "file",
+   "name": "subscription.go",
+   "filePath": "internal/domain/subscription/subscription.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (97 baris, 0 fungsi, 3 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `subscription` (97 baris, 0 fungsi, 3 tipe). Tipe utama: PPPoESubscriptionConfig, HotspotSubscriptionConfig, Subscription.",
+   "tags": [
+    "go",
+    "domain",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/subscription.go:PPPoESubscriptionConfig",
+   "type": "class",
+   "name": "PPPoESubscriptionConfig",
+   "filePath": "internal/domain/subscription/subscription.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPoESubscriptionConfig di subscription.go.",
+   "description": "Tipe PPPoESubscriptionConfig di subscription.go. Didefinisikan pada baris 40-47.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppoesubscriptionconfig"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/subscription.go:HotspotSubscriptionConfig",
+   "type": "class",
+   "name": "HotspotSubscriptionConfig",
+   "filePath": "internal/domain/subscription/subscription.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotSubscriptionConfig di subscription.go.",
+   "description": "Tipe HotspotSubscriptionConfig di subscription.go. Didefinisikan pada baris 50-58.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotsubscriptionconfig"
+   ]
+  },
+  {
+   "id": "class:internal/domain/subscription/subscription.go:Subscription",
+   "type": "class",
+   "name": "Subscription",
+   "filePath": "internal/domain/subscription/subscription.go",
+   "complexity": "simple",
+   "summary": "Tipe Subscription di subscription.go.",
+   "description": "Tipe Subscription di subscription.go. Didefinisikan pada baris 62-97.",
+   "tags": [
+    "go",
+    "tipe",
+    "subscription"
+   ]
+  },
+  {
+   "id": "file:internal/driver/cisco/commands.go",
+   "type": "file",
+   "name": "commands.go",
+   "filePath": "internal/driver/cisco/commands.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `cisco` (38 baris, 2 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `cisco` (38 baris, 2 fungsi, 0 tipe). Fungsi terbesar: Classify, Translate. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "cisco",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/cisco/commands.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/cisco/commands.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (7 baris), parameter: cmd.",
+   "description": "Fungsi Classify (7 baris), parameter: cmd. Didefinisikan pada baris 22-29.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/cisco/commands.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/cisco/commands.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (6 baris), parameter: op.",
+   "description": "Fungsi Translate (6 baris), parameter: op. Didefinisikan pada baris 32-38.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "file:internal/driver/cisco/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/cisco/driver.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `cisco` (46 baris, 5 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `cisco` (46 baris, 5 fungsi, 1 tipe). Tipe utama: Driver. Fungsi terbesar: NewDriver, Execute, Classify, Translate, Close. Bergantung pada 74 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "cisco",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/cisco/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/cisco/driver.go",
+   "complexity": "simple",
+   "summary": "Tipe Driver di driver.go, dengan method: Execute, Classify, Translate, Close.",
+   "description": "Tipe Driver di driver.go, dengan method: Execute, Classify, Translate, Close. Didefinisikan pada baris 15-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "driver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/cisco/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewDriver (2 baris), parameter: ctx, target.",
+   "description": "Fungsi NewDriver (2 baris), parameter: ctx, target. Didefinisikan pada baris 23-25.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newdriver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/cisco/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Execute (2 baris), parameter: ctx, cmd.",
+   "description": "Fungsi Execute (2 baris), parameter: ctx, cmd. Didefinisikan pada baris 29-31.",
+   "tags": [
+    "go",
+    "fungsi",
+    "execute"
+   ]
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/cisco/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (2 baris), parameter: cmd.",
+   "description": "Fungsi Classify (2 baris), parameter: cmd. Didefinisikan pada baris 34-36.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/cisco/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (2 baris), parameter: op.",
+   "description": "Fungsi Translate (2 baris), parameter: op. Didefinisikan pada baris 39-41.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/cisco/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (2 baris).",
+   "description": "Fungsi Close (2 baris). Didefinisikan pada baris 44-46.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genericcli/catalog_test.go",
+   "type": "file",
+   "name": "catalog_test.go",
+   "filePath": "internal/driver/genericcli/catalog_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericcli` (64 baris, 3 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericcli` (64 baris, 3 fungsi, 0 tipe). Fungsi terbesar: TestCatalog_Classify, TestCatalog_Translate, TestCatalog_ZeroValueIsUsable. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genericcli",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/catalog_test.go:TestCatalog_Classify",
+   "type": "function",
+   "name": "TestCatalog_Classify",
+   "filePath": "internal/driver/genericcli/catalog_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestCatalog_Classify (21 baris), parameter: t.",
+   "description": "Fungsi TestCatalog_Classify (21 baris), parameter: t. Didefinisikan pada baris 12-33.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testcatalog-classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/catalog_test.go:TestCatalog_Translate",
+   "type": "function",
+   "name": "TestCatalog_Translate",
+   "filePath": "internal/driver/genericcli/catalog_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestCatalog_Translate (18 baris), parameter: t.",
+   "description": "Fungsi TestCatalog_Translate (18 baris), parameter: t. Didefinisikan pada baris 35-53.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testcatalog-translate"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/catalog_test.go:TestCatalog_ZeroValueIsUsable",
+   "type": "function",
+   "name": "TestCatalog_ZeroValueIsUsable",
+   "filePath": "internal/driver/genericcli/catalog_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestCatalog_ZeroValueIsUsable (9 baris), parameter: t.",
+   "description": "Fungsi TestCatalog_ZeroValueIsUsable (9 baris), parameter: t. Didefinisikan pada baris 55-64.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testcatalog-zerovalueisusable"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genericcli/catalog.go",
+   "type": "file",
+   "name": "catalog.go",
+   "filePath": "internal/driver/genericcli/catalog.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericcli` (87 baris, 2 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericcli` (87 baris, 2 fungsi, 1 tipe). Tipe utama: Catalog. Fungsi terbesar: Classify, Translate. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genericcli",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/genericcli/catalog.go:Catalog",
+   "type": "class",
+   "name": "Catalog",
+   "filePath": "internal/driver/genericcli/catalog.go",
+   "complexity": "simple",
+   "summary": "Tipe Catalog di catalog.go, dengan method: Classify, Translate.",
+   "description": "Tipe Catalog di catalog.go, dengan method: Classify, Translate. Didefinisikan pada baris 20-66.",
+   "tags": [
+    "go",
+    "tipe",
+    "catalog"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/catalog.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/genericcli/catalog.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (7 baris), parameter: cmd.",
+   "description": "Fungsi Classify (7 baris), parameter: cmd. Didefinisikan pada baris 71-78.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/catalog.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/genericcli/catalog.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (6 baris), parameter: op.",
+   "description": "Fungsi Translate (6 baris), parameter: op. Didefinisikan pada baris 81-87.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genericcli/session.go",
+   "type": "file",
+   "name": "session.go",
+   "filePath": "internal/driver/genericcli/session.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericcli` (261 baris, 8 fungsi, 2 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericcli` (261 baris, 8 fungsi, 2 tipe). Tipe utama: cliDriver, Session. Fungsi terbesar: dial, NewSession, Execute, sendWithReconnect, resolveDriver. Bergantung pada 14 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genericcli",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/genericcli/session.go:cliDriver",
+   "type": "class",
+   "name": "cliDriver",
+   "filePath": "internal/driver/genericcli/session.go",
+   "complexity": "simple",
+   "summary": "Tipe cliDriver di session.go, dengan method: Open, Close, SendCommand.",
+   "description": "Tipe cliDriver di session.go, dengan method: Open, Close, SendCommand. Didefinisikan pada baris 32-36.",
+   "tags": [
+    "go",
+    "tipe",
+    "clidriver"
+   ]
+  },
+  {
+   "id": "class:internal/driver/genericcli/session.go:Session",
+   "type": "class",
+   "name": "Session",
+   "filePath": "internal/driver/genericcli/session.go",
+   "complexity": "simple",
+   "summary": "Tipe Session di session.go, dengan method: dial, Execute, sendWithReconnect, Classify, Translate, Close.",
+   "description": "Tipe Session di session.go, dengan method: dial, Execute, sendWithReconnect, Classify, Translate, Close. Didefinisikan pada baris 64-78.",
+   "tags": [
+    "go",
+    "tipe",
+    "session"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:NewSession",
+   "type": "function",
+   "name": "NewSession",
+   "filePath": "internal/driver/genericcli/session.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSession (30 baris), parameter: ctx, target, transportType, defaultPort, platformDef.",
+   "description": "Fungsi NewSession (30 baris), parameter: ctx, target, transportType, defaultPort, platformDef. Didefinisikan pada baris 87-117.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newsession"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:dial",
+   "type": "function",
+   "name": "dial",
+   "filePath": "internal/driver/genericcli/session.go",
+   "complexity": "simple",
+   "summary": "Fungsi dial (54 baris), parameter: ctx.",
+   "description": "Fungsi dial (54 baris), parameter: ctx. Didefinisikan pada baris 123-177.",
+   "tags": [
+    "go",
+    "fungsi",
+    "dial"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/genericcli/session.go",
+   "complexity": "simple",
+   "summary": "Fungsi Execute (30 baris), parameter: ctx, cmd.",
+   "description": "Fungsi Execute (30 baris), parameter: ctx, cmd. Didefinisikan pada baris 187-217.",
+   "tags": [
+    "go",
+    "fungsi",
+    "execute"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/genericcli/session.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (2 baris), parameter: cmd.",
+   "description": "Fungsi Classify (2 baris), parameter: cmd. Didefinisikan pada baris 244-246.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/genericcli/session.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (2 baris), parameter: op.",
+   "description": "Fungsi Translate (2 baris), parameter: op. Didefinisikan pada baris 249-251.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/genericcli/session.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (5 baris).",
+   "description": "Fungsi Close (5 baris). Didefinisikan pada baris 256-261.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genericssh/commands.go",
+   "type": "file",
+   "name": "commands.go",
+   "filePath": "internal/driver/genericssh/commands.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericssh` (21 baris, 2 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericssh` (21 baris, 2 fungsi, 0 tipe). Fungsi terbesar: Classify, Translate. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genericssh",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/commands.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/genericssh/commands.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (2 baris), parameter: cmd.",
+   "description": "Fungsi Classify (2 baris), parameter: cmd. Didefinisikan pada baris 13-15.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/commands.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/genericssh/commands.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (2 baris), parameter: op.",
+   "description": "Fungsi Translate (2 baris), parameter: op. Didefinisikan pada baris 19-21.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genericssh/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/genericssh/driver.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericssh` (104 baris, 6 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericssh` (104 baris, 6 fungsi, 1 tipe). Tipe utama: Driver. Fungsi terbesar: NewDriver, OpenTerminalSession, Execute, Classify, Translate. Bergantung pada 77 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genericssh",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/genericssh/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/genericssh/driver.go",
+   "complexity": "simple",
+   "summary": "Tipe Driver di driver.go, dengan method: OpenTerminalSession, Execute, Classify, Translate, Close.",
+   "description": "Tipe Driver di driver.go, dengan method: OpenTerminalSession, Execute, Classify, Translate, Close. Didefinisikan pada baris 39-47.",
+   "tags": [
+    "go",
+    "tipe",
+    "driver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/genericssh/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewDriver (6 baris), parameter: ctx, target, platformDef, catalog.",
+   "description": "Fungsi NewDriver (6 baris), parameter: ctx, target, platformDef, catalog. Didefinisikan pada baris 67-73.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newdriver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/driver.go:OpenTerminalSession",
+   "type": "function",
+   "name": "OpenTerminalSession",
+   "filePath": "internal/driver/genericssh/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi OpenTerminalSession (2 baris), parameter: ctx, cols, rows.",
+   "description": "Fungsi OpenTerminalSession (2 baris), parameter: ctx, cols, rows. Didefinisikan pada baris 79-81.",
+   "tags": [
+    "go",
+    "fungsi",
+    "openterminalsession"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/genericssh/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Execute (2 baris), parameter: ctx, cmd.",
+   "description": "Fungsi Execute (2 baris), parameter: ctx, cmd. Didefinisikan pada baris 85-87.",
+   "tags": [
+    "go",
+    "fungsi",
+    "execute"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/genericssh/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (2 baris), parameter: cmd.",
+   "description": "Fungsi Classify (2 baris), parameter: cmd. Didefinisikan pada baris 91-93.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/genericssh/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (2 baris), parameter: op.",
+   "description": "Fungsi Translate (2 baris), parameter: op. Didefinisikan pada baris 97-99.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/genericssh/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (2 baris).",
+   "description": "Fungsi Close (2 baris). Didefinisikan pada baris 102-104.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genericssh/pty.go",
+   "type": "file",
+   "name": "pty.go",
+   "filePath": "internal/driver/genericssh/pty.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericssh` (166 baris, 5 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genericssh` (166 baris, 5 fungsi, 1 tipe). Tipe utama: SSHPtySession. Fungsi terbesar: DialSSHPty, Close, Resize, Stdin, Stdout. Bergantung pada 71 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genericssh",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/genericssh/pty.go:SSHPtySession",
+   "type": "class",
+   "name": "SSHPtySession",
+   "filePath": "internal/driver/genericssh/pty.go",
+   "complexity": "simple",
+   "summary": "Tipe SSHPtySession di pty.go, dengan method: Stdin, Stdout, Resize, Close.",
+   "description": "Tipe SSHPtySession di pty.go, dengan method: Stdin, Stdout, Resize, Close. Didefinisikan pada baris 20-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "sshptysession"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/pty.go:Stdin",
+   "type": "function",
+   "name": "Stdin",
+   "filePath": "internal/driver/genericssh/pty.go",
+   "complexity": "simple",
+   "summary": "Fungsi Stdin (2 baris).",
+   "description": "Fungsi Stdin (2 baris). Didefinisikan pada baris 31-33.",
+   "tags": [
+    "go",
+    "fungsi",
+    "stdin"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/pty.go:Stdout",
+   "type": "function",
+   "name": "Stdout",
+   "filePath": "internal/driver/genericssh/pty.go",
+   "complexity": "simple",
+   "summary": "Fungsi Stdout (2 baris).",
+   "description": "Fungsi Stdout (2 baris). Didefinisikan pada baris 35-37.",
+   "tags": [
+    "go",
+    "fungsi",
+    "stdout"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/pty.go:Resize",
+   "type": "function",
+   "name": "Resize",
+   "filePath": "internal/driver/genericssh/pty.go",
+   "complexity": "simple",
+   "summary": "Fungsi Resize (5 baris), parameter: cols, rows.",
+   "description": "Fungsi Resize (5 baris), parameter: cols, rows. Didefinisikan pada baris 39-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "resize"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/pty.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/genericssh/pty.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (18 baris).",
+   "description": "Fungsi Close (18 baris). Didefinisikan pada baris 46-64.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genericssh/pty.go:DialSSHPty",
+   "type": "function",
+   "name": "DialSSHPty",
+   "filePath": "internal/driver/genericssh/pty.go",
+   "complexity": "moderate",
+   "summary": "Fungsi DialSSHPty (99 baris), parameter: ctx, target, cols, rows.",
+   "description": "Fungsi DialSSHPty (99 baris), parameter: ctx, target, cols, rows. Didefinisikan pada baris 67-166.",
+   "tags": [
+    "go",
+    "fungsi",
+    "dialsshpty"
+   ]
+  },
+  {
+   "id": "file:internal/driver/generictelnet/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/generictelnet/driver.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `generictelnet` (92 baris, 5 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `generictelnet` (92 baris, 5 fungsi, 1 tipe). Tipe utama: Driver. Fungsi terbesar: NewDriver, Execute, Classify, Translate, Close. Bergantung pada 77 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "generictelnet",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/generictelnet/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/generictelnet/driver.go",
+   "complexity": "simple",
+   "summary": "Tipe Driver di driver.go, dengan method: Execute, Classify, Translate, Close.",
+   "description": "Tipe Driver di driver.go, dengan method: Execute, Classify, Translate, Close. Didefinisikan pada baris 48-50.",
+   "tags": [
+    "go",
+    "tipe",
+    "driver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/generictelnet/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/generictelnet/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewDriver (6 baris), parameter: ctx, target, platformDef, catalog.",
+   "description": "Fungsi NewDriver (6 baris), parameter: ctx, target, platformDef, catalog. Didefinisikan pada baris 63-69.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newdriver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/generictelnet/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/generictelnet/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Execute (2 baris), parameter: ctx, cmd.",
+   "description": "Fungsi Execute (2 baris), parameter: ctx, cmd. Didefinisikan pada baris 73-75.",
+   "tags": [
+    "go",
+    "fungsi",
+    "execute"
+   ]
+  },
+  {
+   "id": "function:internal/driver/generictelnet/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/generictelnet/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (2 baris), parameter: cmd.",
+   "description": "Fungsi Classify (2 baris), parameter: cmd. Didefinisikan pada baris 79-81.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/generictelnet/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/generictelnet/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (2 baris), parameter: op.",
+   "description": "Fungsi Translate (2 baris), parameter: op. Didefinisikan pada baris 85-87.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "function:internal/driver/generictelnet/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/generictelnet/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (2 baris).",
+   "description": "Fungsi Close (2 baris). Didefinisikan pada baris 90-92.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genieacs/client_http.go",
+   "type": "file",
+   "name": "client_http.go",
+   "filePath": "internal/driver/genieacs/client_http.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (252 baris, 9 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (252 baris, 9 fungsi, 0 tipe). Fungsi terbesar: postTask, execGetDevice, do, taskFaultDetail, taskGone. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genieacs",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_http.go:execGetDevice",
+   "type": "function",
+   "name": "execGetDevice",
+   "filePath": "internal/driver/genieacs/client_http.go",
+   "complexity": "simple",
+   "summary": "Fungsi execGetDevice (29 baris), parameter: ctx, projection.",
+   "description": "Fungsi execGetDevice (29 baris), parameter: ctx, projection. Didefinisikan pada baris 20-49.",
+   "tags": [
+    "go",
+    "fungsi",
+    "execgetdevice"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_http.go:postTask",
+   "type": "function",
+   "name": "postTask",
+   "filePath": "internal/driver/genieacs/client_http.go",
+   "complexity": "simple",
+   "summary": "Fungsi postTask (32 baris), parameter: ctx, body, connectionRequest.",
+   "description": "Fungsi postTask (32 baris), parameter: ctx, body, connectionRequest. Didefinisikan pada baris 55-87.",
+   "tags": [
+    "go",
+    "fungsi",
+    "posttask"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_http.go:taskFaultDetail",
+   "type": "function",
+   "name": "taskFaultDetail",
+   "filePath": "internal/driver/genieacs/client_http.go",
+   "complexity": "simple",
+   "summary": "Fungsi taskFaultDetail (25 baris), parameter: ctx.",
+   "description": "Fungsi taskFaultDetail (25 baris), parameter: ctx. Didefinisikan pada baris 139-164.",
+   "tags": [
+    "go",
+    "fungsi",
+    "taskfaultdetail"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_http.go:do",
+   "type": "function",
+   "name": "do",
+   "filePath": "internal/driver/genieacs/client_http.go",
+   "complexity": "simple",
+   "summary": "Fungsi do (27 baris), parameter: ctx, method, path, query, body.",
+   "description": "Fungsi do (27 baris), parameter: ctx, method, path, query, body. Didefinisikan pada baris 182-209.",
+   "tags": [
+    "go",
+    "fungsi",
+    "do"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genieacs/client_test.go",
+   "type": "file",
+   "name": "client_test.go",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "language": "go",
+   "complexity": "moderate",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (336 baris, 19 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (336 baris, 19 fungsi, 0 tipe). Fungsi terbesar: TestExecute_Reboot_202_PollThenDone, TestExecute_GetParameterValues_200, TestExecute_ConnectionRequestFlag, TestExecute_202_CtxTimeout, TestExecute_AuthHeader. Bergantung pada 14 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genieacs",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestNewDriver_MissingDeviceID",
+   "type": "function",
+   "name": "TestNewDriver_MissingDeviceID",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestNewDriver_MissingDeviceID (3 baris), parameter: t.",
+   "description": "Fungsi TestNewDriver_MissingDeviceID (3 baris), parameter: t. Didefinisikan pada baris 58-61.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testnewdriver-missingdeviceid"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestNewDriver_UnreachableNBI",
+   "type": "function",
+   "name": "TestNewDriver_UnreachableNBI",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestNewDriver_UnreachableNBI (9 baris), parameter: t.",
+   "description": "Fungsi TestNewDriver_UnreachableNBI (9 baris), parameter: t. Didefinisikan pada baris 63-72.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testnewdriver-unreachablenbi"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestNewDriver_ReachableDefaultsFields",
+   "type": "function",
+   "name": "TestNewDriver_ReachableDefaultsFields",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestNewDriver_ReachableDefaultsFields (17 baris), parameter: t.",
+   "description": "Fungsi TestNewDriver_ReachableDefaultsFields (17 baris), parameter: t. Didefinisikan pada baris 82-99.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testnewdriver-reachabledefaultsfields"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestNewDriver_CustomPollInterval",
+   "type": "function",
+   "name": "TestNewDriver_CustomPollInterval",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestNewDriver_CustomPollInterval (14 baris), parameter: t.",
+   "description": "Fungsi TestNewDriver_CustomPollInterval (14 baris), parameter: t. Didefinisikan pada baris 101-115.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testnewdriver-custompollinterval"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice",
+   "type": "function",
+   "name": "TestExecute_GetDevice",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_GetDevice (15 baris), parameter: t.",
+   "description": "Fungsi TestExecute_GetDevice (15 baris), parameter: t. Didefinisikan pada baris 117-132.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-getdevice"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice_NotFound",
+   "type": "function",
+   "name": "TestExecute_GetDevice_NotFound",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_GetDevice_NotFound (10 baris), parameter: t.",
+   "description": "Fungsi TestExecute_GetDevice_NotFound (10 baris), parameter: t. Didefinisikan pada baris 134-144.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-getdevice-notfound"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_UnsupportedTaskType",
+   "type": "function",
+   "name": "TestExecute_UnsupportedTaskType",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_UnsupportedTaskType (9 baris), parameter: t.",
+   "description": "Fungsi TestExecute_UnsupportedTaskType (9 baris), parameter: t. Didefinisikan pada baris 146-155.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-unsupportedtasktype"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_200",
+   "type": "function",
+   "name": "TestExecute_Reboot_200",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_Reboot_200 (18 baris), parameter: t.",
+   "description": "Fungsi TestExecute_Reboot_200 (18 baris), parameter: t. Didefinisikan pada baris 157-175.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-reboot-200"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_202_PollThenDone",
+   "type": "function",
+   "name": "TestExecute_Reboot_202_PollThenDone",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_Reboot_202_PollThenDone (27 baris), parameter: t.",
+   "description": "Fungsi TestExecute_Reboot_202_PollThenDone (27 baris), parameter: t. Didefinisikan pada baris 177-204.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-reboot-202-pollthendone"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_202_CtxTimeout",
+   "type": "function",
+   "name": "TestExecute_202_CtxTimeout",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_202_CtxTimeout (21 baris), parameter: t.",
+   "description": "Fungsi TestExecute_202_CtxTimeout (21 baris), parameter: t. Didefinisikan pada baris 206-227.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-202-ctxtimeout"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_TaskFault",
+   "type": "function",
+   "name": "TestExecute_TaskFault",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_TaskFault (18 baris), parameter: t.",
+   "description": "Fungsi TestExecute_TaskFault (18 baris), parameter: t. Didefinisikan pada baris 229-247.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-taskfault"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_GetParameterValues_200",
+   "type": "function",
+   "name": "TestExecute_GetParameterValues_200",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_GetParameterValues_200 (27 baris), parameter: t.",
+   "description": "Fungsi TestExecute_GetParameterValues_200 (27 baris), parameter: t. Didefinisikan pada baris 249-276.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-getparametervalues-200"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_ConnectionRequestFlag",
+   "type": "function",
+   "name": "TestExecute_ConnectionRequestFlag",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_ConnectionRequestFlag (24 baris), parameter: t.",
+   "description": "Fungsi TestExecute_ConnectionRequestFlag (24 baris), parameter: t. Didefinisikan pada baris 278-302.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-connectionrequestflag"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_AuthHeader",
+   "type": "function",
+   "name": "TestExecute_AuthHeader",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestExecute_AuthHeader (19 baris), parameter: t.",
+   "description": "Fungsi TestExecute_AuthHeader (19 baris), parameter: t. Didefinisikan pada baris 304-323.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testexecute-authheader"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestClose_ReleasesIdleConnections",
+   "type": "function",
+   "name": "TestClose_ReleasesIdleConnections",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestClose_ReleasesIdleConnections (11 baris), parameter: t.",
+   "description": "Fungsi TestClose_ReleasesIdleConnections (11 baris), parameter: t. Didefinisikan pada baris 325-336.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testclose-releasesidleconnections"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genieacs/commands_test.go",
+   "type": "file",
+   "name": "commands_test.go",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (221 baris, 6 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (221 baris, 6 fungsi, 0 tipe). Fungsi terbesar: TestBuildTaskBody, TestFlattenJSON, TestClassify, TestTranslate, TestIsTaskCommand. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genieacs",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestClassify",
+   "type": "function",
+   "name": "TestClassify",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestClassify (22 baris), parameter: t.",
+   "description": "Fungsi TestClassify (22 baris), parameter: t. Didefinisikan pada baris 13-35.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testclassify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestTranslate",
+   "type": "function",
+   "name": "TestTranslate",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestTranslate (22 baris), parameter: t.",
+   "description": "Fungsi TestTranslate (22 baris), parameter: t. Didefinisikan pada baris 37-59.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testtranslate"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestIsTaskCommand",
+   "type": "function",
+   "name": "TestIsTaskCommand",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestIsTaskCommand (18 baris), parameter: t.",
+   "description": "Fungsi TestIsTaskCommand (18 baris), parameter: t. Didefinisikan pada baris 61-79.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testistaskcommand"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestBuildTaskBody",
+   "type": "function",
+   "name": "TestBuildTaskBody",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestBuildTaskBody (91 baris), parameter: t.",
+   "description": "Fungsi TestBuildTaskBody (91 baris), parameter: t. Didefinisikan pada baris 81-172.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testbuildtaskbody"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestProjectionFromParamNames",
+   "type": "function",
+   "name": "TestProjectionFromParamNames",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestProjectionFromParamNames (16 baris), parameter: t.",
+   "description": "Fungsi TestProjectionFromParamNames (16 baris), parameter: t. Didefinisikan pada baris 174-190.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testprojectionfromparamnames"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestFlattenJSON",
+   "type": "function",
+   "name": "TestFlattenJSON",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestFlattenJSON (29 baris), parameter: t.",
+   "description": "Fungsi TestFlattenJSON (29 baris), parameter: t. Didefinisikan pada baris 192-221.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testflattenjson"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genieacs/commands.go",
+   "type": "file",
+   "name": "commands.go",
+   "filePath": "internal/driver/genieacs/commands.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (136 baris, 5 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (136 baris, 5 fungsi, 1 tipe). Tipe utama: taskBody. Fungsi terbesar: buildTaskBody, taskTypeKnown, Translate, Classify, isTaskCommand. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genieacs",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/genieacs/commands.go:taskBody",
+   "type": "class",
+   "name": "taskBody",
+   "filePath": "internal/driver/genieacs/commands.go",
+   "complexity": "simple",
+   "summary": "Tipe taskBody di commands.go.",
+   "description": "Tipe taskBody di commands.go. Didefinisikan pada baris 92-98.",
+   "tags": [
+    "go",
+    "tipe",
+    "taskbody"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/genieacs/commands.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (5 baris), parameter: cmd.",
+   "description": "Fungsi Classify (5 baris), parameter: cmd. Didefinisikan pada baris 48-53.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/genieacs/commands.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (6 baris), parameter: op.",
+   "description": "Fungsi Translate (6 baris), parameter: op. Didefinisikan pada baris 56-62.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genieacs/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/genieacs/driver.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (199 baris, 6 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (199 baris, 6 fungsi, 1 tipe). Tipe utama: Driver. Fungsi terbesar: NewDriver, Execute, ping, Close, Classify. Bergantung pada 74 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "genieacs",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/genieacs/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/genieacs/driver.go",
+   "complexity": "simple",
+   "summary": "Tipe Driver di driver.go, dengan method: ping, Execute, Classify, Translate, Close.",
+   "description": "Tipe Driver di driver.go, dengan method: ping, Execute, Classify, Translate, Close. Didefinisikan pada baris 38-45.",
+   "tags": [
+    "go",
+    "tipe",
+    "driver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/genieacs/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewDriver (47 baris), parameter: ctx, target.",
+   "description": "Fungsi NewDriver (47 baris), parameter: ctx, target. Didefinisikan pada baris 62-109.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newdriver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/genieacs/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Execute (41 baris), parameter: ctx, cmd.",
+   "description": "Fungsi Execute (41 baris), parameter: ctx, cmd. Didefinisikan pada baris 140-181.",
+   "tags": [
+    "go",
+    "fungsi",
+    "execute"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/genieacs/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (2 baris), parameter: cmd.",
+   "description": "Fungsi Classify (2 baris), parameter: cmd. Didefinisikan pada baris 184-186.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/genieacs/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (2 baris), parameter: op.",
+   "description": "Fungsi Translate (2 baris), parameter: op. Didefinisikan pada baris 189-191.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "function:internal/driver/genieacs/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/genieacs/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (3 baris).",
+   "description": "Fungsi Close (3 baris). Didefinisikan pada baris 196-199.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "file:internal/driver/genieacs/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/driver/genieacs/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (27 baris, 0 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `genieacs` (27 baris, 0 fungsi, 0 tipe).",
+   "tags": [
+    "go",
+    "driver",
+    "genieacs",
+    "inti"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/domain/skill/errors.go",
+   "target": "file:internal/domain/skill/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/skill/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter_test.go",
+   "target": "file:internal/domain/skill/frontmatter_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter_test.go",
+   "target": "function:internal/domain/skill/frontmatter_test.go:TestBuildAndParseFrontmatter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter_test.go",
+   "target": "function:internal/domain/skill/frontmatter_test.go:TestParseFrontmatter_NoFrontmatter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter_test.go",
+   "target": "function:internal/domain/skill/frontmatter_test.go:TestValidateSkillName",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter_test.go",
+   "target": "function:internal/domain/skill/frontmatter_test.go:TestValidateResourcePath",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter_test.go",
+   "target": "file:internal/domain/skill/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter_test.go",
+   "target": "file:internal/domain/skill/frontmatter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter_test.go",
+   "target": "file:internal/domain/skill/skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter.go",
+   "target": "file:internal/domain/skill/frontmatter.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter.go",
+   "target": "class:internal/domain/skill/frontmatter.go:SkillMetadata",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter.go",
+   "target": "function:internal/domain/skill/frontmatter.go:BuildFrontmatter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter.go",
+   "target": "function:internal/domain/skill/frontmatter.go:ParseFrontmatter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter.go",
+   "target": "function:internal/domain/skill/frontmatter.go:parseFrontmatterFallback",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter.go",
+   "target": "function:internal/domain/skill/frontmatter.go:ValidateSkillName",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/frontmatter.go",
+   "target": "function:internal/domain/skill/frontmatter.go:ValidateResourcePath",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:internal/domain/skill/frontmatter.go:ParseFrontmatter",
+   "target": "function:internal/domain/skill/frontmatter.go:parseFrontmatterFallback",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/skill/skill.go",
+   "target": "file:internal/domain/skill/skill.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/skill.go",
+   "target": "class:internal/domain/skill/skill.go:Skill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/skill.go",
+   "target": "class:internal/domain/skill/skill.go:SkillResource",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/skill.go",
+   "target": "class:internal/domain/skill/skill.go:ResourceContent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/skill.go",
+   "target": "class:internal/domain/skill/skill.go:GitRepoInfo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/skill.go",
+   "target": "class:internal/domain/skill/skill.go:SkillInfo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/skill/skill.go",
+   "target": "class:internal/domain/skill/skill.go:SkillMetadataRecord",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/errors.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/subscription/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_dedicated.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_dedicated.go",
+   "target": "class:internal/domain/subscription/provision_dedicated.go:DedicatedQueueSpec",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_dedicated.go",
+   "target": "class:internal/domain/subscription/provision_dedicated.go:DedicatedProvisionSpec",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_hotspot.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_hotspot.go",
+   "target": "class:internal/domain/subscription/provision_hotspot.go:HotspotUserSpec",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_hotspot.go",
+   "target": "class:internal/domain/subscription/provision_hotspot.go:HotspotProfileSpec",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_hotspot.go",
+   "target": "class:internal/domain/subscription/provision_hotspot.go:HotspotProvisionSpec",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_pppoe.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_pppoe.go",
+   "target": "class:internal/domain/subscription/provision_pppoe.go:PPPoESecretSpec",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_pppoe.go",
+   "target": "class:internal/domain/subscription/provision_pppoe.go:PPPoEProfileSpec",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/provision_pppoe.go",
+   "target": "class:internal/domain/subscription/provision_pppoe.go:PPPoEProvisionSpec",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/subscriber.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/subscriber.go",
+   "target": "class:internal/domain/subscription/subscriber.go:SubscriberAccount",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/subscription.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/subscription.go",
+   "target": "class:internal/domain/subscription/subscription.go:PPPoESubscriptionConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/subscription.go",
+   "target": "class:internal/domain/subscription/subscription.go:HotspotSubscriptionConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/subscription.go",
+   "target": "class:internal/domain/subscription/subscription.go:Subscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/commands.go",
+   "target": "file:internal/driver/cisco/commands.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/commands.go",
+   "target": "function:internal/driver/cisco/commands.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/commands.go",
+   "target": "function:internal/driver/cisco/commands.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/commands.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/commands.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/commands.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/driver/cisco/driver.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "class:internal/driver/cisco/driver.go:Driver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:NewDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Execute",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/cisco/driver.go:Classify",
+   "target": "function:internal/driver/cisco/driver.go:Classify",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/cisco/driver.go:Translate",
+   "target": "function:internal/driver/cisco/driver.go:Translate",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog_test.go",
+   "target": "file:internal/driver/genericcli/catalog_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog_test.go",
+   "target": "function:internal/driver/genericcli/catalog_test.go:TestCatalog_Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog_test.go",
+   "target": "function:internal/driver/genericcli/catalog_test.go:TestCatalog_Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog_test.go",
+   "target": "function:internal/driver/genericcli/catalog_test.go:TestCatalog_ZeroValueIsUsable",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog.go",
+   "target": "file:internal/driver/genericcli/catalog.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog.go",
+   "target": "class:internal/driver/genericcli/catalog.go:Catalog",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog.go",
+   "target": "function:internal/driver/genericcli/catalog.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog.go",
+   "target": "function:internal/driver/genericcli/catalog.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/catalog.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/driver/genericcli/session.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "class:internal/driver/genericcli/session.go:cliDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "class:internal/driver/genericcli/session.go:Session",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:resolveDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:NewSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:dial",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Execute",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:sendWithReconnect",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/genericcli/session.go:dial",
+   "target": "function:internal/driver/genericcli/session.go:resolveDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genericssh/commands.go",
+   "target": "file:internal/driver/genericssh/commands.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/commands.go",
+   "target": "function:internal/driver/genericssh/commands.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/commands.go",
+   "target": "function:internal/driver/genericssh/commands.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/commands.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/commands.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/commands.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/driver/genericssh/driver.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "class:internal/driver/genericssh/driver.go:Driver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "function:internal/driver/genericssh/driver.go:NewDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "function:internal/driver/genericssh/driver.go:OpenTerminalSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "function:internal/driver/genericssh/driver.go:Execute",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "function:internal/driver/genericssh/driver.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "function:internal/driver/genericssh/driver.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "function:internal/driver/genericssh/driver.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/driver/genericcli/catalog_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/driver/genericcli/catalog.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/driver/genericcli/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/driver/genericssh/pty.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "class:internal/driver/genericssh/pty.go:SSHPtySession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "function:internal/driver/genericssh/pty.go:Stdin",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "function:internal/driver/genericssh/pty.go:Stdout",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "function:internal/driver/genericssh/pty.go:Resize",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "function:internal/driver/genericssh/pty.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "function:internal/driver/genericssh/pty.go:DialSSHPty",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericssh/pty.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/driver/generictelnet/driver.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "class:internal/driver/generictelnet/driver.go:Driver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "function:internal/driver/generictelnet/driver.go:NewDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "function:internal/driver/generictelnet/driver.go:Execute",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "function:internal/driver/generictelnet/driver.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "function:internal/driver/generictelnet/driver.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "function:internal/driver/generictelnet/driver.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/driver/genericcli/catalog_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/driver/genericcli/catalog.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/driver/genericcli/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/generictelnet/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "file:internal/driver/genieacs/client_http.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:execGetDevice",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:postTask",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:waitForTask",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:taskGone",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:taskFaultDetail",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:fetchParamValues",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:do",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:projectionFromParamNames",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "function:internal/driver/genieacs/client_http.go:flattenJSON",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_http.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_http.go:execGetDevice",
+   "target": "function:internal/driver/genieacs/client_http.go:flattenJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_http.go:fetchParamValues",
+   "target": "function:internal/driver/genieacs/client_http.go:projectionFromParamNames",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_http.go:flattenJSON",
+   "target": "function:internal/driver/genieacs/client_http.go:flattenJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/driver/genieacs/client_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:pingHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_MissingDeviceID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_UnreachableNBI",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:mustPort",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_ReachableDefaultsFields",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_CustomPollInterval",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice_NotFound",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_UnsupportedTaskType",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_200",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_202_PollThenDone",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_202_CtxTimeout",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_TaskFault",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetParameterValues_200",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_ConnectionRequestFlag",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_AuthHeader",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestClose_ReleasesIdleConnections",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:pingHandler",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestNewDriver_ReachableDefaultsFields",
+   "target": "function:internal/driver/genieacs/client_test.go:pingHandler",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestNewDriver_ReachableDefaultsFields",
+   "target": "function:internal/driver/genieacs/client_test.go:mustPort",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestNewDriver_CustomPollInterval",
+   "target": "function:internal/driver/genieacs/client_test.go:pingHandler",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestNewDriver_CustomPollInterval",
+   "target": "function:internal/driver/genieacs/client_test.go:mustPort",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice_NotFound",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice_NotFound",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_UnsupportedTaskType",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_200",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_200",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_202_PollThenDone",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_202_PollThenDone",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_202_CtxTimeout",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_202_CtxTimeout",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_TaskFault",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_TaskFault",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_GetParameterValues_200",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_GetParameterValues_200",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_ConnectionRequestFlag",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_ConnectionRequestFlag",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_AuthHeader",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestExecute_AuthHeader",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestClose_ReleasesIdleConnections",
+   "target": "function:internal/driver/genieacs/client_test.go:writeBody",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/client_test.go:TestClose_ReleasesIdleConnections",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "file:internal/driver/genieacs/commands_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestClassify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestTranslate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestIsTaskCommand",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestBuildTaskBody",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestProjectionFromParamNames",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestFlattenJSON",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "file:internal/driver/genieacs/commands.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "class:internal/driver/genieacs/commands.go:taskBody",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:isTaskCommand",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:taskTypeKnown",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:buildTaskBody",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/genieacs/commands.go:isTaskCommand",
+   "target": "function:internal/driver/genieacs/commands.go:taskTypeKnown",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/driver/genieacs/driver.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "class:internal/driver/genieacs/driver.go:Driver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "function:internal/driver/genieacs/driver.go:NewDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "function:internal/driver/genieacs/driver.go:ping",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "function:internal/driver/genieacs/driver.go:Execute",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "function:internal/driver/genieacs/driver.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "function:internal/driver/genieacs/driver.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "function:internal/driver/genieacs/driver.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/genieacs/driver.go:Classify",
+   "target": "function:internal/driver/genieacs/driver.go:Classify",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/genieacs/driver.go:Translate",
+   "target": "function:internal/driver/genieacs/driver.go:Translate",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/errors.go",
+   "target": "file:internal/driver/genieacs/errors.go",
+   "type": "contains",
+   "weight": 1
+  }
+ ]
+}

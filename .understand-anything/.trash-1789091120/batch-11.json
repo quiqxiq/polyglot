@@ -1,0 +1,123 @@
+{
+ "batchIndex": 11,
+ "nodes": [
+  {
+   "id": "document:internal/template/footer.default.txt",
+   "type": "document",
+   "name": "footer.default.txt",
+   "filePath": "internal/template/footer.default.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: footer.default.txt (43 baris).",
+   "description": "Dokumentasi: footer.default.txt (43 baris).",
+   "tags": [
+    "document",
+    "footer-default"
+   ]
+  },
+  {
+   "id": "document:internal/template/footer.small.txt",
+   "type": "document",
+   "name": "footer.small.txt",
+   "filePath": "internal/template/footer.small.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: footer.small.txt (25 baris).",
+   "description": "Dokumentasi: footer.small.txt (25 baris).",
+   "tags": [
+    "document",
+    "footer-small"
+   ]
+  },
+  {
+   "id": "document:internal/template/footer.thermal.txt",
+   "type": "document",
+   "name": "footer.thermal.txt",
+   "filePath": "internal/template/footer.thermal.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: footer.thermal.txt (25 baris).",
+   "description": "Dokumentasi: footer.thermal.txt (25 baris).",
+   "tags": [
+    "document",
+    "footer-thermal"
+   ]
+  },
+  {
+   "id": "document:internal/template/header.default.txt",
+   "type": "document",
+   "name": "header.default.txt",
+   "filePath": "internal/template/header.default.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: header.default.txt (74 baris).",
+   "description": "Dokumentasi: header.default.txt (74 baris).",
+   "tags": [
+    "document",
+    "header-default"
+   ]
+  },
+  {
+   "id": "document:internal/template/header.small.txt",
+   "type": "document",
+   "name": "header.small.txt",
+   "filePath": "internal/template/header.small.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: header.small.txt (45 baris).",
+   "description": "Dokumentasi: header.small.txt (45 baris).",
+   "tags": [
+    "document",
+    "header-small"
+   ]
+  },
+  {
+   "id": "document:internal/template/header.thermal.txt",
+   "type": "document",
+   "name": "header.thermal.txt",
+   "filePath": "internal/template/header.thermal.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: header.thermal.txt (65 baris).",
+   "description": "Dokumentasi: header.thermal.txt (65 baris).",
+   "tags": [
+    "document",
+    "header-thermal"
+   ]
+  },
+  {
+   "id": "document:internal/template/row.default.txt",
+   "type": "document",
+   "name": "row.default.txt",
+   "filePath": "internal/template/row.default.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: row.default.txt (43 baris).",
+   "description": "Dokumentasi: row.default.txt (43 baris).",
+   "tags": [
+    "document",
+    "row-default"
+   ]
+  },
+  {
+   "id": "document:internal/template/row.small.txt",
+   "type": "document",
+   "name": "row.small.txt",
+   "filePath": "internal/template/row.small.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: row.small.txt (31 baris).",
+   "description": "Dokumentasi: row.small.txt (31 baris).",
+   "tags": [
+    "document",
+    "row-small"
+   ]
+  },
+  {
+   "id": "document:internal/template/row.thermal.txt",
+   "type": "document",
+   "name": "row.thermal.txt",
+   "filePath": "internal/template/row.thermal.txt",
+   "complexity": "simple",
+   "summary": "Dokumentasi: row.thermal.txt (66 baris).",
+   "description": "Dokumentasi: row.thermal.txt (66 baris).",
+   "tags": [
+    "document",
+    "row-thermal"
+   ]
+  }
+ ],
+ "edges": []
+}

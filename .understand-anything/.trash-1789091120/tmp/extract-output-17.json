@@ -1,0 +1,6228 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/adapter/connect/hotspot/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 80,
+      "nonEmptyLines": 72,
+      "functions": [
+        {
+          "name": "toProtoHotspotUsers",
+          "startLine": 9,
+          "endLine": 15,
+          "params": [
+            "users"
+          ]
+        },
+        {
+          "name": "toProtoHotspotActiveSession",
+          "startLine": 18,
+          "endLine": 26,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "toProtoActiveSessions",
+          "startLine": 29,
+          "endLine": 35,
+          "params": [
+            "sessions"
+          ]
+        },
+        {
+          "name": "toProtoHotspotActiveStat",
+          "startLine": 38,
+          "endLine": 49,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "toProtoActiveStats",
+          "startLine": 52,
+          "endLine": 58,
+          "params": [
+            "stats"
+          ]
+        },
+        {
+          "name": "toProtoDHCPLease",
+          "startLine": 61,
+          "endLine": 71,
+          "params": [
+            "l"
+          ]
+        },
+        {
+          "name": "toProtoDHCPLeases",
+          "startLine": 74,
+          "endLine": 80,
+          "params": [
+            "leases"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoHotspotUsers",
+          "callee": "make",
+          "lineNumber": 10
+        },
+        {
+          "caller": "toProtoHotspotUsers",
+          "callee": "len",
+          "lineNumber": 10
+        },
+        {
+          "caller": "toProtoHotspotUsers",
+          "callee": "toProtoHotspotUser",
+          "lineNumber": 12
+        },
+        {
+          "caller": "toProtoActiveSessions",
+          "callee": "make",
+          "lineNumber": 30
+        },
+        {
+          "caller": "toProtoActiveSessions",
+          "callee": "len",
+          "lineNumber": 30
+        },
+        {
+          "caller": "toProtoActiveSessions",
+          "callee": "toProtoHotspotActiveSession",
+          "lineNumber": 32
+        },
+        {
+          "caller": "toProtoActiveStats",
+          "callee": "make",
+          "lineNumber": 53
+        },
+        {
+          "caller": "toProtoActiveStats",
+          "callee": "len",
+          "lineNumber": 53
+        },
+        {
+          "caller": "toProtoActiveStats",
+          "callee": "toProtoHotspotActiveStat",
+          "lineNumber": 55
+        },
+        {
+          "caller": "toProtoDHCPLeases",
+          "callee": "make",
+          "lineNumber": 75
+        },
+        {
+          "caller": "toProtoDHCPLeases",
+          "callee": "len",
+          "lineNumber": 75
+        },
+        {
+          "caller": "toProtoDHCPLeases",
+          "callee": "toProtoDHCPLease",
+          "lineNumber": 77
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/profile_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 110,
+      "nonEmptyLines": 94,
+      "functions": [
+        {
+          "name": "CreateProfile",
+          "startLine": 19,
+          "endLine": 41,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdateProfile",
+          "startLine": 44,
+          "endLine": 64,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteProfile",
+          "startLine": 69,
+          "endLine": 82,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "findProfileByName",
+          "startLine": 85,
+          "endLine": 96,
+          "params": [
+            "ctx",
+            "driver",
+            "name"
+          ]
+        },
+        {
+          "name": "findProfileByRosID",
+          "startLine": 99,
+          "endLine": 110,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CreateProfile",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProfile",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteProfile",
+          "line": 69,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateProfile",
+          "callee": "h.getDriver",
+          "lineNumber": 20
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "ProfileParamsFromProto",
+          "lineNumber": 25
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "domainHotspot.NormalizeProfileName",
+          "lineNumber": 26
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "h.useCase.CreateProfile",
+          "lineNumber": 28
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 29
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "h.findProfileByName",
+          "lineNumber": 32
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 37
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "toProtoHotspotProfile",
+          "lineNumber": 38
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 39
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "h.getDriver",
+          "lineNumber": 45
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "ProfileParamsFromProto",
+          "lineNumber": 50
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "h.useCase.UpdateProfile",
+          "lineNumber": 51
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 52
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "h.findProfileByRosID",
+          "lineNumber": 55
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 57
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 60
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "toProtoHotspotProfile",
+          "lineNumber": 61
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 62
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "h.getDriver",
+          "lineNumber": 70
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "h.useCase.DeleteProfile",
+          "lineNumber": 75
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 77
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 79
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 80
+        },
+        {
+          "caller": "findProfileByName",
+          "callee": "h.useCase.GetProfiles",
+          "lineNumber": 86
+        },
+        {
+          "caller": "findProfileByName",
+          "callee": "strings.EqualFold",
+          "lineNumber": 91
+        },
+        {
+          "caller": "findProfileByName",
+          "callee": "fmt.Errorf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "findProfileByRosID",
+          "callee": "h.useCase.GetProfiles",
+          "lineNumber": 100
+        },
+        {
+          "caller": "findProfileByRosID",
+          "callee": "fmt.Errorf",
+          "lineNumber": 109
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/profile_user_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 38,
+      "functions": [
+        {
+          "name": "ListProfiles",
+          "startLine": 13,
+          "endLine": 27,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListUsers",
+          "startLine": 29,
+          "endLine": 47,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListProfiles",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "ListUsers",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListProfiles",
+          "callee": "h.getDriver",
+          "lineNumber": 14
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "h.useCase.GetProfiles",
+          "lineNumber": 19
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "response.MapDomainError",
+          "lineNumber": 21
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "connect.NewResponse",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "toProtoHotspotProfiles",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "h.getDriver",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "h.useCase.GetUsers",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "sanitizeBatchTag",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "toProtoHotspotUsers",
+          "lineNumber": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/report_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 53,
+      "nonEmptyLines": 45,
+      "functions": [
+        {
+          "name": "ListReports",
+          "startLine": 17,
+          "endLine": 36,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteReport",
+          "startLine": 40,
+          "endLine": 53,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListReports",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteReport",
+          "line": 40,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListReports",
+          "callee": "h.getDriver",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ListReports",
+          "callee": "h.useCase.GetReportsByFilter",
+          "lineNumber": 23
+        },
+        {
+          "caller": "ListReports",
+          "callee": "response.MapDomainError",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ListReports",
+          "callee": "SumReportIncome",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ListReports",
+          "callee": "int32",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListReports",
+          "callee": "len",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListReports",
+          "callee": "toProtoHotspotReports",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ListReports",
+          "callee": "connect.NewResponse",
+          "lineNumber": 35
+        },
+        {
+          "caller": "DeleteReport",
+          "callee": "h.getDriver",
+          "lineNumber": 41
+        },
+        {
+          "caller": "DeleteReport",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 46
+        },
+        {
+          "caller": "DeleteReport",
+          "callee": "h.useCase.DeleteReport",
+          "lineNumber": 49
+        },
+        {
+          "caller": "DeleteReport",
+          "callee": "response.MapDomainError",
+          "lineNumber": 50
+        },
+        {
+          "caller": "DeleteReport",
+          "callee": "connect.NewResponse",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 78,
+      "nonEmptyLines": 62,
+      "functions": [
+        {
+          "name": "NewHotspotServiceHandler",
+          "startLine": 13,
+          "endLine": 78,
+          "params": [
+            "uc",
+            "provider"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewHotspotServiceHandler",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "NewHotspotConnectHandler",
+          "lineNumber": 17
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 18
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 35
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 35
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 36
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 36
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 39
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 39
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 40
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 40
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 43
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 43
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 45
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 45
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 48
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 48
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 49
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 49
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 50
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 50
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 53
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 53
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 54
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 54
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 55
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 55
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 56
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 56
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 59
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 59
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 60
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 60
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 63
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 63
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 64
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 64
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 67
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 67
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 68
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 68
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 69
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 69
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 70
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 70
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 73
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 73
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 74
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 74
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 75
+        },
+        {
+          "caller": "NewHotspotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 75
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/session_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "ListActiveSessions",
+          "startLine": 13,
+          "endLine": 27,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "KickActiveSession",
+          "startLine": 29,
+          "endLine": 47,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListActiveSessions",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "KickActiveSession",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListActiveSessions",
+          "callee": "h.getDriver",
+          "lineNumber": 14
+        },
+        {
+          "caller": "ListActiveSessions",
+          "callee": "h.useCase.GetActiveSessions",
+          "lineNumber": 19
+        },
+        {
+          "caller": "ListActiveSessions",
+          "callee": "response.MapDomainError",
+          "lineNumber": 21
+        },
+        {
+          "caller": "ListActiveSessions",
+          "callee": "connect.NewResponse",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListActiveSessions",
+          "callee": "toProtoActiveSessions",
+          "lineNumber": 25
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "h.getDriver",
+          "lineNumber": 30
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 36
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "h.useCase.RemoveActiveSession",
+          "lineNumber": 39
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "response.MapDomainError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "connect.NewResponse",
+          "lineNumber": 44
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/template_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 225,
+      "nonEmptyLines": 206,
+      "functions": [
+        {
+          "name": "ListTemplates",
+          "startLine": 23,
+          "endLine": 30,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetTemplateSection",
+          "startLine": 34,
+          "endLine": 49,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "RenderVouchers",
+          "startLine": 56,
+          "endLine": 177,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "previewVoucherData",
+          "startLine": 181,
+          "endLine": 192,
+          "params": []
+        },
+        {
+          "name": "normalizeTemplateLayout",
+          "startLine": 195,
+          "endLine": 204,
+          "params": [
+            "layout"
+          ]
+        },
+        {
+          "name": "normalizeTemplateSection",
+          "startLine": 207,
+          "endLine": 213,
+          "params": [
+            "section"
+          ]
+        },
+        {
+          "name": "formatPrice",
+          "startLine": 217,
+          "endLine": 225,
+          "params": [
+            "p"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListTemplates",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "GetTemplateSection",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "RenderVouchers",
+          "line": 56,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListTemplates",
+          "callee": "voucher.ListTemplates",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "make",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "len",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "connect.NewResponse",
+          "lineNumber": 29
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "normalizeTemplateLayout",
+          "lineNumber": 35
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "err.Error",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "normalizeTemplateSection",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 41
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "err.Error",
+          "lineNumber": 41
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "templatefs.FS.ReadFile",
+          "lineNumber": 44
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "voucher.TemplateFile",
+          "lineNumber": 44
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "response.MapDomainError",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "fault.Wrap",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "connect.NewResponse",
+          "lineNumber": 48
+        },
+        {
+          "caller": "GetTemplateSection",
+          "callee": "string",
+          "lineNumber": 48
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "normalizeTemplateLayout",
+          "lineNumber": 57
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 59
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "err.Error",
+          "lineNumber": 59
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "voucher.RenderWithOptions",
+          "lineNumber": 64
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "previewVoucherData",
+          "lineNumber": 64
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "voucher.Layout",
+          "lineNumber": 64
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 66
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 68
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 72
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 75
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "h.getDriver",
+          "lineNumber": 78
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "h.useCase.GetUser",
+          "lineNumber": 86
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 88
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "h.useCase.GetUsers",
+          "lineNumber": 94
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 98
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "len",
+          "lineNumber": 101
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "sanitizeBatchTag",
+          "lineNumber": 101
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "h.useCase.GetUsers",
+          "lineNumber": 102
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "sanitizeBatchTag",
+          "lineNumber": 103
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 106
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "len",
+          "lineNumber": 110
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "h.useCase.GetUsers",
+          "lineNumber": 111
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 113
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "strings.Contains",
+          "lineNumber": 115
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "append",
+          "lineNumber": 116
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "len",
+          "lineNumber": 122
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 123
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "fault.New",
+          "lineNumber": 123
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "h.useCase.GetSystemIdentity",
+          "lineNumber": 128
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "h.useCase.GetHotspotServers",
+          "lineNumber": 132
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "len",
+          "lineNumber": 132
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "h.useCase.GetProfiles",
+          "lineNumber": 144
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "domainHotspot.ParseOnLoginScript",
+          "lineNumber": 146
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "make",
+          "lineNumber": 152
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "len",
+          "lineNumber": 152
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "append",
+          "lineNumber": 155
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "formatPrice",
+          "lineNumber": 158
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "voucher.RenderWithOptions",
+          "lineNumber": 169
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "voucher.Layout",
+          "lineNumber": 169
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 171
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 173
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "int32",
+          "lineNumber": 175
+        },
+        {
+          "caller": "RenderVouchers",
+          "callee": "len",
+          "lineNumber": 175
+        },
+        {
+          "caller": "normalizeTemplateLayout",
+          "callee": "string",
+          "lineNumber": 197
+        },
+        {
+          "caller": "normalizeTemplateLayout",
+          "callee": "string",
+          "lineNumber": 200
+        },
+        {
+          "caller": "normalizeTemplateLayout",
+          "callee": "string",
+          "lineNumber": 200
+        },
+        {
+          "caller": "normalizeTemplateLayout",
+          "callee": "string",
+          "lineNumber": 200
+        },
+        {
+          "caller": "normalizeTemplateLayout",
+          "callee": "fmt.Errorf",
+          "lineNumber": 203
+        },
+        {
+          "caller": "normalizeTemplateSection",
+          "callee": "fmt.Errorf",
+          "lineNumber": 212
+        },
+        {
+          "caller": "formatPrice",
+          "callee": "math.Trunc",
+          "lineNumber": 221
+        },
+        {
+          "caller": "formatPrice",
+          "callee": "strconv.FormatFloat",
+          "lineNumber": 222
+        },
+        {
+          "caller": "formatPrice",
+          "callee": "strconv.FormatFloat",
+          "lineNumber": 224
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/user_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 187,
+      "nonEmptyLines": 159,
+      "functions": [
+        {
+          "name": "GetUser",
+          "startLine": 17,
+          "endLine": 28,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CreateUser",
+          "startLine": 32,
+          "endLine": 58,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdateUser",
+          "startLine": 63,
+          "endLine": 91,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ResetUserCounters",
+          "startLine": 94,
+          "endLine": 107,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteUser",
+          "startLine": 110,
+          "endLine": 123,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteHotspotUsers",
+          "startLine": 126,
+          "endLine": 141,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CheckVoucherStatus",
+          "startLine": 144,
+          "endLine": 187,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetUser",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUser",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateUser",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "ResetUserCounters",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteUser",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteHotspotUsers",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "CheckVoucherStatus",
+          "line": 144,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetUser",
+          "callee": "h.getDriver",
+          "lineNumber": 18
+        },
+        {
+          "caller": "GetUser",
+          "callee": "h.useCase.GetUser",
+          "lineNumber": 23
+        },
+        {
+          "caller": "GetUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 25
+        },
+        {
+          "caller": "GetUser",
+          "callee": "connect.NewResponse",
+          "lineNumber": 27
+        },
+        {
+          "caller": "GetUser",
+          "callee": "toProtoHotspotUser",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "h.getDriver",
+          "lineNumber": 33
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "domainHotspot.BuildCreateUserComment",
+          "lineNumber": 38
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "time.Now",
+          "lineNumber": 38
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "HotspotUserParamsFromProto",
+          "lineNumber": 39
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "h.useCase.AddUser",
+          "lineNumber": 41
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 42
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "h.useCase.GetUsers",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 48
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "len",
+          "lineNumber": 50
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "response.Internal",
+          "lineNumber": 51
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "connect.NewResponse",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "toProtoHotspotUser",
+          "lineNumber": 55
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 56
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "h.getDriver",
+          "lineNumber": 64
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "h.useCase.ResetUserCounters",
+          "lineNumber": 70
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 71
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "domainHotspot.BuildUpdatedComment",
+          "lineNumber": 75
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "time.Now",
+          "lineNumber": 75
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "HotspotUserParamsUpdateFromProto",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "h.useCase.UpdateUser",
+          "lineNumber": 78
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 79
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "h.useCase.GetUser",
+          "lineNumber": 82
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 84
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "connect.NewResponse",
+          "lineNumber": 87
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "toProtoHotspotUser",
+          "lineNumber": 88
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ResetUserCounters",
+          "callee": "h.getDriver",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ResetUserCounters",
+          "callee": "h.useCase.ResetUserCounters",
+          "lineNumber": 100
+        },
+        {
+          "caller": "ResetUserCounters",
+          "callee": "response.MapDomainError",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ResetUserCounters",
+          "callee": "connect.NewResponse",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ResetUserCounters",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 105
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "h.getDriver",
+          "lineNumber": 111
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "h.useCase.RemoveUser",
+          "lineNumber": 116
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 118
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "connect.NewResponse",
+          "lineNumber": 120
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 121
+        },
+        {
+          "caller": "DeleteHotspotUsers",
+          "callee": "h.getDriver",
+          "lineNumber": 127
+        },
+        {
+          "caller": "DeleteHotspotUsers",
+          "callee": "h.useCase.DeleteUsersByFilter",
+          "lineNumber": 132
+        },
+        {
+          "caller": "DeleteHotspotUsers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 134
+        },
+        {
+          "caller": "DeleteHotspotUsers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 137
+        },
+        {
+          "caller": "DeleteHotspotUsers",
+          "callee": "int32",
+          "lineNumber": 138
+        },
+        {
+          "caller": "DeleteHotspotUsers",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 139
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "h.getDriver",
+          "lineNumber": 145
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "h.useCase.CheckVoucherStatus",
+          "lineNumber": 150
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "response.MapDomainError",
+          "lineNumber": 152
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "toProtoHotspotUser",
+          "lineNumber": 168
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "toProtoHotspotProfile",
+          "lineNumber": 171
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "toProtoHotspotActiveSession",
+          "lineNumber": 174
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "connect.NewResponse",
+          "lineNumber": 186
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/voucher_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 109,
+      "nonEmptyLines": 96,
+      "functions": [
+        {
+          "name": "GenerateVouchers",
+          "startLine": 18,
+          "endLine": 62,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetVoucherBatch",
+          "startLine": 66,
+          "endLine": 103,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "sanitizeBatchTag",
+          "startLine": 107,
+          "endLine": 109,
+          "params": [
+            "s"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GenerateVouchers",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "GetVoucherBatch",
+          "line": 66,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GenerateVouchers",
+          "callee": "h.getDriver",
+          "lineNumber": 19
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "int",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "sanitizeBatchTag",
+          "lineNumber": 32
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "int",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "domainHotspot.CharSet",
+          "lineNumber": 34
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "sanitizeBatchTag",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "h.useCase.GenerateVouchers",
+          "lineNumber": 40
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "dataLimitBytes",
+          "lineNumber": 45
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "make",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "len",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 58
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "len",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "h.getDriver",
+          "lineNumber": 67
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "h.useCase.GetUsers",
+          "lineNumber": 73
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "response.MapDomainError",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "len",
+          "lineNumber": 79
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "sanitizeBatchTag",
+          "lineNumber": 79
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "h.useCase.GetUsers",
+          "lineNumber": 80
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "sanitizeBatchTag",
+          "lineNumber": 81
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "response.MapDomainError",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "len",
+          "lineNumber": 87
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "h.useCase.GetUsers",
+          "lineNumber": 88
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 90
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "strings.Contains",
+          "lineNumber": 92
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "append",
+          "lineNumber": 93
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "connect.NewResponse",
+          "lineNumber": 99
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "toProtoHotspotUsers",
+          "lineNumber": 100
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "int32",
+          "lineNumber": 101
+        },
+        {
+          "caller": "GetVoucherBatch",
+          "callee": "len",
+          "lineNumber": 101
+        },
+        {
+          "caller": "sanitizeBatchTag",
+          "callee": "strings.Join",
+          "lineNumber": 108
+        },
+        {
+          "caller": "sanitizeBatchTag",
+          "callee": "strings.Fields",
+          "lineNumber": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ispadmin/ispadmin_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 420,
+      "nonEmptyLines": 383,
+      "functions": [
+        {
+          "name": "NewISPAdminConnectHandler",
+          "startLine": 32,
+          "endLine": 46,
+          "params": [
+            "upsert",
+            "routerSrc",
+            "reconciler",
+            "exporter",
+            "resolver"
+          ]
+        },
+        {
+          "name": "ImportFile",
+          "startLine": 49,
+          "endLine": 99,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ImportRouter",
+          "startLine": 102,
+          "endLine": 172,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ExportCustomers",
+          "startLine": 175,
+          "endLine": 194,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "Reconcile",
+          "startLine": 197,
+          "endLine": 211,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "toProtoImportResult",
+          "startLine": 213,
+          "endLine": 225,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "PullRouterPlans",
+          "startLine": 228,
+          "endLine": 268,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CommitPlans",
+          "startLine": 271,
+          "endLine": 309,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "PullRouterCustomers",
+          "startLine": 312,
+          "endLine": 369,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CommitCustomers",
+          "startLine": 372,
+          "endLine": 420,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ISPAdminConnectHandler",
+          "startLine": 23,
+          "endLine": 29,
+          "methods": [
+            "ImportFile",
+            "ImportRouter",
+            "ExportCustomers",
+            "Reconcile",
+            "PullRouterPlans",
+            "CommitPlans",
+            "PullRouterCustomers",
+            "CommitCustomers"
+          ],
+          "properties": [
+            "upsert",
+            "routerSrc",
+            "reconciler",
+            "exporter",
+            "resolve"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ISPAdminConnectHandler",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "NewISPAdminConnectHandler",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "ImportFile",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "ImportRouter",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "ExportCustomers",
+          "line": 175,
+          "isDefault": false
+        },
+        {
+          "name": "Reconcile",
+          "line": 197,
+          "isDefault": false
+        },
+        {
+          "name": "PullRouterPlans",
+          "line": 228,
+          "isDefault": false
+        },
+        {
+          "name": "CommitPlans",
+          "line": 271,
+          "isDefault": false
+        },
+        {
+          "name": "PullRouterCustomers",
+          "line": 312,
+          "isDefault": false
+        },
+        {
+          "name": "CommitCustomers",
+          "line": 372,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ImportFile",
+          "callee": "response.Unavailable",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "importer.ParseXLSX",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "importer.ParseCSV",
+          "lineNumber": 58
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "bytes.NewReader",
+          "lineNumber": 58
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "fault.Wrap",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "importer.ValidateRows",
+          "lineNumber": 64
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "make",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "len",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "append",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "e.Error",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "make",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "append",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 78
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "int32",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "len",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "len",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "int32",
+          "lineNumber": 87
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "len",
+          "lineNumber": 87
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "h.upsert.ImportWithDevice",
+          "lineNumber": 92
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 94
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ImportFile",
+          "callee": "toProtoImportResult",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "h.resolve",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "response.MapDomainError",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "h.routerSrc.PullRouterRows",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "response.MapDomainError",
+          "lineNumber": 120
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 125
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 126
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "importer.ValidateRouterRows",
+          "lineNumber": 129
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "make",
+          "lineNumber": 130
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "len",
+          "lineNumber": 130
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "append",
+          "lineNumber": 132
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "e.Error",
+          "lineNumber": 132
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "make",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "append",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "connect.NewResponse",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 144
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "len",
+          "lineNumber": 144
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 149
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "len",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "connect.NewResponse",
+          "lineNumber": 155
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "len",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "h.upsert.ImportWithDevice",
+          "lineNumber": 161
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "response.MapDomainError",
+          "lineNumber": 163
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "connect.NewResponse",
+          "lineNumber": 165
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "toProtoImportResult",
+          "lineNumber": 166
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 167
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 168
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 169
+        },
+        {
+          "caller": "ImportRouter",
+          "callee": "int32",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ExportCustomers",
+          "callee": "response.Unavailable",
+          "lineNumber": 177
+        },
+        {
+          "caller": "ExportCustomers",
+          "callee": "h.exporter.ExportAll",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ExportCustomers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 189
+        },
+        {
+          "caller": "ExportCustomers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 191
+        },
+        {
+          "caller": "Reconcile",
+          "callee": "h.resolve",
+          "lineNumber": 198
+        },
+        {
+          "caller": "Reconcile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 200
+        },
+        {
+          "caller": "Reconcile",
+          "callee": "h.reconciler.Compare",
+          "lineNumber": 202
+        },
+        {
+          "caller": "Reconcile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 204
+        },
+        {
+          "caller": "Reconcile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 206
+        },
+        {
+          "caller": "toProtoImportResult",
+          "callee": "int32",
+          "lineNumber": 218
+        },
+        {
+          "caller": "toProtoImportResult",
+          "callee": "int32",
+          "lineNumber": 219
+        },
+        {
+          "caller": "toProtoImportResult",
+          "callee": "int32",
+          "lineNumber": 220
+        },
+        {
+          "caller": "toProtoImportResult",
+          "callee": "int32",
+          "lineNumber": 221
+        },
+        {
+          "caller": "toProtoImportResult",
+          "callee": "int32",
+          "lineNumber": 222
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "h.resolve",
+          "lineNumber": 232
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "response.MapDomainError",
+          "lineNumber": 234
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "h.routerSrc.PullRouterPlans",
+          "lineNumber": 237
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "response.MapDomainError",
+          "lineNumber": 239
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "make",
+          "lineNumber": 242
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "len",
+          "lineNumber": 242
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "append",
+          "lineNumber": 244
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "int32",
+          "lineNumber": 248
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "int32",
+          "lineNumber": 249
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "int32",
+          "lineNumber": 254
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "connect.NewResponse",
+          "lineNumber": 263
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "int32",
+          "lineNumber": 265
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "int32",
+          "lineNumber": 266
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "response.Unavailable",
+          "lineNumber": 276
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "make",
+          "lineNumber": 279
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "len",
+          "lineNumber": 279
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "append",
+          "lineNumber": 281
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "int",
+          "lineNumber": 285
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "int",
+          "lineNumber": 286
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "int",
+          "lineNumber": 291
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "h.upsert.CommitPlans",
+          "lineNumber": 299
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "response.MapDomainError",
+          "lineNumber": 301
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "connect.NewResponse",
+          "lineNumber": 304
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "int32",
+          "lineNumber": 305
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "int32",
+          "lineNumber": 306
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "h.resolve",
+          "lineNumber": 316
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 318
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "h.routerSrc.PullRouterCustomerSubscriptionRows",
+          "lineNumber": 327
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 331
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "make",
+          "lineNumber": 334
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "len",
+          "lineNumber": 334
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "append",
+          "lineNumber": 336
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "int32",
+          "lineNumber": 353
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 362
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "int32",
+          "lineNumber": 364
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "int32",
+          "lineNumber": 365
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "int32",
+          "lineNumber": 366
+        },
+        {
+          "caller": "PullRouterCustomers",
+          "callee": "int32",
+          "lineNumber": 367
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "response.Unavailable",
+          "lineNumber": 377
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "make",
+          "lineNumber": 380
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "len",
+          "lineNumber": 380
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "append",
+          "lineNumber": 382
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "int",
+          "lineNumber": 399
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "h.upsert.CommitCustomerSubscriptionRows",
+          "lineNumber": 407
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 409
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 412
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "int32",
+          "lineNumber": 413
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "int32",
+          "lineNumber": 414
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "int32",
+          "lineNumber": 415
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "int32",
+          "lineNumber": 416
+        },
+        {
+          "caller": "CommitCustomers",
+          "callee": "int32",
+          "lineNumber": 417
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 10,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ispadmin/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 33,
+      "functions": [
+        {
+          "name": "NewISPAdminServiceHandler",
+          "startLine": 15,
+          "endLine": 37,
+          "params": [
+            "upsert",
+            "routerSrc",
+            "reconciler",
+            "exporter",
+            "resolver"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewISPAdminServiceHandler",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "NewISPAdminConnectHandler",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewISPAdminServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/llm/llm_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 145,
+      "nonEmptyLines": 130,
+      "functions": [
+        {
+          "name": "NewLLMConnectHandler",
+          "startLine": 22,
+          "endLine": 26,
+          "params": [
+            "useCase"
+          ]
+        },
+        {
+          "name": "ListLLMConfigs",
+          "startLine": 29,
+          "endLine": 40,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CreateLLMConfig",
+          "startLine": 43,
+          "endLine": 68,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdateLLMConfig",
+          "startLine": 71,
+          "endLine": 97,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ActivateLLMConfig",
+          "startLine": 100,
+          "endLine": 111,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "TestLLMConfig",
+          "startLine": 114,
+          "endLine": 131,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteLLMConfig",
+          "startLine": 134,
+          "endLine": 145,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LLMConnectHandler",
+          "startLine": 17,
+          "endLine": 19,
+          "methods": [
+            "ListLLMConfigs",
+            "CreateLLMConfig",
+            "UpdateLLMConfig",
+            "ActivateLLMConfig",
+            "TestLLMConfig",
+            "DeleteLLMConfig"
+          ],
+          "properties": [
+            "useCase"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LLMConnectHandler",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "NewLLMConnectHandler",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "ListLLMConfigs",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "CreateLLMConfig",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateLLMConfig",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "ActivateLLMConfig",
+          "line": 100,
+          "isDefault": false
+        },
+        {
+          "name": "TestLLMConfig",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteLLMConfig",
+          "line": 134,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListLLMConfigs",
+          "callee": "connect.NewResponse",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ListLLMConfigs",
+          "callee": "h.useCase.List",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ListLLMConfigs",
+          "callee": "response.MapDomainError",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListLLMConfigs",
+          "callee": "connect.NewResponse",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListLLMConfigs",
+          "callee": "ToProtoLLMConfigList",
+          "lineNumber": 38
+        },
+        {
+          "caller": "CreateLLMConfig",
+          "callee": "response.Unavailable",
+          "lineNumber": 45
+        },
+        {
+          "caller": "CreateLLMConfig",
+          "callee": "h.useCase.Create",
+          "lineNumber": 48
+        },
+        {
+          "caller": "CreateLLMConfig",
+          "callee": "int",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateLLMConfig",
+          "callee": "response.MapDomainError",
+          "lineNumber": 62
+        },
+        {
+          "caller": "CreateLLMConfig",
+          "callee": "connect.NewResponse",
+          "lineNumber": 65
+        },
+        {
+          "caller": "CreateLLMConfig",
+          "callee": "ToProtoLLMConfig",
+          "lineNumber": 66
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "response.Unavailable",
+          "lineNumber": 73
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 75
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "h.useCase.Update",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "uint",
+          "lineNumber": 77
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "int",
+          "lineNumber": 83
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "response.MapDomainError",
+          "lineNumber": 91
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "connect.NewResponse",
+          "lineNumber": 94
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "ToProtoLLMConfig",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ActivateLLMConfig",
+          "callee": "response.Unavailable",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ActivateLLMConfig",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ActivateLLMConfig",
+          "callee": "h.useCase.SetActive",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ActivateLLMConfig",
+          "callee": "uint",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ActivateLLMConfig",
+          "callee": "response.MapDomainError",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ActivateLLMConfig",
+          "callee": "connect.NewResponse",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestLLMConfig",
+          "callee": "response.Unavailable",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestLLMConfig",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestLLMConfig",
+          "callee": "h.useCase.TestConnection",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestLLMConfig",
+          "callee": "uint",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestLLMConfig",
+          "callee": "connect.NewResponse",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestLLMConfig",
+          "callee": "err.Error",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestLLMConfig",
+          "callee": "connect.NewResponse",
+          "lineNumber": 127
+        },
+        {
+          "caller": "DeleteLLMConfig",
+          "callee": "response.Unavailable",
+          "lineNumber": 136
+        },
+        {
+          "caller": "DeleteLLMConfig",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 138
+        },
+        {
+          "caller": "DeleteLLMConfig",
+          "callee": "h.useCase.Delete",
+          "lineNumber": 139
+        },
+        {
+          "caller": "DeleteLLMConfig",
+          "callee": "uint",
+          "lineNumber": 139
+        },
+        {
+          "caller": "DeleteLLMConfig",
+          "callee": "response.MapDomainError",
+          "lineNumber": 140
+        },
+        {
+          "caller": "DeleteLLMConfig",
+          "callee": "connect.NewResponse",
+          "lineNumber": 142
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/llm/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 34,
+      "functions": [
+        {
+          "name": "ToProtoLLMConfig",
+          "startLine": 11,
+          "endLine": 29,
+          "params": [
+            "cfg"
+          ]
+        },
+        {
+          "name": "ToProtoLLMConfigList",
+          "startLine": 32,
+          "endLine": 38,
+          "params": [
+            "configs"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ToProtoLLMConfig",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "ToProtoLLMConfigList",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ToProtoLLMConfig",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 16
+        },
+        {
+          "caller": "ToProtoLLMConfig",
+          "callee": "int32",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ToProtoLLMConfigList",
+          "callee": "make",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ToProtoLLMConfigList",
+          "callee": "len",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ToProtoLLMConfigList",
+          "callee": "ToProtoLLMConfig",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/llm/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 23,
+      "functions": [
+        {
+          "name": "NewLLMConfigServiceHandler",
+          "startLine": 13,
+          "endLine": 30,
+          "params": [
+            "useCase"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewLLMConfigServiceHandler",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "NewLLMConnectHandler",
+          "lineNumber": 16
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 17
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 18
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewLLMConfigServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 45,
+      "functions": [
+        {
+          "name": "NewNetworkMonitorConnectHandler",
+          "startLine": 28,
+          "endLine": 40,
+          "params": [
+            "hsUC",
+            "activeUC",
+            "provider",
+            "streamGW"
+          ]
+        },
+        {
+          "name": "getDriver",
+          "startLine": 42,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "deviceID"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "NetworkMonitorConnectHandler",
+          "startLine": 20,
+          "endLine": 25,
+          "methods": [
+            "getDriver"
+          ],
+          "properties": [
+            "hotspotUC",
+            "activeSessionsUseCase",
+            "driverProvider",
+            "streamGW"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NetworkMonitorConnectHandler",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "NewNetworkMonitorConnectHandler",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getDriver",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 44
+        },
+        {
+          "caller": "getDriver",
+          "callee": "h.driverProvider",
+          "lineNumber": 46
+        },
+        {
+          "caller": "getDriver",
+          "callee": "response.MapDomainError",
+          "lineNumber": 48
+        },
+        {
+          "caller": "getDriver",
+          "callee": "fault.Wrap",
+          "lineNumber": 48
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "toProtoActiveSessions",
+          "startLine": 8,
+          "endLine": 20,
+          "params": [
+            "sessions"
+          ]
+        },
+        {
+          "name": "toProtoActiveStats",
+          "startLine": 22,
+          "endLine": 37,
+          "params": [
+            "stats"
+          ]
+        },
+        {
+          "name": "toProtoHotspotUsers",
+          "startLine": 39,
+          "endLine": 58,
+          "params": [
+            "users"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoActiveSessions",
+          "callee": "make",
+          "lineNumber": 9
+        },
+        {
+          "caller": "toProtoActiveSessions",
+          "callee": "len",
+          "lineNumber": 9
+        },
+        {
+          "caller": "toProtoActiveStats",
+          "callee": "make",
+          "lineNumber": 23
+        },
+        {
+          "caller": "toProtoActiveStats",
+          "callee": "len",
+          "lineNumber": 23
+        },
+        {
+          "caller": "toProtoHotspotUsers",
+          "callee": "make",
+          "lineNumber": 40
+        },
+        {
+          "caller": "toProtoHotspotUsers",
+          "callee": "len",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/monitor_interface_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 124,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "StreamTraffic",
+          "startLine": 16,
+          "endLine": 62,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        },
+        {
+          "name": "StreamInterfaceEthernet",
+          "startLine": 65,
+          "endLine": 124,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamTraffic",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "StreamInterfaceEthernet",
+          "line": 65,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamTraffic",
+          "callee": "h.getDriver",
+          "lineNumber": 17
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "response.Unimplemented",
+          "lineNumber": 24
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "h.streamGW.StreamTraffic",
+          "lineNumber": 32
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "response.MapDomainError",
+          "lineNumber": 34
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 36
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "handle.Cancel",
+          "lineNumber": 36
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "ctx.Done",
+          "lineNumber": 40
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "handle.Chan",
+          "lineNumber": 42
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "handle.Err",
+          "lineNumber": 44
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "h.streamGW.ParseInterfaceTraffic",
+          "lineNumber": 46
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 48
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "stream.Send",
+          "lineNumber": 50
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "time.Now().Unix",
+          "lineNumber": 55
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "time.Now",
+          "lineNumber": 55
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "h.getDriver",
+          "lineNumber": 66
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "response.Unimplemented",
+          "lineNumber": 73
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "h.streamGW.StreamInterfaces",
+          "lineNumber": 81
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "response.MapDomainError",
+          "lineNumber": 83
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 85
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "handle.Cancel",
+          "lineNumber": 85
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "ctx.Done",
+          "lineNumber": 89
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "handle.Chan",
+          "lineNumber": 91
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "handle.Err",
+          "lineNumber": 93
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "h.streamGW.ParseInterfaces",
+          "lineNumber": 95
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "make",
+          "lineNumber": 96
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "len",
+          "lineNumber": 96
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "append",
+          "lineNumber": 98
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "stream.Send",
+          "lineNumber": 114
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "time.Now().Unix",
+          "lineNumber": 116
+        },
+        {
+          "caller": "StreamInterfaceEthernet",
+          "callee": "time.Now",
+          "lineNumber": 116
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/monitor_log_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 58,
+      "functions": [
+        {
+          "name": "StreamLogs",
+          "startLine": 16,
+          "endLine": 67,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamLogs",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamLogs",
+          "callee": "h.getDriver",
+          "lineNumber": 17
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "response.Unimplemented",
+          "lineNumber": 24
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "h.streamGW.StreamLogs",
+          "lineNumber": 27
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "logger.WithComponent(\"NetworkMonitorConnectHandler\").WithError(err).Warn",
+          "lineNumber": 29
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "logger.WithComponent(\"NetworkMonitorConnectHandler\").WithError",
+          "lineNumber": 29
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "logger.WithComponent",
+          "lineNumber": 29
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "response.MapDomainError",
+          "lineNumber": 30
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 32
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "handle.Cancel",
+          "lineNumber": 32
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "ctx.Done",
+          "lineNumber": 36
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "handle.Chan",
+          "lineNumber": 38
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "handle.Err",
+          "lineNumber": 40
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "h.streamGW.ParseLogEntries",
+          "lineNumber": 42
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "len",
+          "lineNumber": 43
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "make",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "len",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "append",
+          "lineNumber": 49
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "stream.Send",
+          "lineNumber": 57
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "time.Now().Unix",
+          "lineNumber": 59
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "time.Now",
+          "lineNumber": 59
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/monitor_ppp_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 362,
+      "nonEmptyLines": 332,
+      "functions": [
+        {
+          "name": "StreamPPPActive",
+          "startLine": 21,
+          "endLine": 127,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        },
+        {
+          "name": "newPPPSessionState",
+          "startLine": 137,
+          "endLine": 142,
+          "params": []
+        },
+        {
+          "name": "updateSecret",
+          "startLine": 144,
+          "endLine": 171,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "updateActive",
+          "startLine": 173,
+          "endLine": 198,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "inactive",
+          "startLine": 201,
+          "endLine": 213,
+          "params": []
+        },
+        {
+          "name": "StreamPPPInactive",
+          "startLine": 217,
+          "endLine": 362,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "pppSessionState",
+          "startLine": 131,
+          "endLine": 135,
+          "methods": [
+            "updateSecret",
+            "updateActive",
+            "inactive"
+          ],
+          "properties": [
+            "mu",
+            "secretMap",
+            "activeMap"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamPPPActive",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "StreamPPPInactive",
+          "line": 217,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamPPPActive",
+          "callee": "h.getDriver",
+          "lineNumber": 22
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "response.Unimplemented",
+          "lineNumber": 29
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "make",
+          "lineNumber": 32
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "h.activeSessionsUseCase.GetPPPActiveSessions",
+          "lineNumber": 36
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "make",
+          "lineNumber": 43
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "len",
+          "lineNumber": 43
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "append",
+          "lineNumber": 45
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "stream.Send",
+          "lineNumber": 58
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "time.Now().Unix",
+          "lineNumber": 60
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "time.Now",
+          "lineNumber": 60
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "h.streamGW.StreamPPPActive",
+          "lineNumber": 64
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "response.MapDomainError",
+          "lineNumber": 66
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 68
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "handle.Cancel",
+          "lineNumber": 68
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "ctx.Done",
+          "lineNumber": 72
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "handle.Chan",
+          "lineNumber": 74
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "handle.Err",
+          "lineNumber": 76
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "strings.EqualFold",
+          "lineNumber": 83
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "strings.EqualFold",
+          "lineNumber": 83
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "delete",
+          "lineNumber": 84
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "strings.EqualFold",
+          "lineNumber": 99
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "make",
+          "lineNumber": 103
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "len",
+          "lineNumber": 103
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "append",
+          "lineNumber": 105
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "stream.Send",
+          "lineNumber": 117
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "time.Now().Unix",
+          "lineNumber": 119
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "time.Now",
+          "lineNumber": 119
+        },
+        {
+          "caller": "newPPPSessionState",
+          "callee": "make",
+          "lineNumber": 139
+        },
+        {
+          "caller": "newPPPSessionState",
+          "callee": "make",
+          "lineNumber": 140
+        },
+        {
+          "caller": "updateSecret",
+          "callee": "s.mu.Lock",
+          "lineNumber": 145
+        },
+        {
+          "caller": "updateSecret",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 146
+        },
+        {
+          "caller": "updateSecret",
+          "callee": "strings.EqualFold",
+          "lineNumber": 151
+        },
+        {
+          "caller": "updateSecret",
+          "callee": "strings.EqualFold",
+          "lineNumber": 151
+        },
+        {
+          "caller": "updateSecret",
+          "callee": "delete",
+          "lineNumber": 152
+        },
+        {
+          "caller": "updateSecret",
+          "callee": "strings.EqualFold",
+          "lineNumber": 167
+        },
+        {
+          "caller": "updateActive",
+          "callee": "s.mu.Lock",
+          "lineNumber": 174
+        },
+        {
+          "caller": "updateActive",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 175
+        },
+        {
+          "caller": "updateActive",
+          "callee": "strings.EqualFold",
+          "lineNumber": 180
+        },
+        {
+          "caller": "updateActive",
+          "callee": "strings.EqualFold",
+          "lineNumber": 180
+        },
+        {
+          "caller": "updateActive",
+          "callee": "delete",
+          "lineNumber": 181
+        },
+        {
+          "caller": "updateActive",
+          "callee": "strings.EqualFold",
+          "lineNumber": 196
+        },
+        {
+          "caller": "inactive",
+          "callee": "s.mu.Lock",
+          "lineNumber": 202
+        },
+        {
+          "caller": "inactive",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 203
+        },
+        {
+          "caller": "inactive",
+          "callee": "make",
+          "lineNumber": 204
+        },
+        {
+          "caller": "inactive",
+          "callee": "len",
+          "lineNumber": 204
+        },
+        {
+          "caller": "inactive",
+          "callee": "append",
+          "lineNumber": 206
+        },
+        {
+          "caller": "inactive",
+          "callee": "make",
+          "lineNumber": 208
+        },
+        {
+          "caller": "inactive",
+          "callee": "len",
+          "lineNumber": 208
+        },
+        {
+          "caller": "inactive",
+          "callee": "append",
+          "lineNumber": 210
+        },
+        {
+          "caller": "inactive",
+          "callee": "domainPPP.FilterInactiveSecrets",
+          "lineNumber": 212
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "h.getDriver",
+          "lineNumber": 218
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "response.Unimplemented",
+          "lineNumber": 225
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "newPPPSessionState",
+          "lineNumber": 228
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "h.activeSessionsUseCase.GetPPPInactiveSessions",
+          "lineNumber": 232
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "h.activeSessionsUseCase.GetPPPActiveSessions",
+          "lineNumber": 233
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "make",
+          "lineNumber": 242
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "len",
+          "lineNumber": 242
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "append",
+          "lineNumber": 244
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "stream.Send",
+          "lineNumber": 259
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "time.Now().Unix",
+          "lineNumber": 261
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "time.Now",
+          "lineNumber": 261
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "make",
+          "lineNumber": 265
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "make",
+          "lineNumber": 266
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "wg.Add",
+          "lineNumber": 270
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "func() {\n\t\t\tdefer wg.Done()\n\t\t\thandle, err := openStream()\n\t\t\tif err != nil {\n\t\t\t\treturn\n\t\t\t}\n\t\t\tdefer func() { _ = handle.Cancel() }()\n\t\t\tfor {\n\t\t\t\tselect {\n\t\t\t\tcase <-ctx.Done():\n\t\t\t\t\treturn\n\t\t\t\tcase res, ok := <-handle.Chan():\n\t\t\t\t\tif !ok {\n\t\t\t\t\t\treturn\n\t\t\t\t\t}\n\t\t\t\t\tfor _, r := range res.Rows {\n\t\t\t\t\t\tapply(r)\n\t\t\t\t\t}\n\t\t\t\t\tselect {\n\t\t\t\t\tcase notify <- struct{}{}:\n\t\t\t\t\tdefault:\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "wg.Done",
+          "lineNumber": 272
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "openStream",
+          "lineNumber": 273
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 277
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "handle.Cancel",
+          "lineNumber": 277
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "ctx.Done",
+          "lineNumber": 280
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "handle.Chan",
+          "lineNumber": 282
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "apply",
+          "lineNumber": 287
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "start",
+          "lineNumber": 302
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "sd.Stream",
+          "lineNumber": 303
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "state.updateSecret",
+          "lineNumber": 305
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "start",
+          "lineNumber": 307
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "h.streamGW.StreamPPPActive",
+          "lineNumber": 308
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "state.updateActive",
+          "lineNumber": 310
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "func() { wg.Wait(); close(doneCh) }",
+          "lineNumber": 313
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "wg.Wait",
+          "lineNumber": 313
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "close",
+          "lineNumber": 313
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "ctx.Done",
+          "lineNumber": 317
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "time.NewTimer",
+          "lineNumber": 322
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "ctx.Done",
+          "lineNumber": 329
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "state.inactive",
+          "lineNumber": 335
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "make",
+          "lineNumber": 336
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "len",
+          "lineNumber": 336
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "append",
+          "lineNumber": 338
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "stream.Send",
+          "lineNumber": 352
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "time.Now().Unix",
+          "lineNumber": 354
+        },
+        {
+          "caller": "StreamPPPInactive",
+          "callee": "time.Now",
+          "lineNumber": 354
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/monitor_queue_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 99,
+      "nonEmptyLines": 88,
+      "functions": [
+        {
+          "name": "StreamQueueStats",
+          "startLine": 16,
+          "endLine": 99,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamQueueStats",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamQueueStats",
+          "callee": "h.getDriver",
+          "lineNumber": 17
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "response.Unimplemented",
+          "lineNumber": 24
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "h.streamGW.StreamQueueStats",
+          "lineNumber": 37
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "response.MapDomainError",
+          "lineNumber": 39
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 41
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "handle.Cancel",
+          "lineNumber": 41
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "ctx.Done",
+          "lineNumber": 45
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "handle.Chan",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "handle.Err",
+          "lineNumber": 49
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "append",
+          "lineNumber": 51
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "handle.Chan",
+          "lineNumber": 55
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "append",
+          "lineNumber": 59
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "h.streamGW.ParseQueues",
+          "lineNumber": 65
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "len",
+          "lineNumber": 66
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "make",
+          "lineNumber": 70
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "len",
+          "lineNumber": 70
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "append",
+          "lineNumber": 72
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "stream.Send",
+          "lineNumber": 89
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "time.Now().Unix",
+          "lineNumber": 91
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "time.Now",
+          "lineNumber": 91
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/monitor_session_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 375,
+      "nonEmptyLines": 340,
+      "functions": [
+        {
+          "name": "StreamActiveSessions",
+          "startLine": 20,
+          "endLine": 126,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        },
+        {
+          "name": "StreamActiveStats",
+          "startLine": 129,
+          "endLine": 173,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        },
+        {
+          "name": "newHotspotSessionState",
+          "startLine": 181,
+          "endLine": 186,
+          "params": []
+        },
+        {
+          "name": "updateUser",
+          "startLine": 188,
+          "endLine": 220,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "updateActive",
+          "startLine": 222,
+          "endLine": 245,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "inactive",
+          "startLine": 247,
+          "endLine": 259,
+          "params": []
+        },
+        {
+          "name": "StreamHotspotInactive",
+          "startLine": 263,
+          "endLine": 375,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "hotspotSessionState",
+          "startLine": 175,
+          "endLine": 179,
+          "methods": [
+            "updateUser",
+            "updateActive",
+            "inactive"
+          ],
+          "properties": [
+            "mu",
+            "userMap",
+            "activeMap"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamActiveSessions",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "StreamActiveStats",
+          "line": 129,
+          "isDefault": false
+        },
+        {
+          "name": "StreamHotspotInactive",
+          "line": 263,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "h.getDriver",
+          "lineNumber": 21
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "response.Unimplemented",
+          "lineNumber": 28
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "make",
+          "lineNumber": 31
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "h.hotspotUC.GetActiveSessions",
+          "lineNumber": 35
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "make",
+          "lineNumber": 42
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "len",
+          "lineNumber": 42
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "append",
+          "lineNumber": 44
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "sort.Slice",
+          "lineNumber": 46
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "stream.Send",
+          "lineNumber": 51
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "toProtoActiveSessions",
+          "lineNumber": 53
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "time.Now().Unix",
+          "lineNumber": 54
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "time.Now",
+          "lineNumber": 54
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "h.streamGW.StreamHotspotActive",
+          "lineNumber": 57
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "response.MapDomainError",
+          "lineNumber": 59
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 61
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "handle.Cancel",
+          "lineNumber": 61
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "ctx.Done",
+          "lineNumber": 65
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "handle.Chan",
+          "lineNumber": 67
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "handle.Err",
+          "lineNumber": 69
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "append",
+          "lineNumber": 71
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "handle.Chan",
+          "lineNumber": 75
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "append",
+          "lineNumber": 79
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "strings.EqualFold",
+          "lineNumber": 90
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "strings.EqualFold",
+          "lineNumber": 90
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "delete",
+          "lineNumber": 91
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "make",
+          "lineNumber": 108
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "len",
+          "lineNumber": 108
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "append",
+          "lineNumber": 110
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "sort.Slice",
+          "lineNumber": 112
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "stream.Send",
+          "lineNumber": 116
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "toProtoActiveSessions",
+          "lineNumber": 118
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "time.Now().Unix",
+          "lineNumber": 119
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "time.Now",
+          "lineNumber": 119
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "h.getDriver",
+          "lineNumber": 130
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "response.Unimplemented",
+          "lineNumber": 137
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "h.streamGW.StreamHotspotActiveStats",
+          "lineNumber": 145
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "response.MapDomainError",
+          "lineNumber": 147
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 149
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "handle.Cancel",
+          "lineNumber": 149
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "ctx.Done",
+          "lineNumber": 153
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "handle.Chan",
+          "lineNumber": 155
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "handle.Err",
+          "lineNumber": 157
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "h.streamGW.ParseHotspotActiveStats",
+          "lineNumber": 159
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "len",
+          "lineNumber": 160
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "stream.Send",
+          "lineNumber": 164
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "toProtoActiveStats",
+          "lineNumber": 166
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "time.Now().Unix",
+          "lineNumber": 167
+        },
+        {
+          "caller": "StreamActiveStats",
+          "callee": "time.Now",
+          "lineNumber": 167
+        },
+        {
+          "caller": "newHotspotSessionState",
+          "callee": "make",
+          "lineNumber": 183
+        },
+        {
+          "caller": "newHotspotSessionState",
+          "callee": "make",
+          "lineNumber": 184
+        },
+        {
+          "caller": "updateUser",
+          "callee": "s.mu.Lock",
+          "lineNumber": 189
+        },
+        {
+          "caller": "updateUser",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 190
+        },
+        {
+          "caller": "updateUser",
+          "callee": "strings.EqualFold",
+          "lineNumber": 195
+        },
+        {
+          "caller": "updateUser",
+          "callee": "strings.EqualFold",
+          "lineNumber": 195
+        },
+        {
+          "caller": "updateUser",
+          "callee": "delete",
+          "lineNumber": 196
+        },
+        {
+          "caller": "updateUser",
+          "callee": "strings.EqualFold",
+          "lineNumber": 215
+        },
+        {
+          "caller": "updateActive",
+          "callee": "s.mu.Lock",
+          "lineNumber": 223
+        },
+        {
+          "caller": "updateActive",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 224
+        },
+        {
+          "caller": "updateActive",
+          "callee": "strings.EqualFold",
+          "lineNumber": 229
+        },
+        {
+          "caller": "updateActive",
+          "callee": "strings.EqualFold",
+          "lineNumber": 229
+        },
+        {
+          "caller": "updateActive",
+          "callee": "delete",
+          "lineNumber": 230
+        },
+        {
+          "caller": "inactive",
+          "callee": "s.mu.Lock",
+          "lineNumber": 248
+        },
+        {
+          "caller": "inactive",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 249
+        },
+        {
+          "caller": "inactive",
+          "callee": "make",
+          "lineNumber": 250
+        },
+        {
+          "caller": "inactive",
+          "callee": "len",
+          "lineNumber": 250
+        },
+        {
+          "caller": "inactive",
+          "callee": "append",
+          "lineNumber": 252
+        },
+        {
+          "caller": "inactive",
+          "callee": "make",
+          "lineNumber": 254
+        },
+        {
+          "caller": "inactive",
+          "callee": "len",
+          "lineNumber": 254
+        },
+        {
+          "caller": "inactive",
+          "callee": "append",
+          "lineNumber": 256
+        },
+        {
+          "caller": "inactive",
+          "callee": "domainHotspot.FilterInactiveUsers",
+          "lineNumber": 258
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "h.getDriver",
+          "lineNumber": 264
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "response.Unimplemented",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "newHotspotSessionState",
+          "lineNumber": 274
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "h.hotspotUC.GetUsers",
+          "lineNumber": 277
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "h.hotspotUC.GetActiveSessions",
+          "lineNumber": 278
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "state.inactive",
+          "lineNumber": 287
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "stream.Send",
+          "lineNumber": 288
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "time.Now().Unix",
+          "lineNumber": 290
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "time.Now",
+          "lineNumber": 290
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "toProtoHotspotUsers",
+          "lineNumber": 291
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "make",
+          "lineNumber": 294
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "make",
+          "lineNumber": 295
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "wg.Add",
+          "lineNumber": 299
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "func() {\n\t\t\tdefer wg.Done()\n\t\t\thandle, err := openStream()\n\t\t\tif err != nil {\n\t\t\t\treturn\n\t\t\t}\n\t\t\tdefer func() { _ = handle.Cancel() }()\n\t\t\tfor {\n\t\t\t\tselect {\n\t\t\t\tcase <-ctx.Done():\n\t\t\t\t\treturn\n\t\t\t\tcase res, ok := <-handle.Chan():\n\t\t\t\t\tif !ok {\n\t\t\t\t\t\treturn\n\t\t\t\t\t}\n\t\t\t\t\tfor _, r := range res.Rows {\n\t\t\t\t\t\tapply(r)\n\t\t\t\t\t}\n\t\t\t\t\tselect {\n\t\t\t\t\tcase notify <- struct{}{}:\n\t\t\t\t\tdefault:\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+          "lineNumber": 300
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "wg.Done",
+          "lineNumber": 301
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "openStream",
+          "lineNumber": 302
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 306
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "handle.Cancel",
+          "lineNumber": 306
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "ctx.Done",
+          "lineNumber": 309
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "handle.Chan",
+          "lineNumber": 311
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "apply",
+          "lineNumber": 316
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "start",
+          "lineNumber": 331
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "sd.Stream",
+          "lineNumber": 332
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "state.updateUser",
+          "lineNumber": 334
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "start",
+          "lineNumber": 336
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "h.streamGW.StreamHotspotActive",
+          "lineNumber": 337
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "state.updateActive",
+          "lineNumber": 339
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "func() { wg.Wait(); close(doneCh) }",
+          "lineNumber": 342
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "wg.Wait",
+          "lineNumber": 342
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "close",
+          "lineNumber": 342
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "ctx.Done",
+          "lineNumber": 346
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "time.NewTimer",
+          "lineNumber": 351
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "ctx.Done",
+          "lineNumber": 358
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "state.inactive",
+          "lineNumber": 364
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "stream.Send",
+          "lineNumber": 365
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "time.Now().Unix",
+          "lineNumber": 367
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "time.Now",
+          "lineNumber": 367
+        },
+        {
+          "caller": "StreamHotspotInactive",
+          "callee": "toProtoHotspotUsers",
+          "lineNumber": 368
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/monitor_system_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 256,
+      "nonEmptyLines": 234,
+      "functions": [
+        {
+          "name": "setClock",
+          "startLine": 28,
+          "endLine": 32,
+          "params": [
+            "c"
+          ]
+        },
+        {
+          "name": "setResource",
+          "startLine": 34,
+          "endLine": 38,
+          "params": [
+            "r"
+          ]
+        },
+        {
+          "name": "setRouterboard",
+          "startLine": 40,
+          "endLine": 44,
+          "params": [
+            "r"
+          ]
+        },
+        {
+          "name": "setIdentity",
+          "startLine": 46,
+          "endLine": 50,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "setHealth",
+          "startLine": 52,
+          "endLine": 56,
+          "params": [
+            "h"
+          ]
+        },
+        {
+          "name": "toFrame",
+          "startLine": 59,
+          "endLine": 111,
+          "params": [
+            "deviceID"
+          ]
+        },
+        {
+          "name": "StreamSystemSnapshot",
+          "startLine": 114,
+          "endLine": 215,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        },
+        {
+          "name": "StreamResource",
+          "startLine": 218,
+          "endLine": 256,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "systemSnapshotState",
+          "startLine": 19,
+          "endLine": 26,
+          "methods": [
+            "setClock",
+            "setResource",
+            "setRouterboard",
+            "setIdentity",
+            "setHealth",
+            "toFrame"
+          ],
+          "properties": [
+            "mu",
+            "clock",
+            "resource",
+            "routerboard",
+            "identity",
+            "health"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamSystemSnapshot",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "StreamResource",
+          "line": 218,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "setClock",
+          "callee": "s.mu.Lock",
+          "lineNumber": 29
+        },
+        {
+          "caller": "setClock",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 30
+        },
+        {
+          "caller": "setResource",
+          "callee": "s.mu.Lock",
+          "lineNumber": 35
+        },
+        {
+          "caller": "setResource",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 36
+        },
+        {
+          "caller": "setRouterboard",
+          "callee": "s.mu.Lock",
+          "lineNumber": 41
+        },
+        {
+          "caller": "setRouterboard",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 42
+        },
+        {
+          "caller": "setIdentity",
+          "callee": "s.mu.Lock",
+          "lineNumber": 47
+        },
+        {
+          "caller": "setIdentity",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 48
+        },
+        {
+          "caller": "setHealth",
+          "callee": "s.mu.Lock",
+          "lineNumber": 53
+        },
+        {
+          "caller": "setHealth",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 54
+        },
+        {
+          "caller": "toFrame",
+          "callee": "s.mu.Lock",
+          "lineNumber": 60
+        },
+        {
+          "caller": "toFrame",
+          "callee": "s.mu.Unlock",
+          "lineNumber": 61
+        },
+        {
+          "caller": "toFrame",
+          "callee": "time.Now().Unix",
+          "lineNumber": 64
+        },
+        {
+          "caller": "toFrame",
+          "callee": "time.Now",
+          "lineNumber": 64
+        },
+        {
+          "caller": "toFrame",
+          "callee": "int32",
+          "lineNumber": 72
+        },
+        {
+          "caller": "toFrame",
+          "callee": "int32",
+          "lineNumber": 73
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.getDriver",
+          "lineNumber": 115
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "response.Unimplemented",
+          "lineNumber": 122
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "make",
+          "lineNumber": 131
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "make",
+          "lineNumber": 132
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "wg.Add",
+          "lineNumber": 136
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "func() {\n\t\t\tdefer wg.Done()\n\t\t\thandle, err := openStream()\n\t\t\tif err != nil {\n\t\t\t\treturn\n\t\t\t}\n\t\t\tdefer func() { _ = handle.Cancel() }()\n\t\t\tfor {\n\t\t\t\tselect {\n\t\t\t\tcase <-ctx.Done():\n\t\t\t\t\treturn\n\t\t\t\tcase res, ok := <-handle.Chan():\n\t\t\t\t\tif !ok {\n\t\t\t\t\t\treturn\n\t\t\t\t\t}\n\t\t\t\t\tapply(res)\n\t\t\t\t\tselect {\n\t\t\t\t\tcase notify <- struct{}{}:\n\t\t\t\t\tdefault:\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+          "lineNumber": 137
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "wg.Done",
+          "lineNumber": 138
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "openStream",
+          "lineNumber": 139
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 143
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "handle.Cancel",
+          "lineNumber": 143
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "ctx.Done",
+          "lineNumber": 146
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "handle.Chan",
+          "lineNumber": 148
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "apply",
+          "lineNumber": 152
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "start",
+          "lineNumber": 162
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.StreamClock",
+          "lineNumber": 163
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "state.setClock",
+          "lineNumber": 165
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.ParseClock",
+          "lineNumber": 165
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "start",
+          "lineNumber": 167
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.StreamResource",
+          "lineNumber": 168
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "state.setResource",
+          "lineNumber": 170
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.ParseResource",
+          "lineNumber": 170
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "start",
+          "lineNumber": 172
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.StreamRouterboard",
+          "lineNumber": 173
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "state.setRouterboard",
+          "lineNumber": 175
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.ParseRouterboard",
+          "lineNumber": 175
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "start",
+          "lineNumber": 177
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.StreamIdentity",
+          "lineNumber": 178
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "state.setIdentity",
+          "lineNumber": 180
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.ParseIdentity",
+          "lineNumber": 180
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "start",
+          "lineNumber": 182
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.StreamHealth",
+          "lineNumber": 183
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "state.setHealth",
+          "lineNumber": 185
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "h.streamGW.ParseHealth",
+          "lineNumber": 185
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "func() { wg.Wait(); close(doneCh) }",
+          "lineNumber": 188
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "wg.Wait",
+          "lineNumber": 188
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "close",
+          "lineNumber": 188
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "ctx.Done",
+          "lineNumber": 192
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "time.NewTimer",
+          "lineNumber": 197
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "ctx.Done",
+          "lineNumber": 204
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "stream.Send",
+          "lineNumber": 210
+        },
+        {
+          "caller": "StreamSystemSnapshot",
+          "callee": "state.toFrame",
+          "lineNumber": 210
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "h.getDriver",
+          "lineNumber": 219
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "response.Unimplemented",
+          "lineNumber": 226
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "h.streamGW.StreamResource",
+          "lineNumber": 229
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "response.MapDomainError",
+          "lineNumber": 231
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 233
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "handle.Cancel",
+          "lineNumber": 233
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "ctx.Done",
+          "lineNumber": 237
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "handle.Chan",
+          "lineNumber": 239
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "handle.Err",
+          "lineNumber": 241
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "h.streamGW.ParseResource",
+          "lineNumber": 243
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "stream.Send",
+          "lineNumber": 244
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "int32",
+          "lineNumber": 246
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "time.Now().Unix",
+          "lineNumber": 249
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "time.Now",
+          "lineNumber": 249
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/monitor/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 33,
+      "functions": [
+        {
+          "name": "NewNetworkMonitorServiceHandler",
+          "startLine": 15,
+          "endLine": 40,
+          "params": [
+            "hsUC",
+            "activeUC",
+            "provider",
+            "streamGW"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewNetworkMonitorServiceHandler",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "NewNetworkMonitorConnectHandler",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 35
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 35
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 36
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 36
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 37
+        },
+        {
+          "caller": "NewNetworkMonitorServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/network/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 21,
+      "functions": [
+        {
+          "name": "ToProtoDHCPLeases",
+          "startLine": 9,
+          "endLine": 23,
+          "params": [
+            "leases"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ToProtoDHCPLeases",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ToProtoDHCPLeases",
+          "callee": "make",
+          "lineNumber": 10
+        },
+        {
+          "caller": "ToProtoDHCPLeases",
+          "callee": "len",
+          "lineNumber": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/network/network_handler_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 65,
+      "functions": [
+        {
+          "name": "Execute",
+          "startLine": 21,
+          "endLine": 23,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 25,
+          "endLine": 27,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 29,
+          "endLine": 31,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 33,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "ListDHCPLeases",
+          "startLine": 46,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "driver",
+            "server"
+          ]
+        },
+        {
+          "name": "TestNetworkConnectHandler_ListDHCPLeases",
+          "startLine": 50,
+          "endLine": 81,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockDriver",
+          "startLine": 19,
+          "endLine": 19,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": []
+        },
+        {
+          "name": "mockHotspotGateway",
+          "startLine": 37,
+          "endLine": 39,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "mockSessionGateway",
+          "startLine": 41,
+          "endLine": 44,
+          "methods": [
+            "ListDHCPLeases"
+          ],
+          "properties": [
+            "leases"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Execute",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "ListDHCPLeases",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "TestNetworkConnectHandler_ListDHCPLeases",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "hotspotUC.New",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "networkUC.NewActiveSessionsUseCase",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "connectNetwork.NewNetworkConnectHandler",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "context.Background",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "handler.ListDHCPLeases",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "connect.NewRequest",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "require.NoError",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "require.Len",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "assert.Equal",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestNetworkConnectHandler_ListDHCPLeases",
+          "callee": "assert.Equal",
+          "lineNumber": 80
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 3
+      }
+    }
+  ]
+}

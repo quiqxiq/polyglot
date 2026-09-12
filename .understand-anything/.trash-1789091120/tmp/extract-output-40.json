@@ -1,0 +1,2199 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "test/integration/ping_telemetry_e2e_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 144,
+      "nonEmptyLines": 121,
+      "functions": [
+        {
+          "name": "TestPingTelemetryE2E_FullPipeline",
+          "startLine": 28,
+          "endLine": 144,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestPingTelemetryE2E_FullPipeline",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "testing.Short",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "t.Skip",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "godotenv.Load",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "filepath.Join",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "mikrotikTestTarget",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "os.Getenv",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "context.WithTimeout",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "context.Background",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "cancel",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "postgres.NewStore",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.NoError",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "postgres.NewMetricsRepository",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "store.DB",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "repo.IsTimescaleDBAvailable",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.NoError",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "t.Skip",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.NoError",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "func() { assert.NoError(t, drv.Close()) }",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "assert.NoError",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "drv.Close",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.True",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "mikrotiksystem.NewPingStreamCommand",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "sd.Stream",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.NoError",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "func() { assert.NoError(t, handle.Cancel()) }",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "assert.NoError",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "handle.Cancel",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "uuid.New().String",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "uuid.New",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.Now().UTC().Add",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.Now().UTC",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.Now",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "t.Logf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "handle.Chan",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.True",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "len",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "ping.ParsePingLatency",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "strconv.Atoi",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "strconv.Atoi",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "strconv.Atoi",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "strconv.Atoi",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "ping.ParsePacketLoss",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.Now().UTC",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.Now",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "float32",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "int",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "append",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "t.Logf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.After",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "t.Fatalf",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.NotEmpty",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "repo.SavePingMetricsBatch",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.NoError",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.Now().UTC().Add",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.Now().UTC",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "time.Now",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "repo.QueryPingMetrics",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.NoError",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "assert.Len",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "len",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "assert.Equal",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "int64",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "len",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "assert.Greater",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "float32",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "repo.IsContinuousAggregateAvailable",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "t.Logf",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "repo.QueryPingMetrics",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "require.NoError",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "assert.GreaterOrEqual",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "int64",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "t.Logf",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "len",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "repo.CleanupExpiredMetrics",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestPingTelemetryE2E_FullPipeline",
+          "callee": "assert.NoError",
+          "lineNumber": 143
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/integration/router_live_e2e_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 118,
+      "nonEmptyLines": 101,
+      "functions": [
+        {
+          "name": "EncryptString",
+          "startLine": 36,
+          "endLine": 38,
+          "params": [
+            "_",
+            "plaintext"
+          ]
+        },
+        {
+          "name": "DecryptString",
+          "startLine": 40,
+          "endLine": 45,
+          "params": [
+            "_",
+            "ciphertext"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 47,
+          "endLine": 49,
+          "params": []
+        },
+        {
+          "name": "Save",
+          "startLine": 51,
+          "endLine": 51,
+          "params": []
+        },
+        {
+          "name": "TestImportFromRouter_E2E",
+          "startLine": 57,
+          "endLine": 118,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "integrationVault",
+          "startLine": 34,
+          "endLine": 34,
+          "methods": [
+            "EncryptString",
+            "DecryptString",
+            "Get",
+            "Save"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "EncryptString",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "DecryptString",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "TestImportFromRouter_E2E",
+          "line": 57,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "DecryptString",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 41
+        },
+        {
+          "caller": "DecryptString",
+          "callee": "strings.TrimPrefix",
+          "lineNumber": 42
+        },
+        {
+          "caller": "DecryptString",
+          "callee": "errors.New",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "testing.Short",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "t.Skip",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "godotenv.Load",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "filepath.Join",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "os.Getenv",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "t.Skip",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "os.Getenv",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "strconv.Atoi",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "context.Background",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "os.Getenv",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "os.Getenv",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "strings.Contains",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "strings.ToLower",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "err.Error",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "t.Skipf",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "require.NoError",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "mikrotik.NewGateway",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "importer.NewRouterSource",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "src.PullPPPoERows",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "require.NoError",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "t.Logf",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "len",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "gorm.Open",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "sqlite.Open",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "require.NoError",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "require.NoError",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "db.AutoMigrate",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "postgres.NewServicePlanRepository",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "postgres.NewCustomerRepository",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "postgres.NewSubscriptionRepository",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "importer.NewUpsertUseCase",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "upsert.Import",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "require.NoError",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "assert.Equal",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "len",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "t.Logf",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "len",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "subsRepo.FindAll",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "require.NoError",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "require.NotEmpty",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestImportFromRouter_E2E",
+          "callee": "assert.Equal",
+          "lineNumber": 113
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "test/integration/timescale_100_routers_load_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 378,
+      "nonEmptyLines": 332,
+      "functions": [
+        {
+          "name": "setupTimescaleTestContainer",
+          "startLine": 35,
+          "endLine": 108,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "isDockerUnavailable",
+          "startLine": 110,
+          "endLine": 118,
+          "params": [
+            "msg"
+          ]
+        },
+        {
+          "name": "TestTimescaleDB_100RoutersPingSimulation",
+          "startLine": 123,
+          "endLine": 368,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "isContinuousAggregateReady",
+          "startLine": 370,
+          "endLine": 378,
+          "params": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestTimescaleDB_100RoutersPingSimulation",
+          "line": 123,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "t.Helper",
+          "lineNumber": 36
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "context.Background",
+          "lineNumber": 37
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "wait.ForListeningPort(\"5432/tcp\").WithStartupTimeout",
+          "lineNumber": 54
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "wait.ForListeningPort",
+          "lineNumber": 54
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "testcontainers.GenericContainer",
+          "lineNumber": 57
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "isDockerUnavailable",
+          "lineNumber": 61
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "err.Error",
+          "lineNumber": 61
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "t.Skip",
+          "lineNumber": 62
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 64
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "t.Cleanup",
+          "lineNumber": 65
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "container.Terminate",
+          "lineNumber": 65
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "container.Host",
+          "lineNumber": 67
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 68
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "container.MappedPort",
+          "lineNumber": 69
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 70
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 72
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "port.Port",
+          "lineNumber": 72
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "sql.Open",
+          "lineNumber": 75
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 76
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "func() { _ = sqlDB.Close() }",
+          "lineNumber": 77
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "sqlDB.Close",
+          "lineNumber": 77
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "sqlDB.Ping",
+          "lineNumber": 81
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "time.Sleep",
+          "lineNumber": 85
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.True",
+          "lineNumber": 87
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "filepath.Abs",
+          "lineNumber": 90
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "filepath.Join",
+          "lineNumber": 90
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 91
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "migrate.New",
+          "lineNumber": 92
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "filepath.ToSlash",
+          "lineNumber": 92
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 93
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 94
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "m.Up",
+          "lineNumber": 94
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "gorm.Open",
+          "lineNumber": 97
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "gormpg.Open",
+          "lineNumber": 97
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 98
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "gormDB.DB",
+          "lineNumber": 100
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "require.NoError",
+          "lineNumber": 101
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "dbPool.SetMaxOpenConns",
+          "lineNumber": 102
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "dbPool.SetMaxIdleConns",
+          "lineNumber": 103
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "dbPool.SetConnMaxLifetime",
+          "lineNumber": 104
+        },
+        {
+          "caller": "setupTimescaleTestContainer",
+          "callee": "dbPool.SetConnMaxIdleTime",
+          "lineNumber": 105
+        },
+        {
+          "caller": "isDockerUnavailable",
+          "callee": "strings.ToLower",
+          "lineNumber": 111
+        },
+        {
+          "caller": "isDockerUnavailable",
+          "callee": "strings.Contains",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "testing.Short",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Skip",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Log",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "setupTimescaleTestContainer",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "postgres.NewMetricsRepository",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "context.WithTimeout",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "context.Background",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "cancel",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "repo.IsTimescaleDBAvailable",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "require.NoError",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "require.True",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "isContinuousAggregateReady",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "require.NoError",
+          "lineNumber": 141
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "require.True",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "require.True",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "repo.IsContinuousAggregateAvailable",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "make",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "uuid.New().String",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "uuid.New",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Logf",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Log",
+          "lineNumber": 156
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now().UTC",
+          "lineNumber": 163
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now",
+          "lineNumber": 163
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "wg.Add",
+          "lineNumber": 168
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "func(deviceID string, routerNum int) {\n\t\t\tdefer wg.Done()\n\t\t\tvar buffer []device.PingMetricPoint\n\n\t\t\tfor sec := 0; sec < streamSeconds; sec++ {\n\t\t\t\t// Simulasikan RTT bervariasi antara 15ms - 45ms\n\t\t\t\trtt := float32(18.0 + rand.Float64()*22.0)\n\t\t\t\tloss := 0\n\t\t\t\tif rand.Float64() < 0.02 { // 2% packet loss simulation\n\t\t\t\t\tloss = 100\n\t\t\t\t\trtt = 0\n\t\t\t\t}\n\t\t\t\tstatus := \"connected\"\n\t\t\t\tif loss == 100 {\n\t\t\t\t\tstatus = \"timeout\"\n\t\t\t\t}\n\n\t\t\t\tpt := device.PingMetricPoint{\n\t\t\t\t\tRecordedAt: simStart.Add(time.Duration(sec) * time.Second),\n\t\t\t\t\tDeviceID:   deviceID,\n\t\t\t\t\tTarget:     \"8.8.8.8\",\n\t\t\t\t\tSeq:        sec,\n\t\t\t\t\tRTTMS:      rtt,\n\t\t\t\t\tStatus:     status,\n\t\t\t\t\tTTL:        56,\n\t\t\t\t\tSent:       sec + 1,\n\t\t\t\t\tReceived:   sec + 1,\n\t\t\t\t\tPacketLoss: loss,\n\t\t\t\t}\n\t\t\t\tbuffer = append(buffer, pt)\n\n\t\t\t\t// Flush buffer setiap 5 item atau di detik terakhir\n\t\t\t\tif len(buffer) >= 5 || sec == streamSeconds-1 {\n\t\t\t\t\tinsertCtx, insertCancel := context.WithTimeout(ctx, 5*time.Second)\n\t\t\t\t\terr := repo.SavePingMetricsBatch(insertCtx, buffer)\n\t\t\t\t\tinsertCancel()\n\t\t\t\t\tif err != nil {\n\t\t\t\t\t\ttotalIngestErrors.Add(1)\n\t\t\t\t\t\tt.Errorf(\"Router %d SavePingMetricsBatch error: %v\", routerNum, err)\n\t\t\t\t\t} else {\n\t\t\t\t\t\ttotalIngested.Add(int64(len(buffer)))\n\t\t\t\t\t}\n\t\t\t\t\tbuffer = buffer[:0]\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+          "lineNumber": 169
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "wg.Done",
+          "lineNumber": 170
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "float32",
+          "lineNumber": 175
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "rand.Float64",
+          "lineNumber": 175
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "rand.Float64",
+          "lineNumber": 177
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "simStart.Add",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Duration",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "append",
+          "lineNumber": 198
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "len",
+          "lineNumber": 201
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "context.WithTimeout",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "repo.SavePingMetricsBatch",
+          "lineNumber": 203
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "insertCancel",
+          "lineNumber": 204
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "totalIngestErrors.Add",
+          "lineNumber": 206
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Errorf",
+          "lineNumber": 207
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "totalIngested.Add",
+          "lineNumber": 209
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "int64",
+          "lineNumber": 209
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "len",
+          "lineNumber": 209
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "make",
+          "lineNumber": 218
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "readerWg.Add",
+          "lineNumber": 221
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "func(rID int) {\n\t\t\tdefer readerWg.Done()\n\t\t\tfor {\n\t\t\t\tselect {\n\t\t\t\tcase <-readerStop:\n\t\t\t\t\treturn\n\t\t\t\tdefault:\n\t\t\t\t\trandomRouter := routerIDs[rand.Intn(numRouters)]\n\t\t\t\t\tqueryCtx, queryCancel := context.WithTimeout(ctx, 3*time.Second)\n\t\t\t\t\tqStart := time.Now()\n\t\t\t\t\t_, summary, err := repo.QueryPingMetrics(queryCtx, device.PingMetricsFilter{\n\t\t\t\t\t\tDeviceID:       randomRouter,\n\t\t\t\t\t\tStartTime:      simStart.Add(-1 * time.Minute),\n\t\t\t\t\t\tEndTime:        simStart.Add(time.Duration(streamSeconds+5) * time.Second),\n\t\t\t\t\t\tBucketInterval: \"1m\",\n\t\t\t\t\t})\n\t\t\t\t\tqueryCancel()\n\t\t\t\t\telapsed := time.Since(qStart)\n\n\t\t\t\t\tif err != nil {\n\t\t\t\t\t\treadQueryErrors.Add(1)\n\t\t\t\t\t} else {\n\t\t\t\t\t\treadQueriesCount.Add(1)\n\t\t\t\t\t\tassert.Less(t, elapsed, 800*time.Millisecond, \"Continuous aggregate query should complete under 800ms during heavy concurrent ingestion\")\n\t\t\t\t\t\t_ = summary\n\t\t\t\t\t}\n\t\t\t\t\ttime.Sleep(50 * time.Millisecond)\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+          "lineNumber": 222
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "readerWg.Done",
+          "lineNumber": 223
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "rand.Intn",
+          "lineNumber": 229
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "context.WithTimeout",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now",
+          "lineNumber": 231
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "repo.QueryPingMetrics",
+          "lineNumber": 232
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "simStart.Add",
+          "lineNumber": 234
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "simStart.Add",
+          "lineNumber": 235
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Duration",
+          "lineNumber": 235
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "queryCancel",
+          "lineNumber": 238
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Since",
+          "lineNumber": 239
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "readQueryErrors.Add",
+          "lineNumber": 242
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "readQueriesCount.Add",
+          "lineNumber": 244
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Less",
+          "lineNumber": 245
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Sleep",
+          "lineNumber": 248
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "wg.Wait",
+          "lineNumber": 255
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "close",
+          "lineNumber": 256
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "readerWg.Wait",
+          "lineNumber": 257
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "int64",
+          "lineNumber": 259
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Logf",
+          "lineNumber": 260
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "totalIngested.Load",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "totalIngestErrors.Load",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "readQueriesCount.Load",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "readQueryErrors.Load",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Equal",
+          "lineNumber": 263
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "int64",
+          "lineNumber": 263
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "totalIngestErrors.Load",
+          "lineNumber": 263
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Equal",
+          "lineNumber": 264
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "totalIngested.Load",
+          "lineNumber": 264
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Equal",
+          "lineNumber": 265
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "int64",
+          "lineNumber": 265
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "readQueryErrors.Load",
+          "lineNumber": 265
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Log",
+          "lineNumber": 270
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now",
+          "lineNumber": 271
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstWg.Add",
+          "lineNumber": 277
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "func(deviceID string, routerNum int) {\n\t\t\tdefer burstWg.Done()\n\t\t\tbatch := make([]device.PingMetricPoint, 30)\n\t\t\tnow := time.Now().UTC()\n\t\t\tfor p := 0; p < 30; p++ {\n\t\t\t\tbatch[p] = device.PingMetricPoint{\n\t\t\t\t\tRecordedAt: now.Add(time.Duration(p) * time.Second),\n\t\t\t\t\tDeviceID:   deviceID,\n\t\t\t\t\tTarget:     \"1.1.1.1\",\n\t\t\t\t\tSeq:        100 + p,\n\t\t\t\t\tRTTMS:      float32(20.0 + float32(p%10)),\n\t\t\t\t\tStatus:     \"connected\",\n\t\t\t\t\tTTL:        58,\n\t\t\t\t\tSent:       100 + p,\n\t\t\t\t\tReceived:   100 + p,\n\t\t\t\t\tPacketLoss: 0,\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tbCtx, bCancel := context.WithTimeout(ctx, 5*time.Second)\n\t\t\tdefer bCancel()\n\t\t\terr := repo.SavePingMetricsBatch(bCtx, batch)\n\t\t\tif err != nil {\n\t\t\t\tburstErrors.Add(1)\n\t\t\t\tt.Errorf(\"Burst flush error on router %d: %v\", routerNum, err)\n\t\t\t} else {\n\t\t\t\tburstIngested.Add(int64(len(batch)))\n\t\t\t}\n\t\t}",
+          "lineNumber": 278
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstWg.Done",
+          "lineNumber": 279
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "make",
+          "lineNumber": 280
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now().UTC",
+          "lineNumber": 281
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now",
+          "lineNumber": 281
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "now.Add",
+          "lineNumber": 284
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Duration",
+          "lineNumber": 284
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "float32",
+          "lineNumber": 288
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "float32",
+          "lineNumber": 288
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "context.WithTimeout",
+          "lineNumber": 297
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "bCancel",
+          "lineNumber": 298
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "repo.SavePingMetricsBatch",
+          "lineNumber": 299
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstErrors.Add",
+          "lineNumber": 301
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Errorf",
+          "lineNumber": 302
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstIngested.Add",
+          "lineNumber": 304
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "int64",
+          "lineNumber": 304
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "len",
+          "lineNumber": 304
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstWg.Wait",
+          "lineNumber": 309
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Since",
+          "lineNumber": 310
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "float64",
+          "lineNumber": 311
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstIngested.Load",
+          "lineNumber": 311
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstDuration.Seconds",
+          "lineNumber": 311
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Logf",
+          "lineNumber": 313
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstIngested.Load",
+          "lineNumber": 314
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstErrors.Load",
+          "lineNumber": 314
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Equal",
+          "lineNumber": 316
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "int64",
+          "lineNumber": 316
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstErrors.Load",
+          "lineNumber": 316
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Equal",
+          "lineNumber": 317
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "int64",
+          "lineNumber": 317
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "burstIngested.Load",
+          "lineNumber": 317
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Greater",
+          "lineNumber": 318
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "float64",
+          "lineNumber": 318
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Log",
+          "lineNumber": 323
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now",
+          "lineNumber": 326
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "repo.QueryPingMetrics",
+          "lineNumber": 327
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "simStart.Add",
+          "lineNumber": 329
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now().UTC().Add",
+          "lineNumber": 330
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now().UTC",
+          "lineNumber": 330
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Now",
+          "lineNumber": 330
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "time.Since",
+          "lineNumber": 333
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "require.NoError",
+          "lineNumber": 335
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Greater",
+          "lineNumber": 336
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "len",
+          "lineNumber": 336
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Greater",
+          "lineNumber": 337
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "int64",
+          "lineNumber": 337
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Greater",
+          "lineNumber": 338
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "float32",
+          "lineNumber": 338
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Less",
+          "lineNumber": 339
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Logf",
+          "lineNumber": 341
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "len",
+          "lineNumber": 342
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Log",
+          "lineNumber": 347
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "gormDB.Raw(`\n\t\tSELECT compression_enabled \n\t\tFROM timescaledb_information.hypertables \n\t\tWHERE hypertable_name = 'device_ping_metrics'\n\t`).Scan",
+          "lineNumber": 349
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "gormDB.Raw",
+          "lineNumber": 349
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "require.NoError",
+          "lineNumber": 354
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.True",
+          "lineNumber": 355
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "gormDB.Raw(`\n\t\tSELECT time_interval \n\t\tFROM timescaledb_information.dimensions \n\t\tWHERE hypertable_name = 'device_ping_metrics'\n\t`).Scan",
+          "lineNumber": 358
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "gormDB.Raw",
+          "lineNumber": 358
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "require.NoError",
+          "lineNumber": 363
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "assert.Contains",
+          "lineNumber": 364
+        },
+        {
+          "caller": "TestTimescaleDB_100RoutersPingSimulation",
+          "callee": "t.Logf",
+          "lineNumber": 366
+        },
+        {
+          "caller": "isContinuousAggregateReady",
+          "callee": "db.Raw(`\n\t\tSELECT count(1) \n\t\tFROM timescaledb_information.continuous_aggregates \n\t\tWHERE view_name = 'device_ping_metrics_1m'\n\t`).Scan",
+          "lineNumber": 372
+        },
+        {
+          "caller": "isContinuousAggregateReady",
+          "callee": "db.Raw",
+          "lineNumber": 372
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/integration/wa_messages_batch_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 268,
+      "nonEmptyLines": 245,
+      "functions": [
+        {
+          "name": "TestUpsertMessagesBatch",
+          "startLine": 39,
+          "endLine": 155,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "waTestMessage",
+          "startLine": 158,
+          "endLine": 170,
+          "params": [
+            "sessionID",
+            "chatJID",
+            "waID",
+            "content",
+            "fromMe",
+            "ts"
+          ]
+        },
+        {
+          "name": "ensureWAMirrorSchema",
+          "startLine": 178,
+          "endLine": 227,
+          "params": [
+            "t",
+            "db"
+          ]
+        },
+        {
+          "name": "assertColumn",
+          "startLine": 231,
+          "endLine": 241,
+          "params": [
+            "t",
+            "db",
+            "table",
+            "column"
+          ]
+        },
+        {
+          "name": "createWATestSession",
+          "startLine": 244,
+          "endLine": 253,
+          "params": [
+            "t",
+            "db"
+          ]
+        },
+        {
+          "name": "replaceDBName",
+          "startLine": 259,
+          "endLine": 268,
+          "params": [
+            "dsn",
+            "dbName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestUpsertMessagesBatch",
+          "line": 39,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "os.Getenv",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "os.Getenv",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Skip",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "strconv.FormatInt",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "time.Now().UnixNano",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "time.Now",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "gorm.Open",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "gormpg.Open",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "replaceDBName",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "adminDB.Exec",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "adminDB.Exec",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Cleanup",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "adminDB.Exec",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "adminDB.DB",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "sqlDB.Close",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "apppg.NewStore",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "replaceDBName",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "store.DB",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "ensureWAMirrorSchema",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "assertColumn",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "assertColumn",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "assertColumn",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "createWATestSession",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "time.Now().UTC().Truncate",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "time.Now().UTC",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "time.Now",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "waTestMessage",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "waTestMessage",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "base.Add",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "waTestMessage",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "base.Add",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "store.UpsertMessagesBatch",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "context.Background",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "store.UpsertMessagesBatch",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "context.Background",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "waTestMessage",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "base.Add",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "store.UpsertMessagesBatch",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "context.Background",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "store.UpsertMessagesBatch",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "context.Background",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "db.Raw(\"SELECT count(*) FROM wa_messages WHERE session_id = ?\", sessionID).\n\t\tScan",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "db.Raw",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "store.ListChatMessages",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "context.Background",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "len",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "len",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestUpsertMessagesBatch",
+          "callee": "t.Fatalf",
+          "lineNumber": 152
+        },
+        {
+          "caller": "ensureWAMirrorSchema",
+          "callee": "t.Helper",
+          "lineNumber": 179
+        },
+        {
+          "caller": "ensureWAMirrorSchema",
+          "callee": "db.Exec",
+          "lineNumber": 223
+        },
+        {
+          "caller": "ensureWAMirrorSchema",
+          "callee": "t.Fatalf",
+          "lineNumber": 224
+        },
+        {
+          "caller": "assertColumn",
+          "callee": "t.Helper",
+          "lineNumber": 232
+        },
+        {
+          "caller": "assertColumn",
+          "callee": "db.Raw(`SELECT count(*) FROM information_schema.columns\n\t\tWHERE table_name = ? AND column_name = ?`, table, column).Scan",
+          "lineNumber": 234
+        },
+        {
+          "caller": "assertColumn",
+          "callee": "db.Raw",
+          "lineNumber": 234
+        },
+        {
+          "caller": "assertColumn",
+          "callee": "t.Fatalf",
+          "lineNumber": 236
+        },
+        {
+          "caller": "assertColumn",
+          "callee": "t.Fatalf",
+          "lineNumber": 239
+        },
+        {
+          "caller": "createWATestSession",
+          "callee": "t.Helper",
+          "lineNumber": 245
+        },
+        {
+          "caller": "createWATestSession",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 247
+        },
+        {
+          "caller": "createWATestSession",
+          "callee": "time.Now().UnixNano",
+          "lineNumber": 247
+        },
+        {
+          "caller": "createWATestSession",
+          "callee": "time.Now",
+          "lineNumber": 247
+        },
+        {
+          "caller": "createWATestSession",
+          "callee": "db.Raw(\"INSERT INTO wa_sessions (device_name) VALUES (?) RETURNING id\", name).\n\t\tScan",
+          "lineNumber": 248
+        },
+        {
+          "caller": "createWATestSession",
+          "callee": "db.Raw",
+          "lineNumber": 248
+        },
+        {
+          "caller": "createWATestSession",
+          "callee": "t.Fatalf",
+          "lineNumber": 250
+        },
+        {
+          "caller": "replaceDBName",
+          "callee": "strings.Cut",
+          "lineNumber": 260
+        },
+        {
+          "caller": "replaceDBName",
+          "callee": "strings.LastIndex",
+          "lineNumber": 261
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    }
+  ]
+}

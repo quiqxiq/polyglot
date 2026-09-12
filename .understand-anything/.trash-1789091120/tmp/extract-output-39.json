@@ -1,0 +1,6423 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "pkg/phone/phone_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 60,
+      "functions": [
+        {
+          "name": "TestNormalize",
+          "startLine": 10,
+          "endLine": 39,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNormalize_Idempotent",
+          "startLine": 41,
+          "endLine": 47,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestToWhatsAppJID",
+          "startLine": 49,
+          "endLine": 67,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestNormalize",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "TestNormalize_Idempotent",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "TestToWhatsAppJID",
+          "line": 49,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestNormalize",
+          "callee": "t.Run",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestNormalize",
+          "callee": "assert.Equal",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestNormalize",
+          "callee": "phone.Normalize",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestNormalize_Idempotent",
+          "callee": "phone.Normalize",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestNormalize_Idempotent",
+          "callee": "assert.Equal",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestNormalize_Idempotent",
+          "callee": "phone.Normalize",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestToWhatsAppJID",
+          "callee": "t.Run",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestToWhatsAppJID",
+          "callee": "assert.Equal",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestToWhatsAppJID",
+          "callee": "phone.ToWhatsAppJID",
+          "lineNumber": 64
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/phone/phone.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 72,
+      "nonEmptyLines": 65,
+      "functions": [
+        {
+          "name": "Normalize",
+          "startLine": 21,
+          "endLine": 61,
+          "params": [
+            "raw"
+          ]
+        },
+        {
+          "name": "ToWhatsAppJID",
+          "startLine": 66,
+          "endLine": 72,
+          "params": [
+            "raw"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Normalize",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ToWhatsAppJID",
+          "line": 66,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Normalize",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Normalize",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 28
+        },
+        {
+          "caller": "Normalize",
+          "callee": "strings.IndexByte",
+          "lineNumber": 34
+        },
+        {
+          "caller": "Normalize",
+          "callee": "strings.IndexByte",
+          "lineNumber": 37
+        },
+        {
+          "caller": "Normalize",
+          "callee": "b.Grow",
+          "lineNumber": 42
+        },
+        {
+          "caller": "Normalize",
+          "callee": "len",
+          "lineNumber": 42
+        },
+        {
+          "caller": "Normalize",
+          "callee": "b.WriteRune",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Normalize",
+          "callee": "b.String",
+          "lineNumber": 48
+        },
+        {
+          "caller": "Normalize",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Normalize",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ToWhatsAppJID",
+          "callee": "Normalize",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ToWhatsAppJID",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 68
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/ping/parser_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 99,
+      "nonEmptyLines": 91,
+      "functions": [
+        {
+          "name": "TestParsePingLatency",
+          "startLine": 9,
+          "endLine": 59,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseDurationMs",
+          "startLine": 61,
+          "endLine": 79,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParsePacketLoss",
+          "startLine": 81,
+          "endLine": 99,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestParsePingLatency",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseDurationMs",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "TestParsePacketLoss",
+          "line": 81,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestParsePingLatency",
+          "callee": "t.Run",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestParsePingLatency",
+          "callee": "ping.ParsePingLatency",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestParsePingLatency",
+          "callee": "t.Errorf",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestParsePingLatency",
+          "callee": "t.Errorf",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestParseDurationMs",
+          "callee": "ping.ParseDurationMs",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestParseDurationMs",
+          "callee": "t.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestParsePacketLoss",
+          "callee": "ping.ParsePacketLoss",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestParsePacketLoss",
+          "callee": "t.Errorf",
+          "lineNumber": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/ping/parser.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 129,
+      "nonEmptyLines": 113,
+      "functions": [
+        {
+          "name": "ParsePingLatency",
+          "startLine": 12,
+          "endLine": 85,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "ParseDurationMs",
+          "startLine": 88,
+          "endLine": 116,
+          "params": [
+            "timeStr"
+          ]
+        },
+        {
+          "name": "ParsePacketLoss",
+          "startLine": 119,
+          "endLine": 129,
+          "params": [
+            "lossStr"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ParsePingLatency",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ParseDurationMs",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "ParsePacketLoss",
+          "line": 119,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strings.TrimPrefix",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strings.TrimPrefix",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "time.ParseDuration",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "float64",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "float64",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "int64",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "math.Round",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strings.Contains",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strings.Split",
+          "lineNumber": 60
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "len",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 63
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "int64",
+          "lineNumber": 68
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "math.Round",
+          "lineNumber": 68
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 73
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 77
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "int64",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ParsePingLatency",
+          "callee": "math.Round",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "strings.TrimPrefix",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "strings.TrimPrefix",
+          "lineNumber": 94
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "time.ParseDuration",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "float64",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "float64",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "int64",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "math.Round",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "int64",
+          "lineNumber": 112
+        },
+        {
+          "caller": "ParseDurationMs",
+          "callee": "math.Round",
+          "lineNumber": 112
+        },
+        {
+          "caller": "ParsePacketLoss",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 120
+        },
+        {
+          "caller": "ParsePacketLoss",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ParsePacketLoss",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 125
+        },
+        {
+          "caller": "ParsePacketLoss",
+          "callee": "int32",
+          "lineNumber": 126
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/response/connect_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 65,
+      "functions": [
+        {
+          "name": "TestTransportErrorsUseExpectedCodes",
+          "startLine": 12,
+          "endLine": 37,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMapDomainError",
+          "startLine": 39,
+          "endLine": 74,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestTransportErrorsUseExpectedCodes",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TestMapDomainError",
+          "line": 39,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "Unavailable",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "InvalidArgument",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "Unauthenticated",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "PermissionDenied",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "Unimplemented",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "Internal",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "t.Run",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "errors.As",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "t.Fatalf",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "connectErr.Code",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestTransportErrorsUseExpectedCodes",
+          "callee": "t.Errorf",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "MapDomainError",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "t.Errorf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "t.Run",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "tt.kind.String",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "fault.New",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "MapDomainError",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "errors.As",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "t.Fatalf",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "connectErr.Code",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestMapDomainError",
+          "callee": "t.Errorf",
+          "lineNumber": 70
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/response/connect.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "Unavailable",
+          "startLine": 12,
+          "endLine": 14,
+          "params": [
+            "message"
+          ]
+        },
+        {
+          "name": "InvalidArgument",
+          "startLine": 17,
+          "endLine": 19,
+          "params": [
+            "message"
+          ]
+        },
+        {
+          "name": "Unauthenticated",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "message"
+          ]
+        },
+        {
+          "name": "PermissionDenied",
+          "startLine": 27,
+          "endLine": 29,
+          "params": [
+            "message"
+          ]
+        },
+        {
+          "name": "Unimplemented",
+          "startLine": 32,
+          "endLine": 34,
+          "params": [
+            "message"
+          ]
+        },
+        {
+          "name": "Internal",
+          "startLine": 37,
+          "endLine": 39,
+          "params": [
+            "message"
+          ]
+        },
+        {
+          "name": "MapTransportError",
+          "startLine": 43,
+          "endLine": 45,
+          "params": [
+            "kind",
+            "message"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Unavailable",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "InvalidArgument",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "Unauthenticated",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "PermissionDenied",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Unimplemented",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "Internal",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "MapTransportError",
+          "line": 43,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Unavailable",
+          "callee": "connect.NewError",
+          "lineNumber": 13
+        },
+        {
+          "caller": "Unavailable",
+          "callee": "errors.New",
+          "lineNumber": 13
+        },
+        {
+          "caller": "InvalidArgument",
+          "callee": "connect.NewError",
+          "lineNumber": 18
+        },
+        {
+          "caller": "InvalidArgument",
+          "callee": "errors.New",
+          "lineNumber": 18
+        },
+        {
+          "caller": "Unauthenticated",
+          "callee": "connect.NewError",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Unauthenticated",
+          "callee": "errors.New",
+          "lineNumber": 23
+        },
+        {
+          "caller": "PermissionDenied",
+          "callee": "connect.NewError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "PermissionDenied",
+          "callee": "errors.New",
+          "lineNumber": 28
+        },
+        {
+          "caller": "Unimplemented",
+          "callee": "connect.NewError",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Unimplemented",
+          "callee": "errors.New",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Internal",
+          "callee": "connect.NewError",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Internal",
+          "callee": "errors.New",
+          "lineNumber": 38
+        },
+        {
+          "caller": "MapTransportError",
+          "callee": "MapDomainError",
+          "lineNumber": 44
+        },
+        {
+          "caller": "MapTransportError",
+          "callee": "fault.New",
+          "lineNumber": 44
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/response/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 61,
+      "functions": [
+        {
+          "name": "MapDomainError",
+          "startLine": 34,
+          "endLine": 67,
+          "params": [
+            "err"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MapDomainError",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "MapDomainError",
+          "callee": "errors.As",
+          "lineNumber": 41
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "fault.KindOf",
+          "lineNumber": 45
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 47
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 49
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 53
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 55
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 57
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 59
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 61
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 63
+        },
+        {
+          "caller": "MapDomainError",
+          "callee": "connect.NewError",
+          "lineNumber": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/response/http_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 49,
+      "functions": [
+        {
+          "name": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "startLine": 12,
+          "endLine": 33,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestHTTPStatusForKind",
+          "startLine": 35,
+          "endLine": 56,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TestHTTPStatusForKind",
+          "line": 35,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "httptest.NewRecorder",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "WriteHTTPError",
+          "lineNumber": 14
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "fault.New",
+          "lineNumber": 14
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "t.Errorf",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "recorder.Header().Get",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "recorder.Header",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "t.Errorf",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "json.NewDecoder(recorder.Body).Decode",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "json.NewDecoder",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "t.Fatalf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "t.Errorf",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+          "callee": "t.Errorf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestHTTPStatusForKind",
+          "callee": "t.Run",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestHTTPStatusForKind",
+          "callee": "HTTPStatusForKind",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestHTTPStatusForKind",
+          "callee": "t.Errorf",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/response/http.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 146,
+      "nonEmptyLines": 135,
+      "functions": [
+        {
+          "name": "HTTPStatusForKind",
+          "startLine": 23,
+          "endLine": 44,
+          "params": [
+            "kind"
+          ]
+        },
+        {
+          "name": "HTTPCodeForKind",
+          "startLine": 47,
+          "endLine": 70,
+          "params": [
+            "kind"
+          ]
+        },
+        {
+          "name": "HTTPMessageForKind",
+          "startLine": 73,
+          "endLine": 96,
+          "params": [
+            "kind"
+          ]
+        },
+        {
+          "name": "WriteHTTPError",
+          "startLine": 99,
+          "endLine": 107,
+          "params": [
+            "w",
+            "err"
+          ]
+        },
+        {
+          "name": "WriteHTTPStatusError",
+          "startLine": 111,
+          "endLine": 117,
+          "params": [
+            "w",
+            "status",
+            "message"
+          ]
+        },
+        {
+          "name": "httpCodeForStatus",
+          "startLine": 119,
+          "endLine": 140,
+          "params": [
+            "status"
+          ]
+        },
+        {
+          "name": "writeHTTPJSON",
+          "startLine": 142,
+          "endLine": 146,
+          "params": [
+            "w",
+            "status",
+            "value"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "HTTPErrorResponse",
+          "startLine": 11,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "Error"
+          ]
+        },
+        {
+          "name": "HTTPError",
+          "startLine": 16,
+          "endLine": 20,
+          "methods": [],
+          "properties": [
+            "Code",
+            "Message",
+            "Details"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HTTPErrorResponse",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "HTTPError",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "HTTPStatusForKind",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "HTTPCodeForKind",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "HTTPMessageForKind",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "WriteHTTPError",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "WriteHTTPStatusError",
+          "line": 111,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "WriteHTTPError",
+          "callee": "fault.KindOf",
+          "lineNumber": 100
+        },
+        {
+          "caller": "WriteHTTPError",
+          "callee": "HTTPStatusForKind",
+          "lineNumber": 101
+        },
+        {
+          "caller": "WriteHTTPError",
+          "callee": "HTTPCodeForKind",
+          "lineNumber": 103
+        },
+        {
+          "caller": "WriteHTTPError",
+          "callee": "HTTPMessageForKind",
+          "lineNumber": 104
+        },
+        {
+          "caller": "WriteHTTPError",
+          "callee": "writeHTTPJSON",
+          "lineNumber": 106
+        },
+        {
+          "caller": "WriteHTTPStatusError",
+          "callee": "httpCodeForStatus",
+          "lineNumber": 113
+        },
+        {
+          "caller": "WriteHTTPStatusError",
+          "callee": "writeHTTPJSON",
+          "lineNumber": 116
+        },
+        {
+          "caller": "writeHTTPJSON",
+          "callee": "w.Header().Set",
+          "lineNumber": 143
+        },
+        {
+          "caller": "writeHTTPJSON",
+          "callee": "w.Header",
+          "lineNumber": 143
+        },
+        {
+          "caller": "writeHTTPJSON",
+          "callee": "w.WriteHeader",
+          "lineNumber": 144
+        },
+        {
+          "caller": "writeHTTPJSON",
+          "callee": "json.NewEncoder(w).Encode",
+          "lineNumber": 145
+        },
+        {
+          "caller": "writeHTTPJSON",
+          "callee": "json.NewEncoder",
+          "lineNumber": 145
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "pkg/retry/retry.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 6,
+      "functions": [
+        {
+          "name": "Do",
+          "startLine": 6,
+          "endLine": 8,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Do",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/grpc_client/main.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 119,
+      "nonEmptyLines": 106,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 18,
+          "endLine": 119,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 19
+        },
+        {
+          "caller": "main",
+          "callee": "os.Getenv",
+          "lineNumber": 21
+        },
+        {
+          "caller": "main",
+          "callee": "os.Getenv",
+          "lineNumber": 25
+        },
+        {
+          "caller": "main",
+          "callee": "grpc.NewClient",
+          "lineNumber": 29
+        },
+        {
+          "caller": "main",
+          "callee": "grpc.WithTransportCredentials",
+          "lineNumber": 31
+        },
+        {
+          "caller": "main",
+          "callee": "insecure.NewCredentials",
+          "lineNumber": 31
+        },
+        {
+          "caller": "main",
+          "callee": "grpc.WithDefaultCallOptions",
+          "lineNumber": 32
+        },
+        {
+          "caller": "main",
+          "callee": "grpc.CallContentSubtype",
+          "lineNumber": 32
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 35
+        },
+        {
+          "caller": "main",
+          "callee": "func() { _ = conn.Close() }",
+          "lineNumber": 37
+        },
+        {
+          "caller": "main",
+          "callee": "conn.Close",
+          "lineNumber": 37
+        },
+        {
+          "caller": "main",
+          "callee": "devicepb.NewDeviceServiceClient",
+          "lineNumber": 39
+        },
+        {
+          "caller": "main",
+          "callee": "context.WithTimeout",
+          "lineNumber": 40
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 40
+        },
+        {
+          "caller": "main",
+          "callee": "cancel",
+          "lineNumber": 41
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 44
+        },
+        {
+          "caller": "main",
+          "callee": "client.ListDevices",
+          "lineNumber": 45
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 49
+        },
+        {
+          "caller": "main",
+          "callee": "len",
+          "lineNumber": 49
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 51
+        },
+        {
+          "caller": "main",
+          "callee": "len",
+          "lineNumber": 55
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 57
+        },
+        {
+          "caller": "main",
+          "callee": "client.GetDevice",
+          "lineNumber": 58
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 60
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 62
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 65
+        },
+        {
+          "caller": "main",
+          "callee": "client.UpdateDevice",
+          "lineNumber": 81
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 83
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 85
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 89
+        },
+        {
+          "caller": "main",
+          "callee": "context.WithTimeout",
+          "lineNumber": 90
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 90
+        },
+        {
+          "caller": "main",
+          "callee": "streamCancel",
+          "lineNumber": 91
+        },
+        {
+          "caller": "main",
+          "callee": "client.StreamDeviceStatus",
+          "lineNumber": 93
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "main",
+          "callee": "stream.Recv",
+          "lineNumber": 100
+        },
+        {
+          "caller": "main",
+          "callee": "errors.Is",
+          "lineNumber": 101
+        },
+        {
+          "caller": "main",
+          "callee": "streamCtx.Err",
+          "lineNumber": 101
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 105
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 109
+        },
+        {
+          "caller": "main",
+          "callee": "fmt.Println",
+          "lineNumber": 116
+        },
+        {
+          "caller": "main",
+          "callee": "fmt.Println",
+          "lineNumber": 117
+        },
+        {
+          "caller": "main",
+          "callee": "fmt.Println",
+          "lineNumber": 118
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/test_connect_all_services.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 69,
+      "functions": [
+        {
+          "name": "makeConnectRequest",
+          "startLine": 5,
+          "endLine": 36,
+          "params": [
+            "service",
+            "method",
+            "payload"
+          ]
+        },
+        {
+          "name": "runFullConnectRPCVerification",
+          "startLine": 38,
+          "endLine": 74,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "makeConnectRequest",
+          "callee": "JSON.stringify",
+          "lineNumber": 7
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "http.request",
+          "lineNumber": 9
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "res.on",
+          "lineNumber": 20
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "res.on",
+          "lineNumber": 21
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "JSON.parse",
+          "lineNumber": 23
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "resolve",
+          "lineNumber": 24
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "resolve",
+          "lineNumber": 26
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.on",
+          "lineNumber": 32
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.write",
+          "lineNumber": 33
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.end",
+          "lineNumber": 34
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 39
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 42
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 43
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 44
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 46
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 47
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 49
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 64
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 67
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 68
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 69
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 71
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 72
+        },
+        {
+          "caller": "runFullConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 73
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/test_connect_bot_knowledge.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 77,
+      "nonEmptyLines": 67,
+      "functions": [
+        {
+          "name": "makeConnectRequest",
+          "startLine": 3,
+          "endLine": 34,
+          "params": [
+            "service",
+            "method",
+            "payload"
+          ]
+        },
+        {
+          "name": "runBotKnowledgeConnectRPCTest",
+          "startLine": 36,
+          "endLine": 72,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "makeConnectRequest",
+          "callee": "JSON.stringify",
+          "lineNumber": 5
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "http.request",
+          "lineNumber": 7
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "res.on",
+          "lineNumber": 18
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "res.on",
+          "lineNumber": 19
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "JSON.parse",
+          "lineNumber": 21
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "resolve",
+          "lineNumber": 22
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "resolve",
+          "lineNumber": 24
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.on",
+          "lineNumber": 30
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.write",
+          "lineNumber": 31
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.end",
+          "lineNumber": 32
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 37
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 40
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "makeConnectRequest",
+          "lineNumber": 41
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 42
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 43
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 46
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "makeConnectRequest",
+          "lineNumber": 47
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 48
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 49
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 52
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "makeConnectRequest",
+          "lineNumber": 53
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 54
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 55
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 58
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "makeConnectRequest",
+          "lineNumber": 59
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 60
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 61
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "JSON.stringify",
+          "lineNumber": 61
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 64
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "makeConnectRequest",
+          "lineNumber": 65
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 66
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 67
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "JSON.stringify",
+          "lineNumber": 67
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 69
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 70
+        },
+        {
+          "caller": "runBotKnowledgeConnectRPCTest",
+          "callee": "console.log",
+          "lineNumber": 71
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/test_connect_mikhmon.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 88,
+      "nonEmptyLines": 77,
+      "functions": [
+        {
+          "name": "makeConnectRequest",
+          "startLine": 6,
+          "endLine": 37,
+          "params": [
+            "method",
+            "payload"
+          ]
+        },
+        {
+          "name": "runMikhmonConnectRPCVerification",
+          "startLine": 39,
+          "endLine": 83,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "makeConnectRequest",
+          "callee": "JSON.stringify",
+          "lineNumber": 8
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "http.request",
+          "lineNumber": 10
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "res.on",
+          "lineNumber": 21
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "res.on",
+          "lineNumber": 22
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "JSON.parse",
+          "lineNumber": 24
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "resolve",
+          "lineNumber": 25
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "resolve",
+          "lineNumber": 27
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.on",
+          "lineNumber": 33
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.write",
+          "lineNumber": 34
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.end",
+          "lineNumber": 35
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 40
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 41
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 44
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 45
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 46
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 47
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 50
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 51
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 52
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 53
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 56
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 57
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 58
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 59
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 62
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 63
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 64
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 65
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 68
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 69
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 77
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 78
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 78
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 80
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 81
+        },
+        {
+          "caller": "runMikhmonConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/test_connect_rpc.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 72,
+      "functions": [
+        {
+          "name": "makeConnectRequest",
+          "startLine": 5,
+          "endLine": 36,
+          "params": [
+            "method",
+            "payload"
+          ]
+        },
+        {
+          "name": "runConnectRPCVerification",
+          "startLine": 38,
+          "endLine": 76,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "makeConnectRequest",
+          "callee": "JSON.stringify",
+          "lineNumber": 7
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "http.request",
+          "lineNumber": 9
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "res.on",
+          "lineNumber": 20
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "res.on",
+          "lineNumber": 21
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "JSON.parse",
+          "lineNumber": 23
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "resolve",
+          "lineNumber": 24
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "resolve",
+          "lineNumber": 26
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.on",
+          "lineNumber": 32
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.write",
+          "lineNumber": 33
+        },
+        {
+          "caller": "makeConnectRequest",
+          "callee": "req.end",
+          "lineNumber": 34
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 39
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 42
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 43
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 44
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 45
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 45
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 48
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 49
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 50
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 51
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 51
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 54
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "makeConnectRequest",
+          "lineNumber": 55
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 70
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 71
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 71
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 73
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 74
+        },
+        {
+          "caller": "runConnectRPCVerification",
+          "callee": "console.log",
+          "lineNumber": 75
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/test_connect_whatsapp.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "callConnect",
+          "startLine": 3,
+          "endLine": 29,
+          "params": [
+            "path",
+            "body"
+          ]
+        },
+        {
+          "name": "runTests",
+          "startLine": 31,
+          "endLine": 62,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "callConnect",
+          "callee": "JSON.stringify",
+          "lineNumber": 5
+        },
+        {
+          "caller": "callConnect",
+          "callee": "http.request",
+          "lineNumber": 6
+        },
+        {
+          "caller": "callConnect",
+          "callee": "Buffer.byteLength",
+          "lineNumber": 14
+        },
+        {
+          "caller": "callConnect",
+          "callee": "res.on",
+          "lineNumber": 19
+        },
+        {
+          "caller": "callConnect",
+          "callee": "res.on",
+          "lineNumber": 20
+        },
+        {
+          "caller": "callConnect",
+          "callee": "resolve",
+          "lineNumber": 21
+        },
+        {
+          "caller": "callConnect",
+          "callee": "JSON.parse",
+          "lineNumber": 21
+        },
+        {
+          "caller": "callConnect",
+          "callee": "req.on",
+          "lineNumber": 25
+        },
+        {
+          "caller": "callConnect",
+          "callee": "req.write",
+          "lineNumber": 26
+        },
+        {
+          "caller": "callConnect",
+          "callee": "req.end",
+          "lineNumber": 27
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 32
+        },
+        {
+          "caller": "runTests",
+          "callee": "callConnect",
+          "lineNumber": 34
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 35
+        },
+        {
+          "caller": "runTests",
+          "callee": "callConnect",
+          "lineNumber": 37
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 41
+        },
+        {
+          "caller": "runTests",
+          "callee": "callConnect",
+          "lineNumber": 43
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 44
+        },
+        {
+          "caller": "runTests",
+          "callee": "callConnect",
+          "lineNumber": 46
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 47
+        },
+        {
+          "caller": "runTests",
+          "callee": "callConnect",
+          "lineNumber": 49
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 50
+        },
+        {
+          "caller": "runTests",
+          "callee": "callConnect",
+          "lineNumber": 52
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 53
+        },
+        {
+          "caller": "runTests",
+          "callee": "callConnect",
+          "lineNumber": 55
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 56
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.log",
+          "lineNumber": 58
+        },
+        {
+          "caller": "runTests",
+          "callee": "console.error",
+          "lineNumber": 60
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/test_sse_backend.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 165,
+      "nonEmptyLines": 142,
+      "functions": [
+        {
+          "name": "sendRequest",
+          "startLine": 7,
+          "endLine": 38,
+          "params": [
+            "path",
+            "method"
+          ]
+        },
+        {
+          "name": "subscribeSSE",
+          "startLine": 41,
+          "endLine": 76,
+          "params": [
+            "path",
+            "onFrame"
+          ]
+        },
+        {
+          "name": "runTest",
+          "startLine": 78,
+          "endLine": 160,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "sendRequest",
+          "callee": "http.request",
+          "lineNumber": 20
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "res.on",
+          "lineNumber": 22
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "res.on",
+          "lineNumber": 23
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "resolve",
+          "lineNumber": 25
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "JSON.parse",
+          "lineNumber": 25
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "resolve",
+          "lineNumber": 27
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "req.on",
+          "lineNumber": 32
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "req.write",
+          "lineNumber": 34
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "JSON.stringify",
+          "lineNumber": 34
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "req.end",
+          "lineNumber": 36
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "http.get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "console.log",
+          "lineNumber": 45
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "res.on",
+          "lineNumber": 48
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "chunk.toString",
+          "lineNumber": 49
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "buffer.split",
+          "lineNumber": 50
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "lines.pop",
+          "lineNumber": 51
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "line.startsWith",
+          "lineNumber": 57
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "line.substring(6).trim",
+          "lineNumber": 58
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "line.substring",
+          "lineNumber": 58
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "line.startsWith",
+          "lineNumber": 59
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "line.substring(5).trim",
+          "lineNumber": 60
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "line.substring",
+          "lineNumber": 60
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "onFrame",
+          "lineNumber": 62
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "resolve",
+          "lineNumber": 71
+        },
+        {
+          "caller": "subscribeSSE",
+          "callee": "req.on",
+          "lineNumber": 74
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 79
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 82
+        },
+        {
+          "caller": "runTest",
+          "callee": "sendRequest",
+          "lineNumber": 96
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 97
+        },
+        {
+          "caller": "runTest",
+          "callee": "JSON.stringify",
+          "lineNumber": 97
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 100
+        },
+        {
+          "caller": "runTest",
+          "callee": "subscribeSSE",
+          "lineNumber": 103
+        },
+        {
+          "caller": "runTest",
+          "callee": "JSON.parse",
+          "lineNumber": 105
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 106
+        },
+        {
+          "caller": "runTest",
+          "callee": "Array.isArray",
+          "lineNumber": 107
+        },
+        {
+          "caller": "runTest",
+          "callee": "parsed.find",
+          "lineNumber": 107
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 109
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 110
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 111
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 112
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 113
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 114
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 115
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 116
+        },
+        {
+          "caller": "runTest",
+          "callee": "receivedFrames.push",
+          "lineNumber": 118
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 120
+        },
+        {
+          "caller": "runTest",
+          "callee": "setTimeout",
+          "lineNumber": 125
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 128
+        },
+        {
+          "caller": "runTest",
+          "callee": "sendRequest",
+          "lineNumber": 142
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 143
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 144
+        },
+        {
+          "caller": "runTest",
+          "callee": "JSON.stringify",
+          "lineNumber": 144
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 147
+        },
+        {
+          "caller": "runTest",
+          "callee": "setTimeout",
+          "lineNumber": 148
+        },
+        {
+          "caller": "runTest",
+          "callee": "sseConnection.req.destroy",
+          "lineNumber": 151
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 152
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 155
+        },
+        {
+          "caller": "runTest",
+          "callee": "sendRequest",
+          "lineNumber": 156
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 157
+        },
+        {
+          "caller": "runTest",
+          "callee": "JSON.stringify",
+          "lineNumber": 157
+        },
+        {
+          "caller": "runTest",
+          "callee": "console.log",
+          "lineNumber": 159
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/test_sse_live_reboot.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 247,
+      "nonEmptyLines": 217,
+      "functions": [
+        {
+          "name": "logStep",
+          "startLine": 6,
+          "endLine": 10,
+          "params": [
+            "stepNum",
+            "title"
+          ]
+        },
+        {
+          "name": "sendRequest",
+          "startLine": 12,
+          "endLine": 43,
+          "params": [
+            "path",
+            "method"
+          ]
+        },
+        {
+          "name": "startPersistentSSE",
+          "startLine": 45,
+          "endLine": 83,
+          "params": [
+            "path",
+            "frameCallback"
+          ]
+        },
+        {
+          "name": "runLiveStreamingVerification",
+          "startLine": 85,
+          "endLine": 242,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "logStep",
+          "callee": "console.log",
+          "lineNumber": 7
+        },
+        {
+          "caller": "logStep",
+          "callee": "console.log",
+          "lineNumber": 8
+        },
+        {
+          "caller": "logStep",
+          "callee": "console.log",
+          "lineNumber": 9
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "http.request",
+          "lineNumber": 25
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "res.on",
+          "lineNumber": 27
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "res.on",
+          "lineNumber": 28
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "resolve",
+          "lineNumber": 30
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "JSON.parse",
+          "lineNumber": 30
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "resolve",
+          "lineNumber": 32
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "req.on",
+          "lineNumber": 37
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "req.write",
+          "lineNumber": 39
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "JSON.stringify",
+          "lineNumber": 39
+        },
+        {
+          "caller": "sendRequest",
+          "callee": "req.end",
+          "lineNumber": 41
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "http.get",
+          "lineNumber": 47
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "console.log",
+          "lineNumber": 48
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "res.on",
+          "lineNumber": 51
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "chunk.toString",
+          "lineNumber": 52
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "buffer.split",
+          "lineNumber": 53
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "lines.pop",
+          "lineNumber": 54
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "line.startsWith",
+          "lineNumber": 60
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "line.substring(6).trim",
+          "lineNumber": 61
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "line.substring",
+          "lineNumber": 61
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "line.startsWith",
+          "lineNumber": 62
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "line.substring(5).trim",
+          "lineNumber": 63
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "line.substring",
+          "lineNumber": 63
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "frameCallback",
+          "lineNumber": 65
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "res.on",
+          "lineNumber": 73
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "console.log",
+          "lineNumber": 74
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "req.on",
+          "lineNumber": 78
+        },
+        {
+          "caller": "startPersistentSSE",
+          "callee": "console.error",
+          "lineNumber": 79
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 86
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 87
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "logStep",
+          "lineNumber": 90
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "sendRequest",
+          "lineNumber": 91
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 103
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 103
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "logStep",
+          "lineNumber": 106
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "startPersistentSSE",
+          "lineNumber": 108
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "new Date().toISOString().substring",
+          "lineNumber": 110
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "new Date().toISOString",
+          "lineNumber": 110
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "JSON.parse",
+          "lineNumber": 112
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "Array.isArray",
+          "lineNumber": 113
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "parsed.find",
+          "lineNumber": 113
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 115
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 116
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 117
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 118
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 119
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 120
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "targetItem.test.status.toUpperCase",
+          "lineNumber": 120
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 121
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 122
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 123
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 124
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 125
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 126
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 129
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "setTimeout",
+          "lineNumber": 134
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "logStep",
+          "lineNumber": 137
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "sendRequest",
+          "lineNumber": 138
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 150
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 150
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "setTimeout",
+          "lineNumber": 153
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "logStep",
+          "lineNumber": 156
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "sendRequest",
+          "lineNumber": 157
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 169
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 169
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "setTimeout",
+          "lineNumber": 172
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "logStep",
+          "lineNumber": 175
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "sendRequest",
+          "lineNumber": 176
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 188
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 188
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "setTimeout",
+          "lineNumber": 191
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "logStep",
+          "lineNumber": 194
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "sendRequest",
+          "lineNumber": 195
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 207
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 207
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "setTimeout",
+          "lineNumber": 210
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "logStep",
+          "lineNumber": 213
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "sendRequest",
+          "lineNumber": 214
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 226
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 226
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "setTimeout",
+          "lineNumber": 229
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "sseReq.destroy",
+          "lineNumber": 232
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 233
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "logStep",
+          "lineNumber": 235
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "sendRequest",
+          "lineNumber": 236
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 237
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "JSON.stringify",
+          "lineNumber": 237
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 239
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 240
+        },
+        {
+          "caller": "runLiveStreamingVerification",
+          "callee": "console.log",
+          "lineNumber": 241
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/integration/.gitkeep",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "test/integration/device_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 50,
+      "functions": [
+        {
+          "name": "TestDeviceIntegration_TestConnection",
+          "startLine": 20,
+          "endLine": 60,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestDeviceIntegration_TestConnection",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "os.Getenv",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "t.Skip",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "os.Getenv",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "os.Getenv",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "context.WithTimeout",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "context.Background",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "cancel",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "require.NoError",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "driver.Close",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "d.Execute",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "deviceUC.NewManageDeviceUseCase",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "mikrotik.NewGateway",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "uc.TestConnection",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "require.NoError",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "assert.Equal",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "assert.Equal",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestDeviceIntegration_TestConnection",
+          "callee": "t.Logf",
+          "lineNumber": 58
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/integration/mikhmon_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 152,
+      "nonEmptyLines": 134,
+      "functions": [
+        {
+          "name": "TestMikhmonIntegration_FullWorkflow",
+          "startLine": 19,
+          "endLine": 152,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestMikhmonIntegration_FullWorkflow",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotikTestTarget",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "context.WithTimeout",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "context.Background",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "cancel",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "func() { assert.NoError(t, drv.Close()) }",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "assert.NoError",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Close",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "time.Now().UnixNano",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "time.Now",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "time.Now().UnixNano",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "time.Now",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "t.Cleanup",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "context.WithTimeout",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "context.Background",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "cleanupCancel",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewPrintUsersCommand",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.ParseUsers",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewRemoveUserCommand",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewPrintUserProfilesCommand",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.ParseUserProfiles",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewRemoveUserProfileCommand",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotiksystem.NewPrintSchedulerCommand",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotiksystem.ParseScheduler",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotiksystem.NewSetSchedulerCommand",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewAddMikhmonProfileCommand",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewPrintUserProfilesCommand",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.ParseUserProfiles",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NotEmpty",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "assert.Equal",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "assert.Contains",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "t.Logf",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewGenerateVoucherBatchCommands",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewPrintUsersCommand",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.ParseUsers",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "append",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.Len",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "t.Logf",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "t.Logf",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.ParseMikhmonComment",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "assert.Equal",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "assert.Equal",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "assert.False",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewPrintActiveCommand",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.ParseActiveSessions",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.FilterInactiveUsers",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NotEmpty",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "t.Logf",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "len",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "len",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "len",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotiksystem.NewPrintSchedulerCommand",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotiksystem.ParseScheduler",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "len",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewUpdateMikhmonExpireMonitorCommand",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikhmon.NewSetupMikhmonExpireMonitorCommand",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "drv.Execute",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotiksystem.NewPrintSchedulerCommand",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NoError",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "mikrotiksystem.ParseScheduler",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "require.NotEmpty",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "assert.Equal",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "assert.Contains",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestMikhmonIntegration_FullWorkflow",
+          "callee": "t.Logf",
+          "lineNumber": 151
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/integration/mikrotik_builders_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 433,
+      "nonEmptyLines": 362,
+      "functions": [
+        {
+          "name": "newTestDriver",
+          "startLine": 39,
+          "endLine": 54,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "findPPPSecretID",
+          "startLine": 56,
+          "endLine": 63,
+          "params": [
+            "result",
+            "username"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_SystemResource",
+          "startLine": 67,
+          "endLine": 86,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_SystemIdentity",
+          "startLine": 90,
+          "endLine": 100,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_Interfaces",
+          "startLine": 104,
+          "endLine": 125,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_PPPActive",
+          "startLine": 129,
+          "endLine": 139,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "startLine": 143,
+          "endLine": 218,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "startLine": 222,
+          "endLine": 270,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_StreamQueueStats",
+          "startLine": 272,
+          "endLine": 316,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_MonitorTrafficStream",
+          "startLine": 320,
+          "endLine": 363,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "startLine": 367,
+          "endLine": 393,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_PPPActiveStream",
+          "startLine": 397,
+          "endLine": 416,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikBuilders_LogPrint",
+          "startLine": 420,
+          "endLine": 433,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestMikrotikBuilders_SystemResource",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_SystemIdentity",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_Interfaces",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_PPPActive",
+          "line": 129,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "line": 222,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_StreamQueueStats",
+          "line": 272,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_MonitorTrafficStream",
+          "line": 320,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "line": 367,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_PPPActiveStream",
+          "line": 397,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikBuilders_LogPrint",
+          "line": 420,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newTestDriver",
+          "callee": "t.Helper",
+          "lineNumber": 40
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "mikrotikTestTarget",
+          "lineNumber": 41
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "context.WithTimeout",
+          "lineNumber": 42
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "context.Background",
+          "lineNumber": 42
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "cancel",
+          "lineNumber": 43
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 44
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "require.NoError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "t.Cleanup",
+          "lineNumber": 52
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "assert.NoError",
+          "lineNumber": 52
+        },
+        {
+          "caller": "newTestDriver",
+          "callee": "drv.Close",
+          "lineNumber": 52
+        },
+        {
+          "caller": "findPPPSecretID",
+          "callee": "mikrotikppp.ParseSecrets",
+          "lineNumber": 57
+        },
+        {
+          "caller": "findPPPSecretID",
+          "callee": "fmt.Errorf",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "newTestDriver",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "context.Background",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "mikrotiksystem.NewPrintResourceCommand",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "drv.Execute",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "require.NoError",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "require.NotEmpty",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "mikrotiksystem.ParseResource",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "t.Logf",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "t.Logf",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "t.Logf",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "t.Logf",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "assert.GreaterOrEqual",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemResource",
+          "callee": "assert.LessOrEqual",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemIdentity",
+          "callee": "newTestDriver",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemIdentity",
+          "callee": "context.Background",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemIdentity",
+          "callee": "drv.Execute",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemIdentity",
+          "callee": "mikrotiksystem.NewPrintIdentityCommand",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemIdentity",
+          "callee": "require.NoError",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemIdentity",
+          "callee": "mikrotiksystem.ParseIdentity",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemIdentity",
+          "callee": "t.Logf",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestMikrotikBuilders_SystemIdentity",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "newTestDriver",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "context.Background",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "drv.Execute",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "mikrotikiface.NewPrintInterfacesCommand",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "require.NoError",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "mikrotikiface.ParseInterfaces",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "require.NotEmpty",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "t.Logf",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "drv.Execute",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "mikrotikiface.NewMonitorTrafficOnceCommand",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "require.NoError",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "mikrotikiface.ParseInterfaceTrafficStats",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "t.Logf",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestMikrotikBuilders_Interfaces",
+          "callee": "assert.NotNil",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActive",
+          "callee": "newTestDriver",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActive",
+          "callee": "context.Background",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActive",
+          "callee": "drv.Execute",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActive",
+          "callee": "mikrotikppp.NewPrintActiveCommand",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActive",
+          "callee": "require.NoError",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActive",
+          "callee": "mikrotikppp.ParseActiveSessions",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActive",
+          "callee": "t.Logf",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActive",
+          "callee": "len",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "newTestDriver",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "context.Background",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "t.Cleanup",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "context.Background",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewPrintSecretsCommand",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "findPPPSecretID",
+          "lineNumber": 154
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "func() error {\n\t\t\t_, e := drv.Execute(context.Background(), mikrotikppp.NewRemoveSecretCommand(rosID))\n\t\t\treturn e\n\t\t}",
+          "lineNumber": 158
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 159
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "context.Background",
+          "lineNumber": 159
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewRemoveSecretCommand",
+          "lineNumber": 159
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 165
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewPrintSecretsCommand",
+          "lineNumber": 165
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 166
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "findPPPSecretID",
+          "lineNumber": 167
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "findPPPSecretID",
+          "lineNumber": 170
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 171
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewRemoveSecretCommand",
+          "lineNumber": 171
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewAddSecretCommand",
+          "lineNumber": 175
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 181
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 182
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewPrintSecretsCommand",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 186
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.ParseSecrets",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NotEmpty",
+          "lineNumber": 188
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 190
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 191
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "t.Logf",
+          "lineNumber": 192
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewSetSecretCommand",
+          "lineNumber": 195
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 198
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 199
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewPrintSecretsCommand",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 203
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.ParseSecrets",
+          "lineNumber": 204
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NotEmpty",
+          "lineNumber": 205
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "t.Logf",
+          "lineNumber": 206
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewRemoveSecretCommand",
+          "lineNumber": 209
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 210
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 211
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 214
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "mikrotikppp.NewPrintSecretsCommand",
+          "lineNumber": 214
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 215
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "findPPPSecretID",
+          "lineNumber": 216
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPoESecretCRUD",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 217
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "newTestDriver",
+          "lineNumber": 225
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "context.Background",
+          "lineNumber": 226
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "t.Cleanup",
+          "lineNumber": 229
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "context.Background",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.NewPrintSimpleQueuesCommand",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.ParseSimpleQueues",
+          "lineNumber": 234
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 236
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "context.Background",
+          "lineNumber": 236
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.NewRemoveSimpleQueueCommand",
+          "lineNumber": 236
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 241
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.NewPrintSimpleQueuesCommand",
+          "lineNumber": 241
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.ParseSimpleQueues",
+          "lineNumber": 242
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 243
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.NewRemoveSimpleQueueCommand",
+          "lineNumber": 243
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.NewAddSimpleQueueCommand",
+          "lineNumber": 248
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 254
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 255
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 258
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.NewPrintSimpleQueuesCommand",
+          "lineNumber": 258
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 259
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.ParseSimpleQueues",
+          "lineNumber": 260
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "require.NotEmpty",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 263
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "assert.Contains",
+          "lineNumber": 264
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "t.Logf",
+          "lineNumber": 265
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "drv.Execute",
+          "lineNumber": 268
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "mikrotikqueue.NewRemoveSimpleQueueCommand",
+          "lineNumber": 268
+        },
+        {
+          "caller": "TestMikrotikBuilders_SimpleQueueCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 269
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "newTestDriver",
+          "lineNumber": 273
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "context.Background",
+          "lineNumber": 274
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "mikrotikqueue.NewAddSimpleQueueCommand",
+          "lineNumber": 277
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "drv.Execute",
+          "lineNumber": 283
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "require.NoError",
+          "lineNumber": 284
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "func() {\n\t\tif res, err := drv.Execute(ctx, mikrotikqueue.NewPrintSimpleQueuesCommand(testQueueName)); err == nil && len(res.Rows) > 0 {\n\t\t\trosID := res.Rows[0][\".id\"]\n\t\t\t_, _ = drv.Execute(ctx, mikrotikqueue.NewRemoveSimpleQueueCommand(rosID))\n\t\t}\n\t}",
+          "lineNumber": 286
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "drv.Execute",
+          "lineNumber": 287
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "mikrotikqueue.NewPrintSimpleQueuesCommand",
+          "lineNumber": 287
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "len",
+          "lineNumber": 287
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "drv.Execute",
+          "lineNumber": 289
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "mikrotikqueue.NewRemoveSimpleQueueCommand",
+          "lineNumber": 289
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 293
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "require.True",
+          "lineNumber": 294
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "mikrotikqueue.NewStreamQueueStatsCommand",
+          "lineNumber": 296
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "sd.Stream",
+          "lineNumber": 302
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "require.NoError",
+          "lineNumber": 303
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "handle.Cancel",
+          "lineNumber": 304
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "handle.Chan",
+          "lineNumber": 307
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "require.True",
+          "lineNumber": 308
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "mikrotikqueue.ParseSimpleQueues",
+          "lineNumber": 309
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "require.NotEmpty",
+          "lineNumber": 310
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "assert.Equal",
+          "lineNumber": 311
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "t.Logf",
+          "lineNumber": 312
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "time.After",
+          "lineNumber": 313
+        },
+        {
+          "caller": "TestMikrotikBuilders_StreamQueueStats",
+          "callee": "t.Fatal",
+          "lineNumber": 314
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "newTestDriver",
+          "lineNumber": 321
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "context.Background",
+          "lineNumber": 322
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "drv.Execute",
+          "lineNumber": 325
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "mikrotikiface.NewPrintInterfacesCommand",
+          "lineNumber": 325
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "require.NoError",
+          "lineNumber": 326
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "mikrotikiface.ParseInterfaces",
+          "lineNumber": 327
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "require.NotEmpty",
+          "lineNumber": 328
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 332
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "require.True",
+          "lineNumber": 333
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "context.WithTimeout",
+          "lineNumber": 335
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "streamCancel",
+          "lineNumber": 336
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "sd.Stream",
+          "lineNumber": 338
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "mikrotikiface.NewMonitorTrafficStreamCommand",
+          "lineNumber": 338
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "require.NoError",
+          "lineNumber": 339
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 340
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "handle.Cancel",
+          "lineNumber": 340
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "time.After",
+          "lineNumber": 343
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "handle.Chan",
+          "lineNumber": 347
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "mikrotikiface.ParseInterfaceTrafficStats",
+          "lineNumber": 351
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "t.Logf",
+          "lineNumber": 352
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "t.Fatal",
+          "lineNumber": 358
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "assert.GreaterOrEqual",
+          "lineNumber": 361
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "assert.NoError",
+          "lineNumber": 362
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficStream",
+          "callee": "handle.Err",
+          "lineNumber": 362
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "newTestDriver",
+          "lineNumber": 368
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "context.Background",
+          "lineNumber": 369
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "drv.Execute",
+          "lineNumber": 371
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "mikrotikiface.NewPrintInterfacesCommand",
+          "lineNumber": 371
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "require.NoError",
+          "lineNumber": 372
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "mikrotikiface.ParseInterfaces",
+          "lineNumber": 374
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "require.NotEmpty",
+          "lineNumber": 375
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "t.Logf",
+          "lineNumber": 378
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "drv.Execute",
+          "lineNumber": 379
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "mikrotikiface.NewMonitorTrafficOnceCommand",
+          "lineNumber": 379
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "t.Logf",
+          "lineNumber": 381
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "t.Logf",
+          "lineNumber": 384
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "len",
+          "lineNumber": 384
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "len",
+          "lineNumber": 385
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "t.Logf",
+          "lineNumber": 386
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "mikrotikiface.ParseInterfaceTrafficStats",
+          "lineNumber": 387
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 388
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 389
+        },
+        {
+          "caller": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+          "callee": "t.Logf",
+          "lineNumber": 390
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "newTestDriver",
+          "lineNumber": 398
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 400
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "require.True",
+          "lineNumber": 401
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "context.WithTimeout",
+          "lineNumber": 403
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "context.Background",
+          "lineNumber": 403
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "cancel",
+          "lineNumber": 404
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "sd.Stream",
+          "lineNumber": 408
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "mikrotikppp.NewStreamActiveCommand",
+          "lineNumber": 408
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "require.NoError",
+          "lineNumber": 409
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "time.Sleep",
+          "lineNumber": 412
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "assert.NoError",
+          "lineNumber": 413
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "handle.Cancel",
+          "lineNumber": 413
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "assert.NoError",
+          "lineNumber": 414
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "handle.Err",
+          "lineNumber": 414
+        },
+        {
+          "caller": "TestMikrotikBuilders_PPPActiveStream",
+          "callee": "t.Log",
+          "lineNumber": 415
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "newTestDriver",
+          "lineNumber": 421
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "context.Background",
+          "lineNumber": 422
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "drv.Execute",
+          "lineNumber": 424
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "mikrotiksystem.NewPrintLogsCommand",
+          "lineNumber": 424
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "require.NoError",
+          "lineNumber": 425
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "mikrotiksystem.ParseLogs",
+          "lineNumber": 427
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "t.Logf",
+          "lineNumber": 428
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "len",
+          "lineNumber": 428
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "len",
+          "lineNumber": 430
+        },
+        {
+          "caller": "TestMikrotikBuilders_LogPrint",
+          "callee": "t.Logf",
+          "lineNumber": 431
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 13,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/integration/mikrotik_dual_connection_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 176,
+      "nonEmptyLines": 152,
+      "functions": [
+        {
+          "name": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "startLine": 45,
+          "endLine": 117,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikDual_ValidateRealDevice",
+          "startLine": 124,
+          "endLine": 176,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikDual_ValidateRealDevice",
+          "line": 124,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "mikrotikTestTarget",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "context.WithTimeout",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "context.Background",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "cancel",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "require.NoError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "func() { assert.NoError(t, drvA.Close()) }",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "assert.NoError",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "drvA.Close",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "require.NoError",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "func() { assert.NoError(t, drvB.Close()) }",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "assert.NoError",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "drvB.Close",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "t.Logf",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "make",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "wg.Add",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "func() {\n\t\tdefer wg.Done()\n\t\tif _, err := drvA.Execute(ctx, command.Command{Raw: \"/system/resource/print\"}); err != nil {\n\t\t\terrCh <- fmt.Errorf(\"drvA execute resource: %w\", err)\n\t\t}\n\t}",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "wg.Done",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "drvA.Execute",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "fmt.Errorf",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "func() {\n\t\tdefer wg.Done()\n\t\tif _, err := drvB.Execute(ctx, command.Command{Raw: \"/system/identity/print\"}); err != nil {\n\t\t\terrCh <- fmt.Errorf(\"drvB execute identity: %w\", err)\n\t\t}\n\t}",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "wg.Done",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "drvB.Execute",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "fmt.Errorf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "wg.Wait",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "close",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "require.NoError",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "require.True",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "sdA.Stream",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "require.NoError",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "func() { assert.NoError(t, handle.Cancel()) }",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "assert.NoError",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "handle.Cancel",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "time.Sleep",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "context.WithTimeout",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "execCancel",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "time.Now",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "drvB.Execute",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "time.Since",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "require.NoError",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "assert.Less",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "assert.Len",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "handle.Chan",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "assert.True",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "t.Log",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "time.After",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestMikrotikDual_TwoConnectionsConcurrent",
+          "callee": "t.Fatal",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "newTestDriver",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "context.Background",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "require.True",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "drv.Execute",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "mikrotiksystem.NewPrintResourceCommand",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "require.NoError",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "mikrotiksystem.ParseResource",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "t.Logf",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "t.Run",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "require.NoError",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "vd.Validate",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "t.Log",
+          "lineNumber": 155
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "t.Run",
+          "lineNumber": 160
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "vd.Validate",
+          "lineNumber": 161
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "require.Error",
+          "lineNumber": 162
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "t.Logf",
+          "lineNumber": 163
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "t.Run",
+          "lineNumber": 171
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "vd.Validate",
+          "lineNumber": 172
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "assert.NoError",
+          "lineNumber": 173
+        },
+        {
+          "caller": "TestMikrotikDual_ValidateRealDevice",
+          "callee": "t.Log",
+          "lineNumber": 174
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/integration/mikrotik_ssh_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 157,
+      "nonEmptyLines": 141,
+      "functions": [
+        {
+          "name": "mikrotikRouterOSPlatformPath",
+          "startLine": 42,
+          "endLine": 54,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "mikrotikRouterOSCatalog",
+          "startLine": 59,
+          "endLine": 100,
+          "params": []
+        },
+        {
+          "name": "TestMikrotikRouterOSSSH",
+          "startLine": 106,
+          "endLine": 157,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestMikrotikRouterOSSSH",
+          "line": 106,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "mikrotikRouterOSPlatformPath",
+          "callee": "t.Helper",
+          "lineNumber": 43
+        },
+        {
+          "caller": "mikrotikRouterOSPlatformPath",
+          "callee": "runtime.Caller",
+          "lineNumber": 45
+        },
+        {
+          "caller": "mikrotikRouterOSPlatformPath",
+          "callee": "require.True",
+          "lineNumber": 46
+        },
+        {
+          "caller": "mikrotikRouterOSPlatformPath",
+          "callee": "filepath.Join",
+          "lineNumber": 49
+        },
+        {
+          "caller": "mikrotikRouterOSPlatformPath",
+          "callee": "filepath.Dir",
+          "lineNumber": 49
+        },
+        {
+          "caller": "mikrotikRouterOSPlatformPath",
+          "callee": "os.Stat",
+          "lineNumber": 50
+        },
+        {
+          "caller": "mikrotikRouterOSPlatformPath",
+          "callee": "require.NoError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "os.Getenv",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "t.Skip",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "os.Getenv",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "require.NotEmpty",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "os.Getenv",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "context.WithTimeout",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "context.Background",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "cancel",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "genericssh.NewDriver",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "mikrotikRouterOSPlatformPath",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "mikrotikRouterOSCatalog",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "require.NoError",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "func() { assert.NoError(t, drv.Close()) }",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "assert.NoError",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "drv.Close",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "drv.Execute",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "require.NoError",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "assert.Contains",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "drv.Execute",
+          "lineNumber": 154
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "require.NoError",
+          "lineNumber": 155
+        },
+        {
+          "caller": "TestMikrotikRouterOSSSH",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 156
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/integration/mikrotik_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 201,
+      "nonEmptyLines": 170,
+      "functions": [
+        {
+          "name": "mikrotikTestTarget",
+          "startLine": 36,
+          "endLine": 58,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikDriver_Execute",
+          "startLine": 63,
+          "endLine": 77,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikDriver_Stream",
+          "startLine": 82,
+          "endLine": 117,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "startLine": 122,
+          "endLine": 166,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestMikrotikDriver_PingStreamDetails",
+          "startLine": 170,
+          "endLine": 201,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestMikrotikDriver_Execute",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikDriver_Stream",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "line": 122,
+          "isDefault": false
+        },
+        {
+          "name": "TestMikrotikDriver_PingStreamDetails",
+          "line": 170,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "mikrotikTestTarget",
+          "callee": "t.Helper",
+          "lineNumber": 37
+        },
+        {
+          "caller": "mikrotikTestTarget",
+          "callee": "os.Getenv",
+          "lineNumber": 39
+        },
+        {
+          "caller": "mikrotikTestTarget",
+          "callee": "t.Skip",
+          "lineNumber": 41
+        },
+        {
+          "caller": "mikrotikTestTarget",
+          "callee": "os.Getenv",
+          "lineNumber": 45
+        },
+        {
+          "caller": "mikrotikTestTarget",
+          "callee": "strconv.Atoi",
+          "lineNumber": 46
+        },
+        {
+          "caller": "mikrotikTestTarget",
+          "callee": "require.NoError",
+          "lineNumber": 47
+        },
+        {
+          "caller": "mikrotikTestTarget",
+          "callee": "os.Getenv",
+          "lineNumber": 54
+        },
+        {
+          "caller": "mikrotikTestTarget",
+          "callee": "os.Getenv",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "mikrotikTestTarget",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "context.WithTimeout",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "context.Background",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "cancel",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "require.NoError",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "func() { assert.NoError(t, drv.Close()) }",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "assert.NoError",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "drv.Close",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "drv.Execute",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "require.NoError",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "require.Len",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestMikrotikDriver_Execute",
+          "callee": "assert.True",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "mikrotikTestTarget",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "context.WithTimeout",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "context.Background",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "cancel",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "require.NoError",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "func() { assert.NoError(t, drv.Close()) }",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "assert.NoError",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "drv.Close",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "require.True",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "sd.Stream",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "require.NoError",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "func() { assert.NoError(t, handle.Cancel()) }",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "assert.NoError",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "handle.Cancel",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "time.After",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "handle.Chan",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "t.Fatal",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "assert.Greater",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "assert.NoError",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestMikrotikDriver_Stream",
+          "callee": "handle.Err",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "mikrotikTestTarget",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "context.WithTimeout",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "context.Background",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "cancel",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "require.NoError",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "func() { assert.NoError(t, drv.Close()) }",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "assert.NoError",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "drv.Close",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "require.True",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "sd.Stream",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "require.NoError",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "func() { assert.NoError(t, handle.Cancel()) }",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "assert.NoError",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "handle.Cancel",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "time.Sleep",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "context.WithTimeout",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "execCancel",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "time.Now",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "drv.Execute",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "time.Since",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "require.NoError",
+          "lineNumber": 154
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "assert.Less",
+          "lineNumber": 155
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "assert.Len",
+          "lineNumber": 156
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "handle.Chan",
+          "lineNumber": 161
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "assert.True",
+          "lineNumber": 162
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "time.After",
+          "lineNumber": 163
+        },
+        {
+          "caller": "TestMikrotikDriver_ExecuteWhileStreaming",
+          "callee": "t.Fatal",
+          "lineNumber": 164
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "mikrotikTestTarget",
+          "lineNumber": 171
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "context.WithTimeout",
+          "lineNumber": 172
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "context.Background",
+          "lineNumber": 172
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "cancel",
+          "lineNumber": 173
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 175
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "require.NoError",
+          "lineNumber": 176
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "func() { assert.NoError(t, drv.Close()) }",
+          "lineNumber": 177
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "assert.NoError",
+          "lineNumber": 177
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "drv.Close",
+          "lineNumber": 177
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "port.DeviceDriver",
+          "lineNumber": 179
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "require.True",
+          "lineNumber": 180
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "mikrotiksystem.NewPingStreamCommand",
+          "lineNumber": 182
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "sd.Stream",
+          "lineNumber": 183
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "require.NoError",
+          "lineNumber": 184
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "func() { assert.NoError(t, handle.Cancel()) }",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "assert.NoError",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "handle.Cancel",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "t.Logf",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "handle.Chan",
+          "lineNumber": 191
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "require.True",
+          "lineNumber": 192
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "len",
+          "lineNumber": 193
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "t.Logf",
+          "lineNumber": 195
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "time.After",
+          "lineNumber": 197
+        },
+        {
+          "caller": "TestMikrotikDriver_PingStreamDetails",
+          "callee": "t.Fatalf",
+          "lineNumber": 198
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    }
+  ]
+}

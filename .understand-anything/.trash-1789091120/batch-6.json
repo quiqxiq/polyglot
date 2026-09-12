@@ -1,0 +1,1123 @@
+{
+ "batchIndex": 6,
+ "nodes": [
+  {
+   "id": "schema:api/proto/v1/skill.proto",
+   "type": "schema",
+   "name": "skill.proto",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf skill.proto — 44 definisi (1 jenis) dan 20 rpc.",
+   "description": "Skema protobuf skill.proto — 44 definisi (1 jenis) dan 20 rpc. Definisi utama: Skill, SkillResource, ResourceContent, GitRepoInfo, ListSkillsRequest, ListSkillsResponse, …. Layanan: SkillService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "skill"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.ListSkills",
+   "type": "endpoint",
+   "name": "SkillService.ListSkills",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.ListSkills (proto).",
+   "description": "Endpoint rpc SkillService.ListSkills pada baris 246 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "list-skills"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.GetSkill",
+   "type": "endpoint",
+   "name": "SkillService.GetSkill",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.GetSkill (proto).",
+   "description": "Endpoint rpc SkillService.GetSkill pada baris 247 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "get-skill"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.CreateSkill",
+   "type": "endpoint",
+   "name": "SkillService.CreateSkill",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.CreateSkill (proto).",
+   "description": "Endpoint rpc SkillService.CreateSkill pada baris 248 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "create-skill"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.UpdateSkill",
+   "type": "endpoint",
+   "name": "SkillService.UpdateSkill",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.UpdateSkill (proto).",
+   "description": "Endpoint rpc SkillService.UpdateSkill pada baris 249 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "update-skill"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.DeleteSkill",
+   "type": "endpoint",
+   "name": "SkillService.DeleteSkill",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.DeleteSkill (proto).",
+   "description": "Endpoint rpc SkillService.DeleteSkill pada baris 250 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "delete-skill"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.ExportSkill",
+   "type": "endpoint",
+   "name": "SkillService.ExportSkill",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.ExportSkill (proto).",
+   "description": "Endpoint rpc SkillService.ExportSkill pada baris 251 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "export-skill"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.ImportSkill",
+   "type": "endpoint",
+   "name": "SkillService.ImportSkill",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.ImportSkill (proto).",
+   "description": "Endpoint rpc SkillService.ImportSkill pada baris 252 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "import-skill"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.ListResources",
+   "type": "endpoint",
+   "name": "SkillService.ListResources",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.ListResources (proto).",
+   "description": "Endpoint rpc SkillService.ListResources pada baris 253 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "list-resources"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.GetResource",
+   "type": "endpoint",
+   "name": "SkillService.GetResource",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.GetResource (proto).",
+   "description": "Endpoint rpc SkillService.GetResource pada baris 254 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "get-resource"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.SaveResource",
+   "type": "endpoint",
+   "name": "SkillService.SaveResource",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.SaveResource (proto).",
+   "description": "Endpoint rpc SkillService.SaveResource pada baris 255 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "save-resource"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.DeleteResource",
+   "type": "endpoint",
+   "name": "SkillService.DeleteResource",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.DeleteResource (proto).",
+   "description": "Endpoint rpc SkillService.DeleteResource pada baris 256 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "delete-resource"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.ListGitRepos",
+   "type": "endpoint",
+   "name": "SkillService.ListGitRepos",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.ListGitRepos (proto).",
+   "description": "Endpoint rpc SkillService.ListGitRepos pada baris 257 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "list-git-repos"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.AddGitRepo",
+   "type": "endpoint",
+   "name": "SkillService.AddGitRepo",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.AddGitRepo (proto).",
+   "description": "Endpoint rpc SkillService.AddGitRepo pada baris 258 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "add-git-repo"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.UpdateGitRepo",
+   "type": "endpoint",
+   "name": "SkillService.UpdateGitRepo",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.UpdateGitRepo (proto).",
+   "description": "Endpoint rpc SkillService.UpdateGitRepo pada baris 259 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "update-git-repo"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.DeleteGitRepo",
+   "type": "endpoint",
+   "name": "SkillService.DeleteGitRepo",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.DeleteGitRepo (proto).",
+   "description": "Endpoint rpc SkillService.DeleteGitRepo pada baris 260 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "delete-git-repo"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.SyncGitRepo",
+   "type": "endpoint",
+   "name": "SkillService.SyncGitRepo",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.SyncGitRepo (proto).",
+   "description": "Endpoint rpc SkillService.SyncGitRepo pada baris 261 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "sync-git-repo"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.ToggleGitRepo",
+   "type": "endpoint",
+   "name": "SkillService.ToggleGitRepo",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.ToggleGitRepo (proto).",
+   "description": "Endpoint rpc SkillService.ToggleGitRepo pada baris 262 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "toggle-git-repo"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.ToggleSkill",
+   "type": "endpoint",
+   "name": "SkillService.ToggleSkill",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.ToggleSkill (proto).",
+   "description": "Endpoint rpc SkillService.ToggleSkill pada baris 263 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "toggle-skill"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.GetGlobalPrompt",
+   "type": "endpoint",
+   "name": "SkillService.GetGlobalPrompt",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.GetGlobalPrompt (proto).",
+   "description": "Endpoint rpc SkillService.GetGlobalPrompt pada baris 264 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "get-global-prompt"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/skill.proto:SkillService.SaveGlobalPrompt",
+   "type": "endpoint",
+   "name": "SkillService.SaveGlobalPrompt",
+   "filePath": "api/proto/v1/skill.proto",
+   "complexity": "simple",
+   "summary": "RPC SkillService.SaveGlobalPrompt (proto).",
+   "description": "Endpoint rpc SkillService.SaveGlobalPrompt pada baris 265 dari skill.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "skill",
+    "save-global-prompt"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/subscription.proto",
+   "type": "schema",
+   "name": "subscription.proto",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf subscription.proto — 27 definisi (1 jenis) dan 12 rpc.",
+   "description": "Skema protobuf subscription.proto — 27 definisi (1 jenis) dan 12 rpc. Definisi utama: PPPoESubscriptionConfig, HotspotSubscriptionConfig, Subscription, CreateSubscriptionRequest, CreateSubscriptionResponse, UpdateSubscriptionRequest, …. Layanan: SubscriptionService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.ListSubscriptions",
+   "type": "endpoint",
+   "name": "SubscriptionService.ListSubscriptions",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.ListSubscriptions (proto).",
+   "description": "Endpoint rpc SubscriptionService.ListSubscriptions pada baris 155 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "list-subscriptions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.GetSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.GetSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.GetSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.GetSubscription pada baris 156 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "get-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.CreateSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.CreateSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.CreateSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.CreateSubscription pada baris 157 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "create-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.UpdateSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.UpdateSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.UpdateSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.UpdateSubscription pada baris 158 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "update-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.DeleteSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.DeleteSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.DeleteSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.DeleteSubscription pada baris 159 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "delete-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.ChangePlan",
+   "type": "endpoint",
+   "name": "SubscriptionService.ChangePlan",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.ChangePlan (proto).",
+   "description": "Endpoint rpc SubscriptionService.ChangePlan pada baris 160 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "change-plan"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.SuspendSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.SuspendSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.SuspendSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.SuspendSubscription pada baris 161 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "suspend-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.ResumeSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.ResumeSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.ResumeSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.ResumeSubscription pada baris 162 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "resume-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.TerminateSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.TerminateSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.TerminateSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.TerminateSubscription pada baris 163 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "terminate-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.ActivateSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.ActivateSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.ActivateSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.ActivateSubscription pada baris 164 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "activate-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.IsolateSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.IsolateSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.IsolateSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.IsolateSubscription pada baris 165 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "isolate-subscription"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.RestoreSubscription",
+   "type": "endpoint",
+   "name": "SubscriptionService.RestoreSubscription",
+   "filePath": "api/proto/v1/subscription.proto",
+   "complexity": "simple",
+   "summary": "RPC SubscriptionService.RestoreSubscription (proto).",
+   "description": "Endpoint rpc SubscriptionService.RestoreSubscription pada baris 166 dari subscription.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "subscription",
+    "restore-subscription"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/users.proto",
+   "type": "schema",
+   "name": "users.proto",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf users.proto — 17 definisi (1 jenis) dan 8 rpc.",
+   "description": "Skema protobuf users.proto — 17 definisi (1 jenis) dan 8 rpc. Definisi utama: User, ListUsersRequest, ListUsersResponse, CreateUserRequest, CreateUserResponse, UpdateUserRequest, …. Layanan: UserService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/users.proto:UserService.ListUsers",
+   "type": "endpoint",
+   "name": "UserService.ListUsers",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "RPC UserService.ListUsers (proto).",
+   "description": "Endpoint rpc UserService.ListUsers pada baris 118 dari users.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "user",
+    "list-users"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/users.proto:UserService.CreateUser",
+   "type": "endpoint",
+   "name": "UserService.CreateUser",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "RPC UserService.CreateUser (proto).",
+   "description": "Endpoint rpc UserService.CreateUser pada baris 119 dari users.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "user",
+    "create-user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/users.proto:UserService.UpdateUser",
+   "type": "endpoint",
+   "name": "UserService.UpdateUser",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "RPC UserService.UpdateUser (proto).",
+   "description": "Endpoint rpc UserService.UpdateUser pada baris 120 dari users.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "user",
+    "update-user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/users.proto:UserService.ResetPassword",
+   "type": "endpoint",
+   "name": "UserService.ResetPassword",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "RPC UserService.ResetPassword (proto).",
+   "description": "Endpoint rpc UserService.ResetPassword pada baris 121 dari users.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "user",
+    "reset-password"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/users.proto:UserService.ToggleActive",
+   "type": "endpoint",
+   "name": "UserService.ToggleActive",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "RPC UserService.ToggleActive (proto).",
+   "description": "Endpoint rpc UserService.ToggleActive pada baris 122 dari users.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "user",
+    "toggle-active"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/users.proto:UserService.DeleteUser",
+   "type": "endpoint",
+   "name": "UserService.DeleteUser",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "RPC UserService.DeleteUser (proto).",
+   "description": "Endpoint rpc UserService.DeleteUser pada baris 123 dari users.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "user",
+    "delete-user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/users.proto:UserService.AssignDevicesToUser",
+   "type": "endpoint",
+   "name": "UserService.AssignDevicesToUser",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "RPC UserService.AssignDevicesToUser (proto).",
+   "description": "Endpoint rpc UserService.AssignDevicesToUser pada baris 124 dari users.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "user",
+    "assign-devices-to-user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/users.proto:UserService.ListUserAccessibleDevices",
+   "type": "endpoint",
+   "name": "UserService.ListUserAccessibleDevices",
+   "filePath": "api/proto/v1/users.proto",
+   "complexity": "simple",
+   "summary": "RPC UserService.ListUserAccessibleDevices (proto).",
+   "description": "Endpoint rpc UserService.ListUserAccessibleDevices pada baris 125 dari users.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "user",
+    "list-user-accessible-devices"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/whatsapp.proto",
+   "type": "schema",
+   "name": "whatsapp.proto",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf whatsapp.proto — 29 definisi (1 jenis) dan 13 rpc.",
+   "description": "Skema protobuf whatsapp.proto — 29 definisi (1 jenis) dan 13 rpc. Definisi utama: WASession, ListWASessionsRequest, ListWASessionsResponse, CreateWASessionRequest, CreateWASessionResponse, GetWASessionQRRequest, …. Layanan: WhatsAppService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "whatsapp"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ListSessions",
+   "type": "endpoint",
+   "name": "WhatsAppService.ListSessions",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.ListSessions (proto).",
+   "description": "Endpoint rpc WhatsAppService.ListSessions pada baris 10 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "list-sessions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.CreateSession",
+   "type": "endpoint",
+   "name": "WhatsAppService.CreateSession",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.CreateSession (proto).",
+   "description": "Endpoint rpc WhatsAppService.CreateSession pada baris 11 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "create-session"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.GetQRCode",
+   "type": "endpoint",
+   "name": "WhatsAppService.GetQRCode",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.GetQRCode (proto).",
+   "description": "Endpoint rpc WhatsAppService.GetQRCode pada baris 12 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "get-qrcode"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.GetPairingCode",
+   "type": "endpoint",
+   "name": "WhatsAppService.GetPairingCode",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.GetPairingCode (proto).",
+   "description": "Endpoint rpc WhatsAppService.GetPairingCode pada baris 13 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "get-pairing-code"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ToggleBot",
+   "type": "endpoint",
+   "name": "WhatsAppService.ToggleBot",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.ToggleBot (proto).",
+   "description": "Endpoint rpc WhatsAppService.ToggleBot pada baris 14 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "toggle-bot"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ReconnectSession",
+   "type": "endpoint",
+   "name": "WhatsAppService.ReconnectSession",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.ReconnectSession (proto).",
+   "description": "Endpoint rpc WhatsAppService.ReconnectSession pada baris 15 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "reconnect-session"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.LogoutSession",
+   "type": "endpoint",
+   "name": "WhatsAppService.LogoutSession",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.LogoutSession (proto).",
+   "description": "Endpoint rpc WhatsAppService.LogoutSession pada baris 16 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "logout-session"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.PurgeSession",
+   "type": "endpoint",
+   "name": "WhatsAppService.PurgeSession",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.PurgeSession (proto).",
+   "description": "Endpoint rpc WhatsAppService.PurgeSession pada baris 17 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "purge-session"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.SendTextMessage",
+   "type": "endpoint",
+   "name": "WhatsAppService.SendTextMessage",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.SendTextMessage (proto).",
+   "description": "Endpoint rpc WhatsAppService.SendTextMessage pada baris 18 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "send-text-message"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ListChats",
+   "type": "endpoint",
+   "name": "WhatsAppService.ListChats",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.ListChats (proto).",
+   "description": "Endpoint rpc WhatsAppService.ListChats pada baris 19 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "list-chats"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.GetChatMessages",
+   "type": "endpoint",
+   "name": "WhatsAppService.GetChatMessages",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.GetChatMessages (proto).",
+   "description": "Endpoint rpc WhatsAppService.GetChatMessages pada baris 20 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "get-chat-messages"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.MarkChatRead",
+   "type": "endpoint",
+   "name": "WhatsAppService.MarkChatRead",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.MarkChatRead (proto).",
+   "description": "Endpoint rpc WhatsAppService.MarkChatRead pada baris 21 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "mark-chat-read"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ToggleChatBot",
+   "type": "endpoint",
+   "name": "WhatsAppService.ToggleChatBot",
+   "filePath": "api/proto/v1/whatsapp.proto",
+   "complexity": "simple",
+   "summary": "RPC WhatsAppService.ToggleChatBot (proto).",
+   "description": "Endpoint rpc WhatsAppService.ToggleChatBot pada baris 22 dari whatsapp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "whatsapp",
+    "toggle-chat-bot"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.ListSkills",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.GetSkill",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.CreateSkill",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.UpdateSkill",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.DeleteSkill",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.ExportSkill",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.ImportSkill",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.ListResources",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.GetResource",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.SaveResource",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.DeleteResource",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.ListGitRepos",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.AddGitRepo",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.UpdateGitRepo",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.DeleteGitRepo",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.SyncGitRepo",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.ToggleGitRepo",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.ToggleSkill",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.GetGlobalPrompt",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/skill.proto",
+   "target": "endpoint:api/proto/v1/skill.proto:SkillService.SaveGlobalPrompt",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.ListSubscriptions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.GetSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.CreateSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.UpdateSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.DeleteSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.ChangePlan",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.SuspendSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.ResumeSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.TerminateSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.ActivateSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.IsolateSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/subscription.proto",
+   "target": "endpoint:api/proto/v1/subscription.proto:SubscriptionService.RestoreSubscription",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/users.proto",
+   "target": "endpoint:api/proto/v1/users.proto:UserService.ListUsers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/users.proto",
+   "target": "endpoint:api/proto/v1/users.proto:UserService.CreateUser",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/users.proto",
+   "target": "endpoint:api/proto/v1/users.proto:UserService.UpdateUser",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/users.proto",
+   "target": "endpoint:api/proto/v1/users.proto:UserService.ResetPassword",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/users.proto",
+   "target": "endpoint:api/proto/v1/users.proto:UserService.ToggleActive",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/users.proto",
+   "target": "endpoint:api/proto/v1/users.proto:UserService.DeleteUser",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/users.proto",
+   "target": "endpoint:api/proto/v1/users.proto:UserService.AssignDevicesToUser",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/users.proto",
+   "target": "endpoint:api/proto/v1/users.proto:UserService.ListUserAccessibleDevices",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ListSessions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.CreateSession",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.GetQRCode",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.GetPairingCode",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ToggleBot",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ReconnectSession",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.LogoutSession",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.PurgeSession",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.SendTextMessage",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ListChats",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.GetChatMessages",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.MarkChatRead",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/whatsapp.proto",
+   "target": "endpoint:api/proto/v1/whatsapp.proto:WhatsAppService.ToggleChatBot",
+   "type": "defines_schema",
+   "weight": 0.8
+  }
+ ]
+}

@@ -1,0 +1,1769 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/domain/hotspot/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/hotspot/hotspot.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 174,
+      "nonEmptyLines": 159,
+      "functions": [
+        {
+          "name": "ParseDataLimit",
+          "startLine": 153,
+          "endLine": 174,
+          "params": [
+            "s"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "HotspotUser",
+          "startLine": 9,
+          "endLine": 25,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Password",
+            "Profile",
+            "Server",
+            "MACAddress",
+            "Address",
+            "LimitUptime",
+            "LimitBytesIn",
+            "LimitBytesOut",
+            "Comment",
+            "Disabled",
+            "Uptime",
+            "BytesIn",
+            "BytesOut"
+          ]
+        },
+        {
+          "name": "HotspotUserProfile",
+          "startLine": 28,
+          "endLine": 40,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "RateLimit",
+            "SessionTimeout",
+            "IdleTimeout",
+            "SharedUsers",
+            "ParentQueue",
+            "AddressPool",
+            "AddressList",
+            "Comment",
+            "OnLogin"
+          ]
+        },
+        {
+          "name": "HotspotActiveSession",
+          "startLine": 43,
+          "endLine": 50,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Server",
+            "User",
+            "Address",
+            "MACAddress",
+            "LoginBy"
+          ]
+        },
+        {
+          "name": "HotspotActiveStat",
+          "startLine": 53,
+          "endLine": 62,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Uptime",
+            "SessionTimeLeft",
+            "IdleTime",
+            "BytesIn",
+            "BytesOut",
+            "PacketsIn",
+            "PacketsOut"
+          ]
+        },
+        {
+          "name": "HotspotIPBinding",
+          "startLine": 65,
+          "endLine": 74,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "MACAddress",
+            "Address",
+            "ToAddress",
+            "Server",
+            "Type",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "HotspotCookie",
+          "startLine": 77,
+          "endLine": 83,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "User",
+            "MACAddress",
+            "ExpiresIn",
+            "Domain"
+          ]
+        },
+        {
+          "name": "GeneratedVoucher",
+          "startLine": 86,
+          "endLine": 90,
+          "methods": [],
+          "properties": [
+            "Username",
+            "Password",
+            "Comment"
+          ]
+        },
+        {
+          "name": "VoucherBatch",
+          "startLine": 93,
+          "endLine": 95,
+          "methods": [],
+          "properties": [
+            "Vouchers"
+          ]
+        },
+        {
+          "name": "VoucherStatusDetails",
+          "startLine": 98,
+          "endLine": 112,
+          "methods": [],
+          "properties": [
+            "Found",
+            "User",
+            "Profile",
+            "IsOnline",
+            "ActiveSession",
+            "HasCookie",
+            "Cookie",
+            "Status",
+            "SisaWaktu",
+            "SisaKuota",
+            "ExpireDate",
+            "MACLocked",
+            "Message"
+          ]
+        },
+        {
+          "name": "MikhmonTransaction",
+          "startLine": 115,
+          "endLine": 127,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Date",
+            "Time",
+            "Username",
+            "Price",
+            "Address",
+            "MAC",
+            "Validity",
+            "Profile",
+            "Comment",
+            "RawName"
+          ]
+        },
+        {
+          "name": "ExpireMonitorStatus",
+          "startLine": 130,
+          "endLine": 135,
+          "methods": [],
+          "properties": [
+            "IsInstalled",
+            "IsEnabled",
+            "SchedulerID",
+            "SchedulerName"
+          ]
+        },
+        {
+          "name": "MikhmonComment",
+          "startLine": 138,
+          "endLine": 149,
+          "methods": [],
+          "properties": [
+            "Type",
+            "Code",
+            "CreatedDate",
+            "Tag",
+            "IsActivated",
+            "ExpireDate",
+            "ExpireTime",
+            "ExpireMode",
+            "RawComment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HotspotUser",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotUserProfile",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotActiveSession",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotActiveStat",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotIPBinding",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotCookie",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "GeneratedVoucher",
+          "line": 86,
+          "isDefault": false
+        },
+        {
+          "name": "VoucherBatch",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "VoucherStatusDetails",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "MikhmonTransaction",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "ExpireMonitorStatus",
+          "line": 130,
+          "isDefault": false
+        },
+        {
+          "name": "MikhmonComment",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "ParseDataLimit",
+          "line": 153,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseDataLimit",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "strings.ToLower",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "len",
+          "lineNumber": 158
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "len",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "fmt.Sscanf",
+          "lineNumber": 172
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 13,
+        "functionCount": 1,
+        "classCount": 12
+      }
+    },
+    {
+      "path": "internal/domain/hotspot/voucher_rules.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 199,
+      "nonEmptyLines": 181,
+      "functions": [
+        {
+          "name": "GenerateVoucherCode",
+          "startLine": 55,
+          "endLine": 74,
+          "params": [
+            "length",
+            "cs"
+          ]
+        },
+        {
+          "name": "FormatPreLoginComment",
+          "startLine": 77,
+          "endLine": 86,
+          "params": [
+            "vcType",
+            "code",
+            "tag",
+            "t"
+          ]
+        },
+        {
+          "name": "BuildCreateUserComment",
+          "startLine": 89,
+          "endLine": 99,
+          "params": [
+            "name",
+            "password",
+            "comment",
+            "now"
+          ]
+        },
+        {
+          "name": "BuildUpdatedComment",
+          "startLine": 108,
+          "endLine": 124,
+          "params": [
+            "expireDate",
+            "userCode",
+            "newComment",
+            "now"
+          ]
+        },
+        {
+          "name": "ParseOnLoginScript",
+          "startLine": 137,
+          "endLine": 179,
+          "params": [
+            "onLogin"
+          ]
+        },
+        {
+          "name": "NormalizeProfileName",
+          "startLine": 182,
+          "endLine": 184,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "FilterInactiveUsers",
+          "startLine": 187,
+          "endLine": 199,
+          "params": [
+            "users",
+            "active"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "VoucherGenerateParams",
+          "startLine": 41,
+          "endLine": 51,
+          "methods": [],
+          "properties": [
+            "Server",
+            "Profile",
+            "Prefix",
+            "UserLength",
+            "PassLength",
+            "CharSet",
+            "LimitUptime",
+            "LimitBytes",
+            "CommentTag"
+          ]
+        },
+        {
+          "name": "ProfileMeta",
+          "startLine": 127,
+          "endLine": 134,
+          "methods": [],
+          "properties": [
+            "ExpireMode",
+            "Price",
+            "Validity",
+            "SellingPrice",
+            "LockUser",
+            "LockServer"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "VoucherGenerateParams",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateVoucherCode",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "FormatPreLoginComment",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "BuildCreateUserComment",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "BuildUpdatedComment",
+          "line": 108,
+          "isDefault": false
+        },
+        {
+          "name": "ProfileMeta",
+          "line": 127,
+          "isDefault": false
+        },
+        {
+          "name": "ParseOnLoginScript",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "NormalizeProfileName",
+          "line": 182,
+          "isDefault": false
+        },
+        {
+          "name": "FilterInactiveUsers",
+          "line": 187,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "big.NewInt",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "int64",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "len",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "make",
+          "lineNumber": 64
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "rand.Int",
+          "lineNumber": 66
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "idx.Int64",
+          "lineNumber": 71
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "string",
+          "lineNumber": 73
+        },
+        {
+          "caller": "FormatPreLoginComment",
+          "callee": "t.Format",
+          "lineNumber": 81
+        },
+        {
+          "caller": "FormatPreLoginComment",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 83
+        },
+        {
+          "caller": "FormatPreLoginComment",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 85
+        },
+        {
+          "caller": "BuildCreateUserComment",
+          "callee": "GenerateVoucherCode",
+          "lineNumber": 95
+        },
+        {
+          "caller": "BuildCreateUserComment",
+          "callee": "FormatPreLoginComment",
+          "lineNumber": 96
+        },
+        {
+          "caller": "BuildUpdatedComment",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 115
+        },
+        {
+          "caller": "BuildUpdatedComment",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 117
+        },
+        {
+          "caller": "BuildUpdatedComment",
+          "callee": "GenerateVoucherCode",
+          "lineNumber": 120
+        },
+        {
+          "caller": "BuildUpdatedComment",
+          "callee": "FormatPreLoginComment",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 139
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "strings.Index",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "fmt.Errorf",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "len",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "strings.Index",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "fmt.Errorf",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "strings.Split",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "len",
+          "lineNumber": 155
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "fmt.Errorf",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "len",
+          "lineNumber": 160
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 168
+        },
+        {
+          "caller": "ParseOnLoginScript",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 173
+        },
+        {
+          "caller": "NormalizeProfileName",
+          "callee": "strings.Join",
+          "lineNumber": 183
+        },
+        {
+          "caller": "NormalizeProfileName",
+          "callee": "strings.Fields",
+          "lineNumber": 183
+        },
+        {
+          "caller": "FilterInactiveUsers",
+          "callee": "make",
+          "lineNumber": 188
+        },
+        {
+          "caller": "FilterInactiveUsers",
+          "callee": "len",
+          "lineNumber": 188
+        },
+        {
+          "caller": "FilterInactiveUsers",
+          "callee": "make",
+          "lineNumber": 192
+        },
+        {
+          "caller": "FilterInactiveUsers",
+          "callee": "append",
+          "lineNumber": 195
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 9,
+        "functionCount": 7,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/llm/config.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 54,
+      "nonEmptyLines": 47,
+      "classes": [
+        {
+          "name": "Config",
+          "startLine": 13,
+          "endLine": 41,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Provider",
+            "Model",
+            "APIKeyEncrypted",
+            "Params",
+            "MaxOutputTokens",
+            "BaseURL",
+            "Temperature",
+            "SystemPrompt",
+            "IsActive",
+            "CostPer1MInput",
+            "CostPer1MOutput",
+            "CreatedAt",
+            "UpdatedAt",
+            "EnableSkills",
+            "SkillsMode",
+            "SelectedSkills",
+            "SkillsPrompt",
+            "TotalInputTokens",
+            "TotalOutputTokens",
+            "TotalMessages",
+            "TotalCostUSD",
+            "TotalCostIDR"
+          ]
+        },
+        {
+          "name": "ChatMessage",
+          "startLine": 44,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "Role",
+            "Content"
+          ]
+        },
+        {
+          "name": "ChatResponse",
+          "startLine": 50,
+          "endLine": 54,
+          "methods": [],
+          "properties": [
+            "Content",
+            "TokenIn",
+            "TokenOut"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Config",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "ChatMessage",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "ChatResponse",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/domain/llm/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/llm/pricing.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 61,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "GetDefaultModelPricing",
+          "startLine": 12,
+          "endLine": 61,
+          "params": [
+            "provider",
+            "model"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ModelPricing",
+          "startLine": 6,
+          "endLine": 9,
+          "methods": [],
+          "properties": [
+            "CostPer1MInput",
+            "CostPer1MOutput"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ModelPricing",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "GetDefaultModelPricing",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.ToLower",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.ToLower",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 18
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 21
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 27
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 27
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 30
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 30
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 48
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 51
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/llm/tool.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 12,
+      "classes": [
+        {
+          "name": "Tool",
+          "startLine": 10,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Description",
+            "InputSchema",
+            "Handler"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Tool",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/notification/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 12,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/notification/template.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 25,
+      "classes": [
+        {
+          "name": "NotificationTemplate",
+          "startLine": 18,
+          "endLine": 29,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "TemplateKey",
+            "Name",
+            "Content",
+            "VariablesJSON",
+            "IsActive",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationTemplate",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/notification/wa_notification.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "WANotification",
+          "startLine": 7,
+          "endLine": 22,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "TemplateID",
+            "CustomerID",
+            "InvoiceID",
+            "RecipientPhone",
+            "MessageType",
+            "MessageContent",
+            "Status",
+            "ErrorMessage",
+            "SentAt",
+            "Attempts",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WANotification",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/plan/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/plan/service_plan_rate_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "TestRateLimit",
+          "startLine": 5,
+          "endLine": 21,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRateLimitWithBurst",
+          "startLine": 23,
+          "endLine": 44,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestRateLimit",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "TestRateLimitWithBurst",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestRateLimit",
+          "callee": "c.p.RateLimit",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestRateLimit",
+          "callee": "t.Errorf",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestRateLimitWithBurst",
+          "callee": "p.RateLimitWithBurst",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestRateLimitWithBurst",
+          "callee": "t.Errorf",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestRateLimitWithBurst",
+          "callee": "(ServicePlan{BandwidthDownloadKbps: 10240, BandwidthUploadKbps: 5120}).RateLimitWithBurst",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestRateLimitWithBurst",
+          "callee": "t.Errorf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestRateLimitWithBurst",
+          "callee": "partial.RateLimitWithBurst",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestRateLimitWithBurst",
+          "callee": "t.Errorf",
+          "lineNumber": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/plan/service_plan_rate.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 46,
+      "nonEmptyLines": 42,
+      "functions": [
+        {
+          "name": "rateSide",
+          "startLine": 7,
+          "endLine": 16,
+          "params": [
+            "kbps"
+          ]
+        },
+        {
+          "name": "RateLimit",
+          "startLine": 19,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "RateLimitWithBurst",
+          "startLine": 35,
+          "endLine": 46,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "RateLimit",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "RateLimitWithBurst",
+          "line": 35,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "rateSide",
+          "callee": "strconv.Itoa",
+          "lineNumber": 12
+        },
+        {
+          "caller": "rateSide",
+          "callee": "strconv.Itoa",
+          "lineNumber": 14
+        },
+        {
+          "caller": "RateLimit",
+          "callee": "rateSide",
+          "lineNumber": 20
+        },
+        {
+          "caller": "RateLimit",
+          "callee": "rateSide",
+          "lineNumber": 20
+        },
+        {
+          "caller": "RateLimitWithBurst",
+          "callee": "p.RateLimit",
+          "lineNumber": 36
+        },
+        {
+          "caller": "RateLimitWithBurst",
+          "callee": "rateSide",
+          "lineNumber": 42
+        },
+        {
+          "caller": "RateLimitWithBurst",
+          "callee": "rateSide",
+          "lineNumber": 42
+        },
+        {
+          "caller": "RateLimitWithBurst",
+          "callee": "rateSide",
+          "lineNumber": 43
+        },
+        {
+          "caller": "RateLimitWithBurst",
+          "callee": "strconv.Itoa",
+          "lineNumber": 44
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/plan/service_plan.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 62,
+      "nonEmptyLines": 55,
+      "classes": [
+        {
+          "name": "PPPoEPlanConfig",
+          "startLine": 13,
+          "endLine": 18,
+          "methods": [],
+          "properties": [
+            "RemoteAddressPool",
+            "AddressList",
+            "SessionTimeout",
+            "IdleTimeout"
+          ]
+        },
+        {
+          "name": "HotspotPlanConfig",
+          "startLine": 21,
+          "endLine": 27,
+          "methods": [],
+          "properties": [
+            "IPPoolName",
+            "AddressList",
+            "SharedUsers",
+            "SessionTimeout",
+            "IdleTimeout"
+          ]
+        },
+        {
+          "name": "ServicePlan",
+          "startLine": 31,
+          "endLine": 62,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Name",
+            "ServiceType",
+            "BandwidthDownloadKbps",
+            "BandwidthUploadKbps",
+            "BurstDownloadKbps",
+            "BurstUploadKbps",
+            "BurstThresholdKbps",
+            "BurstTimeSeconds",
+            "Price",
+            "InstallationFee",
+            "TaxPercent",
+            "ParentQueue",
+            "IsActive",
+            "Description",
+            "CreatedAt",
+            "UpdatedAt",
+            "PPPoE",
+            "Hotspot",
+            "IPPoolName",
+            "RemoteAddressPool",
+            "AddressList",
+            "SharedUsers",
+            "SessionTimeout",
+            "IdleTimeout"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PPPoEPlanConfig",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotPlanConfig",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ServicePlan",
+          "line": 31,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/domain/ppp/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 12,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/ppp/ppp.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 88,
+      "nonEmptyLines": 83,
+      "functions": [
+        {
+          "name": "FilterInactiveSecrets",
+          "startLine": 58,
+          "endLine": 70,
+          "params": [
+            "secrets",
+            "active"
+          ]
+        },
+        {
+          "name": "EnrichActiveSessionsWithProfiles",
+          "startLine": 73,
+          "endLine": 88,
+          "params": [
+            "active",
+            "secrets"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ActiveSession",
+          "startLine": 6,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Service",
+            "CallerID",
+            "Address",
+            "Encoding",
+            "SessionID",
+            "Radius",
+            "Profile",
+            "Uptime"
+          ]
+        },
+        {
+          "name": "PPPoESecret",
+          "startLine": 22,
+          "endLine": 33,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Profile",
+            "Service",
+            "LocalAddress",
+            "RemoteAddress",
+            "Comment",
+            "Disabled",
+            "LastLoggedOut",
+            "CallerID"
+          ]
+        },
+        {
+          "name": "Profile",
+          "startLine": 36,
+          "endLine": 55,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "RateLimit",
+            "LocalAddress",
+            "RemoteAddress",
+            "DNSServer",
+            "ParentQueue",
+            "AddressList",
+            "Comment",
+            "SharedUsers",
+            "OnlyOne",
+            "UseMPLS",
+            "UseCompression",
+            "UseEncryption",
+            "ChangeTCPMSS",
+            "BridgeLearning",
+            "OnUp",
+            "OnDown"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ActiveSession",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "PPPoESecret",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Profile",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "FilterInactiveSecrets",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "EnrichActiveSessionsWithProfiles",
+          "line": 73,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "FilterInactiveSecrets",
+          "callee": "make",
+          "lineNumber": 59
+        },
+        {
+          "caller": "FilterInactiveSecrets",
+          "callee": "len",
+          "lineNumber": 59
+        },
+        {
+          "caller": "FilterInactiveSecrets",
+          "callee": "make",
+          "lineNumber": 63
+        },
+        {
+          "caller": "FilterInactiveSecrets",
+          "callee": "append",
+          "lineNumber": 66
+        },
+        {
+          "caller": "EnrichActiveSessionsWithProfiles",
+          "callee": "make",
+          "lineNumber": 74
+        },
+        {
+          "caller": "EnrichActiveSessionsWithProfiles",
+          "callee": "len",
+          "lineNumber": 74
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 2,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/domain/registration/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/registration/registration.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 50,
+      "nonEmptyLines": 47,
+      "classes": [
+        {
+          "name": "Registration",
+          "startLine": 19,
+          "endLine": 50,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "RegistrationNo",
+            "PlanID",
+            "FullName",
+            "Phone",
+            "Email",
+            "Address",
+            "Latitude",
+            "Longitude",
+            "Notes",
+            "Status",
+            "ReviewedBy",
+            "ReviewedAt",
+            "AdminNotes",
+            "ScheduledInstallDate",
+            "ScheduledInstallTime",
+            "AssignedTechnicianID",
+            "InstalledAt",
+            "TechnicianNotes",
+            "CustomerID",
+            "SubscriptionID",
+            "InvoiceID",
+            "RejectedAt",
+            "RejectedReason",
+            "CancelledAt",
+            "CancelReason",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Registration",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/reporting/daily_snapshot.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 23,
+      "classes": [
+        {
+          "name": "DailyFinancialSnapshot",
+          "startLine": 12,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "SnapshotDate",
+            "InvoiceCount",
+            "InvoiceTotal",
+            "PaymentCount",
+            "PaymentTotal",
+            "OutstandingTotal",
+            "ExpenseTotal",
+            "ActiveSubscriptions",
+            "CashBalanceJSON",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DailyFinancialSnapshot",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/reporting/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/session/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 15,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/session/session.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "New",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "New",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/setting/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/setting/isp.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "ISPSettings",
+          "startLine": 4,
+          "endLine": 14,
+          "methods": [],
+          "properties": [
+            "BillingCycleStartDay",
+            "BillingDueDays",
+            "AutoIsolate",
+            "IsolateGraceDays",
+            "PPPoEIsolirProfile",
+            "HotspotIsolirProfile",
+            "PaymentRedirectURL",
+            "SuspendAfterDays",
+            "IsolirAddressList"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ISPSettings",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/setting/setting.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 42,
+      "nonEmptyLines": 38,
+      "functions": [
+        {
+          "name": "DefaultBotSettings",
+          "startLine": 29,
+          "endLine": 42,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Setting",
+          "startLine": 6,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "Key",
+            "Value",
+            "Category",
+            "Description",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "BotSettings",
+          "startLine": 15,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "BurstLimit",
+            "BurstWindowSecs",
+            "Mute1HourSecs",
+            "Ban24HourSecs",
+            "DailyChatLimit",
+            "SessionTimeoutMinutes",
+            "SlidingWindowSize",
+            "LLMMaxOutputTokens",
+            "WhitelistAllStaff",
+            "CustomWhitelistPhones"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Setting",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "BotSettings",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "DefaultBotSettings",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 2
+      }
+    }
+  ]
+}

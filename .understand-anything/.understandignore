@@ -1,0 +1,51 @@
+# .understandignore — backend (Go) only scope
+# User request: analyze the Go backend and everything related to it,
+# excluding frontend sides (web/, web_dial/).
+# Syntax: same as .gitignore.
+
+# --- Frontend (excluded per user request) ---
+web/
+web_dial/
+node_modules/
+web/node_modules/
+web/dist/
+web/dist-ssr/
+
+# --- Generated code (regenerated, never hand-edited) ---
+api/gen/
+web/src/gen/
+
+# --- Build artifacts ---
+# NOTE: no bare 'server'/'probe'/'seed' patterns here — they would also
+# match the cmd/server, cmd/probe, cmd/seed source directories (gitignore
+# semantics match basenames anywhere in the tree).
+bin/
+dist/
+build/
+tmp/
+logs/
+*.exe
+wa_stores/
+.ref/
+.ref-wa-multidevice/
+mikhmon4/
+mikhmon_v4/
+.hermes/
+.codebuddy/
+.code-review-graph/
+.tanstack/
+.vitest-attachments/
+
+# --- Environment / secrets ---
+.env
+.env.local
+
+# --- Tooling noise ---
+.vscode/
+.github/
+.che/
+skills-lock.json
+
+# Keep: internal/ (Go backend core), pkg/, cmd/, api/ (protos + openapi),
+# migrations/ (schema), test/ (integration), scripts/, docs/, deployments/,
+# root go.mod/Makefile/*.md architecture docs.

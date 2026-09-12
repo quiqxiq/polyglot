@@ -1,0 +1,97 @@
+{
+ "batchIndex": 12,
+ "nodes": [
+  {
+   "id": "config:scripts/check-connect-errors.sh",
+   "type": "config",
+   "name": "check-connect-errors.sh",
+   "filePath": "scripts/check-connect-errors.sh",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: check-connect-errors.sh.",
+   "description": "Berkas config proyek: check-connect-errors.sh.",
+   "tags": [
+    "config",
+    "check-connect-errors"
+   ]
+  },
+  {
+   "id": "config:scripts/check-layer-boundaries.sh",
+   "type": "config",
+   "name": "check-layer-boundaries.sh",
+   "filePath": "scripts/check-layer-boundaries.sh",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: check-layer-boundaries.sh.",
+   "description": "Berkas config proyek: check-layer-boundaries.sh.",
+   "tags": [
+    "config",
+    "check-layer-boundaries"
+   ]
+  },
+  {
+   "id": "config:scripts/test_docker_api.ps1",
+   "type": "config",
+   "name": "test_docker_api.ps1",
+   "filePath": "scripts/test_docker_api.ps1",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_docker_api.ps1.",
+   "description": "Berkas config proyek: test_docker_api.ps1.",
+   "tags": [
+    "config",
+    "test-docker-api"
+   ]
+  },
+  {
+   "id": "config:scripts/test_inactive_streaming.ps1",
+   "type": "config",
+   "name": "test_inactive_streaming.ps1",
+   "filePath": "scripts/test_inactive_streaming.ps1",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_inactive_streaming.ps1.",
+   "description": "Berkas config proyek: test_inactive_streaming.ps1.",
+   "tags": [
+    "config",
+    "test-inactive-streaming"
+   ]
+  },
+  {
+   "id": "config:scripts/test_pure_streaming.ps1",
+   "type": "config",
+   "name": "test_pure_streaming.ps1",
+   "filePath": "scripts/test_pure_streaming.ps1",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_pure_streaming.ps1.",
+   "description": "Berkas config proyek: test_pure_streaming.ps1.",
+   "tags": [
+    "config",
+    "test-pure-streaming"
+   ]
+  },
+  {
+   "id": "config:scripts/test_ws_queues.ps1",
+   "type": "config",
+   "name": "test_ws_queues.ps1",
+   "filePath": "scripts/test_ws_queues.ps1",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_ws_queues.ps1.",
+   "description": "Berkas config proyek: test_ws_queues.ps1.",
+   "tags": [
+    "config",
+    "test-ws-queues"
+   ]
+  },
+  {
+   "id": "config:scripts/update.sh",
+   "type": "config",
+   "name": "update.sh",
+   "filePath": "scripts/update.sh",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: update.sh.",
+   "description": "Berkas config proyek: update.sh.",
+   "tags": [
+    "config",
+    "update"
+   ]
+  }
+ ],
+ "edges": []
+}

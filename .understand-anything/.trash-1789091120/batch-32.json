@@ -1,0 +1,5339 @@
+{
+ "batchIndex": 32,
+ "nodes": [
+  {
+   "id": "file:internal/port/dhcp.go",
+   "type": "file",
+   "name": "dhcp.go",
+   "filePath": "internal/port/dhcp.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (11 baris, 0 fungsi, 0 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (11 baris, 0 fungsi, 0 tipe). Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/port/event_publisher.go",
+   "type": "file",
+   "name": "event_publisher.go",
+   "filePath": "internal/port/event_publisher.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (6 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (6 baris, 0 fungsi, 1 tipe). Tipe utama: EventPublisher.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/event_publisher.go:EventPublisher",
+   "type": "class",
+   "name": "EventPublisher",
+   "filePath": "internal/port/event_publisher.go",
+   "complexity": "simple",
+   "summary": "Tipe EventPublisher di event_publisher.go, dengan method: PublishEvent.",
+   "description": "Tipe EventPublisher di event_publisher.go, dengan method: PublishEvent. Didefinisikan pada baris 4-6.",
+   "tags": [
+    "go",
+    "tipe",
+    "eventpublisher"
+   ]
+  },
+  {
+   "id": "file:internal/port/firewall_gateway.go",
+   "type": "file",
+   "name": "firewall_gateway.go",
+   "filePath": "internal/port/firewall_gateway.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (48 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (48 baris, 0 fungsi, 2 tipe). Tipe utama: IsolationRedirectConfig, FirewallGateway.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/firewall_gateway.go:IsolationRedirectConfig",
+   "type": "class",
+   "name": "IsolationRedirectConfig",
+   "filePath": "internal/port/firewall_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe IsolationRedirectConfig di firewall_gateway.go.",
+   "description": "Tipe IsolationRedirectConfig di firewall_gateway.go. Didefinisikan pada baris 7-14.",
+   "tags": [
+    "go",
+    "tipe",
+    "isolationredirectconfig"
+   ]
+  },
+  {
+   "id": "class:internal/port/firewall_gateway.go:FirewallGateway",
+   "type": "class",
+   "name": "FirewallGateway",
+   "filePath": "internal/port/firewall_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe FirewallGateway di firewall_gateway.go, dengan method: EnsureIsolationRedirect, EnsureIsolationFilter, DisableIsolationRedirect, HasIsolationRedirect, CountAddressListEntries, AddToAddressList.",
+   "description": "Tipe FirewallGateway di firewall_gateway.go, dengan method: EnsureIsolationRedirect, EnsureIsolationFilter, DisableIsolationRedirect, HasIsolationRedirect, CountAddressListEntries, AddToAddressList. Didefinisikan pada baris 19-48.",
+   "tags": [
+    "go",
+    "tipe",
+    "firewallgateway"
+   ]
+  },
+  {
+   "id": "file:internal/port/gateway_transaction_repository.go",
+   "type": "file",
+   "name": "gateway_transaction_repository.go",
+   "filePath": "internal/port/gateway_transaction_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (17 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (17 baris, 0 fungsi, 1 tipe). Tipe utama: GatewayTransactionRepository. Bergantung pada 5 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/gateway_transaction_repository.go:GatewayTransactionRepository",
+   "type": "class",
+   "name": "GatewayTransactionRepository",
+   "filePath": "internal/port/gateway_transaction_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe GatewayTransactionRepository di gateway_transaction_repository.go, dengan method: Save, FindByExternalID, FindByInvoice, UpdateStatus, LinkPayment.",
+   "description": "Tipe GatewayTransactionRepository di gateway_transaction_repository.go, dengan method: Save, FindByExternalID, FindByInvoice, UpdateStatus, LinkPayment. Didefinisikan pada baris 11-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "gatewaytransactionrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/gateway.go",
+   "type": "file",
+   "name": "gateway.go",
+   "filePath": "internal/port/gateway.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (15 baris, 0 fungsi, 0 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (15 baris, 0 fungsi, 0 tipe). Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/port/hotspot_active.go",
+   "type": "file",
+   "name": "hotspot_active.go",
+   "filePath": "internal/port/hotspot_active.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (11 baris, 0 fungsi, 0 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (11 baris, 0 fungsi, 0 tipe). Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/port/hotspot_binding.go",
+   "type": "file",
+   "name": "hotspot_binding.go",
+   "filePath": "internal/port/hotspot_binding.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (25 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (25 baris, 0 fungsi, 1 tipe). Tipe utama: HotspotIPBindingParams. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/hotspot_binding.go:HotspotIPBindingParams",
+   "type": "class",
+   "name": "HotspotIPBindingParams",
+   "filePath": "internal/port/hotspot_binding.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotIPBindingParams di hotspot_binding.go.",
+   "description": "Tipe HotspotIPBindingParams di hotspot_binding.go. Didefinisikan pada baris 11-19.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotipbindingparams"
+   ]
+  },
+  {
+   "id": "file:internal/port/hotspot_expire.go",
+   "type": "file",
+   "name": "hotspot_expire.go",
+   "filePath": "internal/port/hotspot_expire.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (8 baris, 0 fungsi, 0 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (8 baris, 0 fungsi, 0 tipe). Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/port/hotspot_gateway.go",
+   "type": "file",
+   "name": "hotspot_gateway.go",
+   "filePath": "internal/port/hotspot_gateway.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (94 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (94 baris, 0 fungsi, 1 tipe). Tipe utama: HotspotGateway. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/hotspot_gateway.go:HotspotGateway",
+   "type": "class",
+   "name": "HotspotGateway",
+   "filePath": "internal/port/hotspot_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotGateway di hotspot_gateway.go, dengan method: GetSystemResource, GetSystemIdentity, GetUserProfiles, CreateUserProfile, UpdateUserProfile, DeleteUserProfile.",
+   "description": "Tipe HotspotGateway di hotspot_gateway.go, dengan method: GetSystemResource, GetSystemIdentity, GetUserProfiles, CreateUserProfile, UpdateUserProfile, DeleteUserProfile. Didefinisikan pada baris 15-94.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotgateway"
+   ]
+  },
+  {
+   "id": "file:internal/port/hotspot_profile.go",
+   "type": "file",
+   "name": "hotspot_profile.go",
+   "filePath": "internal/port/hotspot_profile.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (43 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (43 baris, 0 fungsi, 1 tipe). Tipe utama: MikhmonProfileParams. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/hotspot_profile.go:MikhmonProfileParams",
+   "type": "class",
+   "name": "MikhmonProfileParams",
+   "filePath": "internal/port/hotspot_profile.go",
+   "complexity": "simple",
+   "summary": "Tipe MikhmonProfileParams di hotspot_profile.go.",
+   "description": "Tipe MikhmonProfileParams di hotspot_profile.go. Didefinisikan pada baris 24-43.",
+   "tags": [
+    "go",
+    "tipe",
+    "mikhmonprofileparams"
+   ]
+  },
+  {
+   "id": "file:internal/port/hotspot_transaction.go",
+   "type": "file",
+   "name": "hotspot_transaction.go",
+   "filePath": "internal/port/hotspot_transaction.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (20 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (20 baris, 0 fungsi, 1 tipe). Tipe utama: ReportFilter. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/hotspot_transaction.go:ReportFilter",
+   "type": "class",
+   "name": "ReportFilter",
+   "filePath": "internal/port/hotspot_transaction.go",
+   "complexity": "simple",
+   "summary": "Tipe ReportFilter di hotspot_transaction.go.",
+   "description": "Tipe ReportFilter di hotspot_transaction.go. Didefinisikan pada baris 16-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "reportfilter"
+   ]
+  },
+  {
+   "id": "file:internal/port/hotspot_user.go",
+   "type": "file",
+   "name": "hotspot_user.go",
+   "filePath": "internal/port/hotspot_user.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (34 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (34 baris, 0 fungsi, 2 tipe). Tipe utama: ListUsersFilter, HotspotUserParams. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/hotspot_user.go:ListUsersFilter",
+   "type": "class",
+   "name": "ListUsersFilter",
+   "filePath": "internal/port/hotspot_user.go",
+   "complexity": "simple",
+   "summary": "Tipe ListUsersFilter di hotspot_user.go.",
+   "description": "Tipe ListUsersFilter di hotspot_user.go. Didefinisikan pada baris 10-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "listusersfilter"
+   ]
+  },
+  {
+   "id": "class:internal/port/hotspot_user.go:HotspotUserParams",
+   "type": "class",
+   "name": "HotspotUserParams",
+   "filePath": "internal/port/hotspot_user.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotUserParams di hotspot_user.go.",
+   "description": "Tipe HotspotUserParams di hotspot_user.go. Didefinisikan pada baris 19-31.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotuserparams"
+   ]
+  },
+  {
+   "id": "file:internal/port/hotspot_voucher.go",
+   "type": "file",
+   "name": "hotspot_voucher.go",
+   "filePath": "internal/port/hotspot_voucher.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (38 baris, 0 fungsi, 0 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (38 baris, 0 fungsi, 0 tipe). Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/port/invoice_repository.go",
+   "type": "file",
+   "name": "invoice_repository.go",
+   "filePath": "internal/port/invoice_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (37 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (37 baris, 0 fungsi, 1 tipe). Tipe utama: InvoiceRepository. Bergantung pada 5 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/invoice_repository.go:InvoiceRepository",
+   "type": "class",
+   "name": "InvoiceRepository",
+   "filePath": "internal/port/invoice_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe InvoiceRepository di invoice_repository.go, dengan method: Save, FindByID, FindByCustomerID, FindAll, UpdateStatus, FindByPaymentCode.",
+   "description": "Tipe InvoiceRepository di invoice_repository.go, dengan method: Save, FindByID, FindByCustomerID, FindAll, UpdateStatus, FindByPaymentCode. Didefinisikan pada baris 10-37.",
+   "tags": [
+    "go",
+    "tipe",
+    "invoicerepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/ip_pool.go",
+   "type": "file",
+   "name": "ip_pool.go",
+   "filePath": "internal/port/ip_pool.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (7 baris, 0 fungsi, 0 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (7 baris, 0 fungsi, 0 tipe). Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/port/llm_config_repository.go",
+   "type": "file",
+   "name": "llm_config_repository.go",
+   "filePath": "internal/port/llm_config_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (18 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (18 baris, 0 fungsi, 1 tipe). Tipe utama: LLMConfigRepository. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/llm_config_repository.go:LLMConfigRepository",
+   "type": "class",
+   "name": "LLMConfigRepository",
+   "filePath": "internal/port/llm_config_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe LLMConfigRepository di llm_config_repository.go, dengan method: Create, FindByID, FindActive, FindAll, Update, SetActive.",
+   "description": "Tipe LLMConfigRepository di llm_config_repository.go, dengan method: Create, FindByID, FindActive, FindAll, Update, SetActive. Didefinisikan pada baris 10-18.",
+   "tags": [
+    "go",
+    "tipe",
+    "llmconfigrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/llm_provider.go",
+   "type": "file",
+   "name": "llm_provider.go",
+   "filePath": "internal/port/llm_provider.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (14 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (14 baris, 0 fungsi, 1 tipe). Tipe utama: LLMProvider. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/llm_provider.go:LLMProvider",
+   "type": "class",
+   "name": "LLMProvider",
+   "filePath": "internal/port/llm_provider.go",
+   "complexity": "simple",
+   "summary": "Tipe LLMProvider di llm_provider.go, dengan method: Chat, ChatWithTools, TestConnection.",
+   "description": "Tipe LLMProvider di llm_provider.go, dengan method: Chat, ChatWithTools, TestConnection. Didefinisikan pada baris 10-14.",
+   "tags": [
+    "go",
+    "tipe",
+    "llmprovider"
+   ]
+  },
+  {
+   "id": "file:internal/port/metrics_repository.go",
+   "type": "file",
+   "name": "metrics_repository.go",
+   "filePath": "internal/port/metrics_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (25 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (25 baris, 0 fungsi, 1 tipe). Tipe utama: MetricsRepository. Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/metrics_repository.go:MetricsRepository",
+   "type": "class",
+   "name": "MetricsRepository",
+   "filePath": "internal/port/metrics_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe MetricsRepository di metrics_repository.go, dengan method: IsTimescaleDBAvailable, SavePingMetric, SavePingMetricsBatch, QueryPingMetrics, CleanupExpiredMetrics.",
+   "description": "Tipe MetricsRepository di metrics_repository.go, dengan method: IsTimescaleDBAvailable, SavePingMetric, SavePingMetricsBatch, QueryPingMetrics, CleanupExpiredMetrics. Didefinisikan pada baris 10-25.",
+   "tags": [
+    "go",
+    "tipe",
+    "metricsrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/mocktest/fakes_billing.go",
+   "type": "file",
+   "name": "fakes_billing.go",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (187 baris, 15 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (187 baris, 15 fungsi, 2 tipe). Tipe utama: FakeInvoiceRepo, FakePaymentProcessor. Fungsi terbesar: FindByCustomerID, UpdateStatus, DeleteByCustomerID, FindByPaymentCode, FindByQRPayload. Bergantung pada 65 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "mocktest",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_billing.go:FakeInvoiceRepo",
+   "type": "class",
+   "name": "FakeInvoiceRepo",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeInvoiceRepo di fakes_billing.go, dengan method: Save, SaveWithItems, FindByID, FindByCustomerID, FindAll, UpdateStatus.",
+   "description": "Tipe FakeInvoiceRepo di fakes_billing.go, dengan method: Save, SaveWithItems, FindByID, FindByCustomerID, FindAll, UpdateStatus. Didefinisikan pada baris 12-16.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakeinvoicerepo"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_billing.go:FakePaymentProcessor",
+   "type": "class",
+   "name": "FakePaymentProcessor",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Tipe FakePaymentProcessor di fakes_billing.go, dengan method: ProcessCashPayment.",
+   "description": "Tipe FakePaymentProcessor di fakes_billing.go, dengan method: ProcessCashPayment. Didefinisikan pada baris 171-176.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakepaymentprocessor"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:NewFakeInvoiceRepo",
+   "type": "function",
+   "name": "NewFakeInvoiceRepo",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeInvoiceRepo (5 baris).",
+   "description": "Fungsi NewFakeInvoiceRepo (5 baris). Didefinisikan pada baris 19-24.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakeinvoicerepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:Save",
+   "type": "function",
+   "name": "Save",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi Save (5 baris), parameter: _, inv.",
+   "description": "Fungsi Save (5 baris), parameter: _, inv. Didefinisikan pada baris 27-32.",
+   "tags": [
+    "go",
+    "fungsi",
+    "save"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:SaveWithItems",
+   "type": "function",
+   "name": "SaveWithItems",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi SaveWithItems (6 baris), parameter: _, inv, items.",
+   "description": "Fungsi SaveWithItems (6 baris), parameter: _, inv, items. Didefinisikan pada baris 35-41.",
+   "tags": [
+    "go",
+    "fungsi",
+    "savewithitems"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:FindByID",
+   "type": "function",
+   "name": "FindByID",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByID (8 baris), parameter: _, id.",
+   "description": "Fungsi FindByID (8 baris), parameter: _, id. Didefinisikan pada baris 44-52.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:FindByCustomerID",
+   "type": "function",
+   "name": "FindByCustomerID",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByCustomerID (10 baris), parameter: _, cid.",
+   "description": "Fungsi FindByCustomerID (10 baris), parameter: _, cid. Didefinisikan pada baris 55-65.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbycustomerid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:FindAll",
+   "type": "function",
+   "name": "FindAll",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindAll (8 baris), parameter: _.",
+   "description": "Fungsi FindAll (8 baris), parameter: _. Didefinisikan pada baris 68-76.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findall"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:UpdateStatus",
+   "type": "function",
+   "name": "UpdateStatus",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateStatus (10 baris), parameter: _, id, status.",
+   "description": "Fungsi UpdateStatus (10 baris), parameter: _, id, status. Didefinisikan pada baris 79-89.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatestatus"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:FindByPaymentCode",
+   "type": "function",
+   "name": "FindByPaymentCode",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByPaymentCode (9 baris), parameter: _, code.",
+   "description": "Fungsi FindByPaymentCode (9 baris), parameter: _, code. Didefinisikan pada baris 92-101.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbypaymentcode"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:FindByQRPayload",
+   "type": "function",
+   "name": "FindByQRPayload",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByQRPayload (9 baris), parameter: _, qr.",
+   "description": "Fungsi FindByQRPayload (9 baris), parameter: _, qr. Didefinisikan pada baris 104-113.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyqrpayload"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:FindBySubscriptionPeriod",
+   "type": "function",
+   "name": "FindBySubscriptionPeriod",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindBySubscriptionPeriod (9 baris), parameter: _, subID, period.",
+   "description": "Fungsi FindBySubscriptionPeriod (9 baris), parameter: _, subID, period. Didefinisikan pada baris 116-125.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbysubscriptionperiod"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:ItemsOf",
+   "type": "function",
+   "name": "ItemsOf",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi ItemsOf (4 baris), parameter: invoiceID.",
+   "description": "Fungsi ItemsOf (4 baris), parameter: invoiceID. Didefinisikan pada baris 128-132.",
+   "tags": [
+    "go",
+    "fungsi",
+    "itemsof"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:HasForSubscription",
+   "type": "function",
+   "name": "HasForSubscription",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi HasForSubscription (9 baris), parameter: _, subID.",
+   "description": "Fungsi HasForSubscription (9 baris), parameter: _, subID. Didefinisikan pada baris 135-144.",
+   "tags": [
+    "go",
+    "fungsi",
+    "hasforsubscription"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:Delete",
+   "type": "function",
+   "name": "Delete",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi Delete (6 baris), parameter: _, id.",
+   "description": "Fungsi Delete (6 baris), parameter: _, id. Didefinisikan pada baris 147-153.",
+   "tags": [
+    "go",
+    "fungsi",
+    "delete"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:DeleteByCustomerID",
+   "type": "function",
+   "name": "DeleteByCustomerID",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteByCustomerID (10 baris), parameter: _, customerID.",
+   "description": "Fungsi DeleteByCustomerID (10 baris), parameter: _, customerID. Didefinisikan pada baris 156-166.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deletebycustomerid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_billing.go:ProcessCashPayment",
+   "type": "function",
+   "name": "ProcessCashPayment",
+   "filePath": "internal/port/mocktest/fakes_billing.go",
+   "complexity": "simple",
+   "summary": "Fungsi ProcessCashPayment (8 baris), parameter: _, cmd.",
+   "description": "Fungsi ProcessCashPayment (8 baris), parameter: _, cmd. Didefinisikan pada baris 179-187.",
+   "tags": [
+    "go",
+    "fungsi",
+    "processcashpayment"
+   ]
+  },
+  {
+   "id": "file:internal/port/mocktest/fakes_core.go",
+   "type": "file",
+   "name": "fakes_core.go",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (143 baris, 14 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (143 baris, 14 fungsi, 2 tipe). Tipe utama: FakeNotificationRepo, FakeAuditWriter. Fungsi terbesar: Pending, MarkSent, ListByCustomer, Count, FindByID. Bergantung pada 5 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "mocktest",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_core.go:FakeNotificationRepo",
+   "type": "class",
+   "name": "FakeNotificationRepo",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeNotificationRepo di fakes_core.go, dengan method: SeedTemplate, SaveTemplate, FindTemplateByKey, ListTemplates, Queue, Queued.",
+   "description": "Tipe FakeNotificationRepo di fakes_core.go, dengan method: SeedTemplate, SaveTemplate, FindTemplateByKey, ListTemplates, Queue, Queued. Didefinisikan pada baris 14-18.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakenotificationrepo"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_core.go:FakeAuditWriter",
+   "type": "class",
+   "name": "FakeAuditWriter",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeAuditWriter di fakes_core.go, dengan method: Write, Count.",
+   "description": "Tipe FakeAuditWriter di fakes_core.go, dengan method: Write, Count. Didefinisikan pada baris 121-124.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakeauditwriter"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:NewFakeNotificationRepo",
+   "type": "function",
+   "name": "NewFakeNotificationRepo",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeNotificationRepo (2 baris).",
+   "description": "Fungsi NewFakeNotificationRepo (2 baris). Didefinisikan pada baris 20-22.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakenotificationrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:SeedTemplate",
+   "type": "function",
+   "name": "SeedTemplate",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi SeedTemplate (4 baris), parameter: t.",
+   "description": "Fungsi SeedTemplate (4 baris), parameter: t. Didefinisikan pada baris 24-28.",
+   "tags": [
+    "go",
+    "fungsi",
+    "seedtemplate"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:SaveTemplate",
+   "type": "function",
+   "name": "SaveTemplate",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi SaveTemplate (5 baris), parameter: _, t.",
+   "description": "Fungsi SaveTemplate (5 baris), parameter: _, t. Didefinisikan pada baris 30-35.",
+   "tags": [
+    "go",
+    "fungsi",
+    "savetemplate"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:FindTemplateByKey",
+   "type": "function",
+   "name": "FindTemplateByKey",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindTemplateByKey (8 baris), parameter: _, _, key.",
+   "description": "Fungsi FindTemplateByKey (8 baris), parameter: _, _, key. Didefinisikan pada baris 37-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findtemplatebykey"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:ListTemplates",
+   "type": "function",
+   "name": "ListTemplates",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListTemplates (2 baris), parameter: _, _.",
+   "description": "Fungsi ListTemplates (2 baris), parameter: _, _. Didefinisikan pada baris 47-49.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listtemplates"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:Queue",
+   "type": "function",
+   "name": "Queue",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi Queue (5 baris), parameter: _, n.",
+   "description": "Fungsi Queue (5 baris), parameter: _, n. Didefinisikan pada baris 51-56.",
+   "tags": [
+    "go",
+    "fungsi",
+    "queue"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:Queued",
+   "type": "function",
+   "name": "Queued",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi Queued (6 baris).",
+   "description": "Fungsi Queued (6 baris). Didefinisikan pada baris 58-64.",
+   "tags": [
+    "go",
+    "fungsi",
+    "queued"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:FindByID",
+   "type": "function",
+   "name": "FindByID",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByID (9 baris), parameter: _, id.",
+   "description": "Fungsi FindByID (9 baris), parameter: _, id. Didefinisikan pada baris 66-75.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:Pending",
+   "type": "function",
+   "name": "Pending",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi Pending (13 baris), parameter: _, limit.",
+   "description": "Fungsi Pending (13 baris), parameter: _, limit. Didefinisikan pada baris 77-90.",
+   "tags": [
+    "go",
+    "fungsi",
+    "pending"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:MarkSent",
+   "type": "function",
+   "name": "MarkSent",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi MarkSent (11 baris), parameter: _, id, sentAt.",
+   "description": "Fungsi MarkSent (11 baris), parameter: _, id, sentAt. Didefinisikan pada baris 92-103.",
+   "tags": [
+    "go",
+    "fungsi",
+    "marksent"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:MarkFailed",
+   "type": "function",
+   "name": "MarkFailed",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi MarkFailed (0 baris), parameter: _, id, errMsg.",
+   "description": "Fungsi MarkFailed (0 baris), parameter: _, id, errMsg. Didefinisikan pada baris 105-105.",
+   "tags": [
+    "go",
+    "fungsi",
+    "markfailed"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:ListByCustomer",
+   "type": "function",
+   "name": "ListByCustomer",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListByCustomer (10 baris), parameter: _, cid, _.",
+   "description": "Fungsi ListByCustomer (10 baris), parameter: _, cid, _. Didefinisikan pada baris 107-117.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listbycustomer"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:Write",
+   "type": "function",
+   "name": "Write",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi Write (5 baris), parameter: _, e.",
+   "description": "Fungsi Write (5 baris), parameter: _, e. Didefinisikan pada baris 126-131.",
+   "tags": [
+    "go",
+    "fungsi",
+    "write"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_core.go:Count",
+   "type": "function",
+   "name": "Count",
+   "filePath": "internal/port/mocktest/fakes_core.go",
+   "complexity": "simple",
+   "summary": "Fungsi Count (10 baris), parameter: action.",
+   "description": "Fungsi Count (10 baris), parameter: action. Didefinisikan pada baris 133-143.",
+   "tags": [
+    "go",
+    "fungsi",
+    "count"
+   ]
+  },
+  {
+   "id": "file:internal/port/mocktest/fakes_customer.go",
+   "type": "file",
+   "name": "fakes_customer.go",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (99 baris, 9 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (99 baris, 9 fungsi, 1 tipe). Tipe utama: FakeCustomerRepo. Fungsi terbesar: FindByPortalAccessCode, FindByPhone, FindByCustomerCode, FindByID, FindAll. Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "mocktest",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_customer.go:FakeCustomerRepo",
+   "type": "class",
+   "name": "FakeCustomerRepo",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeCustomerRepo di fakes_customer.go, dengan method: Save, FindByID, FindAll, Delete, FindSubscriptions, FindByPortalAccessCode.",
+   "description": "Tipe FakeCustomerRepo di fakes_customer.go, dengan method: Save, FindByID, FindAll, Delete, FindSubscriptions, FindByPortalAccessCode. Didefinisikan pada baris 12-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakecustomerrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:NewFakeCustomerRepo",
+   "type": "function",
+   "name": "NewFakeCustomerRepo",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeCustomerRepo (2 baris).",
+   "description": "Fungsi NewFakeCustomerRepo (2 baris). Didefinisikan pada baris 18-20.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakecustomerrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:Save",
+   "type": "function",
+   "name": "Save",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi Save (5 baris), parameter: _, c.",
+   "description": "Fungsi Save (5 baris), parameter: _, c. Didefinisikan pada baris 23-28.",
+   "tags": [
+    "go",
+    "fungsi",
+    "save"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:FindByID",
+   "type": "function",
+   "name": "FindByID",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByID (8 baris), parameter: _, id.",
+   "description": "Fungsi FindByID (8 baris), parameter: _, id. Didefinisikan pada baris 31-39.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:FindAll",
+   "type": "function",
+   "name": "FindAll",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindAll (8 baris), parameter: _.",
+   "description": "Fungsi FindAll (8 baris), parameter: _. Didefinisikan pada baris 42-50.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findall"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:Delete",
+   "type": "function",
+   "name": "Delete",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi Delete (5 baris), parameter: _, id.",
+   "description": "Fungsi Delete (5 baris), parameter: _, id. Didefinisikan pada baris 53-58.",
+   "tags": [
+    "go",
+    "fungsi",
+    "delete"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:FindSubscriptions",
+   "type": "function",
+   "name": "FindSubscriptions",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindSubscriptions (2 baris), parameter: _, customerID.",
+   "description": "Fungsi FindSubscriptions (2 baris), parameter: _, customerID. Didefinisikan pada baris 61-63.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findsubscriptions"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:FindByPortalAccessCode",
+   "type": "function",
+   "name": "FindByPortalAccessCode",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByPortalAccessCode (9 baris), parameter: _, code.",
+   "description": "Fungsi FindByPortalAccessCode (9 baris), parameter: _, code. Didefinisikan pada baris 66-75.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyportalaccesscode"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:FindByPhone",
+   "type": "function",
+   "name": "FindByPhone",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByPhone (9 baris), parameter: _, phone.",
+   "description": "Fungsi FindByPhone (9 baris), parameter: _, phone. Didefinisikan pada baris 78-87.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyphone"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_customer.go:FindByCustomerCode",
+   "type": "function",
+   "name": "FindByCustomerCode",
+   "filePath": "internal/port/mocktest/fakes_customer.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByCustomerCode (9 baris), parameter: _, code.",
+   "description": "Fungsi FindByCustomerCode (9 baris), parameter: _, code. Didefinisikan pada baris 90-99.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbycustomercode"
+   ]
+  },
+  {
+   "id": "file:internal/port/mocktest/fakes_portal.go",
+   "type": "file",
+   "name": "fakes_portal.go",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (291 baris, 27 fungsi, 5 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (291 baris, 27 fungsi, 5 tipe). Tipe utama: FakeNotificationSender, FakePortalRepo, FakeGatewayTxRepo, FakePaymentGateway, FakePaymentReader. Fungsi terbesar: ConsumeOTP, PendingWithRetryLimit, MarkFailedWithAttempt, LinkPayment, FindByInvoice. Bergantung pada 73 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "mocktest",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_portal.go:FakeNotificationSender",
+   "type": "class",
+   "name": "FakeNotificationSender",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeNotificationSender di fakes_portal.go, dengan method: Sent, Send.",
+   "description": "Tipe FakeNotificationSender di fakes_portal.go, dengan method: Sent, Send. Didefinisikan pada baris 16-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakenotificationsender"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_portal.go:FakePortalRepo",
+   "type": "class",
+   "name": "FakePortalRepo",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Tipe FakePortalRepo di fakes_portal.go, dengan method: SaveSession, FindValidSession, DeleteSession, SaveOTP, ConsumeOTP, OTPCount.",
+   "description": "Tipe FakePortalRepo di fakes_portal.go, dengan method: SaveSession, FindValidSession, DeleteSession, SaveOTP, ConsumeOTP, OTPCount. Didefinisikan pada baris 43-47.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakeportalrepo"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_portal.go:FakeGatewayTxRepo",
+   "type": "class",
+   "name": "FakeGatewayTxRepo",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeGatewayTxRepo di fakes_portal.go, dengan method: Save, FindByExternalID, FindByInvoice, UpdateStatus, LinkPayment, Get.",
+   "description": "Tipe FakeGatewayTxRepo di fakes_portal.go, dengan method: Save, FindByExternalID, FindByInvoice, UpdateStatus, LinkPayment, Get. Didefinisikan pada baris 117-120.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakegatewaytxrepo"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_portal.go:FakePaymentGateway",
+   "type": "class",
+   "name": "FakePaymentGateway",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Tipe FakePaymentGateway di fakes_portal.go, dengan method: Name, Enabled, CreateCharge, ParseWebhook, CheckStatus.",
+   "description": "Tipe FakePaymentGateway di fakes_portal.go, dengan method: Name, Enabled, CreateCharge, ParseWebhook, CheckStatus. Didefinisikan pada baris 190-196.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakepaymentgateway"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_portal.go:FakePaymentReader",
+   "type": "class",
+   "name": "FakePaymentReader",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Tipe FakePaymentReader di fakes_portal.go, dengan method: ListByCustomer.",
+   "description": "Tipe FakePaymentReader di fakes_portal.go, dengan method: ListByCustomer. Didefinisikan pada baris 233-235.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakepaymentreader"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:Sent",
+   "type": "function",
+   "name": "Sent",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi Sent (6 baris).",
+   "description": "Fungsi Sent (6 baris). Didefinisikan pada baris 23-29.",
+   "tags": [
+    "go",
+    "fungsi",
+    "sent"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:Send",
+   "type": "function",
+   "name": "Send",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi Send (8 baris), parameter: _, phone, content.",
+   "description": "Fungsi Send (8 baris), parameter: _, phone, content. Didefinisikan pada baris 31-39.",
+   "tags": [
+    "go",
+    "fungsi",
+    "send"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:NewFakePortalRepo",
+   "type": "function",
+   "name": "NewFakePortalRepo",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakePortalRepo (2 baris).",
+   "description": "Fungsi NewFakePortalRepo (2 baris). Didefinisikan pada baris 49-51.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakeportalrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:SaveSession",
+   "type": "function",
+   "name": "SaveSession",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi SaveSession (5 baris), parameter: _, s.",
+   "description": "Fungsi SaveSession (5 baris), parameter: _, s. Didefinisikan pada baris 53-58.",
+   "tags": [
+    "go",
+    "fungsi",
+    "savesession"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:FindValidSession",
+   "type": "function",
+   "name": "FindValidSession",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindValidSession (8 baris), parameter: _, token.",
+   "description": "Fungsi FindValidSession (8 baris), parameter: _, token. Didefinisikan pada baris 60-68.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findvalidsession"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:DeleteSession",
+   "type": "function",
+   "name": "DeleteSession",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteSession (9 baris), parameter: _, id.",
+   "description": "Fungsi DeleteSession (9 baris), parameter: _, id. Didefinisikan pada baris 70-79.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deletesession"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:SaveOTP",
+   "type": "function",
+   "name": "SaveOTP",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi SaveOTP (5 baris), parameter: _, o.",
+   "description": "Fungsi SaveOTP (5 baris), parameter: _, o. Didefinisikan pada baris 81-86.",
+   "tags": [
+    "go",
+    "fungsi",
+    "saveotp"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:ConsumeOTP",
+   "type": "function",
+   "name": "ConsumeOTP",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi ConsumeOTP (25 baris), parameter: _, phoneN, codeHash, maxAttempts.",
+   "description": "Fungsi ConsumeOTP (25 baris), parameter: _, phoneN, codeHash, maxAttempts. Didefinisikan pada baris 88-113.",
+   "tags": [
+    "go",
+    "fungsi",
+    "consumeotp"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:NewFakeGatewayTxRepo",
+   "type": "function",
+   "name": "NewFakeGatewayTxRepo",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeGatewayTxRepo (2 baris).",
+   "description": "Fungsi NewFakeGatewayTxRepo (2 baris). Didefinisikan pada baris 122-124.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakegatewaytxrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:Save",
+   "type": "function",
+   "name": "Save",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi Save (5 baris), parameter: _, t.",
+   "description": "Fungsi Save (5 baris), parameter: _, t. Didefinisikan pada baris 126-131.",
+   "tags": [
+    "go",
+    "fungsi",
+    "save"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:FindByExternalID",
+   "type": "function",
+   "name": "FindByExternalID",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByExternalID (9 baris), parameter: _, gateway, ext.",
+   "description": "Fungsi FindByExternalID (9 baris), parameter: _, gateway, ext. Didefinisikan pada baris 133-142.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyexternalid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:FindByInvoice",
+   "type": "function",
+   "name": "FindByInvoice",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByInvoice (10 baris), parameter: _, invoiceID.",
+   "description": "Fungsi FindByInvoice (10 baris), parameter: _, invoiceID. Didefinisikan pada baris 144-154.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyinvoice"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:UpdateStatus",
+   "type": "function",
+   "name": "UpdateStatus",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateStatus (10 baris), parameter: _, id, status.",
+   "description": "Fungsi UpdateStatus (10 baris), parameter: _, id, status. Didefinisikan pada baris 156-166.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatestatus"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:LinkPayment",
+   "type": "function",
+   "name": "LinkPayment",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi LinkPayment (11 baris), parameter: _, id, paymentID, fee.",
+   "description": "Fungsi LinkPayment (11 baris), parameter: _, id, paymentID, fee. Didefinisikan pada baris 168-179.",
+   "tags": [
+    "go",
+    "fungsi",
+    "linkpayment"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:Get",
+   "type": "function",
+   "name": "Get",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi Get (4 baris), parameter: id.",
+   "description": "Fungsi Get (4 baris), parameter: id. Didefinisikan pada baris 182-186.",
+   "tags": [
+    "go",
+    "fungsi",
+    "get"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:Name",
+   "type": "function",
+   "name": "Name",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi Name (0 baris).",
+   "description": "Fungsi Name (0 baris). Didefinisikan pada baris 198-198.",
+   "tags": [
+    "go",
+    "fungsi",
+    "name"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:Enabled",
+   "type": "function",
+   "name": "Enabled",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi Enabled (0 baris).",
+   "description": "Fungsi Enabled (0 baris). Didefinisikan pada baris 199-199.",
+   "tags": [
+    "go",
+    "fungsi",
+    "enabled"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:CreateCharge",
+   "type": "function",
+   "name": "CreateCharge",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi CreateCharge (5 baris).",
+   "description": "Fungsi CreateCharge (5 baris). Didefinisikan pada baris 200-205.",
+   "tags": [
+    "go",
+    "fungsi",
+    "createcharge"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:ParseWebhook",
+   "type": "function",
+   "name": "ParseWebhook",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi ParseWebhook (5 baris).",
+   "description": "Fungsi ParseWebhook (5 baris). Didefinisikan pada baris 206-211.",
+   "tags": [
+    "go",
+    "fungsi",
+    "parsewebhook"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:CheckStatus",
+   "type": "function",
+   "name": "CheckStatus",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi CheckStatus (5 baris).",
+   "description": "Fungsi CheckStatus (5 baris). Didefinisikan pada baris 213-218.",
+   "tags": [
+    "go",
+    "fungsi",
+    "checkstatus"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:All",
+   "type": "function",
+   "name": "All",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi All (8 baris).",
+   "description": "Fungsi All (8 baris). Didefinisikan pada baris 221-229.",
+   "tags": [
+    "go",
+    "fungsi",
+    "all"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:ListByCustomer",
+   "type": "function",
+   "name": "ListByCustomer",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListByCustomer (2 baris).",
+   "description": "Fungsi ListByCustomer (2 baris). Didefinisikan pada baris 237-239.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listbycustomer"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:NewFakePaymentReader",
+   "type": "function",
+   "name": "NewFakePaymentReader",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakePaymentReader (0 baris).",
+   "description": "Fungsi NewFakePaymentReader (0 baris). Didefinisikan pada baris 242-242.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakepaymentreader"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:OTPCount",
+   "type": "function",
+   "name": "OTPCount",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi OTPCount (4 baris).",
+   "description": "Fungsi OTPCount (4 baris). Didefinisikan pada baris 245-249.",
+   "tags": [
+    "go",
+    "fungsi",
+    "otpcount"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:AllNotifications",
+   "type": "function",
+   "name": "AllNotifications",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi AllNotifications (6 baris).",
+   "description": "Fungsi AllNotifications (6 baris). Didefinisikan pada baris 252-258.",
+   "tags": [
+    "go",
+    "fungsi",
+    "allnotifications"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:MarkFailedWithAttempt",
+   "type": "function",
+   "name": "MarkFailedWithAttempt",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi MarkFailedWithAttempt (12 baris), parameter: _, id, errMsg, attempts.",
+   "description": "Fungsi MarkFailedWithAttempt (12 baris), parameter: _, id, errMsg, attempts. Didefinisikan pada baris 261-273.",
+   "tags": [
+    "go",
+    "fungsi",
+    "markfailedwithattempt"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_portal.go:PendingWithRetryLimit",
+   "type": "function",
+   "name": "PendingWithRetryLimit",
+   "filePath": "internal/port/mocktest/fakes_portal.go",
+   "complexity": "simple",
+   "summary": "Fungsi PendingWithRetryLimit (15 baris), parameter: _, limit, maxAttempts.",
+   "description": "Fungsi PendingWithRetryLimit (15 baris), parameter: _, limit, maxAttempts. Didefinisikan pada baris 276-291.",
+   "tags": [
+    "go",
+    "fungsi",
+    "pendingwithretrylimit"
+   ]
+  },
+  {
+   "id": "file:internal/port/mocktest/fakes_registration.go",
+   "type": "file",
+   "name": "fakes_registration.go",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (155 baris, 14 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (155 baris, 14 fungsi, 2 tipe). Tipe utama: FakeRegistrationRepo, FakeServicePlanRepo. Fungsi terbesar: List, UpdateStatus, CountPendingSince, FindByNo, FindByName. Bergantung pada 66 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "mocktest",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_registration.go:FakeRegistrationRepo",
+   "type": "class",
+   "name": "FakeRegistrationRepo",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeRegistrationRepo di fakes_registration.go, dengan method: Save, FindByID, FindByNo, List, UpdateStatus, CountPendingSince.",
+   "description": "Tipe FakeRegistrationRepo di fakes_registration.go, dengan method: Save, FindByID, FindByNo, List, UpdateStatus, CountPendingSince. Didefinisikan pada baris 21-24.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakeregistrationrepo"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_registration.go:FakeServicePlanRepo",
+   "type": "class",
+   "name": "FakeServicePlanRepo",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeServicePlanRepo di fakes_registration.go, dengan method: Seed, Save, FindByID, FindByName, List, Delete.",
+   "description": "Tipe FakeServicePlanRepo di fakes_registration.go, dengan method: Seed, Save, FindByID, FindByName, List, Delete. Didefinisikan pada baris 94-97.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakeserviceplanrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:NewFakeRegistrationRepo",
+   "type": "function",
+   "name": "NewFakeRegistrationRepo",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeRegistrationRepo (2 baris).",
+   "description": "Fungsi NewFakeRegistrationRepo (2 baris). Didefinisikan pada baris 26-28.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakeregistrationrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:Save",
+   "type": "function",
+   "name": "Save",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi Save (5 baris), parameter: _, r.",
+   "description": "Fungsi Save (5 baris), parameter: _, r. Didefinisikan pada baris 30-35.",
+   "tags": [
+    "go",
+    "fungsi",
+    "save"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:FindByID",
+   "type": "function",
+   "name": "FindByID",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByID (8 baris), parameter: _, id.",
+   "description": "Fungsi FindByID (8 baris), parameter: _, id. Didefinisikan pada baris 37-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:FindByNo",
+   "type": "function",
+   "name": "FindByNo",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByNo (9 baris), parameter: _, no.",
+   "description": "Fungsi FindByNo (9 baris), parameter: _, no. Didefinisikan pada baris 47-56.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyno"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:List",
+   "type": "function",
+   "name": "List",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi List (8 baris), parameter: _, _.",
+   "description": "Fungsi List (8 baris), parameter: _, _. Didefinisikan pada baris 58-66.",
+   "tags": [
+    "go",
+    "fungsi",
+    "list"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:UpdateStatus",
+   "type": "function",
+   "name": "UpdateStatus",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateStatus (10 baris), parameter: _, id, status.",
+   "description": "Fungsi UpdateStatus (10 baris), parameter: _, id, status. Didefinisikan pada baris 68-78.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatestatus"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:CountPendingSince",
+   "type": "function",
+   "name": "CountPendingSince",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi CountPendingSince (10 baris), parameter: _, _.",
+   "description": "Fungsi CountPendingSince (10 baris), parameter: _, _. Didefinisikan pada baris 80-90.",
+   "tags": [
+    "go",
+    "fungsi",
+    "countpendingsince"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:NewFakeServicePlanRepo",
+   "type": "function",
+   "name": "NewFakeServicePlanRepo",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeServicePlanRepo (2 baris).",
+   "description": "Fungsi NewFakeServicePlanRepo (2 baris). Didefinisikan pada baris 99-101.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakeserviceplanrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:Seed",
+   "type": "function",
+   "name": "Seed",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi Seed (4 baris), parameter: p.",
+   "description": "Fungsi Seed (4 baris), parameter: p. Didefinisikan pada baris 103-107.",
+   "tags": [
+    "go",
+    "fungsi",
+    "seed"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:Save",
+   "type": "function",
+   "name": "Save",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi Save (5 baris), parameter: _, p.",
+   "description": "Fungsi Save (5 baris), parameter: _, p. Didefinisikan pada baris 109-114.",
+   "tags": [
+    "go",
+    "fungsi",
+    "save"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:FindByID",
+   "type": "function",
+   "name": "FindByID",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByID (8 baris), parameter: _, id.",
+   "description": "Fungsi FindByID (8 baris), parameter: _, id. Didefinisikan pada baris 116-124.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:FindByName",
+   "type": "function",
+   "name": "FindByName",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByName (9 baris), parameter: _, tenant, name.",
+   "description": "Fungsi FindByName (9 baris), parameter: _, tenant, name. Didefinisikan pada baris 126-135.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyname"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:List",
+   "type": "function",
+   "name": "List",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi List (11 baris), parameter: _, activeOnly.",
+   "description": "Fungsi List (11 baris), parameter: _, activeOnly. Didefinisikan pada baris 137-148.",
+   "tags": [
+    "go",
+    "fungsi",
+    "list"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_registration.go:Delete",
+   "type": "function",
+   "name": "Delete",
+   "filePath": "internal/port/mocktest/fakes_registration.go",
+   "complexity": "simple",
+   "summary": "Fungsi Delete (5 baris), parameter: _, id.",
+   "description": "Fungsi Delete (5 baris), parameter: _, id. Didefinisikan pada baris 150-155.",
+   "tags": [
+    "go",
+    "fungsi",
+    "delete"
+   ]
+  },
+  {
+   "id": "file:internal/port/mocktest/fakes_router.go",
+   "type": "file",
+   "name": "fakes_router.go",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (125 baris, 18 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (125 baris, 18 fungsi, 1 tipe). Tipe utama: FakeRouterAccountManager. Fungsi terbesar: record, Count, GetIsolationInfrastructureStatus, Provision, ProvisionPPPoE. Bergantung pada 81 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "mocktest",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_router.go:FakeRouterAccountManager",
+   "type": "class",
+   "name": "FakeRouterAccountManager",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeRouterAccountManager di fakes_router.go, dengan method: record, Provision, ProvisionPPPoE, ProvisionHotspot, ProvisionDedicated, UpdateAccount.",
+   "description": "Tipe FakeRouterAccountManager di fakes_router.go, dengan method: record, Provision, ProvisionPPPoE, ProvisionHotspot, ProvisionDedicated, UpdateAccount. Didefinisikan pada baris 18-23.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakerouteraccountmanager"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:Provision",
+   "type": "function",
+   "name": "Provision",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi Provision (2 baris), parameter: _, _, _, a.",
+   "description": "Fungsi Provision (2 baris), parameter: _, _, _, a. Didefinisikan pada baris 37-39.",
+   "tags": [
+    "go",
+    "fungsi",
+    "provision"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:ProvisionPPPoE",
+   "type": "function",
+   "name": "ProvisionPPPoE",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi ProvisionPPPoE (2 baris), parameter: _, _, spec.",
+   "description": "Fungsi ProvisionPPPoE (2 baris), parameter: _, _, spec. Didefinisikan pada baris 42-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "provisionpppoe"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:ProvisionHotspot",
+   "type": "function",
+   "name": "ProvisionHotspot",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi ProvisionHotspot (2 baris), parameter: _, _, spec.",
+   "description": "Fungsi ProvisionHotspot (2 baris), parameter: _, _, spec. Didefinisikan pada baris 47-49.",
+   "tags": [
+    "go",
+    "fungsi",
+    "provisionhotspot"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:ProvisionDedicated",
+   "type": "function",
+   "name": "ProvisionDedicated",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi ProvisionDedicated (2 baris), parameter: _, _, spec.",
+   "description": "Fungsi ProvisionDedicated (2 baris), parameter: _, _, spec. Didefinisikan pada baris 52-54.",
+   "tags": [
+    "go",
+    "fungsi",
+    "provisiondedicated"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:UpdateAccount",
+   "type": "function",
+   "name": "UpdateAccount",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateAccount (2 baris), parameter: _, _, _, username, newProfile.",
+   "description": "Fungsi UpdateAccount (2 baris), parameter: _, _, _, username, newProfile. Didefinisikan pada baris 56-58.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updateaccount"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:EnsureProfile",
+   "type": "function",
+   "name": "EnsureProfile",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi EnsureProfile (2 baris), parameter: _, _, _, profileName, rateLimit.",
+   "description": "Fungsi EnsureProfile (2 baris), parameter: _, _, _, profileName, rateLimit. Didefinisikan pada baris 60-62.",
+   "tags": [
+    "go",
+    "fungsi",
+    "ensureprofile"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:Isolate",
+   "type": "function",
+   "name": "Isolate",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi Isolate (2 baris), parameter: _, _, _, username, opt.",
+   "description": "Fungsi Isolate (2 baris), parameter: _, _, _, username, opt. Didefinisikan pada baris 64-66.",
+   "tags": [
+    "go",
+    "fungsi",
+    "isolate"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:Restore",
+   "type": "function",
+   "name": "Restore",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi Restore (2 baris), parameter: _, _, _, username, normalProfile.",
+   "description": "Fungsi Restore (2 baris), parameter: _, _, _, username, normalProfile. Didefinisikan pada baris 68-70.",
+   "tags": [
+    "go",
+    "fungsi",
+    "restore"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:Suspend",
+   "type": "function",
+   "name": "Suspend",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi Suspend (2 baris), parameter: _, _, _, username.",
+   "description": "Fungsi Suspend (2 baris), parameter: _, _, _, username. Didefinisikan pada baris 72-74.",
+   "tags": [
+    "go",
+    "fungsi",
+    "suspend"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:Terminate",
+   "type": "function",
+   "name": "Terminate",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi Terminate (2 baris), parameter: _, _, _, username.",
+   "description": "Fungsi Terminate (2 baris), parameter: _, _, _, username. Didefinisikan pada baris 77-79.",
+   "tags": [
+    "go",
+    "fungsi",
+    "terminate"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:EnsureIsolationInfrastructure",
+   "type": "function",
+   "name": "EnsureIsolationInfrastructure",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi EnsureIsolationInfrastructure (2 baris), parameter: _, deviceID, _.",
+   "description": "Fungsi EnsureIsolationInfrastructure (2 baris), parameter: _, deviceID, _. Didefinisikan pada baris 82-84.",
+   "tags": [
+    "go",
+    "fungsi",
+    "ensureisolationinfrastructure"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:GetIsolationInfrastructureStatus",
+   "type": "function",
+   "name": "GetIsolationInfrastructureStatus",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetIsolationInfrastructureStatus (6 baris), parameter: _, _.",
+   "description": "Fungsi GetIsolationInfrastructureStatus (6 baris), parameter: _, _. Didefinisikan pada baris 87-93.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getisolationinfrastructurestatus"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:ApplyIntegrationScript",
+   "type": "function",
+   "name": "ApplyIntegrationScript",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi ApplyIntegrationScript (2 baris), parameter: _, deviceID, profileName, serviceType, scriptType.",
+   "description": "Fungsi ApplyIntegrationScript (2 baris), parameter: _, deviceID, profileName, serviceType, scriptType. Didefinisikan pada baris 96-98.",
+   "tags": [
+    "go",
+    "fungsi",
+    "applyintegrationscript"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:SyncPlanProfile",
+   "type": "function",
+   "name": "SyncPlanProfile",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi SyncPlanProfile (2 baris), parameter: _, deviceID, plan.",
+   "description": "Fungsi SyncPlanProfile (2 baris), parameter: _, deviceID, plan. Didefinisikan pada baris 101-103.",
+   "tags": [
+    "go",
+    "fungsi",
+    "syncplanprofile"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:DeletePlanProfile",
+   "type": "function",
+   "name": "DeletePlanProfile",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeletePlanProfile (2 baris), parameter: _, deviceID, serviceType, profileName.",
+   "description": "Fungsi DeletePlanProfile (2 baris), parameter: _, deviceID, serviceType, profileName. Didefinisikan pada baris 106-108.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deleteplanprofile"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:Count",
+   "type": "function",
+   "name": "Count",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi Count (10 baris), parameter: prefix.",
+   "description": "Fungsi Count (10 baris), parameter: prefix. Didefinisikan pada baris 111-121.",
+   "tags": [
+    "go",
+    "fungsi",
+    "count"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_router.go:NewFakeRouterAccountManager",
+   "type": "function",
+   "name": "NewFakeRouterAccountManager",
+   "filePath": "internal/port/mocktest/fakes_router.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeRouterAccountManager (2 baris).",
+   "description": "Fungsi NewFakeRouterAccountManager (2 baris). Didefinisikan pada baris 123-125.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakerouteraccountmanager"
+   ]
+  },
+  {
+   "id": "file:internal/port/mocktest/fakes_setting.go",
+   "type": "file",
+   "name": "fakes_setting.go",
+   "filePath": "internal/port/mocktest/fakes_setting.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (30 baris, 2 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (30 baris, 2 fungsi, 1 tipe). Tipe utama: FakeSettingReader. Fungsi terbesar: GetValue, NewFakeSettingReader.",
+   "tags": [
+    "go",
+    "port",
+    "mocktest",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_setting.go:FakeSettingReader",
+   "type": "class",
+   "name": "FakeSettingReader",
+   "filePath": "internal/port/mocktest/fakes_setting.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeSettingReader di fakes_setting.go, dengan method: GetValue.",
+   "description": "Tipe FakeSettingReader di fakes_setting.go, dengan method: GetValue. Didefinisikan pada baris 10-13.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakesettingreader"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_setting.go:NewFakeSettingReader",
+   "type": "function",
+   "name": "NewFakeSettingReader",
+   "filePath": "internal/port/mocktest/fakes_setting.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeSettingReader (6 baris), parameter: vals.",
+   "description": "Fungsi NewFakeSettingReader (6 baris), parameter: vals. Didefinisikan pada baris 15-21.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakesettingreader"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_setting.go:GetValue",
+   "type": "function",
+   "name": "GetValue",
+   "filePath": "internal/port/mocktest/fakes_setting.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetValue (7 baris), parameter: _, key, fallback.",
+   "description": "Fungsi GetValue (7 baris), parameter: _, key, fallback. Didefinisikan pada baris 23-30.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getvalue"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/dhcp.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/event_publisher.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/event_publisher.go",
+   "target": "class:internal/port/event_publisher.go:EventPublisher",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/firewall_gateway.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/firewall_gateway.go",
+   "target": "class:internal/port/firewall_gateway.go:IsolationRedirectConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/firewall_gateway.go",
+   "target": "class:internal/port/firewall_gateway.go:FirewallGateway",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/gateway_transaction_repository.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/gateway_transaction_repository.go",
+   "target": "class:internal/port/gateway_transaction_repository.go:GatewayTransactionRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/gateway_transaction_repository.go",
+   "target": "file:internal/domain/billing/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/gateway_transaction_repository.go",
+   "target": "file:internal/domain/billing/gateway_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/gateway_transaction_repository.go",
+   "target": "file:internal/domain/billing/invoice_item.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/gateway_transaction_repository.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/gateway_transaction_repository.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/gateway.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/gateway.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/gateway.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/gateway.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_active.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_active.go",
+   "target": "file:internal/domain/hotspot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_active.go",
+   "target": "file:internal/domain/hotspot/hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_active.go",
+   "target": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_binding.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_binding.go",
+   "target": "class:internal/port/hotspot_binding.go:HotspotIPBindingParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_binding.go",
+   "target": "file:internal/domain/hotspot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_binding.go",
+   "target": "file:internal/domain/hotspot/hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_binding.go",
+   "target": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_expire.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_expire.go",
+   "target": "file:internal/domain/hotspot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_expire.go",
+   "target": "file:internal/domain/hotspot/hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_expire.go",
+   "target": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_gateway.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_gateway.go",
+   "target": "class:internal/port/hotspot_gateway.go:HotspotGateway",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_gateway.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_gateway.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_gateway.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_profile.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_profile.go",
+   "target": "class:internal/port/hotspot_profile.go:MikhmonProfileParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_profile.go",
+   "target": "file:internal/domain/hotspot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_profile.go",
+   "target": "file:internal/domain/hotspot/hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_profile.go",
+   "target": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_transaction.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_transaction.go",
+   "target": "class:internal/port/hotspot_transaction.go:ReportFilter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_transaction.go",
+   "target": "file:internal/domain/hotspot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_transaction.go",
+   "target": "file:internal/domain/hotspot/hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_transaction.go",
+   "target": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_user.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_user.go",
+   "target": "class:internal/port/hotspot_user.go:ListUsersFilter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_user.go",
+   "target": "class:internal/port/hotspot_user.go:HotspotUserParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_user.go",
+   "target": "file:internal/domain/hotspot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_user.go",
+   "target": "file:internal/domain/hotspot/hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_user.go",
+   "target": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_voucher.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/hotspot_voucher.go",
+   "target": "file:internal/domain/hotspot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_voucher.go",
+   "target": "file:internal/domain/hotspot/hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/hotspot_voucher.go",
+   "target": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "class:internal/port/invoice_repository.go:InvoiceRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "file:internal/domain/billing/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "file:internal/domain/billing/gateway_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "file:internal/domain/billing/invoice_item.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ip_pool.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_config_repository.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/llm_config_repository.go",
+   "target": "class:internal/port/llm_config_repository.go:LLMConfigRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/llm_config_repository.go",
+   "target": "file:internal/domain/llm/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_config_repository.go",
+   "target": "file:internal/domain/llm/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_config_repository.go",
+   "target": "file:internal/domain/llm/pricing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_config_repository.go",
+   "target": "file:internal/domain/llm/tool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "class:internal/port/llm_provider.go:LLMProvider",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "file:internal/domain/llm/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "file:internal/domain/llm/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "file:internal/domain/llm/pricing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "file:internal/domain/llm/tool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "class:internal/port/metrics_repository.go:MetricsRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/metrics_repository.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/mocktest/fakes_billing.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "class:internal/port/mocktest/fakes_billing.go:FakeInvoiceRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "class:internal/port/mocktest/fakes_billing.go:FakePaymentProcessor",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:NewFakeInvoiceRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:Save",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:SaveWithItems",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:FindByID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:FindByCustomerID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:FindAll",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:UpdateStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:FindByPaymentCode",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:FindByQRPayload",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:FindBySubscriptionPeriod",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:ItemsOf",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:HasForSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:Delete",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:DeleteByCustomerID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "function:internal/port/mocktest/fakes_billing.go:ProcessCashPayment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/domain/billing/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/domain/billing/gateway_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/domain/billing/invoice_item.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_billing.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "file:internal/port/mocktest/fakes_core.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "class:internal/port/mocktest/fakes_core.go:FakeNotificationRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "class:internal/port/mocktest/fakes_core.go:FakeAuditWriter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:NewFakeNotificationRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:SeedTemplate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:SaveTemplate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:FindTemplateByKey",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:ListTemplates",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:Queue",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:Queued",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:FindByID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:Pending",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:MarkSent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:MarkFailed",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:ListByCustomer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:Write",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "function:internal/port/mocktest/fakes_core.go:Count",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "file:internal/domain/audit/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "file:internal/domain/audit/log.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "file:internal/domain/notification/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "file:internal/domain/notification/template.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_core.go",
+   "target": "file:internal/domain/notification/wa_notification.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/port/mocktest/fakes_customer.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "class:internal/port/mocktest/fakes_customer.go:FakeCustomerRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:NewFakeCustomerRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:Save",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:FindByID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:FindAll",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:Delete",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:FindSubscriptions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:FindByPortalAccessCode",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:FindByPhone",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "function:internal/port/mocktest/fakes_customer.go:FindByCustomerCode",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/customer/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/customer/portal_otp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/customer/portal_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_customer.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/mocktest/fakes_portal.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "class:internal/port/mocktest/fakes_portal.go:FakeNotificationSender",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "class:internal/port/mocktest/fakes_portal.go:FakePortalRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "class:internal/port/mocktest/fakes_portal.go:FakeGatewayTxRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "class:internal/port/mocktest/fakes_portal.go:FakePaymentGateway",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "class:internal/port/mocktest/fakes_portal.go:FakePaymentReader",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:Sent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:Send",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:NewFakePortalRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:SaveSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:FindValidSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:DeleteSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:SaveOTP",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:ConsumeOTP",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:NewFakeGatewayTxRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:Save",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:FindByExternalID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:FindByInvoice",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:UpdateStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:LinkPayment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:Get",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:Name",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:Enabled",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:CreateCharge",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:ParseWebhook",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:CheckStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:All",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:ListByCustomer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:NewFakePaymentReader",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:OTPCount",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:AllNotifications",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:MarkFailedWithAttempt",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "function:internal/port/mocktest/fakes_portal.go:PendingWithRetryLimit",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/billing/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/billing/gateway_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/billing/invoice_item.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/customer/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/customer/portal_otp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/customer/portal_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/notification/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/notification/template.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/domain/notification/wa_notification.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_portal.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/mocktest/fakes_registration.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "class:internal/port/mocktest/fakes_registration.go:FakeRegistrationRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "class:internal/port/mocktest/fakes_registration.go:FakeServicePlanRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:NewFakeRegistrationRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:Save",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:FindByID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:FindByNo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:List",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:UpdateStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:CountPendingSince",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:NewFakeServicePlanRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:Seed",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:Save",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:FindByID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:FindByName",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:List",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "function:internal/port/mocktest/fakes_registration.go:Delete",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/domain/plan/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/domain/plan/service_plan_rate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/domain/plan/service_plan_rate.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/domain/plan/service_plan.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/domain/registration/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/domain/registration/registration.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_registration.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/mocktest/fakes_router.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "class:internal/port/mocktest/fakes_router.go:FakeRouterAccountManager",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:record",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:Provision",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:ProvisionPPPoE",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:ProvisionHotspot",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:ProvisionDedicated",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:UpdateAccount",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:EnsureProfile",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:Isolate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:Restore",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:Suspend",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:Terminate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:EnsureIsolationInfrastructure",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:GetIsolationInfrastructureStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:ApplyIntegrationScript",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:SyncPlanProfile",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:DeletePlanProfile",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:Count",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "function:internal/port/mocktest/fakes_router.go:NewFakeRouterAccountManager",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/plan/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/plan/service_plan_rate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/plan/service_plan_rate.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/plan/service_plan.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_router.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_setting.go",
+   "target": "file:internal/port/mocktest/fakes_setting.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_setting.go",
+   "target": "class:internal/port/mocktest/fakes_setting.go:FakeSettingReader",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_setting.go",
+   "target": "function:internal/port/mocktest/fakes_setting.go:NewFakeSettingReader",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_setting.go",
+   "target": "function:internal/port/mocktest/fakes_setting.go:GetValue",
+   "type": "contains",
+   "weight": 1
+  }
+ ]
+}

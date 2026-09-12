@@ -1,0 +1,71 @@
+{
+ "batchIndex": 13,
+ "nodes": [
+  {
+   "id": "document:test/integration/fixtures/anythingllm/gangguan-layanan.md",
+   "type": "document",
+   "name": "gangguan-layanan.md",
+   "filePath": "test/integration/fixtures/anythingllm/gangguan-layanan.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: gangguan-layanan (31 baris).",
+   "description": "Dokumentasi: gangguan-layanan (31 baris).",
+   "tags": [
+    "document",
+    "gangguan-layanan"
+   ]
+  },
+  {
+   "id": "document:test/integration/fixtures/anythingllm/paket-internet.md",
+   "type": "document",
+   "name": "paket-internet.md",
+   "filePath": "test/integration/fixtures/anythingllm/paket-internet.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: paket-internet (35 baris).",
+   "description": "Dokumentasi: paket-internet (35 baris).",
+   "tags": [
+    "document",
+    "paket-internet"
+   ]
+  },
+  {
+   "id": "document:test/integration/fixtures/anythingllm/tagihan-pembayaran.md",
+   "type": "document",
+   "name": "tagihan-pembayaran.md",
+   "filePath": "test/integration/fixtures/anythingllm/tagihan-pembayaran.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: tagihan-pembayaran (32 baris).",
+   "description": "Dokumentasi: tagihan-pembayaran (32 baris).",
+   "tags": [
+    "document",
+    "tagihan-pembayaran"
+   ]
+  },
+  {
+   "id": "config:test/integration/fixtures/anythingllm/upgrade-paket.html",
+   "type": "config",
+   "name": "upgrade-paket.html",
+   "filePath": "test/integration/fixtures/anythingllm/upgrade-paket.html",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: upgrade-paket.html.",
+   "description": "Berkas config proyek: upgrade-paket.html.",
+   "tags": [
+    "config",
+    "upgrade-paket"
+   ]
+  },
+  {
+   "id": "document:test/integration/fixtures/anythingllm/upgrade-paket.md",
+   "type": "document",
+   "name": "upgrade-paket.md",
+   "filePath": "test/integration/fixtures/anythingllm/upgrade-paket.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: upgrade-paket (33 baris).",
+   "description": "Dokumentasi: upgrade-paket (33 baris).",
+   "tags": [
+    "document",
+    "upgrade-paket"
+   ]
+  }
+ ],
+ "edges": []
+}

@@ -1,0 +1,4297 @@
+{
+ "batchIndex": 39,
+ "nodes": [
+  {
+   "id": "file:pkg/phone/phone_test.go",
+   "type": "file",
+   "name": "phone_test.go",
+   "filePath": "pkg/phone/phone_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `phone` (67 baris, 3 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `phone` (67 baris, 3 fungsi, 0 tipe). Fungsi terbesar: TestNormalize, TestToWhatsAppJID, TestNormalize_Idempotent. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "pkg",
+    "phone",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/phone/phone_test.go:TestNormalize",
+   "type": "function",
+   "name": "TestNormalize",
+   "filePath": "pkg/phone/phone_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestNormalize (29 baris), parameter: t.",
+   "description": "Fungsi TestNormalize (29 baris), parameter: t. Didefinisikan pada baris 10-39.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testnormalize"
+   ]
+  },
+  {
+   "id": "function:pkg/phone/phone_test.go:TestNormalize_Idempotent",
+   "type": "function",
+   "name": "TestNormalize_Idempotent",
+   "filePath": "pkg/phone/phone_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestNormalize_Idempotent (6 baris), parameter: t.",
+   "description": "Fungsi TestNormalize_Idempotent (6 baris), parameter: t. Didefinisikan pada baris 41-47.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testnormalize-idempotent"
+   ]
+  },
+  {
+   "id": "function:pkg/phone/phone_test.go:TestToWhatsAppJID",
+   "type": "function",
+   "name": "TestToWhatsAppJID",
+   "filePath": "pkg/phone/phone_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestToWhatsAppJID (18 baris), parameter: t.",
+   "description": "Fungsi TestToWhatsAppJID (18 baris), parameter: t. Didefinisikan pada baris 49-67.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testtowhatsappjid"
+   ]
+  },
+  {
+   "id": "file:pkg/phone/phone.go",
+   "type": "file",
+   "name": "phone.go",
+   "filePath": "pkg/phone/phone.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `phone` (72 baris, 2 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `phone` (72 baris, 2 fungsi, 0 tipe). Fungsi terbesar: Normalize, ToWhatsAppJID.",
+   "tags": [
+    "go",
+    "pkg",
+    "phone",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/phone/phone.go:Normalize",
+   "type": "function",
+   "name": "Normalize",
+   "filePath": "pkg/phone/phone.go",
+   "complexity": "simple",
+   "summary": "Fungsi Normalize (40 baris), parameter: raw.",
+   "description": "Fungsi Normalize (40 baris), parameter: raw. Didefinisikan pada baris 21-61.",
+   "tags": [
+    "go",
+    "fungsi",
+    "normalize"
+   ]
+  },
+  {
+   "id": "function:pkg/phone/phone.go:ToWhatsAppJID",
+   "type": "function",
+   "name": "ToWhatsAppJID",
+   "filePath": "pkg/phone/phone.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToWhatsAppJID (6 baris), parameter: raw.",
+   "description": "Fungsi ToWhatsAppJID (6 baris), parameter: raw. Didefinisikan pada baris 66-72.",
+   "tags": [
+    "go",
+    "fungsi",
+    "towhatsappjid"
+   ]
+  },
+  {
+   "id": "file:pkg/ping/parser_test.go",
+   "type": "file",
+   "name": "parser_test.go",
+   "filePath": "pkg/ping/parser_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `ping` (99 baris, 3 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `ping` (99 baris, 3 fungsi, 0 tipe). Fungsi terbesar: TestParsePingLatency, TestParseDurationMs, TestParsePacketLoss. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "pkg",
+    "ping",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/ping/parser_test.go:TestParsePingLatency",
+   "type": "function",
+   "name": "TestParsePingLatency",
+   "filePath": "pkg/ping/parser_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestParsePingLatency (50 baris), parameter: t.",
+   "description": "Fungsi TestParsePingLatency (50 baris), parameter: t. Didefinisikan pada baris 9-59.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testparsepinglatency"
+   ]
+  },
+  {
+   "id": "function:pkg/ping/parser_test.go:TestParseDurationMs",
+   "type": "function",
+   "name": "TestParseDurationMs",
+   "filePath": "pkg/ping/parser_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestParseDurationMs (18 baris), parameter: t.",
+   "description": "Fungsi TestParseDurationMs (18 baris), parameter: t. Didefinisikan pada baris 61-79.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testparsedurationms"
+   ]
+  },
+  {
+   "id": "function:pkg/ping/parser_test.go:TestParsePacketLoss",
+   "type": "function",
+   "name": "TestParsePacketLoss",
+   "filePath": "pkg/ping/parser_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestParsePacketLoss (18 baris), parameter: t.",
+   "description": "Fungsi TestParsePacketLoss (18 baris), parameter: t. Didefinisikan pada baris 81-99.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testparsepacketloss"
+   ]
+  },
+  {
+   "id": "file:pkg/ping/parser.go",
+   "type": "file",
+   "name": "parser.go",
+   "filePath": "pkg/ping/parser.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `ping` (129 baris, 3 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `ping` (129 baris, 3 fungsi, 0 tipe). Fungsi terbesar: ParsePingLatency, ParseDurationMs, ParsePacketLoss.",
+   "tags": [
+    "go",
+    "pkg",
+    "ping",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/ping/parser.go:ParsePingLatency",
+   "type": "function",
+   "name": "ParsePingLatency",
+   "filePath": "pkg/ping/parser.go",
+   "complexity": "moderate",
+   "summary": "Fungsi ParsePingLatency (73 baris), parameter: row.",
+   "description": "Fungsi ParsePingLatency (73 baris), parameter: row. Didefinisikan pada baris 12-85.",
+   "tags": [
+    "go",
+    "fungsi",
+    "parsepinglatency"
+   ]
+  },
+  {
+   "id": "function:pkg/ping/parser.go:ParseDurationMs",
+   "type": "function",
+   "name": "ParseDurationMs",
+   "filePath": "pkg/ping/parser.go",
+   "complexity": "simple",
+   "summary": "Fungsi ParseDurationMs (28 baris), parameter: timeStr.",
+   "description": "Fungsi ParseDurationMs (28 baris), parameter: timeStr. Didefinisikan pada baris 88-116.",
+   "tags": [
+    "go",
+    "fungsi",
+    "parsedurationms"
+   ]
+  },
+  {
+   "id": "function:pkg/ping/parser.go:ParsePacketLoss",
+   "type": "function",
+   "name": "ParsePacketLoss",
+   "filePath": "pkg/ping/parser.go",
+   "complexity": "simple",
+   "summary": "Fungsi ParsePacketLoss (10 baris), parameter: lossStr.",
+   "description": "Fungsi ParsePacketLoss (10 baris), parameter: lossStr. Didefinisikan pada baris 119-129.",
+   "tags": [
+    "go",
+    "fungsi",
+    "parsepacketloss"
+   ]
+  },
+  {
+   "id": "file:pkg/response/connect_test.go",
+   "type": "file",
+   "name": "connect_test.go",
+   "filePath": "pkg/response/connect_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `response` (74 baris, 2 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `response` (74 baris, 2 fungsi, 0 tipe). Fungsi terbesar: TestMapDomainError, TestTransportErrorsUseExpectedCodes. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "pkg",
+    "response",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect_test.go:TestTransportErrorsUseExpectedCodes",
+   "type": "function",
+   "name": "TestTransportErrorsUseExpectedCodes",
+   "filePath": "pkg/response/connect_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestTransportErrorsUseExpectedCodes (25 baris), parameter: t.",
+   "description": "Fungsi TestTransportErrorsUseExpectedCodes (25 baris), parameter: t. Didefinisikan pada baris 12-37.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testtransporterrorsuseexpectedcodes"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect_test.go:TestMapDomainError",
+   "type": "function",
+   "name": "TestMapDomainError",
+   "filePath": "pkg/response/connect_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMapDomainError (35 baris), parameter: t.",
+   "description": "Fungsi TestMapDomainError (35 baris), parameter: t. Didefinisikan pada baris 39-74.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmapdomainerror"
+   ]
+  },
+  {
+   "id": "file:pkg/response/connect.go",
+   "type": "file",
+   "name": "connect.go",
+   "filePath": "pkg/response/connect.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `response` (45 baris, 7 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `response` (45 baris, 7 fungsi, 0 tipe). Fungsi terbesar: Unavailable, InvalidArgument, Unauthenticated, PermissionDenied, Unimplemented. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "pkg",
+    "response",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect.go:Unavailable",
+   "type": "function",
+   "name": "Unavailable",
+   "filePath": "pkg/response/connect.go",
+   "complexity": "simple",
+   "summary": "Fungsi Unavailable (2 baris), parameter: message.",
+   "description": "Fungsi Unavailable (2 baris), parameter: message. Didefinisikan pada baris 12-14.",
+   "tags": [
+    "go",
+    "fungsi",
+    "unavailable"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect.go:InvalidArgument",
+   "type": "function",
+   "name": "InvalidArgument",
+   "filePath": "pkg/response/connect.go",
+   "complexity": "simple",
+   "summary": "Fungsi InvalidArgument (2 baris), parameter: message.",
+   "description": "Fungsi InvalidArgument (2 baris), parameter: message. Didefinisikan pada baris 17-19.",
+   "tags": [
+    "go",
+    "fungsi",
+    "invalidargument"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect.go:Unauthenticated",
+   "type": "function",
+   "name": "Unauthenticated",
+   "filePath": "pkg/response/connect.go",
+   "complexity": "simple",
+   "summary": "Fungsi Unauthenticated (2 baris), parameter: message.",
+   "description": "Fungsi Unauthenticated (2 baris), parameter: message. Didefinisikan pada baris 22-24.",
+   "tags": [
+    "go",
+    "fungsi",
+    "unauthenticated"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect.go:PermissionDenied",
+   "type": "function",
+   "name": "PermissionDenied",
+   "filePath": "pkg/response/connect.go",
+   "complexity": "simple",
+   "summary": "Fungsi PermissionDenied (2 baris), parameter: message.",
+   "description": "Fungsi PermissionDenied (2 baris), parameter: message. Didefinisikan pada baris 27-29.",
+   "tags": [
+    "go",
+    "fungsi",
+    "permissiondenied"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect.go:Unimplemented",
+   "type": "function",
+   "name": "Unimplemented",
+   "filePath": "pkg/response/connect.go",
+   "complexity": "simple",
+   "summary": "Fungsi Unimplemented (2 baris), parameter: message.",
+   "description": "Fungsi Unimplemented (2 baris), parameter: message. Didefinisikan pada baris 32-34.",
+   "tags": [
+    "go",
+    "fungsi",
+    "unimplemented"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect.go:Internal",
+   "type": "function",
+   "name": "Internal",
+   "filePath": "pkg/response/connect.go",
+   "complexity": "simple",
+   "summary": "Fungsi Internal (2 baris), parameter: message.",
+   "description": "Fungsi Internal (2 baris), parameter: message. Didefinisikan pada baris 37-39.",
+   "tags": [
+    "go",
+    "fungsi",
+    "internal"
+   ]
+  },
+  {
+   "id": "function:pkg/response/connect.go:MapTransportError",
+   "type": "function",
+   "name": "MapTransportError",
+   "filePath": "pkg/response/connect.go",
+   "complexity": "simple",
+   "summary": "Fungsi MapTransportError (2 baris), parameter: kind, message.",
+   "description": "Fungsi MapTransportError (2 baris), parameter: kind, message. Didefinisikan pada baris 43-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "maptransporterror"
+   ]
+  },
+  {
+   "id": "file:pkg/response/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "pkg/response/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `response` (67 baris, 1 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `response` (67 baris, 1 fungsi, 0 tipe). Fungsi terbesar: MapDomainError. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "pkg",
+    "response",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/response/errors.go:MapDomainError",
+   "type": "function",
+   "name": "MapDomainError",
+   "filePath": "pkg/response/errors.go",
+   "complexity": "simple",
+   "summary": "Fungsi MapDomainError (33 baris), parameter: err.",
+   "description": "Fungsi MapDomainError (33 baris), parameter: err. Didefinisikan pada baris 34-67.",
+   "tags": [
+    "go",
+    "fungsi",
+    "mapdomainerror"
+   ]
+  },
+  {
+   "id": "file:pkg/response/http_test.go",
+   "type": "file",
+   "name": "http_test.go",
+   "filePath": "pkg/response/http_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `response` (56 baris, 2 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `response` (56 baris, 2 fungsi, 0 tipe). Fungsi terbesar: TestWriteHTTPError_UsesStableEnvelopeAndStatus, TestHTTPStatusForKind. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "pkg",
+    "response",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/response/http_test.go:TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+   "type": "function",
+   "name": "TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+   "filePath": "pkg/response/http_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestWriteHTTPError_UsesStableEnvelopeAndStatus (21 baris), parameter: t.",
+   "description": "Fungsi TestWriteHTTPError_UsesStableEnvelopeAndStatus (21 baris), parameter: t. Didefinisikan pada baris 12-33.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testwritehttperror-usesstableenvelopeandstatus"
+   ]
+  },
+  {
+   "id": "function:pkg/response/http_test.go:TestHTTPStatusForKind",
+   "type": "function",
+   "name": "TestHTTPStatusForKind",
+   "filePath": "pkg/response/http_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestHTTPStatusForKind (21 baris), parameter: t.",
+   "description": "Fungsi TestHTTPStatusForKind (21 baris), parameter: t. Didefinisikan pada baris 35-56.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testhttpstatusforkind"
+   ]
+  },
+  {
+   "id": "file:pkg/response/http.go",
+   "type": "file",
+   "name": "http.go",
+   "filePath": "pkg/response/http.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `response` (146 baris, 7 fungsi, 2 tipe).",
+   "description": "Paket shared library lintas-context — paket `response` (146 baris, 7 fungsi, 2 tipe). Tipe utama: HTTPErrorResponse, HTTPError. Fungsi terbesar: HTTPCodeForKind, HTTPMessageForKind, HTTPStatusForKind, httpCodeForStatus, WriteHTTPError. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "pkg",
+    "response",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:pkg/response/http.go:HTTPErrorResponse",
+   "type": "class",
+   "name": "HTTPErrorResponse",
+   "filePath": "pkg/response/http.go",
+   "complexity": "simple",
+   "summary": "Tipe HTTPErrorResponse di http.go.",
+   "description": "Tipe HTTPErrorResponse di http.go. Didefinisikan pada baris 11-13.",
+   "tags": [
+    "go",
+    "tipe",
+    "httperrorresponse"
+   ]
+  },
+  {
+   "id": "class:pkg/response/http.go:HTTPError",
+   "type": "class",
+   "name": "HTTPError",
+   "filePath": "pkg/response/http.go",
+   "complexity": "simple",
+   "summary": "Tipe HTTPError di http.go.",
+   "description": "Tipe HTTPError di http.go. Didefinisikan pada baris 16-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "httperror"
+   ]
+  },
+  {
+   "id": "function:pkg/response/http.go:HTTPStatusForKind",
+   "type": "function",
+   "name": "HTTPStatusForKind",
+   "filePath": "pkg/response/http.go",
+   "complexity": "simple",
+   "summary": "Fungsi HTTPStatusForKind (21 baris), parameter: kind.",
+   "description": "Fungsi HTTPStatusForKind (21 baris), parameter: kind. Didefinisikan pada baris 23-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "httpstatusforkind"
+   ]
+  },
+  {
+   "id": "function:pkg/response/http.go:HTTPCodeForKind",
+   "type": "function",
+   "name": "HTTPCodeForKind",
+   "filePath": "pkg/response/http.go",
+   "complexity": "simple",
+   "summary": "Fungsi HTTPCodeForKind (23 baris), parameter: kind.",
+   "description": "Fungsi HTTPCodeForKind (23 baris), parameter: kind. Didefinisikan pada baris 47-70.",
+   "tags": [
+    "go",
+    "fungsi",
+    "httpcodeforkind"
+   ]
+  },
+  {
+   "id": "function:pkg/response/http.go:HTTPMessageForKind",
+   "type": "function",
+   "name": "HTTPMessageForKind",
+   "filePath": "pkg/response/http.go",
+   "complexity": "simple",
+   "summary": "Fungsi HTTPMessageForKind (23 baris), parameter: kind.",
+   "description": "Fungsi HTTPMessageForKind (23 baris), parameter: kind. Didefinisikan pada baris 73-96.",
+   "tags": [
+    "go",
+    "fungsi",
+    "httpmessageforkind"
+   ]
+  },
+  {
+   "id": "function:pkg/response/http.go:WriteHTTPError",
+   "type": "function",
+   "name": "WriteHTTPError",
+   "filePath": "pkg/response/http.go",
+   "complexity": "simple",
+   "summary": "Fungsi WriteHTTPError (8 baris), parameter: w, err.",
+   "description": "Fungsi WriteHTTPError (8 baris), parameter: w, err. Didefinisikan pada baris 99-107.",
+   "tags": [
+    "go",
+    "fungsi",
+    "writehttperror"
+   ]
+  },
+  {
+   "id": "function:pkg/response/http.go:WriteHTTPStatusError",
+   "type": "function",
+   "name": "WriteHTTPStatusError",
+   "filePath": "pkg/response/http.go",
+   "complexity": "simple",
+   "summary": "Fungsi WriteHTTPStatusError (6 baris), parameter: w, status, message.",
+   "description": "Fungsi WriteHTTPStatusError (6 baris), parameter: w, status, message. Didefinisikan pada baris 111-117.",
+   "tags": [
+    "go",
+    "fungsi",
+    "writehttpstatuserror"
+   ]
+  },
+  {
+   "id": "file:pkg/retry/retry.go",
+   "type": "file",
+   "name": "retry.go",
+   "filePath": "pkg/retry/retry.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Paket shared library lintas-context — paket `retry` (8 baris, 1 fungsi, 0 tipe).",
+   "description": "Paket shared library lintas-context — paket `retry` (8 baris, 1 fungsi, 0 tipe). Fungsi terbesar: Do.",
+   "tags": [
+    "go",
+    "pkg",
+    "retry",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:pkg/retry/retry.go:Do",
+   "type": "function",
+   "name": "Do",
+   "filePath": "pkg/retry/retry.go",
+   "complexity": "simple",
+   "summary": "Fungsi Do (2 baris), parameter: ctx.",
+   "description": "Fungsi Do (2 baris), parameter: ctx. Didefinisikan pada baris 6-8.",
+   "tags": [
+    "go",
+    "fungsi",
+    "do"
+   ]
+  },
+  {
+   "id": "file:scripts/grpc_client/main.go",
+   "type": "file",
+   "name": "main.go",
+   "filePath": "scripts/grpc_client/main.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Berkas kode Go proyek — paket `grpc_client` (119 baris, 1 fungsi, 0 tipe).",
+   "description": "Berkas kode Go proyek — paket `grpc_client` (119 baris, 1 fungsi, 0 tipe). Fungsi terbesar: main.",
+   "tags": [
+    "go",
+    "grpc-client",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:scripts/grpc_client/main.go:main",
+   "type": "function",
+   "name": "main",
+   "filePath": "scripts/grpc_client/main.go",
+   "complexity": "moderate",
+   "summary": "Fungsi main (101 baris).",
+   "description": "Fungsi main (101 baris). Didefinisikan pada baris 18-119.",
+   "tags": [
+    "go",
+    "fungsi",
+    "main"
+   ]
+  },
+  {
+   "id": "config:scripts/test_connect_all_services.js",
+   "type": "config",
+   "name": "test_connect_all_services.js",
+   "filePath": "scripts/test_connect_all_services.js",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_connect_all_services.js.",
+   "description": "Berkas config proyek: test_connect_all_services.js.",
+   "tags": [
+    "config",
+    "test-connect-all-services"
+   ]
+  },
+  {
+   "id": "config:scripts/test_connect_bot_knowledge.js",
+   "type": "config",
+   "name": "test_connect_bot_knowledge.js",
+   "filePath": "scripts/test_connect_bot_knowledge.js",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_connect_bot_knowledge.js.",
+   "description": "Berkas config proyek: test_connect_bot_knowledge.js.",
+   "tags": [
+    "config",
+    "test-connect-bot-knowledge"
+   ]
+  },
+  {
+   "id": "config:scripts/test_connect_mikhmon.js",
+   "type": "config",
+   "name": "test_connect_mikhmon.js",
+   "filePath": "scripts/test_connect_mikhmon.js",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_connect_mikhmon.js.",
+   "description": "Berkas config proyek: test_connect_mikhmon.js.",
+   "tags": [
+    "config",
+    "test-connect-mikhmon"
+   ]
+  },
+  {
+   "id": "config:scripts/test_connect_rpc.js",
+   "type": "config",
+   "name": "test_connect_rpc.js",
+   "filePath": "scripts/test_connect_rpc.js",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_connect_rpc.js.",
+   "description": "Berkas config proyek: test_connect_rpc.js.",
+   "tags": [
+    "config",
+    "test-connect-rpc"
+   ]
+  },
+  {
+   "id": "config:scripts/test_connect_whatsapp.js",
+   "type": "config",
+   "name": "test_connect_whatsapp.js",
+   "filePath": "scripts/test_connect_whatsapp.js",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_connect_whatsapp.js.",
+   "description": "Berkas config proyek: test_connect_whatsapp.js.",
+   "tags": [
+    "config",
+    "test-connect-whatsapp"
+   ]
+  },
+  {
+   "id": "config:scripts/test_sse_backend.js",
+   "type": "config",
+   "name": "test_sse_backend.js",
+   "filePath": "scripts/test_sse_backend.js",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_sse_backend.js.",
+   "description": "Berkas config proyek: test_sse_backend.js.",
+   "tags": [
+    "config",
+    "test-sse-backend"
+   ]
+  },
+  {
+   "id": "config:scripts/test_sse_live_reboot.js",
+   "type": "config",
+   "name": "test_sse_live_reboot.js",
+   "filePath": "scripts/test_sse_live_reboot.js",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: test_sse_live_reboot.js.",
+   "description": "Berkas config proyek: test_sse_live_reboot.js.",
+   "tags": [
+    "config",
+    "test-sse-live-reboot"
+   ]
+  },
+  {
+   "id": "config:test/integration/.gitkeep",
+   "type": "config",
+   "name": ".gitkeep",
+   "filePath": "test/integration/.gitkeep",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: .gitkeep.",
+   "description": "Berkas config proyek: .gitkeep.",
+   "tags": [
+    "config"
+   ]
+  },
+  {
+   "id": "file:test/integration/device_test.go",
+   "type": "file",
+   "name": "device_test.go",
+   "filePath": "test/integration/device_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (60 baris, 1 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (60 baris, 1 fungsi, 0 tipe). Fungsi terbesar: TestDeviceIntegration_TestConnection. Bergantung pada 88 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/device_test.go:TestDeviceIntegration_TestConnection",
+   "type": "function",
+   "name": "TestDeviceIntegration_TestConnection",
+   "filePath": "test/integration/device_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestDeviceIntegration_TestConnection (40 baris), parameter: t.",
+   "description": "Fungsi TestDeviceIntegration_TestConnection (40 baris), parameter: t. Didefinisikan pada baris 20-60.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testdeviceintegration-testconnection"
+   ]
+  },
+  {
+   "id": "file:test/integration/mikhmon_test.go",
+   "type": "file",
+   "name": "mikhmon_test.go",
+   "filePath": "test/integration/mikhmon_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (152 baris, 1 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (152 baris, 1 fungsi, 0 tipe). Fungsi terbesar: TestMikhmonIntegration_FullWorkflow. Bergantung pada 34 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikhmon_test.go:TestMikhmonIntegration_FullWorkflow",
+   "type": "function",
+   "name": "TestMikhmonIntegration_FullWorkflow",
+   "filePath": "test/integration/mikhmon_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestMikhmonIntegration_FullWorkflow (133 baris), parameter: t.",
+   "description": "Fungsi TestMikhmonIntegration_FullWorkflow (133 baris), parameter: t. Didefinisikan pada baris 19-152.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikhmonintegration-fullworkflow"
+   ]
+  },
+  {
+   "id": "file:test/integration/mikrotik_builders_test.go",
+   "type": "file",
+   "name": "mikrotik_builders_test.go",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "language": "go",
+   "complexity": "moderate",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (433 baris, 13 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (433 baris, 13 fungsi, 0 tipe). Fungsi terbesar: TestMikrotikBuilders_PPPoESecretCRUD, TestMikrotikBuilders_SimpleQueueCRUD, TestMikrotikBuilders_StreamQueueStats, TestMikrotikBuilders_MonitorTrafficStream, TestMikrotikBuilders_MonitorTrafficNonRunning. Bergantung pada 107 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SystemResource",
+   "type": "function",
+   "name": "TestMikrotikBuilders_SystemResource",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_SystemResource (19 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_SystemResource (19 baris), parameter: t. Didefinisikan pada baris 67-86.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-systemresource"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SystemIdentity",
+   "type": "function",
+   "name": "TestMikrotikBuilders_SystemIdentity",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_SystemIdentity (10 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_SystemIdentity (10 baris), parameter: t. Didefinisikan pada baris 90-100.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-systemidentity"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_Interfaces",
+   "type": "function",
+   "name": "TestMikrotikBuilders_Interfaces",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_Interfaces (21 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_Interfaces (21 baris), parameter: t. Didefinisikan pada baris 104-125.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-interfaces"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPActive",
+   "type": "function",
+   "name": "TestMikrotikBuilders_PPPActive",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_PPPActive (10 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_PPPActive (10 baris), parameter: t. Didefinisikan pada baris 129-139.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-pppactive"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPoESecretCRUD",
+   "type": "function",
+   "name": "TestMikrotikBuilders_PPPoESecretCRUD",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestMikrotikBuilders_PPPoESecretCRUD (75 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_PPPoESecretCRUD (75 baris), parameter: t. Didefinisikan pada baris 143-218.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-pppoesecretcrud"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SimpleQueueCRUD",
+   "type": "function",
+   "name": "TestMikrotikBuilders_SimpleQueueCRUD",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_SimpleQueueCRUD (48 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_SimpleQueueCRUD (48 baris), parameter: t. Didefinisikan pada baris 222-270.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-simplequeuecrud"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_StreamQueueStats",
+   "type": "function",
+   "name": "TestMikrotikBuilders_StreamQueueStats",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_StreamQueueStats (44 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_StreamQueueStats (44 baris), parameter: t. Didefinisikan pada baris 272-316.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-streamqueuestats"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_MonitorTrafficStream",
+   "type": "function",
+   "name": "TestMikrotikBuilders_MonitorTrafficStream",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_MonitorTrafficStream (43 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_MonitorTrafficStream (43 baris), parameter: t. Didefinisikan pada baris 320-363.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-monitortrafficstream"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_MonitorTrafficNonRunning",
+   "type": "function",
+   "name": "TestMikrotikBuilders_MonitorTrafficNonRunning",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_MonitorTrafficNonRunning (26 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_MonitorTrafficNonRunning (26 baris), parameter: t. Didefinisikan pada baris 367-393.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-monitortrafficnonrunning"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPActiveStream",
+   "type": "function",
+   "name": "TestMikrotikBuilders_PPPActiveStream",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_PPPActiveStream (19 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_PPPActiveStream (19 baris), parameter: t. Didefinisikan pada baris 397-416.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-pppactivestream"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_LogPrint",
+   "type": "function",
+   "name": "TestMikrotikBuilders_LogPrint",
+   "filePath": "test/integration/mikrotik_builders_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikBuilders_LogPrint (13 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikBuilders_LogPrint (13 baris), parameter: t. Didefinisikan pada baris 420-433.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikbuilders-logprint"
+   ]
+  },
+  {
+   "id": "file:test/integration/mikrotik_dual_connection_test.go",
+   "type": "file",
+   "name": "mikrotik_dual_connection_test.go",
+   "filePath": "test/integration/mikrotik_dual_connection_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (176 baris, 2 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (176 baris, 2 fungsi, 0 tipe). Fungsi terbesar: TestMikrotikDual_TwoConnectionsConcurrent, TestMikrotikDual_ValidateRealDevice. Bergantung pada 78 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_dual_connection_test.go:TestMikrotikDual_TwoConnectionsConcurrent",
+   "type": "function",
+   "name": "TestMikrotikDual_TwoConnectionsConcurrent",
+   "filePath": "test/integration/mikrotik_dual_connection_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestMikrotikDual_TwoConnectionsConcurrent (72 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikDual_TwoConnectionsConcurrent (72 baris), parameter: t. Didefinisikan pada baris 45-117.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikdual-twoconnectionsconcurrent"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_dual_connection_test.go:TestMikrotikDual_ValidateRealDevice",
+   "type": "function",
+   "name": "TestMikrotikDual_ValidateRealDevice",
+   "filePath": "test/integration/mikrotik_dual_connection_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikDual_ValidateRealDevice (52 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikDual_ValidateRealDevice (52 baris), parameter: t. Didefinisikan pada baris 124-176.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikdual-validaterealdevice"
+   ]
+  },
+  {
+   "id": "file:test/integration/mikrotik_ssh_test.go",
+   "type": "file",
+   "name": "mikrotik_ssh_test.go",
+   "filePath": "test/integration/mikrotik_ssh_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (157 baris, 3 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (157 baris, 3 fungsi, 0 tipe). Fungsi terbesar: TestMikrotikRouterOSSSH, mikrotikRouterOSCatalog, mikrotikRouterOSPlatformPath. Bergantung pada 20 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_ssh_test.go:mikrotikRouterOSCatalog",
+   "type": "function",
+   "name": "mikrotikRouterOSCatalog",
+   "filePath": "test/integration/mikrotik_ssh_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi mikrotikRouterOSCatalog (41 baris).",
+   "description": "Fungsi mikrotikRouterOSCatalog (41 baris). Didefinisikan pada baris 59-100.",
+   "tags": [
+    "go",
+    "fungsi",
+    "mikrotikrouteroscatalog"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_ssh_test.go:TestMikrotikRouterOSSSH",
+   "type": "function",
+   "name": "TestMikrotikRouterOSSSH",
+   "filePath": "test/integration/mikrotik_ssh_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikRouterOSSSH (51 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikRouterOSSSH (51 baris), parameter: t. Didefinisikan pada baris 106-157.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikrouterosssh"
+   ]
+  },
+  {
+   "id": "file:test/integration/mikrotik_test.go",
+   "type": "file",
+   "name": "mikrotik_test.go",
+   "filePath": "test/integration/mikrotik_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (201 baris, 5 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (201 baris, 5 fungsi, 0 tipe). Fungsi terbesar: TestMikrotikDriver_ExecuteWhileStreaming, TestMikrotikDriver_Stream, TestMikrotikDriver_PingStreamDetails, mikrotikTestTarget, TestMikrotikDriver_Execute. Bergantung pada 89 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_Execute",
+   "type": "function",
+   "name": "TestMikrotikDriver_Execute",
+   "filePath": "test/integration/mikrotik_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikDriver_Execute (14 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikDriver_Execute (14 baris), parameter: t. Didefinisikan pada baris 63-77.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikdriver-execute"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_Stream",
+   "type": "function",
+   "name": "TestMikrotikDriver_Stream",
+   "filePath": "test/integration/mikrotik_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikDriver_Stream (35 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikDriver_Stream (35 baris), parameter: t. Didefinisikan pada baris 82-117.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikdriver-stream"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_ExecuteWhileStreaming",
+   "type": "function",
+   "name": "TestMikrotikDriver_ExecuteWhileStreaming",
+   "filePath": "test/integration/mikrotik_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikDriver_ExecuteWhileStreaming (44 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikDriver_ExecuteWhileStreaming (44 baris), parameter: t. Didefinisikan pada baris 122-166.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikdriver-executewhilestreaming"
+   ]
+  },
+  {
+   "id": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_PingStreamDetails",
+   "type": "function",
+   "name": "TestMikrotikDriver_PingStreamDetails",
+   "filePath": "test/integration/mikrotik_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestMikrotikDriver_PingStreamDetails (31 baris), parameter: t.",
+   "description": "Fungsi TestMikrotikDriver_PingStreamDetails (31 baris), parameter: t. Didefinisikan pada baris 170-201.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testmikrotikdriver-pingstreamdetails"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:pkg/phone/phone_test.go",
+   "target": "file:pkg/phone/phone_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/phone/phone_test.go",
+   "target": "function:pkg/phone/phone_test.go:TestNormalize",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/phone/phone_test.go",
+   "target": "function:pkg/phone/phone_test.go:TestNormalize_Idempotent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/phone/phone_test.go",
+   "target": "function:pkg/phone/phone_test.go:TestToWhatsAppJID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/phone/phone_test.go",
+   "target": "file:pkg/phone/phone.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/phone/phone.go",
+   "target": "file:pkg/phone/phone.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/phone/phone.go",
+   "target": "function:pkg/phone/phone.go:Normalize",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/phone/phone.go",
+   "target": "function:pkg/phone/phone.go:ToWhatsAppJID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:pkg/phone/phone.go:ToWhatsAppJID",
+   "target": "function:pkg/phone/phone.go:Normalize",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:pkg/ping/parser_test.go",
+   "target": "file:pkg/ping/parser_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/ping/parser_test.go",
+   "target": "function:pkg/ping/parser_test.go:TestParsePingLatency",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/ping/parser_test.go",
+   "target": "function:pkg/ping/parser_test.go:TestParseDurationMs",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/ping/parser_test.go",
+   "target": "function:pkg/ping/parser_test.go:TestParsePacketLoss",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/ping/parser_test.go",
+   "target": "file:pkg/ping/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/ping/parser.go",
+   "target": "file:pkg/ping/parser.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/ping/parser.go",
+   "target": "function:pkg/ping/parser.go:ParsePingLatency",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/ping/parser.go",
+   "target": "function:pkg/ping/parser.go:ParseDurationMs",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/ping/parser.go",
+   "target": "function:pkg/ping/parser.go:ParsePacketLoss",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect_test.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect_test.go",
+   "target": "function:pkg/response/connect_test.go:TestTransportErrorsUseExpectedCodes",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect_test.go",
+   "target": "function:pkg/response/connect_test.go:TestMapDomainError",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect_test.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/connect_test.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "function:pkg/response/connect.go:Unavailable",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "function:pkg/response/connect.go:InvalidArgument",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "function:pkg/response/connect.go:Unauthenticated",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "function:pkg/response/connect.go:PermissionDenied",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "function:pkg/response/connect.go:Unimplemented",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "function:pkg/response/connect.go:Internal",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "function:pkg/response/connect.go:MapTransportError",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/connect.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/errors.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/errors.go",
+   "target": "function:pkg/response/errors.go:MapDomainError",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/http_test.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http_test.go",
+   "target": "function:pkg/response/http_test.go:TestWriteHTTPError_UsesStableEnvelopeAndStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http_test.go",
+   "target": "function:pkg/response/http_test.go:TestHTTPStatusForKind",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http_test.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/http_test.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "file:pkg/response/http.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "class:pkg/response/http.go:HTTPErrorResponse",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "class:pkg/response/http.go:HTTPError",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "function:pkg/response/http.go:HTTPStatusForKind",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "function:pkg/response/http.go:HTTPCodeForKind",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "function:pkg/response/http.go:HTTPMessageForKind",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "function:pkg/response/http.go:WriteHTTPError",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "function:pkg/response/http.go:WriteHTTPStatusError",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "function:pkg/response/http.go:httpCodeForStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "function:pkg/response/http.go:writeHTTPJSON",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/response/http.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:pkg/response/http.go:WriteHTTPError",
+   "target": "function:pkg/response/http.go:HTTPStatusForKind",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:pkg/response/http.go:WriteHTTPError",
+   "target": "function:pkg/response/http.go:HTTPCodeForKind",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:pkg/response/http.go:WriteHTTPError",
+   "target": "function:pkg/response/http.go:HTTPMessageForKind",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:pkg/response/http.go:WriteHTTPError",
+   "target": "function:pkg/response/http.go:writeHTTPJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:pkg/response/http.go:WriteHTTPStatusError",
+   "target": "function:pkg/response/http.go:httpCodeForStatus",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:pkg/response/http.go:WriteHTTPStatusError",
+   "target": "function:pkg/response/http.go:writeHTTPJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:pkg/retry/retry.go",
+   "target": "file:pkg/retry/retry.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/retry/retry.go",
+   "target": "function:pkg/retry/retry.go:Do",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:scripts/grpc_client/main.go",
+   "target": "file:scripts/grpc_client/main.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:scripts/grpc_client/main.go",
+   "target": "function:scripts/grpc_client/main.go:main",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:test/integration/device_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "function:test/integration/device_test.go:TestDeviceIntegration_TestConnection",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/usecase/device/manage_device_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/usecase/device/manage_device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/usecase/device/manage_isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/usecase/device/manage_metrics_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/device_test.go",
+   "target": "file:internal/usecase/device/manage_metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:test/integration/mikhmon_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "function:test/integration/mikhmon_test.go:TestMikhmonIntegration_FullWorkflow",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/cleaner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/cookie.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/report.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/walled_garden_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/hotspot/walled_garden.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/system/operations.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikhmon_test.go",
+   "target": "file:internal/driver/mikrotik/system/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:test/integration/mikrotik_builders_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:findPPPSecretID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SystemResource",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SystemIdentity",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_Interfaces",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPActive",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPoESecretCRUD",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SimpleQueueCRUD",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_StreamQueueStats",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_MonitorTrafficStream",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_MonitorTrafficNonRunning",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPActiveStream",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_LogPrint",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/iface/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/iface/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/iface/operations.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/iface/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/iface/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/iface/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/ppp/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/ppp/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/ppp/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/ppp/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/ppp/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/ppp/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/queue/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/queue/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/queue/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/queue/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/queue/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/queue/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/system/operations.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/driver/mikrotik/system/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_builders_test.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SystemResource",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SystemIdentity",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_Interfaces",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPActive",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPoESecretCRUD",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPoESecretCRUD",
+   "target": "function:test/integration/mikrotik_builders_test.go:findPPPSecretID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_SimpleQueueCRUD",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_StreamQueueStats",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_MonitorTrafficStream",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_MonitorTrafficNonRunning",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_PPPActiveStream",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_builders_test.go:TestMikrotikBuilders_LogPrint",
+   "target": "function:test/integration/mikrotik_builders_test.go:newTestDriver",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:test/integration/mikrotik_dual_connection_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "function:test/integration/mikrotik_dual_connection_test.go:TestMikrotikDual_TwoConnectionsConcurrent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "function:test/integration/mikrotik_dual_connection_test.go:TestMikrotikDual_ValidateRealDevice",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/system/operations.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/driver/mikrotik/system/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_dual_connection_test.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:test/integration/mikrotik_ssh_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "function:test/integration/mikrotik_ssh_test.go:mikrotikRouterOSPlatformPath",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "function:test/integration/mikrotik_ssh_test.go:mikrotikRouterOSCatalog",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "function:test/integration/mikrotik_ssh_test.go:TestMikrotikRouterOSSSH",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/driver/genericcli/catalog_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/driver/genericcli/catalog.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/driver/genericcli/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/driver/genericssh/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/driver/genericssh/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_ssh_test.go",
+   "target": "file:internal/driver/genericssh/pty.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:test/integration/mikrotik_ssh_test.go:TestMikrotikRouterOSSSH",
+   "target": "function:test/integration/mikrotik_ssh_test.go:mikrotikRouterOSPlatformPath",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_ssh_test.go:TestMikrotikRouterOSSSH",
+   "target": "function:test/integration/mikrotik_ssh_test.go:mikrotikRouterOSCatalog",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:test/integration/mikrotik_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "function:test/integration/mikrotik_test.go:mikrotikTestTarget",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_Execute",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_Stream",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_ExecuteWhileStreaming",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_PingStreamDetails",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/system/operations.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/driver/mikrotik/system/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/mikrotik_test.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_Execute",
+   "target": "function:test/integration/mikrotik_test.go:mikrotikTestTarget",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_Stream",
+   "target": "function:test/integration/mikrotik_test.go:mikrotikTestTarget",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_ExecuteWhileStreaming",
+   "target": "function:test/integration/mikrotik_test.go:mikrotikTestTarget",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/mikrotik_test.go:TestMikrotikDriver_PingStreamDetails",
+   "target": "function:test/integration/mikrotik_test.go:mikrotikTestTarget",
+   "type": "calls",
+   "weight": 0.8
+  }
+ ]
+}

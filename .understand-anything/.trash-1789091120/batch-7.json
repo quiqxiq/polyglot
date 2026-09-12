@@ -1,0 +1,71 @@
+{
+ "batchIndex": 7,
+ "nodes": [
+  {
+   "id": "document:data/skills/ghaib-network-cs/references/eskalasi-dan-faq.md",
+   "type": "document",
+   "name": "eskalasi-dan-faq.md",
+   "filePath": "data/skills/ghaib-network-cs/references/eskalasi-dan-faq.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: eskalasi-dan-faq (48 baris).",
+   "description": "Dokumentasi: eskalasi-dan-faq (48 baris).",
+   "tags": [
+    "document",
+    "eskalasi-dan-faq"
+   ]
+  },
+  {
+   "id": "document:data/skills/ghaib-network-cs/references/paket-dan-harga.md",
+   "type": "document",
+   "name": "paket-dan-harga.md",
+   "filePath": "data/skills/ghaib-network-cs/references/paket-dan-harga.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: paket-dan-harga (45 baris).",
+   "description": "Dokumentasi: paket-dan-harga (45 baris).",
+   "tags": [
+    "document",
+    "paket-dan-harga"
+   ]
+  },
+  {
+   "id": "document:data/skills/ghaib-network-cs/references/profil-perusahaan.md",
+   "type": "document",
+   "name": "profil-perusahaan.md",
+   "filePath": "data/skills/ghaib-network-cs/references/profil-perusahaan.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: profil-perusahaan (51 baris).",
+   "description": "Dokumentasi: profil-perusahaan (51 baris).",
+   "tags": [
+    "document",
+    "profil-perusahaan"
+   ]
+  },
+  {
+   "id": "document:data/skills/ghaib-network-cs/references/tagihan-dan-pembayaran.md",
+   "type": "document",
+   "name": "tagihan-dan-pembayaran.md",
+   "filePath": "data/skills/ghaib-network-cs/references/tagihan-dan-pembayaran.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: tagihan-dan-pembayaran (54 baris).",
+   "description": "Dokumentasi: tagihan-dan-pembayaran (54 baris).",
+   "tags": [
+    "document",
+    "tagihan-dan-pembayaran"
+   ]
+  },
+  {
+   "id": "document:data/skills/ghaib-network-cs/references/troubleshooting-jaringan.md",
+   "type": "document",
+   "name": "troubleshooting-jaringan.md",
+   "filePath": "data/skills/ghaib-network-cs/references/troubleshooting-jaringan.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: troubleshooting-jaringan (115 baris).",
+   "description": "Dokumentasi: troubleshooting-jaringan (115 baris).",
+   "tags": [
+    "document",
+    "troubleshooting-jaringan"
+   ]
+  }
+ ],
+ "edges": []
+}

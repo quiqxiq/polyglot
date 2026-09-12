@@ -1,0 +1,2685 @@
+{
+ "batchIndex": 40,
+ "nodes": [
+  {
+   "id": "file:test/integration/ping_telemetry_e2e_test.go",
+   "type": "file",
+   "name": "ping_telemetry_e2e_test.go",
+   "filePath": "test/integration/ping_telemetry_e2e_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (144 baris, 1 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (144 baris, 1 fungsi, 0 tipe). Fungsi terbesar: TestPingTelemetryE2E_FullPipeline. Bergantung pada 124 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/ping_telemetry_e2e_test.go:TestPingTelemetryE2E_FullPipeline",
+   "type": "function",
+   "name": "TestPingTelemetryE2E_FullPipeline",
+   "filePath": "test/integration/ping_telemetry_e2e_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestPingTelemetryE2E_FullPipeline (116 baris), parameter: t.",
+   "description": "Fungsi TestPingTelemetryE2E_FullPipeline (116 baris), parameter: t. Didefinisikan pada baris 28-144.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testpingtelemetrye2e-fullpipeline"
+   ]
+  },
+  {
+   "id": "file:test/integration/router_live_e2e_test.go",
+   "type": "file",
+   "name": "router_live_e2e_test.go",
+   "filePath": "test/integration/router_live_e2e_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (118 baris, 5 fungsi, 1 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (118 baris, 5 fungsi, 1 tipe). Tipe utama: integrationVault. Fungsi terbesar: TestImportFromRouter_E2E, DecryptString, EncryptString, Get, Save. Bergantung pada 168 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:test/integration/router_live_e2e_test.go:integrationVault",
+   "type": "class",
+   "name": "integrationVault",
+   "filePath": "test/integration/router_live_e2e_test.go",
+   "complexity": "simple",
+   "summary": "Tipe integrationVault di router_live_e2e_test.go, dengan method: EncryptString, DecryptString, Get, Save.",
+   "description": "Tipe integrationVault di router_live_e2e_test.go, dengan method: EncryptString, DecryptString, Get, Save. Didefinisikan pada baris 34-34.",
+   "tags": [
+    "go",
+    "tipe",
+    "integrationvault"
+   ]
+  },
+  {
+   "id": "function:test/integration/router_live_e2e_test.go:EncryptString",
+   "type": "function",
+   "name": "EncryptString",
+   "filePath": "test/integration/router_live_e2e_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi EncryptString (2 baris), parameter: _, plaintext.",
+   "description": "Fungsi EncryptString (2 baris), parameter: _, plaintext. Didefinisikan pada baris 36-38.",
+   "tags": [
+    "go",
+    "fungsi",
+    "encryptstring"
+   ]
+  },
+  {
+   "id": "function:test/integration/router_live_e2e_test.go:DecryptString",
+   "type": "function",
+   "name": "DecryptString",
+   "filePath": "test/integration/router_live_e2e_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi DecryptString (5 baris), parameter: _, ciphertext.",
+   "description": "Fungsi DecryptString (5 baris), parameter: _, ciphertext. Didefinisikan pada baris 40-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "decryptstring"
+   ]
+  },
+  {
+   "id": "function:test/integration/router_live_e2e_test.go:Get",
+   "type": "function",
+   "name": "Get",
+   "filePath": "test/integration/router_live_e2e_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi Get (2 baris).",
+   "description": "Fungsi Get (2 baris). Didefinisikan pada baris 47-49.",
+   "tags": [
+    "go",
+    "fungsi",
+    "get"
+   ]
+  },
+  {
+   "id": "function:test/integration/router_live_e2e_test.go:Save",
+   "type": "function",
+   "name": "Save",
+   "filePath": "test/integration/router_live_e2e_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi Save (0 baris).",
+   "description": "Fungsi Save (0 baris). Didefinisikan pada baris 51-51.",
+   "tags": [
+    "go",
+    "fungsi",
+    "save"
+   ]
+  },
+  {
+   "id": "function:test/integration/router_live_e2e_test.go:TestImportFromRouter_E2E",
+   "type": "function",
+   "name": "TestImportFromRouter_E2E",
+   "filePath": "test/integration/router_live_e2e_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestImportFromRouter_E2E (61 baris), parameter: t.",
+   "description": "Fungsi TestImportFromRouter_E2E (61 baris), parameter: t. Didefinisikan pada baris 57-118.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testimportfromrouter-e2e"
+   ]
+  },
+  {
+   "id": "file:test/integration/timescale_100_routers_load_test.go",
+   "type": "file",
+   "name": "timescale_100_routers_load_test.go",
+   "filePath": "test/integration/timescale_100_routers_load_test.go",
+   "language": "go",
+   "complexity": "moderate",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (378 baris, 4 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (378 baris, 4 fungsi, 0 tipe). Fungsi terbesar: TestTimescaleDB_100RoutersPingSimulation, setupTimescaleTestContainer, isDockerUnavailable, isContinuousAggregateReady. Bergantung pada 47 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/timescale_100_routers_load_test.go:setupTimescaleTestContainer",
+   "type": "function",
+   "name": "setupTimescaleTestContainer",
+   "filePath": "test/integration/timescale_100_routers_load_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi setupTimescaleTestContainer (73 baris), parameter: t.",
+   "description": "Fungsi setupTimescaleTestContainer (73 baris), parameter: t. Didefinisikan pada baris 35-108.",
+   "tags": [
+    "go",
+    "fungsi",
+    "setuptimescaletestcontainer"
+   ]
+  },
+  {
+   "id": "function:test/integration/timescale_100_routers_load_test.go:TestTimescaleDB_100RoutersPingSimulation",
+   "type": "function",
+   "name": "TestTimescaleDB_100RoutersPingSimulation",
+   "filePath": "test/integration/timescale_100_routers_load_test.go",
+   "complexity": "complex",
+   "summary": "Fungsi TestTimescaleDB_100RoutersPingSimulation (245 baris), parameter: t.",
+   "description": "Fungsi TestTimescaleDB_100RoutersPingSimulation (245 baris), parameter: t. Didefinisikan pada baris 123-368.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testtimescaledb-100routerspingsimulation"
+   ]
+  },
+  {
+   "id": "file:test/integration/wa_messages_batch_test.go",
+   "type": "file",
+   "name": "wa_messages_batch_test.go",
+   "filePath": "test/integration/wa_messages_batch_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (268 baris, 6 fungsi, 0 tipe).",
+   "description": "Uji integrasi dengan dependensi layanan eksplisit — paket `integration` (268 baris, 6 fungsi, 0 tipe). Fungsi terbesar: TestUpsertMessagesBatch, ensureWAMirrorSchema, waTestMessage, assertColumn, createWATestSession. Bergantung pada 42 berkas internal.",
+   "tags": [
+    "go",
+    "test",
+    "integration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:test/integration/wa_messages_batch_test.go:TestUpsertMessagesBatch",
+   "type": "function",
+   "name": "TestUpsertMessagesBatch",
+   "filePath": "test/integration/wa_messages_batch_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestUpsertMessagesBatch (116 baris), parameter: t.",
+   "description": "Fungsi TestUpsertMessagesBatch (116 baris), parameter: t. Didefinisikan pada baris 39-155.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testupsertmessagesbatch"
+   ]
+  },
+  {
+   "id": "function:test/integration/wa_messages_batch_test.go:ensureWAMirrorSchema",
+   "type": "function",
+   "name": "ensureWAMirrorSchema",
+   "filePath": "test/integration/wa_messages_batch_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi ensureWAMirrorSchema (49 baris), parameter: t, db.",
+   "description": "Fungsi ensureWAMirrorSchema (49 baris), parameter: t, db. Didefinisikan pada baris 178-227.",
+   "tags": [
+    "go",
+    "fungsi",
+    "ensurewamirrorschema"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:test/integration/ping_telemetry_e2e_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "function:test/integration/ping_telemetry_e2e_test.go:TestPingTelemetryE2E_FullPipeline",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/bot_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/chat_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/fase4_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/helpers.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/isp_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/isp_testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/metrics_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/setting_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/skill_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/user_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/system/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/system/operations.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/system/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/system/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:pkg/ping/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/ping_telemetry_e2e_test.go",
+   "target": "file:pkg/ping/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:test/integration/router_live_e2e_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "class:test/integration/router_live_e2e_test.go:integrationVault",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "function:test/integration/router_live_e2e_test.go:EncryptString",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "function:test/integration/router_live_e2e_test.go:DecryptString",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "function:test/integration/router_live_e2e_test.go:Get",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "function:test/integration/router_live_e2e_test.go:Save",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "function:test/integration/router_live_e2e_test.go:TestImportFromRouter_E2E",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/bot_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/chat_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/fase4_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/helpers.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/isp_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/isp_testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/metrics_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/cashbook_models.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/conversation_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/customer_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/device_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/gateway_transaction_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/invoice_item_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/invoice_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/llm_config_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/notification_models.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/payment_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/ping_metric_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/portal_otp_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/portal_session_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/registration_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/reporting_audit_models.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/service_plan_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/session_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/setting_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/skill_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/subscription_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/user_device_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/user_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/model/wa_chat_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/setting_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/skill_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/user_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/comment_parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/comment_parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/e2e_vault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/export.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/file.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/plan_source_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/plan_source.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/router_live_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/router_live.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/row.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/upsert_plans.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/upsert.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/importer/util.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/execute_command_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/execute_command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/get_active_sessions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/get_active_sessions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/get_device_status.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/open_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/push_config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/stream_output.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/stream_ping_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/stream_ping.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/stream_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/router_live_e2e_test.go",
+   "target": "file:internal/usecase/network/stream_traffic.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:test/integration/timescale_100_routers_load_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "function:test/integration/timescale_100_routers_load_test.go:setupTimescaleTestContainer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "function:test/integration/timescale_100_routers_load_test.go:isDockerUnavailable",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "function:test/integration/timescale_100_routers_load_test.go:TestTimescaleDB_100RoutersPingSimulation",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "function:test/integration/timescale_100_routers_load_test.go:isContinuousAggregateReady",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/bot_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/chat_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/fase4_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/helpers.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/isp_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/isp_testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/metrics_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/setting_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/skill_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/user_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/timescale_100_routers_load_test.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:test/integration/timescale_100_routers_load_test.go:setupTimescaleTestContainer",
+   "target": "function:test/integration/timescale_100_routers_load_test.go:isDockerUnavailable",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/timescale_100_routers_load_test.go:TestTimescaleDB_100RoutersPingSimulation",
+   "target": "function:test/integration/timescale_100_routers_load_test.go:setupTimescaleTestContainer",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/timescale_100_routers_load_test.go:TestTimescaleDB_100RoutersPingSimulation",
+   "target": "function:test/integration/timescale_100_routers_load_test.go:isContinuousAggregateReady",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:test/integration/wa_messages_batch_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "function:test/integration/wa_messages_batch_test.go:TestUpsertMessagesBatch",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "function:test/integration/wa_messages_batch_test.go:waTestMessage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "function:test/integration/wa_messages_batch_test.go:ensureWAMirrorSchema",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "function:test/integration/wa_messages_batch_test.go:assertColumn",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "function:test/integration/wa_messages_batch_test.go:createWATestSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "function:test/integration/wa_messages_batch_test.go:replaceDBName",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/bot_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/chat_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/fase4_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/helpers.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/isp_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/isp_testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/metrics_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/setting_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/skill_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/user_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/domain/bot/chat.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/domain/bot/conversation_context.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/domain/bot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/integration/wa_messages_batch_test.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:test/integration/wa_messages_batch_test.go:TestUpsertMessagesBatch",
+   "target": "function:test/integration/wa_messages_batch_test.go:replaceDBName",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/wa_messages_batch_test.go:TestUpsertMessagesBatch",
+   "target": "function:test/integration/wa_messages_batch_test.go:ensureWAMirrorSchema",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/wa_messages_batch_test.go:TestUpsertMessagesBatch",
+   "target": "function:test/integration/wa_messages_batch_test.go:assertColumn",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/wa_messages_batch_test.go:TestUpsertMessagesBatch",
+   "target": "function:test/integration/wa_messages_batch_test.go:createWATestSession",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:test/integration/wa_messages_batch_test.go:TestUpsertMessagesBatch",
+   "target": "function:test/integration/wa_messages_batch_test.go:waTestMessage",
+   "type": "calls",
+   "weight": 0.8
+  }
+ ]
+}

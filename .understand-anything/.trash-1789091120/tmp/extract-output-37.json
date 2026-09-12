@@ -1,0 +1,7568 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/usecase/network/push_config.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "functions": [
+        {
+          "name": "PushConfig",
+          "startLine": 14,
+          "endLine": 16,
+          "params": [
+            "ctx",
+            "driver",
+            "cmd"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PushConfig",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "PushConfig",
+          "callee": "ExecuteCommand",
+          "lineNumber": 15
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/network/stream_output.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "functions": [
+        {
+          "name": "StreamOutput",
+          "startLine": 9,
+          "endLine": 11,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamOutput",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/network/stream_ping_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 130,
+      "nonEmptyLines": 115,
+      "functions": [
+        {
+          "name": "Chan",
+          "startLine": 17,
+          "endLine": 19,
+          "params": []
+        },
+        {
+          "name": "Cancel",
+          "startLine": 21,
+          "endLine": 26,
+          "params": []
+        },
+        {
+          "name": "Err",
+          "startLine": 28,
+          "endLine": 30,
+          "params": []
+        },
+        {
+          "name": "Stream",
+          "startLine": 37,
+          "endLine": 42,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "TestStreamPing",
+          "startLine": 44,
+          "endLine": 130,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockStreamHandle",
+          "startLine": 12,
+          "endLine": 15,
+          "methods": [
+            "Chan",
+            "Cancel",
+            "Err"
+          ],
+          "properties": [
+            "ch",
+            "cancelFn"
+          ]
+        },
+        {
+          "name": "mockStreamingDriver",
+          "startLine": 32,
+          "endLine": 35,
+          "methods": [
+            "Stream"
+          ],
+          "properties": [
+            "streamFn"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Chan",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "Cancel",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "Err",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Stream",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "TestStreamPing",
+          "line": 44,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Cancel",
+          "callee": "m.cancelFn",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Stream",
+          "callee": "d.streamFn",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Run",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "make",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "close",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Errorf",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Errorf",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Errorf",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "StreamPing",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "context.Background",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "append",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Fatalf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "len",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Fatalf",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "len",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Errorf",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Errorf",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Errorf",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Run",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "StreamPing",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "context.Background",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "errors.Is",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestStreamPing",
+          "callee": "t.Errorf",
+          "lineNumber": 127
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/network/stream_ping.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 94,
+      "nonEmptyLines": 82,
+      "functions": [
+        {
+          "name": "StreamPing",
+          "startLine": 26,
+          "endLine": 94,
+          "params": [
+            "ctx",
+            "driver",
+            "host",
+            "onResult"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PingStreamItem",
+          "startLine": 15,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "Seq",
+            "Host",
+            "LatencyMS",
+            "Status",
+            "TTL",
+            "PacketLoss",
+            "TimestampUnix"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PingStreamItem",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "StreamPing",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamPing",
+          "callee": "net.SplitHostPort",
+          "lineNumber": 32
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "sd.Stream",
+          "lineNumber": 43
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "fmt.Errorf",
+          "lineNumber": 45
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "handle.Cancel",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "ctx.Done",
+          "lineNumber": 52
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "ctx.Err",
+          "lineNumber": 53
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "handle.Chan",
+          "lineNumber": 54
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "handle.Err",
+          "lineNumber": 56
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "len",
+          "lineNumber": 58
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "ping.ParsePingLatency",
+          "lineNumber": 63
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 64
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 67
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "int64",
+          "lineNumber": 70
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "int32",
+          "lineNumber": 73
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 75
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "ping.ParsePacketLoss",
+          "lineNumber": 76
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "int32",
+          "lineNumber": 79
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "int32",
+          "lineNumber": 83
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "time.Now().Unix",
+          "lineNumber": 85
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "time.Now",
+          "lineNumber": 85
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "onResult",
+          "lineNumber": 88
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/stream_terminal.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 26,
+      "functions": [
+        {
+          "name": "NewStreamTerminalUseCase",
+          "startLine": 18,
+          "endLine": 23,
+          "params": [
+            "repo",
+            "vault"
+          ]
+        },
+        {
+          "name": "OpenTerminal",
+          "startLine": 26,
+          "endLine": 31,
+          "params": [
+            "ctx",
+            "driver",
+            "deviceID",
+            "cols",
+            "rows"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "StreamTerminalUseCase",
+          "startLine": 12,
+          "endLine": 15,
+          "methods": [
+            "OpenTerminal"
+          ],
+          "properties": [
+            "repo",
+            "vault"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamTerminalUseCase",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamTerminalUseCase",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "OpenTerminal",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "OpenTerminal",
+          "callee": "td.OpenTerminalSession",
+          "lineNumber": 28
+        },
+        {
+          "caller": "OpenTerminal",
+          "callee": "fmt.Errorf",
+          "lineNumber": 30
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/stream_traffic.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 72,
+      "nonEmptyLines": 61,
+      "functions": [
+        {
+          "name": "StreamTraffic",
+          "startLine": 21,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "driver",
+            "iface",
+            "onResult"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "TrafficStreamItem",
+          "startLine": 13,
+          "endLine": 18,
+          "methods": [],
+          "properties": [
+            "Interface",
+            "RxBps",
+            "TxBps",
+            "TimestampUnix"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TrafficStreamItem",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "StreamTraffic",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamTraffic",
+          "callee": "sd.Stream",
+          "lineNumber": 38
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "fmt.Errorf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 42
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "handle.Cancel",
+          "lineNumber": 42
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "ctx.Done",
+          "lineNumber": 46
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "ctx.Err",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "handle.Chan",
+          "lineNumber": 48
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "handle.Err",
+          "lineNumber": 50
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "len",
+          "lineNumber": 52
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 57
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 58
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "time.Now().Unix",
+          "lineNumber": 64
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "time.Now",
+          "lineNumber": 64
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "onResult",
+          "lineNumber": 67
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/notification/manage_notification_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 139,
+      "nonEmptyLines": 116,
+      "functions": [
+        {
+          "name": "SaveTemplate",
+          "startLine": 18,
+          "endLine": 21,
+          "params": [
+            "ctx",
+            "t"
+          ]
+        },
+        {
+          "name": "FindTemplateByKey",
+          "startLine": 23,
+          "endLine": 30,
+          "params": [
+            "ctx",
+            "tenantID",
+            "key"
+          ]
+        },
+        {
+          "name": "ListTemplates",
+          "startLine": 32,
+          "endLine": 34,
+          "params": [
+            "ctx",
+            "activeOnly"
+          ]
+        },
+        {
+          "name": "Queue",
+          "startLine": 36,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "n"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 41,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "Pending",
+          "startLine": 50,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "limit"
+          ]
+        },
+        {
+          "name": "MarkSent",
+          "startLine": 54,
+          "endLine": 57,
+          "params": [
+            "ctx",
+            "id",
+            "at"
+          ]
+        },
+        {
+          "name": "MarkFailed",
+          "startLine": 59,
+          "endLine": 62,
+          "params": [
+            "ctx",
+            "id",
+            "err"
+          ]
+        },
+        {
+          "name": "ListByCustomer",
+          "startLine": 64,
+          "endLine": 66,
+          "params": [
+            "ctx",
+            "customerID",
+            "limit"
+          ]
+        },
+        {
+          "name": "Send",
+          "startLine": 73,
+          "endLine": 77,
+          "params": [
+            "ctx",
+            "phone",
+            "content"
+          ]
+        },
+        {
+          "name": "TestManageNotificationUseCase",
+          "startLine": 79,
+          "endLine": 139,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockNotificationRepo",
+          "startLine": 11,
+          "endLine": 16,
+          "methods": [
+            "SaveTemplate",
+            "FindTemplateByKey",
+            "ListTemplates",
+            "Queue",
+            "FindByID",
+            "Pending",
+            "MarkSent",
+            "MarkFailed",
+            "ListByCustomer"
+          ],
+          "properties": [
+            "templates",
+            "pending",
+            "sentIDs",
+            "failedIDs"
+          ]
+        },
+        {
+          "name": "mockNotificationSender",
+          "startLine": 68,
+          "endLine": 71,
+          "methods": [
+            "Send"
+          ],
+          "properties": [
+            "lastPhone",
+            "lastContent"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SaveTemplate",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "FindTemplateByKey",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "ListTemplates",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "Queue",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "Pending",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "MarkSent",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "MarkFailed",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "ListByCustomer",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "Send",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "TestManageNotificationUseCase",
+          "line": 79,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SaveTemplate",
+          "callee": "append",
+          "lineNumber": 19
+        },
+        {
+          "caller": "Queue",
+          "callee": "append",
+          "lineNumber": 37
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "append",
+          "lineNumber": 55
+        },
+        {
+          "caller": "MarkFailed",
+          "callee": "append",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "context.Background",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "NewManageNotificationUseCase",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "uc.ListTemplates",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "len",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "uc.GetTemplate",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "uc.SaveTemplate",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "uc.ListNotifications",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "len",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "uc.PendingCount",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "uc.MarkSent",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "len",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "uc.MarkFailed",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "len",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "uc.TestSend",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestManageNotificationUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 137
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 11,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/notification/manage_notification.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 130,
+      "nonEmptyLines": 118,
+      "functions": [
+        {
+          "name": "NewManageNotificationUseCase",
+          "startLine": 20,
+          "endLine": 25,
+          "params": [
+            "repo",
+            "sender"
+          ]
+        },
+        {
+          "name": "ListTemplates",
+          "startLine": 28,
+          "endLine": 37,
+          "params": [
+            "ctx",
+            "activeOnly"
+          ]
+        },
+        {
+          "name": "GetTemplate",
+          "startLine": 40,
+          "endLine": 49,
+          "params": [
+            "ctx",
+            "templateKey"
+          ]
+        },
+        {
+          "name": "SaveTemplate",
+          "startLine": 52,
+          "endLine": 66,
+          "params": [
+            "ctx",
+            "tmpl"
+          ]
+        },
+        {
+          "name": "ListNotifications",
+          "startLine": 69,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "customerID",
+            "limit"
+          ]
+        },
+        {
+          "name": "PendingCount",
+          "startLine": 88,
+          "endLine": 97,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "MarkSent",
+          "startLine": 100,
+          "endLine": 108,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "MarkFailed",
+          "startLine": 111,
+          "endLine": 119,
+          "params": [
+            "ctx",
+            "id",
+            "errMsg"
+          ]
+        },
+        {
+          "name": "TestSend",
+          "startLine": 122,
+          "endLine": 130,
+          "params": [
+            "ctx",
+            "phone",
+            "content"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ManageNotificationUseCase",
+          "startLine": 14,
+          "endLine": 17,
+          "methods": [
+            "ListTemplates",
+            "GetTemplate",
+            "SaveTemplate",
+            "ListNotifications",
+            "PendingCount",
+            "MarkSent",
+            "MarkFailed",
+            "TestSend"
+          ],
+          "properties": [
+            "repo",
+            "sender"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ManageNotificationUseCase",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewManageNotificationUseCase",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "ListTemplates",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "GetTemplate",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "SaveTemplate",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "ListNotifications",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "PendingCount",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "MarkSent",
+          "line": 100,
+          "isDefault": false
+        },
+        {
+          "name": "MarkFailed",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "TestSend",
+          "line": 122,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListTemplates",
+          "callee": "uc.repo.ListTemplates",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "fmt.Errorf",
+          "lineNumber": 34
+        },
+        {
+          "caller": "GetTemplate",
+          "callee": "uc.repo.FindTemplateByKey",
+          "lineNumber": 44
+        },
+        {
+          "caller": "GetTemplate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "idgen.New",
+          "lineNumber": 57
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "uc.repo.SaveTemplate",
+          "lineNumber": 62
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 63
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "uc.repo.ListByCustomer",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "fmt.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "uc.repo.Pending",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "fmt.Errorf",
+          "lineNumber": 82
+        },
+        {
+          "caller": "PendingCount",
+          "callee": "uc.repo.Pending",
+          "lineNumber": 92
+        },
+        {
+          "caller": "PendingCount",
+          "callee": "fmt.Errorf",
+          "lineNumber": 94
+        },
+        {
+          "caller": "PendingCount",
+          "callee": "len",
+          "lineNumber": 96
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "uc.repo.MarkSent",
+          "lineNumber": 104
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "time.Now",
+          "lineNumber": 104
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "fmt.Errorf",
+          "lineNumber": 105
+        },
+        {
+          "caller": "MarkFailed",
+          "callee": "uc.repo.MarkFailed",
+          "lineNumber": 115
+        },
+        {
+          "caller": "MarkFailed",
+          "callee": "fmt.Errorf",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestSend",
+          "callee": "uc.sender.Send",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestSend",
+          "callee": "fmt.Errorf",
+          "lineNumber": 127
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 9,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/notification/wa_sender_worker_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 84,
+      "nonEmptyLines": 71,
+      "functions": [
+        {
+          "name": "newWorker",
+          "startLine": 16,
+          "endLine": 20,
+          "params": [
+            "t",
+            "notif",
+            "sender"
+          ]
+        },
+        {
+          "name": "queue",
+          "startLine": 22,
+          "endLine": 29,
+          "params": [
+            "t",
+            "notif",
+            "id",
+            "phone"
+          ]
+        },
+        {
+          "name": "TestWaSender_SendsPending_MarksSent",
+          "startLine": 31,
+          "endLine": 48,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "startLine": 50,
+          "endLine": 70,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "startLine": 72,
+          "endLine": 84,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestWaSender_SendsPending_MarksSent",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "line": 72,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newWorker",
+          "callee": "t.Helper",
+          "lineNumber": 17
+        },
+        {
+          "caller": "newWorker",
+          "callee": "mocktest.NewFakeSettingReader",
+          "lineNumber": 18
+        },
+        {
+          "caller": "newWorker",
+          "callee": "uc.NewWASenderWorker",
+          "lineNumber": 19
+        },
+        {
+          "caller": "queue",
+          "callee": "t.Helper",
+          "lineNumber": 23
+        },
+        {
+          "caller": "queue",
+          "callee": "require.NoError",
+          "lineNumber": 24
+        },
+        {
+          "caller": "queue",
+          "callee": "notif.Queue",
+          "lineNumber": 24
+        },
+        {
+          "caller": "queue",
+          "callee": "context.Background",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "mocktest.NewFakeNotificationRepo",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "queue",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "queue",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "newWorker(t, notif, sender).Run",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "newWorker",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "context.Background",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "require.NoError",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "assert.Equal",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "assert.Len",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "assert.Equal",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "notif.Pending",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "context.Background",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestWaSender_SendsPending_MarksSent",
+          "callee": "assert.Empty",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "mocktest.NewFakeNotificationRepo",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "errors.New",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "queue",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "newWorker",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "worker.Run",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "context.Background",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "require.NoError",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "assert.Equal",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "assert.Equal",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "worker.Run",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "context.Background",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "require.NoError",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "assert.Equal",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestWaSender_Failure_IncrementsAttempt_ThenGivesUp",
+          "callee": "assert.Equal",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "mocktest.NewFakeNotificationRepo",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "queue",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "newWorker(t, notif, sender).Run",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "newWorker",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "context.Background",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "require.NoError",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "assert.True",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "notif.AllNotifications",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "require.NotEmpty",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestWaSender_NoSession_DoesNotBurnAttempts",
+          "callee": "assert.Equal",
+          "lineNumber": 83
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/notification/wa_sender_worker.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 118,
+      "nonEmptyLines": 107,
+      "functions": [
+        {
+          "name": "NewWASenderWorker",
+          "startLine": 33,
+          "endLine": 39,
+          "params": [
+            "notif",
+            "sender",
+            "settings"
+          ]
+        },
+        {
+          "name": "Run",
+          "startLine": 50,
+          "endLine": 92,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "atoiDefault",
+          "startLine": 94,
+          "endLine": 106,
+          "params": [
+            "s",
+            "def"
+          ]
+        },
+        {
+          "name": "itoa",
+          "startLine": 108,
+          "endLine": 118,
+          "params": [
+            "n"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "notificationRepo",
+          "startLine": 16,
+          "endLine": 19,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "WASenderWorker",
+          "startLine": 24,
+          "endLine": 30,
+          "methods": [
+            "Run"
+          ],
+          "properties": [
+            "notif",
+            "sender",
+            "settings",
+            "now"
+          ]
+        },
+        {
+          "name": "SendResult",
+          "startLine": 42,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "Sent",
+            "Failed",
+            "GaveUp",
+            "NoSession"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WASenderWorker",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "NewWASenderWorker",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "SendResult",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "Run",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Run",
+          "callee": "atoiDefault",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Run",
+          "callee": "w.settings.GetValue",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Run",
+          "callee": "w.notif.PendingWithRetryLimit",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Run",
+          "callee": "fmt.Errorf",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Run",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Run",
+          "callee": "w.notif.MarkFailedWithAttempt",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Run",
+          "callee": "w.sender.Send",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Run",
+          "callee": "w.notif.MarkSent",
+          "lineNumber": 67
+        },
+        {
+          "caller": "Run",
+          "callee": "w.now",
+          "lineNumber": 67
+        },
+        {
+          "caller": "Run",
+          "callee": "fmt.Errorf",
+          "lineNumber": 68
+        },
+        {
+          "caller": "Run",
+          "callee": "logger.WithComponent(\"WASenderWorker\").WithError(sendErr).WithFields(map[string]any{\n\t\t\t\"notification_id\": n.ID,\n\t\t}).Warn",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Run",
+          "callee": "logger.WithComponent(\"WASenderWorker\").WithError(sendErr).WithFields",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Run",
+          "callee": "logger.WithComponent(\"WASenderWorker\").WithError",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Run",
+          "callee": "logger.WithComponent",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Run",
+          "callee": "errors.Is",
+          "lineNumber": 76
+        },
+        {
+          "caller": "Run",
+          "callee": "w.notif.MarkFailedWithAttempt",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Run",
+          "callee": "sendErr.Error",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Run",
+          "callee": "w.notif.MarkFailedWithAttempt",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Run",
+          "callee": "itoa",
+          "lineNumber": 88
+        },
+        {
+          "caller": "Run",
+          "callee": "sendErr.Error",
+          "lineNumber": 88
+        },
+        {
+          "caller": "atoiDefault",
+          "callee": "int",
+          "lineNumber": 100
+        },
+        {
+          "caller": "itoa",
+          "callee": "string",
+          "lineNumber": 114
+        },
+        {
+          "caller": "itoa",
+          "callee": "rune",
+          "lineNumber": 114
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/usecase/plan/manage_plan.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 163,
+      "nonEmptyLines": 145,
+      "functions": [
+        {
+          "name": "NewManagePlanUseCase",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "plans",
+            "subs",
+            "router"
+          ]
+        },
+        {
+          "name": "Create",
+          "startLine": 28,
+          "endLine": 67,
+          "params": [
+            "ctx",
+            "p",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 70,
+          "endLine": 101,
+          "params": [
+            "ctx",
+            "p",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 104,
+          "endLine": 127,
+          "params": [
+            "ctx",
+            "id",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 130,
+          "endLine": 136,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "List",
+          "startLine": 139,
+          "endLine": 145,
+          "params": [
+            "ctx",
+            "activeOnly"
+          ]
+        },
+        {
+          "name": "validatePlan",
+          "startLine": 147,
+          "endLine": 163,
+          "params": [
+            "p"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ManagePlanUseCase",
+          "startLine": 16,
+          "endLine": 20,
+          "methods": [
+            "Create",
+            "Update",
+            "Delete",
+            "Get",
+            "List"
+          ],
+          "properties": [
+            "plans",
+            "subs",
+            "router"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ManagePlanUseCase",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewManagePlanUseCase",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Create",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 130,
+          "isDefault": false
+        },
+        {
+          "name": "List",
+          "line": 139,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Create",
+          "callee": "validatePlan",
+          "lineNumber": 29
+        },
+        {
+          "caller": "Create",
+          "callee": "idgen.New",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Create",
+          "callee": "u.plans.FindByName",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Create",
+          "callee": "fmt.Errorf",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Create",
+          "callee": "u.plans.Save",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Create",
+          "callee": "fmt.Errorf",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Create",
+          "callee": "u.router.SyncPlanProfile",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Create",
+          "callee": "fmt.Errorf",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Update",
+          "callee": "fmt.Errorf",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Update",
+          "callee": "u.plans.FindByID",
+          "lineNumber": 74
+        },
+        {
+          "caller": "Update",
+          "callee": "fmt.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "Update",
+          "callee": "validatePlan",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Update",
+          "callee": "u.plans.Save",
+          "lineNumber": 89
+        },
+        {
+          "caller": "Update",
+          "callee": "fmt.Errorf",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Update",
+          "callee": "u.router.SyncPlanProfile",
+          "lineNumber": 95
+        },
+        {
+          "caller": "Update",
+          "callee": "fmt.Errorf",
+          "lineNumber": 96
+        },
+        {
+          "caller": "Delete",
+          "callee": "u.subs.HasActiveForPlan",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Delete",
+          "callee": "fmt.Errorf",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Delete",
+          "callee": "fmt.Errorf",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Delete",
+          "callee": "u.plans.FindByID",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Delete",
+          "callee": "fmt.Errorf",
+          "lineNumber": 114
+        },
+        {
+          "caller": "Delete",
+          "callee": "u.plans.Delete",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Delete",
+          "callee": "fmt.Errorf",
+          "lineNumber": 118
+        },
+        {
+          "caller": "Delete",
+          "callee": "u.router.DeletePlanProfile",
+          "lineNumber": 123
+        },
+        {
+          "caller": "Get",
+          "callee": "u.plans.FindByID",
+          "lineNumber": 131
+        },
+        {
+          "caller": "Get",
+          "callee": "fmt.Errorf",
+          "lineNumber": 133
+        },
+        {
+          "caller": "List",
+          "callee": "u.plans.List",
+          "lineNumber": 140
+        },
+        {
+          "caller": "List",
+          "callee": "fmt.Errorf",
+          "lineNumber": 142
+        },
+        {
+          "caller": "validatePlan",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 148
+        },
+        {
+          "caller": "validatePlan",
+          "callee": "fmt.Errorf",
+          "lineNumber": 149
+        },
+        {
+          "caller": "validatePlan",
+          "callee": "strings.ToUpper",
+          "lineNumber": 151
+        },
+        {
+          "caller": "validatePlan",
+          "callee": "fmt.Errorf",
+          "lineNumber": 154
+        },
+        {
+          "caller": "validatePlan",
+          "callee": "fmt.Errorf",
+          "lineNumber": 157
+        },
+        {
+          "caller": "validatePlan",
+          "callee": "fmt.Errorf",
+          "lineNumber": 160
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/plan/plan_account.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 206,
+      "nonEmptyLines": 196,
+      "functions": [
+        {
+          "name": "BuildPPPoEProvisionSpec",
+          "startLine": 10,
+          "endLine": 71,
+          "params": [
+            "sub",
+            "pl"
+          ]
+        },
+        {
+          "name": "BuildHotspotProvisionSpec",
+          "startLine": 74,
+          "endLine": 142,
+          "params": [
+            "sub",
+            "pl"
+          ]
+        },
+        {
+          "name": "BuildDedicatedProvisionSpec",
+          "startLine": 145,
+          "endLine": 163,
+          "params": [
+            "sub",
+            "pl"
+          ]
+        },
+        {
+          "name": "SubscriberAccountFromPlan",
+          "startLine": 166,
+          "endLine": 206,
+          "params": [
+            "sub",
+            "pl"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BuildPPPoEProvisionSpec",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "BuildHotspotProvisionSpec",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "BuildDedicatedProvisionSpec",
+          "line": 145,
+          "isDefault": false
+        },
+        {
+          "name": "SubscriberAccountFromPlan",
+          "line": 166,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "BuildPPPoEProvisionSpec",
+          "callee": "pl.RateLimitWithBurst",
+          "lineNumber": 11
+        },
+        {
+          "caller": "BuildHotspotProvisionSpec",
+          "callee": "pl.RateLimitWithBurst",
+          "lineNumber": 75
+        },
+        {
+          "caller": "BuildDedicatedProvisionSpec",
+          "callee": "BuildPPPoEProvisionSpec",
+          "lineNumber": 146
+        },
+        {
+          "caller": "BuildDedicatedProvisionSpec",
+          "callee": "pl.RateLimitWithBurst",
+          "lineNumber": 156
+        },
+        {
+          "caller": "BuildDedicatedProvisionSpec",
+          "callee": "pl.RateLimit",
+          "lineNumber": 157
+        },
+        {
+          "caller": "SubscriberAccountFromPlan",
+          "callee": "pl.RateLimitWithBurst",
+          "lineNumber": 169
+        },
+        {
+          "caller": "SubscriberAccountFromPlan",
+          "callee": "pl.RateLimit",
+          "lineNumber": 203
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/plan/plan_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 49,
+      "functions": [
+        {
+          "name": "TestPlanUseCase_CRUD",
+          "startLine": 15,
+          "endLine": 60,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestPlanUseCase_CRUD",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "mocktest.NewFakeServicePlanRepo",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "mocktest.NewFakeRouterAccountManager",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "planUC.NewManagePlanUseCase",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "context.Background",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "uc.Create",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "assert.True",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "uc.Get",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "uc.List",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "assert.Len",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "uc.Update",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "uc.Delete",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "uc.Get",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestPlanUseCase_CRUD",
+          "callee": "assert.Error",
+          "lineNumber": 59
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/portal/manage_portal.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 387,
+      "nonEmptyLines": 352,
+      "functions": [
+        {
+          "name": "NewUseCase",
+          "startLine": 37,
+          "endLine": 48,
+          "params": [
+            "portals",
+            "customs",
+            "subs",
+            "invs",
+            "pays",
+            "sender",
+            "reader"
+          ]
+        },
+        {
+          "name": "RequestOTP",
+          "startLine": 54,
+          "endLine": 79,
+          "params": [
+            "ctx",
+            "identifier"
+          ]
+        },
+        {
+          "name": "Login",
+          "startLine": 82,
+          "endLine": 109,
+          "params": [
+            "ctx",
+            "identifier",
+            "otp"
+          ]
+        },
+        {
+          "name": "Authenticate",
+          "startLine": 112,
+          "endLine": 121,
+          "params": [
+            "ctx",
+            "bearer"
+          ]
+        },
+        {
+          "name": "Logout",
+          "startLine": 124,
+          "endLine": 130,
+          "params": [
+            "ctx",
+            "token"
+          ]
+        },
+        {
+          "name": "Overview",
+          "startLine": 167,
+          "endLine": 215,
+          "params": [
+            "ctx",
+            "customerID"
+          ]
+        },
+        {
+          "name": "Invoices",
+          "startLine": 218,
+          "endLine": 220,
+          "params": [
+            "ctx",
+            "customerID"
+          ]
+        },
+        {
+          "name": "Payments",
+          "startLine": 223,
+          "endLine": 225,
+          "params": [
+            "ctx",
+            "customerID",
+            "limit"
+          ]
+        },
+        {
+          "name": "LookupBill",
+          "startLine": 243,
+          "endLine": 307,
+          "params": [
+            "ctx",
+            "identifier"
+          ]
+        },
+        {
+          "name": "resolve",
+          "startLine": 311,
+          "endLine": 329,
+          "params": [
+            "ctx",
+            "identifier"
+          ]
+        },
+        {
+          "name": "generateDigits",
+          "startLine": 331,
+          "endLine": 338,
+          "params": [
+            "n"
+          ]
+        },
+        {
+          "name": "hashCode",
+          "startLine": 340,
+          "endLine": 343,
+          "params": [
+            "code"
+          ]
+        },
+        {
+          "name": "newToken",
+          "startLine": 345,
+          "endLine": 349,
+          "params": []
+        },
+        {
+          "name": "maskPhone",
+          "startLine": 351,
+          "endLine": 356,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "atoiDefault",
+          "startLine": 358,
+          "endLine": 364,
+          "params": [
+            "s",
+            "def"
+          ]
+        },
+        {
+          "name": "strPtrOrNil",
+          "startLine": 366,
+          "endLine": 371,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "maskName",
+          "startLine": 373,
+          "endLine": 387,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "UseCase",
+          "startLine": 26,
+          "endLine": 34,
+          "methods": [
+            "RequestOTP",
+            "Login",
+            "Authenticate",
+            "Logout",
+            "Overview",
+            "Invoices",
+            "Payments",
+            "LookupBill",
+            "resolve"
+          ],
+          "properties": [
+            "portals",
+            "customs",
+            "subs",
+            "invs",
+            "pays",
+            "sender",
+            "reader"
+          ]
+        },
+        {
+          "name": "CustomerOverview",
+          "startLine": 134,
+          "endLine": 140,
+          "methods": [],
+          "properties": [
+            "Customer",
+            "Status",
+            "Subscription",
+            "UnpaidInvoices",
+            "PaymentURL"
+          ]
+        },
+        {
+          "name": "SubscriptionView",
+          "startLine": 143,
+          "endLine": 151,
+          "methods": [],
+          "properties": [
+            "ID",
+            "PlanID",
+            "ServiceType",
+            "Status",
+            "RateLimit",
+            "BillingDay",
+            "EndDate"
+          ]
+        },
+        {
+          "name": "InvoiceView",
+          "startLine": 154,
+          "endLine": 164,
+          "methods": [],
+          "properties": [
+            "ID",
+            "InvoiceNumber",
+            "Period",
+            "Total",
+            "PaidAmount",
+            "Outstanding",
+            "DueDate",
+            "Status",
+            "ManualPaymentCode"
+          ]
+        },
+        {
+          "name": "PublicBillView",
+          "startLine": 228,
+          "endLine": 240,
+          "methods": [],
+          "properties": [
+            "CustomerName",
+            "CustomerCode",
+            "InvoiceID",
+            "InvoiceNumber",
+            "Period",
+            "Total",
+            "PaidAmount",
+            "Outstanding",
+            "DueDate",
+            "Status",
+            "ManualPaymentCode"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UseCase",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "NewUseCase",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "RequestOTP",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "Login",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "Authenticate",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "Logout",
+          "line": 124,
+          "isDefault": false
+        },
+        {
+          "name": "CustomerOverview",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "SubscriptionView",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "InvoiceView",
+          "line": 154,
+          "isDefault": false
+        },
+        {
+          "name": "Overview",
+          "line": 167,
+          "isDefault": false
+        },
+        {
+          "name": "Invoices",
+          "line": 218,
+          "isDefault": false
+        },
+        {
+          "name": "Payments",
+          "line": 223,
+          "isDefault": false
+        },
+        {
+          "name": "PublicBillView",
+          "line": 228,
+          "isDefault": false
+        },
+        {
+          "name": "LookupBill",
+          "line": 243,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RequestOTP",
+          "callee": "u.resolve",
+          "lineNumber": 55
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "generateDigits",
+          "lineNumber": 59
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "atoiDefault",
+          "lineNumber": 60
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "u.reader.GetValue",
+          "lineNumber": 60
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "time.Now",
+          "lineNumber": 61
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "idgen.New",
+          "lineNumber": 63
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "hashCode",
+          "lineNumber": 66
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "now.Add",
+          "lineNumber": 68
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "time.Duration",
+          "lineNumber": 68
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "u.portals.SaveOTP",
+          "lineNumber": 71
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "u.sender.Send",
+          "lineNumber": 75
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "fmt.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "maskPhone",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Login",
+          "callee": "u.resolve",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Login",
+          "callee": "atoiDefault",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Login",
+          "callee": "u.reader.GetValue",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Login",
+          "callee": "u.portals.ConsumeOTP",
+          "lineNumber": 88
+        },
+        {
+          "caller": "Login",
+          "callee": "hashCode",
+          "lineNumber": 88
+        },
+        {
+          "caller": "Login",
+          "callee": "atoiDefault",
+          "lineNumber": 95
+        },
+        {
+          "caller": "Login",
+          "callee": "u.reader.GetValue",
+          "lineNumber": 95
+        },
+        {
+          "caller": "Login",
+          "callee": "time.Now",
+          "lineNumber": 96
+        },
+        {
+          "caller": "Login",
+          "callee": "idgen.New",
+          "lineNumber": 98
+        },
+        {
+          "caller": "Login",
+          "callee": "newToken",
+          "lineNumber": 101
+        },
+        {
+          "caller": "Login",
+          "callee": "now.Add",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Login",
+          "callee": "time.Duration",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Login",
+          "callee": "u.portals.SaveSession",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "u.portals.FindValidSession",
+          "lineNumber": 116
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "u.customs.FindByID",
+          "lineNumber": 120
+        },
+        {
+          "caller": "Logout",
+          "callee": "u.portals.FindValidSession",
+          "lineNumber": 125
+        },
+        {
+          "caller": "Logout",
+          "callee": "u.portals.DeleteSession",
+          "lineNumber": 129
+        },
+        {
+          "caller": "Overview",
+          "callee": "u.customs.FindByID",
+          "lineNumber": 168
+        },
+        {
+          "caller": "Overview",
+          "callee": "u.subs.FindByCustomerID",
+          "lineNumber": 174
+        },
+        {
+          "caller": "Overview",
+          "callee": "len",
+          "lineNumber": 174
+        },
+        {
+          "caller": "Overview",
+          "callee": "append",
+          "lineNumber": 180
+        },
+        {
+          "caller": "Overview",
+          "callee": "len",
+          "lineNumber": 183
+        },
+        {
+          "caller": "Overview",
+          "callee": "s.EndDate.Format",
+          "lineNumber": 189
+        },
+        {
+          "caller": "Overview",
+          "callee": "strPtrOrNil",
+          "lineNumber": 194
+        },
+        {
+          "caller": "Overview",
+          "callee": "u.invs.FindByCustomerID",
+          "lineNumber": 198
+        },
+        {
+          "caller": "Overview",
+          "callee": "append",
+          "lineNumber": 204
+        },
+        {
+          "caller": "Overview",
+          "callee": "inv.DueDate.Format",
+          "lineNumber": 207
+        },
+        {
+          "caller": "Overview",
+          "callee": "len",
+          "lineNumber": 211
+        },
+        {
+          "caller": "Overview",
+          "callee": "u.reader.GetValue",
+          "lineNumber": 212
+        },
+        {
+          "caller": "Invoices",
+          "callee": "u.invs.FindByCustomerID",
+          "lineNumber": 219
+        },
+        {
+          "caller": "Payments",
+          "callee": "u.pays.ListByCustomer",
+          "lineNumber": 224
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 244
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "u.invs.FindByPaymentCode",
+          "lineNumber": 250
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "u.invs.FindByID",
+          "lineNumber": 252
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "u.customs.FindByID",
+          "lineNumber": 255
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "maskName",
+          "lineNumber": 258
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "inv.DueDate.Format",
+          "lineNumber": 266
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "u.resolve",
+          "lineNumber": 273
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "u.customs.FindByCustomerCode",
+          "lineNumber": 275
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "u.invs.FindByCustomerID",
+          "lineNumber": 281
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "len",
+          "lineNumber": 282
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "maskName",
+          "lineNumber": 291
+        },
+        {
+          "caller": "LookupBill",
+          "callee": "inv.DueDate.Format",
+          "lineNumber": 299
+        },
+        {
+          "caller": "resolve",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 312
+        },
+        {
+          "caller": "resolve",
+          "callee": "phone.Normalize",
+          "lineNumber": 314
+        },
+        {
+          "caller": "resolve",
+          "callee": "append",
+          "lineNumber": 315
+        },
+        {
+          "caller": "resolve",
+          "callee": "u.customs.FindByPhone",
+          "lineNumber": 319
+        },
+        {
+          "caller": "resolve",
+          "callee": "u.customs.FindByPortalAccessCode",
+          "lineNumber": 324
+        },
+        {
+          "caller": "generateDigits",
+          "callee": "make",
+          "lineNumber": 332
+        },
+        {
+          "caller": "generateDigits",
+          "callee": "rand.Read",
+          "lineNumber": 333
+        },
+        {
+          "caller": "generateDigits",
+          "callee": "string",
+          "lineNumber": 337
+        },
+        {
+          "caller": "hashCode",
+          "callee": "sha256.Sum256",
+          "lineNumber": 341
+        },
+        {
+          "caller": "hashCode",
+          "callee": "hex.EncodeToString",
+          "lineNumber": 342
+        },
+        {
+          "caller": "newToken",
+          "callee": "make",
+          "lineNumber": 346
+        },
+        {
+          "caller": "newToken",
+          "callee": "rand.Read",
+          "lineNumber": 347
+        },
+        {
+          "caller": "newToken",
+          "callee": "hex.EncodeToString",
+          "lineNumber": 348
+        },
+        {
+          "caller": "maskPhone",
+          "callee": "len",
+          "lineNumber": 352
+        },
+        {
+          "caller": "maskPhone",
+          "callee": "len",
+          "lineNumber": 355
+        },
+        {
+          "caller": "atoiDefault",
+          "callee": "strconv.Atoi",
+          "lineNumber": 359
+        },
+        {
+          "caller": "maskName",
+          "callee": "strings.Fields",
+          "lineNumber": 374
+        },
+        {
+          "caller": "maskName",
+          "callee": "len",
+          "lineNumber": 377
+        },
+        {
+          "caller": "maskName",
+          "callee": "len",
+          "lineNumber": 378
+        },
+        {
+          "caller": "maskName",
+          "callee": "string",
+          "lineNumber": 381
+        },
+        {
+          "caller": "maskName",
+          "callee": "len",
+          "lineNumber": 382
+        },
+        {
+          "caller": "maskName",
+          "callee": "string",
+          "lineNumber": 383
+        },
+        {
+          "caller": "maskName",
+          "callee": "strings.Join",
+          "lineNumber": 386
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 17,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "internal/usecase/portal/portal_flow_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 154,
+      "nonEmptyLines": 131,
+      "functions": [
+        {
+          "name": "fixture",
+          "startLine": 17,
+          "endLine": 37,
+          "params": [
+            "t",
+            "phone"
+          ]
+        },
+        {
+          "name": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "startLine": 39,
+          "endLine": 47,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRequestOTP_UnknownIdentifier_GenericError",
+          "startLine": 49,
+          "endLine": 54,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "isDigits",
+          "startLine": 56,
+          "endLine": 63,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "TestLogin_FullFlow_AndWrongOTP",
+          "startLine": 65,
+          "endLine": 97,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "lastCodeFromSender",
+          "startLine": 99,
+          "endLine": 112,
+          "params": [
+            "sender"
+          ]
+        },
+        {
+          "name": "TestLookupBill_ByPhoneAndPaymentCode",
+          "startLine": 114,
+          "endLine": 154,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "TestRequestOTP_UnknownIdentifier_GenericError",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "TestLogin_FullFlow_AndWrongOTP",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "TestLookupBill_ByPhoneAndPaymentCode",
+          "line": 114,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "fixture",
+          "callee": "t.Helper",
+          "lineNumber": 18
+        },
+        {
+          "caller": "fixture",
+          "callee": "mocktest.NewFakePortalRepo",
+          "lineNumber": 19
+        },
+        {
+          "caller": "fixture",
+          "callee": "mocktest.NewFakeCustomerRepo",
+          "lineNumber": 20
+        },
+        {
+          "caller": "fixture",
+          "callee": "mocktest.NewFakeSettingReader",
+          "lineNumber": 22
+        },
+        {
+          "caller": "fixture",
+          "callee": "uc.NewUseCase",
+          "lineNumber": 27
+        },
+        {
+          "caller": "fixture",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 28
+        },
+        {
+          "caller": "fixture",
+          "callee": "mocktest.NewFakeInvoiceRepo",
+          "lineNumber": 28
+        },
+        {
+          "caller": "fixture",
+          "callee": "mocktest.NewFakePaymentReader",
+          "lineNumber": 29
+        },
+        {
+          "caller": "fixture",
+          "callee": "require.NoError",
+          "lineNumber": 31
+        },
+        {
+          "caller": "fixture",
+          "callee": "customers.Save",
+          "lineNumber": 31
+        },
+        {
+          "caller": "fixture",
+          "callee": "context.Background",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "fixture",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "usecase.RequestOTP",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "context.Background",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "require.NoError",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "assert.True",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "assert.True",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "strings.Contains",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "require.Len",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestRequestOTP_SendsViaWA_MaskedPhone",
+          "callee": "assert.Contains",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestRequestOTP_UnknownIdentifier_GenericError",
+          "callee": "fixture",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestRequestOTP_UnknownIdentifier_GenericError",
+          "callee": "usecase.RequestOTP",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestRequestOTP_UnknownIdentifier_GenericError",
+          "callee": "context.Background",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestRequestOTP_UnknownIdentifier_GenericError",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestRequestOTP_UnknownIdentifier_GenericError",
+          "callee": "assert.Empty",
+          "lineNumber": 53
+        },
+        {
+          "caller": "isDigits",
+          "callee": "len",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "fixture",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "context.Background",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "usecase.RequestOTP",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "require.NoError",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "lastCodeFromSender",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "require.NotEmpty",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "t.Logf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "portals.OTPCount",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "usecase.Login",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "t.Logf",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "len",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "require.NoError",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "assert.Equal",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "usecase.Authenticate",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "require.NoError",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "assert.Equal",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "require.NoError",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "usecase.Logout",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "usecase.Authenticate",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "usecase.RequestOTP",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "require.NoError",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "usecase.Login",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestLogin_FullFlow_AndWrongOTP",
+          "callee": "assert.Error",
+          "lineNumber": 94
+        },
+        {
+          "caller": "lastCodeFromSender",
+          "callee": "sender.Sent",
+          "lineNumber": 100
+        },
+        {
+          "caller": "lastCodeFromSender",
+          "callee": "len",
+          "lineNumber": 101
+        },
+        {
+          "caller": "lastCodeFromSender",
+          "callee": "len",
+          "lineNumber": 104
+        },
+        {
+          "caller": "lastCodeFromSender",
+          "callee": "strings.Fields",
+          "lineNumber": 105
+        },
+        {
+          "caller": "lastCodeFromSender",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 106
+        },
+        {
+          "caller": "lastCodeFromSender",
+          "callee": "len",
+          "lineNumber": 107
+        },
+        {
+          "caller": "lastCodeFromSender",
+          "callee": "isDigits",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "context.Background",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "mocktest.NewFakePortalRepo",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "mocktest.NewFakeCustomerRepo",
+          "lineNumber": 117
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "mocktest.NewFakeInvoiceRepo",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "mocktest.NewFakeSettingReader",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "uc.NewUseCase",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "mocktest.NewFakePaymentReader",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "require.NoError",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "customers.Save",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "require.NoError",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "invoices.Save",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "usecase.LookupBill",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "require.NoError",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "assert.Equal",
+          "lineNumber": 141
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "assert.Equal",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "assert.Equal",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "assert.Equal",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "float64",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "usecase.LookupBill",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "require.NoError",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "assert.Equal",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "usecase.LookupBill",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestLookupBill_ByPhoneAndPaymentCode",
+          "callee": "assert.Error",
+          "lineNumber": 153
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/ppp/manage_ppp_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 126,
+      "nonEmptyLines": 104,
+      "functions": [
+        {
+          "name": "ListSecrets",
+          "startLine": 18,
+          "endLine": 20,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "GetSecret",
+          "startLine": 22,
+          "endLine": 29,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "AddSecret",
+          "startLine": 31,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "UpdateSecret",
+          "startLine": 41,
+          "endLine": 43,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "RemoveSecret",
+          "startLine": 45,
+          "endLine": 47,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "SetSecretDisabled",
+          "startLine": 49,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "disabled"
+          ]
+        },
+        {
+          "name": "ListProfiles",
+          "startLine": 53,
+          "endLine": 55,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "GetProfile",
+          "startLine": 57,
+          "endLine": 64,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "AddProfile",
+          "startLine": 66,
+          "endLine": 73,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "UpdateProfile",
+          "startLine": 75,
+          "endLine": 77,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "RemoveProfile",
+          "startLine": 79,
+          "endLine": 81,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "ListActive",
+          "startLine": 83,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "KickActive",
+          "startLine": 87,
+          "endLine": 89,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "ListInactive",
+          "startLine": 91,
+          "endLine": 93,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "TestPPPUseCase_Secrets",
+          "startLine": 95,
+          "endLine": 126,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockPPPGateway",
+          "startLine": 12,
+          "endLine": 16,
+          "methods": [
+            "ListSecrets",
+            "GetSecret",
+            "AddSecret",
+            "UpdateSecret",
+            "RemoveSecret",
+            "SetSecretDisabled",
+            "ListProfiles",
+            "GetProfile",
+            "AddProfile",
+            "UpdateProfile",
+            "RemoveProfile",
+            "ListActive",
+            "KickActive",
+            "ListInactive"
+          ],
+          "properties": [
+            "secrets",
+            "profiles",
+            "active"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListSecrets",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "GetSecret",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "AddSecret",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateSecret",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveSecret",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "SetSecretDisabled",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "ListProfiles",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "GetProfile",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "AddProfile",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProfile",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveProfile",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "ListActive",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "KickActive",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "ListInactive",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "TestPPPUseCase_Secrets",
+          "line": 95,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "AddSecret",
+          "callee": "append",
+          "lineNumber": 32
+        },
+        {
+          "caller": "AddProfile",
+          "callee": "append",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "ppp.New",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "context.Background",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "uc.ListSecrets",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "len",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "t.Fatalf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "len",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "uc.AddSecret",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "t.Fatalf",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "uc.AddSecret",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "t.Fatalf",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "uc.KickActiveBatch",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestPPPUseCase_Secrets",
+          "callee": "t.Fatalf",
+          "lineNumber": 124
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 15,
+        "functionCount": 15,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/ppp/manage_ppp.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 136,
+      "nonEmptyLines": 117,
+      "functions": [
+        {
+          "name": "New",
+          "startLine": 20,
+          "endLine": 22,
+          "params": [
+            "gateway"
+          ]
+        },
+        {
+          "name": "ListSecrets",
+          "startLine": 25,
+          "endLine": 27,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "GetSecret",
+          "startLine": 30,
+          "endLine": 35,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "AddSecret",
+          "startLine": 38,
+          "endLine": 43,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "UpdateSecret",
+          "startLine": 46,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "RemoveSecret",
+          "startLine": 54,
+          "endLine": 59,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "SetSecretDisabled",
+          "startLine": 62,
+          "endLine": 67,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "disabled"
+          ]
+        },
+        {
+          "name": "ListProfiles",
+          "startLine": 70,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "GetProfile",
+          "startLine": 75,
+          "endLine": 80,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "AddProfile",
+          "startLine": 83,
+          "endLine": 88,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "UpdateProfile",
+          "startLine": 91,
+          "endLine": 96,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "RemoveProfile",
+          "startLine": 99,
+          "endLine": 104,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "ListActive",
+          "startLine": 107,
+          "endLine": 109,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "KickActive",
+          "startLine": 112,
+          "endLine": 117,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "KickActiveBatch",
+          "startLine": 120,
+          "endLine": 131,
+          "params": [
+            "ctx",
+            "driver",
+            "rosIDs"
+          ]
+        },
+        {
+          "name": "ListInactive",
+          "startLine": 134,
+          "endLine": 136,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "UseCase",
+          "startLine": 15,
+          "endLine": 17,
+          "methods": [
+            "ListSecrets",
+            "GetSecret",
+            "AddSecret",
+            "UpdateSecret",
+            "RemoveSecret",
+            "SetSecretDisabled",
+            "ListProfiles",
+            "GetProfile",
+            "AddProfile",
+            "UpdateProfile",
+            "RemoveProfile",
+            "ListActive",
+            "KickActive",
+            "KickActiveBatch",
+            "ListInactive"
+          ],
+          "properties": [
+            "gateway"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UseCase",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "New",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "ListSecrets",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "GetSecret",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "AddSecret",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateSecret",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveSecret",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "SetSecretDisabled",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "ListProfiles",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "GetProfile",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "AddProfile",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProfile",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveProfile",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "ListActive",
+          "line": 107,
+          "isDefault": false
+        },
+        {
+          "name": "KickActive",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "KickActiveBatch",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "ListInactive",
+          "line": 134,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListSecrets",
+          "callee": "u.gateway.ListSecrets",
+          "lineNumber": 26
+        },
+        {
+          "caller": "GetSecret",
+          "callee": "fmt.Errorf",
+          "lineNumber": 32
+        },
+        {
+          "caller": "GetSecret",
+          "callee": "u.gateway.GetSecret",
+          "lineNumber": 34
+        },
+        {
+          "caller": "AddSecret",
+          "callee": "fmt.Errorf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "AddSecret",
+          "callee": "u.gateway.AddSecret",
+          "lineNumber": 42
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "fmt.Errorf",
+          "lineNumber": 48
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "u.gateway.UpdateSecret",
+          "lineNumber": 50
+        },
+        {
+          "caller": "RemoveSecret",
+          "callee": "fmt.Errorf",
+          "lineNumber": 56
+        },
+        {
+          "caller": "RemoveSecret",
+          "callee": "u.gateway.RemoveSecret",
+          "lineNumber": 58
+        },
+        {
+          "caller": "SetSecretDisabled",
+          "callee": "fmt.Errorf",
+          "lineNumber": 64
+        },
+        {
+          "caller": "SetSecretDisabled",
+          "callee": "u.gateway.SetSecretDisabled",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "u.gateway.ListProfiles",
+          "lineNumber": 71
+        },
+        {
+          "caller": "GetProfile",
+          "callee": "fmt.Errorf",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetProfile",
+          "callee": "u.gateway.GetProfile",
+          "lineNumber": 79
+        },
+        {
+          "caller": "AddProfile",
+          "callee": "fmt.Errorf",
+          "lineNumber": 85
+        },
+        {
+          "caller": "AddProfile",
+          "callee": "u.gateway.AddProfile",
+          "lineNumber": 87
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "fmt.Errorf",
+          "lineNumber": 93
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "u.gateway.UpdateProfile",
+          "lineNumber": 95
+        },
+        {
+          "caller": "RemoveProfile",
+          "callee": "fmt.Errorf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "RemoveProfile",
+          "callee": "u.gateway.RemoveProfile",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ListActive",
+          "callee": "u.gateway.ListActive",
+          "lineNumber": 108
+        },
+        {
+          "caller": "KickActive",
+          "callee": "fmt.Errorf",
+          "lineNumber": 114
+        },
+        {
+          "caller": "KickActive",
+          "callee": "u.gateway.KickActive",
+          "lineNumber": 116
+        },
+        {
+          "caller": "KickActiveBatch",
+          "callee": "u.gateway.KickActive",
+          "lineNumber": 126
+        },
+        {
+          "caller": "ListInactive",
+          "callee": "u.gateway.ListInactive",
+          "lineNumber": 135
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 17,
+        "functionCount": 16,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/registration/convert_artifacts.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 258,
+      "nonEmptyLines": 244,
+      "functions": [
+        {
+          "name": "orTenant",
+          "startLine": 20,
+          "endLine": 25,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "planServiceType",
+          "startLine": 28,
+          "endLine": 35,
+          "params": [
+            "pl"
+          ]
+        },
+        {
+          "name": "createCustomer",
+          "startLine": 37,
+          "endLine": 70,
+          "params": [
+            "ctx",
+            "reg",
+            "now"
+          ]
+        },
+        {
+          "name": "createSubscription",
+          "startLine": 72,
+          "endLine": 164,
+          "params": [
+            "ctx",
+            "reg",
+            "pl",
+            "customerID",
+            "deviceID",
+            "now"
+          ]
+        },
+        {
+          "name": "buildInvoice",
+          "startLine": 168,
+          "endLine": 218,
+          "params": [
+            "reg",
+            "pl",
+            "subscriptionID",
+            "now"
+          ]
+        },
+        {
+          "name": "endOfMonth",
+          "startLine": 220,
+          "endLine": 223,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "writeAudit",
+          "startLine": 225,
+          "endLine": 240,
+          "params": [
+            "ctx",
+            "w",
+            "actorID",
+            "action",
+            "entityType",
+            "entityID"
+          ]
+        },
+        {
+          "name": "planRate",
+          "startLine": 243,
+          "endLine": 258,
+          "params": [
+            "pl"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "createCustomer",
+          "callee": "idgen.New",
+          "lineNumber": 39
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "orTenant",
+          "lineNumber": 40
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "time.Date",
+          "lineNumber": 49
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "now.Year",
+          "lineNumber": 49
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "now.Month",
+          "lineNumber": 49
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "now.Day",
+          "lineNumber": 49
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "u.genCode",
+          "lineNumber": 54
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "u.deps.Customers.FindByCustomerCode",
+          "lineNumber": 55
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "u.genPortal",
+          "lineNumber": 60
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "u.deps.Customers.FindByPortalAccessCode",
+          "lineNumber": 61
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "u.deps.Customers.Save",
+          "lineNumber": 65
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 66
+        },
+        {
+          "caller": "createCustomer",
+          "callee": "writeAudit",
+          "lineNumber": 68
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "idgen.GenerateUsername",
+          "lineNumber": 73
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "now.AddDate",
+          "lineNumber": 74
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "now.Day",
+          "lineNumber": 75
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "idgen.New",
+          "lineNumber": 86
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "orTenant",
+          "lineNumber": 87
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "planServiceType",
+          "lineNumber": 91
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "u.genSecret",
+          "lineNumber": 93
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "time.Date",
+          "lineNumber": 99
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "now.Year",
+          "lineNumber": 99
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "now.Month",
+          "lineNumber": 99
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "now.Day",
+          "lineNumber": 99
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "u.deps.Subs.Save",
+          "lineNumber": 105
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "fmt.Errorf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "planRate",
+          "lineNumber": 123
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "u.deps.Manager.ProvisionHotspot",
+          "lineNumber": 131
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "planRate",
+          "lineNumber": 143
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "u.deps.Manager.ProvisionPPPoE",
+          "lineNumber": 150
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "logger.WithComponent(\"ConvertUC\").WithError(provErr).Warn",
+          "lineNumber": 153
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "logger.WithComponent(\"ConvertUC\").WithError",
+          "lineNumber": 153
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "logger.WithComponent",
+          "lineNumber": 153
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "u.deps.Subs.Save",
+          "lineNumber": 157
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "fmt.Errorf",
+          "lineNumber": 158
+        },
+        {
+          "caller": "createSubscription",
+          "callee": "writeAudit",
+          "lineNumber": 162
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "now.Format",
+          "lineNumber": 173
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "endOfMonth",
+          "lineNumber": 174
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "idgen.New",
+          "lineNumber": 176
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "orTenant",
+          "lineNumber": 179
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 180
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "now.Format",
+          "lineNumber": 180
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "idgen.Digits",
+          "lineNumber": 180
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "idgen.Digits",
+          "lineNumber": 190
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "idgen.New",
+          "lineNumber": 196
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 198
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "append",
+          "lineNumber": 206
+        },
+        {
+          "caller": "buildInvoice",
+          "callee": "idgen.New",
+          "lineNumber": 207
+        },
+        {
+          "caller": "endOfMonth",
+          "callee": "time.Date",
+          "lineNumber": 221
+        },
+        {
+          "caller": "endOfMonth",
+          "callee": "t.Year",
+          "lineNumber": 221
+        },
+        {
+          "caller": "endOfMonth",
+          "callee": "t.Month",
+          "lineNumber": 221
+        },
+        {
+          "caller": "endOfMonth",
+          "callee": "t.Location",
+          "lineNumber": 221
+        },
+        {
+          "caller": "endOfMonth",
+          "callee": "firstNext.AddDate",
+          "lineNumber": 222
+        },
+        {
+          "caller": "writeAudit",
+          "callee": "w.Write",
+          "lineNumber": 229
+        },
+        {
+          "caller": "writeAudit",
+          "callee": "logger.WithComponent(\"RegistrationUC\").WithError(err).Warn",
+          "lineNumber": 238
+        },
+        {
+          "caller": "writeAudit",
+          "callee": "logger.WithComponent(\"RegistrationUC\").WithError",
+          "lineNumber": 238
+        },
+        {
+          "caller": "writeAudit",
+          "callee": "logger.WithComponent",
+          "lineNumber": 238
+        },
+        {
+          "caller": "planRate",
+          "callee": "strconv.Itoa",
+          "lineNumber": 249
+        },
+        {
+          "caller": "planRate",
+          "callee": "strconv.Itoa",
+          "lineNumber": 251
+        },
+        {
+          "caller": "planRate",
+          "callee": "side",
+          "lineNumber": 253
+        },
+        {
+          "caller": "planRate",
+          "callee": "side",
+          "lineNumber": 253
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/registration/convert.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 107,
+      "nonEmptyLines": 94,
+      "functions": [
+        {
+          "name": "NewConvertUseCase",
+          "startLine": 41,
+          "endLine": 49,
+          "params": [
+            "deps"
+          ]
+        },
+        {
+          "name": "WithGenerators",
+          "startLine": 52,
+          "endLine": 54,
+          "params": [
+            "code",
+            "portal",
+            "secret"
+          ]
+        },
+        {
+          "name": "Convert",
+          "startLine": 58,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "regID",
+            "actorID"
+          ]
+        },
+        {
+          "name": "ConvertWithDevice",
+          "startLine": 65,
+          "endLine": 107,
+          "params": [
+            "ctx",
+            "regID",
+            "deviceID",
+            "actorID"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ConvertDeps",
+          "startLine": 15,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "Repo",
+            "Plans",
+            "Customers",
+            "Subs",
+            "Invoices",
+            "Audit",
+            "Manager"
+          ]
+        },
+        {
+          "name": "ConvertUseCase",
+          "startLine": 31,
+          "endLine": 38,
+          "methods": [
+            "WithGenerators",
+            "Convert",
+            "ConvertWithDevice"
+          ],
+          "properties": [
+            "deps",
+            "now",
+            "genCode",
+            "genPortal",
+            "genSecret"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConvertDeps",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ConvertUseCase",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "NewConvertUseCase",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "WithGenerators",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "Convert",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "ConvertWithDevice",
+          "line": 65,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewConvertUseCase",
+          "callee": "idgen.Digits",
+          "lineNumber": 45
+        },
+        {
+          "caller": "NewConvertUseCase",
+          "callee": "idgen.Digits",
+          "lineNumber": 46
+        },
+        {
+          "caller": "NewConvertUseCase",
+          "callee": "idgen.Digits",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Convert",
+          "callee": "u.ConvertWithDevice",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "u.deps.Repo.FindByID",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "u.deps.Plans.FindByID",
+          "lineNumber": 78
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "u.now",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "u.createCustomer",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "u.createSubscription",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "buildInvoice",
+          "lineNumber": 92
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "u.deps.Invoices.SaveWithItems",
+          "lineNumber": 94
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "u.deps.Repo.Save",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ConvertWithDevice",
+          "callee": "writeAudit",
+          "lineNumber": 105
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 4,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/registration/coverage_extra_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 78,
+      "nonEmptyLines": 64,
+      "functions": [
+        {
+          "name": "TestConvert_DefaultGenerators",
+          "startLine": 19,
+          "endLine": 60,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestReject_HappyPath",
+          "startLine": 62,
+          "endLine": 78,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestConvert_DefaultGenerators",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "TestReject_HappyPath",
+          "line": 62,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "mocktest.NewFakeRegistrationRepo",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "mocktest.NewFakeServicePlanRepo",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "mocktest.NewFakeCustomerRepo",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "mocktest.NewFakeInvoiceRepo",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "plans.Seed",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "uc.NewManageRegistrationUseCase",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "uc.NewConvertUseCase",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "context.Background",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "validRegistration",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "mgr.Submit",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "require.NoError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "repo.FindByID",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "require.NoError",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "require.NoError",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "repo.Save",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "conv.Convert",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "require.NoError",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "customers.FindByID",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "require.NoError",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "assert.Len",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "assert.Len",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "subs.FindByID",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "require.NoError",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "assert.True",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestConvert_DefaultGenerators",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "mocktest.NewFakeRegistrationRepo",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "uc.NewManageRegistrationUseCase",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "mgr.Submit",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "context.Background",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "validRegistration",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "require.NoError",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "mgr.Reject",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "context.Background",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "require.NoError",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "assert.Equal",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "assert.Equal",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "assert.Equal",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "auditW.Count",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "repo.FindByID",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "context.Background",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestReject_HappyPath",
+          "callee": "require.NoError",
+          "lineNumber": 77
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/registration/manage_registration_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 284,
+      "nonEmptyLines": 249,
+      "functions": [
+        {
+          "name": "validRegistration",
+          "startLine": 19,
+          "endLine": 26,
+          "params": []
+        },
+        {
+          "name": "newUC",
+          "startLine": 28,
+          "endLine": 34,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSubmit_TableDriven",
+          "startLine": 36,
+          "endLine": 64,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestApprove_HappyPath",
+          "startLine": 66,
+          "endLine": 84,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestTransitions_InvalidPaths",
+          "startLine": 86,
+          "endLine": 121,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestScheduleInstall_ThenMarkInstalled",
+          "startLine": 123,
+          "endLine": 142,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestCancel_FromActiveRejected",
+          "startLine": 144,
+          "endLine": 156,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "startLine": 158,
+          "endLine": 225,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestConvert_Guards",
+          "startLine": 227,
+          "endLine": 251,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestManageRegistrationUseCase_ListAndFindByID",
+          "startLine": 253,
+          "endLine": 274,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "mustDate",
+          "startLine": 278,
+          "endLine": 284,
+          "params": [
+            "s"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestSubmit_TableDriven",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "TestApprove_HappyPath",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "TestTransitions_InvalidPaths",
+          "line": 86,
+          "isDefault": false
+        },
+        {
+          "name": "TestScheduleInstall_ThenMarkInstalled",
+          "line": 123,
+          "isDefault": false
+        },
+        {
+          "name": "TestCancel_FromActiveRejected",
+          "line": 144,
+          "isDefault": false
+        },
+        {
+          "name": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "TestConvert_Guards",
+          "line": 227,
+          "isDefault": false
+        },
+        {
+          "name": "TestManageRegistrationUseCase_ListAndFindByID",
+          "line": 253,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newUC",
+          "callee": "t.Helper",
+          "lineNumber": 29
+        },
+        {
+          "caller": "newUC",
+          "callee": "mocktest.NewFakeRegistrationRepo",
+          "lineNumber": 30
+        },
+        {
+          "caller": "newUC",
+          "callee": "mocktest.NewFakeNotificationRepo",
+          "lineNumber": 31
+        },
+        {
+          "caller": "newUC",
+          "callee": "uc.NewManageRegistrationUseCase",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "validRegistration",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "func() domainRegistration.Registration { r := validRegistration(); r.FullName = \"\"; return r }",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "validRegistration",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "func() domainRegistration.Registration { r := validRegistration(); r.Address = \"\"; return r }",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "validRegistration",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "func() domainRegistration.Registration { r := validRegistration(); r.PlanID = \"\"; return r }",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "validRegistration",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "func() domainRegistration.Registration { r := validRegistration(); r.Phone = \"12345\"; return r }",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "validRegistration",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "func() domainRegistration.Registration { r := validRegistration(); r.Phone = \"0321123456\"; return r }",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "validRegistration",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "t.Run",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "newUC",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "usecase.Submit",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "context.Background",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "require.Error",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "require.NoError",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "assert.Equal",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "assert.Equal",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestSubmit_TableDriven",
+          "callee": "auditW.Count",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "newUC",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "context.Background",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "usecase.Submit",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "validRegistration",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "require.NoError",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "usecase.Approve",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "require.NoError",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "assert.Equal",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "require.NotNil",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "assert.Equal",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "uint",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "repo.FindByID",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "require.NoError",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "assert.Equal",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "require.Len",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "notif.Queued",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "assert.Equal",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestApprove_HappyPath",
+          "callee": "notif.Queued",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "u.Approve",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "context.Background",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "u.Approve",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "context.Background",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "u.MarkInstalled",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "context.Background",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "u.Approve",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "context.Background",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "u.Reject",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "context.Background",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "t.Run",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "newUC",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "usecase.Submit",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "context.Background",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "validRegistration",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "require.NoError",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "tt.run",
+          "lineNumber": 117
+        },
+        {
+          "caller": "TestTransitions_InvalidPaths",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "newUC",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "context.Background",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "usecase.Submit",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "validRegistration",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "require.NoError",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "usecase.Approve",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "require.NoError",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "usecase.ScheduleInstall",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "mustDate",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "require.NoError",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "notif.Queued",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "require.Len",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "assert.Equal",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "uint",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "usecase.MarkInstalled",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "require.NoError",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "assert.Equal",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestScheduleInstall_ThenMarkInstalled",
+          "callee": "require.NotNil",
+          "lineNumber": 141
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "newUC",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "usecase.Submit",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "context.Background",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "validRegistration",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "require.NoError",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "usecase.Cancel",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "context.Background",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "require.NoError",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "func() error {\n\t\t_, err := usecase.Cancel(context.Background(), sub.ID, \"again\")\n\t\treturn err\n\t}",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "usecase.Cancel",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "context.Background",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestCancel_FromActiveRejected",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 155
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mocktest.NewFakeRegistrationRepo",
+          "lineNumber": 159
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mocktest.NewFakeServicePlanRepo",
+          "lineNumber": 160
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mocktest.NewFakeCustomerRepo",
+          "lineNumber": 161
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 162
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mocktest.NewFakeInvoiceRepo",
+          "lineNumber": 163
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mocktest.NewFakeNotificationRepo",
+          "lineNumber": 164
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "uc.NewManageRegistrationUseCase",
+          "lineNumber": 167
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "plans.Seed",
+          "lineNumber": 168
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "uc.NewConvertUseCase",
+          "lineNumber": 173
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "conv.WithGenerators",
+          "lineNumber": 178
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "string",
+          "lineNumber": 179
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "rune",
+          "lineNumber": 179
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "context.Background",
+          "lineNumber": 184
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mgr.Submit",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "validRegistration",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "require.NoError",
+          "lineNumber": 186
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mgr.Approve",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "require.NoError",
+          "lineNumber": 188
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "uint",
+          "lineNumber": 189
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "mgr.MarkInstalled",
+          "lineNumber": 190
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "require.NoError",
+          "lineNumber": 191
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "conv.Convert",
+          "lineNumber": 193
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "require.NoError",
+          "lineNumber": 194
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.Equal",
+          "lineNumber": 195
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 198
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 199
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 200
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "customers.FindByID",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "require.NoError",
+          "lineNumber": 203
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 204
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.Len",
+          "lineNumber": 205
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "subs.FindByID",
+          "lineNumber": 207
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "require.NoError",
+          "lineNumber": 208
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.True",
+          "lineNumber": 209
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 209
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 210
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "invoices.FindByID",
+          "lineNumber": 212
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "require.NoError",
+          "lineNumber": 213
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.InDelta",
+          "lineNumber": 214
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.Len",
+          "lineNumber": 215
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "invoices.ItemsOf",
+          "lineNumber": 215
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "invoices.ItemsOf",
+          "lineNumber": 216
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.Equal",
+          "lineNumber": 217
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.InDelta",
+          "lineNumber": 219
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.Equal",
+          "lineNumber": 222
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "auditW.Count",
+          "lineNumber": 222
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.Equal",
+          "lineNumber": 223
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "auditW.Count",
+          "lineNumber": 223
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "assert.Equal",
+          "lineNumber": 224
+        },
+        {
+          "caller": "TestConvert_FullFlow_CreatesArtifactsAndLinksBack",
+          "callee": "auditW.Count",
+          "lineNumber": 224
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "mocktest.NewFakeRegistrationRepo",
+          "lineNumber": 228
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "mocktest.NewFakeServicePlanRepo",
+          "lineNumber": 229
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "uc.NewConvertUseCase",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "mocktest.NewFakeCustomerRepo",
+          "lineNumber": 232
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 233
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "mocktest.NewFakeInvoiceRepo",
+          "lineNumber": 234
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "context.Background",
+          "lineNumber": 236
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "uc.NewManageRegistrationUseCase(repo, nil, nil).Submit",
+          "lineNumber": 239
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "uc.NewManageRegistrationUseCase",
+          "lineNumber": 239
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "validRegistration",
+          "lineNumber": 239
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "require.NoError",
+          "lineNumber": 240
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "conv.Convert",
+          "lineNumber": 241
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 242
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "repo.FindByID",
+          "lineNumber": 245
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "require.NoError",
+          "lineNumber": 246
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "require.NoError",
+          "lineNumber": 248
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "repo.Save",
+          "lineNumber": 248
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "conv.Convert",
+          "lineNumber": 249
+        },
+        {
+          "caller": "TestConvert_Guards",
+          "callee": "assert.ErrorContains",
+          "lineNumber": 250
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "newUC",
+          "lineNumber": 254
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "context.Background",
+          "lineNumber": 255
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "usecase.Submit",
+          "lineNumber": 257
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "validRegistration",
+          "lineNumber": 257
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "require.NoError",
+          "lineNumber": 258
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "usecase.List",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "string",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "require.NoError",
+          "lineNumber": 262
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "assert.Len",
+          "lineNumber": 263
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "usecase.FindByID",
+          "lineNumber": 266
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "require.NoError",
+          "lineNumber": 267
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "assert.Equal",
+          "lineNumber": 268
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "usecase.FindByID",
+          "lineNumber": 271
+        },
+        {
+          "caller": "TestManageRegistrationUseCase_ListAndFindByID",
+          "callee": "assert.Error",
+          "lineNumber": 272
+        },
+        {
+          "caller": "mustDate",
+          "callee": "time.Parse",
+          "lineNumber": 279
+        },
+        {
+          "caller": "mustDate",
+          "callee": "panic",
+          "lineNumber": 281
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 11,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/registration/manage_registration.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 262,
+      "nonEmptyLines": 240,
+      "functions": [
+        {
+          "name": "NewManageRegistrationUseCase",
+          "startLine": 34,
+          "endLine": 40,
+          "params": [
+            "repo",
+            "notif",
+            "auditW"
+          ]
+        },
+        {
+          "name": "Submit",
+          "startLine": 43,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "reg"
+          ]
+        },
+        {
+          "name": "Approve",
+          "startLine": 68,
+          "endLine": 89,
+          "params": [
+            "ctx",
+            "id",
+            "reviewerID",
+            "adminNotes"
+          ]
+        },
+        {
+          "name": "ScheduleInstall",
+          "startLine": 92,
+          "endLine": 114,
+          "params": [
+            "ctx",
+            "id",
+            "date",
+            "installTime",
+            "techID"
+          ]
+        },
+        {
+          "name": "MarkInstalled",
+          "startLine": 117,
+          "endLine": 134,
+          "params": [
+            "ctx",
+            "id",
+            "installerID",
+            "techNotes"
+          ]
+        },
+        {
+          "name": "Reject",
+          "startLine": 137,
+          "endLine": 153,
+          "params": [
+            "ctx",
+            "id",
+            "reason",
+            "reviewerID"
+          ]
+        },
+        {
+          "name": "Cancel",
+          "startLine": 156,
+          "endLine": 174,
+          "params": [
+            "ctx",
+            "id",
+            "reason"
+          ]
+        },
+        {
+          "name": "mustGet",
+          "startLine": 176,
+          "endLine": 185,
+          "params": [
+            "ctx",
+            "id",
+            "wantStatus"
+          ]
+        },
+        {
+          "name": "writeAudit",
+          "startLine": 187,
+          "endLine": 202,
+          "params": [
+            "ctx",
+            "actorType",
+            "actorID",
+            "action",
+            "entityType",
+            "entityID"
+          ]
+        },
+        {
+          "name": "queueTemplate",
+          "startLine": 204,
+          "endLine": 231,
+          "params": [
+            "ctx",
+            "tenantID",
+            "key",
+            "vars",
+            "phone"
+          ]
+        },
+        {
+          "name": "List",
+          "startLine": 234,
+          "endLine": 243,
+          "params": [
+            "ctx",
+            "filter"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 246,
+          "endLine": 255,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "actorStr",
+          "startLine": 257,
+          "endLine": 262,
+          "params": [
+            "id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ManageRegistrationUseCase",
+          "startLine": 25,
+          "endLine": 31,
+          "methods": [
+            "Submit",
+            "Approve",
+            "ScheduleInstall",
+            "MarkInstalled",
+            "Reject",
+            "Cancel",
+            "mustGet",
+            "writeAudit",
+            "queueTemplate",
+            "List",
+            "FindByID"
+          ],
+          "properties": [
+            "repo",
+            "notif",
+            "audit",
+            "now"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ManageRegistrationUseCase",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "NewManageRegistrationUseCase",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "Submit",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "Approve",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "ScheduleInstall",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "MarkInstalled",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "Reject",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "Cancel",
+          "line": 156,
+          "isDefault": false
+        },
+        {
+          "name": "List",
+          "line": 234,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 246,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Submit",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Submit",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Submit",
+          "callee": "fmt.Errorf",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Submit",
+          "callee": "phoneRe.MatchString",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Submit",
+          "callee": "fmt.Errorf",
+          "lineNumber": 48
+        },
+        {
+          "caller": "Submit",
+          "callee": "fmt.Errorf",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Submit",
+          "callee": "u.now",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Submit",
+          "callee": "idgen.New",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Submit",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Submit",
+          "callee": "now.Format",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Submit",
+          "callee": "now.UnixNano",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Submit",
+          "callee": "u.repo.Save",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Submit",
+          "callee": "u.writeAudit",
+          "lineNumber": 63
+        },
+        {
+          "caller": "Approve",
+          "callee": "u.mustGet",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Approve",
+          "callee": "u.now",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Approve",
+          "callee": "u.repo.Save",
+          "lineNumber": 79
+        },
+        {
+          "caller": "Approve",
+          "callee": "u.writeAudit",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Approve",
+          "callee": "fmt.Sprint",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Approve",
+          "callee": "u.queueTemplate",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "u.mustGet",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "date.IsZero",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "fmt.Errorf",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "u.repo.Save",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "u.queueTemplate",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "date.Format",
+          "lineNumber": 110
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "u.mustGet",
+          "lineNumber": 118
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "u.now",
+          "lineNumber": 122
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "u.repo.Save",
+          "lineNumber": 129
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "u.writeAudit",
+          "lineNumber": 132
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "actorStr",
+          "lineNumber": 132
+        },
+        {
+          "caller": "Reject",
+          "callee": "u.mustGet",
+          "lineNumber": 138
+        },
+        {
+          "caller": "Reject",
+          "callee": "u.now",
+          "lineNumber": 142
+        },
+        {
+          "caller": "Reject",
+          "callee": "u.repo.Save",
+          "lineNumber": 148
+        },
+        {
+          "caller": "Reject",
+          "callee": "u.writeAudit",
+          "lineNumber": 151
+        },
+        {
+          "caller": "Reject",
+          "callee": "fmt.Sprint",
+          "lineNumber": 151
+        },
+        {
+          "caller": "Cancel",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 157
+        },
+        {
+          "caller": "Cancel",
+          "callee": "fmt.Errorf",
+          "lineNumber": 163
+        },
+        {
+          "caller": "Cancel",
+          "callee": "u.now",
+          "lineNumber": 165
+        },
+        {
+          "caller": "Cancel",
+          "callee": "u.repo.Save",
+          "lineNumber": 169
+        },
+        {
+          "caller": "Cancel",
+          "callee": "u.writeAudit",
+          "lineNumber": 172
+        },
+        {
+          "caller": "mustGet",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 177
+        },
+        {
+          "caller": "mustGet",
+          "callee": "fmt.Errorf",
+          "lineNumber": 182
+        },
+        {
+          "caller": "writeAudit",
+          "callee": "u.audit.Write",
+          "lineNumber": 191
+        },
+        {
+          "caller": "writeAudit",
+          "callee": "logger.WithComponent(\"RegistrationUC\").WithError(err).Warn",
+          "lineNumber": 200
+        },
+        {
+          "caller": "writeAudit",
+          "callee": "logger.WithComponent(\"RegistrationUC\").WithError",
+          "lineNumber": 200
+        },
+        {
+          "caller": "writeAudit",
+          "callee": "logger.WithComponent",
+          "lineNumber": 200
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "u.notif.FindTemplateByKey",
+          "lineNumber": 208
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "make",
+          "lineNumber": 213
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "len",
+          "lineNumber": 213
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "append",
+          "lineNumber": 215
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "strings.NewReplacer(rep...).Replace",
+          "lineNumber": 217
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "strings.NewReplacer",
+          "lineNumber": 217
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "idgen.New",
+          "lineNumber": 220
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "u.now",
+          "lineNumber": 226
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "u.notif.Queue",
+          "lineNumber": 228
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "logger.WithComponent(\"RegistrationUC\").WithError(err).Warn",
+          "lineNumber": 229
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "logger.WithComponent(\"RegistrationUC\").WithError",
+          "lineNumber": 229
+        },
+        {
+          "caller": "queueTemplate",
+          "callee": "logger.WithComponent",
+          "lineNumber": 229
+        },
+        {
+          "caller": "List",
+          "callee": "u.repo.List",
+          "lineNumber": 238
+        },
+        {
+          "caller": "List",
+          "callee": "fmt.Errorf",
+          "lineNumber": 240
+        },
+        {
+          "caller": "FindByID",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 250
+        },
+        {
+          "caller": "FindByID",
+          "callee": "fmt.Errorf",
+          "lineNumber": 252
+        },
+        {
+          "caller": "actorStr",
+          "callee": "fmt.Sprint",
+          "lineNumber": 261
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 13,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/report/manage_report_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 61,
+      "functions": [
+        {
+          "name": "GetByDate",
+          "startLine": 15,
+          "endLine": 21,
+          "params": [
+            "ctx",
+            "tenantID",
+            "date"
+          ]
+        },
+        {
+          "name": "ListRange",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "ctx",
+            "tenantID",
+            "from",
+            "to"
+          ]
+        },
+        {
+          "name": "UpsertSnapshot",
+          "startLine": 27,
+          "endLine": 30,
+          "params": [
+            "ctx",
+            "snap"
+          ]
+        },
+        {
+          "name": "RecomputeDaily",
+          "startLine": 36,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "tenantID",
+            "date"
+          ]
+        },
+        {
+          "name": "TestManageReportUseCase",
+          "startLine": 41,
+          "endLine": 74,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockReportRepo",
+          "startLine": 11,
+          "endLine": 13,
+          "methods": [
+            "GetByDate",
+            "ListRange",
+            "UpsertSnapshot"
+          ],
+          "properties": [
+            "snaps"
+          ]
+        },
+        {
+          "name": "mockSnapshotComputer",
+          "startLine": 32,
+          "endLine": 34,
+          "methods": [
+            "RecomputeDaily"
+          ],
+          "properties": [
+            "recomputed"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetByDate",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ListRange",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "UpsertSnapshot",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "RecomputeDaily",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "TestManageReportUseCase",
+          "line": 41,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "UpsertSnapshot",
+          "callee": "append",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "context.Background",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "time.Now",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "NewManageReportUseCase",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "uc.DailyReport",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "len",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "uc.MonthlyReport",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "len",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "uc.YearlyReport",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "len",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "uc.RefreshSnapshot",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestManageReportUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 72
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/report/manage_report.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 102,
+      "nonEmptyLines": 94,
+      "functions": [
+        {
+          "name": "NewManageReportUseCase",
+          "startLine": 20,
+          "endLine": 25,
+          "params": [
+            "repo",
+            "snapshotter"
+          ]
+        },
+        {
+          "name": "DailyReport",
+          "startLine": 28,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "dateStr"
+          ]
+        },
+        {
+          "name": "MonthlyReport",
+          "startLine": 48,
+          "endLine": 66,
+          "params": [
+            "ctx",
+            "monthStr"
+          ]
+        },
+        {
+          "name": "YearlyReport",
+          "startLine": 69,
+          "endLine": 83,
+          "params": [
+            "ctx",
+            "year"
+          ]
+        },
+        {
+          "name": "RefreshSnapshot",
+          "startLine": 86,
+          "endLine": 102,
+          "params": [
+            "ctx",
+            "dateStr"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ManageReportUseCase",
+          "startLine": 14,
+          "endLine": 17,
+          "methods": [
+            "DailyReport",
+            "MonthlyReport",
+            "YearlyReport",
+            "RefreshSnapshot"
+          ],
+          "properties": [
+            "repo",
+            "snapshotter"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ManageReportUseCase",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewManageReportUseCase",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "DailyReport",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "MonthlyReport",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "YearlyReport",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "RefreshSnapshot",
+          "line": 86,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "DailyReport",
+          "callee": "time.Now().UTC",
+          "lineNumber": 32
+        },
+        {
+          "caller": "DailyReport",
+          "callee": "time.Now",
+          "lineNumber": 32
+        },
+        {
+          "caller": "DailyReport",
+          "callee": "time.Parse",
+          "lineNumber": 34
+        },
+        {
+          "caller": "DailyReport",
+          "callee": "fmt.Errorf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "DailyReport",
+          "callee": "uc.repo.GetByDate",
+          "lineNumber": 40
+        },
+        {
+          "caller": "DailyReport",
+          "callee": "fmt.Errorf",
+          "lineNumber": 42
+        },
+        {
+          "caller": "DailyReport",
+          "callee": "day.Format",
+          "lineNumber": 44
+        },
+        {
+          "caller": "MonthlyReport",
+          "callee": "time.Now().Format",
+          "lineNumber": 54
+        },
+        {
+          "caller": "MonthlyReport",
+          "callee": "time.Now",
+          "lineNumber": 54
+        },
+        {
+          "caller": "MonthlyReport",
+          "callee": "time.Parse",
+          "lineNumber": 56
+        },
+        {
+          "caller": "MonthlyReport",
+          "callee": "fmt.Errorf",
+          "lineNumber": 58
+        },
+        {
+          "caller": "MonthlyReport",
+          "callee": "from.AddDate",
+          "lineNumber": 60
+        },
+        {
+          "caller": "MonthlyReport",
+          "callee": "uc.repo.ListRange",
+          "lineNumber": 61
+        },
+        {
+          "caller": "MonthlyReport",
+          "callee": "fmt.Errorf",
+          "lineNumber": 63
+        },
+        {
+          "caller": "YearlyReport",
+          "callee": "time.Now().Year",
+          "lineNumber": 74
+        },
+        {
+          "caller": "YearlyReport",
+          "callee": "time.Now",
+          "lineNumber": 74
+        },
+        {
+          "caller": "YearlyReport",
+          "callee": "time.Date",
+          "lineNumber": 76
+        },
+        {
+          "caller": "YearlyReport",
+          "callee": "from.AddDate",
+          "lineNumber": 77
+        },
+        {
+          "caller": "YearlyReport",
+          "callee": "uc.repo.ListRange",
+          "lineNumber": 78
+        },
+        {
+          "caller": "YearlyReport",
+          "callee": "fmt.Errorf",
+          "lineNumber": 80
+        },
+        {
+          "caller": "YearlyReport",
+          "callee": "strconv.Itoa",
+          "lineNumber": 82
+        },
+        {
+          "caller": "RefreshSnapshot",
+          "callee": "time.Now().UTC",
+          "lineNumber": 90
+        },
+        {
+          "caller": "RefreshSnapshot",
+          "callee": "time.Now",
+          "lineNumber": 90
+        },
+        {
+          "caller": "RefreshSnapshot",
+          "callee": "time.Parse",
+          "lineNumber": 92
+        },
+        {
+          "caller": "RefreshSnapshot",
+          "callee": "fmt.Errorf",
+          "lineNumber": 94
+        },
+        {
+          "caller": "RefreshSnapshot",
+          "callee": "uc.snapshotter.RecomputeDaily",
+          "lineNumber": 98
+        },
+        {
+          "caller": "RefreshSnapshot",
+          "callee": "fmt.Errorf",
+          "lineNumber": 99
+        },
+        {
+          "caller": "RefreshSnapshot",
+          "callee": "day.Format",
+          "lineNumber": 101
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/setting/manage_setting_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 114,
+      "nonEmptyLines": 95,
+      "functions": [
+        {
+          "name": "newMockSettingRepo",
+          "startLine": 19,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "Get",
+          "startLine": 26,
+          "endLine": 31,
+          "params": [
+            "ctx",
+            "key"
+          ]
+        },
+        {
+          "name": "GetValue",
+          "startLine": 33,
+          "endLine": 38,
+          "params": [
+            "ctx",
+            "key",
+            "fallback"
+          ]
+        },
+        {
+          "name": "Set",
+          "startLine": 40,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "key",
+            "value",
+            "category",
+            "description"
+          ]
+        },
+        {
+          "name": "GetByCategory",
+          "startLine": 50,
+          "endLine": 58,
+          "params": [
+            "ctx",
+            "category"
+          ]
+        },
+        {
+          "name": "GetAll",
+          "startLine": 60,
+          "endLine": 66,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "BatchSet",
+          "startLine": 68,
+          "endLine": 73,
+          "params": [
+            "ctx",
+            "settings"
+          ]
+        },
+        {
+          "name": "GetBotSettings",
+          "startLine": 75,
+          "endLine": 77,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "SaveBotSettings",
+          "startLine": 79,
+          "endLine": 82,
+          "params": [
+            "ctx",
+            "s"
+          ]
+        },
+        {
+          "name": "TestManageSettingUseCase",
+          "startLine": 84,
+          "endLine": 114,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockSettingRepo",
+          "startLine": 14,
+          "endLine": 17,
+          "methods": [
+            "Get",
+            "GetValue",
+            "Set",
+            "GetByCategory",
+            "GetAll",
+            "BatchSet",
+            "GetBotSettings",
+            "SaveBotSettings"
+          ],
+          "properties": [
+            "settings",
+            "botSettings"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Get",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "GetValue",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "Set",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "GetByCategory",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "GetAll",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "BatchSet",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "GetBotSettings",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "SaveBotSettings",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "TestManageSettingUseCase",
+          "line": 84,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newMockSettingRepo",
+          "callee": "make",
+          "lineNumber": 21
+        },
+        {
+          "caller": "newMockSettingRepo",
+          "callee": "setting.DefaultBotSettings",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "append",
+          "lineNumber": 54
+        },
+        {
+          "caller": "GetAll",
+          "callee": "append",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "context.Background",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "newMockSettingRepo",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "settingUC.NewManageSettingUseCase",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "uc.UpdateSetting",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "uc.GetSettingsByCategory",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "assert.Len",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "uc.GetBotSettings",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "uc.UpdateBotSettings",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "uc.GetBotSettings",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestManageSettingUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 113
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 9,
+        "functionCount": 10,
+        "classCount": 1
+      }
+    }
+  ]
+}

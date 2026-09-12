@@ -1,0 +1,1687 @@
+{
+ "batchIndex": 26,
+ "nodes": [
+  {
+   "id": "file:internal/domain/hotspot/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/hotspot/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `hotspot` (12 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `hotspot` (12 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "hotspot",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/hotspot/hotspot.go",
+   "type": "file",
+   "name": "hotspot.go",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `hotspot` (174 baris, 1 fungsi, 12 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `hotspot` (174 baris, 1 fungsi, 12 tipe). Tipe utama: HotspotUser, HotspotUserProfile, HotspotActiveSession, HotspotActiveStat, HotspotIPBinding, …. Fungsi terbesar: ParseDataLimit.",
+   "tags": [
+    "go",
+    "domain",
+    "hotspot",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:HotspotUser",
+   "type": "class",
+   "name": "HotspotUser",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotUser di hotspot.go.",
+   "description": "Tipe HotspotUser di hotspot.go. Didefinisikan pada baris 9-25.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotuser"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:HotspotUserProfile",
+   "type": "class",
+   "name": "HotspotUserProfile",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotUserProfile di hotspot.go.",
+   "description": "Tipe HotspotUserProfile di hotspot.go. Didefinisikan pada baris 28-40.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotuserprofile"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:HotspotActiveSession",
+   "type": "class",
+   "name": "HotspotActiveSession",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotActiveSession di hotspot.go.",
+   "description": "Tipe HotspotActiveSession di hotspot.go. Didefinisikan pada baris 43-50.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotactivesession"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:HotspotActiveStat",
+   "type": "class",
+   "name": "HotspotActiveStat",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotActiveStat di hotspot.go.",
+   "description": "Tipe HotspotActiveStat di hotspot.go. Didefinisikan pada baris 53-62.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotactivestat"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:HotspotIPBinding",
+   "type": "class",
+   "name": "HotspotIPBinding",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotIPBinding di hotspot.go.",
+   "description": "Tipe HotspotIPBinding di hotspot.go. Didefinisikan pada baris 65-74.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotipbinding"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:HotspotCookie",
+   "type": "class",
+   "name": "HotspotCookie",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotCookie di hotspot.go.",
+   "description": "Tipe HotspotCookie di hotspot.go. Didefinisikan pada baris 77-83.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotcookie"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:GeneratedVoucher",
+   "type": "class",
+   "name": "GeneratedVoucher",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe GeneratedVoucher di hotspot.go.",
+   "description": "Tipe GeneratedVoucher di hotspot.go. Didefinisikan pada baris 86-90.",
+   "tags": [
+    "go",
+    "tipe",
+    "generatedvoucher"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:VoucherBatch",
+   "type": "class",
+   "name": "VoucherBatch",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe VoucherBatch di hotspot.go.",
+   "description": "Tipe VoucherBatch di hotspot.go. Didefinisikan pada baris 93-95.",
+   "tags": [
+    "go",
+    "tipe",
+    "voucherbatch"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:VoucherStatusDetails",
+   "type": "class",
+   "name": "VoucherStatusDetails",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe VoucherStatusDetails di hotspot.go.",
+   "description": "Tipe VoucherStatusDetails di hotspot.go. Didefinisikan pada baris 98-112.",
+   "tags": [
+    "go",
+    "tipe",
+    "voucherstatusdetails"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:MikhmonTransaction",
+   "type": "class",
+   "name": "MikhmonTransaction",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe MikhmonTransaction di hotspot.go.",
+   "description": "Tipe MikhmonTransaction di hotspot.go. Didefinisikan pada baris 115-127.",
+   "tags": [
+    "go",
+    "tipe",
+    "mikhmontransaction"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:ExpireMonitorStatus",
+   "type": "class",
+   "name": "ExpireMonitorStatus",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe ExpireMonitorStatus di hotspot.go.",
+   "description": "Tipe ExpireMonitorStatus di hotspot.go. Didefinisikan pada baris 130-135.",
+   "tags": [
+    "go",
+    "tipe",
+    "expiremonitorstatus"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/hotspot.go:MikhmonComment",
+   "type": "class",
+   "name": "MikhmonComment",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Tipe MikhmonComment di hotspot.go.",
+   "description": "Tipe MikhmonComment di hotspot.go. Didefinisikan pada baris 138-149.",
+   "tags": [
+    "go",
+    "tipe",
+    "mikhmoncomment"
+   ]
+  },
+  {
+   "id": "function:internal/domain/hotspot/hotspot.go:ParseDataLimit",
+   "type": "function",
+   "name": "ParseDataLimit",
+   "filePath": "internal/domain/hotspot/hotspot.go",
+   "complexity": "simple",
+   "summary": "Fungsi ParseDataLimit (21 baris), parameter: s.",
+   "description": "Fungsi ParseDataLimit (21 baris), parameter: s. Didefinisikan pada baris 153-174.",
+   "tags": [
+    "go",
+    "fungsi",
+    "parsedatalimit"
+   ]
+  },
+  {
+   "id": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "file",
+   "name": "voucher_rules.go",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `hotspot` (199 baris, 7 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `hotspot` (199 baris, 7 fungsi, 2 tipe). Tipe utama: VoucherGenerateParams, ProfileMeta. Fungsi terbesar: ParseOnLoginScript, GenerateVoucherCode, BuildUpdatedComment, FilterInactiveUsers, BuildCreateUserComment.",
+   "tags": [
+    "go",
+    "domain",
+    "hotspot",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/voucher_rules.go:VoucherGenerateParams",
+   "type": "class",
+   "name": "VoucherGenerateParams",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Tipe VoucherGenerateParams di voucher_rules.go.",
+   "description": "Tipe VoucherGenerateParams di voucher_rules.go. Didefinisikan pada baris 41-51.",
+   "tags": [
+    "go",
+    "tipe",
+    "vouchergenerateparams"
+   ]
+  },
+  {
+   "id": "class:internal/domain/hotspot/voucher_rules.go:ProfileMeta",
+   "type": "class",
+   "name": "ProfileMeta",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Tipe ProfileMeta di voucher_rules.go.",
+   "description": "Tipe ProfileMeta di voucher_rules.go. Didefinisikan pada baris 127-134.",
+   "tags": [
+    "go",
+    "tipe",
+    "profilemeta"
+   ]
+  },
+  {
+   "id": "function:internal/domain/hotspot/voucher_rules.go:GenerateVoucherCode",
+   "type": "function",
+   "name": "GenerateVoucherCode",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Fungsi GenerateVoucherCode (19 baris), parameter: length, cs.",
+   "description": "Fungsi GenerateVoucherCode (19 baris), parameter: length, cs. Didefinisikan pada baris 55-74.",
+   "tags": [
+    "go",
+    "fungsi",
+    "generatevouchercode"
+   ]
+  },
+  {
+   "id": "function:internal/domain/hotspot/voucher_rules.go:FormatPreLoginComment",
+   "type": "function",
+   "name": "FormatPreLoginComment",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Fungsi FormatPreLoginComment (9 baris), parameter: vcType, code, tag, t.",
+   "description": "Fungsi FormatPreLoginComment (9 baris), parameter: vcType, code, tag, t. Didefinisikan pada baris 77-86.",
+   "tags": [
+    "go",
+    "fungsi",
+    "formatprelogincomment"
+   ]
+  },
+  {
+   "id": "function:internal/domain/hotspot/voucher_rules.go:BuildCreateUserComment",
+   "type": "function",
+   "name": "BuildCreateUserComment",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Fungsi BuildCreateUserComment (10 baris), parameter: name, password, comment, now.",
+   "description": "Fungsi BuildCreateUserComment (10 baris), parameter: name, password, comment, now. Didefinisikan pada baris 89-99.",
+   "tags": [
+    "go",
+    "fungsi",
+    "buildcreateusercomment"
+   ]
+  },
+  {
+   "id": "function:internal/domain/hotspot/voucher_rules.go:BuildUpdatedComment",
+   "type": "function",
+   "name": "BuildUpdatedComment",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Fungsi BuildUpdatedComment (16 baris), parameter: expireDate, userCode, newComment, now.",
+   "description": "Fungsi BuildUpdatedComment (16 baris), parameter: expireDate, userCode, newComment, now. Didefinisikan pada baris 108-124.",
+   "tags": [
+    "go",
+    "fungsi",
+    "buildupdatedcomment"
+   ]
+  },
+  {
+   "id": "function:internal/domain/hotspot/voucher_rules.go:ParseOnLoginScript",
+   "type": "function",
+   "name": "ParseOnLoginScript",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Fungsi ParseOnLoginScript (42 baris), parameter: onLogin.",
+   "description": "Fungsi ParseOnLoginScript (42 baris), parameter: onLogin. Didefinisikan pada baris 137-179.",
+   "tags": [
+    "go",
+    "fungsi",
+    "parseonloginscript"
+   ]
+  },
+  {
+   "id": "function:internal/domain/hotspot/voucher_rules.go:NormalizeProfileName",
+   "type": "function",
+   "name": "NormalizeProfileName",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Fungsi NormalizeProfileName (2 baris), parameter: name.",
+   "description": "Fungsi NormalizeProfileName (2 baris), parameter: name. Didefinisikan pada baris 182-184.",
+   "tags": [
+    "go",
+    "fungsi",
+    "normalizeprofilename"
+   ]
+  },
+  {
+   "id": "function:internal/domain/hotspot/voucher_rules.go:FilterInactiveUsers",
+   "type": "function",
+   "name": "FilterInactiveUsers",
+   "filePath": "internal/domain/hotspot/voucher_rules.go",
+   "complexity": "simple",
+   "summary": "Fungsi FilterInactiveUsers (12 baris), parameter: users, active.",
+   "description": "Fungsi FilterInactiveUsers (12 baris), parameter: users, active. Didefinisikan pada baris 187-199.",
+   "tags": [
+    "go",
+    "fungsi",
+    "filterinactiveusers"
+   ]
+  },
+  {
+   "id": "file:internal/domain/llm/config.go",
+   "type": "file",
+   "name": "config.go",
+   "filePath": "internal/domain/llm/config.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `llm` (54 baris, 0 fungsi, 3 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `llm` (54 baris, 0 fungsi, 3 tipe). Tipe utama: Config, ChatMessage, ChatResponse.",
+   "tags": [
+    "go",
+    "domain",
+    "llm",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/llm/config.go:Config",
+   "type": "class",
+   "name": "Config",
+   "filePath": "internal/domain/llm/config.go",
+   "complexity": "simple",
+   "summary": "Tipe Config di config.go.",
+   "description": "Tipe Config di config.go. Didefinisikan pada baris 13-41.",
+   "tags": [
+    "go",
+    "tipe",
+    "config"
+   ]
+  },
+  {
+   "id": "class:internal/domain/llm/config.go:ChatMessage",
+   "type": "class",
+   "name": "ChatMessage",
+   "filePath": "internal/domain/llm/config.go",
+   "complexity": "simple",
+   "summary": "Tipe ChatMessage di config.go.",
+   "description": "Tipe ChatMessage di config.go. Didefinisikan pada baris 44-47.",
+   "tags": [
+    "go",
+    "tipe",
+    "chatmessage"
+   ]
+  },
+  {
+   "id": "class:internal/domain/llm/config.go:ChatResponse",
+   "type": "class",
+   "name": "ChatResponse",
+   "filePath": "internal/domain/llm/config.go",
+   "complexity": "simple",
+   "summary": "Tipe ChatResponse di config.go.",
+   "description": "Tipe ChatResponse di config.go. Didefinisikan pada baris 50-54.",
+   "tags": [
+    "go",
+    "tipe",
+    "chatresponse"
+   ]
+  },
+  {
+   "id": "file:internal/domain/llm/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/llm/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `llm` (12 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `llm` (12 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "llm",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/llm/pricing.go",
+   "type": "file",
+   "name": "pricing.go",
+   "filePath": "internal/domain/llm/pricing.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `llm` (61 baris, 1 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `llm` (61 baris, 1 fungsi, 1 tipe). Tipe utama: ModelPricing. Fungsi terbesar: GetDefaultModelPricing.",
+   "tags": [
+    "go",
+    "domain",
+    "llm",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/llm/pricing.go:ModelPricing",
+   "type": "class",
+   "name": "ModelPricing",
+   "filePath": "internal/domain/llm/pricing.go",
+   "complexity": "simple",
+   "summary": "Tipe ModelPricing di pricing.go.",
+   "description": "Tipe ModelPricing di pricing.go. Didefinisikan pada baris 6-9.",
+   "tags": [
+    "go",
+    "tipe",
+    "modelpricing"
+   ]
+  },
+  {
+   "id": "function:internal/domain/llm/pricing.go:GetDefaultModelPricing",
+   "type": "function",
+   "name": "GetDefaultModelPricing",
+   "filePath": "internal/domain/llm/pricing.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetDefaultModelPricing (49 baris), parameter: provider, model.",
+   "description": "Fungsi GetDefaultModelPricing (49 baris), parameter: provider, model. Didefinisikan pada baris 12-61.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getdefaultmodelpricing"
+   ]
+  },
+  {
+   "id": "file:internal/domain/llm/tool.go",
+   "type": "file",
+   "name": "tool.go",
+   "filePath": "internal/domain/llm/tool.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `llm` (15 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `llm` (15 baris, 0 fungsi, 1 tipe). Tipe utama: Tool.",
+   "tags": [
+    "go",
+    "domain",
+    "llm",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/llm/tool.go:Tool",
+   "type": "class",
+   "name": "Tool",
+   "filePath": "internal/domain/llm/tool.go",
+   "complexity": "simple",
+   "summary": "Tipe Tool di tool.go.",
+   "description": "Tipe Tool di tool.go. Didefinisikan pada baris 10-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "tool"
+   ]
+  },
+  {
+   "id": "file:internal/domain/notification/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/notification/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `notification` (14 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `notification` (14 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "notification",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/notification/template.go",
+   "type": "file",
+   "name": "template.go",
+   "filePath": "internal/domain/notification/template.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `notification` (29 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `notification` (29 baris, 0 fungsi, 1 tipe). Tipe utama: NotificationTemplate.",
+   "tags": [
+    "go",
+    "domain",
+    "notification",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/notification/template.go:NotificationTemplate",
+   "type": "class",
+   "name": "NotificationTemplate",
+   "filePath": "internal/domain/notification/template.go",
+   "complexity": "simple",
+   "summary": "Tipe NotificationTemplate di template.go.",
+   "description": "Tipe NotificationTemplate di template.go. Didefinisikan pada baris 18-29.",
+   "tags": [
+    "go",
+    "tipe",
+    "notificationtemplate"
+   ]
+  },
+  {
+   "id": "file:internal/domain/notification/wa_notification.go",
+   "type": "file",
+   "name": "wa_notification.go",
+   "filePath": "internal/domain/notification/wa_notification.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `notification` (22 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `notification` (22 baris, 0 fungsi, 1 tipe). Tipe utama: WANotification.",
+   "tags": [
+    "go",
+    "domain",
+    "notification",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/notification/wa_notification.go:WANotification",
+   "type": "class",
+   "name": "WANotification",
+   "filePath": "internal/domain/notification/wa_notification.go",
+   "complexity": "simple",
+   "summary": "Tipe WANotification di wa_notification.go.",
+   "description": "Tipe WANotification di wa_notification.go. Didefinisikan pada baris 7-22.",
+   "tags": [
+    "go",
+    "tipe",
+    "wanotification"
+   ]
+  },
+  {
+   "id": "file:internal/domain/plan/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/plan/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `plan` (10 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `plan` (10 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "plan",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/plan/service_plan_rate_test.go",
+   "type": "file",
+   "name": "service_plan_rate_test.go",
+   "filePath": "internal/domain/plan/service_plan_rate_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `plan` (44 baris, 2 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `plan` (44 baris, 2 fungsi, 0 tipe). Fungsi terbesar: TestRateLimitWithBurst, TestRateLimit.",
+   "tags": [
+    "go",
+    "domain",
+    "plan",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/domain/plan/service_plan_rate_test.go:TestRateLimit",
+   "type": "function",
+   "name": "TestRateLimit",
+   "filePath": "internal/domain/plan/service_plan_rate_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestRateLimit (16 baris), parameter: t.",
+   "description": "Fungsi TestRateLimit (16 baris), parameter: t. Didefinisikan pada baris 5-21.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testratelimit"
+   ]
+  },
+  {
+   "id": "function:internal/domain/plan/service_plan_rate_test.go:TestRateLimitWithBurst",
+   "type": "function",
+   "name": "TestRateLimitWithBurst",
+   "filePath": "internal/domain/plan/service_plan_rate_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestRateLimitWithBurst (21 baris), parameter: t.",
+   "description": "Fungsi TestRateLimitWithBurst (21 baris), parameter: t. Didefinisikan pada baris 23-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testratelimitwithburst"
+   ]
+  },
+  {
+   "id": "file:internal/domain/plan/service_plan_rate.go",
+   "type": "file",
+   "name": "service_plan_rate.go",
+   "filePath": "internal/domain/plan/service_plan_rate.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `plan` (46 baris, 3 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `plan` (46 baris, 3 fungsi, 0 tipe). Fungsi terbesar: RateLimitWithBurst, rateSide, RateLimit.",
+   "tags": [
+    "go",
+    "domain",
+    "plan",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/domain/plan/service_plan_rate.go:RateLimit",
+   "type": "function",
+   "name": "RateLimit",
+   "filePath": "internal/domain/plan/service_plan_rate.go",
+   "complexity": "simple",
+   "summary": "Fungsi RateLimit (6 baris).",
+   "description": "Fungsi RateLimit (6 baris). Didefinisikan pada baris 19-25.",
+   "tags": [
+    "go",
+    "fungsi",
+    "ratelimit"
+   ]
+  },
+  {
+   "id": "function:internal/domain/plan/service_plan_rate.go:RateLimitWithBurst",
+   "type": "function",
+   "name": "RateLimitWithBurst",
+   "filePath": "internal/domain/plan/service_plan_rate.go",
+   "complexity": "simple",
+   "summary": "Fungsi RateLimitWithBurst (11 baris).",
+   "description": "Fungsi RateLimitWithBurst (11 baris). Didefinisikan pada baris 35-46.",
+   "tags": [
+    "go",
+    "fungsi",
+    "ratelimitwithburst"
+   ]
+  },
+  {
+   "id": "file:internal/domain/plan/service_plan.go",
+   "type": "file",
+   "name": "service_plan.go",
+   "filePath": "internal/domain/plan/service_plan.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `plan` (62 baris, 0 fungsi, 3 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `plan` (62 baris, 0 fungsi, 3 tipe). Tipe utama: PPPoEPlanConfig, HotspotPlanConfig, ServicePlan.",
+   "tags": [
+    "go",
+    "domain",
+    "plan",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/plan/service_plan.go:PPPoEPlanConfig",
+   "type": "class",
+   "name": "PPPoEPlanConfig",
+   "filePath": "internal/domain/plan/service_plan.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPoEPlanConfig di service_plan.go.",
+   "description": "Tipe PPPoEPlanConfig di service_plan.go. Didefinisikan pada baris 13-18.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppoeplanconfig"
+   ]
+  },
+  {
+   "id": "class:internal/domain/plan/service_plan.go:HotspotPlanConfig",
+   "type": "class",
+   "name": "HotspotPlanConfig",
+   "filePath": "internal/domain/plan/service_plan.go",
+   "complexity": "simple",
+   "summary": "Tipe HotspotPlanConfig di service_plan.go.",
+   "description": "Tipe HotspotPlanConfig di service_plan.go. Didefinisikan pada baris 21-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "hotspotplanconfig"
+   ]
+  },
+  {
+   "id": "class:internal/domain/plan/service_plan.go:ServicePlan",
+   "type": "class",
+   "name": "ServicePlan",
+   "filePath": "internal/domain/plan/service_plan.go",
+   "complexity": "simple",
+   "summary": "Tipe ServicePlan di service_plan.go.",
+   "description": "Tipe ServicePlan di service_plan.go. Didefinisikan pada baris 31-62.",
+   "tags": [
+    "go",
+    "tipe",
+    "serviceplan"
+   ]
+  },
+  {
+   "id": "file:internal/domain/ppp/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/ppp/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `ppp` (14 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `ppp` (14 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "ppp",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/ppp/ppp.go",
+   "type": "file",
+   "name": "ppp.go",
+   "filePath": "internal/domain/ppp/ppp.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `ppp` (88 baris, 2 fungsi, 3 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `ppp` (88 baris, 2 fungsi, 3 tipe). Tipe utama: ActiveSession, PPPoESecret, Profile. Fungsi terbesar: EnrichActiveSessionsWithProfiles, FilterInactiveSecrets.",
+   "tags": [
+    "go",
+    "domain",
+    "ppp",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/ppp/ppp.go:ActiveSession",
+   "type": "class",
+   "name": "ActiveSession",
+   "filePath": "internal/domain/ppp/ppp.go",
+   "complexity": "simple",
+   "summary": "Tipe ActiveSession di ppp.go.",
+   "description": "Tipe ActiveSession di ppp.go. Didefinisikan pada baris 6-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "activesession"
+   ]
+  },
+  {
+   "id": "class:internal/domain/ppp/ppp.go:PPPoESecret",
+   "type": "class",
+   "name": "PPPoESecret",
+   "filePath": "internal/domain/ppp/ppp.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPoESecret di ppp.go.",
+   "description": "Tipe PPPoESecret di ppp.go. Didefinisikan pada baris 22-33.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppoesecret"
+   ]
+  },
+  {
+   "id": "class:internal/domain/ppp/ppp.go:Profile",
+   "type": "class",
+   "name": "Profile",
+   "filePath": "internal/domain/ppp/ppp.go",
+   "complexity": "simple",
+   "summary": "Tipe Profile di ppp.go.",
+   "description": "Tipe Profile di ppp.go. Didefinisikan pada baris 36-55.",
+   "tags": [
+    "go",
+    "tipe",
+    "profile"
+   ]
+  },
+  {
+   "id": "function:internal/domain/ppp/ppp.go:FilterInactiveSecrets",
+   "type": "function",
+   "name": "FilterInactiveSecrets",
+   "filePath": "internal/domain/ppp/ppp.go",
+   "complexity": "simple",
+   "summary": "Fungsi FilterInactiveSecrets (12 baris), parameter: secrets, active.",
+   "description": "Fungsi FilterInactiveSecrets (12 baris), parameter: secrets, active. Didefinisikan pada baris 58-70.",
+   "tags": [
+    "go",
+    "fungsi",
+    "filterinactivesecrets"
+   ]
+  },
+  {
+   "id": "function:internal/domain/ppp/ppp.go:EnrichActiveSessionsWithProfiles",
+   "type": "function",
+   "name": "EnrichActiveSessionsWithProfiles",
+   "filePath": "internal/domain/ppp/ppp.go",
+   "complexity": "simple",
+   "summary": "Fungsi EnrichActiveSessionsWithProfiles (15 baris), parameter: active, secrets.",
+   "description": "Fungsi EnrichActiveSessionsWithProfiles (15 baris), parameter: active, secrets. Didefinisikan pada baris 73-88.",
+   "tags": [
+    "go",
+    "fungsi",
+    "enrichactivesessionswithprofiles"
+   ]
+  },
+  {
+   "id": "file:internal/domain/registration/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/registration/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `registration` (13 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `registration` (13 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "registration",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/registration/registration.go",
+   "type": "file",
+   "name": "registration.go",
+   "filePath": "internal/domain/registration/registration.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `registration` (50 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `registration` (50 baris, 0 fungsi, 1 tipe). Tipe utama: Registration.",
+   "tags": [
+    "go",
+    "domain",
+    "registration",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/registration/registration.go:Registration",
+   "type": "class",
+   "name": "Registration",
+   "filePath": "internal/domain/registration/registration.go",
+   "complexity": "simple",
+   "summary": "Tipe Registration di registration.go.",
+   "description": "Tipe Registration di registration.go. Didefinisikan pada baris 19-50.",
+   "tags": [
+    "go",
+    "tipe",
+    "registration"
+   ]
+  },
+  {
+   "id": "file:internal/domain/reporting/daily_snapshot.go",
+   "type": "file",
+   "name": "daily_snapshot.go",
+   "filePath": "internal/domain/reporting/daily_snapshot.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `reporting` (26 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `reporting` (26 baris, 0 fungsi, 1 tipe). Tipe utama: DailyFinancialSnapshot.",
+   "tags": [
+    "go",
+    "domain",
+    "reporting",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/reporting/daily_snapshot.go:DailyFinancialSnapshot",
+   "type": "class",
+   "name": "DailyFinancialSnapshot",
+   "filePath": "internal/domain/reporting/daily_snapshot.go",
+   "complexity": "simple",
+   "summary": "Tipe DailyFinancialSnapshot di daily_snapshot.go.",
+   "description": "Tipe DailyFinancialSnapshot di daily_snapshot.go. Didefinisikan pada baris 12-26.",
+   "tags": [
+    "go",
+    "tipe",
+    "dailyfinancialsnapshot"
+   ]
+  },
+  {
+   "id": "file:internal/domain/reporting/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/reporting/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `reporting` (10 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `reporting` (10 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "reporting",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/session/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/session/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `session` (17 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `session` (17 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "session",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/session/session.go",
+   "type": "file",
+   "name": "session.go",
+   "filePath": "internal/domain/session/session.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `session` (18 baris, 1 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `session` (18 baris, 1 fungsi, 0 tipe). Fungsi terbesar: New.",
+   "tags": [
+    "go",
+    "domain",
+    "session",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/domain/session/session.go:New",
+   "type": "function",
+   "name": "New",
+   "filePath": "internal/domain/session/session.go",
+   "complexity": "simple",
+   "summary": "Fungsi New (2 baris), parameter: ctx.",
+   "description": "Fungsi New (2 baris), parameter: ctx. Didefinisikan pada baris 16-18.",
+   "tags": [
+    "go",
+    "fungsi",
+    "new"
+   ]
+  },
+  {
+   "id": "file:internal/domain/setting/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/setting/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `setting` (13 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `setting` (13 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "setting",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/setting/isp.go",
+   "type": "file",
+   "name": "isp.go",
+   "filePath": "internal/domain/setting/isp.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `setting` (14 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `setting` (14 baris, 0 fungsi, 1 tipe). Tipe utama: ISPSettings.",
+   "tags": [
+    "go",
+    "domain",
+    "setting",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/setting/isp.go:ISPSettings",
+   "type": "class",
+   "name": "ISPSettings",
+   "filePath": "internal/domain/setting/isp.go",
+   "complexity": "simple",
+   "summary": "Tipe ISPSettings di isp.go.",
+   "description": "Tipe ISPSettings di isp.go. Didefinisikan pada baris 4-14.",
+   "tags": [
+    "go",
+    "tipe",
+    "ispsettings"
+   ]
+  },
+  {
+   "id": "file:internal/domain/setting/setting.go",
+   "type": "file",
+   "name": "setting.go",
+   "filePath": "internal/domain/setting/setting.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `setting` (42 baris, 1 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `setting` (42 baris, 1 fungsi, 2 tipe). Tipe utama: Setting, BotSettings. Fungsi terbesar: DefaultBotSettings.",
+   "tags": [
+    "go",
+    "domain",
+    "setting",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/setting/setting.go:Setting",
+   "type": "class",
+   "name": "Setting",
+   "filePath": "internal/domain/setting/setting.go",
+   "complexity": "simple",
+   "summary": "Tipe Setting di setting.go.",
+   "description": "Tipe Setting di setting.go. Didefinisikan pada baris 6-12.",
+   "tags": [
+    "go",
+    "tipe",
+    "setting"
+   ]
+  },
+  {
+   "id": "class:internal/domain/setting/setting.go:BotSettings",
+   "type": "class",
+   "name": "BotSettings",
+   "filePath": "internal/domain/setting/setting.go",
+   "complexity": "simple",
+   "summary": "Tipe BotSettings di setting.go.",
+   "description": "Tipe BotSettings di setting.go. Didefinisikan pada baris 15-26.",
+   "tags": [
+    "go",
+    "tipe",
+    "botsettings"
+   ]
+  },
+  {
+   "id": "function:internal/domain/setting/setting.go:DefaultBotSettings",
+   "type": "function",
+   "name": "DefaultBotSettings",
+   "filePath": "internal/domain/setting/setting.go",
+   "complexity": "simple",
+   "summary": "Fungsi DefaultBotSettings (13 baris).",
+   "description": "Fungsi DefaultBotSettings (13 baris). Didefinisikan pada baris 29-42.",
+   "tags": [
+    "go",
+    "fungsi",
+    "defaultbotsettings"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/domain/hotspot/errors.go",
+   "target": "file:internal/domain/hotspot/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/hotspot/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "file:internal/domain/hotspot/hotspot.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:HotspotUser",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:HotspotUserProfile",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:HotspotActiveSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:HotspotActiveStat",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:HotspotIPBinding",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:HotspotCookie",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:GeneratedVoucher",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:VoucherBatch",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:VoucherStatusDetails",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:MikhmonTransaction",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:ExpireMonitorStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "class:internal/domain/hotspot/hotspot.go:MikhmonComment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/hotspot.go",
+   "target": "function:internal/domain/hotspot/hotspot.go:ParseDataLimit",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "file:internal/domain/hotspot/voucher_rules.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "class:internal/domain/hotspot/voucher_rules.go:VoucherGenerateParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "class:internal/domain/hotspot/voucher_rules.go:ProfileMeta",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:GenerateVoucherCode",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:FormatPreLoginComment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:BuildCreateUserComment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:BuildUpdatedComment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:ParseOnLoginScript",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:NormalizeProfileName",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/hotspot/voucher_rules.go",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:FilterInactiveUsers",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:internal/domain/hotspot/voucher_rules.go:BuildCreateUserComment",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:GenerateVoucherCode",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/domain/hotspot/voucher_rules.go:BuildCreateUserComment",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:FormatPreLoginComment",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/domain/hotspot/voucher_rules.go:BuildUpdatedComment",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:GenerateVoucherCode",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/domain/hotspot/voucher_rules.go:BuildUpdatedComment",
+   "target": "function:internal/domain/hotspot/voucher_rules.go:FormatPreLoginComment",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/llm/config.go",
+   "target": "file:internal/domain/llm/config.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/config.go",
+   "target": "class:internal/domain/llm/config.go:Config",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/config.go",
+   "target": "class:internal/domain/llm/config.go:ChatMessage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/config.go",
+   "target": "class:internal/domain/llm/config.go:ChatResponse",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/errors.go",
+   "target": "file:internal/domain/llm/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/llm/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/llm/pricing.go",
+   "target": "file:internal/domain/llm/pricing.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/pricing.go",
+   "target": "class:internal/domain/llm/pricing.go:ModelPricing",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/pricing.go",
+   "target": "function:internal/domain/llm/pricing.go:GetDefaultModelPricing",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/tool.go",
+   "target": "file:internal/domain/llm/tool.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/llm/tool.go",
+   "target": "class:internal/domain/llm/tool.go:Tool",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/notification/errors.go",
+   "target": "file:internal/domain/notification/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/notification/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/notification/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/notification/template.go",
+   "target": "file:internal/domain/notification/template.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/notification/template.go",
+   "target": "class:internal/domain/notification/template.go:NotificationTemplate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/notification/wa_notification.go",
+   "target": "file:internal/domain/notification/wa_notification.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/notification/wa_notification.go",
+   "target": "class:internal/domain/notification/wa_notification.go:WANotification",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/errors.go",
+   "target": "file:internal/domain/plan/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/plan/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan_rate_test.go",
+   "target": "file:internal/domain/plan/service_plan_rate_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan_rate_test.go",
+   "target": "function:internal/domain/plan/service_plan_rate_test.go:TestRateLimit",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan_rate_test.go",
+   "target": "function:internal/domain/plan/service_plan_rate_test.go:TestRateLimitWithBurst",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan_rate.go",
+   "target": "file:internal/domain/plan/service_plan_rate.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan_rate.go",
+   "target": "function:internal/domain/plan/service_plan_rate.go:rateSide",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan_rate.go",
+   "target": "function:internal/domain/plan/service_plan_rate.go:RateLimit",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan_rate.go",
+   "target": "function:internal/domain/plan/service_plan_rate.go:RateLimitWithBurst",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:internal/domain/plan/service_plan_rate.go:RateLimit",
+   "target": "function:internal/domain/plan/service_plan_rate.go:rateSide",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/domain/plan/service_plan_rate.go:RateLimitWithBurst",
+   "target": "function:internal/domain/plan/service_plan_rate.go:rateSide",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan.go",
+   "target": "file:internal/domain/plan/service_plan.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan.go",
+   "target": "class:internal/domain/plan/service_plan.go:PPPoEPlanConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan.go",
+   "target": "class:internal/domain/plan/service_plan.go:HotspotPlanConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/service_plan.go",
+   "target": "class:internal/domain/plan/service_plan.go:ServicePlan",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/ppp/errors.go",
+   "target": "file:internal/domain/ppp/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/ppp/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/ppp/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/ppp/ppp.go",
+   "target": "file:internal/domain/ppp/ppp.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/ppp/ppp.go",
+   "target": "class:internal/domain/ppp/ppp.go:ActiveSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/ppp/ppp.go",
+   "target": "class:internal/domain/ppp/ppp.go:PPPoESecret",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/ppp/ppp.go",
+   "target": "class:internal/domain/ppp/ppp.go:Profile",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/ppp/ppp.go",
+   "target": "function:internal/domain/ppp/ppp.go:FilterInactiveSecrets",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/ppp/ppp.go",
+   "target": "function:internal/domain/ppp/ppp.go:EnrichActiveSessionsWithProfiles",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/registration/errors.go",
+   "target": "file:internal/domain/registration/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/registration/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/registration/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/registration/registration.go",
+   "target": "file:internal/domain/registration/registration.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/registration/registration.go",
+   "target": "class:internal/domain/registration/registration.go:Registration",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/reporting/daily_snapshot.go",
+   "target": "file:internal/domain/reporting/daily_snapshot.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/reporting/daily_snapshot.go",
+   "target": "class:internal/domain/reporting/daily_snapshot.go:DailyFinancialSnapshot",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/reporting/errors.go",
+   "target": "file:internal/domain/reporting/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/reporting/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/reporting/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/session/errors.go",
+   "target": "file:internal/domain/session/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/session/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/session/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/session/session.go",
+   "target": "file:internal/domain/session/session.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/session/session.go",
+   "target": "function:internal/domain/session/session.go:New",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/setting/errors.go",
+   "target": "file:internal/domain/setting/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/setting/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/setting/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/setting/isp.go",
+   "target": "file:internal/domain/setting/isp.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/setting/isp.go",
+   "target": "class:internal/domain/setting/isp.go:ISPSettings",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/setting/setting.go",
+   "target": "file:internal/domain/setting/setting.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/setting/setting.go",
+   "target": "class:internal/domain/setting/setting.go:Setting",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/setting/setting.go",
+   "target": "class:internal/domain/setting/setting.go:BotSettings",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/setting/setting.go",
+   "target": "function:internal/domain/setting/setting.go:DefaultBotSettings",
+   "type": "contains",
+   "weight": 1
+  }
+ ]
+}

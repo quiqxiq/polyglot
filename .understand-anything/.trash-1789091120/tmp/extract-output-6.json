@@ -1,0 +1,1650 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "api/proto/v1/skill.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 266,
+      "nonEmptyLines": 217,
+      "definitions": [
+        {
+          "name": "Skill",
+          "kind": "message",
+          "fields": [
+            "id",
+            "name",
+            "description",
+            "content",
+            "license",
+            "compatibility",
+            "allowed_tools",
+            "read_only",
+            "source_type",
+            "source_url",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 13,
+          "endLine": 27
+        },
+        {
+          "name": "SkillResource",
+          "kind": "message",
+          "fields": [
+            "path",
+            "name",
+            "type",
+            "size",
+            "mime_type",
+            "readable",
+            "modified"
+          ],
+          "startLine": 29,
+          "endLine": 37
+        },
+        {
+          "name": "ResourceContent",
+          "kind": "message",
+          "fields": [
+            "content",
+            "encoding",
+            "mime_type",
+            "size"
+          ],
+          "startLine": 39,
+          "endLine": 44
+        },
+        {
+          "name": "GitRepoInfo",
+          "kind": "message",
+          "fields": [
+            "id",
+            "url",
+            "name",
+            "enabled",
+            "last_synced_at"
+          ],
+          "startLine": 46,
+          "endLine": 52
+        },
+        {
+          "name": "ListSkillsRequest",
+          "kind": "message",
+          "fields": [
+            "user_id"
+          ],
+          "startLine": 54,
+          "endLine": 56
+        },
+        {
+          "name": "ListSkillsResponse",
+          "kind": "message",
+          "fields": [
+            "skills"
+          ],
+          "startLine": 58,
+          "endLine": 60
+        },
+        {
+          "name": "GetSkillRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "user_id"
+          ],
+          "startLine": 62,
+          "endLine": 65
+        },
+        {
+          "name": "GetSkillResponse",
+          "kind": "message",
+          "fields": [
+            "skill"
+          ],
+          "startLine": 67,
+          "endLine": 69
+        },
+        {
+          "name": "CreateSkillRequest",
+          "kind": "message",
+          "fields": [
+            "user_id",
+            "name",
+            "description",
+            "content",
+            "license",
+            "compatibility",
+            "allowed_tools"
+          ],
+          "startLine": 71,
+          "endLine": 80
+        },
+        {
+          "name": "CreateSkillResponse",
+          "kind": "message",
+          "fields": [
+            "skill"
+          ],
+          "startLine": 82,
+          "endLine": 84
+        },
+        {
+          "name": "UpdateSkillRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "user_id",
+            "name",
+            "description",
+            "content",
+            "license",
+            "compatibility",
+            "allowed_tools"
+          ],
+          "startLine": 86,
+          "endLine": 96
+        },
+        {
+          "name": "UpdateSkillResponse",
+          "kind": "message",
+          "fields": [
+            "skill"
+          ],
+          "startLine": 98,
+          "endLine": 100
+        },
+        {
+          "name": "DeleteSkillRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "user_id"
+          ],
+          "startLine": 102,
+          "endLine": 105
+        },
+        {
+          "name": "DeleteSkillResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "message"
+          ],
+          "startLine": 107,
+          "endLine": 110
+        },
+        {
+          "name": "ExportSkillRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 112,
+          "endLine": 114
+        },
+        {
+          "name": "ExportSkillResponse",
+          "kind": "message",
+          "fields": [
+            "archive",
+            "filename"
+          ],
+          "startLine": 116,
+          "endLine": 119
+        },
+        {
+          "name": "ImportSkillRequest",
+          "kind": "message",
+          "fields": [
+            "archive",
+            "user_id"
+          ],
+          "startLine": 121,
+          "endLine": 124
+        },
+        {
+          "name": "ImportSkillResponse",
+          "kind": "message",
+          "fields": [
+            "skill"
+          ],
+          "startLine": 126,
+          "endLine": 128
+        },
+        {
+          "name": "ListResourcesRequest",
+          "kind": "message",
+          "fields": [
+            "skill_id"
+          ],
+          "startLine": 130,
+          "endLine": 132
+        },
+        {
+          "name": "ListResourcesResponse",
+          "kind": "message",
+          "fields": [
+            "resources"
+          ],
+          "startLine": 134,
+          "endLine": 136
+        },
+        {
+          "name": "GetResourceRequest",
+          "kind": "message",
+          "fields": [
+            "skill_id",
+            "path"
+          ],
+          "startLine": 138,
+          "endLine": 141
+        },
+        {
+          "name": "GetResourceResponse",
+          "kind": "message",
+          "fields": [
+            "content",
+            "metadata"
+          ],
+          "startLine": 143,
+          "endLine": 146
+        },
+        {
+          "name": "SaveResourceRequest",
+          "kind": "message",
+          "fields": [
+            "skill_id",
+            "path",
+            "data"
+          ],
+          "startLine": 148,
+          "endLine": 152
+        },
+        {
+          "name": "SaveResourceResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "message"
+          ],
+          "startLine": 154,
+          "endLine": 157
+        },
+        {
+          "name": "DeleteResourceRequest",
+          "kind": "message",
+          "fields": [
+            "skill_id",
+            "path"
+          ],
+          "startLine": 159,
+          "endLine": 162
+        },
+        {
+          "name": "DeleteResourceResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "message"
+          ],
+          "startLine": 164,
+          "endLine": 167
+        },
+        {
+          "name": "ListGitReposRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 169,
+          "endLine": 169
+        },
+        {
+          "name": "ListGitReposResponse",
+          "kind": "message",
+          "fields": [
+            "repos"
+          ],
+          "startLine": 171,
+          "endLine": 173
+        },
+        {
+          "name": "AddGitRepoRequest",
+          "kind": "message",
+          "fields": [
+            "url"
+          ],
+          "startLine": 175,
+          "endLine": 177
+        },
+        {
+          "name": "AddGitRepoResponse",
+          "kind": "message",
+          "fields": [
+            "repo"
+          ],
+          "startLine": 179,
+          "endLine": 181
+        },
+        {
+          "name": "UpdateGitRepoRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "url",
+            "enabled"
+          ],
+          "startLine": 183,
+          "endLine": 187
+        },
+        {
+          "name": "UpdateGitRepoResponse",
+          "kind": "message",
+          "fields": [
+            "repo"
+          ],
+          "startLine": 189,
+          "endLine": 191
+        },
+        {
+          "name": "DeleteGitRepoRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 193,
+          "endLine": 195
+        },
+        {
+          "name": "DeleteGitRepoResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "message"
+          ],
+          "startLine": 197,
+          "endLine": 200
+        },
+        {
+          "name": "SyncGitRepoRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 202,
+          "endLine": 204
+        },
+        {
+          "name": "SyncGitRepoResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "message"
+          ],
+          "startLine": 206,
+          "endLine": 209
+        },
+        {
+          "name": "ToggleGitRepoRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 211,
+          "endLine": 213
+        },
+        {
+          "name": "ToggleGitRepoResponse",
+          "kind": "message",
+          "fields": [
+            "repo"
+          ],
+          "startLine": 215,
+          "endLine": 217
+        },
+        {
+          "name": "ToggleSkillRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "user_id",
+            "enabled"
+          ],
+          "startLine": 219,
+          "endLine": 223
+        },
+        {
+          "name": "ToggleSkillResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "message"
+          ],
+          "startLine": 225,
+          "endLine": 228
+        },
+        {
+          "name": "GetGlobalPromptRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 230,
+          "endLine": 230
+        },
+        {
+          "name": "GetGlobalPromptResponse",
+          "kind": "message",
+          "fields": [
+            "content"
+          ],
+          "startLine": 232,
+          "endLine": 234
+        },
+        {
+          "name": "SaveGlobalPromptRequest",
+          "kind": "message",
+          "fields": [
+            "content"
+          ],
+          "startLine": 236,
+          "endLine": 238
+        },
+        {
+          "name": "SaveGlobalPromptResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "message"
+          ],
+          "startLine": 240,
+          "endLine": 243
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "SkillService.ListSkills",
+          "startLine": 246,
+          "endLine": 246
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.GetSkill",
+          "startLine": 247,
+          "endLine": 247
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.CreateSkill",
+          "startLine": 248,
+          "endLine": 248
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.UpdateSkill",
+          "startLine": 249,
+          "endLine": 249
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.DeleteSkill",
+          "startLine": 250,
+          "endLine": 250
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.ExportSkill",
+          "startLine": 251,
+          "endLine": 251
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.ImportSkill",
+          "startLine": 252,
+          "endLine": 252
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.ListResources",
+          "startLine": 253,
+          "endLine": 253
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.GetResource",
+          "startLine": 254,
+          "endLine": 254
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.SaveResource",
+          "startLine": 255,
+          "endLine": 255
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.DeleteResource",
+          "startLine": 256,
+          "endLine": 256
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.ListGitRepos",
+          "startLine": 257,
+          "endLine": 257
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.AddGitRepo",
+          "startLine": 258,
+          "endLine": 258
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.UpdateGitRepo",
+          "startLine": 259,
+          "endLine": 259
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.DeleteGitRepo",
+          "startLine": 260,
+          "endLine": 260
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.SyncGitRepo",
+          "startLine": 261,
+          "endLine": 261
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.ToggleGitRepo",
+          "startLine": 262,
+          "endLine": 262
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.ToggleSkill",
+          "startLine": 263,
+          "endLine": 263
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.GetGlobalPrompt",
+          "startLine": 264,
+          "endLine": 264
+        },
+        {
+          "method": "rpc",
+          "path": "SkillService.SaveGlobalPrompt",
+          "startLine": 265,
+          "endLine": 265
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 44,
+        "endpointCount": 20
+      }
+    },
+    {
+      "path": "api/proto/v1/subscription.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 167,
+      "nonEmptyLines": 146,
+      "definitions": [
+        {
+          "name": "PPPoESubscriptionConfig",
+          "kind": "message",
+          "fields": [
+            "local_address",
+            "remote_address",
+            "caller_id",
+            "routes",
+            "rate_limit",
+            "router_profile"
+          ],
+          "startLine": 9,
+          "endLine": 16
+        },
+        {
+          "name": "HotspotSubscriptionConfig",
+          "kind": "message",
+          "fields": [
+            "server",
+            "mac_address",
+            "ip_address",
+            "rate_limit",
+            "router_profile",
+            "limit_uptime",
+            "limit_bytes"
+          ],
+          "startLine": 18,
+          "endLine": 26
+        },
+        {
+          "name": "Subscription",
+          "kind": "message",
+          "fields": [
+            "id",
+            "tenant_id",
+            "customer_id",
+            "plan_id",
+            "device_id",
+            "service_type",
+            "remote_username",
+            "rate_limit",
+            "router_profile",
+            "provision_status",
+            "billing_cycle",
+            "billing_day",
+            "auto_isolate",
+            "isolation_grace_days",
+            "status",
+            "start_date_unix",
+            "end_date_unix",
+            "custom_price",
+            "notes",
+            "pppoe_config",
+            "hotspot_config",
+            "customer_name",
+            "customer_phone",
+            "customer_code",
+            "plan_name",
+            "plan_price",
+            "device_name",
+            "device_host"
+          ],
+          "startLine": 28,
+          "endLine": 61
+        },
+        {
+          "name": "CreateSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "customer_id",
+            "plan_id",
+            "device_id",
+            "service_type",
+            "remote_username",
+            "remote_password",
+            "custom_price",
+            "billing_cycle",
+            "billing_day",
+            "notes",
+            "pppoe_config",
+            "hotspot_config"
+          ],
+          "startLine": 63,
+          "endLine": 76
+        },
+        {
+          "name": "CreateSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 77,
+          "endLine": 77
+        },
+        {
+          "name": "UpdateSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "remote_username",
+            "remote_password",
+            "custom_price",
+            "billing_cycle",
+            "billing_day",
+            "device_id",
+            "notes",
+            "pppoe_config",
+            "hotspot_config"
+          ],
+          "startLine": 79,
+          "endLine": 90
+        },
+        {
+          "name": "UpdateSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 91,
+          "endLine": 91
+        },
+        {
+          "name": "DeleteSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 93,
+          "endLine": 95
+        },
+        {
+          "name": "DeleteSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 96,
+          "endLine": 96
+        },
+        {
+          "name": "ListSubscriptionsRequest",
+          "kind": "message",
+          "fields": [
+            "customer_id"
+          ],
+          "startLine": 98,
+          "endLine": 100
+        },
+        {
+          "name": "ListSubscriptionsResponse",
+          "kind": "message",
+          "fields": [
+            "subscriptions"
+          ],
+          "startLine": 101,
+          "endLine": 101
+        },
+        {
+          "name": "GetSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 103,
+          "endLine": 105
+        },
+        {
+          "name": "GetSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 106,
+          "endLine": 106
+        },
+        {
+          "name": "ChangePlanRequest",
+          "kind": "message",
+          "fields": [
+            "subscription_id",
+            "new_plan_id"
+          ],
+          "startLine": 108,
+          "endLine": 111
+        },
+        {
+          "name": "ChangePlanResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 112,
+          "endLine": 112
+        },
+        {
+          "name": "SuspendSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "subscription_id",
+            "reason"
+          ],
+          "startLine": 114,
+          "endLine": 117
+        },
+        {
+          "name": "SuspendSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 118,
+          "endLine": 118
+        },
+        {
+          "name": "ResumeSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "subscription_id"
+          ],
+          "startLine": 120,
+          "endLine": 122
+        },
+        {
+          "name": "ResumeSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 123,
+          "endLine": 123
+        },
+        {
+          "name": "TerminateSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "subscription_id",
+            "reason"
+          ],
+          "startLine": 125,
+          "endLine": 128
+        },
+        {
+          "name": "TerminateSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 129,
+          "endLine": 129
+        },
+        {
+          "name": "ActivateSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "subscription_id",
+            "device_id"
+          ],
+          "startLine": 131,
+          "endLine": 134
+        },
+        {
+          "name": "ActivateSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 135,
+          "endLine": 135
+        },
+        {
+          "name": "IsolateSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "subscription_id",
+            "reason"
+          ],
+          "startLine": 137,
+          "endLine": 140
+        },
+        {
+          "name": "IsolateSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription",
+            "message"
+          ],
+          "startLine": 141,
+          "endLine": 144
+        },
+        {
+          "name": "RestoreSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "subscription_id"
+          ],
+          "startLine": 146,
+          "endLine": 148
+        },
+        {
+          "name": "RestoreSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription",
+            "message"
+          ],
+          "startLine": 149,
+          "endLine": 152
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.ListSubscriptions",
+          "startLine": 155,
+          "endLine": 155
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.GetSubscription",
+          "startLine": 156,
+          "endLine": 156
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.CreateSubscription",
+          "startLine": 157,
+          "endLine": 157
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.UpdateSubscription",
+          "startLine": 158,
+          "endLine": 158
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.DeleteSubscription",
+          "startLine": 159,
+          "endLine": 159
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.ChangePlan",
+          "startLine": 160,
+          "endLine": 160
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.SuspendSubscription",
+          "startLine": 161,
+          "endLine": 161
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.ResumeSubscription",
+          "startLine": 162,
+          "endLine": 162
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.TerminateSubscription",
+          "startLine": 163,
+          "endLine": 163
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.ActivateSubscription",
+          "startLine": 164,
+          "endLine": 164
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.IsolateSubscription",
+          "startLine": 165,
+          "endLine": 165
+        },
+        {
+          "method": "rpc",
+          "path": "SubscriptionService.RestoreSubscription",
+          "startLine": 166,
+          "endLine": 166
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 27,
+        "endpointCount": 12
+      }
+    },
+    {
+      "path": "api/proto/v1/users.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 126,
+      "nonEmptyLines": 105,
+      "definitions": [
+        {
+          "name": "User",
+          "kind": "message",
+          "fields": [
+            "id",
+            "username",
+            "email",
+            "role",
+            "roles",
+            "is_active",
+            "tenant_id",
+            "created_at_unix",
+            "updated_at_unix",
+            "full_name",
+            "phone_number",
+            "specialization",
+            "assigned_device_ids"
+          ],
+          "startLine": 12,
+          "endLine": 26
+        },
+        {
+          "name": "ListUsersRequest",
+          "kind": "message",
+          "fields": [
+            "page",
+            "page_size",
+            "search"
+          ],
+          "startLine": 28,
+          "endLine": 32
+        },
+        {
+          "name": "ListUsersResponse",
+          "kind": "message",
+          "fields": [
+            "users",
+            "total",
+            "page",
+            "page_size"
+          ],
+          "startLine": 34,
+          "endLine": 39
+        },
+        {
+          "name": "CreateUserRequest",
+          "kind": "message",
+          "fields": [
+            "username",
+            "email",
+            "password",
+            "role",
+            "full_name",
+            "phone_number",
+            "specialization",
+            "assigned_device_ids"
+          ],
+          "startLine": 41,
+          "endLine": 50
+        },
+        {
+          "name": "CreateUserResponse",
+          "kind": "message",
+          "fields": [
+            "user"
+          ],
+          "startLine": 52,
+          "endLine": 54
+        },
+        {
+          "name": "UpdateUserRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "username",
+            "email",
+            "role",
+            "full_name",
+            "phone_number",
+            "specialization",
+            "assigned_device_ids"
+          ],
+          "startLine": 57,
+          "endLine": 66
+        },
+        {
+          "name": "UpdateUserResponse",
+          "kind": "message",
+          "fields": [
+            "user"
+          ],
+          "startLine": 68,
+          "endLine": 70
+        },
+        {
+          "name": "ResetPasswordRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "new_password"
+          ],
+          "startLine": 72,
+          "endLine": 75
+        },
+        {
+          "name": "ResetPasswordResponse",
+          "kind": "message",
+          "fields": [
+            "success"
+          ],
+          "startLine": 77,
+          "endLine": 79
+        },
+        {
+          "name": "ToggleActiveRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 83,
+          "endLine": 85
+        },
+        {
+          "name": "ToggleActiveResponse",
+          "kind": "message",
+          "fields": [
+            "user"
+          ],
+          "startLine": 87,
+          "endLine": 89
+        },
+        {
+          "name": "DeleteUserRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 91,
+          "endLine": 93
+        },
+        {
+          "name": "DeleteUserResponse",
+          "kind": "message",
+          "fields": [
+            "success"
+          ],
+          "startLine": 95,
+          "endLine": 97
+        },
+        {
+          "name": "AssignDevicesRequest",
+          "kind": "message",
+          "fields": [
+            "user_id",
+            "device_ids"
+          ],
+          "startLine": 99,
+          "endLine": 102
+        },
+        {
+          "name": "AssignDevicesResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "assigned_device_ids"
+          ],
+          "startLine": 104,
+          "endLine": 107
+        },
+        {
+          "name": "ListUserDevicesRequest",
+          "kind": "message",
+          "fields": [
+            "user_id"
+          ],
+          "startLine": 109,
+          "endLine": 111
+        },
+        {
+          "name": "ListUserDevicesResponse",
+          "kind": "message",
+          "fields": [
+            "device_ids"
+          ],
+          "startLine": 113,
+          "endLine": 115
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "UserService.ListUsers",
+          "startLine": 118,
+          "endLine": 118
+        },
+        {
+          "method": "rpc",
+          "path": "UserService.CreateUser",
+          "startLine": 119,
+          "endLine": 119
+        },
+        {
+          "method": "rpc",
+          "path": "UserService.UpdateUser",
+          "startLine": 120,
+          "endLine": 120
+        },
+        {
+          "method": "rpc",
+          "path": "UserService.ResetPassword",
+          "startLine": 121,
+          "endLine": 121
+        },
+        {
+          "method": "rpc",
+          "path": "UserService.ToggleActive",
+          "startLine": 122,
+          "endLine": 122
+        },
+        {
+          "method": "rpc",
+          "path": "UserService.DeleteUser",
+          "startLine": 123,
+          "endLine": 123
+        },
+        {
+          "method": "rpc",
+          "path": "UserService.AssignDevicesToUser",
+          "startLine": 124,
+          "endLine": 124
+        },
+        {
+          "method": "rpc",
+          "path": "UserService.ListUserAccessibleDevices",
+          "startLine": 125,
+          "endLine": 125
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 17,
+        "endpointCount": 8
+      }
+    },
+    {
+      "path": "api/proto/v1/whatsapp.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 171,
+      "nonEmptyLines": 151,
+      "definitions": [
+        {
+          "name": "WASession",
+          "kind": "message",
+          "fields": [
+            "id",
+            "name",
+            "phone_number",
+            "status",
+            "is_bot_active",
+            "created_at",
+            "jid",
+            "connected_at"
+          ],
+          "startLine": 25,
+          "endLine": 34
+        },
+        {
+          "name": "ListWASessionsRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 36,
+          "endLine": 36
+        },
+        {
+          "name": "ListWASessionsResponse",
+          "kind": "message",
+          "fields": [
+            "sessions"
+          ],
+          "startLine": 37,
+          "endLine": 39
+        },
+        {
+          "name": "CreateWASessionRequest",
+          "kind": "message",
+          "fields": [
+            "name",
+            "phone_number"
+          ],
+          "startLine": 41,
+          "endLine": 44
+        },
+        {
+          "name": "CreateWASessionResponse",
+          "kind": "message",
+          "fields": [
+            "session"
+          ],
+          "startLine": 45,
+          "endLine": 47
+        },
+        {
+          "name": "GetWASessionQRRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 49,
+          "endLine": 51
+        },
+        {
+          "name": "GetWASessionQRResponse",
+          "kind": "message",
+          "fields": [
+            "qr_code_base64",
+            "qr_code_path",
+            "duration_seconds"
+          ],
+          "startLine": 52,
+          "endLine": 56
+        },
+        {
+          "name": "GetWASessionPairingRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "phone_number"
+          ],
+          "startLine": 58,
+          "endLine": 61
+        },
+        {
+          "name": "GetWASessionPairingResponse",
+          "kind": "message",
+          "fields": [
+            "pairing_code"
+          ],
+          "startLine": 62,
+          "endLine": 64
+        },
+        {
+          "name": "ToggleWABotRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "is_active"
+          ],
+          "startLine": 66,
+          "endLine": 69
+        },
+        {
+          "name": "ToggleWABotResponse",
+          "kind": "message",
+          "fields": [
+            "message",
+            "is_active"
+          ],
+          "startLine": 70,
+          "endLine": 73
+        },
+        {
+          "name": "ReconnectWASessionRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 75,
+          "endLine": 77
+        },
+        {
+          "name": "ReconnectWASessionResponse",
+          "kind": "message",
+          "fields": [
+            "message",
+            "status"
+          ],
+          "startLine": 78,
+          "endLine": 81
+        },
+        {
+          "name": "LogoutWASessionRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 83,
+          "endLine": 85
+        },
+        {
+          "name": "LogoutWASessionResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 86,
+          "endLine": 88
+        },
+        {
+          "name": "PurgeWASessionRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 90,
+          "endLine": 92
+        },
+        {
+          "name": "PurgeWASessionResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 93,
+          "endLine": 95
+        },
+        {
+          "name": "SendWATextMessageRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "recipient_phone",
+            "message_text"
+          ],
+          "startLine": 97,
+          "endLine": 101
+        },
+        {
+          "name": "SendWATextMessageResponse",
+          "kind": "message",
+          "fields": [
+            "message_id",
+            "status"
+          ],
+          "startLine": 102,
+          "endLine": 105
+        },
+        {
+          "name": "WAChat",
+          "kind": "message",
+          "fields": [
+            "id",
+            "session_id",
+            "chat_jid",
+            "display_name",
+            "is_group",
+            "last_message_preview",
+            "last_message_time",
+            "unread_count",
+            "bot_enabled"
+          ],
+          "startLine": 107,
+          "endLine": 117
+        },
+        {
+          "name": "WAChatMessage",
+          "kind": "message",
+          "fields": [
+            "id",
+            "chat_jid",
+            "sender_jid",
+            "sender_name",
+            "content",
+            "media_type",
+            "is_from_me",
+            "timestamp",
+            "status",
+            "is_read"
+          ],
+          "startLine": 119,
+          "endLine": 131
+        },
+        {
+          "name": "ListChatsRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "limit",
+            "offset",
+            "search"
+          ],
+          "startLine": 133,
+          "endLine": 138
+        },
+        {
+          "name": "ListChatsResponse",
+          "kind": "message",
+          "fields": [
+            "chats",
+            "total"
+          ],
+          "startLine": 139,
+          "endLine": 142
+        },
+        {
+          "name": "GetChatMessagesRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "chat_jid",
+            "limit",
+            "offset"
+          ],
+          "startLine": 144,
+          "endLine": 149
+        },
+        {
+          "name": "GetChatMessagesResponse",
+          "kind": "message",
+          "fields": [
+            "messages",
+            "total"
+          ],
+          "startLine": 150,
+          "endLine": 153
+        },
+        {
+          "name": "MarkChatReadRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "chat_jid"
+          ],
+          "startLine": 155,
+          "endLine": 158
+        },
+        {
+          "name": "MarkChatReadResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 159,
+          "endLine": 161
+        },
+        {
+          "name": "ToggleChatBotRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "chat_jid",
+            "is_active"
+          ],
+          "startLine": 163,
+          "endLine": 167
+        },
+        {
+          "name": "ToggleChatBotResponse",
+          "kind": "message",
+          "fields": [
+            "message",
+            "is_active"
+          ],
+          "startLine": 168,
+          "endLine": 171
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.ListSessions",
+          "startLine": 10,
+          "endLine": 10
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.CreateSession",
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.GetQRCode",
+          "startLine": 12,
+          "endLine": 12
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.GetPairingCode",
+          "startLine": 13,
+          "endLine": 13
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.ToggleBot",
+          "startLine": 14,
+          "endLine": 14
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.ReconnectSession",
+          "startLine": 15,
+          "endLine": 15
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.LogoutSession",
+          "startLine": 16,
+          "endLine": 16
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.PurgeSession",
+          "startLine": 17,
+          "endLine": 17
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.SendTextMessage",
+          "startLine": 18,
+          "endLine": 18
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.ListChats",
+          "startLine": 19,
+          "endLine": 19
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.GetChatMessages",
+          "startLine": 20,
+          "endLine": 20
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.MarkChatRead",
+          "startLine": 21,
+          "endLine": 21
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.ToggleChatBot",
+          "startLine": 22,
+          "endLine": 22
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 29,
+        "endpointCount": 13
+      }
+    }
+  ]
+}

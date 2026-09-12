@@ -1,0 +1,19 @@
+{
+ "batchIndex": 1,
+ "nodes": [
+  {
+   "id": "service:deployments/docker/Dockerfile",
+   "type": "service",
+   "name": "Dockerfile",
+   "filePath": "deployments/docker/Dockerfile",
+   "complexity": "simple",
+   "summary": "Berkas service proyek: Dockerfile.",
+   "description": "Berkas service proyek: Dockerfile.",
+   "tags": [
+    "service",
+    "dockerfile"
+   ]
+  }
+ ],
+ "edges": []
+}

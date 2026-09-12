@@ -1,0 +1,3409 @@
+{
+ "batchIndex": 31,
+ "nodes": [
+  {
+   "id": "file:internal/driver/whatsapp/jid_filter.go",
+   "type": "file",
+   "name": "jid_filter.go",
+   "filePath": "internal/driver/whatsapp/jid_filter.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (95 baris, 5 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (95 baris, 5 fungsi, 0 tipe). Fungsi terbesar: resolveChatDisplayName, normalizeJIDFromLID, isSystemBroadcastJID, isNewsletterJID, isSkippedJID. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "whatsapp",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/driver/whatsapp/mirror.go",
+   "type": "file",
+   "name": "mirror.go",
+   "filePath": "internal/driver/whatsapp/mirror.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (198 baris, 5 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (198 baris, 5 fungsi, 0 tipe). Fungsi terbesar: persistMirrorMessage, recordOutgoingMessage, extractMediaType, previewOf, reconcileLIDChat. Bergantung pada 8 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "whatsapp",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/mirror.go:persistMirrorMessage",
+   "type": "function",
+   "name": "persistMirrorMessage",
+   "filePath": "internal/driver/whatsapp/mirror.go",
+   "complexity": "moderate",
+   "summary": "Fungsi persistMirrorMessage (67 baris), parameter: evt.",
+   "description": "Fungsi persistMirrorMessage (67 baris), parameter: evt. Didefinisikan pada baris 29-96.",
+   "tags": [
+    "go",
+    "fungsi",
+    "persistmirrormessage"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/mirror.go:recordOutgoingMessage",
+   "type": "function",
+   "name": "recordOutgoingMessage",
+   "filePath": "internal/driver/whatsapp/mirror.go",
+   "complexity": "simple",
+   "summary": "Fungsi recordOutgoingMessage (40 baris), parameter: jid, waMessageID, content, mediaType.",
+   "description": "Fungsi recordOutgoingMessage (40 baris), parameter: jid, waMessageID, content, mediaType. Didefinisikan pada baris 98-138.",
+   "tags": [
+    "go",
+    "fungsi",
+    "recordoutgoingmessage"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/mirror.go:extractMediaType",
+   "type": "function",
+   "name": "extractMediaType",
+   "filePath": "internal/driver/whatsapp/mirror.go",
+   "complexity": "simple",
+   "summary": "Fungsi extractMediaType (32 baris), parameter: msg.",
+   "description": "Fungsi extractMediaType (32 baris), parameter: msg. Didefinisikan pada baris 140-172.",
+   "tags": [
+    "go",
+    "fungsi",
+    "extractmediatype"
+   ]
+  },
+  {
+   "id": "file:internal/driver/whatsapp/qr.go",
+   "type": "file",
+   "name": "qr.go",
+   "filePath": "internal/driver/whatsapp/qr.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (129 baris, 4 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (129 baris, 4 fungsi, 0 tipe). Fungsi terbesar: startQRFlow, GetPairingCode, GetQRCode, EnsureQRFlow. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "whatsapp",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/qr.go:EnsureQRFlow",
+   "type": "function",
+   "name": "EnsureQRFlow",
+   "filePath": "internal/driver/whatsapp/qr.go",
+   "complexity": "simple",
+   "summary": "Fungsi EnsureQRFlow (5 baris).",
+   "description": "Fungsi EnsureQRFlow (5 baris). Didefinisikan pada baris 17-22.",
+   "tags": [
+    "go",
+    "fungsi",
+    "ensureqrflow"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/qr.go:startQRFlow",
+   "type": "function",
+   "name": "startQRFlow",
+   "filePath": "internal/driver/whatsapp/qr.go",
+   "complexity": "moderate",
+   "summary": "Fungsi startQRFlow (82 baris).",
+   "description": "Fungsi startQRFlow (82 baris). Didefinisikan pada baris 25-107.",
+   "tags": [
+    "go",
+    "fungsi",
+    "startqrflow"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/qr.go:GetQRCode",
+   "type": "function",
+   "name": "GetQRCode",
+   "filePath": "internal/driver/whatsapp/qr.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetQRCode (7 baris).",
+   "description": "Fungsi GetQRCode (7 baris). Didefinisikan pada baris 109-116.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getqrcode"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/qr.go:GetPairingCode",
+   "type": "function",
+   "name": "GetPairingCode",
+   "filePath": "internal/driver/whatsapp/qr.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetPairingCode (11 baris), parameter: ctx, phoneNumber.",
+   "description": "Fungsi GetPairingCode (11 baris), parameter: ctx, phoneNumber. Didefinisikan pada baris 118-129.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getpairingcode"
+   ]
+  },
+  {
+   "id": "file:internal/driver/whatsapp/sender.go",
+   "type": "file",
+   "name": "sender.go",
+   "filePath": "internal/driver/whatsapp/sender.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (150 baris, 4 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (150 baris, 4 fungsi, 0 tipe). Fungsi terbesar: SendDocument, SendImage, SendMessage, parseJID.",
+   "tags": [
+    "go",
+    "driver",
+    "whatsapp",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/sender.go:SendMessage",
+   "type": "function",
+   "name": "SendMessage",
+   "filePath": "internal/driver/whatsapp/sender.go",
+   "complexity": "simple",
+   "summary": "Fungsi SendMessage (21 baris), parameter: ctx, to, content.",
+   "description": "Fungsi SendMessage (21 baris), parameter: ctx, to, content. Didefinisikan pada baris 15-36.",
+   "tags": [
+    "go",
+    "fungsi",
+    "sendmessage"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/sender.go:SendDocument",
+   "type": "function",
+   "name": "SendDocument",
+   "filePath": "internal/driver/whatsapp/sender.go",
+   "complexity": "simple",
+   "summary": "Fungsi SendDocument (47 baris), parameter: ctx, to, fileBytes, fileName, contentType.",
+   "description": "Fungsi SendDocument (47 baris), parameter: ctx, to, fileBytes, fileName, contentType. Didefinisikan pada baris 38-85.",
+   "tags": [
+    "go",
+    "fungsi",
+    "senddocument"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/sender.go:SendImage",
+   "type": "function",
+   "name": "SendImage",
+   "filePath": "internal/driver/whatsapp/sender.go",
+   "complexity": "simple",
+   "summary": "Fungsi SendImage (43 baris), parameter: ctx, to, imageBytes, contentType, caption.",
+   "description": "Fungsi SendImage (43 baris), parameter: ctx, to, imageBytes, contentType, caption. Didefinisikan pada baris 87-130.",
+   "tags": [
+    "go",
+    "fungsi",
+    "sendimage"
+   ]
+  },
+  {
+   "id": "file:internal/driver/whatsapp/session_manager.go",
+   "type": "file",
+   "name": "session_manager.go",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "language": "go",
+   "complexity": "moderate",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (373 baris, 19 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `whatsapp` (373 baris, 19 fungsi, 1 tipe). Tipe utama: SessionManager. Fungsi terbesar: ConnectWithContext, GetQRCode, GetStatus, Logout, RestoreAllSessions. Bergantung pada 68 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "whatsapp",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/whatsapp/session_manager.go:SessionManager",
+   "type": "class",
+   "name": "SessionManager",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Tipe SessionManager di session_manager.go, dengan method: ConnectWithContext, Connect, DisconnectAll, Disconnect, Logout, Purge.",
+   "description": "Tipe SessionManager di session_manager.go, dengan method: ConnectWithContext, Connect, DisconnectAll, Disconnect, Logout, Purge. Didefinisikan pada baris 18-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "sessionmanager"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:NewSessionManager",
+   "type": "function",
+   "name": "NewSessionManager",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSessionManager (15 baris), parameter: postgresConnStr, chatRepo, onMsg, onStat.",
+   "description": "Fungsi NewSessionManager (15 baris), parameter: postgresConnStr, chatRepo, onMsg, onStat. Didefinisikan pada baris 31-46.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newsessionmanager"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:ConnectWithContext",
+   "type": "function",
+   "name": "ConnectWithContext",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "moderate",
+   "summary": "Fungsi ConnectWithContext (64 baris), parameter: ctx, session.",
+   "description": "Fungsi ConnectWithContext (64 baris), parameter: ctx, session. Didefinisikan pada baris 48-112.",
+   "tags": [
+    "go",
+    "fungsi",
+    "connectwithcontext"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Connect",
+   "type": "function",
+   "name": "Connect",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi Connect (2 baris), parameter: session.",
+   "description": "Fungsi Connect (2 baris), parameter: session. Didefinisikan pada baris 114-116.",
+   "tags": [
+    "go",
+    "fungsi",
+    "connect"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:DisconnectAll",
+   "type": "function",
+   "name": "DisconnectAll",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi DisconnectAll (16 baris).",
+   "description": "Fungsi DisconnectAll (16 baris). Didefinisikan pada baris 121-137.",
+   "tags": [
+    "go",
+    "fungsi",
+    "disconnectall"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Disconnect",
+   "type": "function",
+   "name": "Disconnect",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi Disconnect (13 baris), parameter: sessionID.",
+   "description": "Fungsi Disconnect (13 baris), parameter: sessionID. Didefinisikan pada baris 142-155.",
+   "tags": [
+    "go",
+    "fungsi",
+    "disconnect"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Logout",
+   "type": "function",
+   "name": "Logout",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi Logout (17 baris), parameter: sessionID.",
+   "description": "Fungsi Logout (17 baris), parameter: sessionID. Didefinisikan pada baris 161-178.",
+   "tags": [
+    "go",
+    "fungsi",
+    "logout"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Purge",
+   "type": "function",
+   "name": "Purge",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi Purge (2 baris), parameter: sessionID.",
+   "description": "Fungsi Purge (2 baris), parameter: sessionID. Didefinisikan pada baris 184-186.",
+   "tags": [
+    "go",
+    "fungsi",
+    "purge"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Reconnect",
+   "type": "function",
+   "name": "Reconnect",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi Reconnect (13 baris), parameter: sessionID.",
+   "description": "Fungsi Reconnect (13 baris), parameter: sessionID. Didefinisikan pada baris 188-201.",
+   "tags": [
+    "go",
+    "fungsi",
+    "reconnect"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SendMessage",
+   "type": "function",
+   "name": "SendMessage",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi SendMessage (2 baris), parameter: sessionID, to, content.",
+   "description": "Fungsi SendMessage (2 baris), parameter: sessionID, to, content. Didefinisikan pada baris 203-205.",
+   "tags": [
+    "go",
+    "fungsi",
+    "sendmessage"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SendMessageContext",
+   "type": "function",
+   "name": "SendMessageContext",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi SendMessageContext (13 baris), parameter: ctx, sessionID, to, content.",
+   "description": "Fungsi SendMessageContext (13 baris), parameter: ctx, sessionID, to, content. Didefinisikan pada baris 207-220.",
+   "tags": [
+    "go",
+    "fungsi",
+    "sendmessagecontext"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SendDocument",
+   "type": "function",
+   "name": "SendDocument",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi SendDocument (13 baris), parameter: ctx, sessionID, to, fileBytes, fileName.",
+   "description": "Fungsi SendDocument (13 baris), parameter: ctx, sessionID, to, fileBytes, fileName. Didefinisikan pada baris 222-235.",
+   "tags": [
+    "go",
+    "fungsi",
+    "senddocument"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SendImage",
+   "type": "function",
+   "name": "SendImage",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi SendImage (13 baris), parameter: ctx, sessionID, to, imageBytes, contentType.",
+   "description": "Fungsi SendImage (13 baris), parameter: ctx, sessionID, to, imageBytes, contentType. Didefinisikan pada baris 237-250.",
+   "tags": [
+    "go",
+    "fungsi",
+    "sendimage"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:GetStatus",
+   "type": "function",
+   "name": "GetStatus",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetStatus (18 baris), parameter: sessionID.",
+   "description": "Fungsi GetStatus (18 baris), parameter: sessionID. Didefinisikan pada baris 252-270.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getstatus"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:GetQRCode",
+   "type": "function",
+   "name": "GetQRCode",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetQRCode (21 baris), parameter: sessionID.",
+   "description": "Fungsi GetQRCode (21 baris), parameter: sessionID. Didefinisikan pada baris 272-293.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getqrcode"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:GetPairingCode",
+   "type": "function",
+   "name": "GetPairingCode",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetPairingCode (13 baris), parameter: sessionID, phoneNumber.",
+   "description": "Fungsi GetPairingCode (13 baris), parameter: sessionID, phoneNumber. Didefinisikan pada baris 295-308.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getpairingcode"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:RestoreAllSessions",
+   "type": "function",
+   "name": "RestoreAllSessions",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi RestoreAllSessions (17 baris), parameter: sessions.",
+   "description": "Fungsi RestoreAllSessions (17 baris), parameter: sessions. Didefinisikan pada baris 310-327.",
+   "tags": [
+    "go",
+    "fungsi",
+    "restoreallsessions"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SetMessageCallback",
+   "type": "function",
+   "name": "SetMessageCallback",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi SetMessageCallback (11 baris), parameter: cb.",
+   "description": "Fungsi SetMessageCallback (11 baris), parameter: cb. Didefinisikan pada baris 332-343.",
+   "tags": [
+    "go",
+    "fungsi",
+    "setmessagecallback"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SetChatUpdateCallback",
+   "type": "function",
+   "name": "SetChatUpdateCallback",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi SetChatUpdateCallback (10 baris), parameter: cb.",
+   "description": "Fungsi SetChatUpdateCallback (10 baris), parameter: cb. Didefinisikan pada baris 348-358.",
+   "tags": [
+    "go",
+    "fungsi",
+    "setchatupdatecallback"
+   ]
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SetChatPresenceCallback",
+   "type": "function",
+   "name": "SetChatPresenceCallback",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "complexity": "simple",
+   "summary": "Fungsi SetChatPresenceCallback (10 baris), parameter: cb.",
+   "description": "Fungsi SetChatPresenceCallback (10 baris), parameter: cb. Didefinisikan pada baris 363-373.",
+   "tags": [
+    "go",
+    "fungsi",
+    "setchatpresencecallback"
+   ]
+  },
+  {
+   "id": "file:internal/driver/zteolt/commands.go",
+   "type": "file",
+   "name": "commands.go",
+   "filePath": "internal/driver/zteolt/commands.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `zteolt` (38 baris, 2 fungsi, 0 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `zteolt` (38 baris, 2 fungsi, 0 tipe). Fungsi terbesar: Translate, Classify. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "zteolt",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/commands.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/zteolt/commands.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (5 baris), parameter: cmd.",
+   "description": "Fungsi Classify (5 baris), parameter: cmd. Didefinisikan pada baris 24-29.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/commands.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/zteolt/commands.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (6 baris), parameter: op.",
+   "description": "Fungsi Translate (6 baris), parameter: op. Didefinisikan pada baris 32-38.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "file:internal/driver/zteolt/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/zteolt/driver.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `zteolt` (64 baris, 5 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `zteolt` (64 baris, 5 fungsi, 1 tipe). Tipe utama: Driver. Fungsi terbesar: NewDriver, Close, Execute, Classify, Translate. Bergantung pada 74 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "zteolt",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/zteolt/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/zteolt/driver.go",
+   "complexity": "simple",
+   "summary": "Tipe Driver di driver.go, dengan method: Execute, Classify, Translate, Close.",
+   "description": "Tipe Driver di driver.go, dengan method: Execute, Classify, Translate, Close. Didefinisikan pada baris 18-21.",
+   "tags": [
+    "go",
+    "tipe",
+    "driver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/zteolt/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewDriver (8 baris), parameter: ctx, target.",
+   "description": "Fungsi NewDriver (8 baris), parameter: ctx, target. Didefinisikan pada baris 28-36.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newdriver"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/zteolt/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Execute (2 baris), parameter: ctx, cmd.",
+   "description": "Fungsi Execute (2 baris), parameter: ctx, cmd. Didefinisikan pada baris 39-41.",
+   "tags": [
+    "go",
+    "fungsi",
+    "execute"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/zteolt/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Classify (2 baris), parameter: cmd.",
+   "description": "Fungsi Classify (2 baris), parameter: cmd. Didefinisikan pada baris 44-46.",
+   "tags": [
+    "go",
+    "fungsi",
+    "classify"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/zteolt/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Translate (2 baris), parameter: op.",
+   "description": "Fungsi Translate (2 baris), parameter: op. Didefinisikan pada baris 54-56.",
+   "tags": [
+    "go",
+    "fungsi",
+    "translate"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/zteolt/driver.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (5 baris).",
+   "description": "Fungsi Close (5 baris). Didefinisikan pada baris 59-64.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "file:internal/driver/zteolt/snmp.go",
+   "type": "file",
+   "name": "snmp.go",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `zteolt` (28 baris, 3 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `zteolt` (28 baris, 3 fungsi, 1 tipe). Tipe utama: SNMPClient. Fungsi terbesar: NewSNMPClient, Get, Close. Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "driver",
+    "zteolt",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/zteolt/snmp.go:SNMPClient",
+   "type": "class",
+   "name": "SNMPClient",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "complexity": "simple",
+   "summary": "Tipe SNMPClient di snmp.go, dengan method: Get, Close.",
+   "description": "Tipe SNMPClient di snmp.go, dengan method: Get, Close. Didefinisikan pada baris 11-11.",
+   "tags": [
+    "go",
+    "tipe",
+    "snmpclient"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/snmp.go:NewSNMPClient",
+   "type": "function",
+   "name": "NewSNMPClient",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSNMPClient (2 baris), parameter: ctx, target.",
+   "description": "Fungsi NewSNMPClient (2 baris), parameter: ctx, target. Didefinisikan pada baris 16-18.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newsnmpclient"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/snmp.go:Get",
+   "type": "function",
+   "name": "Get",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "complexity": "simple",
+   "summary": "Fungsi Get (2 baris), parameter: ctx, oid.",
+   "description": "Fungsi Get (2 baris), parameter: ctx, oid. Didefinisikan pada baris 21-23.",
+   "tags": [
+    "go",
+    "fungsi",
+    "get"
+   ]
+  },
+  {
+   "id": "function:internal/driver/zteolt/snmp.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (2 baris).",
+   "description": "Fungsi Close (2 baris). Didefinisikan pada baris 26-28.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "file:internal/driver/zteolt/telnet.go",
+   "type": "file",
+   "name": "telnet.go",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Driver eksternal: implementasi protokol/hardware vendor — paket `zteolt` (13 baris, 1 fungsi, 1 tipe).",
+   "description": "Driver eksternal: implementasi protokol/hardware vendor — paket `zteolt` (13 baris, 1 fungsi, 1 tipe). Tipe utama: telnetClient. Fungsi terbesar: close.",
+   "tags": [
+    "go",
+    "driver",
+    "zteolt",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/driver/zteolt/telnet.go:telnetClient",
+   "type": "class",
+   "name": "telnetClient",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "complexity": "simple",
+   "summary": "Tipe telnetClient di telnet.go, dengan method: close.",
+   "description": "Tipe telnetClient di telnet.go, dengan method: close. Didefinisikan pada baris 8-8.",
+   "tags": [
+    "go",
+    "tipe",
+    "telnetclient"
+   ]
+  },
+  {
+   "id": "config:internal/platformdef/mikrotik_routeros.yaml",
+   "type": "config",
+   "name": "mikrotik_routeros.yaml",
+   "filePath": "internal/platformdef/mikrotik_routeros.yaml",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: mikrotik_routeros.yaml.",
+   "description": "Berkas config proyek: mikrotik_routeros.yaml.",
+   "tags": [
+    "config",
+    "mikrotik-routeros"
+   ]
+  },
+  {
+   "id": "document:internal/platformdef/README.md",
+   "type": "document",
+   "name": "README.md",
+   "filePath": "internal/platformdef/README.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: README (10 baris).",
+   "description": "Dokumentasi: README (10 baris).",
+   "tags": [
+    "document",
+    "readme"
+   ]
+  },
+  {
+   "id": "file:internal/port/audit.go",
+   "type": "file",
+   "name": "audit.go",
+   "filePath": "internal/port/audit.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (24 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (24 baris, 0 fungsi, 2 tipe). Tipe utama: AuditWriter, AuditLogWriter. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/audit.go:AuditWriter",
+   "type": "class",
+   "name": "AuditWriter",
+   "filePath": "internal/port/audit.go",
+   "complexity": "simple",
+   "summary": "Tipe AuditWriter di audit.go, dengan method: Write.",
+   "description": "Tipe AuditWriter di audit.go, dengan method: Write. Didefinisikan pada baris 15-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "auditwriter"
+   ]
+  },
+  {
+   "id": "class:internal/port/audit.go:AuditLogWriter",
+   "type": "class",
+   "name": "AuditLogWriter",
+   "filePath": "internal/port/audit.go",
+   "complexity": "simple",
+   "summary": "Tipe AuditLogWriter di audit.go, dengan method: Write.",
+   "description": "Tipe AuditLogWriter di audit.go, dengan method: Write. Didefinisikan pada baris 22-24.",
+   "tags": [
+    "go",
+    "tipe",
+    "auditlogwriter"
+   ]
+  },
+  {
+   "id": "file:internal/port/auth_service.go",
+   "type": "file",
+   "name": "auth_service.go",
+   "filePath": "internal/port/auth_service.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (46 baris, 0 fungsi, 5 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (46 baris, 0 fungsi, 5 tipe). Tipe utama: RateLimiter, RoleAuthorizer, RBACManager, TokenService, RefreshTokenManager.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/auth_service.go:RateLimiter",
+   "type": "class",
+   "name": "RateLimiter",
+   "filePath": "internal/port/auth_service.go",
+   "complexity": "simple",
+   "summary": "Tipe RateLimiter di auth_service.go, dengan method: IncrementRateLimit, GetRateLimitCount, ResetRateLimit.",
+   "description": "Tipe RateLimiter di auth_service.go, dengan method: IncrementRateLimit, GetRateLimitCount, ResetRateLimit. Didefinisikan pada baris 9-13.",
+   "tags": [
+    "go",
+    "tipe",
+    "ratelimiter"
+   ]
+  },
+  {
+   "id": "class:internal/port/auth_service.go:RoleAuthorizer",
+   "type": "class",
+   "name": "RoleAuthorizer",
+   "filePath": "internal/port/auth_service.go",
+   "complexity": "simple",
+   "summary": "Tipe RoleAuthorizer di auth_service.go, dengan method: GetRolesForUser, GetImplicitPermissionsForUser, AddRoleForUser, DeleteRolesForUser.",
+   "description": "Tipe RoleAuthorizer di auth_service.go, dengan method: GetRolesForUser, GetImplicitPermissionsForUser, AddRoleForUser, DeleteRolesForUser. Didefinisikan pada baris 16-21.",
+   "tags": [
+    "go",
+    "tipe",
+    "roleauthorizer"
+   ]
+  },
+  {
+   "id": "class:internal/port/auth_service.go:RBACManager",
+   "type": "class",
+   "name": "RBACManager",
+   "filePath": "internal/port/auth_service.go",
+   "complexity": "simple",
+   "summary": "Tipe RBACManager di auth_service.go, dengan method: GetPolicies, AddPolicy, RemovePolicy, GetGroupingPolicies, AddRoleForUser, DeleteRoleForUser.",
+   "description": "Tipe RBACManager di auth_service.go, dengan method: GetPolicies, AddPolicy, RemovePolicy, GetGroupingPolicies, AddRoleForUser, DeleteRoleForUser. Didefinisikan pada baris 24-33.",
+   "tags": [
+    "go",
+    "tipe",
+    "rbacmanager"
+   ]
+  },
+  {
+   "id": "class:internal/port/auth_service.go:TokenService",
+   "type": "class",
+   "name": "TokenService",
+   "filePath": "internal/port/auth_service.go",
+   "complexity": "simple",
+   "summary": "Tipe TokenService di auth_service.go, dengan method: GenerateAccessToken, ValidateAccessToken.",
+   "description": "Tipe TokenService di auth_service.go, dengan method: GenerateAccessToken, ValidateAccessToken. Didefinisikan pada baris 36-39.",
+   "tags": [
+    "go",
+    "tipe",
+    "tokenservice"
+   ]
+  },
+  {
+   "id": "class:internal/port/auth_service.go:RefreshTokenManager",
+   "type": "class",
+   "name": "RefreshTokenManager",
+   "filePath": "internal/port/auth_service.go",
+   "complexity": "simple",
+   "summary": "Tipe RefreshTokenManager di auth_service.go, dengan method: IssueToken, RotateToken, RevokeToken.",
+   "description": "Tipe RefreshTokenManager di auth_service.go, dengan method: IssueToken, RotateToken, RevokeToken. Didefinisikan pada baris 42-46.",
+   "tags": [
+    "go",
+    "tipe",
+    "refreshtokenmanager"
+   ]
+  },
+  {
+   "id": "file:internal/port/authorizer.go",
+   "type": "file",
+   "name": "authorizer.go",
+   "filePath": "internal/port/authorizer.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (15 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (15 baris, 0 fungsi, 1 tipe). Tipe utama: Authorizer.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/authorizer.go:Authorizer",
+   "type": "class",
+   "name": "Authorizer",
+   "filePath": "internal/port/authorizer.go",
+   "complexity": "simple",
+   "summary": "Tipe Authorizer di authorizer.go, dengan method: Enforce, AddPolicy, RemovePolicy, GetPolicies, AddRoleForUser, DeleteRoleForUser.",
+   "description": "Tipe Authorizer di authorizer.go, dengan method: Enforce, AddPolicy, RemovePolicy, GetPolicies, AddRoleForUser, DeleteRoleForUser. Didefinisikan pada baris 6-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "authorizer"
+   ]
+  },
+  {
+   "id": "file:internal/port/bot_repository.go",
+   "type": "file",
+   "name": "bot_repository.go",
+   "filePath": "internal/port/bot_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (31 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (31 baris, 0 fungsi, 2 tipe). Tipe utama: WASessionRepository, ConversationRepository. Bergantung pada 6 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/bot_repository.go:WASessionRepository",
+   "type": "class",
+   "name": "WASessionRepository",
+   "filePath": "internal/port/bot_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe WASessionRepository di bot_repository.go, dengan method: CreateSession, FindSessionByID, FindAllSessions, UpdateSession, DeleteSession.",
+   "description": "Tipe WASessionRepository di bot_repository.go, dengan method: CreateSession, FindSessionByID, FindAllSessions, UpdateSession, DeleteSession. Didefinisikan pada baris 10-16.",
+   "tags": [
+    "go",
+    "tipe",
+    "wasessionrepository"
+   ]
+  },
+  {
+   "id": "class:internal/port/bot_repository.go:ConversationRepository",
+   "type": "class",
+   "name": "ConversationRepository",
+   "filePath": "internal/port/bot_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe ConversationRepository di bot_repository.go, dengan method: FindActiveConversationByCustomer, CreateConversation, FindConversationByID, FindConversationByIDWithMessages, FindConversationsByStatus, FindConversationsBySessionID.",
+   "description": "Tipe ConversationRepository di bot_repository.go, dengan method: FindActiveConversationByCustomer, CreateConversation, FindConversationByID, FindConversationByIDWithMessages, FindConversationsByStatus, FindConversationsBySessionID. Didefinisikan pada baris 19-31.",
+   "tags": [
+    "go",
+    "tipe",
+    "conversationrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/cache_store.go",
+   "type": "file",
+   "name": "cache_store.go",
+   "filePath": "internal/port/cache_store.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (12 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (12 baris, 0 fungsi, 1 tipe). Tipe utama: CacheStore.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/cache_store.go:CacheStore",
+   "type": "class",
+   "name": "CacheStore",
+   "filePath": "internal/port/cache_store.go",
+   "complexity": "simple",
+   "summary": "Tipe CacheStore di cache_store.go, dengan method: Get, Set, Delete.",
+   "description": "Tipe CacheStore di cache_store.go, dengan method: Get, Set, Delete. Didefinisikan pada baris 8-12.",
+   "tags": [
+    "go",
+    "tipe",
+    "cachestore"
+   ]
+  },
+  {
+   "id": "file:internal/port/cashbook_repository.go",
+   "type": "file",
+   "name": "cashbook_repository.go",
+   "filePath": "internal/port/cashbook_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (44 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (44 baris, 0 fungsi, 2 tipe). Tipe utama: CashTransactionFilter, CashbookRepository. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/cashbook_repository.go:CashTransactionFilter",
+   "type": "class",
+   "name": "CashTransactionFilter",
+   "filePath": "internal/port/cashbook_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe CashTransactionFilter di cashbook_repository.go.",
+   "description": "Tipe CashTransactionFilter di cashbook_repository.go. Didefinisikan pada baris 12-21.",
+   "tags": [
+    "go",
+    "tipe",
+    "cashtransactionfilter"
+   ]
+  },
+  {
+   "id": "class:internal/port/cashbook_repository.go:CashbookRepository",
+   "type": "class",
+   "name": "CashbookRepository",
+   "filePath": "internal/port/cashbook_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe CashbookRepository di cashbook_repository.go, dengan method: SaveAccount, FindAccounts, FindAccountByID, SaveCategory, FindCategories, FindCategoryByID.",
+   "description": "Tipe CashbookRepository di cashbook_repository.go, dengan method: SaveAccount, FindAccounts, FindAccountByID, SaveCategory, FindCategories, FindCategoryByID. Didefinisikan pada baris 26-44.",
+   "tags": [
+    "go",
+    "tipe",
+    "cashbookrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/chat_repository.go",
+   "type": "file",
+   "name": "chat_repository.go",
+   "filePath": "internal/port/chat_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (51 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (51 baris, 0 fungsi, 1 tipe). Tipe utama: ChatRepository. Bergantung pada 6 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/chat_repository.go:ChatRepository",
+   "type": "class",
+   "name": "ChatRepository",
+   "filePath": "internal/port/chat_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe ChatRepository di chat_repository.go, dengan method: UpsertChat, UpsertMessage, UpsertMessagesBatch, IncrementUnread, MarkChatRead, SetChatUnread.",
+   "description": "Tipe ChatRepository di chat_repository.go, dengan method: UpsertChat, UpsertMessage, UpsertMessagesBatch, IncrementUnread, MarkChatRead, SetChatUnread. Didefinisikan pada baris 11-51.",
+   "tags": [
+    "go",
+    "tipe",
+    "chatrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/credential_vault.go",
+   "type": "file",
+   "name": "credential_vault.go",
+   "filePath": "internal/port/credential_vault.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (32 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (32 baris, 0 fungsi, 1 tipe). Tipe utama: CredentialVault. Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/credential_vault.go:CredentialVault",
+   "type": "class",
+   "name": "CredentialVault",
+   "filePath": "internal/port/credential_vault.go",
+   "complexity": "simple",
+   "summary": "Tipe CredentialVault di credential_vault.go, dengan method: Get, Save, EncryptString, DecryptString.",
+   "description": "Tipe CredentialVault di credential_vault.go, dengan method: Get, Save, EncryptString, DecryptString. Didefinisikan pada baris 17-32.",
+   "tags": [
+    "go",
+    "tipe",
+    "credentialvault"
+   ]
+  },
+  {
+   "id": "file:internal/port/customer_repository.go",
+   "type": "file",
+   "name": "customer_repository.go",
+   "filePath": "internal/port/customer_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (22 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (22 baris, 0 fungsi, 1 tipe). Tipe utama: CustomerRepository. Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/customer_repository.go:CustomerRepository",
+   "type": "class",
+   "name": "CustomerRepository",
+   "filePath": "internal/port/customer_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe CustomerRepository di customer_repository.go, dengan method: Save, FindByID, FindAll, Delete, FindSubscriptions, FindByPortalAccessCode.",
+   "description": "Tipe CustomerRepository di customer_repository.go, dengan method: Save, FindByID, FindAll, Delete, FindSubscriptions, FindByPortalAccessCode. Didefinisikan pada baris 11-22.",
+   "tags": [
+    "go",
+    "tipe",
+    "customerrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/device_authorizer.go",
+   "type": "file",
+   "name": "device_authorizer.go",
+   "filePath": "internal/port/device_authorizer.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (8 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (8 baris, 0 fungsi, 1 tipe). Tipe utama: DeviceAuthorizer.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/device_authorizer.go:DeviceAuthorizer",
+   "type": "class",
+   "name": "DeviceAuthorizer",
+   "filePath": "internal/port/device_authorizer.go",
+   "complexity": "simple",
+   "summary": "Tipe DeviceAuthorizer di device_authorizer.go, dengan method: CanAccessDevice.",
+   "description": "Tipe DeviceAuthorizer di device_authorizer.go, dengan method: CanAccessDevice. Didefinisikan pada baris 6-8.",
+   "tags": [
+    "go",
+    "tipe",
+    "deviceauthorizer"
+   ]
+  },
+  {
+   "id": "file:internal/port/device_diagnostics.go",
+   "type": "file",
+   "name": "device_diagnostics.go",
+   "filePath": "internal/port/device_diagnostics.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (38 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (38 baris, 0 fungsi, 1 tipe). Tipe utama: DeviceDiagnostics. Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/device_diagnostics.go:DeviceDiagnostics",
+   "type": "class",
+   "name": "DeviceDiagnostics",
+   "filePath": "internal/port/device_diagnostics.go",
+   "complexity": "simple",
+   "summary": "Tipe DeviceDiagnostics di device_diagnostics.go, dengan method: GetSystemResource, GetSystemIdentity, ListInterfaces, MonitorTrafficOnce.",
+   "description": "Tipe DeviceDiagnostics di device_diagnostics.go, dengan method: GetSystemResource, GetSystemIdentity, ListInterfaces, MonitorTrafficOnce. Didefinisikan pada baris 28-38.",
+   "tags": [
+    "go",
+    "tipe",
+    "devicediagnostics"
+   ]
+  },
+  {
+   "id": "file:internal/port/device_driver.go",
+   "type": "file",
+   "name": "device_driver.go",
+   "filePath": "internal/port/device_driver.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (48 baris, 0 fungsi, 3 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (48 baris, 0 fungsi, 3 tipe). Tipe utama: DeviceDriver, TerminalSession, TerminalDeviceDriver. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/device_driver.go:DeviceDriver",
+   "type": "class",
+   "name": "DeviceDriver",
+   "filePath": "internal/port/device_driver.go",
+   "complexity": "simple",
+   "summary": "Tipe DeviceDriver di device_driver.go, dengan method: Execute, Classify, Translate, Close.",
+   "description": "Tipe DeviceDriver di device_driver.go, dengan method: Execute, Classify, Translate, Close. Didefinisikan pada baris 23-35.",
+   "tags": [
+    "go",
+    "tipe",
+    "devicedriver"
+   ]
+  },
+  {
+   "id": "class:internal/port/device_driver.go:TerminalSession",
+   "type": "class",
+   "name": "TerminalSession",
+   "filePath": "internal/port/device_driver.go",
+   "complexity": "simple",
+   "summary": "Tipe TerminalSession di device_driver.go, dengan method: Stdin, Stdout, Resize, Close.",
+   "description": "Tipe TerminalSession di device_driver.go, dengan method: Stdin, Stdout, Resize, Close. Didefinisikan pada baris 38-43.",
+   "tags": [
+    "go",
+    "tipe",
+    "terminalsession"
+   ]
+  },
+  {
+   "id": "class:internal/port/device_driver.go:TerminalDeviceDriver",
+   "type": "class",
+   "name": "TerminalDeviceDriver",
+   "filePath": "internal/port/device_driver.go",
+   "complexity": "simple",
+   "summary": "Tipe TerminalDeviceDriver di device_driver.go, dengan method: OpenTerminalSession.",
+   "description": "Tipe TerminalDeviceDriver di device_driver.go, dengan method: OpenTerminalSession. Didefinisikan pada baris 46-48.",
+   "tags": [
+    "go",
+    "tipe",
+    "terminaldevicedriver"
+   ]
+  },
+  {
+   "id": "file:internal/port/device_interface.go",
+   "type": "file",
+   "name": "device_interface.go",
+   "filePath": "internal/port/device_interface.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (12 baris, 0 fungsi, 0 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (12 baris, 0 fungsi, 0 tipe). Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/port/device_repository.go",
+   "type": "file",
+   "name": "device_repository.go",
+   "filePath": "internal/port/device_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (26 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (26 baris, 0 fungsi, 1 tipe). Tipe utama: DeviceRepository. Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/device_repository.go:DeviceRepository",
+   "type": "class",
+   "name": "DeviceRepository",
+   "filePath": "internal/port/device_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe DeviceRepository di device_repository.go, dengan method: Save, FindByID, FindAll, Update, Delete, FindByUserScope.",
+   "description": "Tipe DeviceRepository di device_repository.go, dengan method: Save, FindByID, FindAll, Update, Delete, FindByUserScope. Didefinisikan pada baris 12-26.",
+   "tags": [
+    "go",
+    "tipe",
+    "devicerepository"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/whatsapp/jid_filter.go",
+   "target": "file:internal/driver/whatsapp/jid_filter.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/jid_filter.go",
+   "target": "function:internal/driver/whatsapp/jid_filter.go:isSystemBroadcastJID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/jid_filter.go",
+   "target": "function:internal/driver/whatsapp/jid_filter.go:isNewsletterJID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/jid_filter.go",
+   "target": "function:internal/driver/whatsapp/jid_filter.go:isSkippedJID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/jid_filter.go",
+   "target": "function:internal/driver/whatsapp/jid_filter.go:resolveChatDisplayName",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/jid_filter.go",
+   "target": "function:internal/driver/whatsapp/jid_filter.go:normalizeJIDFromLID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/jid_filter.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/jid_filter.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/whatsapp/jid_filter.go:isSkippedJID",
+   "target": "function:internal/driver/whatsapp/jid_filter.go:isSystemBroadcastJID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/whatsapp/jid_filter.go:isSkippedJID",
+   "target": "function:internal/driver/whatsapp/jid_filter.go:isNewsletterJID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/whatsapp/jid_filter.go:resolveChatDisplayName",
+   "target": "function:internal/driver/whatsapp/jid_filter.go:normalizeJIDFromLID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:internal/driver/whatsapp/mirror.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "function:internal/driver/whatsapp/mirror.go:reconcileLIDChat",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "function:internal/driver/whatsapp/mirror.go:persistMirrorMessage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "function:internal/driver/whatsapp/mirror.go:recordOutgoingMessage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "function:internal/driver/whatsapp/mirror.go:extractMediaType",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "function:internal/driver/whatsapp/mirror.go:previewOf",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:internal/domain/bot/chat.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:internal/domain/bot/conversation_context.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:internal/domain/bot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/mirror.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/whatsapp/mirror.go:persistMirrorMessage",
+   "target": "function:internal/driver/whatsapp/mirror.go:extractMediaType",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/whatsapp/mirror.go:persistMirrorMessage",
+   "target": "function:internal/driver/whatsapp/mirror.go:previewOf",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/whatsapp/mirror.go:recordOutgoingMessage",
+   "target": "function:internal/driver/whatsapp/mirror.go:previewOf",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/qr.go",
+   "target": "file:internal/driver/whatsapp/qr.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/qr.go",
+   "target": "function:internal/driver/whatsapp/qr.go:EnsureQRFlow",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/qr.go",
+   "target": "function:internal/driver/whatsapp/qr.go:startQRFlow",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/qr.go",
+   "target": "function:internal/driver/whatsapp/qr.go:GetQRCode",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/qr.go",
+   "target": "function:internal/driver/whatsapp/qr.go:GetPairingCode",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/qr.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/qr.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/sender.go",
+   "target": "file:internal/driver/whatsapp/sender.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/sender.go",
+   "target": "function:internal/driver/whatsapp/sender.go:SendMessage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/sender.go",
+   "target": "function:internal/driver/whatsapp/sender.go:SendDocument",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/sender.go",
+   "target": "function:internal/driver/whatsapp/sender.go:SendImage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/sender.go",
+   "target": "function:internal/driver/whatsapp/sender.go:parseJID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:internal/driver/whatsapp/sender.go:SendMessage",
+   "target": "function:internal/driver/whatsapp/sender.go:parseJID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/whatsapp/sender.go:SendDocument",
+   "target": "function:internal/driver/whatsapp/sender.go:parseJID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/whatsapp/sender.go:SendImage",
+   "target": "function:internal/driver/whatsapp/sender.go:parseJID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/driver/whatsapp/session_manager.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "class:internal/driver/whatsapp/session_manager.go:SessionManager",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:NewSessionManager",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:ConnectWithContext",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Connect",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:DisconnectAll",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Disconnect",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Logout",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Purge",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Reconnect",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendMessage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendMessageContext",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendDocument",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendImage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetQRCode",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetPairingCode",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:RestoreAllSessions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SetMessageCallback",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SetChatUpdateCallback",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SetChatPresenceCallback",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/chat.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/conversation_context.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/commands.go",
+   "target": "file:internal/driver/zteolt/commands.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/commands.go",
+   "target": "function:internal/driver/zteolt/commands.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/commands.go",
+   "target": "function:internal/driver/zteolt/commands.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/commands.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/commands.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/commands.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/driver/zteolt/driver.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "class:internal/driver/zteolt/driver.go:Driver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "function:internal/driver/zteolt/driver.go:NewDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "function:internal/driver/zteolt/driver.go:Execute",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "function:internal/driver/zteolt/driver.go:Classify",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "function:internal/driver/zteolt/driver.go:Translate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "function:internal/driver/zteolt/driver.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/driver/zteolt/driver.go:Classify",
+   "target": "function:internal/driver/zteolt/driver.go:Classify",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/driver/zteolt/driver.go:Translate",
+   "target": "function:internal/driver/zteolt/driver.go:Translate",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/driver/zteolt/snmp.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "class:internal/driver/zteolt/snmp.go:SNMPClient",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:NewSNMPClient",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:Get",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/driver/zteolt/telnet.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "class:internal/driver/zteolt/telnet.go:telnetClient",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/audit.go",
+   "target": "file:internal/port/audit.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/audit.go",
+   "target": "class:internal/port/audit.go:AuditWriter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/audit.go",
+   "target": "class:internal/port/audit.go:AuditLogWriter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/audit.go",
+   "target": "file:internal/domain/audit/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/audit.go",
+   "target": "file:internal/domain/audit/log.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/auth_service.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/auth_service.go",
+   "target": "class:internal/port/auth_service.go:RateLimiter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/auth_service.go",
+   "target": "class:internal/port/auth_service.go:RoleAuthorizer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/auth_service.go",
+   "target": "class:internal/port/auth_service.go:RBACManager",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/auth_service.go",
+   "target": "class:internal/port/auth_service.go:TokenService",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/auth_service.go",
+   "target": "class:internal/port/auth_service.go:RefreshTokenManager",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/authorizer.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/authorizer.go",
+   "target": "class:internal/port/authorizer.go:Authorizer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "class:internal/port/bot_repository.go:WASessionRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "class:internal/port/bot_repository.go:ConversationRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/chat.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/conversation_context.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/cache_store.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/cache_store.go",
+   "target": "class:internal/port/cache_store.go:CacheStore",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/cashbook_repository.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/cashbook_repository.go",
+   "target": "class:internal/port/cashbook_repository.go:CashTransactionFilter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/cashbook_repository.go",
+   "target": "class:internal/port/cashbook_repository.go:CashbookRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/cashbook_repository.go",
+   "target": "file:internal/domain/cashbook/account.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/cashbook_repository.go",
+   "target": "file:internal/domain/cashbook/category.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/cashbook_repository.go",
+   "target": "file:internal/domain/cashbook/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/cashbook_repository.go",
+   "target": "file:internal/domain/cashbook/transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/chat_repository.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/chat_repository.go",
+   "target": "class:internal/port/chat_repository.go:ChatRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/chat_repository.go",
+   "target": "file:internal/domain/bot/chat.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/chat_repository.go",
+   "target": "file:internal/domain/bot/conversation_context.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/chat_repository.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/chat_repository.go",
+   "target": "file:internal/domain/bot/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/chat_repository.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/chat_repository.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "class:internal/port/credential_vault.go:CredentialVault",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "class:internal/port/customer_repository.go:CustomerRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/customer/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/customer/portal_otp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/customer/portal_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_authorizer.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_authorizer.go",
+   "target": "class:internal/port/device_authorizer.go:DeviceAuthorizer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "class:internal/port/device_diagnostics.go:DeviceDiagnostics",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_diagnostics.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:DeviceDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:TerminalSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:TerminalDeviceDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_interface.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "class:internal/port/device_repository.go:DeviceRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  }
+ ]
+}

@@ -1,0 +1,175 @@
+{
+ "batchIndex": 10,
+ "nodes": [
+  {
+   "id": "document:docs/mikhmon/01-auth-admin.md",
+   "type": "document",
+   "name": "01-auth-admin.md",
+   "filePath": "docs/mikhmon/01-auth-admin.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 01-auth-admin (95 baris).",
+   "description": "Dokumentasi: 01-auth-admin (95 baris).",
+   "tags": [
+    "document",
+    "01-auth-admin"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/02-router-instance.md",
+   "type": "document",
+   "name": "02-router-instance.md",
+   "filePath": "docs/mikhmon/02-router-instance.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 02-router-instance (143 baris).",
+   "description": "Dokumentasi: 02-router-instance (143 baris).",
+   "tags": [
+    "document",
+    "02-router-instance"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/03-dashboard-monitoring.md",
+   "type": "document",
+   "name": "03-dashboard-monitoring.md",
+   "filePath": "docs/mikhmon/03-dashboard-monitoring.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 03-dashboard-monitoring (157 baris).",
+   "description": "Dokumentasi: 03-dashboard-monitoring (157 baris).",
+   "tags": [
+    "document",
+    "03-dashboard-monitoring"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/04-hotspot-user.md",
+   "type": "document",
+   "name": "04-hotspot-user.md",
+   "filePath": "docs/mikhmon/04-hotspot-user.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 04-hotspot-user (82 baris).",
+   "description": "Dokumentasi: 04-hotspot-user (82 baris).",
+   "tags": [
+    "document",
+    "04-hotspot-user"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/05-hotspot-profile.md",
+   "type": "document",
+   "name": "05-hotspot-profile.md",
+   "filePath": "docs/mikhmon/05-hotspot-profile.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 05-hotspot-profile (112 baris).",
+   "description": "Dokumentasi: 05-hotspot-profile (112 baris).",
+   "tags": [
+    "document",
+    "05-hotspot-profile"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/06-active-host-server.md",
+   "type": "document",
+   "name": "06-active-host-server.md",
+   "filePath": "docs/mikhmon/06-active-host-server.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 06-active-host-server (80 baris).",
+   "description": "Dokumentasi: 06-active-host-server (80 baris).",
+   "tags": [
+    "document",
+    "06-active-host-server"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/07-voucher-generator.md",
+   "type": "document",
+   "name": "07-voucher-generator.md",
+   "filePath": "docs/mikhmon/07-voucher-generator.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 07-voucher-generator (90 baris).",
+   "description": "Dokumentasi: 07-voucher-generator (90 baris).",
+   "tags": [
+    "document",
+    "07-voucher-generator"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/08-sales-report.md",
+   "type": "document",
+   "name": "08-sales-report.md",
+   "filePath": "docs/mikhmon/08-sales-report.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 08-sales-report (76 baris).",
+   "description": "Dokumentasi: 08-sales-report (76 baris).",
+   "tags": [
+    "document",
+    "08-sales-report"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/09-expire-monitor.md",
+   "type": "document",
+   "name": "09-expire-monitor.md",
+   "filePath": "docs/mikhmon/09-expire-monitor.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 09-expire-monitor (86 baris).",
+   "description": "Dokumentasi: 09-expire-monitor (86 baris).",
+   "tags": [
+    "document",
+    "09-expire-monitor"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/10-template-print.md",
+   "type": "document",
+   "name": "10-template-print.md",
+   "filePath": "docs/mikhmon/10-template-print.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 10-template-print (114 baris).",
+   "description": "Dokumentasi: 10-template-print (114 baris).",
+   "tags": [
+    "document",
+    "10-template-print"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/11-resources-theme.md",
+   "type": "document",
+   "name": "11-resources-theme.md",
+   "filePath": "docs/mikhmon/11-resources-theme.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 11-resources-theme (66 baris).",
+   "description": "Dokumentasi: 11-resources-theme (66 baris).",
+   "tags": [
+    "document",
+    "11-resources-theme"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/IMPLEMENTATION-PLAN-04-10.md",
+   "type": "document",
+   "name": "IMPLEMENTATION-PLAN-04-10.md",
+   "filePath": "docs/mikhmon/IMPLEMENTATION-PLAN-04-10.md",
+   "complexity": "moderate",
+   "summary": "Dokumentasi: IMPLEMENTATION-PLAN-04-10 (659 baris).",
+   "description": "Dokumentasi: IMPLEMENTATION-PLAN-04-10 (659 baris).",
+   "tags": [
+    "document",
+    "implementation-plan-04-10"
+   ]
+  },
+  {
+   "id": "document:docs/mikhmon/README.md",
+   "type": "document",
+   "name": "README.md",
+   "filePath": "docs/mikhmon/README.md",
+   "complexity": "moderate",
+   "summary": "Dokumentasi: README (328 baris).",
+   "description": "Dokumentasi: README (328 baris).",
+   "tags": [
+    "document",
+    "readme"
+   ]
+  }
+ ],
+ "edges": []
+}

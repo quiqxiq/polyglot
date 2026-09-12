@@ -1,0 +1,71 @@
+{
+ "batchIndex": 4,
+ "nodes": [
+  {
+   "id": "config:buf.yaml",
+   "type": "config",
+   "name": "buf.yaml",
+   "filePath": "buf.yaml",
+   "complexity": "simple",
+   "summary": "Konfigurasi Buf (lint & breaking check) untuk modul protobuf api/proto.",
+   "description": "Aturan lint dan deteksi breaking change protobuf; wajib lolos sebelum regenerasi kode (make proto-check).",
+   "tags": [
+    "config",
+    "buf"
+   ]
+  },
+  {
+   "id": "config:go.mod",
+   "type": "config",
+   "name": "go.mod",
+   "filePath": "go.mod",
+   "complexity": "simple",
+   "summary": "Manifest modul Go (github.com/quixiq/polyglot, Go 1.26) dan seluruh dependensi.",
+   "description": "Dependensi kunci: connectrpc.com/connect, modelcontextprotocol/go-sdk, gorm+casbin, redis, websocket (coder), whatsmeow, scrapligo, openai-go, firebase/genkit, golang-migrate, testcontainers.",
+   "tags": [
+    "config",
+    "go"
+   ]
+  },
+  {
+   "id": "config:go.sum",
+   "type": "config",
+   "name": "go.sum",
+   "filePath": "go.sum",
+   "complexity": "moderate",
+   "summary": "Berkas config proyek: go.sum.",
+   "description": "Berkas config proyek: go.sum.",
+   "tags": [
+    "config",
+    "go"
+   ]
+  },
+  {
+   "id": "config:opencode.jsonc",
+   "type": "config",
+   "name": "opencode.jsonc",
+   "filePath": "opencode.jsonc",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: opencode.jsonc.",
+   "description": "Berkas config proyek: opencode.jsonc.",
+   "tags": [
+    "config",
+    "opencode"
+   ]
+  },
+  {
+   "id": "document:provision-plan.md",
+   "type": "document",
+   "name": "provision-plan.md",
+   "filePath": "provision-plan.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: provision-plan (257 baris).",
+   "description": "Dokumentasi: provision-plan (257 baris).",
+   "tags": [
+    "document",
+    "provision-plan"
+   ]
+  }
+ ],
+ "edges": []
+}

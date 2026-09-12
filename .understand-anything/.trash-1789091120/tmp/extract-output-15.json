@@ -1,0 +1,6597 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/adapter/auth/procedure_permissions.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 300,
+      "nonEmptyLines": 275,
+      "functions": [
+        {
+          "name": "PermissionFor",
+          "startLine": 297,
+          "endLine": 300,
+          "params": [
+            "procedure"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PermissionFor",
+          "line": 297,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/auth/rbac_enforce_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 190,
+      "nonEmptyLines": 166,
+      "functions": [
+        {
+          "name": "newTestEnforcer",
+          "startLine": 14,
+          "endLine": 35,
+          "params": [
+            "t",
+            "policies",
+            "roles"
+          ]
+        },
+        {
+          "name": "TestEnforceRoleMatrix",
+          "startLine": 37,
+          "endLine": 102,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestWildcardRegexMatching",
+          "startLine": 104,
+          "endLine": 134,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSyncRolePermissions",
+          "startLine": 136,
+          "endLine": 161,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestDeleteRole",
+          "startLine": 163,
+          "endLine": 190,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestEnforceRoleMatrix",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "TestWildcardRegexMatching",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "TestSyncRolePermissions",
+          "line": 136,
+          "isDefault": false
+        },
+        {
+          "name": "TestDeleteRole",
+          "line": 163,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newTestEnforcer",
+          "callee": "t.Helper",
+          "lineNumber": 15
+        },
+        {
+          "caller": "newTestEnforcer",
+          "callee": "model.NewModelFromString",
+          "lineNumber": 16
+        },
+        {
+          "caller": "newTestEnforcer",
+          "callee": "t.Fatalf",
+          "lineNumber": 18
+        },
+        {
+          "caller": "newTestEnforcer",
+          "callee": "casbin.NewEnforcer",
+          "lineNumber": 20
+        },
+        {
+          "caller": "newTestEnforcer",
+          "callee": "t.Fatalf",
+          "lineNumber": 22
+        },
+        {
+          "caller": "newTestEnforcer",
+          "callee": "e.AddPolicy",
+          "lineNumber": 25
+        },
+        {
+          "caller": "newTestEnforcer",
+          "callee": "t.Fatalf",
+          "lineNumber": 26
+        },
+        {
+          "caller": "newTestEnforcer",
+          "callee": "e.AddRoleForUser",
+          "lineNumber": 30
+        },
+        {
+          "caller": "newTestEnforcer",
+          "callee": "t.Fatalf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestEnforceRoleMatrix",
+          "callee": "newTestEnforcer",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestEnforceRoleMatrix",
+          "callee": "SeedSystemPolicies",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestEnforceRoleMatrix",
+          "callee": "seeder.AddRoleForUser",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestEnforceRoleMatrix",
+          "callee": "t.Fatalf",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestEnforceRoleMatrix",
+          "callee": "t.Run",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestEnforceRoleMatrix",
+          "callee": "seeder.Enforce",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestEnforceRoleMatrix",
+          "callee": "t.Fatalf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestEnforceRoleMatrix",
+          "callee": "t.Fatalf",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestWildcardRegexMatching",
+          "callee": "newTestEnforcer",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestWildcardRegexMatching",
+          "callee": "t.Run",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestWildcardRegexMatching",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestWildcardRegexMatching",
+          "callee": "ce.Enforce",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestWildcardRegexMatching",
+          "callee": "t.Fatalf",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestWildcardRegexMatching",
+          "callee": "t.Fatalf",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestSyncRolePermissions",
+          "callee": "newTestEnforcer",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestSyncRolePermissions",
+          "callee": "ce.SyncRolePermissions",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestSyncRolePermissions",
+          "callee": "t.Fatalf",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestSyncRolePermissions",
+          "callee": "ce.Enforce",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestSyncRolePermissions",
+          "callee": "t.Errorf",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestSyncRolePermissions",
+          "callee": "ce.Enforce",
+          "lineNumber": 157
+        },
+        {
+          "caller": "TestSyncRolePermissions",
+          "callee": "t.Errorf",
+          "lineNumber": 159
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "newTestEnforcer",
+          "lineNumber": 164
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "ce.DeleteRole",
+          "lineNumber": 171
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "t.Errorf",
+          "lineNumber": 172
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "ce.DeleteRole",
+          "lineNumber": 176
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "t.Fatalf",
+          "lineNumber": 177
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "ce.Enforce",
+          "lineNumber": 181
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "t.Errorf",
+          "lineNumber": 183
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "ce.Enforce",
+          "lineNumber": 186
+        },
+        {
+          "caller": "TestDeleteRole",
+          "callee": "t.Errorf",
+          "lineNumber": 188
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/auth/refresh_token_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 116,
+      "nonEmptyLines": 104,
+      "functions": [
+        {
+          "name": "newFakeRefreshStore",
+          "startLine": 16,
+          "endLine": 18,
+          "params": []
+        },
+        {
+          "name": "Set",
+          "startLine": 20,
+          "endLine": 25,
+          "params": [
+            "_",
+            "key",
+            "value",
+            "_"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 27,
+          "endLine": 31,
+          "params": [
+            "_",
+            "key"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 33,
+          "endLine": 38,
+          "params": [
+            "_",
+            "key"
+          ]
+        },
+        {
+          "name": "len",
+          "startLine": 40,
+          "endLine": 44,
+          "params": []
+        },
+        {
+          "name": "TestRefreshTokenService",
+          "startLine": 46,
+          "endLine": 116,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "fakeRefreshStore",
+          "startLine": 11,
+          "endLine": 14,
+          "methods": [
+            "Set",
+            "Get",
+            "Delete",
+            "len"
+          ],
+          "properties": [
+            "mu",
+            "data"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Set",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "TestRefreshTokenService",
+          "line": 46,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Set",
+          "callee": "f.mu.Lock",
+          "lineNumber": 21
+        },
+        {
+          "caller": "Set",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Get",
+          "callee": "f.mu.Lock",
+          "lineNumber": 28
+        },
+        {
+          "caller": "Get",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 29
+        },
+        {
+          "caller": "Delete",
+          "callee": "f.mu.Lock",
+          "lineNumber": 34
+        },
+        {
+          "caller": "Delete",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 35
+        },
+        {
+          "caller": "Delete",
+          "callee": "delete",
+          "lineNumber": 36
+        },
+        {
+          "caller": "len",
+          "callee": "f.mu.Lock",
+          "lineNumber": 41
+        },
+        {
+          "caller": "len",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 42
+        },
+        {
+          "caller": "len",
+          "callee": "len",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "newFakeRefreshStore",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "NewRefreshTokenService",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "context.Background",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Run",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Issue",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatal",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Validate",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "len",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Run",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Validate",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatal",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Run",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "store.len",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Issue",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Rotate",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatal",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Validate",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatal",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Validate",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "store.len",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "store.len",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Run",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Issue",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Revoke",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatalf",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "svc.Validate",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestRefreshTokenService",
+          "callee": "t.Fatal",
+          "lineNumber": 113
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/auth/refresh_token.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 231,
+      "nonEmptyLines": 201,
+      "functions": [
+        {
+          "name": "NewRefreshTokenService",
+          "startLine": 45,
+          "endLine": 50,
+          "params": [
+            "store",
+            "ttl"
+          ]
+        },
+        {
+          "name": "IssueToken",
+          "startLine": 53,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "userID",
+            "roles",
+            "tenantID"
+          ]
+        },
+        {
+          "name": "RotateToken",
+          "startLine": 63,
+          "endLine": 69,
+          "params": [
+            "ctx",
+            "oldToken"
+          ]
+        },
+        {
+          "name": "RevokeToken",
+          "startLine": 72,
+          "endLine": 74,
+          "params": [
+            "ctx",
+            "token"
+          ]
+        },
+        {
+          "name": "Issue",
+          "startLine": 77,
+          "endLine": 90,
+          "params": [
+            "ctx",
+            "claims"
+          ]
+        },
+        {
+          "name": "Validate",
+          "startLine": 93,
+          "endLine": 109,
+          "params": [
+            "ctx",
+            "token"
+          ]
+        },
+        {
+          "name": "Rotate",
+          "startLine": 112,
+          "endLine": 125,
+          "params": [
+            "ctx",
+            "oldToken"
+          ]
+        },
+        {
+          "name": "Revoke",
+          "startLine": 128,
+          "endLine": 133,
+          "params": [
+            "ctx",
+            "token"
+          ]
+        },
+        {
+          "name": "TTL",
+          "startLine": 136,
+          "endLine": 138,
+          "params": []
+        },
+        {
+          "name": "refreshKey",
+          "startLine": 140,
+          "endLine": 142,
+          "params": [
+            "token"
+          ]
+        },
+        {
+          "name": "randomToken",
+          "startLine": 144,
+          "endLine": 150,
+          "params": []
+        },
+        {
+          "name": "SetRefreshTokenCookie",
+          "startLine": 153,
+          "endLine": 155,
+          "params": [
+            "h",
+            "token",
+            "ttl",
+            "secure"
+          ]
+        },
+        {
+          "name": "ClearRefreshTokenCookie",
+          "startLine": 158,
+          "endLine": 160,
+          "params": [
+            "h",
+            "secure"
+          ]
+        },
+        {
+          "name": "ExtractRefreshTokenCookie",
+          "startLine": 163,
+          "endLine": 165,
+          "params": [
+            "h"
+          ]
+        },
+        {
+          "name": "SetRefreshCookieWriter",
+          "startLine": 168,
+          "endLine": 170,
+          "params": [
+            "w",
+            "token",
+            "ttl",
+            "secure"
+          ]
+        },
+        {
+          "name": "SetRefreshCookieHeader",
+          "startLine": 173,
+          "endLine": 177,
+          "params": [
+            "h",
+            "token",
+            "ttl",
+            "secure"
+          ]
+        },
+        {
+          "name": "ClearRefreshCookieWriter",
+          "startLine": 180,
+          "endLine": 182,
+          "params": [
+            "w"
+          ]
+        },
+        {
+          "name": "ClearRefreshCookieHeader",
+          "startLine": 185,
+          "endLine": 189,
+          "params": [
+            "h",
+            "secure"
+          ]
+        },
+        {
+          "name": "refreshCookie",
+          "startLine": 191,
+          "endLine": 201,
+          "params": [
+            "token",
+            "ttl",
+            "secure"
+          ]
+        },
+        {
+          "name": "expiredRefreshCookie",
+          "startLine": 203,
+          "endLine": 212,
+          "params": []
+        },
+        {
+          "name": "ReadRefreshToken",
+          "startLine": 215,
+          "endLine": 226,
+          "params": [
+            "h",
+            "bodyValue"
+          ]
+        },
+        {
+          "name": "UserIDToRef",
+          "startLine": 229,
+          "endLine": 231,
+          "params": [
+            "userID"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RefreshClaims",
+          "startLine": 29,
+          "endLine": 34,
+          "methods": [],
+          "properties": [
+            "UserID",
+            "Roles",
+            "TenantID",
+            "IssuedAt"
+          ]
+        },
+        {
+          "name": "RefreshTokenService",
+          "startLine": 37,
+          "endLine": 40,
+          "methods": [
+            "IssueToken",
+            "RotateToken",
+            "RevokeToken",
+            "Issue",
+            "Validate",
+            "Rotate",
+            "Revoke",
+            "TTL"
+          ],
+          "properties": [
+            "store",
+            "ttl"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RefreshClaims",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "RefreshTokenService",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "NewRefreshTokenService",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "IssueToken",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "RotateToken",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "RevokeToken",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "Issue",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "Validate",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "Rotate",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "Revoke",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "TTL",
+          "line": 136,
+          "isDefault": false
+        },
+        {
+          "name": "SetRefreshTokenCookie",
+          "line": 153,
+          "isDefault": false
+        },
+        {
+          "name": "ClearRefreshTokenCookie",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "ExtractRefreshTokenCookie",
+          "line": 163,
+          "isDefault": false
+        },
+        {
+          "name": "SetRefreshCookieWriter",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "SetRefreshCookieHeader",
+          "line": 173,
+          "isDefault": false
+        },
+        {
+          "name": "ClearRefreshCookieWriter",
+          "line": 180,
+          "isDefault": false
+        },
+        {
+          "name": "ClearRefreshCookieHeader",
+          "line": 185,
+          "isDefault": false
+        },
+        {
+          "name": "ReadRefreshToken",
+          "line": 215,
+          "isDefault": false
+        },
+        {
+          "name": "UserIDToRef",
+          "line": 229,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "IssueToken",
+          "callee": "s.Issue",
+          "lineNumber": 54
+        },
+        {
+          "caller": "IssueToken",
+          "callee": "time.Now().Unix",
+          "lineNumber": 58
+        },
+        {
+          "caller": "IssueToken",
+          "callee": "time.Now",
+          "lineNumber": 58
+        },
+        {
+          "caller": "RotateToken",
+          "callee": "s.Rotate",
+          "lineNumber": 64
+        },
+        {
+          "caller": "RevokeToken",
+          "callee": "s.Revoke",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Issue",
+          "callee": "randomToken",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Issue",
+          "callee": "json.Marshal",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Issue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 84
+        },
+        {
+          "caller": "Issue",
+          "callee": "s.store.Set",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Issue",
+          "callee": "refreshKey",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Issue",
+          "callee": "string",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Issue",
+          "callee": "int",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Issue",
+          "callee": "s.ttl.Seconds",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Issue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Validate",
+          "callee": "s.store.Get",
+          "lineNumber": 97
+        },
+        {
+          "caller": "Validate",
+          "callee": "refreshKey",
+          "lineNumber": 97
+        },
+        {
+          "caller": "Validate",
+          "callee": "json.Unmarshal",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Rotate",
+          "callee": "s.Validate",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Rotate",
+          "callee": "s.store.Delete",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Rotate",
+          "callee": "refreshKey",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Rotate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 118
+        },
+        {
+          "caller": "Rotate",
+          "callee": "s.Issue",
+          "lineNumber": 120
+        },
+        {
+          "caller": "Revoke",
+          "callee": "s.store.Delete",
+          "lineNumber": 132
+        },
+        {
+          "caller": "Revoke",
+          "callee": "refreshKey",
+          "lineNumber": 132
+        },
+        {
+          "caller": "randomToken",
+          "callee": "make",
+          "lineNumber": 145
+        },
+        {
+          "caller": "randomToken",
+          "callee": "rand.Read",
+          "lineNumber": 146
+        },
+        {
+          "caller": "randomToken",
+          "callee": "fmt.Errorf",
+          "lineNumber": 147
+        },
+        {
+          "caller": "randomToken",
+          "callee": "hex.EncodeToString",
+          "lineNumber": 149
+        },
+        {
+          "caller": "SetRefreshTokenCookie",
+          "callee": "SetRefreshCookieHeader",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ClearRefreshTokenCookie",
+          "callee": "ClearRefreshCookieHeader",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ExtractRefreshTokenCookie",
+          "callee": "ReadRefreshToken",
+          "lineNumber": 164
+        },
+        {
+          "caller": "SetRefreshCookieWriter",
+          "callee": "http.SetCookie",
+          "lineNumber": 169
+        },
+        {
+          "caller": "SetRefreshCookieWriter",
+          "callee": "refreshCookie",
+          "lineNumber": 169
+        },
+        {
+          "caller": "SetRefreshCookieHeader",
+          "callee": "refreshCookie",
+          "lineNumber": 174
+        },
+        {
+          "caller": "SetRefreshCookieHeader",
+          "callee": "h.Add",
+          "lineNumber": 175
+        },
+        {
+          "caller": "SetRefreshCookieHeader",
+          "callee": "c.String",
+          "lineNumber": 175
+        },
+        {
+          "caller": "ClearRefreshCookieWriter",
+          "callee": "http.SetCookie",
+          "lineNumber": 181
+        },
+        {
+          "caller": "ClearRefreshCookieWriter",
+          "callee": "expiredRefreshCookie",
+          "lineNumber": 181
+        },
+        {
+          "caller": "ClearRefreshCookieHeader",
+          "callee": "expiredRefreshCookie",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ClearRefreshCookieHeader",
+          "callee": "h.Add",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ClearRefreshCookieHeader",
+          "callee": "c.String",
+          "lineNumber": 187
+        },
+        {
+          "caller": "refreshCookie",
+          "callee": "int",
+          "lineNumber": 196
+        },
+        {
+          "caller": "refreshCookie",
+          "callee": "ttl.Seconds",
+          "lineNumber": 196
+        },
+        {
+          "caller": "ReadRefreshToken",
+          "callee": "h.Get",
+          "lineNumber": 216
+        },
+        {
+          "caller": "ReadRefreshToken",
+          "callee": "http.ParseCookie",
+          "lineNumber": 217
+        },
+        {
+          "caller": "ReadRefreshToken",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 225
+        },
+        {
+          "caller": "UserIDToRef",
+          "callee": "strconv.FormatUint",
+          "lineNumber": 230
+        },
+        {
+          "caller": "UserIDToRef",
+          "callee": "uint64",
+          "lineNumber": 230
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 20,
+        "functionCount": 22,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/connect/auth/auth_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 215,
+      "nonEmptyLines": 177,
+      "functions": [
+        {
+          "name": "NewAuthConnectHandler",
+          "startLine": 28,
+          "endLine": 40,
+          "params": [
+            "authUC",
+            "refreshUC",
+            "userUC",
+            "secure"
+          ]
+        },
+        {
+          "name": "Login",
+          "startLine": 42,
+          "endLine": 63,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetMe",
+          "startLine": 65,
+          "endLine": 97,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdateMe",
+          "startLine": 99,
+          "endLine": 129,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ChangePassword",
+          "startLine": 131,
+          "endLine": 159,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "RefreshToken",
+          "startLine": 161,
+          "endLine": 187,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "Logout",
+          "startLine": 189,
+          "endLine": 202,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "clientIPFromRequest",
+          "startLine": 204,
+          "endLine": 215,
+          "params": [
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AuthConnectHandler",
+          "startLine": 21,
+          "endLine": 26,
+          "methods": [
+            "Login",
+            "GetMe",
+            "UpdateMe",
+            "ChangePassword",
+            "RefreshToken",
+            "Logout"
+          ],
+          "properties": [
+            "authUC",
+            "refreshUC",
+            "userUC",
+            "secure"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AuthConnectHandler",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "NewAuthConnectHandler",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Login",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "GetMe",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateMe",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "ChangePassword",
+          "line": 131,
+          "isDefault": false
+        },
+        {
+          "name": "RefreshToken",
+          "line": 161,
+          "isDefault": false
+        },
+        {
+          "name": "Logout",
+          "line": 189,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Login",
+          "callee": "clientIPFromRequest",
+          "lineNumber": 43
+        },
+        {
+          "caller": "Login",
+          "callee": "h.authUC.Login",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Login",
+          "callee": "response.MapDomainError",
+          "lineNumber": 46
+        },
+        {
+          "caller": "Login",
+          "callee": "DomainUserToProfile",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Login",
+          "callee": "time.Now",
+          "lineNumber": 50
+        },
+        {
+          "caller": "Login",
+          "callee": "connect.NewResponse",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Login",
+          "callee": "now.Add(24 * time.Hour).Unix",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Login",
+          "callee": "now.Add",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Login",
+          "callee": "iauth.SetRefreshTokenCookie",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Login",
+          "callee": "resp.Header",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GetMe",
+          "callee": "req.Header().Get",
+          "lineNumber": 66
+        },
+        {
+          "caller": "GetMe",
+          "callee": "req.Header",
+          "lineNumber": 66
+        },
+        {
+          "caller": "GetMe",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 68
+        },
+        {
+          "caller": "GetMe",
+          "callee": "strings.SplitN",
+          "lineNumber": 71
+        },
+        {
+          "caller": "GetMe",
+          "callee": "len",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GetMe",
+          "callee": "strings.EqualFold",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GetMe",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 73
+        },
+        {
+          "caller": "GetMe",
+          "callee": "h.authUC.TokenService().ValidateAccessToken",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetMe",
+          "callee": "h.authUC.TokenService",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetMe",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 79
+        },
+        {
+          "caller": "GetMe",
+          "callee": "fmt.Sscanf",
+          "lineNumber": 83
+        },
+        {
+          "caller": "GetMe",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GetMe",
+          "callee": "h.userUC.GetUser",
+          "lineNumber": 87
+        },
+        {
+          "caller": "GetMe",
+          "callee": "response.MapDomainError",
+          "lineNumber": 89
+        },
+        {
+          "caller": "GetMe",
+          "callee": "h.userUC.GetRoles",
+          "lineNumber": 92
+        },
+        {
+          "caller": "GetMe",
+          "callee": "h.userUC.GetPermissions",
+          "lineNumber": 93
+        },
+        {
+          "caller": "GetMe",
+          "callee": "DomainUserToProfile",
+          "lineNumber": 95
+        },
+        {
+          "caller": "GetMe",
+          "callee": "connect.NewResponse",
+          "lineNumber": 96
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "req.Header().Get",
+          "lineNumber": 100
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "req.Header",
+          "lineNumber": 100
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 102
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "strings.SplitN",
+          "lineNumber": 104
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "len",
+          "lineNumber": 105
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "strings.EqualFold",
+          "lineNumber": 105
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 106
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "h.authUC.TokenService().ValidateAccessToken",
+          "lineNumber": 109
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "h.authUC.TokenService",
+          "lineNumber": 109
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 111
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "fmt.Sscanf",
+          "lineNumber": 115
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 116
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "h.authUC.UpdateProfile",
+          "lineNumber": 119
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "response.MapDomainError",
+          "lineNumber": 121
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "h.userUC.GetRoles",
+          "lineNumber": 124
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "h.userUC.GetPermissions",
+          "lineNumber": 125
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "DomainUserToProfile",
+          "lineNumber": 127
+        },
+        {
+          "caller": "UpdateMe",
+          "callee": "connect.NewResponse",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "req.Header().Get",
+          "lineNumber": 132
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "req.Header",
+          "lineNumber": 132
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "strings.SplitN",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "len",
+          "lineNumber": 137
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "strings.EqualFold",
+          "lineNumber": 137
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 138
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "h.authUC.TokenService().ValidateAccessToken",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "h.authUC.TokenService",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "fmt.Sscanf",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "h.authUC.ChangePassword",
+          "lineNumber": 151
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "response.MapDomainError",
+          "lineNumber": 152
+        },
+        {
+          "caller": "ChangePassword",
+          "callee": "connect.NewResponse",
+          "lineNumber": 155
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "iauth.ExtractRefreshTokenCookie",
+          "lineNumber": 164
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "req.Header",
+          "lineNumber": 164
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 167
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "h.refreshUC.Refresh",
+          "lineNumber": 170
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "response.MapDomainError",
+          "lineNumber": 172
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "time.Now",
+          "lineNumber": 175
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "connect.NewResponse",
+          "lineNumber": 176
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "now.Add(24 * time.Hour).Unix",
+          "lineNumber": 178
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "now.Add",
+          "lineNumber": 178
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "now.Add(iauth.RefreshTokenLifetime).Unix",
+          "lineNumber": 179
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "now.Add",
+          "lineNumber": 179
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "iauth.SetRefreshTokenCookie",
+          "lineNumber": 183
+        },
+        {
+          "caller": "RefreshToken",
+          "callee": "resp.Header",
+          "lineNumber": 183
+        },
+        {
+          "caller": "Logout",
+          "callee": "iauth.ExtractRefreshTokenCookie",
+          "lineNumber": 190
+        },
+        {
+          "caller": "Logout",
+          "callee": "req.Header",
+          "lineNumber": 190
+        },
+        {
+          "caller": "Logout",
+          "callee": "h.refreshUC.Revoke",
+          "lineNumber": 193
+        },
+        {
+          "caller": "Logout",
+          "callee": "connect.NewResponse",
+          "lineNumber": 196
+        },
+        {
+          "caller": "Logout",
+          "callee": "iauth.ClearRefreshTokenCookie",
+          "lineNumber": 199
+        },
+        {
+          "caller": "Logout",
+          "callee": "resp.Header",
+          "lineNumber": 199
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "req.Header().Get",
+          "lineNumber": 205
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "req.Header",
+          "lineNumber": 205
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "strings.Split",
+          "lineNumber": 206
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "len",
+          "lineNumber": 207
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 207
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 208
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "req.Header().Get",
+          "lineNumber": 211
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "req.Header",
+          "lineNumber": 211
+        },
+        {
+          "caller": "clientIPFromRequest",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 212
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/auth/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 59,
+      "nonEmptyLines": 51,
+      "functions": [
+        {
+          "name": "DomainUserToPb",
+          "startLine": 11,
+          "endLine": 35,
+          "params": [
+            "u",
+            "roles"
+          ]
+        },
+        {
+          "name": "DomainUserToProfile",
+          "startLine": 38,
+          "endLine": 59,
+          "params": [
+            "u",
+            "roles",
+            "perms"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DomainUserToPb",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "DomainUserToProfile",
+          "line": 38,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "DomainUserToPb",
+          "callee": "len",
+          "lineNumber": 17
+        },
+        {
+          "caller": "DomainUserToPb",
+          "callee": "uint64",
+          "lineNumber": 22
+        },
+        {
+          "caller": "DomainUserToPb",
+          "callee": "u.CreatedAt.Unix",
+          "lineNumber": 32
+        },
+        {
+          "caller": "DomainUserToPb",
+          "callee": "u.UpdatedAt.Unix",
+          "lineNumber": 33
+        },
+        {
+          "caller": "DomainUserToProfile",
+          "callee": "len",
+          "lineNumber": 44
+        },
+        {
+          "caller": "DomainUserToProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/auth/rbac_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 175,
+      "nonEmptyLines": 140,
+      "functions": [
+        {
+          "name": "NewRBACConnectHandler",
+          "startLine": 21,
+          "endLine": 23,
+          "params": [
+            "enforcer"
+          ]
+        },
+        {
+          "name": "ListPolicies",
+          "startLine": 25,
+          "endLine": 47,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "AddPolicy",
+          "startLine": 49,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "RemovePolicy",
+          "startLine": 62,
+          "endLine": 73,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListRoleAssignments",
+          "startLine": 75,
+          "endLine": 96,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "AssignRole",
+          "startLine": 98,
+          "endLine": 109,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UnassignRole",
+          "startLine": 111,
+          "endLine": 122,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "SyncRolePermissions",
+          "startLine": 124,
+          "endLine": 137,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteRole",
+          "startLine": 139,
+          "endLine": 156,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "NewRBACServiceHandler",
+          "startLine": 159,
+          "endLine": 175,
+          "params": [
+            "enforcer"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RBACConnectHandler",
+          "startLine": 16,
+          "endLine": 18,
+          "methods": [
+            "ListPolicies",
+            "AddPolicy",
+            "RemovePolicy",
+            "ListRoleAssignments",
+            "AssignRole",
+            "UnassignRole",
+            "SyncRolePermissions",
+            "DeleteRole"
+          ],
+          "properties": [
+            "enforcer"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RBACConnectHandler",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewRBACConnectHandler",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ListPolicies",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "AddPolicy",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "RemovePolicy",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "ListRoleAssignments",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "AssignRole",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "UnassignRole",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "SyncRolePermissions",
+          "line": 124,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteRole",
+          "line": 139,
+          "isDefault": false
+        },
+        {
+          "name": "NewRBACServiceHandler",
+          "line": 159,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListPolicies",
+          "callee": "connect.NewResponse",
+          "lineNumber": 27
+        },
+        {
+          "caller": "ListPolicies",
+          "callee": "h.enforcer.GetPolicies",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListPolicies",
+          "callee": "response.MapDomainError",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ListPolicies",
+          "callee": "make",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListPolicies",
+          "callee": "len",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListPolicies",
+          "callee": "len",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListPolicies",
+          "callee": "append",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ListPolicies",
+          "callee": "connect.NewResponse",
+          "lineNumber": 46
+        },
+        {
+          "caller": "AddPolicy",
+          "callee": "response.Unavailable",
+          "lineNumber": 51
+        },
+        {
+          "caller": "AddPolicy",
+          "callee": "h.enforcer.AddPolicy",
+          "lineNumber": 54
+        },
+        {
+          "caller": "AddPolicy",
+          "callee": "response.MapDomainError",
+          "lineNumber": 56
+        },
+        {
+          "caller": "AddPolicy",
+          "callee": "connect.NewResponse",
+          "lineNumber": 59
+        },
+        {
+          "caller": "RemovePolicy",
+          "callee": "response.Unavailable",
+          "lineNumber": 64
+        },
+        {
+          "caller": "RemovePolicy",
+          "callee": "h.enforcer.RemovePolicy",
+          "lineNumber": 67
+        },
+        {
+          "caller": "RemovePolicy",
+          "callee": "response.MapDomainError",
+          "lineNumber": 69
+        },
+        {
+          "caller": "RemovePolicy",
+          "callee": "connect.NewResponse",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ListRoleAssignments",
+          "callee": "connect.NewResponse",
+          "lineNumber": 77
+        },
+        {
+          "caller": "ListRoleAssignments",
+          "callee": "h.enforcer.GetGroupingPolicies",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ListRoleAssignments",
+          "callee": "response.MapDomainError",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ListRoleAssignments",
+          "callee": "make",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ListRoleAssignments",
+          "callee": "len",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ListRoleAssignments",
+          "callee": "len",
+          "lineNumber": 87
+        },
+        {
+          "caller": "ListRoleAssignments",
+          "callee": "append",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ListRoleAssignments",
+          "callee": "connect.NewResponse",
+          "lineNumber": 95
+        },
+        {
+          "caller": "AssignRole",
+          "callee": "response.Unavailable",
+          "lineNumber": 100
+        },
+        {
+          "caller": "AssignRole",
+          "callee": "h.enforcer.AddRoleForUser",
+          "lineNumber": 103
+        },
+        {
+          "caller": "AssignRole",
+          "callee": "response.MapDomainError",
+          "lineNumber": 105
+        },
+        {
+          "caller": "AssignRole",
+          "callee": "connect.NewResponse",
+          "lineNumber": 108
+        },
+        {
+          "caller": "UnassignRole",
+          "callee": "response.Unavailable",
+          "lineNumber": 113
+        },
+        {
+          "caller": "UnassignRole",
+          "callee": "h.enforcer.DeleteRoleForUser",
+          "lineNumber": 116
+        },
+        {
+          "caller": "UnassignRole",
+          "callee": "response.MapDomainError",
+          "lineNumber": 118
+        },
+        {
+          "caller": "UnassignRole",
+          "callee": "connect.NewResponse",
+          "lineNumber": 121
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "response.Unavailable",
+          "lineNumber": 126
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "h.enforcer.SyncRolePermissions",
+          "lineNumber": 129
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "response.MapDomainError",
+          "lineNumber": 130
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "connect.NewResponse",
+          "lineNumber": 133
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 135
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "response.PermissionDenied",
+          "lineNumber": 141
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "response.Unavailable",
+          "lineNumber": 145
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "h.enforcer.DeleteRole",
+          "lineNumber": 148
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "response.MapDomainError",
+          "lineNumber": 149
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "connect.NewResponse",
+          "lineNumber": 152
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 154
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "NewRBACConnectHandler",
+          "lineNumber": 160
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 161
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 162
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 165
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 165
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 166
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 166
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 167
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 167
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 168
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 168
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 169
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 169
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 170
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 170
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 171
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 171
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 172
+        },
+        {
+          "caller": "NewRBACServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 172
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 10,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/auth/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 43,
+      "functions": [
+        {
+          "name": "NewAuthServiceHandler",
+          "startLine": 13,
+          "endLine": 32,
+          "params": [
+            "authUC",
+            "refreshUC",
+            "userUC",
+            "secure"
+          ]
+        },
+        {
+          "name": "NewUserServiceHandler",
+          "startLine": 35,
+          "endLine": 51,
+          "params": [
+            "uc"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewAuthServiceHandler",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewUserServiceHandler",
+          "line": 35,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "NewAuthConnectHandler",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 20
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewAuthServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "NewUserConnectHandler",
+          "lineNumber": 36
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 37
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 38
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 41
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 41
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 42
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 42
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 43
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 43
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 45
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 45
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 46
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 46
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 47
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 47
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 48
+        },
+        {
+          "caller": "NewUserServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 48
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/auth/user_handler_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 61,
+      "nonEmptyLines": 55,
+      "functions": [
+        {
+          "name": "TestIsKnownRole",
+          "startLine": 13,
+          "endLine": 28,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestUserPermissionRegistry",
+          "startLine": 32,
+          "endLine": 50,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestKnownRolesSinkronSeeder",
+          "startLine": 54,
+          "endLine": 61,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestIsKnownRole",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "TestUserPermissionRegistry",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "TestKnownRolesSinkronSeeder",
+          "line": 54,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestIsKnownRole",
+          "callee": "t.Run",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestIsKnownRole",
+          "callee": "t.Fatalf",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestIsKnownRole",
+          "callee": "t.Run",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestIsKnownRole",
+          "callee": "t.Fatalf",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestUserPermissionRegistry",
+          "callee": "authadapter.PermissionFor",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestUserPermissionRegistry",
+          "callee": "t.Fatalf",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestUserPermissionRegistry",
+          "callee": "t.Fatalf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestKnownRolesSinkronSeeder",
+          "callee": "strings.Join",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestKnownRolesSinkronSeeder",
+          "callee": "strings.Contains",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestKnownRolesSinkronSeeder",
+          "callee": "t.Fatalf",
+          "lineNumber": 58
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/auth/user_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 189,
+      "nonEmptyLines": 158,
+      "functions": [
+        {
+          "name": "NewUserConnectHandler",
+          "startLine": 19,
+          "endLine": 23,
+          "params": [
+            "uc"
+          ]
+        },
+        {
+          "name": "ListUsers",
+          "startLine": 25,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CreateUser",
+          "startLine": 54,
+          "endLine": 78,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdateUser",
+          "startLine": 80,
+          "endLine": 104,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "AssignDevicesToUser",
+          "startLine": 106,
+          "endLine": 117,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListUserAccessibleDevices",
+          "startLine": 119,
+          "endLine": 134,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ResetPassword",
+          "startLine": 136,
+          "endLine": 146,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ToggleActive",
+          "startLine": 148,
+          "endLine": 174,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteUser",
+          "startLine": 176,
+          "endLine": 189,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "UserConnectHandler",
+          "startLine": 15,
+          "endLine": 17,
+          "methods": [
+            "ListUsers",
+            "CreateUser",
+            "UpdateUser",
+            "AssignDevicesToUser",
+            "ListUserAccessibleDevices",
+            "ResetPassword",
+            "ToggleActive",
+            "DeleteUser"
+          ],
+          "properties": [
+            "userUC"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UserConnectHandler",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "NewUserConnectHandler",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "ListUsers",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUser",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateUser",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "AssignDevicesToUser",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "ListUserAccessibleDevices",
+          "line": 119,
+          "isDefault": false
+        },
+        {
+          "name": "ResetPassword",
+          "line": 136,
+          "isDefault": false
+        },
+        {
+          "name": "ToggleActive",
+          "line": 148,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteUser",
+          "line": 176,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListUsers",
+          "callee": "int",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "int",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "h.userUC.ListUsers",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "response.MapDomainError",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "make",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "len",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "h.userUC.GetRoles",
+          "lineNumber": 42
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "DomainUserToPb",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "connect.NewResponse",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "int32",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "int32",
+          "lineNumber": 50
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "iauth.IdentityFromContext",
+          "lineNumber": 55
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "h.userUC.CreateUser",
+          "lineNumber": 57
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 71
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "h.userUC.GetRoles",
+          "lineNumber": 74
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "connect.NewResponse",
+          "lineNumber": 75
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "DomainUserToPb",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "iauth.IdentityFromContext",
+          "lineNumber": 81
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "h.userUC.UpdateUser",
+          "lineNumber": 83
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "uint",
+          "lineNumber": 87
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 97
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "h.userUC.GetRoles",
+          "lineNumber": 100
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "connect.NewResponse",
+          "lineNumber": 101
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "DomainUserToPb",
+          "lineNumber": 102
+        },
+        {
+          "caller": "AssignDevicesToUser",
+          "callee": "iauth.IdentityFromContext",
+          "lineNumber": 107
+        },
+        {
+          "caller": "AssignDevicesToUser",
+          "callee": "h.userUC.AssignDevicesToUser",
+          "lineNumber": 108
+        },
+        {
+          "caller": "AssignDevicesToUser",
+          "callee": "uint",
+          "lineNumber": 108
+        },
+        {
+          "caller": "AssignDevicesToUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 110
+        },
+        {
+          "caller": "AssignDevicesToUser",
+          "callee": "connect.NewResponse",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ListUserAccessibleDevices",
+          "callee": "iauth.IdentityFromContext",
+          "lineNumber": 120
+        },
+        {
+          "caller": "ListUserAccessibleDevices",
+          "callee": "uint",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ListUserAccessibleDevices",
+          "callee": "h.userUC.ListUserAccessibleDevices",
+          "lineNumber": 126
+        },
+        {
+          "caller": "ListUserAccessibleDevices",
+          "callee": "response.MapDomainError",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ListUserAccessibleDevices",
+          "callee": "connect.NewResponse",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ResetPassword",
+          "callee": "iauth.IdentityFromContext",
+          "lineNumber": 137
+        },
+        {
+          "caller": "ResetPassword",
+          "callee": "h.userUC.AdminResetPassword",
+          "lineNumber": 139
+        },
+        {
+          "caller": "ResetPassword",
+          "callee": "uint",
+          "lineNumber": 139
+        },
+        {
+          "caller": "ResetPassword",
+          "callee": "response.MapDomainError",
+          "lineNumber": 140
+        },
+        {
+          "caller": "ResetPassword",
+          "callee": "connect.NewResponse",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "iauth.IdentityFromContext",
+          "lineNumber": 149
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "uint",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "response.MapDomainError",
+          "lineNumber": 151
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "h.userUC.GetUser",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "uint",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "response.MapDomainError",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "h.userUC.ToggleStatus",
+          "lineNumber": 160
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "uint",
+          "lineNumber": 160
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "response.MapDomainError",
+          "lineNumber": 161
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "h.userUC.GetUser",
+          "lineNumber": 164
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "uint",
+          "lineNumber": 164
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "h.userUC.GetRoles",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "connect.NewResponse",
+          "lineNumber": 171
+        },
+        {
+          "caller": "ToggleActive",
+          "callee": "DomainUserToPb",
+          "lineNumber": 172
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "iauth.IdentityFromContext",
+          "lineNumber": 177
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "uint",
+          "lineNumber": 178
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 179
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "h.userUC.DeleteUser",
+          "lineNumber": 182
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "uint",
+          "lineNumber": 182
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "response.MapDomainError",
+          "lineNumber": 183
+        },
+        {
+          "caller": "DeleteUser",
+          "callee": "connect.NewResponse",
+          "lineNumber": 186
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 9,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/billing/billing_handler_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 113,
+      "nonEmptyLines": 97,
+      "functions": [
+        {
+          "name": "newBillingConnectFixture",
+          "startLine": 20,
+          "endLine": 36,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestBillingConnectHandler_CashierPay",
+          "startLine": 38,
+          "endLine": 60,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestBillingConnectHandler_GenerateInvoices",
+          "startLine": 62,
+          "endLine": 81,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestBillingConnectHandler_CancelInvoice",
+          "startLine": 83,
+          "endLine": 113,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestBillingConnectHandler_CashierPay",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "TestBillingConnectHandler_GenerateInvoices",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "TestBillingConnectHandler_CancelInvoice",
+          "line": 83,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "t.Helper",
+          "lineNumber": 21
+        },
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "mocktest.NewFakeInvoiceRepo",
+          "lineNumber": 22
+        },
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 23
+        },
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "mocktest.NewFakeServicePlanRepo",
+          "lineNumber": 24
+        },
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "mocktest.NewFakeCustomerRepo",
+          "lineNumber": 25
+        },
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "billingUC.NewInvoiceUseCase",
+          "lineNumber": 30
+        },
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "billingUC.NewCheckoutUseCase",
+          "lineNumber": 31
+        },
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "billingUC.NewRunBillingUseCase",
+          "lineNumber": 32
+        },
+        {
+          "caller": "newBillingConnectFixture",
+          "callee": "connectBilling.NewBillingConnectHandler",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "newBillingConnectFixture",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "context.Background",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "require.NoError",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "invRepo.Save",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "handler.CashierPay",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "connect.NewRequest",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "require.NoError",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "assert.Equal",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestBillingConnectHandler_CashierPay",
+          "callee": "assert.Equal",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "newBillingConnectFixture",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "context.Background",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "planRepo.Seed",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "subRepo.Seed",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "handler.GenerateInvoices",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "connect.NewRequest",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "require.NoError",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "assert.Equal",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "int32",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "assert.Equal",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestBillingConnectHandler_GenerateInvoices",
+          "callee": "int32",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "newBillingConnectFixture",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "context.Background",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "require.NoError",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "invRepo.Save",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "handler.CancelInvoice",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "connect.NewRequest",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "require.NoError",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "assert.Equal",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "require.NoError",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "invRepo.Save",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "handler.CancelInvoice",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "connect.NewRequest",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestBillingConnectHandler_CancelInvoice",
+          "callee": "require.Error",
+          "lineNumber": 112
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/billing/handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 26,
+      "functions": [
+        {
+          "name": "NewBillingConnectHandler",
+          "startLine": 18,
+          "endLine": 28,
+          "params": [
+            "invUC",
+            "checkoutUC",
+            "runBilling"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "BillingConnectHandler",
+          "startLine": 11,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "invoiceUC",
+            "checkoutUC",
+            "runBilling"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BillingConnectHandler",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewBillingConnectHandler",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/billing/invoice_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 154,
+      "nonEmptyLines": 141,
+      "functions": [
+        {
+          "name": "ListInvoices",
+          "startLine": 16,
+          "endLine": 36,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetInvoice",
+          "startLine": 39,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CancelInvoice",
+          "startLine": 53,
+          "endLine": 64,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CashierResolve",
+          "startLine": 67,
+          "endLine": 89,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CashierPay",
+          "startLine": 92,
+          "endLine": 135,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GenerateInvoices",
+          "startLine": 138,
+          "endLine": 154,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListInvoices",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "GetInvoice",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "CancelInvoice",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "CashierResolve",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "CashierPay",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateInvoices",
+          "line": 138,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListInvoices",
+          "callee": "response.Unavailable",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ListInvoices",
+          "callee": "h.invoiceUC.ListInvoices",
+          "lineNumber": 20
+        },
+        {
+          "caller": "ListInvoices",
+          "callee": "response.MapDomainError",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ListInvoices",
+          "callee": "append",
+          "lineNumber": 28
+        },
+        {
+          "caller": "ListInvoices",
+          "callee": "connect.NewResponse",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ListInvoices",
+          "callee": "toProtoInvoiceList",
+          "lineNumber": 34
+        },
+        {
+          "caller": "GetInvoice",
+          "callee": "response.Unavailable",
+          "lineNumber": 41
+        },
+        {
+          "caller": "GetInvoice",
+          "callee": "h.invoiceUC.GetInvoice",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GetInvoice",
+          "callee": "response.MapDomainError",
+          "lineNumber": 45
+        },
+        {
+          "caller": "GetInvoice",
+          "callee": "connect.NewResponse",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GetInvoice",
+          "callee": "toProtoInvoice",
+          "lineNumber": 48
+        },
+        {
+          "caller": "CancelInvoice",
+          "callee": "response.Unavailable",
+          "lineNumber": 55
+        },
+        {
+          "caller": "CancelInvoice",
+          "callee": "h.invoiceUC.CancelInvoice",
+          "lineNumber": 57
+        },
+        {
+          "caller": "CancelInvoice",
+          "callee": "response.MapDomainError",
+          "lineNumber": 59
+        },
+        {
+          "caller": "CancelInvoice",
+          "callee": "connect.NewResponse",
+          "lineNumber": 61
+        },
+        {
+          "caller": "CancelInvoice",
+          "callee": "toProtoInvoice",
+          "lineNumber": 62
+        },
+        {
+          "caller": "CashierResolve",
+          "callee": "response.Unavailable",
+          "lineNumber": 69
+        },
+        {
+          "caller": "CashierResolve",
+          "callee": "h.checkoutUC.ResolveByQR",
+          "lineNumber": 77
+        },
+        {
+          "caller": "CashierResolve",
+          "callee": "h.checkoutUC.ResolveByPortalCode",
+          "lineNumber": 79
+        },
+        {
+          "caller": "CashierResolve",
+          "callee": "h.checkoutUC.ResolveByPaymentCode",
+          "lineNumber": 81
+        },
+        {
+          "caller": "CashierResolve",
+          "callee": "response.MapDomainError",
+          "lineNumber": 84
+        },
+        {
+          "caller": "CashierResolve",
+          "callee": "connect.NewResponse",
+          "lineNumber": 86
+        },
+        {
+          "caller": "CashierResolve",
+          "callee": "toProtoInvoice",
+          "lineNumber": 87
+        },
+        {
+          "caller": "CashierPay",
+          "callee": "response.Unavailable",
+          "lineNumber": 94
+        },
+        {
+          "caller": "CashierPay",
+          "callee": "iauth.IdentityFromContext",
+          "lineNumber": 110
+        },
+        {
+          "caller": "CashierPay",
+          "callee": "h.checkoutUC.PayCash",
+          "lineNumber": 114
+        },
+        {
+          "caller": "CashierPay",
+          "callee": "response.MapDomainError",
+          "lineNumber": 126
+        },
+        {
+          "caller": "CashierPay",
+          "callee": "h.invoiceUC.GetInvoice",
+          "lineNumber": 129
+        },
+        {
+          "caller": "CashierPay",
+          "callee": "connect.NewResponse",
+          "lineNumber": 130
+        },
+        {
+          "caller": "CashierPay",
+          "callee": "toProtoInvoice",
+          "lineNumber": 133
+        },
+        {
+          "caller": "GenerateInvoices",
+          "callee": "response.Unavailable",
+          "lineNumber": 140
+        },
+        {
+          "caller": "GenerateInvoices",
+          "callee": "time.Now().Format",
+          "lineNumber": 144
+        },
+        {
+          "caller": "GenerateInvoices",
+          "callee": "time.Now",
+          "lineNumber": 144
+        },
+        {
+          "caller": "GenerateInvoices",
+          "callee": "h.runBilling.Run",
+          "lineNumber": 146
+        },
+        {
+          "caller": "GenerateInvoices",
+          "callee": "response.MapDomainError",
+          "lineNumber": 148
+        },
+        {
+          "caller": "GenerateInvoices",
+          "callee": "connect.NewResponse",
+          "lineNumber": 150
+        },
+        {
+          "caller": "GenerateInvoices",
+          "callee": "int32",
+          "lineNumber": 151
+        },
+        {
+          "caller": "GenerateInvoices",
+          "callee": "int32",
+          "lineNumber": 152
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/billing/mapper_invoice.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 45,
+      "functions": [
+        {
+          "name": "toProtoInvoice",
+          "startLine": 8,
+          "endLine": 40,
+          "params": [
+            "inv"
+          ]
+        },
+        {
+          "name": "toProtoInvoiceList",
+          "startLine": 42,
+          "endLine": 48,
+          "params": [
+            "invoices"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoInvoice",
+          "callee": "inv.PaidAt.Unix",
+          "lineNumber": 18
+        },
+        {
+          "caller": "toProtoInvoice",
+          "callee": "inv.DueDate.Unix",
+          "lineNumber": 32
+        },
+        {
+          "caller": "toProtoInvoice",
+          "callee": "inv.CreatedAt.Unix",
+          "lineNumber": 38
+        },
+        {
+          "caller": "toProtoInvoiceList",
+          "callee": "make",
+          "lineNumber": 43
+        },
+        {
+          "caller": "toProtoInvoiceList",
+          "callee": "len",
+          "lineNumber": 43
+        },
+        {
+          "caller": "toProtoInvoiceList",
+          "callee": "toProtoInvoice",
+          "lineNumber": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/billing/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 25,
+      "functions": [
+        {
+          "name": "NewBillingServiceHandler",
+          "startLine": 13,
+          "endLine": 33,
+          "params": [
+            "invUC",
+            "checkoutUC",
+            "runBilling"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewBillingServiceHandler",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "NewBillingConnectHandler",
+          "lineNumber": 18
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 20
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewBillingServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 30
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/bot/bot_conversation_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 195,
+      "nonEmptyLines": 171,
+      "functions": [
+        {
+          "name": "parseID",
+          "startLine": 18,
+          "endLine": 24,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "ListConversations",
+          "startLine": 26,
+          "endLine": 54,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetConversation",
+          "startLine": 56,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetConversationContext",
+          "startLine": 87,
+          "endLine": 128,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "TakeOverConversation",
+          "startLine": 130,
+          "endLine": 139,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ResetConversationBot",
+          "startLine": 141,
+          "endLine": 150,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CloseConversation",
+          "startLine": 152,
+          "endLine": 161,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ResetRateLimit",
+          "startLine": 163,
+          "endLine": 174,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetRateLimitStatus",
+          "startLine": 176,
+          "endLine": 195,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListConversations",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "GetConversation",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "GetConversationContext",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "TakeOverConversation",
+          "line": 130,
+          "isDefault": false
+        },
+        {
+          "name": "ResetConversationBot",
+          "line": 141,
+          "isDefault": false
+        },
+        {
+          "name": "CloseConversation",
+          "line": 152,
+          "isDefault": false
+        },
+        {
+          "name": "ResetRateLimit",
+          "line": 163,
+          "isDefault": false
+        },
+        {
+          "name": "GetRateLimitStatus",
+          "line": 176,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parseID",
+          "callee": "fmt.Sscanf",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "connect.NewResponse",
+          "lineNumber": 28
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "parseID",
+          "lineNumber": 34
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "h.convService.ListConversationsBySession",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "h.convService.ListConversations",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "response.MapDomainError",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "make",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "len",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "string",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "c.UpdatedAt.Format",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "connect.NewResponse",
+          "lineNumber": 53
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "connect.NewResponse",
+          "lineNumber": 58
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "parseID",
+          "lineNumber": 61
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "h.convService.GetConversationWithMessages",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "response.MapDomainError",
+          "lineNumber": 65
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "make",
+          "lineNumber": 68
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "len",
+          "lineNumber": 68
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 71
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "string",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "connect.NewResponse",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 79
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "string",
+          "lineNumber": 81
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "parseID",
+          "lineNumber": 88
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 90
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "response.Unimplemented",
+          "lineNumber": 93
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "h.contextProvider.GetConversationContext",
+          "lineNumber": 96
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "response.MapDomainError",
+          "lineNumber": 98
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "make",
+          "lineNumber": 101
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "len",
+          "lineNumber": 101
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 104
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "string",
+          "lineNumber": 105
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "int64",
+          "lineNumber": 107
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "int64",
+          "lineNumber": 108
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "m.CreatedAt.Format",
+          "lineNumber": 109
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 112
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "connect.NewResponse",
+          "lineNumber": 117
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 118
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "string",
+          "lineNumber": 119
+        },
+        {
+          "caller": "GetConversationContext",
+          "callee": "info.UpdatedAt.Format",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TakeOverConversation",
+          "callee": "parseID",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TakeOverConversation",
+          "callee": "h.convService.TakeOver",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TakeOverConversation",
+          "callee": "connect.NewResponse",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ResetConversationBot",
+          "callee": "parseID",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ResetConversationBot",
+          "callee": "h.convService.ResetBot",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ResetConversationBot",
+          "callee": "connect.NewResponse",
+          "lineNumber": 147
+        },
+        {
+          "caller": "CloseConversation",
+          "callee": "parseID",
+          "lineNumber": 154
+        },
+        {
+          "caller": "CloseConversation",
+          "callee": "h.convService.CloseConversation",
+          "lineNumber": 156
+        },
+        {
+          "caller": "CloseConversation",
+          "callee": "connect.NewResponse",
+          "lineNumber": 158
+        },
+        {
+          "caller": "ResetRateLimit",
+          "callee": "h.contextProvider.ResetRateLimit",
+          "lineNumber": 165
+        },
+        {
+          "caller": "ResetRateLimit",
+          "callee": "response.MapDomainError",
+          "lineNumber": 166
+        },
+        {
+          "caller": "ResetRateLimit",
+          "callee": "connect.NewResponse",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ResetRateLimit",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 172
+        },
+        {
+          "caller": "GetRateLimitStatus",
+          "callee": "connect.NewResponse",
+          "lineNumber": 178
+        },
+        {
+          "caller": "GetRateLimitStatus",
+          "callee": "h.contextProvider.GetRateLimitStatus",
+          "lineNumber": 183
+        },
+        {
+          "caller": "GetRateLimitStatus",
+          "callee": "response.MapDomainError",
+          "lineNumber": 185
+        },
+        {
+          "caller": "GetRateLimitStatus",
+          "callee": "connect.NewResponse",
+          "lineNumber": 188
+        },
+        {
+          "caller": "GetRateLimitStatus",
+          "callee": "int32",
+          "lineNumber": 191
+        },
+        {
+          "caller": "GetRateLimitStatus",
+          "callee": "int32",
+          "lineNumber": 192
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/bot/bot_service_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 116,
+      "nonEmptyLines": 106,
+      "functions": [
+        {
+          "name": "NewBotConnectHandler",
+          "startLine": 28,
+          "endLine": 36,
+          "params": [
+            "convService",
+            "contextProvider"
+          ]
+        },
+        {
+          "name": "NewBotServiceHandler",
+          "startLine": 38,
+          "endLine": 116,
+          "params": [
+            "convService",
+            "contextProvider"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ConversationContextProvider",
+          "startLine": 17,
+          "endLine": 21,
+          "methods": [
+            "GetConversationContext",
+            "ResetRateLimit",
+            "GetRateLimitStatus"
+          ],
+          "properties": []
+        },
+        {
+          "name": "BotConnectHandler",
+          "startLine": 23,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "convService",
+            "contextProvider"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConversationContextProvider",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "BotConnectHandler",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "NewBotConnectHandler",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "NewBotServiceHandler",
+          "line": 38,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "NewBotConnectHandler",
+          "lineNumber": 42
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 43
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 47
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 47
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 52
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 52
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 57
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 57
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 62
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 62
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 67
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 67
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 72
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 72
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 77
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 77
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 82
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 82
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 89
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 89
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 94
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 94
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 99
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 99
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 104
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 104
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 109
+        },
+        {
+          "caller": "NewBotServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 109
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 2,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/connect/bot/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 175,
+      "nonEmptyLines": 159,
+      "functions": [
+        {
+          "name": "toProtoWASession",
+          "startLine": 14,
+          "endLine": 26,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "toProtoWASessionList",
+          "startLine": 29,
+          "endLine": 35,
+          "params": [
+            "sessions"
+          ]
+        },
+        {
+          "name": "toProtoLLMConfig",
+          "startLine": 38,
+          "endLine": 56,
+          "params": [
+            "cfg"
+          ]
+        },
+        {
+          "name": "toProtoLLMConfigList",
+          "startLine": 59,
+          "endLine": 65,
+          "params": [
+            "configs"
+          ]
+        },
+        {
+          "name": "toProtoConversation",
+          "startLine": 68,
+          "endLine": 79,
+          "params": [
+            "c"
+          ]
+        },
+        {
+          "name": "toProtoConversationList",
+          "startLine": 82,
+          "endLine": 88,
+          "params": [
+            "convs"
+          ]
+        },
+        {
+          "name": "toProtoSkill",
+          "startLine": 92,
+          "endLine": 111,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "toProtoSkillList",
+          "startLine": 113,
+          "endLine": 119,
+          "params": [
+            "skills"
+          ]
+        },
+        {
+          "name": "toProtoSkillResource",
+          "startLine": 121,
+          "endLine": 134,
+          "params": [
+            "r"
+          ]
+        },
+        {
+          "name": "toProtoSkillResourceList",
+          "startLine": 136,
+          "endLine": 142,
+          "params": [
+            "resources"
+          ]
+        },
+        {
+          "name": "toProtoResourceContent",
+          "startLine": 144,
+          "endLine": 154,
+          "params": [
+            "c"
+          ]
+        },
+        {
+          "name": "toProtoGitRepoInfo",
+          "startLine": 156,
+          "endLine": 167,
+          "params": [
+            "g"
+          ]
+        },
+        {
+          "name": "toProtoGitRepoInfoList",
+          "startLine": 169,
+          "endLine": 175,
+          "params": [
+            "repos"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoWASession",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 19
+        },
+        {
+          "caller": "toProtoWASession",
+          "callee": "string",
+          "lineNumber": 22
+        },
+        {
+          "caller": "toProtoWASession",
+          "callee": "s.CreatedAt.Format",
+          "lineNumber": 24
+        },
+        {
+          "caller": "toProtoWASessionList",
+          "callee": "make",
+          "lineNumber": 30
+        },
+        {
+          "caller": "toProtoWASessionList",
+          "callee": "len",
+          "lineNumber": 30
+        },
+        {
+          "caller": "toProtoWASessionList",
+          "callee": "toProtoWASession",
+          "lineNumber": 32
+        },
+        {
+          "caller": "toProtoLLMConfig",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 43
+        },
+        {
+          "caller": "toProtoLLMConfig",
+          "callee": "int32",
+          "lineNumber": 49
+        },
+        {
+          "caller": "toProtoLLMConfigList",
+          "callee": "make",
+          "lineNumber": 60
+        },
+        {
+          "caller": "toProtoLLMConfigList",
+          "callee": "len",
+          "lineNumber": 60
+        },
+        {
+          "caller": "toProtoLLMConfigList",
+          "callee": "toProtoLLMConfig",
+          "lineNumber": 62
+        },
+        {
+          "caller": "toProtoConversation",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 73
+        },
+        {
+          "caller": "toProtoConversation",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "toProtoConversation",
+          "callee": "string",
+          "lineNumber": 76
+        },
+        {
+          "caller": "toProtoConversation",
+          "callee": "c.UpdatedAt.Format",
+          "lineNumber": 77
+        },
+        {
+          "caller": "toProtoConversationList",
+          "callee": "make",
+          "lineNumber": 83
+        },
+        {
+          "caller": "toProtoConversationList",
+          "callee": "len",
+          "lineNumber": 83
+        },
+        {
+          "caller": "toProtoConversationList",
+          "callee": "toProtoConversation",
+          "lineNumber": 85
+        },
+        {
+          "caller": "toProtoSkill",
+          "callee": "s.CreatedAt.Format",
+          "lineNumber": 108
+        },
+        {
+          "caller": "toProtoSkill",
+          "callee": "s.UpdatedAt.Format",
+          "lineNumber": 109
+        },
+        {
+          "caller": "toProtoSkillList",
+          "callee": "make",
+          "lineNumber": 114
+        },
+        {
+          "caller": "toProtoSkillList",
+          "callee": "len",
+          "lineNumber": 114
+        },
+        {
+          "caller": "toProtoSkillList",
+          "callee": "toProtoSkill",
+          "lineNumber": 116
+        },
+        {
+          "caller": "toProtoSkillResource",
+          "callee": "r.Modified.Format",
+          "lineNumber": 132
+        },
+        {
+          "caller": "toProtoSkillResourceList",
+          "callee": "make",
+          "lineNumber": 137
+        },
+        {
+          "caller": "toProtoSkillResourceList",
+          "callee": "len",
+          "lineNumber": 137
+        },
+        {
+          "caller": "toProtoSkillResourceList",
+          "callee": "toProtoSkillResource",
+          "lineNumber": 139
+        },
+        {
+          "caller": "toProtoGitRepoInfo",
+          "callee": "g.LastSyncedAt.Format",
+          "lineNumber": 165
+        },
+        {
+          "caller": "toProtoGitRepoInfoList",
+          "callee": "make",
+          "lineNumber": 170
+        },
+        {
+          "caller": "toProtoGitRepoInfoList",
+          "callee": "len",
+          "lineNumber": 170
+        },
+        {
+          "caller": "toProtoGitRepoInfoList",
+          "callee": "toProtoGitRepoInfo",
+          "lineNumber": 172
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 13,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/bot/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 6,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/bot/technician_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 44,
+      "functions": [
+        {
+          "name": "ListTechnicians",
+          "startLine": 11,
+          "endLine": 15,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CreateTechnician",
+          "startLine": 17,
+          "endLine": 27,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdateTechnician",
+          "startLine": 29,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ToggleTechnicianActive",
+          "startLine": 41,
+          "endLine": 46,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteTechnician",
+          "startLine": 48,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListTechnicians",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "CreateTechnician",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateTechnician",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "ToggleTechnicianActive",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteTechnician",
+          "line": 48,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListTechnicians",
+          "callee": "connect.NewResponse",
+          "lineNumber": 12
+        },
+        {
+          "caller": "CreateTechnician",
+          "callee": "connect.NewResponse",
+          "lineNumber": 18
+        },
+        {
+          "caller": "UpdateTechnician",
+          "callee": "connect.NewResponse",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ToggleTechnicianActive",
+          "callee": "connect.NewResponse",
+          "lineNumber": 42
+        },
+        {
+          "caller": "DeleteTechnician",
+          "callee": "connect.NewResponse",
+          "lineNumber": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/bot/whatsapp_chat_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 138,
+      "nonEmptyLines": 116,
+      "functions": [
+        {
+          "name": "parseSessionID",
+          "startLine": 16,
+          "endLine": 25,
+          "params": [
+            "raw"
+          ]
+        },
+        {
+          "name": "ListChats",
+          "startLine": 27,
+          "endLine": 63,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetChatMessages",
+          "startLine": 65,
+          "endLine": 101,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ToggleChatBot",
+          "startLine": 103,
+          "endLine": 121,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "MarkChatRead",
+          "startLine": 123,
+          "endLine": 138,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListChats",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "GetChatMessages",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "ToggleChatBot",
+          "line": 103,
+          "isDefault": false
+        },
+        {
+          "name": "MarkChatRead",
+          "line": 123,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parseSessionID",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 20
+        },
+        {
+          "caller": "parseSessionID",
+          "callee": "fmt.Errorf",
+          "lineNumber": 22
+        },
+        {
+          "caller": "parseSessionID",
+          "callee": "uint",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListChats",
+          "callee": "connect.NewResponse",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ListChats",
+          "callee": "parseSessionID",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ListChats",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 34
+        },
+        {
+          "caller": "ListChats",
+          "callee": "h.chatService.ListChats",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListChats",
+          "callee": "int",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListChats",
+          "callee": "int",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListChats",
+          "callee": "response.MapDomainError",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ListChats",
+          "callee": "make",
+          "lineNumber": 42
+        },
+        {
+          "caller": "ListChats",
+          "callee": "len",
+          "lineNumber": 42
+        },
+        {
+          "caller": "ListChats",
+          "callee": "c.LastMessageTime.IsZero",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ListChats",
+          "callee": "c.LastMessageTime.Format",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ListChats",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ListChats",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ListChats",
+          "callee": "int32",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ListChats",
+          "callee": "connect.NewResponse",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ListChats",
+          "callee": "int32",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ListChats",
+          "callee": "len",
+          "lineNumber": 62
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "connect.NewResponse",
+          "lineNumber": 67
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "parseSessionID",
+          "lineNumber": 70
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "h.chatService.GetChatMessages",
+          "lineNumber": 75
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "int",
+          "lineNumber": 75
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "int",
+          "lineNumber": 75
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "response.MapDomainError",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "make",
+          "lineNumber": 80
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "len",
+          "lineNumber": 80
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "m.Timestamp.IsZero",
+          "lineNumber": 83
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "m.Timestamp.Format",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "connect.NewResponse",
+          "lineNumber": 100
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "int32",
+          "lineNumber": 100
+        },
+        {
+          "caller": "GetChatMessages",
+          "callee": "len",
+          "lineNumber": 100
+        },
+        {
+          "caller": "ToggleChatBot",
+          "callee": "connect.NewResponse",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ToggleChatBot",
+          "callee": "parseSessionID",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ToggleChatBot",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 110
+        },
+        {
+          "caller": "ToggleChatBot",
+          "callee": "h.chatService.ToggleChatBot",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ToggleChatBot",
+          "callee": "response.MapDomainError",
+          "lineNumber": 114
+        },
+        {
+          "caller": "ToggleChatBot",
+          "callee": "connect.NewResponse",
+          "lineNumber": 117
+        },
+        {
+          "caller": "MarkChatRead",
+          "callee": "connect.NewResponse",
+          "lineNumber": 125
+        },
+        {
+          "caller": "MarkChatRead",
+          "callee": "parseSessionID",
+          "lineNumber": 128
+        },
+        {
+          "caller": "MarkChatRead",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 130
+        },
+        {
+          "caller": "MarkChatRead",
+          "callee": "h.chatService.MarkRead",
+          "lineNumber": 133
+        },
+        {
+          "caller": "MarkChatRead",
+          "callee": "response.MapDomainError",
+          "lineNumber": 134
+        },
+        {
+          "caller": "MarkChatRead",
+          "callee": "connect.NewResponse",
+          "lineNumber": 137
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/bot/whatsapp_service_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 101,
+      "nonEmptyLines": 92,
+      "functions": [
+        {
+          "name": "NewWhatsAppConnectHandler",
+          "startLine": 19,
+          "endLine": 25,
+          "params": [
+            "sessionRepo",
+            "waGateway",
+            "chatService"
+          ]
+        },
+        {
+          "name": "NewWhatsAppServiceHandler",
+          "startLine": 27,
+          "endLine": 101,
+          "params": [
+            "sessionRepo",
+            "waGateway",
+            "chatService"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "WhatsAppConnectHandler",
+          "startLine": 13,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "sessionRepo",
+            "waGateway",
+            "chatService"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WhatsAppConnectHandler",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewWhatsAppConnectHandler",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "NewWhatsAppServiceHandler",
+          "line": 27,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "NewWhatsAppConnectHandler",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 39
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 39
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 49
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 49
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 54
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 54
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 59
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 59
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 64
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 64
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 69
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 69
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 74
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 74
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 79
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 79
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 84
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 84
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 89
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 89
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 94
+        },
+        {
+          "caller": "NewWhatsAppServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 94
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 239,
+      "nonEmptyLines": 207,
+      "functions": [
+        {
+          "name": "formatTime",
+          "startLine": 18,
+          "endLine": 23,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "ListSessions",
+          "startLine": 25,
+          "endLine": 59,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CreateSession",
+          "startLine": 61,
+          "endLine": 98,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetQRCode",
+          "startLine": 100,
+          "endLine": 133,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetPairingCode",
+          "startLine": 135,
+          "endLine": 162,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ToggleBot",
+          "startLine": 164,
+          "endLine": 169,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ReconnectSession",
+          "startLine": 171,
+          "endLine": 186,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "LogoutSession",
+          "startLine": 188,
+          "endLine": 203,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "PurgeSession",
+          "startLine": 205,
+          "endLine": 224,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "SendTextMessage",
+          "startLine": 226,
+          "endLine": 239,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListSessions",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "CreateSession",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "GetQRCode",
+          "line": 100,
+          "isDefault": false
+        },
+        {
+          "name": "GetPairingCode",
+          "line": 135,
+          "isDefault": false
+        },
+        {
+          "name": "ToggleBot",
+          "line": 164,
+          "isDefault": false
+        },
+        {
+          "name": "ReconnectSession",
+          "line": 171,
+          "isDefault": false
+        },
+        {
+          "name": "LogoutSession",
+          "line": 188,
+          "isDefault": false
+        },
+        {
+          "name": "PurgeSession",
+          "line": 205,
+          "isDefault": false
+        },
+        {
+          "name": "SendTextMessage",
+          "line": 226,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "formatTime",
+          "callee": "t.IsZero",
+          "lineNumber": 19
+        },
+        {
+          "caller": "formatTime",
+          "callee": "t.Format",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "connect.NewResponse",
+          "lineNumber": 27
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "h.sessionRepo.FindAllSessions",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "response.MapDomainError",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "make",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "len",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "string",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "h.waGateway.GetStatus",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "s.CreatedAt.Format",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "formatTime",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ListSessions",
+          "callee": "connect.NewResponse",
+          "lineNumber": 58
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "response.Unavailable",
+          "lineNumber": 63
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "h.sessionRepo.CreateSession",
+          "lineNumber": 73
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "response.MapDomainError",
+          "lineNumber": 74
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "h.waGateway.Connect",
+          "lineNumber": 80
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "logger.WithComponent(\"WhatsApp\").WithError(err).WithField(\"session_id\", sess.ID).Warn",
+          "lineNumber": 81
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "logger.WithComponent(\"WhatsApp\").WithError(err).WithField",
+          "lineNumber": 81
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "logger.WithComponent(\"WhatsApp\").WithError",
+          "lineNumber": 81
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "logger.WithComponent",
+          "lineNumber": 81
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "h.sessionRepo.UpdateSession",
+          "lineNumber": 85
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "connect.NewResponse",
+          "lineNumber": 88
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 90
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "string",
+          "lineNumber": 93
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "sess.CreatedAt.Format",
+          "lineNumber": 95
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 101
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 103
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "response.Unavailable",
+          "lineNumber": 107
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "uint",
+          "lineNumber": 110
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "h.waGateway.GetStatus",
+          "lineNumber": 114
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "string",
+          "lineNumber": 115
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "h.sessionRepo.FindSessionByID",
+          "lineNumber": 116
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "h.waGateway.Connect",
+          "lineNumber": 119
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "h.waGateway.GetQRCode",
+          "lineNumber": 123
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "response.MapDomainError",
+          "lineNumber": 125
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "fmt.Errorf",
+          "lineNumber": 125
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "connect.NewResponse",
+          "lineNumber": 128
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 136
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 138
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "response.Unavailable",
+          "lineNumber": 142
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "uint",
+          "lineNumber": 145
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "h.waGateway.GetStatus",
+          "lineNumber": 148
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "string",
+          "lineNumber": 149
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "h.sessionRepo.FindSessionByID",
+          "lineNumber": 150
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "h.waGateway.Connect",
+          "lineNumber": 153
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "h.waGateway.GetPairingCode",
+          "lineNumber": 157
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "response.MapDomainError",
+          "lineNumber": 159
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "fmt.Errorf",
+          "lineNumber": 159
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "connect.NewResponse",
+          "lineNumber": 161
+        },
+        {
+          "caller": "ToggleBot",
+          "callee": "connect.NewResponse",
+          "lineNumber": 165
+        },
+        {
+          "caller": "ReconnectSession",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 172
+        },
+        {
+          "caller": "ReconnectSession",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 174
+        },
+        {
+          "caller": "ReconnectSession",
+          "callee": "response.Unavailable",
+          "lineNumber": 177
+        },
+        {
+          "caller": "ReconnectSession",
+          "callee": "h.waGateway.Reconnect",
+          "lineNumber": 179
+        },
+        {
+          "caller": "ReconnectSession",
+          "callee": "uint",
+          "lineNumber": 179
+        },
+        {
+          "caller": "ReconnectSession",
+          "callee": "response.Internal",
+          "lineNumber": 180
+        },
+        {
+          "caller": "ReconnectSession",
+          "callee": "connect.NewResponse",
+          "lineNumber": 182
+        },
+        {
+          "caller": "LogoutSession",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 189
+        },
+        {
+          "caller": "LogoutSession",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 191
+        },
+        {
+          "caller": "LogoutSession",
+          "callee": "response.Unavailable",
+          "lineNumber": 194
+        },
+        {
+          "caller": "LogoutSession",
+          "callee": "h.waGateway.Logout",
+          "lineNumber": 199
+        },
+        {
+          "caller": "LogoutSession",
+          "callee": "uint",
+          "lineNumber": 199
+        },
+        {
+          "caller": "LogoutSession",
+          "callee": "response.Internal",
+          "lineNumber": 200
+        },
+        {
+          "caller": "LogoutSession",
+          "callee": "connect.NewResponse",
+          "lineNumber": 202
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 206
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 208
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "h.waGateway.Purge",
+          "lineNumber": 214
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "uint",
+          "lineNumber": 214
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "response.Internal",
+          "lineNumber": 215
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "h.sessionRepo.DeleteSession",
+          "lineNumber": 219
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "uint",
+          "lineNumber": 219
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "response.Internal",
+          "lineNumber": 220
+        },
+        {
+          "caller": "PurgeSession",
+          "callee": "connect.NewResponse",
+          "lineNumber": 223
+        },
+        {
+          "caller": "SendTextMessage",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 227
+        },
+        {
+          "caller": "SendTextMessage",
+          "callee": "h.waGateway.SendMessage",
+          "lineNumber": 230
+        },
+        {
+          "caller": "SendTextMessage",
+          "callee": "uint",
+          "lineNumber": 230
+        },
+        {
+          "caller": "SendTextMessage",
+          "callee": "response.Internal",
+          "lineNumber": 233
+        },
+        {
+          "caller": "SendTextMessage",
+          "callee": "connect.NewResponse",
+          "lineNumber": 235
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 9,
+        "functionCount": 10,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/cashbook/cashbook_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 162,
+      "nonEmptyLines": 150,
+      "functions": [
+        {
+          "name": "NewCashbookConnectHandler",
+          "startLine": 24,
+          "endLine": 26,
+          "params": [
+            "useCase"
+          ]
+        },
+        {
+          "name": "ListAccounts",
+          "startLine": 29,
+          "endLine": 40,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "SaveAccount",
+          "startLine": 43,
+          "endLine": 61,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListCategories",
+          "startLine": 64,
+          "endLine": 75,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "SaveCategory",
+          "startLine": 78,
+          "endLine": 95,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "AddTransaction",
+          "startLine": 98,
+          "endLine": 115,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListTransactions",
+          "startLine": 118,
+          "endLine": 141,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "Balances",
+          "startLine": 144,
+          "endLine": 162,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CashbookConnectHandler",
+          "startLine": 19,
+          "endLine": 21,
+          "methods": [
+            "ListAccounts",
+            "SaveAccount",
+            "ListCategories",
+            "SaveCategory",
+            "AddTransaction",
+            "ListTransactions",
+            "Balances"
+          ],
+          "properties": [
+            "useCase"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CashbookConnectHandler",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "NewCashbookConnectHandler",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "ListAccounts",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "SaveAccount",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "ListCategories",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "SaveCategory",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "AddTransaction",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "ListTransactions",
+          "line": 118,
+          "isDefault": false
+        },
+        {
+          "name": "Balances",
+          "line": 144,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListAccounts",
+          "callee": "response.Unavailable",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ListAccounts",
+          "callee": "h.useCase.ListAccounts",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ListAccounts",
+          "callee": "response.MapDomainError",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListAccounts",
+          "callee": "connect.NewResponse",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ListAccounts",
+          "callee": "toProtoAccountList",
+          "lineNumber": 38
+        },
+        {
+          "caller": "SaveAccount",
+          "callee": "response.Unavailable",
+          "lineNumber": 45
+        },
+        {
+          "caller": "SaveAccount",
+          "callee": "h.useCase.SaveAccount",
+          "lineNumber": 48
+        },
+        {
+          "caller": "SaveAccount",
+          "callee": "response.MapDomainError",
+          "lineNumber": 56
+        },
+        {
+          "caller": "SaveAccount",
+          "callee": "connect.NewResponse",
+          "lineNumber": 58
+        },
+        {
+          "caller": "SaveAccount",
+          "callee": "toProtoAccount",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ListCategories",
+          "callee": "response.Unavailable",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ListCategories",
+          "callee": "h.useCase.ListCategories",
+          "lineNumber": 68
+        },
+        {
+          "caller": "ListCategories",
+          "callee": "response.MapDomainError",
+          "lineNumber": 70
+        },
+        {
+          "caller": "ListCategories",
+          "callee": "connect.NewResponse",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ListCategories",
+          "callee": "toProtoCategoryList",
+          "lineNumber": 73
+        },
+        {
+          "caller": "SaveCategory",
+          "callee": "response.Unavailable",
+          "lineNumber": 80
+        },
+        {
+          "caller": "SaveCategory",
+          "callee": "h.useCase.SaveCategory",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SaveCategory",
+          "callee": "response.MapDomainError",
+          "lineNumber": 90
+        },
+        {
+          "caller": "SaveCategory",
+          "callee": "connect.NewResponse",
+          "lineNumber": 92
+        },
+        {
+          "caller": "SaveCategory",
+          "callee": "toProtoCategory",
+          "lineNumber": 93
+        },
+        {
+          "caller": "AddTransaction",
+          "callee": "response.Unavailable",
+          "lineNumber": 100
+        },
+        {
+          "caller": "AddTransaction",
+          "callee": "h.useCase.AddTransaction",
+          "lineNumber": 102
+        },
+        {
+          "caller": "AddTransaction",
+          "callee": "response.MapDomainError",
+          "lineNumber": 110
+        },
+        {
+          "caller": "AddTransaction",
+          "callee": "connect.NewResponse",
+          "lineNumber": 112
+        },
+        {
+          "caller": "AddTransaction",
+          "callee": "toProtoTransaction",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ListTransactions",
+          "callee": "response.Unavailable",
+          "lineNumber": 120
+        },
+        {
+          "caller": "ListTransactions",
+          "callee": "int",
+          "lineNumber": 126
+        },
+        {
+          "caller": "ListTransactions",
+          "callee": "time.Unix",
+          "lineNumber": 129
+        },
+        {
+          "caller": "ListTransactions",
+          "callee": "time.Unix",
+          "lineNumber": 132
+        },
+        {
+          "caller": "ListTransactions",
+          "callee": "h.useCase.ListTransactions",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ListTransactions",
+          "callee": "response.MapDomainError",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ListTransactions",
+          "callee": "connect.NewResponse",
+          "lineNumber": 138
+        },
+        {
+          "caller": "ListTransactions",
+          "callee": "toProtoTransactionList",
+          "lineNumber": 139
+        },
+        {
+          "caller": "Balances",
+          "callee": "response.Unavailable",
+          "lineNumber": 146
+        },
+        {
+          "caller": "Balances",
+          "callee": "time.Unix",
+          "lineNumber": 150
+        },
+        {
+          "caller": "Balances",
+          "callee": "time.Unix",
+          "lineNumber": 153
+        },
+        {
+          "caller": "Balances",
+          "callee": "h.useCase.Balances",
+          "lineNumber": 155
+        },
+        {
+          "caller": "Balances",
+          "callee": "response.MapDomainError",
+          "lineNumber": 157
+        },
+        {
+          "caller": "Balances",
+          "callee": "connect.NewResponse",
+          "lineNumber": 159
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 9,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/cashbook/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "toProtoAccount",
+          "startLine": 8,
+          "endLine": 15,
+          "params": [
+            "a"
+          ]
+        },
+        {
+          "name": "toProtoAccountList",
+          "startLine": 17,
+          "endLine": 23,
+          "params": [
+            "list"
+          ]
+        },
+        {
+          "name": "toProtoCategory",
+          "startLine": 25,
+          "endLine": 32,
+          "params": [
+            "c"
+          ]
+        },
+        {
+          "name": "toProtoCategoryList",
+          "startLine": 34,
+          "endLine": 40,
+          "params": [
+            "list"
+          ]
+        },
+        {
+          "name": "toProtoTransaction",
+          "startLine": 42,
+          "endLine": 52,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "toProtoTransactionList",
+          "startLine": 54,
+          "endLine": 60,
+          "params": [
+            "list"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoAccountList",
+          "callee": "make",
+          "lineNumber": 18
+        },
+        {
+          "caller": "toProtoAccountList",
+          "callee": "len",
+          "lineNumber": 18
+        },
+        {
+          "caller": "toProtoAccountList",
+          "callee": "toProtoAccount",
+          "lineNumber": 20
+        },
+        {
+          "caller": "toProtoCategoryList",
+          "callee": "make",
+          "lineNumber": 35
+        },
+        {
+          "caller": "toProtoCategoryList",
+          "callee": "len",
+          "lineNumber": 35
+        },
+        {
+          "caller": "toProtoCategoryList",
+          "callee": "toProtoCategory",
+          "lineNumber": 37
+        },
+        {
+          "caller": "toProtoTransaction",
+          "callee": "t.TrxDate.Unix",
+          "lineNumber": 49
+        },
+        {
+          "caller": "toProtoTransactionList",
+          "callee": "make",
+          "lineNumber": 55
+        },
+        {
+          "caller": "toProtoTransactionList",
+          "callee": "len",
+          "lineNumber": 55
+        },
+        {
+          "caller": "toProtoTransactionList",
+          "callee": "toProtoTransaction",
+          "lineNumber": 57
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    }
+  ]
+}

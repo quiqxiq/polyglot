@@ -1,0 +1,6529 @@
+{
+ "batchIndex": 24,
+ "nodes": [
+  {
+   "id": "file:internal/adapter/ws/device_stream_handler.go",
+   "type": "file",
+   "name": "device_stream_handler.go",
+   "filePath": "internal/adapter/ws/device_stream_handler.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (115 baris, 2 fungsi, 2 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (115 baris, 2 fungsi, 2 tipe). Tipe utama: TerminalMessage, TerminalHandler. Fungsi terbesar: ServeHTTP, NewTerminalHandler. Bergantung pada 19 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "ws",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/ws/device_stream_handler.go:TerminalMessage",
+   "type": "class",
+   "name": "TerminalMessage",
+   "filePath": "internal/adapter/ws/device_stream_handler.go",
+   "complexity": "simple",
+   "summary": "Tipe TerminalMessage di device_stream_handler.go.",
+   "description": "Tipe TerminalMessage di device_stream_handler.go. Didefinisikan pada baris 15-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "terminalmessage"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/ws/device_stream_handler.go:TerminalHandler",
+   "type": "class",
+   "name": "TerminalHandler",
+   "filePath": "internal/adapter/ws/device_stream_handler.go",
+   "complexity": "simple",
+   "summary": "Tipe TerminalHandler di device_stream_handler.go, dengan method: ServeHTTP.",
+   "description": "Tipe TerminalHandler di device_stream_handler.go, dengan method: ServeHTTP. Didefinisikan pada baris 22-24.",
+   "tags": [
+    "go",
+    "tipe",
+    "terminalhandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/device_stream_handler.go:NewTerminalHandler",
+   "type": "function",
+   "name": "NewTerminalHandler",
+   "filePath": "internal/adapter/ws/device_stream_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewTerminalHandler (4 baris), parameter: openTermUC.",
+   "description": "Fungsi NewTerminalHandler (4 baris), parameter: openTermUC. Didefinisikan pada baris 26-30.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newterminalhandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/device_stream_handler.go:ServeHTTP",
+   "type": "function",
+   "name": "ServeHTTP",
+   "filePath": "internal/adapter/ws/device_stream_handler.go",
+   "complexity": "moderate",
+   "summary": "Fungsi ServeHTTP (83 baris), parameter: w, r.",
+   "description": "Fungsi ServeHTTP (83 baris), parameter: w, r. Didefinisikan pada baris 32-115.",
+   "tags": [
+    "go",
+    "fungsi",
+    "servehttp"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/ws/hub.go",
+   "type": "file",
+   "name": "hub.go",
+   "filePath": "internal/adapter/ws/hub.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (11 baris, 1 fungsi, 0 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (11 baris, 1 fungsi, 0 tipe). Fungsi terbesar: NewHub.",
+   "tags": [
+    "go",
+    "adapter",
+    "ws",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/hub.go:NewHub",
+   "type": "function",
+   "name": "NewHub",
+   "filePath": "internal/adapter/ws/hub.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewHub (2 baris), parameter: ctx.",
+   "description": "Fungsi NewHub (2 baris), parameter: ctx. Didefinisikan pada baris 9-11.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newhub"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/ws/router.go",
+   "type": "file",
+   "name": "router.go",
+   "filePath": "internal/adapter/ws/router.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (19 baris, 1 fungsi, 0 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (19 baris, 1 fungsi, 0 tipe). Fungsi terbesar: RegisterEventRoutes. Bergantung pada 12 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "ws",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/router.go:RegisterEventRoutes",
+   "type": "function",
+   "name": "RegisterEventRoutes",
+   "filePath": "internal/adapter/ws/router.go",
+   "complexity": "simple",
+   "summary": "Fungsi RegisterEventRoutes (9 baris), parameter: mux, sseHub, openTermUC.",
+   "description": "Fungsi RegisterEventRoutes (9 baris), parameter: mux, sseHub, openTermUC. Didefinisikan pada baris 10-19.",
+   "tags": [
+    "go",
+    "fungsi",
+    "registereventroutes"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/ws/sse_chain_test.go",
+   "type": "file",
+   "name": "sse_chain_test.go",
+   "filePath": "internal/adapter/ws/sse_chain_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (53 baris, 1 fungsi, 0 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (53 baris, 1 fungsi, 0 tipe). Fungsi terbesar: TestSSEThroughMiddlewareChain. Bergantung pada 10 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "ws",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_chain_test.go:TestSSEThroughMiddlewareChain",
+   "type": "function",
+   "name": "TestSSEThroughMiddlewareChain",
+   "filePath": "internal/adapter/ws/sse_chain_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestSSEThroughMiddlewareChain (35 baris), parameter: t.",
+   "description": "Fungsi TestSSEThroughMiddlewareChain (35 baris), parameter: t. Didefinisikan pada baris 18-53.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testssethroughmiddlewarechain"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/ws/sse_hub_test.go",
+   "type": "file",
+   "name": "sse_hub_test.go",
+   "filePath": "internal/adapter/ws/sse_hub_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (98 baris, 3 fungsi, 0 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (98 baris, 3 fungsi, 0 tipe). Fungsi terbesar: TestSSEHubCloseClosesAllClients, TestSSEHubCloseThenCleanupNoPanic, TestSSEHubCloseUnblocksStream.",
+   "tags": [
+    "go",
+    "adapter",
+    "ws",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub_test.go:TestSSEHubCloseClosesAllClients",
+   "type": "function",
+   "name": "TestSSEHubCloseClosesAllClients",
+   "filePath": "internal/adapter/ws/sse_hub_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestSSEHubCloseClosesAllClients (40 baris), parameter: t.",
+   "description": "Fungsi TestSSEHubCloseClosesAllClients (40 baris), parameter: t. Didefinisikan pada baris 7-47.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testssehubcloseclosesallclients"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub_test.go:TestSSEHubCloseThenCleanupNoPanic",
+   "type": "function",
+   "name": "TestSSEHubCloseThenCleanupNoPanic",
+   "filePath": "internal/adapter/ws/sse_hub_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestSSEHubCloseThenCleanupNoPanic (28 baris), parameter: t.",
+   "description": "Fungsi TestSSEHubCloseThenCleanupNoPanic (28 baris), parameter: t. Didefinisikan pada baris 49-77.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testssehubclosethencleanupnopanic"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub_test.go:TestSSEHubCloseUnblocksStream",
+   "type": "function",
+   "name": "TestSSEHubCloseUnblocksStream",
+   "filePath": "internal/adapter/ws/sse_hub_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestSSEHubCloseUnblocksStream (19 baris), parameter: t.",
+   "description": "Fungsi TestSSEHubCloseUnblocksStream (19 baris), parameter: t. Didefinisikan pada baris 79-98.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testssehubcloseunblocksstream"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/ws/sse_hub.go",
+   "type": "file",
+   "name": "sse_hub.go",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (120 baris, 6 fungsi, 2 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `ws` (120 baris, 6 fungsi, 2 tipe). Tipe utama: SSEEvent, SSEHub. Fungsi terbesar: ServeHTTP, Broadcast, Close, NewSSEHub, Publish. Bergantung pada 67 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "ws",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/ws/sse_hub.go:SSEEvent",
+   "type": "class",
+   "name": "SSEEvent",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "complexity": "simple",
+   "summary": "Tipe SSEEvent di sse_hub.go.",
+   "description": "Tipe SSEEvent di sse_hub.go. Didefinisikan pada baris 14-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "sseevent"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/ws/sse_hub.go:SSEHub",
+   "type": "class",
+   "name": "SSEHub",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "complexity": "simple",
+   "summary": "Tipe SSEHub di sse_hub.go, dengan method: ServeHTTP, Broadcast, Publish, PublishEvent, Close.",
+   "description": "Tipe SSEHub di sse_hub.go, dengan method: ServeHTTP, Broadcast, Publish, PublishEvent, Close. Didefinisikan pada baris 19-22.",
+   "tags": [
+    "go",
+    "tipe",
+    "ssehub"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub.go:NewSSEHub",
+   "type": "function",
+   "name": "NewSSEHub",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSSEHub (4 baris).",
+   "description": "Fungsi NewSSEHub (4 baris). Didefinisikan pada baris 26-30.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newssehub"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub.go:ServeHTTP",
+   "type": "function",
+   "name": "ServeHTTP",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "complexity": "simple",
+   "summary": "Fungsi ServeHTTP (54 baris), parameter: w, r.",
+   "description": "Fungsi ServeHTTP (54 baris), parameter: w, r. Didefinisikan pada baris 32-86.",
+   "tags": [
+    "go",
+    "fungsi",
+    "servehttp"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub.go:Broadcast",
+   "type": "function",
+   "name": "Broadcast",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "complexity": "simple",
+   "summary": "Fungsi Broadcast (15 baris), parameter: eventName, data.",
+   "description": "Fungsi Broadcast (15 baris), parameter: eventName, data. Didefinisikan pada baris 88-103.",
+   "tags": [
+    "go",
+    "fungsi",
+    "broadcast"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub.go:Publish",
+   "type": "function",
+   "name": "Publish",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "complexity": "simple",
+   "summary": "Fungsi Publish (2 baris), parameter: eventName, data.",
+   "description": "Fungsi Publish (2 baris), parameter: eventName, data. Didefinisikan pada baris 105-107.",
+   "tags": [
+    "go",
+    "fungsi",
+    "publish"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub.go:PublishEvent",
+   "type": "function",
+   "name": "PublishEvent",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "complexity": "simple",
+   "summary": "Fungsi PublishEvent (2 baris), parameter: eventType, data.",
+   "description": "Fungsi PublishEvent (2 baris), parameter: eventType, data. Didefinisikan pada baris 109-111.",
+   "tags": [
+    "go",
+    "fungsi",
+    "publishevent"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/ws/sse_hub.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/adapter/ws/sse_hub.go",
+   "complexity": "simple",
+   "summary": "Fungsi Close (7 baris).",
+   "description": "Fungsi Close (7 baris). Didefinisikan pada baris 113-120.",
+   "tags": [
+    "go",
+    "fungsi",
+    "close"
+   ]
+  },
+  {
+   "id": "file:internal/app/app.go",
+   "type": "file",
+   "name": "app.go",
+   "filePath": "internal/app/app.go",
+   "language": "go",
+   "complexity": "moderate",
+   "summary": "Berkas kode Go proyek — paket `app` (429 baris, 5 fungsi, 1 tipe).",
+   "description": "Berkas kode Go proyek — paket `app` (429 baris, 5 fungsi, 1 tipe). Tipe utama: App. Fungsi terbesar: New, Shutdown, Run, timeNowUTC, loadInitialDevices. Bergantung pada 316 berkas internal.",
+   "tags": [
+    "go",
+    "app",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/app/app.go:App",
+   "type": "class",
+   "name": "App",
+   "filePath": "internal/app/app.go",
+   "complexity": "simple",
+   "summary": "Tipe App di app.go, dengan method: Run, Shutdown.",
+   "description": "Tipe App di app.go, dengan method: Run, Shutdown. Didefinisikan pada baris 57-67.",
+   "tags": [
+    "go",
+    "tipe",
+    "app"
+   ]
+  },
+  {
+   "id": "function:internal/app/app.go:New",
+   "type": "function",
+   "name": "New",
+   "filePath": "internal/app/app.go",
+   "complexity": "complex",
+   "summary": "Fungsi New (318 baris), parameter: ctx, cfg.",
+   "description": "Fungsi New (318 baris), parameter: ctx, cfg. Didefinisikan pada baris 69-387.",
+   "tags": [
+    "go",
+    "fungsi",
+    "new"
+   ]
+  },
+  {
+   "id": "function:internal/app/app.go:Run",
+   "type": "function",
+   "name": "Run",
+   "filePath": "internal/app/app.go",
+   "complexity": "simple",
+   "summary": "Fungsi Run (6 baris).",
+   "description": "Fungsi Run (6 baris). Didefinisikan pada baris 389-395.",
+   "tags": [
+    "go",
+    "fungsi",
+    "run"
+   ]
+  },
+  {
+   "id": "function:internal/app/app.go:Shutdown",
+   "type": "function",
+   "name": "Shutdown",
+   "filePath": "internal/app/app.go",
+   "complexity": "simple",
+   "summary": "Fungsi Shutdown (23 baris), parameter: ctx.",
+   "description": "Fungsi Shutdown (23 baris), parameter: ctx. Didefinisikan pada baris 397-420.",
+   "tags": [
+    "go",
+    "fungsi",
+    "shutdown"
+   ]
+  },
+  {
+   "id": "file:internal/app/router.go",
+   "type": "file",
+   "name": "router.go",
+   "filePath": "internal/app/router.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Berkas kode Go proyek — paket `app` (253 baris, 1 fungsi, 1 tipe).",
+   "description": "Berkas kode Go proyek — paket `app` (253 baris, 1 fungsi, 1 tipe). Tipe utama: routerDeps. Fungsi terbesar: buildRouter. Bergantung pada 369 berkas internal.",
+   "tags": [
+    "go",
+    "app",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/app/router.go:routerDeps",
+   "type": "class",
+   "name": "routerDeps",
+   "filePath": "internal/app/router.go",
+   "complexity": "simple",
+   "summary": "Tipe routerDeps di router.go.",
+   "description": "Tipe routerDeps di router.go. Didefinisikan pada baris 65-116.",
+   "tags": [
+    "go",
+    "tipe",
+    "routerdeps"
+   ]
+  },
+  {
+   "id": "function:internal/app/router.go:buildRouter",
+   "type": "function",
+   "name": "buildRouter",
+   "filePath": "internal/app/router.go",
+   "complexity": "moderate",
+   "summary": "Fungsi buildRouter (135 baris), parameter: d.",
+   "description": "Fungsi buildRouter (135 baris), parameter: d. Didefinisikan pada baris 118-253.",
+   "tags": [
+    "go",
+    "fungsi",
+    "buildrouter"
+   ]
+  },
+  {
+   "id": "file:internal/app/scheduler_lifecycle_test.go",
+   "type": "file",
+   "name": "scheduler_lifecycle_test.go",
+   "filePath": "internal/app/scheduler_lifecycle_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Berkas kode Go proyek — paket `app` (42 baris, 1 fungsi, 0 tipe).",
+   "description": "Berkas kode Go proyek — paket `app` (42 baris, 1 fungsi, 0 tipe). Fungsi terbesar: TestScheduler_Lifecycle.",
+   "tags": [
+    "go",
+    "app",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/app/scheduler_lifecycle_test.go:TestScheduler_Lifecycle",
+   "type": "function",
+   "name": "TestScheduler_Lifecycle",
+   "filePath": "internal/app/scheduler_lifecycle_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestScheduler_Lifecycle (29 baris), parameter: t.",
+   "description": "Fungsi TestScheduler_Lifecycle (29 baris), parameter: t. Didefinisikan pada baris 13-42.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testscheduler-lifecycle"
+   ]
+  },
+  {
+   "id": "file:internal/app/scheduler.go",
+   "type": "file",
+   "name": "scheduler.go",
+   "filePath": "internal/app/scheduler.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Berkas kode Go proyek — paket `app` (123 baris, 3 fungsi, 3 tipe).",
+   "description": "Berkas kode Go proyek — paket `app` (123 baris, 3 fungsi, 3 tipe). Tipe utama: schedulerJobs, schedulerSpecs, Scheduler. Fungsi terbesar: newScheduler, Start, Stop. Bergantung pada 18 berkas internal.",
+   "tags": [
+    "go",
+    "app",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/app/scheduler.go:schedulerJobs",
+   "type": "class",
+   "name": "schedulerJobs",
+   "filePath": "internal/app/scheduler.go",
+   "complexity": "simple",
+   "summary": "Tipe schedulerJobs di scheduler.go.",
+   "description": "Tipe schedulerJobs di scheduler.go. Didefinisikan pada baris 15-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "schedulerjobs"
+   ]
+  },
+  {
+   "id": "class:internal/app/scheduler.go:schedulerSpecs",
+   "type": "class",
+   "name": "schedulerSpecs",
+   "filePath": "internal/app/scheduler.go",
+   "complexity": "simple",
+   "summary": "Tipe schedulerSpecs di scheduler.go.",
+   "description": "Tipe schedulerSpecs di scheduler.go. Didefinisikan pada baris 22-24.",
+   "tags": [
+    "go",
+    "tipe",
+    "schedulerspecs"
+   ]
+  },
+  {
+   "id": "class:internal/app/scheduler.go:Scheduler",
+   "type": "class",
+   "name": "Scheduler",
+   "filePath": "internal/app/scheduler.go",
+   "complexity": "simple",
+   "summary": "Tipe Scheduler di scheduler.go, dengan method: Start, Stop.",
+   "description": "Tipe Scheduler di scheduler.go, dengan method: Start, Stop. Didefinisikan pada baris 33-37.",
+   "tags": [
+    "go",
+    "tipe",
+    "scheduler"
+   ]
+  },
+  {
+   "id": "function:internal/app/scheduler.go:newScheduler",
+   "type": "function",
+   "name": "newScheduler",
+   "filePath": "internal/app/scheduler.go",
+   "complexity": "moderate",
+   "summary": "Fungsi newScheduler (80 baris), parameter: jobs, specs, tenantID.",
+   "description": "Fungsi newScheduler (80 baris), parameter: jobs, specs, tenantID. Didefinisikan pada baris 39-119.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newscheduler"
+   ]
+  },
+  {
+   "id": "function:internal/app/scheduler.go:Start",
+   "type": "function",
+   "name": "Start",
+   "filePath": "internal/app/scheduler.go",
+   "complexity": "simple",
+   "summary": "Fungsi Start (0 baris).",
+   "description": "Fungsi Start (0 baris). Didefinisikan pada baris 121-121.",
+   "tags": [
+    "go",
+    "fungsi",
+    "start"
+   ]
+  },
+  {
+   "id": "function:internal/app/scheduler.go:Stop",
+   "type": "function",
+   "name": "Stop",
+   "filePath": "internal/app/scheduler.go",
+   "complexity": "simple",
+   "summary": "Fungsi Stop (0 baris).",
+   "description": "Fungsi Stop (0 baris). Didefinisikan pada baris 123-123.",
+   "tags": [
+    "go",
+    "fungsi",
+    "stop"
+   ]
+  },
+  {
+   "id": "file:internal/app/shutdown_test.go",
+   "type": "file",
+   "name": "shutdown_test.go",
+   "filePath": "internal/app/shutdown_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Berkas kode Go proyek — paket `app` (152 baris, 2 fungsi, 0 tipe).",
+   "description": "Berkas kode Go proyek — paket `app` (152 baris, 2 fungsi, 0 tipe). Fungsi terbesar: TestShutdownCompletesWithSSEClients, readByteWithTimeout. Bergantung pada 6 berkas internal.",
+   "tags": [
+    "go",
+    "app",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/app/shutdown_test.go:TestShutdownCompletesWithSSEClients",
+   "type": "function",
+   "name": "TestShutdownCompletesWithSSEClients",
+   "filePath": "internal/app/shutdown_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestShutdownCompletesWithSSEClients (117 baris), parameter: t.",
+   "description": "Fungsi TestShutdownCompletesWithSSEClients (117 baris), parameter: t. Didefinisikan pada baris 17-134.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testshutdowncompleteswithsseclients"
+   ]
+  },
+  {
+   "id": "file:internal/config/config.go",
+   "type": "file",
+   "name": "config.go",
+   "filePath": "internal/config/config.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Berkas kode Go proyek — paket `config` (112 baris, 4 fungsi, 1 tipe).",
+   "description": "Berkas kode Go proyek — paket `config` (112 baris, 4 fungsi, 1 tipe). Tipe utama: Config. Fungsi terbesar: Load, Validate, getEnvAsInt, getEnv. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "config",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/config/config.go:Config",
+   "type": "class",
+   "name": "Config",
+   "filePath": "internal/config/config.go",
+   "complexity": "simple",
+   "summary": "Tipe Config di config.go, dengan method: Validate.",
+   "description": "Tipe Config di config.go, dengan method: Validate. Didefinisikan pada baris 18-44.",
+   "tags": [
+    "go",
+    "tipe",
+    "config"
+   ]
+  },
+  {
+   "id": "function:internal/config/config.go:Load",
+   "type": "function",
+   "name": "Load",
+   "filePath": "internal/config/config.go",
+   "complexity": "simple",
+   "summary": "Fungsi Load (40 baris).",
+   "description": "Fungsi Load (40 baris). Didefinisikan pada baris 47-87.",
+   "tags": [
+    "go",
+    "fungsi",
+    "load"
+   ]
+  },
+  {
+   "id": "function:internal/config/config.go:Validate",
+   "type": "function",
+   "name": "Validate",
+   "filePath": "internal/config/config.go",
+   "complexity": "simple",
+   "summary": "Fungsi Validate (8 baris).",
+   "description": "Fungsi Validate (8 baris). Didefinisikan pada baris 89-97.",
+   "tags": [
+    "go",
+    "fungsi",
+    "validate"
+   ]
+  },
+  {
+   "id": "file:internal/config/crypto.go",
+   "type": "file",
+   "name": "crypto.go",
+   "filePath": "internal/config/crypto.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Berkas kode Go proyek — paket `config` (25 baris, 2 fungsi, 0 tipe).",
+   "description": "Berkas kode Go proyek — paket `config` (25 baris, 2 fungsi, 0 tipe). Fungsi terbesar: Encrypt, Decrypt. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "config",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/config/crypto.go:Encrypt",
+   "type": "function",
+   "name": "Encrypt",
+   "filePath": "internal/config/crypto.go",
+   "complexity": "simple",
+   "summary": "Fungsi Encrypt (6 baris), parameter: plaintext, key.",
+   "description": "Fungsi Encrypt (6 baris), parameter: plaintext, key. Didefinisikan pada baris 10-16.",
+   "tags": [
+    "go",
+    "fungsi",
+    "encrypt"
+   ]
+  },
+  {
+   "id": "function:internal/config/crypto.go:Decrypt",
+   "type": "function",
+   "name": "Decrypt",
+   "filePath": "internal/config/crypto.go",
+   "complexity": "simple",
+   "summary": "Fungsi Decrypt (6 baris), parameter: ciphertext, key.",
+   "description": "Fungsi Decrypt (6 baris), parameter: ciphertext, key. Didefinisikan pada baris 19-25.",
+   "tags": [
+    "go",
+    "fungsi",
+    "decrypt"
+   ]
+  },
+  {
+   "id": "config:internal/config/rbac_model.conf",
+   "type": "config",
+   "name": "rbac_model.conf",
+   "filePath": "internal/config/rbac_model.conf",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: rbac_model.conf.",
+   "description": "Berkas config proyek: rbac_model.conf.",
+   "tags": [
+    "config",
+    "rbac-model"
+   ]
+  },
+  {
+   "id": "file:internal/domain/audit/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/audit/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `audit` (10 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `audit` (10 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "audit",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/audit/log.go",
+   "type": "file",
+   "name": "log.go",
+   "filePath": "internal/domain/audit/log.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `audit` (35 baris, 0 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `audit` (35 baris, 0 fungsi, 2 tipe). Tipe utama: AuditLog, Event.",
+   "tags": [
+    "go",
+    "domain",
+    "audit",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/audit/log.go:AuditLog",
+   "type": "class",
+   "name": "AuditLog",
+   "filePath": "internal/domain/audit/log.go",
+   "complexity": "simple",
+   "summary": "Tipe AuditLog di log.go.",
+   "description": "Tipe AuditLog di log.go. Didefinisikan pada baris 14-25.",
+   "tags": [
+    "go",
+    "tipe",
+    "auditlog"
+   ]
+  },
+  {
+   "id": "class:internal/domain/audit/log.go:Event",
+   "type": "class",
+   "name": "Event",
+   "filePath": "internal/domain/audit/log.go",
+   "complexity": "simple",
+   "summary": "Tipe Event di log.go.",
+   "description": "Tipe Event di log.go. Didefinisikan pada baris 29-35.",
+   "tags": [
+    "go",
+    "tipe",
+    "event"
+   ]
+  },
+  {
+   "id": "file:internal/domain/billing/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/billing/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (32 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (32 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "billing",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/billing/gateway_transaction.go",
+   "type": "file",
+   "name": "gateway_transaction.go",
+   "filePath": "internal/domain/billing/gateway_transaction.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (38 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (38 baris, 0 fungsi, 1 tipe). Tipe utama: GatewayTransaction.",
+   "tags": [
+    "go",
+    "domain",
+    "billing",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/billing/gateway_transaction.go:GatewayTransaction",
+   "type": "class",
+   "name": "GatewayTransaction",
+   "filePath": "internal/domain/billing/gateway_transaction.go",
+   "complexity": "simple",
+   "summary": "Tipe GatewayTransaction di gateway_transaction.go.",
+   "description": "Tipe GatewayTransaction di gateway_transaction.go. Didefinisikan pada baris 19-38.",
+   "tags": [
+    "go",
+    "tipe",
+    "gatewaytransaction"
+   ]
+  },
+  {
+   "id": "file:internal/domain/billing/invoice_item.go",
+   "type": "file",
+   "name": "invoice_item.go",
+   "filePath": "internal/domain/billing/invoice_item.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (23 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (23 baris, 0 fungsi, 1 tipe). Tipe utama: InvoiceItem.",
+   "tags": [
+    "go",
+    "domain",
+    "billing",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/billing/invoice_item.go:InvoiceItem",
+   "type": "class",
+   "name": "InvoiceItem",
+   "filePath": "internal/domain/billing/invoice_item.go",
+   "complexity": "simple",
+   "summary": "Tipe InvoiceItem di invoice_item.go.",
+   "description": "Tipe InvoiceItem di invoice_item.go. Didefinisikan pada baris 14-23.",
+   "tags": [
+    "go",
+    "tipe",
+    "invoiceitem"
+   ]
+  },
+  {
+   "id": "file:internal/domain/billing/invoice.go",
+   "type": "file",
+   "name": "invoice.go",
+   "filePath": "internal/domain/billing/invoice.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (40 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (40 baris, 0 fungsi, 1 tipe). Tipe utama: Invoice.",
+   "tags": [
+    "go",
+    "domain",
+    "billing",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/billing/invoice.go:Invoice",
+   "type": "class",
+   "name": "Invoice",
+   "filePath": "internal/domain/billing/invoice.go",
+   "complexity": "simple",
+   "summary": "Tipe Invoice di invoice.go.",
+   "description": "Tipe Invoice di invoice.go. Didefinisikan pada baris 17-40.",
+   "tags": [
+    "go",
+    "tipe",
+    "invoice"
+   ]
+  },
+  {
+   "id": "file:internal/domain/billing/payment.go",
+   "type": "file",
+   "name": "payment.go",
+   "filePath": "internal/domain/billing/payment.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (47 baris, 0 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `billing` (47 baris, 0 fungsi, 2 tipe). Tipe utama: PaymentMethod, Payment.",
+   "tags": [
+    "go",
+    "domain",
+    "billing",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/billing/payment.go:PaymentMethod",
+   "type": "class",
+   "name": "PaymentMethod",
+   "filePath": "internal/domain/billing/payment.go",
+   "complexity": "simple",
+   "summary": "Tipe PaymentMethod di payment.go.",
+   "description": "Tipe PaymentMethod di payment.go. Didefinisikan pada baris 23-30.",
+   "tags": [
+    "go",
+    "tipe",
+    "paymentmethod"
+   ]
+  },
+  {
+   "id": "class:internal/domain/billing/payment.go:Payment",
+   "type": "class",
+   "name": "Payment",
+   "filePath": "internal/domain/billing/payment.go",
+   "complexity": "simple",
+   "summary": "Tipe Payment di payment.go.",
+   "description": "Tipe Payment di payment.go. Didefinisikan pada baris 34-47.",
+   "tags": [
+    "go",
+    "tipe",
+    "payment"
+   ]
+  },
+  {
+   "id": "file:internal/domain/bot/chat.go",
+   "type": "file",
+   "name": "chat.go",
+   "filePath": "internal/domain/bot/chat.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (43 baris, 0 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (43 baris, 0 fungsi, 2 tipe). Tipe utama: WAChat, WAMessage.",
+   "tags": [
+    "go",
+    "domain",
+    "bot",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/bot/chat.go:WAChat",
+   "type": "class",
+   "name": "WAChat",
+   "filePath": "internal/domain/bot/chat.go",
+   "complexity": "simple",
+   "summary": "Tipe WAChat di chat.go.",
+   "description": "Tipe WAChat di chat.go. Didefinisikan pada baris 9-24.",
+   "tags": [
+    "go",
+    "tipe",
+    "wachat"
+   ]
+  },
+  {
+   "id": "class:internal/domain/bot/chat.go:WAMessage",
+   "type": "class",
+   "name": "WAMessage",
+   "filePath": "internal/domain/bot/chat.go",
+   "complexity": "simple",
+   "summary": "Tipe WAMessage di chat.go.",
+   "description": "Tipe WAMessage di chat.go. Didefinisikan pada baris 29-43.",
+   "tags": [
+    "go",
+    "tipe",
+    "wamessage"
+   ]
+  },
+  {
+   "id": "file:internal/domain/bot/conversation_context.go",
+   "type": "file",
+   "name": "conversation_context.go",
+   "filePath": "internal/domain/bot/conversation_context.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (19 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (19 baris, 0 fungsi, 1 tipe). Tipe utama: ConversationContext.",
+   "tags": [
+    "go",
+    "domain",
+    "bot",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/bot/conversation_context.go:ConversationContext",
+   "type": "class",
+   "name": "ConversationContext",
+   "filePath": "internal/domain/bot/conversation_context.go",
+   "complexity": "simple",
+   "summary": "Tipe ConversationContext di conversation_context.go.",
+   "description": "Tipe ConversationContext di conversation_context.go. Didefinisikan pada baris 9-19.",
+   "tags": [
+    "go",
+    "tipe",
+    "conversationcontext"
+   ]
+  },
+  {
+   "id": "file:internal/domain/bot/conversation.go",
+   "type": "file",
+   "name": "conversation.go",
+   "filePath": "internal/domain/bot/conversation.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (26 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (26 baris, 0 fungsi, 1 tipe). Tipe utama: Conversation.",
+   "tags": [
+    "go",
+    "domain",
+    "bot",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/bot/conversation.go:Conversation",
+   "type": "class",
+   "name": "Conversation",
+   "filePath": "internal/domain/bot/conversation.go",
+   "complexity": "simple",
+   "summary": "Tipe Conversation di conversation.go.",
+   "description": "Tipe Conversation di conversation.go. Didefinisikan pada baris 15-26.",
+   "tags": [
+    "go",
+    "tipe",
+    "conversation"
+   ]
+  },
+  {
+   "id": "file:internal/domain/bot/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/bot/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (22 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (22 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "bot",
+    "inti"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/adapter/ws/device_stream_handler.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "class:internal/adapter/ws/device_stream_handler.go:TerminalMessage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "class:internal/adapter/ws/device_stream_handler.go:TerminalHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "function:internal/adapter/ws/device_stream_handler.go:NewTerminalHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "function:internal/adapter/ws/device_stream_handler.go:ServeHTTP",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/execute_command_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/execute_command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/get_active_sessions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/get_active_sessions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/get_device_status.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/open_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/push_config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/stream_output.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/stream_ping_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/stream_ping.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/stream_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:internal/usecase/network/stream_traffic.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/device_stream_handler.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/hub.go",
+   "target": "file:internal/adapter/ws/hub.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/hub.go",
+   "target": "function:internal/adapter/ws/hub.go:NewHub",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/adapter/ws/router.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "function:internal/adapter/ws/router.go:RegisterEventRoutes",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/execute_command_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/execute_command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/get_active_sessions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/get_active_sessions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/get_device_status.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/open_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/push_config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/stream_output.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/stream_ping_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/stream_ping.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/stream_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/router.go",
+   "target": "file:internal/usecase/network/stream_traffic.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/ws/sse_chain_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "function:internal/adapter/ws/sse_chain_test.go:TestSSEThroughMiddlewareChain",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/auth.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/chain.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/cors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/rbac_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/rbac.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/recovery.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/request_id.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_chain_test.go",
+   "target": "file:internal/adapter/http/middleware/validate.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub_test.go",
+   "target": "file:internal/adapter/ws/sse_hub_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub_test.go",
+   "target": "function:internal/adapter/ws/sse_hub_test.go:TestSSEHubCloseClosesAllClients",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub_test.go",
+   "target": "function:internal/adapter/ws/sse_hub_test.go:TestSSEHubCloseThenCleanupNoPanic",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub_test.go",
+   "target": "function:internal/adapter/ws/sse_hub_test.go:TestSSEHubCloseUnblocksStream",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/adapter/ws/sse_hub.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "class:internal/adapter/ws/sse_hub.go:SSEEvent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "class:internal/adapter/ws/sse_hub.go:SSEHub",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "function:internal/adapter/ws/sse_hub.go:NewSSEHub",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "function:internal/adapter/ws/sse_hub.go:ServeHTTP",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "function:internal/adapter/ws/sse_hub.go:Broadcast",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "function:internal/adapter/ws/sse_hub.go:Publish",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "function:internal/adapter/ws/sse_hub.go:PublishEvent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "function:internal/adapter/ws/sse_hub.go:Close",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/ws/sse_hub.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/app/app.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "class:internal/app/app.go:App",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "function:internal/app/app.go:New",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "function:internal/app/app.go:Run",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "function:internal/app/app.go:Shutdown",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "function:internal/app/app.go:loadInitialDevices",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "function:internal/app/app.go:timeNowUTC",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/device_authorizer_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/identity.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/procedure_permissions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/rbac_enforce_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/refresh_token_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/auth/refresh_token.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/llm/genkit/provider_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/llm/genkit/provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/llm/provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/bot_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/chat_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/fase4_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/helpers.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/isp_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/isp_testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/metrics_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/setting_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/skill_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/user_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/dedicated_queue_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/isolation_infra.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/plan_profile_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/plan_sync.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/provisioner_e2e_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/provisioner_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/provisioner/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/redis/store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/storage/fs_skill_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/storage/fs_skill_store_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/storage/fs_skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/storage/fs_skill_zip.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/storage/git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/tripay/adapter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/whatsapp/sender_adapter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/ws/device_stream_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/ws/hub.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/ws/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/ws/sse_chain_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/ws/sse_hub_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/adapter/ws/sse_hub.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/llm/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/llm/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/llm/pricing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/domain/llm/tool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genericssh/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genericssh/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genericssh/pty.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genieacs/client_http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genieacs/client_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genieacs/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genieacs/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genieacs/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/genieacs/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/cleaner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/commands.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/cookie.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/report.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/types.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/walled_garden_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/hotspot/walled_garden.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/client.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/event_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/events.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/history_sync_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/history_sync.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/jid_filter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/mirror.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/qr.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/sender.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/driver/whatsapp/session_manager.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/registry/registry_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/registry/registry.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/auth/login_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/auth/login.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/auth/refresh_token.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/checkout_isolate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/checkout.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/coverage_extra_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/gateway_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/isolate_worker_settings_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/isolate_worker.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/manage_invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/run_billing_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/run_billing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/template.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/billing/testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/context_manager_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/context_manager.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/engine_mocks_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/engine_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/engine.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/guardrail_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/guardrail.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/media_cleaner_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/media_cleaner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/ratelimit_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/ratelimit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/bot/tools.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/cashbook/manage_cashbook_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/cashbook/manage_cashbook.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/chat/manage_chat.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/conversation/manage_conversation_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/conversation/manage_conversation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/customer/manage_customer_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/customer/manage_customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/device/manage_device_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/device/manage_device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/device/manage_isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/device/manage_metrics_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/device/manage_metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/hotspot/hotspot_usecase_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/hotspot/hotspot_usecase.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/hotspot/manage_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/hotspot/manage_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/hotspot/manage_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/comment_parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/comment_parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/e2e_vault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/export.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/file.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/plan_source_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/plan_source.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/router_live_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/router_live.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/row.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/upsert_plans.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/upsert.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/importer/util.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/llm/manage_config_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/llm/manage_config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/metrics/ping_stream_manager.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/metrics/ping_stream_worker_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/execute_command_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/execute_command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/get_active_sessions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/get_active_sessions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/get_device_status.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/open_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/push_config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/stream_output.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/stream_ping_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/stream_ping.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/stream_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/network/stream_traffic.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/notification/manage_notification_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/notification/manage_notification.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/notification/wa_sender_worker_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/notification/wa_sender_worker.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/plan/manage_plan.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/plan/plan_account.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/plan/plan_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/portal/manage_portal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/portal/portal_flow_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/ppp/manage_ppp_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/ppp/manage_ppp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/registration/convert_artifacts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/registration/convert.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/registration/coverage_extra_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/registration/manage_registration_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/registration/manage_registration.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/report/manage_report_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/report/manage_report.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/setting/manage_setting_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/setting/manage_setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/skill/manage_skill_git_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/skill/manage_skill_git.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/skill/manage_skill_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/skill/manage_skill_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/skill/manage_skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/skill/prompt_builder_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/skill/prompt_builder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/subscription/lifecycle.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/subscription/manage_subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/subscription/subscription_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/user/manage_user_roles.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/user/manage_user_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:internal/usecase/user/manage_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/app.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/app/app.go:New",
+   "target": "function:internal/app/app.go:loadInitialDevices",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/app/app.go:New",
+   "target": "function:internal/app/app.go:timeNowUTC",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/app/router.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "class:internal/app/router.go:routerDeps",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "function:internal/app/router.go:buildRouter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/device_authorizer_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/identity.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/procedure_permissions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/rbac_enforce_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/refresh_token_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/auth/refresh_token.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/auth/auth_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/auth/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/auth/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/auth/user_handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/auth/user_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/billing/billing_handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/billing/handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/billing/invoice_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/billing/mapper_invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/billing/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/bot/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/bot/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/bot/technician_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/bot/whatsapp_chat_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/cashbook/cashbook_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/cashbook/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/cashbook/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/customer/customer_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/customer/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/customer/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/customer/technician_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/device_handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/device_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/metrics_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/probe_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/stream_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/stream_terminal_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/device/validation_contract_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/cookie_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/expire_monitor_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/host_server_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/hotspot_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/ip_binding_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/mapper_host_server.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/mapper_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/mapper_report.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/mapper_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/mapper_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/profile_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/report_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/template_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/user_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/hotspot/voucher_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ispadmin/ispadmin_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ispadmin/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/llm/llm_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/llm/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/llm/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/monitor_interface_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/monitor_log_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/monitor_ppp_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/monitor_queue_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/monitor_session_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/monitor_system_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/monitor/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/network/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/network/network_handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/network/network_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/network/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/notification/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/notification/notification_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/notification/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/plan/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/plan/plan_handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/plan/plan_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/plan/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/portal/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/portal/portal_handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/portal/portal_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/portal/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ppp/active_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ppp/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ppp/ppp_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ppp/profile_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ppp/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ppp/secret_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/ppp/stream_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/registration/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/registration/registration_handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/registration/registration_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/registration/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/report/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/report/report_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/report/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/setting/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/setting/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/setting/setting_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/skill/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/skill/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/skill/skill_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/subscription/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/subscription/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/adminapi/handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/adminapi/handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/gateway/handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/gateway/handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/auth.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/chain.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/cors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/rbac_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/rbac.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/recovery.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/request_id.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/middleware/validate.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/portal/handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/report/handler_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/report/handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/http/webhook/handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/server_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/server.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tool_customer_lookup.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tool_get_device_status.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tool_list_skills.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tool_mikhmon_generate_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tool_mikhmon_get_dashboard.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tool_mikhmon_kick_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tool_push_config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tool_run_command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/mcp/tools_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/bot_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/chat_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/fase4_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/helpers.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/isp_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/isp_testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/metrics_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/setting_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/skill_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/user_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/ws/device_stream_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/ws/hub.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/ws/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/ws/sse_chain_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/ws/sse_hub_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/adapter/ws/sse_hub.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/client.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/event_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/events.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/history_sync_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/history_sync.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/jid_filter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/mirror.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/qr.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/sender.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/driver/whatsapp/session_manager.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/registry/registry_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/registry/registry.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/auth/login_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/auth/login.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/auth/refresh_token.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/checkout_isolate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/checkout.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/coverage_extra_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/gateway_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/isolate_worker_settings_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/isolate_worker.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/manage_invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/run_billing_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/run_billing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/template.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/billing/testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/context_manager_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/context_manager.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/engine_mocks_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/engine_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/engine.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/guardrail_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/guardrail.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/media_cleaner_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/media_cleaner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/ratelimit_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/ratelimit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/bot/tools.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/cashbook/manage_cashbook_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/cashbook/manage_cashbook.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/chat/manage_chat.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/conversation/manage_conversation_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/conversation/manage_conversation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/customer/manage_customer_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/customer/manage_customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/device/manage_device_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/device/manage_device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/device/manage_isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/device/manage_metrics_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/device/manage_metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/hotspot/hotspot_usecase_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/hotspot/hotspot_usecase.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/hotspot/manage_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/hotspot/manage_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/hotspot/manage_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/comment_parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/comment_parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/e2e_vault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/export.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/file.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/plan_source_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/plan_source.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/router_live_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/router_live.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/row.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/upsert_plans.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/upsert.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/importer/util.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/llm/manage_config_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/llm/manage_config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/execute_command_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/execute_command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/get_active_sessions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/get_active_sessions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/get_device_status.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/open_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/push_config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/stream_output.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/stream_ping_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/stream_ping.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/stream_terminal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/network/stream_traffic.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/notification/manage_notification_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/notification/manage_notification.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/notification/wa_sender_worker_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/notification/wa_sender_worker.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/plan/manage_plan.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/plan/plan_account.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/plan/plan_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/portal/manage_portal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/portal/portal_flow_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/ppp/manage_ppp_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/ppp/manage_ppp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/registration/convert_artifacts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/registration/convert.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/registration/coverage_extra_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/registration/manage_registration_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/registration/manage_registration.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/report/manage_report_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/report/manage_report.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/setting/manage_setting_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/setting/manage_setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/skill/manage_skill_git_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/skill/manage_skill_git.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/skill/manage_skill_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/skill/manage_skill_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/skill/manage_skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/skill/prompt_builder_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/skill/prompt_builder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/subscription/lifecycle.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/subscription/manage_subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/subscription/subscription_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/user/manage_user_roles.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/user/manage_user_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/router.go",
+   "target": "file:internal/usecase/user/manage_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler_lifecycle_test.go",
+   "target": "file:internal/app/scheduler_lifecycle_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler_lifecycle_test.go",
+   "target": "function:internal/app/scheduler_lifecycle_test.go:TestScheduler_Lifecycle",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/app/scheduler.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "class:internal/app/scheduler.go:schedulerJobs",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "class:internal/app/scheduler.go:schedulerSpecs",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "class:internal/app/scheduler.go:Scheduler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "function:internal/app/scheduler.go:newScheduler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "function:internal/app/scheduler.go:Start",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "function:internal/app/scheduler.go:Stop",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/checkout_isolate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/checkout.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/coverage_extra_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/gateway_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/isolate_worker_settings_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/isolate_worker.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/manage_invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/run_billing_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/run_billing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/template.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/billing/testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/notification/manage_notification_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/notification/manage_notification.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/notification/wa_sender_worker_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:internal/usecase/notification/wa_sender_worker.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/scheduler.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "file:internal/app/shutdown_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "function:internal/app/shutdown_test.go:TestShutdownCompletesWithSSEClients",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "function:internal/app/shutdown_test.go:readByteWithTimeout",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "file:internal/adapter/ws/device_stream_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "file:internal/adapter/ws/hub.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "file:internal/adapter/ws/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "file:internal/adapter/ws/sse_chain_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "file:internal/adapter/ws/sse_hub_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/app/shutdown_test.go",
+   "target": "file:internal/adapter/ws/sse_hub.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/app/shutdown_test.go:TestShutdownCompletesWithSSEClients",
+   "target": "function:internal/app/shutdown_test.go:readByteWithTimeout",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/config/config.go",
+   "target": "file:internal/config/config.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/config.go",
+   "target": "class:internal/config/config.go:Config",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/config.go",
+   "target": "function:internal/config/config.go:Load",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/config.go",
+   "target": "function:internal/config/config.go:Validate",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/config.go",
+   "target": "function:internal/config/config.go:getEnv",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/config.go",
+   "target": "function:internal/config/config.go:getEnvAsInt",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/config.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/config/config.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/config/config.go:Load",
+   "target": "function:internal/config/config.go:getEnv",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/config/config.go:Load",
+   "target": "function:internal/config/config.go:getEnvAsInt",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/config/config.go:getEnvAsInt",
+   "target": "function:internal/config/config.go:getEnv",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "function:internal/config/crypto.go:Encrypt",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "function:internal/config/crypto.go:Decrypt",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "file:pkg/crypto/aes_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "file:pkg/crypto/aes.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/audit/errors.go",
+   "target": "file:internal/domain/audit/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/audit/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/audit/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/audit/log.go",
+   "target": "file:internal/domain/audit/log.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/audit/log.go",
+   "target": "class:internal/domain/audit/log.go:AuditLog",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/audit/log.go",
+   "target": "class:internal/domain/audit/log.go:Event",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/errors.go",
+   "target": "file:internal/domain/billing/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/billing/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/billing/gateway_transaction.go",
+   "target": "file:internal/domain/billing/gateway_transaction.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/gateway_transaction.go",
+   "target": "class:internal/domain/billing/gateway_transaction.go:GatewayTransaction",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/invoice_item.go",
+   "target": "file:internal/domain/billing/invoice_item.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/invoice_item.go",
+   "target": "class:internal/domain/billing/invoice_item.go:InvoiceItem",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/invoice.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/invoice.go",
+   "target": "class:internal/domain/billing/invoice.go:Invoice",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/payment.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/payment.go",
+   "target": "class:internal/domain/billing/payment.go:PaymentMethod",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/billing/payment.go",
+   "target": "class:internal/domain/billing/payment.go:Payment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/chat.go",
+   "target": "file:internal/domain/bot/chat.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/chat.go",
+   "target": "class:internal/domain/bot/chat.go:WAChat",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/chat.go",
+   "target": "class:internal/domain/bot/chat.go:WAMessage",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/conversation_context.go",
+   "target": "file:internal/domain/bot/conversation_context.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/conversation_context.go",
+   "target": "class:internal/domain/bot/conversation_context.go:ConversationContext",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/conversation.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/conversation.go",
+   "target": "class:internal/domain/bot/conversation.go:Conversation",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/errors.go",
+   "target": "file:internal/domain/bot/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/bot/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  }
+ ]
+}

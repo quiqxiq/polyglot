@@ -1,0 +1,4084 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/adapter/ws/device_stream_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 115,
+      "nonEmptyLines": 97,
+      "functions": [
+        {
+          "name": "NewTerminalHandler",
+          "startLine": 26,
+          "endLine": 30,
+          "params": [
+            "openTermUC"
+          ]
+        },
+        {
+          "name": "ServeHTTP",
+          "startLine": 32,
+          "endLine": 115,
+          "params": [
+            "w",
+            "r"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "TerminalMessage",
+          "startLine": 15,
+          "endLine": 20,
+          "methods": [],
+          "properties": [
+            "DeviceID",
+            "InputData",
+            "Cols",
+            "Rows"
+          ]
+        },
+        {
+          "name": "TerminalHandler",
+          "startLine": 22,
+          "endLine": 24,
+          "methods": [
+            "ServeHTTP"
+          ],
+          "properties": [
+            "openTermUC"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TerminalMessage",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "TerminalHandler",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "NewTerminalHandler",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "ServeHTTP",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ServeHTTP",
+          "callee": "r.PathValue",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "response.WriteHTTPStatusError",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "websocket.Accept",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "logger.WithComponent(\"TerminalWS\").WithError(err).Error",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "logger.WithComponent(\"TerminalWS\").WithError",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "logger.WithComponent",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "func() { _ = conn.CloseNow() }",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "conn.CloseNow",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "r.Context",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "conn.Write",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "conn.Write",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "h.openTermUC.Execute",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "conn.Write",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "func() { _ = termSession.Close() }",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "termSession.Close",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "conn.Write",
+          "lineNumber": 64
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "make",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "func() {\n\t\tbuf := make([]byte, 4096)\n\t\tstdout := termSession.Stdout()\n\t\tfor {\n\t\t\tn, rErr := stdout.Read(buf)\n\t\t\tif n > 0 {\n\t\t\t\tif wErr := conn.Write(ctx, websocket.MessageText, buf[:n]); wErr != nil {\n\t\t\t\t\terrChan <- wErr\n\t\t\t\t\treturn\n\t\t\t\t}\n\t\t\t}\n\t\t\tif rErr != nil {\n\t\t\t\terrChan <- rErr\n\t\t\t\treturn\n\t\t\t}\n\t\t}\n\t}",
+          "lineNumber": 69
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "make",
+          "lineNumber": 70
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "termSession.Stdout",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "stdout.Read",
+          "lineNumber": 73
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "conn.Write",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "func() {\n\t\tstdin := termSession.Stdin()\n\t\tfor {\n\t\t\t_, msgBytes, rErr := conn.Read(ctx)\n\t\t\tif rErr != nil {\n\t\t\t\terrChan <- rErr\n\t\t\t\treturn\n\t\t\t}\n\n\t\t\tvar msg TerminalMessage\n\t\t\tif err := json.Unmarshal(msgBytes, &msg); err == nil {\n\t\t\t\tif msg.InputData != \"\" {\n\t\t\t\t\t_, _ = stdin.Write([]byte(msg.InputData))\n\t\t\t\t}\n\t\t\t\tif msg.Cols > 0 && msg.Rows > 0 {\n\t\t\t\t\t_ = termSession.Resize(msg.Cols, msg.Rows)\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\t_, _ = stdin.Write(msgBytes)\n\t\t\t}\n\t\t}\n\t}",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "termSession.Stdin",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "conn.Read",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "json.Unmarshal",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "stdin.Write",
+          "lineNumber": 100
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "termSession.Resize",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "stdin.Write",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "ctx.Done",
+          "lineNumber": 112
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 2,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/ws/hub.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "functions": [
+        {
+          "name": "NewHub",
+          "startLine": 9,
+          "endLine": 11,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewHub",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/ws/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 15,
+      "functions": [
+        {
+          "name": "RegisterEventRoutes",
+          "startLine": 10,
+          "endLine": 19,
+          "params": [
+            "mux",
+            "sseHub",
+            "openTermUC"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RegisterEventRoutes",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RegisterEventRoutes",
+          "callee": "mux.HandleFunc",
+          "lineNumber": 15
+        },
+        {
+          "caller": "RegisterEventRoutes",
+          "callee": "NewTerminalHandler",
+          "lineNumber": 17
+        },
+        {
+          "caller": "RegisterEventRoutes",
+          "callee": "mux.HandleFunc",
+          "lineNumber": 18
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/ws/sse_chain_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 53,
+      "nonEmptyLines": 45,
+      "functions": [
+        {
+          "name": "TestSSEThroughMiddlewareChain",
+          "startLine": 18,
+          "endLine": 53,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestSSEThroughMiddlewareChain",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "NewSSEHub",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "http.NewServeMux",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "mux.HandleFunc",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "middleware.Chain",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "middleware.Recovery",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "middleware.RequestLogger",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "middleware.CORS",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "httptest.NewServer",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "srv.Close",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "http.Get",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "t.Fatalf",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "func() { _ = resp.Body.Close() }",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "resp.Body.Close",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "t.Fatalf",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "resp.Header.Get",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "t.Fatalf",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "bufio.NewReader",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "reader.ReadString",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "t.Fatalf",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestSSEThroughMiddlewareChain",
+          "callee": "t.Fatalf",
+          "lineNumber": 51
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/ws/sse_hub_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 98,
+      "nonEmptyLines": 81,
+      "functions": [
+        {
+          "name": "TestSSEHubCloseClosesAllClients",
+          "startLine": 7,
+          "endLine": 47,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSSEHubCloseThenCleanupNoPanic",
+          "startLine": 49,
+          "endLine": 77,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSSEHubCloseUnblocksStream",
+          "startLine": 79,
+          "endLine": 98,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestSSEHubCloseClosesAllClients",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "TestSSEHubCloseThenCleanupNoPanic",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "TestSSEHubCloseUnblocksStream",
+          "line": 79,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "NewSSEHub",
+          "lineNumber": 8
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "make",
+          "lineNumber": 12
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "h.mutex.Lock",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "make",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "append",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "h.mutex.Unlock",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "h.Close",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "t.Errorf",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "t.Errorf",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "h.mutex.RLock",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "len",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "h.mutex.RUnlock",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "t.Errorf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "h.Close",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestSSEHubCloseClosesAllClients",
+          "callee": "h.Broadcast",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "NewSSEHub",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "make",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "h.mutex.Lock",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "h.mutex.Unlock",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "h.Close",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "h.mutex.Lock",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "delete",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "close",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "h.mutex.Unlock",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "h.mutex.Lock",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "delete",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "close",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestSSEHubCloseThenCleanupNoPanic",
+          "callee": "h.mutex.Unlock",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestSSEHubCloseUnblocksStream",
+          "callee": "NewSSEHub",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestSSEHubCloseUnblocksStream",
+          "callee": "make",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestSSEHubCloseUnblocksStream",
+          "callee": "h.mutex.Lock",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestSSEHubCloseUnblocksStream",
+          "callee": "h.mutex.Unlock",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestSSEHubCloseUnblocksStream",
+          "callee": "h.Close",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestSSEHubCloseUnblocksStream",
+          "callee": "h.Broadcast",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestSSEHubCloseUnblocksStream",
+          "callee": "t.Errorf",
+          "lineNumber": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/ws/sse_hub.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 120,
+      "nonEmptyLines": 100,
+      "functions": [
+        {
+          "name": "NewSSEHub",
+          "startLine": 26,
+          "endLine": 30,
+          "params": []
+        },
+        {
+          "name": "ServeHTTP",
+          "startLine": 32,
+          "endLine": 86,
+          "params": [
+            "w",
+            "r"
+          ]
+        },
+        {
+          "name": "Broadcast",
+          "startLine": 88,
+          "endLine": 103,
+          "params": [
+            "eventName",
+            "data"
+          ]
+        },
+        {
+          "name": "Publish",
+          "startLine": 105,
+          "endLine": 107,
+          "params": [
+            "eventName",
+            "data"
+          ]
+        },
+        {
+          "name": "PublishEvent",
+          "startLine": 109,
+          "endLine": 111,
+          "params": [
+            "eventType",
+            "data"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 113,
+          "endLine": 120,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SSEEvent",
+          "startLine": 14,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "Event",
+            "Data"
+          ]
+        },
+        {
+          "name": "SSEHub",
+          "startLine": 19,
+          "endLine": 22,
+          "methods": [
+            "ServeHTTP",
+            "Broadcast",
+            "Publish",
+            "PublishEvent",
+            "Close"
+          ],
+          "properties": [
+            "clients",
+            "mutex"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SSEEvent",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "SSEHub",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "NewSSEHub",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "ServeHTTP",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "Broadcast",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "Publish",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "PublishEvent",
+          "line": 109,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 113,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewSSEHub",
+          "callee": "make",
+          "lineNumber": 28
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "response.WriteHTTPStatusError",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "w.Header().Set",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "w.Header",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "w.Header().Set",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "w.Header",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "w.Header().Set",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "w.Header",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "make",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "h.mutex.Lock",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "h.mutex.Unlock",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "func() {\n\t\th.mutex.Lock()\n\t\tif _, ok := h.clients[clientChan]; ok {\n\t\t\tdelete(h.clients, clientChan)\n\t\t\tclose(clientChan)\n\t\t}\n\t\th.mutex.Unlock()\n\t\tlogger.WithComponent(\"SSEHub\").Debug(\"client disconnected\")\n\t}",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "h.mutex.Lock",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "delete",
+          "lineNumber": 52
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "close",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "h.mutex.Unlock",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "logger.WithComponent(\"SSEHub\").Debug",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "logger.WithComponent",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "logger.WithComponent(\"SSEHub\").Debug",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "logger.WithComponent",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "flusher.Flush",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "r.Context",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "json.Marshal",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 78
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "string",
+          "lineNumber": 78
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "flusher.Flush",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ServeHTTP",
+          "callee": "ctx.Done",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Broadcast",
+          "callee": "h.mutex.RLock",
+          "lineNumber": 89
+        },
+        {
+          "caller": "Broadcast",
+          "callee": "h.mutex.RUnlock",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Publish",
+          "callee": "h.Broadcast",
+          "lineNumber": 106
+        },
+        {
+          "caller": "PublishEvent",
+          "callee": "h.Broadcast",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Close",
+          "callee": "h.mutex.Lock",
+          "lineNumber": 114
+        },
+        {
+          "caller": "Close",
+          "callee": "h.mutex.Unlock",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Close",
+          "callee": "close",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Close",
+          "callee": "delete",
+          "lineNumber": 118
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 6,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/app/app.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 429,
+      "nonEmptyLines": 391,
+      "functions": [
+        {
+          "name": "New",
+          "startLine": 69,
+          "endLine": 387,
+          "params": [
+            "ctx",
+            "cfg"
+          ]
+        },
+        {
+          "name": "Run",
+          "startLine": 389,
+          "endLine": 395,
+          "params": []
+        },
+        {
+          "name": "Shutdown",
+          "startLine": 397,
+          "endLine": 420,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "loadInitialDevices",
+          "startLine": 422,
+          "endLine": 424,
+          "params": [
+            "pgStore",
+            "encKey"
+          ]
+        },
+        {
+          "name": "timeNowUTC",
+          "startLine": 426,
+          "endLine": 429,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "App",
+          "startLine": 57,
+          "endLine": 67,
+          "methods": [
+            "Run",
+            "Shutdown"
+          ],
+          "properties": [
+            "cfg",
+            "httpServer",
+            "registry",
+            "waManager",
+            "pgStore",
+            "redisStore",
+            "sseHub",
+            "pingStreamMgr",
+            "scheduler"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "App",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "New",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "Run",
+          "line": 389,
+          "isDefault": false
+        },
+        {
+          "name": "Shutdown",
+          "line": 397,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "New",
+          "callee": "logger.Init",
+          "lineNumber": 70
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").Info",
+          "lineNumber": 71
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent",
+          "lineNumber": 71
+        },
+        {
+          "caller": "New",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 73
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewStore",
+          "lineNumber": 74
+        },
+        {
+          "caller": "New",
+          "callee": "fmt.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "New",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 79
+        },
+        {
+          "caller": "New",
+          "callee": "redisAdapter.NewStore",
+          "lineNumber": 80
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError(err).Warn",
+          "lineNumber": 82
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError",
+          "lineNumber": 82
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent",
+          "lineNumber": 82
+        },
+        {
+          "caller": "New",
+          "callee": "auth.NewJWTService",
+          "lineNumber": 85
+        },
+        {
+          "caller": "New",
+          "callee": "auth.NewRefreshTokenService",
+          "lineNumber": 89
+        },
+        {
+          "caller": "New",
+          "callee": "time.Duration",
+          "lineNumber": 89
+        },
+        {
+          "caller": "New",
+          "callee": "auth.NewCasbinEnforcer",
+          "lineNumber": 92
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 92
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError(err).Warn",
+          "lineNumber": 94
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError",
+          "lineNumber": 94
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent",
+          "lineNumber": 94
+        },
+        {
+          "caller": "New",
+          "callee": "auth.SeedSystemPolicies",
+          "lineNumber": 96
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.FindAllUsers",
+          "lineNumber": 97
+        },
+        {
+          "caller": "New",
+          "callee": "make",
+          "lineNumber": 98
+        },
+        {
+          "caller": "New",
+          "callee": "len",
+          "lineNumber": 98
+        },
+        {
+          "caller": "New",
+          "callee": "append",
+          "lineNumber": 100
+        },
+        {
+          "caller": "New",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 100
+        },
+        {
+          "caller": "New",
+          "callee": "auth.EnsureUserRoleAssignments",
+          "lineNumber": 102
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError(err).Warn",
+          "lineNumber": 104
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError",
+          "lineNumber": 104
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent",
+          "lineNumber": 104
+        },
+        {
+          "caller": "New",
+          "callee": "wsAdapter.NewSSEHub",
+          "lineNumber": 108
+        },
+        {
+          "caller": "New",
+          "callee": "whatsapp.NewEventHandler",
+          "lineNumber": 110
+        },
+        {
+          "caller": "New",
+          "callee": "chatUC.NewChatUseCase",
+          "lineNumber": 111
+        },
+        {
+          "caller": "New",
+          "callee": "whatsapp.NewSessionManager",
+          "lineNumber": 112
+        },
+        {
+          "caller": "New",
+          "callee": "eventHandler.MakeStatusCallback",
+          "lineNumber": 112
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError(err).Warn",
+          "lineNumber": 114
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError",
+          "lineNumber": 114
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent",
+          "lineNumber": 114
+        },
+        {
+          "caller": "New",
+          "callee": "convUC.NewConversationUseCase",
+          "lineNumber": 117
+        },
+        {
+          "caller": "New",
+          "callee": "convService.SetPublisher",
+          "lineNumber": 118
+        },
+        {
+          "caller": "New",
+          "callee": "storageAdapter.NewFSSkillStore",
+          "lineNumber": 120
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError(err).Warn",
+          "lineNumber": 122
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithError",
+          "lineNumber": 122
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent",
+          "lineNumber": 122
+        },
+        {
+          "caller": "New",
+          "callee": "storageAdapter.NewGitSyncer",
+          "lineNumber": 124
+        },
+        {
+          "caller": "New",
+          "callee": "skillUC.NewManageSkillUseCase",
+          "lineNumber": 125
+        },
+        {
+          "caller": "New",
+          "callee": "llmadapter.NewProvider",
+          "lineNumber": 128
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewUserRepository",
+          "lineNumber": 130
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 130
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewSettingRepository",
+          "lineNumber": 131
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 131
+        },
+        {
+          "caller": "New",
+          "callee": "botUC.NewEngine",
+          "lineNumber": 132
+        },
+        {
+          "caller": "New",
+          "callee": "skillUseCase.Provider",
+          "lineNumber": 136
+        },
+        {
+          "caller": "New",
+          "callee": "waManager.SetMessageCallback",
+          "lineNumber": 147
+        },
+        {
+          "caller": "New",
+          "callee": "eventHandler.MakeMessageCallback",
+          "lineNumber": 147
+        },
+        {
+          "caller": "New",
+          "callee": "waManager.SetChatUpdateCallback",
+          "lineNumber": 148
+        },
+        {
+          "caller": "New",
+          "callee": "eventHandler.MakeChatUpdateCallback",
+          "lineNumber": 148
+        },
+        {
+          "caller": "New",
+          "callee": "waManager.SetChatPresenceCallback",
+          "lineNumber": 149
+        },
+        {
+          "caller": "New",
+          "callee": "eventHandler.MakeChatPresenceCallback",
+          "lineNumber": 149
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.FindAllSessions",
+          "lineNumber": 150
+        },
+        {
+          "caller": "New",
+          "callee": "context.Background",
+          "lineNumber": 150
+        },
+        {
+          "caller": "New",
+          "callee": "len",
+          "lineNumber": 151
+        },
+        {
+          "caller": "New",
+          "callee": "waManager.RestoreAllSessions",
+          "lineNumber": 152
+        },
+        {
+          "caller": "New",
+          "callee": "loadInitialDevices",
+          "lineNumber": 156
+        },
+        {
+          "caller": "New",
+          "callee": "mikrotik.NewDriver",
+          "lineNumber": 159
+        },
+        {
+          "caller": "New",
+          "callee": "genieacs.NewDriver",
+          "lineNumber": 162
+        },
+        {
+          "caller": "New",
+          "callee": "registry.New",
+          "lineNumber": 165
+        },
+        {
+          "caller": "New",
+          "callee": "mikhmon.NewGateway",
+          "lineNumber": 168
+        },
+        {
+          "caller": "New",
+          "callee": "mikrotik.NewGateway",
+          "lineNumber": 169
+        },
+        {
+          "caller": "New",
+          "callee": "mikrotik.NewQueueGateway",
+          "lineNumber": 170
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewCustomerRepository",
+          "lineNumber": 173
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 173
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewInvoiceRepository",
+          "lineNumber": 174
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 174
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewSubscriptionRepository",
+          "lineNumber": 175
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 175
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewServicePlanRepository",
+          "lineNumber": 176
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 176
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewNotificationRepository",
+          "lineNumber": 177
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 177
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewCashbookRepository",
+          "lineNumber": 178
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 178
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewReportingRepository",
+          "lineNumber": 179
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 179
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewAuditLogRepository",
+          "lineNumber": 180
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 180
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewRegistrationRepository",
+          "lineNumber": 181
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 181
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewPortalRepository",
+          "lineNumber": 182
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 182
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewGatewayTransactionRepository",
+          "lineNumber": 183
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 183
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewPaymentReader",
+          "lineNumber": 184
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 184
+        },
+        {
+          "caller": "New",
+          "callee": "provisioner.New",
+          "lineNumber": 186
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewPaymentProcessor",
+          "lineNumber": 187
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 187
+        },
+        {
+          "caller": "New",
+          "callee": "provisioner.BuildOnPaidRestore",
+          "lineNumber": 188
+        },
+        {
+          "caller": "New",
+          "callee": "waAdapter.NewSenderAdapter",
+          "lineNumber": 189
+        },
+        {
+          "caller": "New",
+          "callee": "tripay.NewAdapter",
+          "lineNumber": 190
+        },
+        {
+          "caller": "New",
+          "callee": "authUC.NewAuthUseCase",
+          "lineNumber": 193
+        },
+        {
+          "caller": "New",
+          "callee": "authUC.NewRefreshTokenUseCase",
+          "lineNumber": 194
+        },
+        {
+          "caller": "New",
+          "callee": "userUC.NewManageUserUseCase",
+          "lineNumber": 195
+        },
+        {
+          "caller": "New",
+          "callee": "settingUC.NewManageSettingUseCase",
+          "lineNumber": 196
+        },
+        {
+          "caller": "New",
+          "callee": "customerUC.NewManageCustomerUseCase",
+          "lineNumber": 197
+        },
+        {
+          "caller": "New",
+          "callee": "deviceUC.NewManageDeviceUseCase",
+          "lineNumber": 198
+        },
+        {
+          "caller": "New",
+          "callee": "networkUC.NewOpenTerminalUseCase",
+          "lineNumber": 199
+        },
+        {
+          "caller": "New",
+          "callee": "hotspotUC.New",
+          "lineNumber": 200
+        },
+        {
+          "caller": "New",
+          "callee": "networkUC.NewActiveSessionsUseCase",
+          "lineNumber": 201
+        },
+        {
+          "caller": "New",
+          "callee": "pppUC.New",
+          "lineNumber": 202
+        },
+        {
+          "caller": "New",
+          "callee": "billingUC.NewInvoiceUseCase",
+          "lineNumber": 204
+        },
+        {
+          "caller": "New",
+          "callee": "planUC.NewManagePlanUseCase",
+          "lineNumber": 205
+        },
+        {
+          "caller": "New",
+          "callee": "subUC.NewManageSubscriptionUseCase",
+          "lineNumber": 206
+        },
+        {
+          "caller": "New",
+          "callee": "billingUC.NewCheckoutUseCase",
+          "lineNumber": 207
+        },
+        {
+          "caller": "New",
+          "callee": "subUC.NewLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo).WithSettings",
+          "lineNumber": 208
+        },
+        {
+          "caller": "New",
+          "callee": "subUC.NewLifecycleUseCase",
+          "lineNumber": 208
+        },
+        {
+          "caller": "New",
+          "callee": "billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo).WithSettings",
+          "lineNumber": 209
+        },
+        {
+          "caller": "New",
+          "callee": "billingUC.NewRunBillingUseCase",
+          "lineNumber": 209
+        },
+        {
+          "caller": "New",
+          "callee": "billingUC.NewGatewayChargeUseCase",
+          "lineNumber": 210
+        },
+        {
+          "caller": "New",
+          "callee": "registrationUC.NewManageRegistrationUseCase",
+          "lineNumber": 212
+        },
+        {
+          "caller": "New",
+          "callee": "registrationUC.NewConvertUseCase",
+          "lineNumber": 213
+        },
+        {
+          "caller": "New",
+          "callee": "portalUC.NewUseCase",
+          "lineNumber": 218
+        },
+        {
+          "caller": "New",
+          "callee": "importer.NewUpsertUseCase",
+          "lineNumber": 220
+        },
+        {
+          "caller": "New",
+          "callee": "upsertImport.SetDeviceResolver",
+          "lineNumber": 221
+        },
+        {
+          "caller": "New",
+          "callee": "repo.FindAll",
+          "lineNumber": 222
+        },
+        {
+          "caller": "New",
+          "callee": "context.Background",
+          "lineNumber": 222
+        },
+        {
+          "caller": "New",
+          "callee": "strings.EqualFold",
+          "lineNumber": 227
+        },
+        {
+          "caller": "New",
+          "callee": "importer.NewRouterSource",
+          "lineNumber": 233
+        },
+        {
+          "caller": "New",
+          "callee": "routerSource.SetPlanRepository",
+          "lineNumber": 234
+        },
+        {
+          "caller": "New",
+          "callee": "importer.NewReconciler",
+          "lineNumber": 235
+        },
+        {
+          "caller": "New",
+          "callee": "importer.NewExportUseCase",
+          "lineNumber": 236
+        },
+        {
+          "caller": "New",
+          "callee": "auth.NewDeviceAuthorizer",
+          "lineNumber": 238
+        },
+        {
+          "caller": "New",
+          "callee": "postgres.NewMetricsRepository",
+          "lineNumber": 239
+        },
+        {
+          "caller": "New",
+          "callee": "pgStore.DB",
+          "lineNumber": 239
+        },
+        {
+          "caller": "New",
+          "callee": "deviceUC.NewManageMetricsUseCase",
+          "lineNumber": 240
+        },
+        {
+          "caller": "New",
+          "callee": "deviceUC.NewManageIsolationUseCase",
+          "lineNumber": 241
+        },
+        {
+          "caller": "New",
+          "callee": "metricsUC.NewPingStreamWorker",
+          "lineNumber": 243
+        },
+        {
+          "caller": "New",
+          "callee": "reg.Get",
+          "lineNumber": 244
+        },
+        {
+          "caller": "New",
+          "callee": "pingStreamMgr.Start",
+          "lineNumber": 246
+        },
+        {
+          "caller": "New",
+          "callee": "auth.IdentityFromContext",
+          "lineNumber": 249
+        },
+        {
+          "caller": "New",
+          "callee": "deviceAuthorizer.CanAccessDevice",
+          "lineNumber": 251
+        },
+        {
+          "caller": "New",
+          "callee": "response.PermissionDenied",
+          "lineNumber": 256
+        },
+        {
+          "caller": "New",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 256
+        },
+        {
+          "caller": "New",
+          "callee": "reg.Get",
+          "lineNumber": 259
+        },
+        {
+          "caller": "New",
+          "callee": "cashbookUC.NewManageCashbookUseCase",
+          "lineNumber": 262
+        },
+        {
+          "caller": "New",
+          "callee": "llmUC.NewManageConfigUseCase",
+          "lineNumber": 263
+        },
+        {
+          "caller": "New",
+          "callee": "genkit.NewProvider",
+          "lineNumber": 264
+        },
+        {
+          "caller": "New",
+          "callee": "fmt.Errorf",
+          "lineNumber": 266
+        },
+        {
+          "caller": "New",
+          "callee": "prov.TestConnection",
+          "lineNumber": 268
+        },
+        {
+          "caller": "New",
+          "callee": "fmt.Errorf",
+          "lineNumber": 269
+        },
+        {
+          "caller": "New",
+          "callee": "reg.Get",
+          "lineNumber": 275
+        },
+        {
+          "caller": "New",
+          "callee": "reportUC.NewManageReportUseCase",
+          "lineNumber": 282
+        },
+        {
+          "caller": "New",
+          "callee": "notificationUC.NewManageNotificationUseCase",
+          "lineNumber": 283
+        },
+        {
+          "caller": "New",
+          "callee": "mikrotik.NewMonitorStreamGateway",
+          "lineNumber": 284
+        },
+        {
+          "caller": "New",
+          "callee": "buildRouter",
+          "lineNumber": 286
+        },
+        {
+          "caller": "New",
+          "callee": "billingUC.NewIsolateWorker",
+          "lineNumber": 342
+        },
+        {
+          "caller": "New",
+          "callee": "notificationUC.NewWASenderWorker",
+          "lineNumber": 345
+        },
+        {
+          "caller": "New",
+          "callee": "reportingRepo.RecomputeDaily",
+          "lineNumber": 347
+        },
+        {
+          "caller": "New",
+          "callee": "timeNowUTC",
+          "lineNumber": 347
+        },
+        {
+          "caller": "New",
+          "callee": "newScheduler",
+          "lineNumber": 349
+        },
+        {
+          "caller": "New",
+          "callee": "sched.Start",
+          "lineNumber": 360
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithFields(map[string]any{\n\t\t\t\"billing_cron\":   cfg.BillingCronSpec,\n\t\t\t\"isolation_cron\": cfg.IsolationCronSpec,\n\t\t\t\"wa_send_cron\":   cfg.WaSendCronSpec,\n\t\t\t\"snapshot_cron\":  cfg.SnapshotCronSpec,\n\t\t}).Info",
+          "lineNumber": 361
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent(\"App\").WithFields",
+          "lineNumber": 361
+        },
+        {
+          "caller": "New",
+          "callee": "logger.WithComponent",
+          "lineNumber": 361
+        },
+        {
+          "caller": "Run",
+          "callee": "logger.WithComponent(\"App\").WithField(\"address\", a.httpServer.Addr).Info",
+          "lineNumber": 390
+        },
+        {
+          "caller": "Run",
+          "callee": "logger.WithComponent(\"App\").WithField",
+          "lineNumber": 390
+        },
+        {
+          "caller": "Run",
+          "callee": "logger.WithComponent",
+          "lineNumber": 390
+        },
+        {
+          "caller": "Run",
+          "callee": "a.httpServer.ListenAndServe",
+          "lineNumber": 391
+        },
+        {
+          "caller": "Run",
+          "callee": "fmt.Errorf",
+          "lineNumber": 392
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "logger.WithComponent(\"App\").Info",
+          "lineNumber": 398
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "logger.WithComponent",
+          "lineNumber": 398
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "a.scheduler.Stop",
+          "lineNumber": 400
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "a.pingStreamMgr.Stop",
+          "lineNumber": 403
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "a.sseHub.Close",
+          "lineNumber": 406
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "a.httpServer.Shutdown",
+          "lineNumber": 408
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "logger.WithComponent(\"App\").WithError(err).Warn",
+          "lineNumber": 409
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "logger.WithComponent(\"App\").WithError",
+          "lineNumber": 409
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "logger.WithComponent",
+          "lineNumber": 409
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "a.httpServer.Close",
+          "lineNumber": 410
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "a.waManager.DisconnectAll",
+          "lineNumber": 413
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "a.registry.Close",
+          "lineNumber": 416
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "logger.WithComponent(\"App\").Info",
+          "lineNumber": 418
+        },
+        {
+          "caller": "Shutdown",
+          "callee": "logger.WithComponent",
+          "lineNumber": 418
+        },
+        {
+          "caller": "loadInitialDevices",
+          "callee": "postgres.NewDeviceRepository",
+          "lineNumber": 423
+        },
+        {
+          "caller": "loadInitialDevices",
+          "callee": "pgStore.DB",
+          "lineNumber": 423
+        },
+        {
+          "caller": "loadInitialDevices",
+          "callee": "postgres.NewCredentialVault",
+          "lineNumber": 423
+        },
+        {
+          "caller": "loadInitialDevices",
+          "callee": "pgStore.DB",
+          "lineNumber": 423
+        },
+        {
+          "caller": "timeNowUTC",
+          "callee": "time.Now().UTC",
+          "lineNumber": 427
+        },
+        {
+          "caller": "timeNowUTC",
+          "callee": "time.Now",
+          "lineNumber": 427
+        },
+        {
+          "caller": "timeNowUTC",
+          "callee": "time.Date",
+          "lineNumber": 428
+        },
+        {
+          "caller": "timeNowUTC",
+          "callee": "n.Year",
+          "lineNumber": 428
+        },
+        {
+          "caller": "timeNowUTC",
+          "callee": "n.Month",
+          "lineNumber": 428
+        },
+        {
+          "caller": "timeNowUTC",
+          "callee": "n.Day",
+          "lineNumber": 428
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/app/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 253,
+      "nonEmptyLines": 214,
+      "functions": [
+        {
+          "name": "buildRouter",
+          "startLine": 118,
+          "endLine": 253,
+          "params": [
+            "d"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "routerDeps",
+          "startLine": 65,
+          "endLine": 116,
+          "methods": [],
+          "properties": [
+            "cfg",
+            "jwtService",
+            "casbinEnforcer",
+            "reportingRepo",
+            "userRepo",
+            "customerRepo",
+            "regRepo",
+            "cashbookUseCase",
+            "notifRepo",
+            "pgStore",
+            "reg",
+            "waManager",
+            "sseHub",
+            "waSender",
+            "chatService",
+            "skillUseCase",
+            "convService",
+            "botEngine",
+            "llmConfigUseCase",
+            "authUseCase",
+            "refreshUseCase",
+            "manageUserUseCase",
+            "manageSettingUseCase",
+            "custUC",
+            "devUC",
+            "openTermUC",
+            "hotUC",
+            "activeSessionsUC",
+            "pppUseCase",
+            "invUC",
+            "planUCase",
+            "subUCase",
+            "checkoutUC",
+            "lifecycleUC",
+            "runBillingUC",
+            "chargeUC",
+            "regManagerUC",
+            "regConvertUC",
+            "portalUCase",
+            "upsertImport",
+            "routerSource",
+            "reconciler",
+            "exportUC",
+            "metricsUseCase",
+            "manageIsolationUseCase",
+            "notifManagerUC",
+            "reportManagerUC",
+            "streamGW",
+            "connectDriverProvider",
+            "driverResolverConnect"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "buildRouter",
+          "callee": "http.NewServeMux",
+          "lineNumber": 119
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "webhookHTTP.NewHandler",
+          "lineNumber": 121
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "webhookHTTPHandler.RegisterPublic",
+          "lineNumber": 122
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "authConnect.NewAuthServiceHandler",
+          "lineNumber": 124
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "rootMux.Handle",
+          "lineNumber": 127
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registrationConnect.NewPublicSubmitHandler",
+          "lineNumber": 129
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "rootMux.Handle",
+          "lineNumber": 130
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "portalConnect.NewPortalServiceHandler",
+          "lineNumber": 132
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "rootMux.Handle",
+          "lineNumber": 133
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "portalHTTP.NewHandler",
+          "lineNumber": 135
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "portalHTTPHandler.RegisterPublic",
+          "lineNumber": 136
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "portalHTTPHandler.RegisterAuthenticated",
+          "lineNumber": 137
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "gatewayHTTP.NewHandler",
+          "lineNumber": 139
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "gatewayHTTPHandler.RegisterPublic",
+          "lineNumber": 140
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "mcp.New(d.reg, nil).\n\t\tWithMikhmonUseCase(d.hotUC).\n\t\tWithCustomerRepository",
+          "lineNumber": 142
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "mcp.New(d.reg, nil).\n\t\tWithMikhmonUseCase",
+          "lineNumber": 142
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "mcp.New",
+          "lineNumber": 142
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "rootMux.Handle",
+          "lineNumber": 145
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "mcpServer.HTTPHandler",
+          "lineNumber": 145
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "wsAdapter.RegisterEventRoutes",
+          "lineNumber": 147
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "http.NewServeMux",
+          "lineNumber": 149
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "protectedMux.Handle",
+          "lineNumber": 153
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "append",
+          "lineNumber": 154
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "deviceConnect.NewDeviceServiceHandler",
+          "lineNumber": 157
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 158
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "customerConnect.NewCustomerServiceHandler",
+          "lineNumber": 160
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 161
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "authConnect.NewRBACServiceHandler",
+          "lineNumber": 163
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 164
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "authConnect.NewUserServiceHandler",
+          "lineNumber": 166
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 167
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "settingConnect.NewSettingServiceHandler",
+          "lineNumber": 169
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 170
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "planConnect.NewPlanServiceHandler",
+          "lineNumber": 172
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 173
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "subConnect.NewSubscriptionServiceHandler",
+          "lineNumber": 175
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 176
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "billingConnect.NewBillingServiceHandler",
+          "lineNumber": 178
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 179
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registrationConnect.NewRegistrationServiceHandler",
+          "lineNumber": 181
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 182
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "cashbookConnect.NewCashbookServiceHandler",
+          "lineNumber": 184
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 185
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "notificationConnect.NewNotificationServiceHandler",
+          "lineNumber": 187
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 188
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "reportConnect.NewReportServiceHandler",
+          "lineNumber": 190
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 191
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "ispadminConnect.NewISPAdminServiceHandler",
+          "lineNumber": 193
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 195
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "hotspotConnect.NewHotspotServiceHandler",
+          "lineNumber": 197
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 198
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "networkConnect.NewNetworkServiceHandler",
+          "lineNumber": 200
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 201
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "monitorConnect.NewNetworkMonitorServiceHandler",
+          "lineNumber": 203
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 204
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "pppConnect.NewPPPServiceHandler",
+          "lineNumber": 206
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 207
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "botConnect.NewWhatsAppServiceHandler",
+          "lineNumber": 209
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 210
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "skillConnect.NewSkillServiceHandler",
+          "lineNumber": 212
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 213
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "llmConnect.NewLLMConfigServiceHandler",
+          "lineNumber": 215
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 216
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "botConnect.NewBotServiceHandler",
+          "lineNumber": 218
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 219
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "deviceConnect.NewProbeServiceHandler",
+          "lineNumber": 221
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "registerProtected",
+          "lineNumber": 222
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "gatewayHTTPHandler.RegisterProtected",
+          "lineNumber": 224
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "reportHTTP.NewHandler(d.reportingRepo).Register",
+          "lineNumber": 225
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "reportHTTP.NewHandler",
+          "lineNumber": 225
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "adminapi.NewHandler(d.upsertImport, d.routerSource, d.reconciler, d.reportingRepo, d.exportUC, d.driverResolverConnect).\n\t\tRegisterProtected",
+          "lineNumber": 226
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "adminapi.NewHandler",
+          "lineNumber": 226
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "middleware.Chain",
+          "lineNumber": 229
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "middleware.AuthenticateJWT",
+          "lineNumber": 231
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "middleware.AuthorizeProcedure",
+          "lineNumber": 232
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "rootMux.Handle",
+          "lineNumber": 235
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "rootMux.Handle",
+          "lineNumber": 243
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "middleware.Chain",
+          "lineNumber": 246
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "middleware.RequestID",
+          "lineNumber": 248
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "middleware.RequestLogger",
+          "lineNumber": 249
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "middleware.CORS",
+          "lineNumber": 250
+        },
+        {
+          "caller": "buildRouter",
+          "callee": "middleware.Recovery",
+          "lineNumber": 251
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/app/scheduler_lifecycle_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 42,
+      "nonEmptyLines": 33,
+      "functions": [
+        {
+          "name": "TestScheduler_Lifecycle",
+          "startLine": 13,
+          "endLine": 42,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestScheduler_Lifecycle",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "snapshotRuns.Add",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "newScheduler",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "require.NotNil",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "sched.Start",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "assert.Eventually",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "snapshotRuns.Load",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "sched.Stop",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "snapshotRuns.Load",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "time.Sleep",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "assert.LessOrEqual",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestScheduler_Lifecycle",
+          "callee": "snapshotRuns.Load",
+          "lineNumber": 41
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/app/scheduler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 123,
+      "nonEmptyLines": 111,
+      "functions": [
+        {
+          "name": "newScheduler",
+          "startLine": 39,
+          "endLine": 119,
+          "params": [
+            "jobs",
+            "specs",
+            "tenantID"
+          ]
+        },
+        {
+          "name": "Start",
+          "startLine": 121,
+          "endLine": 121,
+          "params": []
+        },
+        {
+          "name": "Stop",
+          "startLine": 123,
+          "endLine": 123,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "schedulerJobs",
+          "startLine": 15,
+          "endLine": 20,
+          "methods": [],
+          "properties": [
+            "billing",
+            "isolate",
+            "waSend",
+            "snapshot"
+          ]
+        },
+        {
+          "name": "schedulerSpecs",
+          "startLine": 22,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "billing",
+            "isolation",
+            "waSend",
+            "snapshot"
+          ]
+        },
+        {
+          "name": "Scheduler",
+          "startLine": 33,
+          "endLine": 37,
+          "methods": [
+            "Start",
+            "Stop"
+          ],
+          "properties": [
+            "cron",
+            "jobs",
+            "tenantID"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Scheduler",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "Start",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "Stop",
+          "line": 123,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newScheduler",
+          "callee": "cronv3.New",
+          "lineNumber": 41
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "cronv3.WithLocation",
+          "lineNumber": 41
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "func() {\n\t\t\t\tif r := recover(); r != nil {\n\t\t\t\t\tlogger.WithComponent(\"Scheduler\").WithFields(map[string]any{\"job\": name, \"panic\": r}).\n\t\t\t\t\t\tError(\"scheduler job panicked\")\n\t\t\t\t}\n\t\t\t}",
+          "lineNumber": 48
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "recover",
+          "lineNumber": 49
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\"job\": name, \"panic\": r}).\n\t\t\t\t\t\tError",
+          "lineNumber": 50
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields",
+          "lineNumber": 50
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent",
+          "lineNumber": 50
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "context.WithTimeout",
+          "lineNumber": 54
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "context.Background",
+          "lineNumber": 54
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "cancel",
+          "lineNumber": 55
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "fn",
+          "lineNumber": 56
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\"job\": name}).\n\t\t\t\t\tWithError(err).Error",
+          "lineNumber": 57
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\"job\": name}).\n\t\t\t\t\tWithError",
+          "lineNumber": 57
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields",
+          "lineNumber": 57
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent",
+          "lineNumber": 57
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\"job\": name}).\n\t\t\t\tDebug",
+          "lineNumber": 61
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields",
+          "lineNumber": 61
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent",
+          "lineNumber": 61
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "s.cron.AddFunc",
+          "lineNumber": 70
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "safeWrap",
+          "lineNumber": 70
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\n\t\t\t\t\"job\": name, \"spec\": spec,\n\t\t\t}).WithError(err).Error",
+          "lineNumber": 71
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\n\t\t\t\t\"job\": name, \"spec\": spec,\n\t\t\t}).WithError",
+          "lineNumber": 71
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields",
+          "lineNumber": 71
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent",
+          "lineNumber": 71
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "add",
+          "lineNumber": 78
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "s.jobs.billing.Run",
+          "lineNumber": 79
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "time.Now().Format",
+          "lineNumber": 79
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "time.Now",
+          "lineNumber": 79
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\n\t\t\t\t\t\"created\": res.Created, \"skipped\": res.Skipped,\n\t\t\t\t}).Info",
+          "lineNumber": 81
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields",
+          "lineNumber": 81
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent",
+          "lineNumber": 81
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "add",
+          "lineNumber": 89
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "s.jobs.isolate.Run",
+          "lineNumber": 90
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\n\t\t\t\t\t\"isolated\": res.Isolated, \"suspended\": res.Suspended,\n\t\t\t\t\t\"provisioned\": res.Provisioned, \"provision_failed\": res.ProvisionFailed,\n\t\t\t\t\t\"router_failures\":   res.RouterFailures,\n\t\t\t\t\t\"skipped_no_router\": res.SkippedNoRouter,\n\t\t\t\t}).Info",
+          "lineNumber": 92
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields",
+          "lineNumber": 92
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent",
+          "lineNumber": 92
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "add",
+          "lineNumber": 103
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "s.jobs.waSend.Run",
+          "lineNumber": 104
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields(map[string]any{\n\t\t\t\t\t\"sent\": res.Sent, \"failed\": res.Failed, \"gave_up\": res.GaveUp,\n\t\t\t\t}).Info",
+          "lineNumber": 106
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent(\"Scheduler\").WithFields",
+          "lineNumber": 106
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "logger.WithComponent",
+          "lineNumber": 106
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "add",
+          "lineNumber": 114
+        },
+        {
+          "caller": "newScheduler",
+          "callee": "s.jobs.snapshot",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Start",
+          "callee": "s.cron.Start",
+          "lineNumber": 121
+        },
+        {
+          "caller": "Stop",
+          "callee": "s.cron.Stop",
+          "lineNumber": 123
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/app/shutdown_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 152,
+      "nonEmptyLines": 134,
+      "functions": [
+        {
+          "name": "TestShutdownCompletesWithSSEClients",
+          "startLine": 17,
+          "endLine": 134,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "readByteWithTimeout",
+          "startLine": 136,
+          "endLine": 152,
+          "params": [
+            "rdr",
+            "timeout"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestShutdownCompletesWithSSEClients",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "wsAdapter.NewSSEHub",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "http.NewServeMux",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "wsAdapter.RegisterEventRoutes",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "net.Listen",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "func() { _ = ln.Close() }",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "ln.Close",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "make",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "func() {\n\t\tserveErr <- httpSrv.Serve(ln)\n\t}",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "httpSrv.Serve",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "ln.Addr().String",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "ln.Addr",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "make",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "make",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "func() {\n\t\tdefer close(pingDone)\n\t\tticker := time.NewTicker(50 * time.Millisecond)\n\t\tdefer ticker.Stop()\n\t\tfor {\n\t\t\tselect {\n\t\t\tcase <-stopPing:\n\t\t\t\treturn\n\t\t\tcase <-ticker.C:\n\t\t\t\tsseHub.Broadcast(\"ping\", map[string]string{\"k\": \"v\"})\n\t\t\t}\n\t\t}\n\t}",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "close",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "time.NewTicker",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "ticker.Stop",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "sseHub.Broadcast",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "make",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "http.NewRequest",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "http.DefaultClient.Do",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "func() { _ = resp.Body.Close() }",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "resp.Body.Close",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "resp.Header.Get",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "append",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "bufio.NewReader",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "time.Now().Add",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "time.Now",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "time.Now().Before",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "time.Now",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "rdr.ReadString",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "close",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "context.WithTimeout",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "context.Background",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "cancel",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "time.Now",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "a.Shutdown",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "time.Since",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "errors.Is",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatalf",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "time.After",
+          "lineNumber": 117
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Fatal",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "readByteWithTimeout",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestShutdownCompletesWithSSEClients",
+          "callee": "t.Errorf",
+          "lineNumber": 131
+        },
+        {
+          "caller": "readByteWithTimeout",
+          "callee": "make",
+          "lineNumber": 141
+        },
+        {
+          "caller": "readByteWithTimeout",
+          "callee": "func() {\n\t\tb, err := rdr.ReadByte()\n\t\tch <- result{b: b, err: err}\n\t}",
+          "lineNumber": 142
+        },
+        {
+          "caller": "readByteWithTimeout",
+          "callee": "rdr.ReadByte",
+          "lineNumber": 143
+        },
+        {
+          "caller": "readByteWithTimeout",
+          "callee": "time.After",
+          "lineNumber": 149
+        },
+        {
+          "caller": "readByteWithTimeout",
+          "callee": "errors.New",
+          "lineNumber": 150
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/config/config.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 112,
+      "nonEmptyLines": 94,
+      "functions": [
+        {
+          "name": "Load",
+          "startLine": 47,
+          "endLine": 87,
+          "params": []
+        },
+        {
+          "name": "Validate",
+          "startLine": 89,
+          "endLine": 97,
+          "params": []
+        },
+        {
+          "name": "getEnv",
+          "startLine": 99,
+          "endLine": 104,
+          "params": [
+            "key",
+            "defaultVal"
+          ]
+        },
+        {
+          "name": "getEnvAsInt",
+          "startLine": 106,
+          "endLine": 112,
+          "params": [
+            "key",
+            "defaultVal"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Config",
+          "startLine": 18,
+          "endLine": 44,
+          "methods": [
+            "Validate"
+          ],
+          "properties": [
+            "Port",
+            "AppEnv",
+            "LogLevel",
+            "DatabaseURL",
+            "RedisURL",
+            "EncryptionKey",
+            "JWTSecret",
+            "JWTExpiryHours",
+            "RefreshTokenTTLHours",
+            "WAStoreDir",
+            "CORSOrigins",
+            "BillingCronSpec",
+            "IsolationCronSpec",
+            "SchedulerEnabled",
+            "WaSendCronSpec",
+            "SnapshotCronSpec"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Config",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Load",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "Validate",
+          "line": 89,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Load",
+          "callee": "godotenv.Load",
+          "lineNumber": 48
+        },
+        {
+          "caller": "Load",
+          "callee": "logger.WithComponent(\"Config\").Warn",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Load",
+          "callee": "logger.WithComponent",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Load",
+          "callee": "godotenv.Overload",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Load",
+          "callee": "strings.Split",
+          "lineNumber": 58
+        },
+        {
+          "caller": "Load",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Load",
+          "callee": "append",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 67
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 68
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnvAsInt",
+          "lineNumber": 74
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnvAsInt",
+          "lineNumber": 75
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 76
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 81
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 84
+        },
+        {
+          "caller": "Load",
+          "callee": "getEnv",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Validate",
+          "callee": "len",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Validate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Validate",
+          "callee": "len",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Validate",
+          "callee": "len",
+          "lineNumber": 93
+        },
+        {
+          "caller": "Validate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 94
+        },
+        {
+          "caller": "getEnv",
+          "callee": "os.LookupEnv",
+          "lineNumber": 100
+        },
+        {
+          "caller": "getEnvAsInt",
+          "callee": "getEnv",
+          "lineNumber": 107
+        },
+        {
+          "caller": "getEnvAsInt",
+          "callee": "strconv.Atoi",
+          "lineNumber": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/config/crypto.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 21,
+      "functions": [
+        {
+          "name": "Encrypt",
+          "startLine": 10,
+          "endLine": 16,
+          "params": [
+            "plaintext",
+            "key"
+          ]
+        },
+        {
+          "name": "Decrypt",
+          "startLine": 19,
+          "endLine": 25,
+          "params": [
+            "ciphertext",
+            "key"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Encrypt",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "Decrypt",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Encrypt",
+          "callee": "crypto.Encrypt",
+          "lineNumber": 11
+        },
+        {
+          "caller": "Encrypt",
+          "callee": "fmt.Errorf",
+          "lineNumber": 13
+        },
+        {
+          "caller": "Decrypt",
+          "callee": "crypto.Decrypt",
+          "lineNumber": 20
+        },
+        {
+          "caller": "Decrypt",
+          "callee": "fmt.Errorf",
+          "lineNumber": 22
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/config/rbac_model.conf",
+      "language": "conf",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 10,
+      "metrics": {}
+    },
+    {
+      "path": "internal/domain/audit/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/audit/log.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 31,
+      "classes": [
+        {
+          "name": "AuditLog",
+          "startLine": 14,
+          "endLine": 25,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "ActorType",
+            "ActorID",
+            "Action",
+            "EntityType",
+            "EntityID",
+            "Description",
+            "IPAddress",
+            "CreatedAt"
+          ]
+        },
+        {
+          "name": "Event",
+          "startLine": 29,
+          "endLine": 35,
+          "methods": [],
+          "properties": [
+            "DeviceID",
+            "UserID",
+            "Command",
+            "Result",
+            "Timestamp"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AuditLog",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Event",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/billing/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 28,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/billing/gateway_transaction.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 35,
+      "classes": [
+        {
+          "name": "GatewayTransaction",
+          "startLine": 19,
+          "endLine": 38,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Gateway",
+            "ExternalID",
+            "InvoiceID",
+            "PaymentID",
+            "Amount",
+            "FeeAmount",
+            "Status",
+            "PaymentChannel",
+            "PaymentURL",
+            "QRString",
+            "RawCallback",
+            "CallbackCount",
+            "PaidAt",
+            "ExpiresAt",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GatewayTransaction",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/billing/invoice_item.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "InvoiceItem",
+          "startLine": 14,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "ID",
+            "InvoiceID",
+            "Description",
+            "Quantity",
+            "UnitPrice",
+            "Amount",
+            "ItemType",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "InvoiceItem",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/billing/invoice.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 37,
+      "classes": [
+        {
+          "name": "Invoice",
+          "startLine": 17,
+          "endLine": 40,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "InvoiceNumber",
+            "CustomerID",
+            "SubscriptionID",
+            "Period",
+            "Subtotal",
+            "Discount",
+            "TaxAmount",
+            "Total",
+            "PaidAmount",
+            "DueDate",
+            "PaidAt",
+            "Status",
+            "QRPayload",
+            "ManualPaymentCode",
+            "Notes",
+            "CancelledAt",
+            "CancelReason",
+            "DeletedAt",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Invoice",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/billing/payment.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 42,
+      "classes": [
+        {
+          "name": "PaymentMethod",
+          "startLine": 23,
+          "endLine": 30,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Name",
+            "Type",
+            "IsActive",
+            "CreatedAt"
+          ]
+        },
+        {
+          "name": "Payment",
+          "startLine": 34,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "PaymentNo",
+            "InvoiceID",
+            "PaymentMethodID",
+            "Amount",
+            "PaymentDate",
+            "ReceivedBy",
+            "ScanMethod",
+            "Reference",
+            "Notes",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PaymentMethod",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Payment",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/bot/chat.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 40,
+      "classes": [
+        {
+          "name": "WAChat",
+          "startLine": 9,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "ID",
+            "SessionID",
+            "ChatJID",
+            "DisplayName",
+            "IsGroup",
+            "LastMessageID",
+            "LastMessagePreview",
+            "LastMessageTime",
+            "UnreadCount",
+            "BotEnabled",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "WAMessage",
+          "startLine": 29,
+          "endLine": 43,
+          "methods": [],
+          "properties": [
+            "ID",
+            "SessionID",
+            "ChatJID",
+            "WAMessageID",
+            "SenderJID",
+            "SenderName",
+            "Content",
+            "MediaType",
+            "IsFromMe",
+            "IsRead",
+            "Status",
+            "Timestamp",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WAChat",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "WAMessage",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/bot/conversation_context.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 17,
+      "classes": [
+        {
+          "name": "ConversationContext",
+          "startLine": 9,
+          "endLine": 19,
+          "methods": [],
+          "properties": [
+            "ConversationID",
+            "Status",
+            "ClientPhone",
+            "Summary",
+            "RecentMessages",
+            "TotalTokenIn",
+            "TotalTokenOut",
+            "TotalLLMCalls",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConversationContext",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/bot/conversation.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 21,
+      "classes": [
+        {
+          "name": "Conversation",
+          "startLine": 15,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "ID",
+            "SessionID",
+            "CustomerWANumber",
+            "Status",
+            "AssignedAgentID",
+            "StartedAt",
+            "CreatedAt",
+            "UpdatedAt",
+            "Messages"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Conversation",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/bot/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 20,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

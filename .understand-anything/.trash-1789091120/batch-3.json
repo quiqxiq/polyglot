@@ -1,0 +1,273 @@
+{
+ "batchIndex": 3,
+ "nodes": [
+  {
+   "id": "config:.air.toml",
+   "type": "config",
+   "name": ".air.toml",
+   "filePath": ".air.toml",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: .air.toml.",
+   "description": "Berkas config proyek: .air.toml.",
+   "tags": [
+    "config",
+    "air"
+   ]
+  },
+  {
+   "id": "service:.dockerignore",
+   "type": "service",
+   "name": ".dockerignore",
+   "filePath": ".dockerignore",
+   "complexity": "simple",
+   "summary": "Berkas service proyek: .dockerignore.",
+   "description": "Berkas service proyek: .dockerignore.",
+   "tags": [
+    "service"
+   ]
+  },
+  {
+   "id": "config:.env.example",
+   "type": "config",
+   "name": ".env.example",
+   "filePath": ".env.example",
+   "complexity": "simple",
+   "summary": "Contoh konfigurasi environment: DATABASE_URL, REDIS, JWT, vendor MikroTik, WhatsApp, AI.",
+   "description": "Template variabel lingkungan yang diperlukan server; salin ke .env untuk pengembangan lokal.",
+   "tags": [
+    "config",
+    "env"
+   ]
+  },
+  {
+   "id": "config:.golangci.yml",
+   "type": "config",
+   "name": ".golangci.yml",
+   "filePath": ".golangci.yml",
+   "complexity": "simple",
+   "summary": "Konfigurasi golangci-lint — linter agregat untuk gate kualitas Go.",
+   "description": "Menentukan linter aktif dan pengecualian; dijalankan oleh make lint.",
+   "tags": [
+    "config",
+    "golangci"
+   ]
+  },
+  {
+   "id": "config:.mcp.json",
+   "type": "config",
+   "name": ".mcp.json",
+   "filePath": ".mcp.json",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: .mcp.json.",
+   "description": "Berkas config proyek: .mcp.json.",
+   "tags": [
+    "config",
+    "mcp"
+   ]
+  },
+  {
+   "id": "document:AGENTS.md",
+   "type": "document",
+   "name": "AGENTS.md",
+   "filePath": "AGENTS.md",
+   "complexity": "simple",
+   "summary": "Instruksi operasional AI agent: arsitektur repo, aturan non-negotiable, perintah build/test, dan definisi selesai.",
+   "description": "Sumber kebenaran utama untuk konvensi: batasan layer (domain→port→usecase→adapter→driver), aturan error via pkg/response & fault.New, logger terpusat, batas 500 baris per berkas, dan checklist `make check`.",
+   "tags": [
+    "documentasi",
+    "konvensi",
+    "agent",
+    "arsitektur"
+   ]
+  },
+  {
+   "id": "document:CHATWOOT_PLAN.md",
+   "type": "document",
+   "name": "CHATWOOT_PLAN.md",
+   "filePath": "CHATWOOT_PLAN.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: CHATWOOT_PLAN (197 baris).",
+   "description": "Dokumentasi: CHATWOOT_PLAN (197 baris).",
+   "tags": [
+    "document",
+    "chatwoot-plan"
+   ]
+  },
+  {
+   "id": "document:CLAUDE.md",
+   "type": "document",
+   "name": "CLAUDE.md",
+   "filePath": "CLAUDE.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: CLAUDE (3 baris).",
+   "description": "Dokumentasi: CLAUDE (3 baris).",
+   "tags": [
+    "document",
+    "claude"
+   ]
+  },
+  {
+   "id": "document:DEVELOPMENT-GUIDELINES.md",
+   "type": "document",
+   "name": "DEVELOPMENT-GUIDELINES.md",
+   "filePath": "DEVELOPMENT-GUIDELINES.md",
+   "complexity": "moderate",
+   "summary": "Panduan & standar pengembangan definitif: Clean Hexagonal, naming, interface, logging, error handling.",
+   "description": "Rujukan standar implementasi harian: batasan arsitektur heksagonal, penamaan, desain interface Go, logging terpusat, dan penanganan error.",
+   "tags": [
+    "documentasi",
+    "standar",
+    "arsitektur"
+   ]
+  },
+  {
+   "id": "document:EFFECTIVE_GO.md",
+   "type": "document",
+   "name": "EFFECTIVE_GO.md",
+   "filePath": "EFFECTIVE_GO.md",
+   "complexity": "complex",
+   "summary": "Pedoman penulisan Go proyek: format, penamaan, error, dan desain paket.",
+   "description": "Melengkapi EFFECTIVE GO resmi dengan konvensi spesifik repo Polyglot untuk penulisan kode Go yang konsisten.",
+   "tags": [
+    "documentasi",
+    "go",
+    "konvensi"
+   ]
+  },
+  {
+   "id": "service:Makefile",
+   "type": "service",
+   "name": "Makefile",
+   "filePath": "Makefile",
+   "complexity": "simple",
+   "summary": "Target build & kualitas: build, vet, test, lint, check, proto-check, boundary checks, test-integration, security.",
+   "description": "Gerbang kualitas proyek — make check menjalankan build, vet, test, lint, cek error connect, dan cek batasan layer; make proto-check memverifikasi kode generated protobuf.",
+   "tags": [
+    "service",
+    "makefile"
+   ]
+  },
+  {
+   "id": "document:PLAN-BACKEND-STANDARDIZATION-V2.md",
+   "type": "document",
+   "name": "PLAN-BACKEND-STANDARDIZATION-V2.md",
+   "filePath": "PLAN-BACKEND-STANDARDIZATION-V2.md",
+   "complexity": "complex",
+   "summary": "Rencana pekerjaan standardisasi backend yang belum selesai.",
+   "description": "Daftar sisa pekerjaan standardisasi backend: normalisasi layer, penyeragaman handler, dan penyelesaian migrasi arsitektur.",
+   "tags": [
+    "documentasi",
+    "rencana",
+    "backend"
+   ]
+  },
+  {
+   "id": "document:PLAN-PING-ANALYTICS-OPTIMIZATION.md",
+   "type": "document",
+   "name": "PLAN-PING-ANALYTICS-OPTIMIZATION.md",
+   "filePath": "PLAN-PING-ANALYTICS-OPTIMIZATION.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: PLAN-PING-ANALYTICS-OPTIMIZATION (280 baris).",
+   "description": "Dokumentasi: PLAN-PING-ANALYTICS-OPTIMIZATION (280 baris).",
+   "tags": [
+    "document",
+    "plan-ping-analytics-optimization"
+   ]
+  },
+  {
+   "id": "document:PLAN.md",
+   "type": "document",
+   "name": "PLAN.md",
+   "filePath": "PLAN.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: PLAN (279 baris).",
+   "description": "Dokumentasi: PLAN (279 baris).",
+   "tags": [
+    "document",
+    "plan"
+   ]
+  },
+  {
+   "id": "document:Polyglot-Architecture.md",
+   "type": "document",
+   "name": "Polyglot-Architecture.md",
+   "filePath": "Polyglot-Architecture.md",
+   "complexity": "moderate",
+   "summary": "Rasional arsitektur sistem: alur kerja, vendor-agnostic command gateway, dan state orchestration.",
+   "description": "Dokumen arsitektur yang menjelaskan alur request antar-layer, konsep command gateway yang bebas vendor (MikroTik dll.), serta orkestrasi state perangkat.",
+   "tags": [
+    "documentasi",
+    "arsitektur",
+    "gateway"
+   ]
+  },
+  {
+   "id": "document:README.md",
+   "type": "document",
+   "name": "README.md",
+   "filePath": "README.md",
+   "complexity": "simple",
+   "summary": "Dokumen utama proyek Polyglot — engine backend NetOps & manajemen ISP berbasis Go murni.",
+   "description": "Menjelaskan platform: ConnectRPC, MCP, SSE/WebSocket, otomasi jaringan multi-vendor, billing ISP, hotspot voucher (parity Mikhmon), dan bot AI WhatsApp. Menjadi indeks seluruh dokumen teknis proyek.",
+   "tags": [
+    "documentasi",
+    "overview",
+    "polyglot"
+   ]
+  },
+  {
+   "id": "document:ROADMAP-AND-ISSUES.md",
+   "type": "document",
+   "name": "ROADMAP-AND-ISSUES.md",
+   "filePath": "ROADMAP-AND-ISSUES.md",
+   "complexity": "moderate",
+   "summary": "Dokumentasi: ROADMAP-AND-ISSUES (423 baris).",
+   "description": "Dokumentasi: ROADMAP-AND-ISSUES (423 baris).",
+   "tags": [
+    "document",
+    "roadmap-and-issues"
+   ]
+  },
+  {
+   "id": "document:SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "type": "document",
+   "name": "SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "filePath": "SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "complexity": "moderate",
+   "summary": "Struktur folder definitif, relasi antar-komponen, dan diagram arsitektur sistem.",
+   "description": "Peta struktur direktori internal/ (domain, port, usecase, adapter, driver), pkg/, api/, migrations/, beserta diagram relasi komponen.",
+   "tags": [
+    "documentasi",
+    "struktur",
+    "arsitektur"
+   ]
+  },
+  {
+   "id": "document:TECH-STACK-DAN-PERSIAPAN.md",
+   "type": "document",
+   "name": "TECH-STACK-DAN-PERSIAPAN.md",
+   "filePath": "TECH-STACK-DAN-PERSIAPAN.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: TECH-STACK-DAN-PERSIAPAN (168 baris).",
+   "description": "Dokumentasi: TECH-STACK-DAN-PERSIAPAN (168 baris).",
+   "tags": [
+    "document",
+    "tech-stack-dan-persiapan"
+   ]
+  },
+  {
+   "id": "config:buf.gen.yaml",
+   "type": "config",
+   "name": "buf.gen.yaml",
+   "filePath": "buf.gen.yaml",
+   "complexity": "simple",
+   "summary": "Template generasi kode protobuf (ConnectRPC + Go types) via buf.",
+   "description": "Mengatur plugin generasi ke api/gen/ — direktori generated yang tidak boleh diedit manual.",
+   "tags": [
+    "config",
+    "buf-gen"
+   ]
+  }
+ ],
+ "edges": []
+}

@@ -1,0 +1,136 @@
+{
+ "batchIndex": 9,
+ "nodes": [
+  {
+   "id": "document:docs/adr/0001-pilih-gin-daripada-echo.md",
+   "type": "document",
+   "name": "0001-pilih-gin-daripada-echo.md",
+   "filePath": "docs/adr/0001-pilih-gin-daripada-echo.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0001-pilih-gin-daripada-echo (15 baris).",
+   "description": "Dokumentasi: 0001-pilih-gin-daripada-echo (15 baris).",
+   "tags": [
+    "document",
+    "0001-pilih-gin-daripada-echo"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0002-devicedriver-tanpa-session-terpisah.md",
+   "type": "document",
+   "name": "0002-devicedriver-tanpa-session-terpisah.md",
+   "filePath": "docs/adr/0002-devicedriver-tanpa-session-terpisah.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0002-devicedriver-tanpa-session-terpisah (42 baris).",
+   "description": "Dokumentasi: 0002-devicedriver-tanpa-session-terpisah (42 baris).",
+   "tags": [
+    "document",
+    "0002-devicedriver-tanpa-session-terpisah"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0003-mikrotik-dual-connection-streaming.md",
+   "type": "document",
+   "name": "0003-mikrotik-dual-connection-streaming.md",
+   "filePath": "docs/adr/0003-mikrotik-dual-connection-streaming.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0003-mikrotik-dual-connection-streaming (113 baris).",
+   "description": "Dokumentasi: 0003-mikrotik-dual-connection-streaming (113 baris).",
+   "tags": [
+    "document",
+    "0003-mikrotik-dual-connection-streaming"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0004-generic-cli-driver-scrapligo.md",
+   "type": "document",
+   "name": "0004-generic-cli-driver-scrapligo.md",
+   "filePath": "docs/adr/0004-generic-cli-driver-scrapligo.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0004-generic-cli-driver-scrapligo (174 baris).",
+   "description": "Dokumentasi: 0004-generic-cli-driver-scrapligo (174 baris).",
+   "tags": [
+    "document",
+    "0004-generic-cli-driver-scrapligo"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0005-migrasi-dari-gin-ke-net-http-servemux.md",
+   "type": "document",
+   "name": "0005-migrasi-dari-gin-ke-net-http-servemux.md",
+   "filePath": "docs/adr/0005-migrasi-dari-gin-ke-net-http-servemux.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0005-migrasi-dari-gin-ke-net-http-servemux (21 baris).",
+   "description": "Dokumentasi: 0005-migrasi-dari-gin-ke-net-http-servemux (21 baris).",
+   "tags": [
+    "document",
+    "0005-migrasi-dari-gin-ke-net-http-servemux"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0006-http-error-envelope.md",
+   "type": "document",
+   "name": "0006-http-error-envelope.md",
+   "filePath": "docs/adr/0006-http-error-envelope.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0006-http-error-envelope (10 baris).",
+   "description": "Dokumentasi: 0006-http-error-envelope (10 baris).",
+   "tags": [
+    "document",
+    "0006-http-error-envelope"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0007-pagination-contract.md",
+   "type": "document",
+   "name": "0007-pagination-contract.md",
+   "filePath": "docs/adr/0007-pagination-contract.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0007-pagination-contract (10 baris).",
+   "description": "Dokumentasi: 0007-pagination-contract (10 baris).",
+   "tags": [
+    "document",
+    "0007-pagination-contract"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0008-go-version.md",
+   "type": "document",
+   "name": "0008-go-version.md",
+   "filePath": "docs/adr/0008-go-version.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0008-go-version (10 baris).",
+   "description": "Dokumentasi: 0008-go-version (10 baris).",
+   "tags": [
+    "document",
+    "0008-go-version"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0009-request-validation.md",
+   "type": "document",
+   "name": "0009-request-validation.md",
+   "filePath": "docs/adr/0009-request-validation.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0009-request-validation (10 baris).",
+   "description": "Dokumentasi: 0009-request-validation (10 baris).",
+   "tags": [
+    "document",
+    "0009-request-validation"
+   ]
+  },
+  {
+   "id": "document:docs/adr/0010-wire-compatibility.md",
+   "type": "document",
+   "name": "0010-wire-compatibility.md",
+   "filePath": "docs/adr/0010-wire-compatibility.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: 0010-wire-compatibility (10 baris).",
+   "description": "Dokumentasi: 0010-wire-compatibility (10 baris).",
+   "tags": [
+    "document",
+    "0010-wire-compatibility"
+   ]
+  }
+ ],
+ "edges": []
+}

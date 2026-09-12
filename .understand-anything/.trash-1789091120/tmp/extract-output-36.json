@@ -1,0 +1,7056 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/usecase/hotspot/manage_voucher.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 111,
+      "nonEmptyLines": 98,
+      "functions": [
+        {
+          "name": "GenerateVouchers",
+          "startLine": 13,
+          "endLine": 15,
+          "params": [
+            "ctx",
+            "driver",
+            "p",
+            "count"
+          ]
+        },
+        {
+          "name": "CheckVoucherStatus",
+          "startLine": 18,
+          "endLine": 111,
+          "params": [
+            "ctx",
+            "driver",
+            "username"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GenerateVouchers",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "CheckVoucherStatus",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GenerateVouchers",
+          "callee": "u.gateway.GenerateVouchers",
+          "lineNumber": 14
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 19
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "u.gateway.ListUsers",
+          "lineNumber": 23
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "fmt.Errorf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "len",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "u.gateway.GetUserProfiles",
+          "lineNumber": 50
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "u.gateway.ListActiveSessions",
+          "lineNumber": 62
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "u.gateway.ListCookies",
+          "lineNumber": 75
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "u.gateway.ParseUserComment",
+          "lineNumber": 88
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "strings.Contains",
+          "lineNumber": 93
+        },
+        {
+          "caller": "CheckVoucherStatus",
+          "callee": "strings.ToLower",
+          "lineNumber": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/importer/comment_parser_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 97,
+      "nonEmptyLines": 89,
+      "functions": [
+        {
+          "name": "TestGuessCustomerName",
+          "startLine": 11,
+          "endLine": 74,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestFormatAutoName",
+          "startLine": 76,
+          "endLine": 85,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestGuessPhone",
+          "startLine": 87,
+          "endLine": 91,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestExtractPriceFromComment",
+          "startLine": 93,
+          "endLine": 97,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestGuessCustomerName",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TestFormatAutoName",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "TestGuessPhone",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "TestExtractPriceFromComment",
+          "line": 93,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestGuessCustomerName",
+          "callee": "t.Run",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestGuessCustomerName",
+          "callee": "importer.GuessCustomerName",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestGuessCustomerName",
+          "callee": "assert.Equal",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "assert.Equal",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "importer.FormatAutoName",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "assert.Equal",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "importer.FormatAutoName",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "assert.Equal",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "importer.FormatAutoName",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "assert.Equal",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "importer.FormatAutoName",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "assert.Equal",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "importer.FormatAutoName",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "assert.Equal",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "importer.FormatAutoName",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "assert.Equal",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "importer.FormatAutoName",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "assert.Equal",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestFormatAutoName",
+          "callee": "importer.FormatAutoName",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestGuessPhone",
+          "callee": "assert.Equal",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestGuessPhone",
+          "callee": "importer.GuessPhone",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestGuessPhone",
+          "callee": "assert.Equal",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestGuessPhone",
+          "callee": "importer.GuessPhone",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestGuessPhone",
+          "callee": "assert.Equal",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestGuessPhone",
+          "callee": "importer.GuessPhone",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "assert.Equal",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "float64",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "importer.ExtractPriceFromComment",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "assert.Equal",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "float64",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "importer.ExtractPriceFromComment",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "assert.Equal",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "float64",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestExtractPriceFromComment",
+          "callee": "importer.ExtractPriceFromComment",
+          "lineNumber": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/importer/comment_parser.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 142,
+      "nonEmptyLines": 127,
+      "functions": [
+        {
+          "name": "extractPriceFromComment",
+          "startLine": 11,
+          "endLine": 25,
+          "params": [
+            "comment"
+          ]
+        },
+        {
+          "name": "extractRateFromProfileHint",
+          "startLine": 28,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "guessPhone",
+          "startLine": 31,
+          "endLine": 45,
+          "params": [
+            "comment"
+          ]
+        },
+        {
+          "name": "guessCustomerName",
+          "startLine": 49,
+          "endLine": 93,
+          "params": [
+            "username",
+            "comment"
+          ]
+        },
+        {
+          "name": "isNumericOrIP",
+          "startLine": 95,
+          "endLine": 101,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "FormatAutoName",
+          "startLine": 106,
+          "endLine": 127,
+          "params": [
+            "raw"
+          ]
+        },
+        {
+          "name": "GuessCustomerName",
+          "startLine": 130,
+          "endLine": 132,
+          "params": [
+            "username",
+            "comment"
+          ]
+        },
+        {
+          "name": "GuessPhone",
+          "startLine": 135,
+          "endLine": 137,
+          "params": [
+            "comment"
+          ]
+        },
+        {
+          "name": "ExtractPriceFromComment",
+          "startLine": 140,
+          "endLine": 142,
+          "params": [
+            "comment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FormatAutoName",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "GuessCustomerName",
+          "line": 130,
+          "isDefault": false
+        },
+        {
+          "name": "GuessPhone",
+          "line": 135,
+          "isDefault": false
+        },
+        {
+          "name": "ExtractPriceFromComment",
+          "line": 140,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 12
+        },
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 13
+        },
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 14
+        },
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strings.Fields",
+          "lineNumber": 15
+        },
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strings.ToLower",
+          "lineNumber": 16
+        },
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 17
+        },
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strings.NewReplacer(\"rp.\", \"\", \"rp\", \"\", \".\", \"\", \",\", \".\").Replace",
+          "lineNumber": 18
+        },
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strings.NewReplacer",
+          "lineNumber": 18
+        },
+        {
+          "caller": "extractPriceFromComment",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 19
+        },
+        {
+          "caller": "guessPhone",
+          "callee": "strings.Fields",
+          "lineNumber": 32
+        },
+        {
+          "caller": "guessPhone",
+          "callee": "strings.Map",
+          "lineNumber": 33
+        },
+        {
+          "caller": "guessPhone",
+          "callee": "len",
+          "lineNumber": 39
+        },
+        {
+          "caller": "guessPhone",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 39
+        },
+        {
+          "caller": "guessPhone",
+          "callee": "len",
+          "lineNumber": 40
+        },
+        {
+          "caller": "guessPhone",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 40
+        },
+        {
+          "caller": "guessPhone",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 40
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 50
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "FormatAutoName",
+          "lineNumber": 52
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.ToLower",
+          "lineNumber": 55
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 57
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.Contains",
+          "lineNumber": 58
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.Contains",
+          "lineNumber": 59
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.Contains",
+          "lineNumber": 60
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.Contains",
+          "lineNumber": 61
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "FormatAutoName",
+          "lineNumber": 62
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.Index",
+          "lineNumber": 67
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 68
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "len",
+          "lineNumber": 68
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.IndexAny",
+          "lineNumber": 69
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 70
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "len",
+          "lineNumber": 72
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "isNumericOrIP",
+          "lineNumber": 72
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.FieldsFunc",
+          "lineNumber": 79
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 83
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "len",
+          "lineNumber": 84
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 85
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "strings.ToLower",
+          "lineNumber": 85
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "guessPhone",
+          "lineNumber": 86
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "isNumericOrIP",
+          "lineNumber": 87
+        },
+        {
+          "caller": "guessCustomerName",
+          "callee": "FormatAutoName",
+          "lineNumber": 92
+        },
+        {
+          "caller": "isNumericOrIP",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 96
+        },
+        {
+          "caller": "isNumericOrIP",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 97
+        },
+        {
+          "caller": "isNumericOrIP",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 98
+        },
+        {
+          "caller": "isNumericOrIP",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 99
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 107
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "strings.ContainsAny",
+          "lineNumber": 111
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 116
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 117
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "strings.Fields",
+          "lineNumber": 118
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "strings.ToLower",
+          "lineNumber": 120
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "len",
+          "lineNumber": 121
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "unicode.ToUpper",
+          "lineNumber": 122
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "string",
+          "lineNumber": 124
+        },
+        {
+          "caller": "FormatAutoName",
+          "callee": "strings.Join",
+          "lineNumber": 126
+        },
+        {
+          "caller": "GuessCustomerName",
+          "callee": "guessCustomerName",
+          "lineNumber": 131
+        },
+        {
+          "caller": "GuessPhone",
+          "callee": "guessPhone",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ExtractPriceFromComment",
+          "callee": "extractPriceFromComment",
+          "lineNumber": 141
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/importer/e2e_vault_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 24,
+      "functions": [
+        {
+          "name": "EncryptString",
+          "startLine": 14,
+          "endLine": 16,
+          "params": [
+            "_",
+            "p"
+          ]
+        },
+        {
+          "name": "DecryptString",
+          "startLine": 18,
+          "endLine": 23,
+          "params": [
+            "_",
+            "c"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 25,
+          "endLine": 27,
+          "params": [
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "Save",
+          "startLine": 29,
+          "endLine": 31,
+          "params": [
+            "_",
+            "_",
+            "_"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "e2eVault",
+          "startLine": 12,
+          "endLine": 12,
+          "methods": [
+            "EncryptString",
+            "DecryptString",
+            "Get",
+            "Save"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "EncryptString",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "DecryptString",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "DecryptString",
+          "callee": "len",
+          "lineNumber": 19
+        },
+        {
+          "caller": "DecryptString",
+          "callee": "errors.New",
+          "lineNumber": 22
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/importer/export.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 132,
+      "nonEmptyLines": 124,
+      "functions": [
+        {
+          "name": "NewExportUseCase",
+          "startLine": 22,
+          "endLine": 29,
+          "params": [
+            "subs",
+            "customs",
+            "plans",
+            "devices"
+          ]
+        },
+        {
+          "name": "ExportAll",
+          "startLine": 33,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "format"
+          ]
+        },
+        {
+          "name": "CollectRows",
+          "startLine": 51,
+          "endLine": 125,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "planNameOr",
+          "startLine": 127,
+          "endLine": 132,
+          "params": [
+            "planID",
+            "names"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ExportUseCase",
+          "startLine": 14,
+          "endLine": 19,
+          "methods": [
+            "ExportAll",
+            "CollectRows"
+          ],
+          "properties": [
+            "subs",
+            "customs",
+            "plans",
+            "devices"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ExportUseCase",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewExportUseCase",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "ExportAll",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "CollectRows",
+          "line": 51,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ExportAll",
+          "callee": "len",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ExportAll",
+          "callee": "u.CollectRows",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ExportAll",
+          "callee": "WriteXLSX",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ExportAll",
+          "callee": "WriteCSV",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "len",
+          "lineNumber": 53
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "u.subs.FindAll",
+          "lineNumber": 56
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "u.customs.FindAll",
+          "lineNumber": 60
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "u.plans.List",
+          "lineNumber": 70
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "u.devices.FindAll",
+          "lineNumber": 78
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "sort.Slice",
+          "lineNumber": 85
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "subs[i].CreatedAt.Before",
+          "lineNumber": 85
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "make",
+          "lineNumber": 86
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "len",
+          "lineNumber": 86
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "planNameOr",
+          "lineNumber": 112
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "len",
+          "lineNumber": 120
+        },
+        {
+          "caller": "CollectRows",
+          "callee": "append",
+          "lineNumber": 122
+        },
+        {
+          "caller": "planNameOr",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 131
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/importer/file.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 136,
+      "nonEmptyLines": 125,
+      "functions": [
+        {
+          "name": "ParseCSV",
+          "startLine": 17,
+          "endLine": 25,
+          "params": [
+            "r"
+          ]
+        },
+        {
+          "name": "ParseXLSX",
+          "startLine": 28,
+          "endLine": 43,
+          "params": [
+            "data"
+          ]
+        },
+        {
+          "name": "WriteCSV",
+          "startLine": 46,
+          "endLine": 71,
+          "params": [
+            "rows"
+          ]
+        },
+        {
+          "name": "WriteXLSX",
+          "startLine": 74,
+          "endLine": 99,
+          "params": [
+            "rows"
+          ]
+        },
+        {
+          "name": "parseRecords",
+          "startLine": 103,
+          "endLine": 120,
+          "params": [
+            "records"
+          ]
+        },
+        {
+          "name": "isBlankRow",
+          "startLine": 122,
+          "endLine": 129,
+          "params": [
+            "cells"
+          ]
+        },
+        {
+          "name": "fnum",
+          "startLine": 131,
+          "endLine": 136,
+          "params": [
+            "p"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ParseCSV",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "ParseXLSX",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "WriteCSV",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "WriteXLSX",
+          "line": 74,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseCSV",
+          "callee": "csv.NewReader",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ParseCSV",
+          "callee": "reader.ReadAll",
+          "lineNumber": 20
+        },
+        {
+          "caller": "ParseCSV",
+          "callee": "fmt.Errorf",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ParseCSV",
+          "callee": "parseRecords",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "excelize.OpenReader",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "bytes.NewReader",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "fmt.Errorf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "func() { _ = f.Close() }",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "f.Close",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "f.GetSheetList",
+          "lineNumber": 34
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "len",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "f.GetRows",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "fmt.Errorf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ParseXLSX",
+          "callee": "parseRecords",
+          "lineNumber": 42
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "csv.NewWriter",
+          "lineNumber": 48
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "w.Write",
+          "lineNumber": 52
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "fnum",
+          "lineNumber": 58
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "fnum",
+          "lineNumber": 58
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 59
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "w.Write",
+          "lineNumber": 62
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "w.Flush",
+          "lineNumber": 66
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "w.Error",
+          "lineNumber": 67
+        },
+        {
+          "caller": "WriteCSV",
+          "callee": "buf.Bytes",
+          "lineNumber": 70
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "excelize.NewFile",
+          "lineNumber": 75
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "f.SetSheetName",
+          "lineNumber": 77
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "WriteCSV",
+          "lineNumber": 80
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "csv.NewReader(bytes.NewReader(csvBytes)).ReadAll",
+          "lineNumber": 84
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "csv.NewReader",
+          "lineNumber": 84
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "bytes.NewReader",
+          "lineNumber": 84
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "excelize.CoordinatesToCellName",
+          "lineNumber": 89
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "f.SetSheetRow",
+          "lineNumber": 90
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "f.WriteToBuffer",
+          "lineNumber": 94
+        },
+        {
+          "caller": "WriteXLSX",
+          "callee": "buf.Bytes",
+          "lineNumber": 98
+        },
+        {
+          "caller": "parseRecords",
+          "callee": "len",
+          "lineNumber": 104
+        },
+        {
+          "caller": "parseRecords",
+          "callee": "mapHeaders",
+          "lineNumber": 107
+        },
+        {
+          "caller": "parseRecords",
+          "callee": "len",
+          "lineNumber": 108
+        },
+        {
+          "caller": "parseRecords",
+          "callee": "make",
+          "lineNumber": 111
+        },
+        {
+          "caller": "parseRecords",
+          "callee": "len",
+          "lineNumber": 111
+        },
+        {
+          "caller": "parseRecords",
+          "callee": "isBlankRow",
+          "lineNumber": 114
+        },
+        {
+          "caller": "parseRecords",
+          "callee": "append",
+          "lineNumber": 117
+        },
+        {
+          "caller": "parseRecords",
+          "callee": "buildRow",
+          "lineNumber": 117
+        },
+        {
+          "caller": "isBlankRow",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 124
+        },
+        {
+          "caller": "fnum",
+          "callee": "strconv.FormatFloat",
+          "lineNumber": 135
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/importer/parser_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 92,
+      "nonEmptyLines": 77,
+      "functions": [
+        {
+          "name": "TestParseCSV_Valid",
+          "startLine": 20,
+          "endLine": 37,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestValidateRows_Errors",
+          "startLine": 39,
+          "endLine": 54,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestCSXXLSX_RoundTrip",
+          "startLine": 56,
+          "endLine": 82,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseCSV_BadHeader",
+          "startLine": 84,
+          "endLine": 87,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseCSV_EmptyFile",
+          "startLine": 89,
+          "endLine": 92,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestParseCSV_Valid",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "TestValidateRows_Errors",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "TestCSXXLSX_RoundTrip",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseCSV_BadHeader",
+          "line": 84,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseCSV_EmptyFile",
+          "line": 89,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "importer.ParseCSV",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "strings.NewReader",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "require.NoError",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "require.Len",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.Equal",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.Equal",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.Equal",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.Equal",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.Equal",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.InDelta",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.Equal",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.Equal",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestParseCSV_Valid",
+          "callee": "assert.Equal",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestValidateRows_Errors",
+          "callee": "importer.ParseCSV",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestValidateRows_Errors",
+          "callee": "strings.NewReader",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestValidateRows_Errors",
+          "callee": "require.NoError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestValidateRows_Errors",
+          "callee": "importer.ValidateRows",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestValidateRows_Errors",
+          "callee": "assert.Empty",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestValidateRows_Errors",
+          "callee": "importer.ValidateRows",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestValidateRows_Errors",
+          "callee": "require.Len",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "importer.WriteCSV",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "require.NoError",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "importer.ParseCSV",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "strings.NewReader",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "string",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "require.NoError",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "require.Len",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "assert.Equal",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "assert.Equal",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "assert.InDelta",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "importer.WriteXLSX",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "require.NoError",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "importer.ParseXLSX",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "require.NoError",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "require.Len",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "assert.Equal",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestCSXXLSX_RoundTrip",
+          "callee": "assert.Equal",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestParseCSV_BadHeader",
+          "callee": "importer.ParseCSV",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestParseCSV_BadHeader",
+          "callee": "strings.NewReader",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestParseCSV_BadHeader",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestParseCSV_EmptyFile",
+          "callee": "importer.ParseCSV",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestParseCSV_EmptyFile",
+          "callee": "strings.NewReader",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestParseCSV_EmptyFile",
+          "callee": "assert.Error",
+          "lineNumber": 91
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/importer/plan_source_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 91,
+      "nonEmptyLines": 77,
+      "functions": [
+        {
+          "name": "newMockPlanRepo",
+          "startLine": 20,
+          "endLine": 22,
+          "params": []
+        },
+        {
+          "name": "FindByName",
+          "startLine": 24,
+          "endLine": 29,
+          "params": [
+            "_",
+            "tenantID",
+            "name"
+          ]
+        },
+        {
+          "name": "Save",
+          "startLine": 31,
+          "endLine": 34,
+          "params": [
+            "_",
+            "plan"
+          ]
+        },
+        {
+          "name": "TestPullRouterPlans_Unified",
+          "startLine": 36,
+          "endLine": 91,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockPlanRepo",
+          "startLine": 15,
+          "endLine": 18,
+          "methods": [
+            "FindByName",
+            "Save"
+          ],
+          "properties": [
+            "plans"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FindByName",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "TestPullRouterPlans_Unified",
+          "line": 36,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newMockPlanRepo",
+          "callee": "make",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "context.Background",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "newMockPlanRepo",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "importer.NewRouterSource",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "src.SetPlanRepository",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "src.PullRouterPlans",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "require.NoError",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "len",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "require.NotNil",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "float64",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.True",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "importer.NewUpsertUseCase",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "upsert.CommitPlans",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "require.NoError",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestPullRouterPlans_Unified",
+          "callee": "len",
+          "lineNumber": 90
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/importer/plan_source.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 125,
+      "nonEmptyLines": 118,
+      "functions": [
+        {
+          "name": "PullRouterPlans",
+          "startLine": 32,
+          "endLine": 125,
+          "params": [
+            "ctx",
+            "driver",
+            "serviceType"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PlanRow",
+          "startLine": 13,
+          "endLine": 29,
+          "methods": [],
+          "properties": [
+            "Name",
+            "ServiceType",
+            "RateLimit",
+            "BandwidthDownloadKbps",
+            "BandwidthUploadKbps",
+            "Price",
+            "ParentQueue",
+            "AddressList",
+            "IPPoolName",
+            "SharedUsers",
+            "SessionTimeout",
+            "IdleTimeout",
+            "IsNew",
+            "Selected",
+            "RouterProfile"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PlanRow",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "PullRouterPlans",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "PullRouterPlans",
+          "callee": "strings.ToUpper",
+          "lineNumber": 37
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 37
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "make",
+          "lineNumber": 38
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "s.gateway.ListProfiles",
+          "lineNumber": 44
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "fmt.Errorf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 49
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "splitRate",
+          "lineNumber": 53
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "extractPriceFromComment",
+          "lineNumber": 54
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "s.plans.FindByName",
+          "lineNumber": 57
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "append",
+          "lineNumber": 61
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "FormatAutoName",
+          "lineNumber": 62
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 81
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "s.hotspotGw.GetUserProfiles",
+          "lineNumber": 82
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "fmt.Errorf",
+          "lineNumber": 84
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 87
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "splitRate",
+          "lineNumber": 91
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "extractPriceFromComment",
+          "lineNumber": 92
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "strconv.Atoi",
+          "lineNumber": 94
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "s.plans.FindByName",
+          "lineNumber": 99
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "append",
+          "lineNumber": 103
+        },
+        {
+          "caller": "PullRouterPlans",
+          "callee": "FormatAutoName",
+          "lineNumber": 104
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/importer/router_live_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 207,
+      "nonEmptyLines": 185,
+      "functions": [
+        {
+          "name": "ListSecrets",
+          "startLine": 20,
+          "endLine": 25,
+          "params": [
+            "ctx",
+            "driver",
+            "service"
+          ]
+        },
+        {
+          "name": "ListProfiles",
+          "startLine": 27,
+          "endLine": 32,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "GetUserProfiles",
+          "startLine": 41,
+          "endLine": 46,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListIPBindings",
+          "startLine": 48,
+          "endLine": 53,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListUsers",
+          "startLine": 55,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "driver",
+            "f"
+          ]
+        },
+        {
+          "name": "TestIsVoucherProfile",
+          "startLine": 62,
+          "endLine": 83,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestPullHotspotRows_PermanentVsVoucher",
+          "startLine": 85,
+          "endLine": 149,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestPullRouterRows_Unified",
+          "startLine": 151,
+          "endLine": 207,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockPPPGateway",
+          "startLine": 14,
+          "endLine": 18,
+          "methods": [
+            "ListSecrets",
+            "ListProfiles"
+          ],
+          "properties": [
+            "listSecretsFn",
+            "listProfilesFn"
+          ]
+        },
+        {
+          "name": "mockHotspotGateway",
+          "startLine": 34,
+          "endLine": 39,
+          "methods": [
+            "GetUserProfiles",
+            "ListIPBindings",
+            "ListUsers"
+          ],
+          "properties": [
+            "getUserProfilesFn",
+            "listIPBindingsFn",
+            "listUsersFn"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListSecrets",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "ListProfiles",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "GetUserProfiles",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "ListIPBindings",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "ListUsers",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "TestIsVoucherProfile",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "TestPullHotspotRows_PermanentVsVoucher",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "TestPullRouterRows_Unified",
+          "line": 151,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListSecrets",
+          "callee": "m.listSecretsFn",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "m.listProfilesFn",
+          "lineNumber": 29
+        },
+        {
+          "caller": "GetUserProfiles",
+          "callee": "m.getUserProfilesFn",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ListIPBindings",
+          "callee": "m.listIPBindingsFn",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "m.listUsersFn",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestIsVoucherProfile",
+          "callee": "assert.True",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestIsVoucherProfile",
+          "callee": "importer.IsVoucherProfile",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestIsVoucherProfile",
+          "callee": "assert.True",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestIsVoucherProfile",
+          "callee": "importer.IsVoucherProfile",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestIsVoucherProfile",
+          "callee": "assert.False",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestIsVoucherProfile",
+          "callee": "importer.IsVoucherProfile",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "context.Background",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "importer.NewRouterSource",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "src.PullHotspotRows",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "require.NoError",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "require.Len",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.InDelta",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestPullHotspotRows_PermanentVsVoucher",
+          "callee": "assert.Equal",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "context.Background",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "importer.NewRouterSource",
+          "lineNumber": 176
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "src.PullRouterRows",
+          "lineNumber": 179
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "require.NoError",
+          "lineNumber": 184
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 186
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "require.Len",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 188
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 189
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "src.PullRouterCustomerSubscriptionRows",
+          "lineNumber": 192
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "require.NoError",
+          "lineNumber": 197
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 198
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 199
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 200
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 201
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "len",
+          "lineNumber": 202
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.True",
+          "lineNumber": 203
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 204
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 205
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "assert.Equal",
+          "lineNumber": 206
+        },
+        {
+          "caller": "TestPullRouterRows_Unified",
+          "callee": "float64",
+          "lineNumber": 206
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/importer/router_live.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 444,
+      "nonEmptyLines": 402,
+      "functions": [
+        {
+          "name": "SetPlanRepository",
+          "startLine": 20,
+          "endLine": 22,
+          "params": [
+            "plans"
+          ]
+        },
+        {
+          "name": "NewRouterSource",
+          "startLine": 25,
+          "endLine": 27,
+          "params": [
+            "gw",
+            "hotspotGw"
+          ]
+        },
+        {
+          "name": "IsVoucherProfile",
+          "startLine": 47,
+          "endLine": 58,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "PullPPPoERows",
+          "startLine": 61,
+          "endLine": 101,
+          "params": [
+            "ctx",
+            "driver",
+            "deviceName"
+          ]
+        },
+        {
+          "name": "PullHotspotRows",
+          "startLine": 104,
+          "endLine": 232,
+          "params": [
+            "ctx",
+            "driver",
+            "deviceName",
+            "includeIPBindings",
+            "includeVouchers"
+          ]
+        },
+        {
+          "name": "PullRouterRows",
+          "startLine": 235,
+          "endLine": 274,
+          "params": [
+            "ctx",
+            "driver",
+            "deviceName",
+            "opts"
+          ]
+        },
+        {
+          "name": "PullRouterCustomerSubscriptionRows",
+          "startLine": 304,
+          "endLine": 383,
+          "params": [
+            "ctx",
+            "driver",
+            "deviceID",
+            "deviceName",
+            "opts"
+          ]
+        },
+        {
+          "name": "NewReconciler",
+          "startLine": 392,
+          "endLine": 394,
+          "params": [
+            "subs",
+            "gw"
+          ]
+        },
+        {
+          "name": "Compare",
+          "startLine": 403,
+          "endLine": 444,
+          "params": [
+            "ctx",
+            "deviceID",
+            "driver"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RouterSource",
+          "startLine": 13,
+          "endLine": 17,
+          "methods": [
+            "SetPlanRepository",
+            "PullPPPoERows",
+            "PullHotspotRows",
+            "PullRouterRows",
+            "PullRouterCustomerSubscriptionRows"
+          ],
+          "properties": [
+            "gateway",
+            "hotspotGw",
+            "plans"
+          ]
+        },
+        {
+          "name": "PullOptions",
+          "startLine": 30,
+          "endLine": 34,
+          "methods": [],
+          "properties": [
+            "ServiceType",
+            "IncludeIPBindings",
+            "IncludeVouchers"
+          ]
+        },
+        {
+          "name": "PullResult",
+          "startLine": 37,
+          "endLine": 43,
+          "methods": [],
+          "properties": [
+            "Rows",
+            "PPPoEDetected",
+            "HotspotPermanentDetected",
+            "HotspotIPBindingDetected",
+            "VouchersSkipped"
+          ]
+        },
+        {
+          "name": "CustomerSubscriptionRow",
+          "startLine": 278,
+          "endLine": 301,
+          "methods": [],
+          "properties": [
+            "CustomerCode",
+            "Name",
+            "Phone",
+            "Email",
+            "Address",
+            "ServiceType",
+            "Username",
+            "Password",
+            "PlanName",
+            "PlanID",
+            "Price",
+            "RateLimit",
+            "LocalAddress",
+            "RemoteAddress",
+            "MACAddress",
+            "HotspotType",
+            "BillingDay",
+            "DeviceID",
+            "DeviceName",
+            "Selected",
+            "ValidationWarnings",
+            "RouterProfile"
+          ]
+        },
+        {
+          "name": "DriftReport",
+          "startLine": 386,
+          "endLine": 390,
+          "methods": [],
+          "properties": [
+            "MissingInDB",
+            "MissingInRoute",
+            "ProfileMismatch"
+          ]
+        },
+        {
+          "name": "Reconciler",
+          "startLine": 396,
+          "endLine": 399,
+          "methods": [
+            "Compare"
+          ],
+          "properties": [
+            "subs",
+            "gw"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RouterSource",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "SetPlanRepository",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "NewRouterSource",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "PullOptions",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "PullResult",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "IsVoucherProfile",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "PullPPPoERows",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "PullHotspotRows",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "PullRouterRows",
+          "line": 235,
+          "isDefault": false
+        },
+        {
+          "name": "CustomerSubscriptionRow",
+          "line": 278,
+          "isDefault": false
+        },
+        {
+          "name": "PullRouterCustomerSubscriptionRows",
+          "line": 304,
+          "isDefault": false
+        },
+        {
+          "name": "DriftReport",
+          "line": 386,
+          "isDefault": false
+        },
+        {
+          "name": "NewReconciler",
+          "line": 392,
+          "isDefault": false
+        },
+        {
+          "name": "Reconciler",
+          "line": 396,
+          "isDefault": false
+        },
+        {
+          "name": "Compare",
+          "line": 403,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.ToLower",
+          "lineNumber": 48
+        },
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.Contains",
+          "lineNumber": 49
+        },
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.Contains",
+          "lineNumber": 50
+        },
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.Contains",
+          "lineNumber": 51
+        },
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.Contains",
+          "lineNumber": 52
+        },
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.Contains",
+          "lineNumber": 53
+        },
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.ToLower",
+          "lineNumber": 56
+        },
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.Contains",
+          "lineNumber": 57
+        },
+        {
+          "caller": "IsVoucherProfile",
+          "callee": "strings.Contains",
+          "lineNumber": 57
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "s.gateway.ListSecrets",
+          "lineNumber": 65
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "fmt.Errorf",
+          "lineNumber": 67
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "make",
+          "lineNumber": 69
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "len",
+          "lineNumber": 69
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 71
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 72
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "extractPriceFromComment",
+          "lineNumber": 80
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "extractRateFromProfileHint",
+          "lineNumber": 81
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "guessCustomerName",
+          "lineNumber": 82
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "append",
+          "lineNumber": 83
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "guessPhone",
+          "lineNumber": 85
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "orValue",
+          "lineNumber": 90
+        },
+        {
+          "caller": "PullPPPoERows",
+          "callee": "len",
+          "lineNumber": 97
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "make",
+          "lineNumber": 118
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "make",
+          "lineNumber": 121
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "s.hotspotGw.GetUserProfiles",
+          "lineNumber": 122
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "IsVoucherProfile",
+          "lineNumber": 124
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "s.hotspotGw.ListIPBindings",
+          "lineNumber": 131
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 137
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "guessCustomerName",
+          "lineNumber": 147
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "append",
+          "lineNumber": 148
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "guessPhone",
+          "lineNumber": 150
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "extractPriceFromComment",
+          "lineNumber": 158
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "len",
+          "lineNumber": 164
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "s.hotspotGw.ListUsers",
+          "lineNumber": 172
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "fmt.Errorf",
+          "lineNumber": 174
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 178
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 179
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 188
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "strings.ToLower",
+          "lineNumber": 188
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "strings.Contains",
+          "lineNumber": 189
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "strings.ToLower",
+          "lineNumber": 189
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "extractPriceFromComment",
+          "lineNumber": 205
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "guessCustomerName",
+          "lineNumber": 210
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "append",
+          "lineNumber": 212
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "guessPhone",
+          "lineNumber": 214
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "orValue",
+          "lineNumber": 220
+        },
+        {
+          "caller": "PullHotspotRows",
+          "callee": "len",
+          "lineNumber": 227
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "make",
+          "lineNumber": 241
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "strings.ToUpper",
+          "lineNumber": 242
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 242
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "s.PullPPPoERows",
+          "lineNumber": 246
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "len",
+          "lineNumber": 250
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "append",
+          "lineNumber": 251
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 255
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "s.PullHotspotRows",
+          "lineNumber": 256
+        },
+        {
+          "caller": "PullRouterRows",
+          "callee": "append",
+          "lineNumber": 265
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "s.PullRouterRows",
+          "lineNumber": 310
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "time.Now",
+          "lineNumber": 315
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "now.Day",
+          "lineNumber": 316
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "make",
+          "lineNumber": 321
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "len",
+          "lineNumber": 321
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "make",
+          "lineNumber": 323
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 324
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 329
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "append",
+          "lineNumber": 331
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 334
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 336
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "append",
+          "lineNumber": 337
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "s.plans.FindByName",
+          "lineNumber": 348
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "append",
+          "lineNumber": 356
+        },
+        {
+          "caller": "PullRouterCustomerSubscriptionRows",
+          "callee": "orValue",
+          "lineNumber": 378
+        },
+        {
+          "caller": "Compare",
+          "callee": "r.subs.ListLifecycle",
+          "lineNumber": 406
+        },
+        {
+          "caller": "Compare",
+          "callee": "r.gw.ListSecrets",
+          "lineNumber": 419
+        },
+        {
+          "caller": "Compare",
+          "callee": "append",
+          "lineNumber": 430
+        },
+        {
+          "caller": "Compare",
+          "callee": "append",
+          "lineNumber": 434
+        },
+        {
+          "caller": "Compare",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 435
+        },
+        {
+          "caller": "Compare",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 439
+        },
+        {
+          "caller": "Compare",
+          "callee": "append",
+          "lineNumber": 440
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 15,
+        "functionCount": 9,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "internal/usecase/importer/row.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 183,
+      "nonEmptyLines": 174,
+      "functions": [
+        {
+          "name": "mapHeaders",
+          "startLine": 63,
+          "endLine": 78,
+          "params": [
+            "cells"
+          ]
+        },
+        {
+          "name": "buildRow",
+          "startLine": 81,
+          "endLine": 136,
+          "params": [
+            "m",
+            "cells",
+            "rowNo"
+          ]
+        },
+        {
+          "name": "ValidateRows",
+          "startLine": 139,
+          "endLine": 163,
+          "params": [
+            "rows"
+          ]
+        },
+        {
+          "name": "ValidateRouterRows",
+          "startLine": 166,
+          "endLine": 183,
+          "params": [
+            "rows"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Row",
+          "startLine": 12,
+          "endLine": 37,
+          "methods": [],
+          "properties": [
+            "CustomerCode",
+            "Name",
+            "Phone",
+            "Email",
+            "Address",
+            "Latitude",
+            "Longitude",
+            "ServiceType",
+            "DeviceName",
+            "Username",
+            "Password",
+            "PlanName",
+            "Price",
+            "RateLimit",
+            "Status",
+            "LocalAddress",
+            "RemoteAddr",
+            "ParentQueue",
+            "BillingDay",
+            "MACAddress",
+            "HotspotType",
+            "RouterProfile",
+            "RowNumber"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Row",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateRows",
+          "line": 139,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateRouterRows",
+          "line": 166,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "mapHeaders",
+          "callee": "make",
+          "lineNumber": 64
+        },
+        {
+          "caller": "mapHeaders",
+          "callee": "len",
+          "lineNumber": 64
+        },
+        {
+          "caller": "mapHeaders",
+          "callee": "strings.ToLower",
+          "lineNumber": 66
+        },
+        {
+          "caller": "mapHeaders",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 66
+        },
+        {
+          "caller": "mapHeaders",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 67
+        },
+        {
+          "caller": "buildRow",
+          "callee": "len",
+          "lineNumber": 86
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 87
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 92
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 93
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 94
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 95
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 96
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strings.ToUpper",
+          "lineNumber": 97
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 97
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 101
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 102
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 103
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 104
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 105
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strings.ToUpper",
+          "lineNumber": 106
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 110
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 111
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 112
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 114
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 115
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 119
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 120
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 124
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strings.NewReplacer(\"Rp\", \"\", \".\", \"\", \",\", \".\", \" \", \"\").Replace",
+          "lineNumber": 125
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strings.NewReplacer",
+          "lineNumber": 125
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strconv.ParseFloat",
+          "lineNumber": 126
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 126
+        },
+        {
+          "caller": "buildRow",
+          "callee": "get",
+          "lineNumber": 130
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strconv.Atoi",
+          "lineNumber": 131
+        },
+        {
+          "caller": "buildRow",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "fmtLine",
+          "lineNumber": 142
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "append",
+          "lineNumber": 144
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "errf",
+          "lineNumber": 144
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 146
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "append",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "errf",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 149
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "append",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "errf",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 152
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 152
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "append",
+          "lineNumber": 153
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "errf",
+          "lineNumber": 153
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "append",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ValidateRows",
+          "callee": "errf",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "fmtLine",
+          "lineNumber": 169
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "append",
+          "lineNumber": 171
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "errf",
+          "lineNumber": 171
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 173
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "append",
+          "lineNumber": 174
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "errf",
+          "lineNumber": 174
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "append",
+          "lineNumber": 179
+        },
+        {
+          "caller": "ValidateRouterRows",
+          "callee": "errf",
+          "lineNumber": 179
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/importer/upsert_plans.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 112,
+      "nonEmptyLines": 102,
+      "functions": [
+        {
+          "name": "CommitPlans",
+          "startLine": 20,
+          "endLine": 112,
+          "params": [
+            "ctx",
+            "rows"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CommitPlansResult",
+          "startLine": 13,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "PlansCreated",
+            "PlansUpdated",
+            "Errors"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CommitPlansResult",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "CommitPlans",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CommitPlans",
+          "callee": "u.now",
+          "lineNumber": 22
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 28
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "append",
+          "lineNumber": 30
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "strings.ToUpper",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "splitRate",
+          "lineNumber": 42
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "u.plans.FindByName",
+          "lineNumber": 50
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "u.plans.Save",
+          "lineNumber": 76
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "append",
+          "lineNumber": 77
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 77
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "writeAuditImport",
+          "lineNumber": 81
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "idgen.New",
+          "lineNumber": 84
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "orValue",
+          "lineNumber": 91
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "u.plans.Save",
+          "lineNumber": 102
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "append",
+          "lineNumber": 103
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 103
+        },
+        {
+          "caller": "CommitPlans",
+          "callee": "writeAuditImport",
+          "lineNumber": 107
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/importer/upsert.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 467,
+      "nonEmptyLines": 434,
+      "functions": [
+        {
+          "name": "SetDeviceResolver",
+          "startLine": 31,
+          "endLine": 33,
+          "params": [
+            "fn"
+          ]
+        },
+        {
+          "name": "NewUpsertUseCase",
+          "startLine": 35,
+          "endLine": 46,
+          "params": [
+            "plans",
+            "customs",
+            "subs",
+            "auditW",
+            "defaultDevice"
+          ]
+        },
+        {
+          "name": "Import",
+          "startLine": 58,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "rows"
+          ]
+        },
+        {
+          "name": "ImportWithDevice",
+          "startLine": 63,
+          "endLine": 71,
+          "params": [
+            "ctx",
+            "rows",
+            "defaultDeviceID"
+          ]
+        },
+        {
+          "name": "importRow",
+          "startLine": 73,
+          "endLine": 152,
+          "params": [
+            "ctx",
+            "r",
+            "res",
+            "fallbackDevice"
+          ]
+        },
+        {
+          "name": "ensurePlan",
+          "startLine": 154,
+          "endLine": 177,
+          "params": [
+            "ctx",
+            "r"
+          ]
+        },
+        {
+          "name": "upsertCustomer",
+          "startLine": 179,
+          "endLine": 213,
+          "params": [
+            "ctx",
+            "r",
+            "now",
+            "res"
+          ]
+        },
+        {
+          "name": "serviceTypeOf",
+          "startLine": 220,
+          "endLine": 225,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "mapStatus",
+          "startLine": 227,
+          "endLine": 234,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "splitRate",
+          "startLine": 236,
+          "endLine": 264,
+          "params": [
+            "rl"
+          ]
+        },
+        {
+          "name": "normalizePhone",
+          "startLine": 266,
+          "endLine": 266,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "orDash",
+          "startLine": 267,
+          "endLine": 267,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "orValue",
+          "startLine": 268,
+          "endLine": 273,
+          "params": [
+            "v",
+            "def"
+          ]
+        },
+        {
+          "name": "clampDay",
+          "startLine": 274,
+          "endLine": 279,
+          "params": [
+            "d"
+          ]
+        },
+        {
+          "name": "dayStart",
+          "startLine": 280,
+          "endLine": 282,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "coalesceCoord",
+          "startLine": 283,
+          "endLine": 291,
+          "params": [
+            "aLat",
+            "aLon",
+            "bLat",
+            "bLon"
+          ]
+        },
+        {
+          "name": "writeAuditImport",
+          "startLine": 292,
+          "endLine": 297,
+          "params": [
+            "ctx",
+            "w",
+            "action",
+            "entityID"
+          ]
+        },
+        {
+          "name": "CommitCustomerSubscriptionRows",
+          "startLine": 311,
+          "endLine": 467,
+          "params": [
+            "ctx",
+            "deviceID",
+            "rows"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "UpsertUseCase",
+          "startLine": 20,
+          "endLine": 28,
+          "methods": [
+            "SetDeviceResolver",
+            "Import",
+            "ImportWithDevice",
+            "importRow",
+            "ensurePlan",
+            "upsertCustomer",
+            "CommitCustomerSubscriptionRows"
+          ],
+          "properties": [
+            "plans",
+            "customs",
+            "subs",
+            "audit",
+            "defaultDevice",
+            "deviceResolver",
+            "now"
+          ]
+        },
+        {
+          "name": "Result",
+          "startLine": 49,
+          "endLine": 56,
+          "methods": [],
+          "properties": [
+            "RowsTotal",
+            "CustomersCreated",
+            "CustomersUpdated",
+            "SubsCreated",
+            "PlansCreated",
+            "Skipped"
+          ]
+        },
+        {
+          "name": "CommitCustomersResult",
+          "startLine": 300,
+          "endLine": 307,
+          "methods": [],
+          "properties": [
+            "CustomersCreated",
+            "CustomersUpdated",
+            "SubscriptionsCreated",
+            "SubscriptionsUpdated",
+            "PlansCreated",
+            "Errors"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UpsertUseCase",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "SetDeviceResolver",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "NewUpsertUseCase",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "Result",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "Import",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "ImportWithDevice",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "CommitCustomersResult",
+          "line": 300,
+          "isDefault": false
+        },
+        {
+          "name": "CommitCustomerSubscriptionRows",
+          "line": 311,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Import",
+          "callee": "u.ImportWithDevice",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ImportWithDevice",
+          "callee": "len",
+          "lineNumber": 64
+        },
+        {
+          "caller": "ImportWithDevice",
+          "callee": "u.importRow",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ImportWithDevice",
+          "callee": "append",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ImportWithDevice",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ImportWithDevice",
+          "callee": "orDash",
+          "lineNumber": 67
+        },
+        {
+          "caller": "importRow",
+          "callee": "u.now",
+          "lineNumber": 74
+        },
+        {
+          "caller": "importRow",
+          "callee": "u.ensurePlan",
+          "lineNumber": 76
+        },
+        {
+          "caller": "importRow",
+          "callee": "u.deviceResolver",
+          "lineNumber": 86
+        },
+        {
+          "caller": "importRow",
+          "callee": "u.upsertCustomer",
+          "lineNumber": 91
+        },
+        {
+          "caller": "importRow",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 95
+        },
+        {
+          "caller": "importRow",
+          "callee": "u.subs.FindByDeviceAndUsername",
+          "lineNumber": 100
+        },
+        {
+          "caller": "importRow",
+          "callee": "mapStatus",
+          "lineNumber": 101
+        },
+        {
+          "caller": "importRow",
+          "callee": "clampDay",
+          "lineNumber": 104
+        },
+        {
+          "caller": "importRow",
+          "callee": "now.Day",
+          "lineNumber": 104
+        },
+        {
+          "caller": "importRow",
+          "callee": "now.AddDate",
+          "lineNumber": 110
+        },
+        {
+          "caller": "importRow",
+          "callee": "idgen.New",
+          "lineNumber": 112
+        },
+        {
+          "caller": "importRow",
+          "callee": "serviceTypeOf",
+          "lineNumber": 114
+        },
+        {
+          "caller": "importRow",
+          "callee": "orValue",
+          "lineNumber": 115
+        },
+        {
+          "caller": "importRow",
+          "callee": "orValue",
+          "lineNumber": 117
+        },
+        {
+          "caller": "importRow",
+          "callee": "dayStart",
+          "lineNumber": 122
+        },
+        {
+          "caller": "importRow",
+          "callee": "u.subs.Save",
+          "lineNumber": 128
+        },
+        {
+          "caller": "importRow",
+          "callee": "writeAuditImport",
+          "lineNumber": 132
+        },
+        {
+          "caller": "importRow",
+          "callee": "orValue",
+          "lineNumber": 136
+        },
+        {
+          "caller": "importRow",
+          "callee": "orValue",
+          "lineNumber": 137
+        },
+        {
+          "caller": "importRow",
+          "callee": "u.subs.Save",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 155
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "fmt.Errorf",
+          "lineNumber": 157
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "u.plans.FindByName",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "splitRate",
+          "lineNumber": 162
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "idgen.New",
+          "lineNumber": 164
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "serviceTypeOf",
+          "lineNumber": 165
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "orValue",
+          "lineNumber": 169
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "time.Now",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "time.Now",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "u.plans.Save",
+          "lineNumber": 172
+        },
+        {
+          "caller": "ensurePlan",
+          "callee": "writeAuditImport",
+          "lineNumber": 175
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "normalizePhone",
+          "lineNumber": 180
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "u.customs.FindByPhone",
+          "lineNumber": 182
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "orValue",
+          "lineNumber": 183
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "orValue",
+          "lineNumber": 184
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "orValue",
+          "lineNumber": 185
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "coalesceCoord",
+          "lineNumber": 186
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "u.customs.Save",
+          "lineNumber": 191
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "idgen.New",
+          "lineNumber": 199
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "orValue",
+          "lineNumber": 200
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "idgen.Digits",
+          "lineNumber": 200
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "idgen.Digits",
+          "lineNumber": 201
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "dayStart",
+          "lineNumber": 205
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "u.customs.Save",
+          "lineNumber": 207
+        },
+        {
+          "caller": "upsertCustomer",
+          "callee": "writeAuditImport",
+          "lineNumber": 211
+        },
+        {
+          "caller": "serviceTypeOf",
+          "callee": "strings.EqualFold",
+          "lineNumber": 221
+        },
+        {
+          "caller": "splitRate",
+          "callee": "strings.SplitN",
+          "lineNumber": 237
+        },
+        {
+          "caller": "splitRate",
+          "callee": "strings.ToLower",
+          "lineNumber": 237
+        },
+        {
+          "caller": "splitRate",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 239
+        },
+        {
+          "caller": "splitRate",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 245
+        },
+        {
+          "caller": "splitRate",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 246
+        },
+        {
+          "caller": "splitRate",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 247
+        },
+        {
+          "caller": "splitRate",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 249
+        },
+        {
+          "caller": "splitRate",
+          "callee": "fmt.Sscanf",
+          "lineNumber": 252
+        },
+        {
+          "caller": "splitRate",
+          "callee": "parse",
+          "lineNumber": 257
+        },
+        {
+          "caller": "splitRate",
+          "callee": "len",
+          "lineNumber": 258
+        },
+        {
+          "caller": "splitRate",
+          "callee": "parse",
+          "lineNumber": 259
+        },
+        {
+          "caller": "normalizePhone",
+          "callee": "strings.TrimPrefix",
+          "lineNumber": 266
+        },
+        {
+          "caller": "normalizePhone",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 266
+        },
+        {
+          "caller": "orDash",
+          "callee": "orValue",
+          "lineNumber": 267
+        },
+        {
+          "caller": "orValue",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 269
+        },
+        {
+          "caller": "orValue",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 272
+        },
+        {
+          "caller": "dayStart",
+          "callee": "time.Date",
+          "lineNumber": 281
+        },
+        {
+          "caller": "dayStart",
+          "callee": "t.Year",
+          "lineNumber": 281
+        },
+        {
+          "caller": "dayStart",
+          "callee": "t.Month",
+          "lineNumber": 281
+        },
+        {
+          "caller": "dayStart",
+          "callee": "t.Day",
+          "lineNumber": 281
+        },
+        {
+          "caller": "writeAuditImport",
+          "callee": "w.Write",
+          "lineNumber": 296
+        },
+        {
+          "caller": "writeAuditImport",
+          "callee": "domainAuditEntry",
+          "lineNumber": 296
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.now",
+          "lineNumber": 317
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 323
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "append",
+          "lineNumber": 324
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 324
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "orDash",
+          "lineNumber": 324
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 338
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 339
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.plans.FindByName",
+          "lineNumber": 340
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.ensurePlan",
+          "lineNumber": 343
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "append",
+          "lineNumber": 350
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 350
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 359
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "normalizePhone",
+          "lineNumber": 363
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.customs.FindByPhone",
+          "lineNumber": 367
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.customs.Save",
+          "lineNumber": 376
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "idgen.New",
+          "lineNumber": 384
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "orValue",
+          "lineNumber": 386
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "idgen.Digits",
+          "lineNumber": 386
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "idgen.Digits",
+          "lineNumber": 387
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "orValue",
+          "lineNumber": 391
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 391
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "dayStart",
+          "lineNumber": 393
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.customs.Save",
+          "lineNumber": 397
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "append",
+          "lineNumber": 398
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 398
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "writeAuditImport",
+          "lineNumber": 402
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.subs.FindByDeviceAndUsername",
+          "lineNumber": 406
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "clampDay",
+          "lineNumber": 407
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "clampDay",
+          "lineNumber": 409
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "now.Day",
+          "lineNumber": 409
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "orValue",
+          "lineNumber": 412
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "now.AddDate",
+          "lineNumber": 415
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "idgen.New",
+          "lineNumber": 417
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "serviceTypeOf",
+          "lineNumber": 422
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "orValue",
+          "lineNumber": 424
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "dayStart",
+          "lineNumber": 432
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.subs.Save",
+          "lineNumber": 440
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "append",
+          "lineNumber": 441
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 441
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "writeAuditImport",
+          "lineNumber": 445
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "orValue",
+          "lineNumber": 450
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "orValue",
+          "lineNumber": 451
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "u.subs.Save",
+          "lineNumber": 458
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "append",
+          "lineNumber": 459
+        },
+        {
+          "caller": "CommitCustomerSubscriptionRows",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 459
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 18,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/usecase/importer/util.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "fmtLine",
+          "startLine": 9,
+          "endLine": 9,
+          "params": [
+            "n"
+          ]
+        },
+        {
+          "name": "errf",
+          "startLine": 10,
+          "endLine": 10,
+          "params": [
+            "f"
+          ]
+        },
+        {
+          "name": "domainAuditEntry",
+          "startLine": 12,
+          "endLine": 20,
+          "params": [
+            "action",
+            "entityID"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "fmtLine",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 9
+        },
+        {
+          "caller": "errf",
+          "callee": "fmt.Errorf",
+          "lineNumber": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/llm/manage_config_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 141,
+      "nonEmptyLines": 121,
+      "functions": [
+        {
+          "name": "newMockLLMRepo",
+          "startLine": 17,
+          "endLine": 21,
+          "params": []
+        },
+        {
+          "name": "Create",
+          "startLine": 23,
+          "endLine": 31,
+          "params": [
+            "ctx",
+            "cfg"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 33,
+          "endLine": 38,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "FindActive",
+          "startLine": 40,
+          "endLine": 45,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "FindAll",
+          "startLine": 47,
+          "endLine": 49,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 51,
+          "endLine": 54,
+          "params": [
+            "ctx",
+            "cfg"
+          ]
+        },
+        {
+          "name": "SetActive",
+          "startLine": 56,
+          "endLine": 63,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 65,
+          "endLine": 68,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "TestManageConfigUseCase",
+          "startLine": 70,
+          "endLine": 141,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockLLMRepo",
+          "startLine": 11,
+          "endLine": 15,
+          "methods": [
+            "Create",
+            "FindByID",
+            "FindActive",
+            "FindAll",
+            "Update",
+            "SetActive",
+            "Delete"
+          ],
+          "properties": [
+            "configs",
+            "active",
+            "byID"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Create",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "FindActive",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "FindAll",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "SetActive",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "TestManageConfigUseCase",
+          "line": 70,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newMockLLMRepo",
+          "callee": "make",
+          "lineNumber": 19
+        },
+        {
+          "caller": "Create",
+          "callee": "uint",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Create",
+          "callee": "len",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Create",
+          "callee": "append",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Delete",
+          "callee": "delete",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "context.Background",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "newMockLLMRepo",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "errors.New",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "NewManageConfigUseCase",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "uc.Create",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Errorf",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Errorf",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "uc.List",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "len",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "len",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "uc.GetByID",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "uc.Update",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "uc.TestConnection",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "uc.SetActive",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "uc.Delete",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestManageConfigUseCase",
+          "callee": "t.Fatalf",
+          "lineNumber": 139
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 9,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/llm/manage_config.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 225,
+      "nonEmptyLines": 199,
+      "functions": [
+        {
+          "name": "NewManageConfigUseCase",
+          "startLine": 56,
+          "endLine": 62,
+          "params": [
+            "repo",
+            "encryptionKey",
+            "tester"
+          ]
+        },
+        {
+          "name": "List",
+          "startLine": 65,
+          "endLine": 74,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "GetByID",
+          "startLine": 77,
+          "endLine": 86,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "Create",
+          "startLine": 89,
+          "endLine": 134,
+          "params": [
+            "ctx",
+            "input"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 137,
+          "endLine": 175,
+          "params": [
+            "ctx",
+            "input"
+          ]
+        },
+        {
+          "name": "SetActive",
+          "startLine": 178,
+          "endLine": 186,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 189,
+          "endLine": 197,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "TestConnection",
+          "startLine": 200,
+          "endLine": 225,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CreateConfigInput",
+          "startLine": 18,
+          "endLine": 30,
+          "methods": [],
+          "properties": [
+            "Provider",
+            "ModelName",
+            "APIKey",
+            "BaseURL",
+            "Temperature",
+            "MaxTokens",
+            "SystemPrompt",
+            "SkillsMode",
+            "EnableSkills",
+            "SkillsPrompt",
+            "SelectedSkills"
+          ]
+        },
+        {
+          "name": "UpdateConfigInput",
+          "startLine": 33,
+          "endLine": 46,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Provider",
+            "ModelName",
+            "APIKey",
+            "BaseURL",
+            "Temperature",
+            "MaxTokens",
+            "SystemPrompt",
+            "SkillsMode",
+            "EnableSkills",
+            "SkillsPrompt",
+            "SelectedSkills"
+          ]
+        },
+        {
+          "name": "ManageConfigUseCase",
+          "startLine": 49,
+          "endLine": 53,
+          "methods": [
+            "List",
+            "GetByID",
+            "Create",
+            "Update",
+            "SetActive",
+            "Delete",
+            "TestConnection"
+          ],
+          "properties": [
+            "repo",
+            "encryptionKey",
+            "tester"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CreateConfigInput",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateConfigInput",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "ManageConfigUseCase",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "NewManageConfigUseCase",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "List",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "GetByID",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "Create",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "SetActive",
+          "line": 178,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 189,
+          "isDefault": false
+        },
+        {
+          "name": "TestConnection",
+          "line": 200,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "List",
+          "callee": "uc.repo.FindAll",
+          "lineNumber": 69
+        },
+        {
+          "caller": "List",
+          "callee": "fmt.Errorf",
+          "lineNumber": 71
+        },
+        {
+          "caller": "GetByID",
+          "callee": "uc.repo.FindByID",
+          "lineNumber": 81
+        },
+        {
+          "caller": "GetByID",
+          "callee": "fmt.Errorf",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Create",
+          "callee": "fmt.Errorf",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Create",
+          "callee": "crypto.Encrypt",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Create",
+          "callee": "fault.Wrap",
+          "lineNumber": 101
+        },
+        {
+          "caller": "Create",
+          "callee": "fmt.Errorf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "Create",
+          "callee": "llmcost.GetDefaultPricing",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Create",
+          "callee": "uc.repo.FindActive",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Create",
+          "callee": "uc.repo.Create",
+          "lineNumber": 130
+        },
+        {
+          "caller": "Create",
+          "callee": "fmt.Errorf",
+          "lineNumber": 131
+        },
+        {
+          "caller": "Update",
+          "callee": "uc.repo.FindByID",
+          "lineNumber": 141
+        },
+        {
+          "caller": "Update",
+          "callee": "fmt.Errorf",
+          "lineNumber": 143
+        },
+        {
+          "caller": "Update",
+          "callee": "llmcost.GetDefaultPricing",
+          "lineNumber": 156
+        },
+        {
+          "caller": "Update",
+          "callee": "crypto.Encrypt",
+          "lineNumber": 164
+        },
+        {
+          "caller": "Update",
+          "callee": "fault.Wrap",
+          "lineNumber": 166
+        },
+        {
+          "caller": "Update",
+          "callee": "fmt.Errorf",
+          "lineNumber": 166
+        },
+        {
+          "caller": "Update",
+          "callee": "uc.repo.Update",
+          "lineNumber": 171
+        },
+        {
+          "caller": "Update",
+          "callee": "fmt.Errorf",
+          "lineNumber": 172
+        },
+        {
+          "caller": "SetActive",
+          "callee": "uc.repo.SetActive",
+          "lineNumber": 182
+        },
+        {
+          "caller": "SetActive",
+          "callee": "fmt.Errorf",
+          "lineNumber": 183
+        },
+        {
+          "caller": "Delete",
+          "callee": "uc.repo.Delete",
+          "lineNumber": 193
+        },
+        {
+          "caller": "Delete",
+          "callee": "fmt.Errorf",
+          "lineNumber": 194
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "uc.repo.FindByID",
+          "lineNumber": 204
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "fmt.Errorf",
+          "lineNumber": 206
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "crypto.Decrypt",
+          "lineNumber": 211
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "fmt.Errorf",
+          "lineNumber": 213
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "uc.tester",
+          "lineNumber": 219
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 224
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 8,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/usecase/metrics/ping_stream_manager.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 326,
+      "nonEmptyLines": 290,
+      "functions": [
+        {
+          "name": "NewPingStreamWorker",
+          "startLine": 32,
+          "endLine": 43,
+          "params": [
+            "deviceRepo",
+            "metricsRepo",
+            "getter"
+          ]
+        },
+        {
+          "name": "Start",
+          "startLine": 46,
+          "endLine": 57,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "Stop",
+          "startLine": 60,
+          "endLine": 68,
+          "params": []
+        },
+        {
+          "name": "supervisorLoop",
+          "startLine": 70,
+          "endLine": 86,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "syncActiveStreams",
+          "startLine": 88,
+          "endLine": 134,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "runDeviceStream",
+          "startLine": 136,
+          "endLine": 192,
+          "params": [
+            "ctx",
+            "dev"
+          ]
+        },
+        {
+          "name": "consumeStream",
+          "startLine": 201,
+          "endLine": 298,
+          "params": [
+            "ctx",
+            "deviceID",
+            "target",
+            "handle"
+          ]
+        },
+        {
+          "name": "cleanupLoop",
+          "startLine": 300,
+          "endLine": 326,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PingStreamWorker",
+          "startLine": 21,
+          "endLine": 29,
+          "methods": [
+            "Start",
+            "Stop",
+            "supervisorLoop",
+            "syncActiveStreams",
+            "runDeviceStream",
+            "consumeStream",
+            "cleanupLoop"
+          ],
+          "properties": [
+            "deviceRepo",
+            "metricsRepo",
+            "driverGetter",
+            "mu",
+            "cancelFn",
+            "running"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PingStreamWorker",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "NewPingStreamWorker",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "Start",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "Stop",
+          "line": 60,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewPingStreamWorker",
+          "callee": "make",
+          "lineNumber": 41
+        },
+        {
+          "caller": "Start",
+          "callee": "m.mu.Lock",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Start",
+          "callee": "m.mu.Unlock",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Start",
+          "callee": "m.mu.Unlock",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Start",
+          "callee": "m.supervisorLoop",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Start",
+          "callee": "m.cleanupLoop",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Stop",
+          "callee": "m.mu.Lock",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Stop",
+          "callee": "m.mu.Unlock",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Stop",
+          "callee": "cancel",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Stop",
+          "callee": "delete",
+          "lineNumber": 66
+        },
+        {
+          "caller": "supervisorLoop",
+          "callee": "time.NewTicker",
+          "lineNumber": 71
+        },
+        {
+          "caller": "supervisorLoop",
+          "callee": "ticker.Stop",
+          "lineNumber": 72
+        },
+        {
+          "caller": "supervisorLoop",
+          "callee": "m.syncActiveStreams",
+          "lineNumber": 75
+        },
+        {
+          "caller": "supervisorLoop",
+          "callee": "ctx.Done",
+          "lineNumber": 79
+        },
+        {
+          "caller": "supervisorLoop",
+          "callee": "m.Stop",
+          "lineNumber": 80
+        },
+        {
+          "caller": "supervisorLoop",
+          "callee": "m.syncActiveStreams",
+          "lineNumber": 83
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "m.metricsRepo.IsTimescaleDBAvailable",
+          "lineNumber": 93
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "m.deviceRepo.FindAll",
+          "lineNumber": 98
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "make",
+          "lineNumber": 103
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "dev.PingConfig",
+          "lineNumber": 105
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "m.mu.Lock",
+          "lineNumber": 110
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "m.mu.Unlock",
+          "lineNumber": 111
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "cancel",
+          "lineNumber": 116
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "delete",
+          "lineNumber": 117
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").WithField(\"device_id\", id).Info",
+          "lineNumber": 118
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").WithField",
+          "lineNumber": 118
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "logger.WithComponent",
+          "lineNumber": 118
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "context.WithCancel",
+          "lineNumber": 125
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "m.runDeviceStream",
+          "lineNumber": 127
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").WithFields(map[string]any{\n\t\t\t\t\"device_id\": id,\n\t\t\t\t\"target\":    dev.PingConfig().Target,\n\t\t\t}).Info",
+          "lineNumber": 128
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").WithFields",
+          "lineNumber": 128
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "logger.WithComponent",
+          "lineNumber": 128
+        },
+        {
+          "caller": "syncActiveStreams",
+          "callee": "dev.PingConfig",
+          "lineNumber": 130
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "dev.PingConfig",
+          "lineNumber": 137
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "net.SplitHostPort",
+          "lineNumber": 142
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "ctx.Done",
+          "lineNumber": 148
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "time.Sleep",
+          "lineNumber": 154
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "m.driverGetter",
+          "lineNumber": 158
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "time.Sleep",
+          "lineNumber": 160
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "time.Sleep",
+          "lineNumber": 166
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "sDrv.Stream",
+          "lineNumber": 176
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "time.Sleep",
+          "lineNumber": 178
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "m.consumeStream",
+          "lineNumber": 182
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "handle.Cancel",
+          "lineNumber": 183
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "ctx.Done",
+          "lineNumber": 187
+        },
+        {
+          "caller": "runDeviceStream",
+          "callee": "time.After",
+          "lineNumber": 189
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "make",
+          "lineNumber": 207
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "time.NewTicker",
+          "lineNumber": 208
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "flushTicker.Stop",
+          "lineNumber": 209
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "len",
+          "lineNumber": 213
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "context.WithTimeout",
+          "lineNumber": 216
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "context.Background",
+          "lineNumber": 216
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "m.metricsRepo.SavePingMetricsBatch",
+          "lineNumber": 217
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "cancel",
+          "lineNumber": 218
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").\n\t\t\t\tWithError(err).\n\t\t\t\tWithField(\"device_id\", deviceID).\n\t\t\t\tWithField(\"points_count\", len(buffer)).\n\t\t\t\tWarn",
+          "lineNumber": 220
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").\n\t\t\t\tWithError(err).\n\t\t\t\tWithField(\"device_id\", deviceID).\n\t\t\t\tWithField",
+          "lineNumber": 220
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").\n\t\t\t\tWithError(err).\n\t\t\t\tWithField",
+          "lineNumber": 220
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").\n\t\t\t\tWithError",
+          "lineNumber": 220
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "logger.WithComponent",
+          "lineNumber": 220
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "len",
+          "lineNumber": 223
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "flush",
+          "lineNumber": 228
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "ctx.Done",
+          "lineNumber": 232
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "flush",
+          "lineNumber": 235
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "handle.Chan",
+          "lineNumber": 236
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "ping.ParsePingLatency",
+          "lineNumber": 241
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "strconv.Atoi",
+          "lineNumber": 242
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "strconv.Atoi",
+          "lineNumber": 245
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "strconv.Atoi",
+          "lineNumber": 252
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "strconv.Atoi",
+          "lineNumber": 253
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "strconv.Atoi",
+          "lineNumber": 254
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "strconv.Atoi",
+          "lineNumber": 255
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "ping.ParsePacketLoss",
+          "lineNumber": 256
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "ping.ParseDurationMs",
+          "lineNumber": 257
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "ping.ParseDurationMs",
+          "lineNumber": 258
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "ping.ParseDurationMs",
+          "lineNumber": 259
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "float32",
+          "lineNumber": 263
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "float32",
+          "lineNumber": 267
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "float32",
+          "lineNumber": 271
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "append",
+          "lineNumber": 275
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "time.Now().UTC",
+          "lineNumber": 276
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "time.Now",
+          "lineNumber": 276
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "float32",
+          "lineNumber": 282
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "int",
+          "lineNumber": 286
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "len",
+          "lineNumber": 292
+        },
+        {
+          "caller": "consumeStream",
+          "callee": "flush",
+          "lineNumber": 293
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "time.NewTicker",
+          "lineNumber": 301
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "ticker.Stop",
+          "lineNumber": 302
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "ctx.Done",
+          "lineNumber": 306
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "m.deviceRepo.FindAll",
+          "lineNumber": 309
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "dev.PingConfig",
+          "lineNumber": 314
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "context.WithTimeout",
+          "lineNumber": 318
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "context.Background",
+          "lineNumber": 318
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "m.metricsRepo.CleanupExpiredMetrics",
+          "lineNumber": 319
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").WithError(err).WithField(\"device_id\", dev.ID).Warn",
+          "lineNumber": 320
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").WithError(err).WithField",
+          "lineNumber": 320
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "logger.WithComponent(\"PingStreamWorker\").WithError",
+          "lineNumber": 320
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "logger.WithComponent",
+          "lineNumber": 320
+        },
+        {
+          "caller": "cleanupLoop",
+          "callee": "cancel",
+          "lineNumber": 322
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/metrics/ping_stream_worker_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 42,
+      "functions": [
+        {
+          "name": "Save",
+          "startLine": 13,
+          "endLine": 13,
+          "params": []
+        },
+        {
+          "name": "FindByID",
+          "startLine": 14,
+          "endLine": 16,
+          "params": []
+        },
+        {
+          "name": "FindAll",
+          "startLine": 17,
+          "endLine": 17,
+          "params": []
+        },
+        {
+          "name": "Update",
+          "startLine": 18,
+          "endLine": 18,
+          "params": []
+        },
+        {
+          "name": "Delete",
+          "startLine": 19,
+          "endLine": 19,
+          "params": []
+        },
+        {
+          "name": "FindByUserScope",
+          "startLine": 20,
+          "endLine": 22,
+          "params": []
+        },
+        {
+          "name": "IsTimescaleDBAvailable",
+          "startLine": 26,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "SavePingMetric",
+          "startLine": 29,
+          "endLine": 31,
+          "params": []
+        },
+        {
+          "name": "SavePingMetricsBatch",
+          "startLine": 32,
+          "endLine": 34,
+          "params": []
+        },
+        {
+          "name": "QueryPingMetrics",
+          "startLine": 35,
+          "endLine": 37,
+          "params": []
+        },
+        {
+          "name": "CleanupExpiredMetrics",
+          "startLine": 38,
+          "endLine": 38,
+          "params": []
+        },
+        {
+          "name": "TestPingStreamWorker_StartStopIsIdempotent",
+          "startLine": 40,
+          "endLine": 51,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "workerDeviceRepo",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindAll",
+            "Update",
+            "Delete",
+            "FindByUserScope"
+          ],
+          "properties": []
+        },
+        {
+          "name": "workerMetricsRepo",
+          "startLine": 24,
+          "endLine": 24,
+          "methods": [
+            "IsTimescaleDBAvailable",
+            "SavePingMetric",
+            "SavePingMetricsBatch",
+            "QueryPingMetrics",
+            "CleanupExpiredMetrics"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Save",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "FindAll",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "FindByUserScope",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "IsTimescaleDBAvailable",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "SavePingMetric",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "SavePingMetricsBatch",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "QueryPingMetrics",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "CleanupExpiredMetrics",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "TestPingStreamWorker_StartStopIsIdempotent",
+          "line": 40,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "context.WithCancel",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "context.Background",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "NewPingStreamWorker",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "worker.Start",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "worker.Start",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "cancel",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "worker.Stop",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "worker.Stop",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestPingStreamWorker_StartStopIsIdempotent",
+          "callee": "time.Sleep",
+          "lineNumber": 50
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 12,
+        "functionCount": 12,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/network/execute_command_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 68,
+      "nonEmptyLines": 58,
+      "functions": [
+        {
+          "name": "Validate",
+          "startLine": 21,
+          "endLine": 26,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "TestExecuteCommandValidation",
+          "startLine": 28,
+          "endLine": 68,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "validatingMockDriver",
+          "startLine": 16,
+          "endLine": 19,
+          "methods": [
+            "Validate"
+          ],
+          "properties": [
+            "validateFn"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Validate",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecuteCommandValidation",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Validate",
+          "callee": "m.validateFn",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "context.Background",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "t.Run",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "errors.New",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "ExecuteCommand",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "require.Error",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "assert.False",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "t.Run",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "ExecuteCommand",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "require.NoError",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "assert.True",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "t.Run",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "ExecuteCommand",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "require.NoError",
+          "lineNumber": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/execute_command.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 69,
+      "nonEmptyLines": 63,
+      "functions": [
+        {
+          "name": "validateIfSupported",
+          "startLine": 27,
+          "endLine": 32,
+          "params": [
+            "ctx",
+            "driver",
+            "cmd"
+          ]
+        },
+        {
+          "name": "ExecuteCommand",
+          "startLine": 34,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "driver",
+            "cmd"
+          ]
+        },
+        {
+          "name": "ExecuteCommandPreApproved",
+          "startLine": 61,
+          "endLine": 69,
+          "params": [
+            "ctx",
+            "driver",
+            "cmd"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ExecuteCommand",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "ExecuteCommandPreApproved",
+          "line": 61,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "validateIfSupported",
+          "callee": "v.Validate",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ExecuteCommand",
+          "callee": "validateIfSupported",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ExecuteCommand",
+          "callee": "command.Decide",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ExecuteCommand",
+          "callee": "driver.Classify",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ExecuteCommand",
+          "callee": "driver.Execute",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ExecuteCommandPreApproved",
+          "callee": "command.Decide",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ExecuteCommandPreApproved",
+          "callee": "driver.Classify",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ExecuteCommandPreApproved",
+          "callee": "driver.Execute",
+          "lineNumber": 68
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/network/get_active_sessions_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 157,
+      "nonEmptyLines": 138,
+      "functions": [
+        {
+          "name": "Execute",
+          "startLine": 17,
+          "endLine": 22,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 24,
+          "endLine": 26,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 28,
+          "endLine": 30,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 32,
+          "endLine": 34,
+          "params": []
+        },
+        {
+          "name": "ListPPPActive",
+          "startLine": 45,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListPPPInactive",
+          "startLine": 52,
+          "endLine": 57,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListHotspotInactiveUsers",
+          "startLine": 59,
+          "endLine": 64,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "ListDHCPLeases",
+          "startLine": 66,
+          "endLine": 71,
+          "params": [
+            "ctx",
+            "driver",
+            "macFilter"
+          ]
+        },
+        {
+          "name": "SetDHCPLeaseBlock",
+          "startLine": 73,
+          "endLine": 78,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "blocked",
+            "comment"
+          ]
+        },
+        {
+          "name": "TestActiveSessionsUseCase",
+          "startLine": 80,
+          "endLine": 157,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockDriver",
+          "startLine": 13,
+          "endLine": 15,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "executeFn"
+          ]
+        },
+        {
+          "name": "mockSessionGateway",
+          "startLine": 36,
+          "endLine": 43,
+          "methods": [
+            "ListPPPActive",
+            "ListPPPInactive",
+            "ListHotspotInactiveUsers",
+            "ListDHCPLeases",
+            "SetDHCPLeaseBlock"
+          ],
+          "properties": [
+            "listPPPActiveFn",
+            "listPPPInactiveFn",
+            "listHotspotInactiveUsersFn",
+            "listDHCPLeasesFn",
+            "setDHCPLeaseBlockFn"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Execute",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "ListPPPActive",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "ListPPPInactive",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "ListHotspotInactiveUsers",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "ListDHCPLeases",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "SetDHCPLeaseBlock",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "TestActiveSessionsUseCase",
+          "line": 80,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Execute",
+          "callee": "m.executeFn",
+          "lineNumber": 19
+        },
+        {
+          "caller": "ListPPPActive",
+          "callee": "m.listPPPActiveFn",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ListPPPInactive",
+          "callee": "m.listPPPInactiveFn",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ListHotspotInactiveUsers",
+          "callee": "m.listHotspotInactiveUsersFn",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ListDHCPLeases",
+          "callee": "m.listDHCPLeasesFn",
+          "lineNumber": 68
+        },
+        {
+          "caller": "SetDHCPLeaseBlock",
+          "callee": "m.setDHCPLeaseBlockFn",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "context.Background",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "t.Run",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "NewActiveSessionsUseCase",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.GetPPPActiveSessions",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 94
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.Len",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "t.Run",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "NewActiveSessionsUseCase",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.GetPPPInactiveSessions",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.Len",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "t.Run",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "NewActiveSessionsUseCase",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.GetHotspotInactiveUsers",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.Len",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "t.Run",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.True",
+          "lineNumber": 141
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "NewActiveSessionsUseCase",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.GetDHCPLeases",
+          "lineNumber": 148
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.Len",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.SetDHCPLeaseBlock",
+          "lineNumber": 153
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 154
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.True",
+          "lineNumber": 155
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 10,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/network/get_active_sessions.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 48,
+      "functions": [
+        {
+          "name": "NewActiveSessionsUseCase",
+          "startLine": 18,
+          "endLine": 20,
+          "params": [
+            "gateway"
+          ]
+        },
+        {
+          "name": "GetPPPActiveSessions",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GetPPPInactiveSessions",
+          "startLine": 28,
+          "endLine": 30,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "KickPPPSession",
+          "startLine": 33,
+          "endLine": 35,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "GetHotspotActiveSessions",
+          "startLine": 38,
+          "endLine": 40,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GetHotspotInactiveUsers",
+          "startLine": 43,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "KickHotspotSession",
+          "startLine": 48,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "GetDHCPLeases",
+          "startLine": 53,
+          "endLine": 55,
+          "params": [
+            "ctx",
+            "driver",
+            "macFilter"
+          ]
+        },
+        {
+          "name": "SetDHCPLeaseBlock",
+          "startLine": 58,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "blocked",
+            "comment"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ActiveSessionsUseCase",
+          "startLine": 13,
+          "endLine": 15,
+          "methods": [
+            "GetPPPActiveSessions",
+            "GetPPPInactiveSessions",
+            "KickPPPSession",
+            "GetHotspotActiveSessions",
+            "GetHotspotInactiveUsers",
+            "KickHotspotSession",
+            "GetDHCPLeases",
+            "SetDHCPLeaseBlock"
+          ],
+          "properties": [
+            "gateway"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ActiveSessionsUseCase",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewActiveSessionsUseCase",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "GetPPPActiveSessions",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "GetPPPInactiveSessions",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "KickPPPSession",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "GetHotspotActiveSessions",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "GetHotspotInactiveUsers",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "KickHotspotSession",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "GetDHCPLeases",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "SetDHCPLeaseBlock",
+          "line": 58,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetPPPActiveSessions",
+          "callee": "u.gateway.ListPPPActive",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GetPPPInactiveSessions",
+          "callee": "u.gateway.ListPPPInactive",
+          "lineNumber": 29
+        },
+        {
+          "caller": "KickPPPSession",
+          "callee": "u.gateway.KickPPPSession",
+          "lineNumber": 34
+        },
+        {
+          "caller": "GetHotspotActiveSessions",
+          "callee": "u.gateway.ListHotspotActive",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetHotspotInactiveUsers",
+          "callee": "u.gateway.ListHotspotInactiveUsers",
+          "lineNumber": 44
+        },
+        {
+          "caller": "KickHotspotSession",
+          "callee": "u.gateway.KickHotspotSession",
+          "lineNumber": 49
+        },
+        {
+          "caller": "GetDHCPLeases",
+          "callee": "u.gateway.ListDHCPLeases",
+          "lineNumber": 54
+        },
+        {
+          "caller": "SetDHCPLeaseBlock",
+          "callee": "u.gateway.SetDHCPLeaseBlock",
+          "lineNumber": 59
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 9,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/get_device_status.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 17,
+      "functions": [
+        {
+          "name": "GetDeviceStatus",
+          "startLine": 14,
+          "endLine": 20,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetDeviceStatus",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetDeviceStatus",
+          "callee": "driver.Translate",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GetDeviceStatus",
+          "callee": "ExecuteCommand",
+          "lineNumber": 19
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/network/open_terminal.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 42,
+      "functions": [
+        {
+          "name": "NewOpenTerminalUseCase",
+          "startLine": 22,
+          "endLine": 28,
+          "params": [
+            "repo",
+            "vault",
+            "dialer"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 31,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "deviceID",
+            "cols",
+            "rows"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "OpenTerminalUseCase",
+          "startLine": 15,
+          "endLine": 19,
+          "methods": [
+            "Execute"
+          ],
+          "properties": [
+            "repo",
+            "vault",
+            "dialer"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "OpenTerminalUseCase",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "NewOpenTerminalUseCase",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 31,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "Execute",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "Execute",
+          "callee": "u.vault.Get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "Execute",
+          "callee": "dev.ToTarget",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Execute",
+          "callee": "u.dialer",
+          "lineNumber": 50
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    }
+  ]
+}

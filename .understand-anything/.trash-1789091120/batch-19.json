@@ -1,0 +1,4567 @@
+{
+ "batchIndex": 19,
+ "nodes": [
+  {
+   "id": "file:internal/adapter/connect/registration/router.go",
+   "type": "file",
+   "name": "router.go",
+   "filePath": "internal/adapter/connect/registration/router.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `registration` (47 baris, 2 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `registration` (47 baris, 2 fungsi, 0 tipe). Fungsi terbesar: NewRegistrationServiceHandler, NewPublicSubmitHandler. Bergantung pada 9 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "registration",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/registration/router.go:NewRegistrationServiceHandler",
+   "type": "function",
+   "name": "NewRegistrationServiceHandler",
+   "filePath": "internal/adapter/connect/registration/router.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewRegistrationServiceHandler (19 baris), parameter: managerUC, convertUC.",
+   "description": "Fungsi NewRegistrationServiceHandler (19 baris), parameter: managerUC, convertUC. Didefinisikan pada baris 14-33.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newregistrationservicehandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/registration/router.go:NewPublicSubmitHandler",
+   "type": "function",
+   "name": "NewPublicSubmitHandler",
+   "filePath": "internal/adapter/connect/registration/router.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewPublicSubmitHandler (10 baris), parameter: managerUC.",
+   "description": "Fungsi NewPublicSubmitHandler (10 baris), parameter: managerUC. Didefinisikan pada baris 37-47.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newpublicsubmithandler"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/report/mapper.go",
+   "type": "file",
+   "name": "mapper.go",
+   "filePath": "internal/adapter/connect/report/mapper.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `report` (32 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `report` (32 baris, 1 fungsi, 0 tipe). Fungsi terbesar: toProtoSummary. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "report",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/report/report_handler.go",
+   "type": "file",
+   "name": "report_handler.go",
+   "filePath": "internal/adapter/connect/report/report_handler.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `report` (73 baris, 5 fungsi, 1 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `report` (73 baris, 5 fungsi, 1 tipe). Tipe utama: ReportConnectHandler. Fungsi terbesar: RefreshSnapshot, DailyReport, MonthlyReport, YearlyReport, NewReportConnectHandler. Bergantung pada 7 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "report",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/connect/report/report_handler.go:ReportConnectHandler",
+   "type": "class",
+   "name": "ReportConnectHandler",
+   "filePath": "internal/adapter/connect/report/report_handler.go",
+   "complexity": "simple",
+   "summary": "Tipe ReportConnectHandler di report_handler.go, dengan method: DailyReport, MonthlyReport, YearlyReport, RefreshSnapshot.",
+   "description": "Tipe ReportConnectHandler di report_handler.go, dengan method: DailyReport, MonthlyReport, YearlyReport, RefreshSnapshot. Didefinisikan pada baris 13-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "reportconnecthandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/report/report_handler.go:NewReportConnectHandler",
+   "type": "function",
+   "name": "NewReportConnectHandler",
+   "filePath": "internal/adapter/connect/report/report_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewReportConnectHandler (2 baris), parameter: uc.",
+   "description": "Fungsi NewReportConnectHandler (2 baris), parameter: uc. Didefinisikan pada baris 18-20.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newreportconnecthandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/report/report_handler.go:DailyReport",
+   "type": "function",
+   "name": "DailyReport",
+   "filePath": "internal/adapter/connect/report/report_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi DailyReport (11 baris), parameter: ctx, req.",
+   "description": "Fungsi DailyReport (11 baris), parameter: ctx, req. Didefinisikan pada baris 22-33.",
+   "tags": [
+    "go",
+    "fungsi",
+    "dailyreport"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/report/report_handler.go:MonthlyReport",
+   "type": "function",
+   "name": "MonthlyReport",
+   "filePath": "internal/adapter/connect/report/report_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi MonthlyReport (11 baris), parameter: ctx, req.",
+   "description": "Fungsi MonthlyReport (11 baris), parameter: ctx, req. Didefinisikan pada baris 35-46.",
+   "tags": [
+    "go",
+    "fungsi",
+    "monthlyreport"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/report/report_handler.go:YearlyReport",
+   "type": "function",
+   "name": "YearlyReport",
+   "filePath": "internal/adapter/connect/report/report_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi YearlyReport (11 baris), parameter: ctx, req.",
+   "description": "Fungsi YearlyReport (11 baris), parameter: ctx, req. Didefinisikan pada baris 48-59.",
+   "tags": [
+    "go",
+    "fungsi",
+    "yearlyreport"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/report/report_handler.go:RefreshSnapshot",
+   "type": "function",
+   "name": "RefreshSnapshot",
+   "filePath": "internal/adapter/connect/report/report_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi RefreshSnapshot (12 baris), parameter: ctx, req.",
+   "description": "Fungsi RefreshSnapshot (12 baris), parameter: ctx, req. Didefinisikan pada baris 61-73.",
+   "tags": [
+    "go",
+    "fungsi",
+    "refreshsnapshot"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/report/router.go",
+   "type": "file",
+   "name": "router.go",
+   "filePath": "internal/adapter/connect/report/router.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `report` (25 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `report` (25 baris, 1 fungsi, 0 tipe). Fungsi terbesar: NewReportServiceHandler. Bergantung pada 6 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "report",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/report/router.go:NewReportServiceHandler",
+   "type": "function",
+   "name": "NewReportServiceHandler",
+   "filePath": "internal/adapter/connect/report/router.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewReportServiceHandler (12 baris), parameter: uc.",
+   "description": "Fungsi NewReportServiceHandler (12 baris), parameter: uc. Didefinisikan pada baris 13-25.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newreportservicehandler"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/request_id.go",
+   "type": "file",
+   "name": "request_id.go",
+   "filePath": "internal/adapter/connect/request_id.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `connect` (45 baris, 4 fungsi, 1 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `connect` (45 baris, 4 fungsi, 1 tipe). Tipe utama: requestIDInterceptor. Fungsi terbesar: WrapUnary, WrapStreamingHandler, requestID, WrapStreamingClient.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "connect",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/connect/request_id.go:requestIDInterceptor",
+   "type": "class",
+   "name": "requestIDInterceptor",
+   "filePath": "internal/adapter/connect/request_id.go",
+   "complexity": "simple",
+   "summary": "Tipe requestIDInterceptor di request_id.go, dengan method: WrapUnary, WrapStreamingClient, WrapStreamingHandler.",
+   "description": "Tipe requestIDInterceptor di request_id.go, dengan method: WrapUnary, WrapStreamingClient, WrapStreamingHandler. Didefinisikan pada baris 14-14.",
+   "tags": [
+    "go",
+    "tipe",
+    "requestidinterceptor"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/request_id.go:WrapUnary",
+   "type": "function",
+   "name": "WrapUnary",
+   "filePath": "internal/adapter/connect/request_id.go",
+   "complexity": "simple",
+   "summary": "Fungsi WrapUnary (9 baris), parameter: next.",
+   "description": "Fungsi WrapUnary (9 baris), parameter: next. Didefinisikan pada baris 16-25.",
+   "tags": [
+    "go",
+    "fungsi",
+    "wrapunary"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/request_id.go:WrapStreamingClient",
+   "type": "function",
+   "name": "WrapStreamingClient",
+   "filePath": "internal/adapter/connect/request_id.go",
+   "complexity": "simple",
+   "summary": "Fungsi WrapStreamingClient (2 baris), parameter: next.",
+   "description": "Fungsi WrapStreamingClient (2 baris), parameter: next. Didefinisikan pada baris 27-29.",
+   "tags": [
+    "go",
+    "fungsi",
+    "wrapstreamingclient"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/request_id.go:WrapStreamingHandler",
+   "type": "function",
+   "name": "WrapStreamingHandler",
+   "filePath": "internal/adapter/connect/request_id.go",
+   "complexity": "simple",
+   "summary": "Fungsi WrapStreamingHandler (6 baris), parameter: next.",
+   "description": "Fungsi WrapStreamingHandler (6 baris), parameter: next. Didefinisikan pada baris 31-37.",
+   "tags": [
+    "go",
+    "fungsi",
+    "wrapstreaminghandler"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/setting/mapper.go",
+   "type": "file",
+   "name": "mapper.go",
+   "filePath": "internal/adapter/connect/setting/mapper.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `setting` (80 baris, 5 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `setting` (80 baris, 5 fungsi, 0 tipe). Fungsi terbesar: DomainBotSettingsToPb, PbBotSettingsToDomain, DomainSettingToPb, PbSettingToDomain, DomainSettingsToPb. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "setting",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/mapper.go:DomainSettingToPb",
+   "type": "function",
+   "name": "DomainSettingToPb",
+   "filePath": "internal/adapter/connect/setting/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi DomainSettingToPb (11 baris), parameter: s.",
+   "description": "Fungsi DomainSettingToPb (11 baris), parameter: s. Didefinisikan pada baris 9-20.",
+   "tags": [
+    "go",
+    "fungsi",
+    "domainsettingtopb"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/mapper.go:DomainSettingsToPb",
+   "type": "function",
+   "name": "DomainSettingsToPb",
+   "filePath": "internal/adapter/connect/setting/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi DomainSettingsToPb (6 baris), parameter: items.",
+   "description": "Fungsi DomainSettingsToPb (6 baris), parameter: items. Didefinisikan pada baris 23-29.",
+   "tags": [
+    "go",
+    "fungsi",
+    "domainsettingstopb"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/mapper.go:PbSettingToDomain",
+   "type": "function",
+   "name": "PbSettingToDomain",
+   "filePath": "internal/adapter/connect/setting/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi PbSettingToDomain (10 baris), parameter: pb.",
+   "description": "Fungsi PbSettingToDomain (10 baris), parameter: pb. Didefinisikan pada baris 32-42.",
+   "tags": [
+    "go",
+    "fungsi",
+    "pbsettingtodomain"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/mapper.go:DomainBotSettingsToPb",
+   "type": "function",
+   "name": "DomainBotSettingsToPb",
+   "filePath": "internal/adapter/connect/setting/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi DomainBotSettingsToPb (16 baris), parameter: s.",
+   "description": "Fungsi DomainBotSettingsToPb (16 baris), parameter: s. Didefinisikan pada baris 45-61.",
+   "tags": [
+    "go",
+    "fungsi",
+    "domainbotsettingstopb"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/mapper.go:PbBotSettingsToDomain",
+   "type": "function",
+   "name": "PbBotSettingsToDomain",
+   "filePath": "internal/adapter/connect/setting/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi PbBotSettingsToDomain (16 baris), parameter: pb.",
+   "description": "Fungsi PbBotSettingsToDomain (16 baris), parameter: pb. Didefinisikan pada baris 64-80.",
+   "tags": [
+    "go",
+    "fungsi",
+    "pbbotsettingstodomain"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/setting/router.go",
+   "type": "file",
+   "name": "router.go",
+   "filePath": "internal/adapter/connect/setting/router.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `setting` (27 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `setting` (27 baris, 1 fungsi, 0 tipe). Fungsi terbesar: NewSettingServiceHandler. Bergantung pada 6 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "setting",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/router.go:NewSettingServiceHandler",
+   "type": "function",
+   "name": "NewSettingServiceHandler",
+   "filePath": "internal/adapter/connect/setting/router.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSettingServiceHandler (14 baris), parameter: uc.",
+   "description": "Fungsi NewSettingServiceHandler (14 baris), parameter: uc. Didefinisikan pada baris 13-27.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newsettingservicehandler"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/setting/setting_handler.go",
+   "type": "file",
+   "name": "setting_handler.go",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `setting` (104 baris, 7 fungsi, 1 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `setting` (104 baris, 7 fungsi, 1 tipe). Tipe utama: SettingConnectHandler. Fungsi terbesar: BatchUpdateSettings, UpdateBotSettings, GetAllSettings, GetSettingsByCategory, UpdateSetting. Bergantung pada 10 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "setting",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/connect/setting/setting_handler.go:SettingConnectHandler",
+   "type": "class",
+   "name": "SettingConnectHandler",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "complexity": "simple",
+   "summary": "Tipe SettingConnectHandler di setting_handler.go, dengan method: GetAllSettings, GetSettingsByCategory, UpdateSetting, BatchUpdateSettings, GetBotSettings, UpdateBotSettings.",
+   "description": "Tipe SettingConnectHandler di setting_handler.go, dengan method: GetAllSettings, GetSettingsByCategory, UpdateSetting, BatchUpdateSettings, GetBotSettings, UpdateBotSettings. Didefinisikan pada baris 14-16.",
+   "tags": [
+    "go",
+    "tipe",
+    "settingconnecthandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/setting_handler.go:NewSettingConnectHandler",
+   "type": "function",
+   "name": "NewSettingConnectHandler",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSettingConnectHandler (4 baris), parameter: settingUC.",
+   "description": "Fungsi NewSettingConnectHandler (4 baris), parameter: settingUC. Didefinisikan pada baris 18-22.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newsettingconnecthandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/setting_handler.go:GetAllSettings",
+   "type": "function",
+   "name": "GetAllSettings",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetAllSettings (9 baris), parameter: ctx, req.",
+   "description": "Fungsi GetAllSettings (9 baris), parameter: ctx, req. Didefinisikan pada baris 24-33.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getallsettings"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/setting_handler.go:GetSettingsByCategory",
+   "type": "function",
+   "name": "GetSettingsByCategory",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetSettingsByCategory (9 baris), parameter: ctx, req.",
+   "description": "Fungsi GetSettingsByCategory (9 baris), parameter: ctx, req. Didefinisikan pada baris 35-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getsettingsbycategory"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/setting_handler.go:UpdateSetting",
+   "type": "function",
+   "name": "UpdateSetting",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateSetting (9 baris), parameter: ctx, req.",
+   "description": "Fungsi UpdateSetting (9 baris), parameter: ctx, req. Didefinisikan pada baris 46-55.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatesetting"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/setting_handler.go:BatchUpdateSettings",
+   "type": "function",
+   "name": "BatchUpdateSettings",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi BatchUpdateSettings (20 baris), parameter: ctx, req.",
+   "description": "Fungsi BatchUpdateSettings (20 baris), parameter: ctx, req. Didefinisikan pada baris 57-77.",
+   "tags": [
+    "go",
+    "fungsi",
+    "batchupdatesettings"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/setting_handler.go:GetBotSettings",
+   "type": "function",
+   "name": "GetBotSettings",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetBotSettings (9 baris), parameter: ctx, req.",
+   "description": "Fungsi GetBotSettings (9 baris), parameter: ctx, req. Didefinisikan pada baris 79-88.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getbotsettings"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/setting/setting_handler.go:UpdateBotSettings",
+   "type": "function",
+   "name": "UpdateBotSettings",
+   "filePath": "internal/adapter/connect/setting/setting_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateBotSettings (14 baris), parameter: ctx, req.",
+   "description": "Fungsi UpdateBotSettings (14 baris), parameter: ctx, req. Didefinisikan pada baris 90-104.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatebotsettings"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/skill/mapper.go",
+   "type": "file",
+   "name": "mapper.go",
+   "filePath": "internal/adapter/connect/skill/mapper.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `skill` (100 baris, 7 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `skill` (100 baris, 7 fungsi, 0 tipe). Fungsi terbesar: ToProtoSkill, ToProtoSkillResource, ToProtoGitRepoInfo, ToProtoResourceContent, ToProtoSkillList. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "skill",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkill",
+   "type": "function",
+   "name": "ToProtoSkill",
+   "filePath": "internal/adapter/connect/skill/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoSkill (19 baris), parameter: s.",
+   "description": "Fungsi ToProtoSkill (19 baris), parameter: s. Didefinisikan pada baris 11-30.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotoskill"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillList",
+   "type": "function",
+   "name": "ToProtoSkillList",
+   "filePath": "internal/adapter/connect/skill/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoSkillList (6 baris), parameter: skills.",
+   "description": "Fungsi ToProtoSkillList (6 baris), parameter: skills. Didefinisikan pada baris 33-39.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotoskilllist"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillResource",
+   "type": "function",
+   "name": "ToProtoSkillResource",
+   "filePath": "internal/adapter/connect/skill/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoSkillResource (13 baris), parameter: r.",
+   "description": "Fungsi ToProtoSkillResource (13 baris), parameter: r. Didefinisikan pada baris 42-55.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotoskillresource"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillResourceList",
+   "type": "function",
+   "name": "ToProtoSkillResourceList",
+   "filePath": "internal/adapter/connect/skill/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoSkillResourceList (6 baris), parameter: resources.",
+   "description": "Fungsi ToProtoSkillResourceList (6 baris), parameter: resources. Didefinisikan pada baris 58-64.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotoskillresourcelist"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/mapper.go:ToProtoResourceContent",
+   "type": "function",
+   "name": "ToProtoResourceContent",
+   "filePath": "internal/adapter/connect/skill/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoResourceContent (10 baris), parameter: c.",
+   "description": "Fungsi ToProtoResourceContent (10 baris), parameter: c. Didefinisikan pada baris 67-77.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotoresourcecontent"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/mapper.go:ToProtoGitRepoInfo",
+   "type": "function",
+   "name": "ToProtoGitRepoInfo",
+   "filePath": "internal/adapter/connect/skill/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoGitRepoInfo (11 baris), parameter: g.",
+   "description": "Fungsi ToProtoGitRepoInfo (11 baris), parameter: g. Didefinisikan pada baris 80-91.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotogitrepoinfo"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/mapper.go:ToProtoGitRepoInfoList",
+   "type": "function",
+   "name": "ToProtoGitRepoInfoList",
+   "filePath": "internal/adapter/connect/skill/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoGitRepoInfoList (6 baris), parameter: repos.",
+   "description": "Fungsi ToProtoGitRepoInfoList (6 baris), parameter: repos. Didefinisikan pada baris 94-100.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotogitrepoinfolist"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/skill/router.go",
+   "type": "file",
+   "name": "router.go",
+   "filePath": "internal/adapter/connect/skill/router.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `skill` (44 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `skill` (44 baris, 1 fungsi, 0 tipe). Fungsi terbesar: NewSkillServiceHandler. Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "skill",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/router.go:NewSkillServiceHandler",
+   "type": "function",
+   "name": "NewSkillServiceHandler",
+   "filePath": "internal/adapter/connect/skill/router.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSkillServiceHandler (31 baris), parameter: skillUC.",
+   "description": "Fungsi NewSkillServiceHandler (31 baris), parameter: skillUC. Didefinisikan pada baris 13-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newskillservicehandler"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/skill/skill_handler.go",
+   "type": "file",
+   "name": "skill_handler.go",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "language": "go",
+   "complexity": "moderate",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `skill` (354 baris, 21 fungsi, 1 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `skill` (354 baris, 21 fungsi, 1 tipe). Tipe utama: SkillConnectHandler. Fungsi terbesar: CreateSkill, UpdateSkill, DeleteSkill, ExportSkill, GetResource. Bergantung pada 12 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "skill",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/connect/skill/skill_handler.go:SkillConnectHandler",
+   "type": "class",
+   "name": "SkillConnectHandler",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillConnectHandler di skill_handler.go, dengan method: ListSkills, GetSkill, CreateSkill, UpdateSkill, DeleteSkill, ExportSkill.",
+   "description": "Tipe SkillConnectHandler di skill_handler.go, dengan method: ListSkills, GetSkill, CreateSkill, UpdateSkill, DeleteSkill, ExportSkill. Didefinisikan pada baris 16-18.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillconnecthandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:NewSkillConnectHandler",
+   "type": "function",
+   "name": "NewSkillConnectHandler",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSkillConnectHandler (4 baris), parameter: skillUC.",
+   "description": "Fungsi NewSkillConnectHandler (4 baris), parameter: skillUC. Didefinisikan pada baris 21-25.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newskillconnecthandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:ListSkills",
+   "type": "function",
+   "name": "ListSkills",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListSkills (12 baris), parameter: ctx, req.",
+   "description": "Fungsi ListSkills (12 baris), parameter: ctx, req. Didefinisikan pada baris 28-40.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listskills"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:GetSkill",
+   "type": "function",
+   "name": "GetSkill",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetSkill (12 baris), parameter: ctx, req.",
+   "description": "Fungsi GetSkill (12 baris), parameter: ctx, req. Didefinisikan pada baris 43-55.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getskill"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:CreateSkill",
+   "type": "function",
+   "name": "CreateSkill",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi CreateSkill (22 baris), parameter: ctx, req.",
+   "description": "Fungsi CreateSkill (22 baris), parameter: ctx, req. Didefinisikan pada baris 58-80.",
+   "tags": [
+    "go",
+    "fungsi",
+    "createskill"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:UpdateSkill",
+   "type": "function",
+   "name": "UpdateSkill",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateSkill (22 baris), parameter: ctx, req.",
+   "description": "Fungsi UpdateSkill (22 baris), parameter: ctx, req. Didefinisikan pada baris 83-105.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updateskill"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:DeleteSkill",
+   "type": "function",
+   "name": "DeleteSkill",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteSkill (13 baris), parameter: ctx, req.",
+   "description": "Fungsi DeleteSkill (13 baris), parameter: ctx, req. Didefinisikan pada baris 108-121.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deleteskill"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:ExportSkill",
+   "type": "function",
+   "name": "ExportSkill",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ExportSkill (13 baris), parameter: _, req.",
+   "description": "Fungsi ExportSkill (13 baris), parameter: _, req. Didefinisikan pada baris 124-137.",
+   "tags": [
+    "go",
+    "fungsi",
+    "exportskill"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:ImportSkill",
+   "type": "function",
+   "name": "ImportSkill",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ImportSkill (12 baris), parameter: ctx, req.",
+   "description": "Fungsi ImportSkill (12 baris), parameter: ctx, req. Didefinisikan pada baris 140-152.",
+   "tags": [
+    "go",
+    "fungsi",
+    "importskill"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:ListResources",
+   "type": "function",
+   "name": "ListResources",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListResources (12 baris), parameter: _, req.",
+   "description": "Fungsi ListResources (12 baris), parameter: _, req. Didefinisikan pada baris 155-167.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listresources"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:GetResource",
+   "type": "function",
+   "name": "GetResource",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetResource (13 baris), parameter: _, req.",
+   "description": "Fungsi GetResource (13 baris), parameter: _, req. Didefinisikan pada baris 170-183.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getresource"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:SaveResource",
+   "type": "function",
+   "name": "SaveResource",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi SaveResource (13 baris), parameter: _, req.",
+   "description": "Fungsi SaveResource (13 baris), parameter: _, req. Didefinisikan pada baris 186-199.",
+   "tags": [
+    "go",
+    "fungsi",
+    "saveresource"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:DeleteResource",
+   "type": "function",
+   "name": "DeleteResource",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteResource (13 baris), parameter: _, req.",
+   "description": "Fungsi DeleteResource (13 baris), parameter: _, req. Didefinisikan pada baris 202-215.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deleteresource"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:ListGitRepos",
+   "type": "function",
+   "name": "ListGitRepos",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListGitRepos (12 baris), parameter: _, _.",
+   "description": "Fungsi ListGitRepos (12 baris), parameter: _, _. Didefinisikan pada baris 218-230.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listgitrepos"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:AddGitRepo",
+   "type": "function",
+   "name": "AddGitRepo",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi AddGitRepo (12 baris), parameter: ctx, req.",
+   "description": "Fungsi AddGitRepo (12 baris), parameter: ctx, req. Didefinisikan pada baris 233-245.",
+   "tags": [
+    "go",
+    "fungsi",
+    "addgitrepo"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:UpdateGitRepo",
+   "type": "function",
+   "name": "UpdateGitRepo",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateGitRepo (12 baris), parameter: _, req.",
+   "description": "Fungsi UpdateGitRepo (12 baris), parameter: _, req. Didefinisikan pada baris 248-260.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updategitrepo"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:DeleteGitRepo",
+   "type": "function",
+   "name": "DeleteGitRepo",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteGitRepo (13 baris), parameter: ctx, req.",
+   "description": "Fungsi DeleteGitRepo (13 baris), parameter: ctx, req. Didefinisikan pada baris 263-276.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deletegitrepo"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:SyncGitRepo",
+   "type": "function",
+   "name": "SyncGitRepo",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi SyncGitRepo (13 baris), parameter: ctx, req.",
+   "description": "Fungsi SyncGitRepo (13 baris), parameter: ctx, req. Didefinisikan pada baris 279-292.",
+   "tags": [
+    "go",
+    "fungsi",
+    "syncgitrepo"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:ToggleGitRepo",
+   "type": "function",
+   "name": "ToggleGitRepo",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToggleGitRepo (12 baris), parameter: _, req.",
+   "description": "Fungsi ToggleGitRepo (12 baris), parameter: _, req. Didefinisikan pada baris 295-307.",
+   "tags": [
+    "go",
+    "fungsi",
+    "togglegitrepo"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:ToggleSkill",
+   "type": "function",
+   "name": "ToggleSkill",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToggleSkill (13 baris), parameter: ctx, req.",
+   "description": "Fungsi ToggleSkill (13 baris), parameter: ctx, req. Didefinisikan pada baris 310-323.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toggleskill"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:GetGlobalPrompt",
+   "type": "function",
+   "name": "GetGlobalPrompt",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetGlobalPrompt (12 baris), parameter: ctx, _.",
+   "description": "Fungsi GetGlobalPrompt (12 baris), parameter: ctx, _. Didefinisikan pada baris 326-338.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getglobalprompt"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/skill/skill_handler.go:SaveGlobalPrompt",
+   "type": "function",
+   "name": "SaveGlobalPrompt",
+   "filePath": "internal/adapter/connect/skill/skill_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi SaveGlobalPrompt (13 baris), parameter: ctx, req.",
+   "description": "Fungsi SaveGlobalPrompt (13 baris), parameter: ctx, req. Didefinisikan pada baris 341-354.",
+   "tags": [
+    "go",
+    "fungsi",
+    "saveglobalprompt"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/subscription/mapper.go",
+   "type": "file",
+   "name": "mapper.go",
+   "filePath": "internal/adapter/connect/subscription/mapper.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `subscription` (137 baris, 3 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `subscription` (137 baris, 3 fungsi, 0 tipe). Fungsi terbesar: ToProtoSubscription, ToProtoSubscriptionDetail, ToProtoSubscriptionDetailList. Bergantung pada 13 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscription",
+   "type": "function",
+   "name": "ToProtoSubscription",
+   "filePath": "internal/adapter/connect/subscription/mapper.go",
+   "complexity": "moderate",
+   "summary": "Fungsi ToProtoSubscription (66 baris), parameter: sub.",
+   "description": "Fungsi ToProtoSubscription (66 baris), parameter: sub. Didefinisikan pada baris 11-77.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotosubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscriptionDetail",
+   "type": "function",
+   "name": "ToProtoSubscriptionDetail",
+   "filePath": "internal/adapter/connect/subscription/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoSubscriptionDetail (48 baris), parameter: detail.",
+   "description": "Fungsi ToProtoSubscriptionDetail (48 baris), parameter: detail. Didefinisikan pada baris 80-128.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotosubscriptiondetail"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscriptionDetailList",
+   "type": "function",
+   "name": "ToProtoSubscriptionDetailList",
+   "filePath": "internal/adapter/connect/subscription/mapper.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToProtoSubscriptionDetailList (6 baris), parameter: details.",
+   "description": "Fungsi ToProtoSubscriptionDetailList (6 baris), parameter: details. Didefinisikan pada baris 131-137.",
+   "tags": [
+    "go",
+    "fungsi",
+    "toprotosubscriptiondetaillist"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/subscription/router.go",
+   "type": "file",
+   "name": "router.go",
+   "filePath": "internal/adapter/connect/subscription/router.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `subscription` (37 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `subscription` (37 baris, 1 fungsi, 0 tipe). Fungsi terbesar: NewSubscriptionServiceHandler. Bergantung pada 7 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/router.go:NewSubscriptionServiceHandler",
+   "type": "function",
+   "name": "NewSubscriptionServiceHandler",
+   "filePath": "internal/adapter/connect/subscription/router.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSubscriptionServiceHandler (24 baris), parameter: subUC, lifecycleUC.",
+   "description": "Fungsi NewSubscriptionServiceHandler (24 baris), parameter: subUC, lifecycleUC. Didefinisikan pada baris 13-37.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newsubscriptionservicehandler"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "type": "file",
+   "name": "subscription_handler_test.go",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `subscription` (68 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `subscription` (68 baris, 1 fungsi, 0 tipe). Fungsi terbesar: TestSubscriptionConnectHandler_CRUDAndEnrichment. Bergantung pada 25 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler_test.go:TestSubscriptionConnectHandler_CRUDAndEnrichment",
+   "type": "function",
+   "name": "TestSubscriptionConnectHandler_CRUDAndEnrichment",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestSubscriptionConnectHandler_CRUDAndEnrichment (49 baris), parameter: t.",
+   "description": "Fungsi TestSubscriptionConnectHandler_CRUDAndEnrichment (49 baris), parameter: t. Didefinisikan pada baris 19-68.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testsubscriptionconnecthandler-crudandenrichment"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "type": "file",
+   "name": "subscription_handler.go",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "language": "go",
+   "complexity": "moderate",
+   "summary": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `subscription` (326 baris, 14 fungsi, 1 tipe).",
+   "description": "Handler ConnectRPC: router, handler, dan mapper protobuf-domain — paket `subscription` (326 baris, 14 fungsi, 1 tipe). Tipe utama: SubscriptionConnectHandler. Fungsi terbesar: CreateSubscription, UpdateSubscription, IsolateSubscription, RestoreSubscription, ListSubscriptions. Bergantung pada 14 berkas internal.",
+   "tags": [
+    "go",
+    "connectrpc",
+    "subscription",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/connect/subscription/subscription_handler.go:SubscriptionConnectHandler",
+   "type": "class",
+   "name": "SubscriptionConnectHandler",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Tipe SubscriptionConnectHandler di subscription_handler.go, dengan method: toEnrichedProto, ListSubscriptions, GetSubscription, ChangePlan, SuspendSubscription, ResumeSubscription.",
+   "description": "Tipe SubscriptionConnectHandler di subscription_handler.go, dengan method: toEnrichedProto, ListSubscriptions, GetSubscription, ChangePlan, SuspendSubscription, ResumeSubscription. Didefinisikan pada baris 17-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "subscriptionconnecthandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:NewSubscriptionConnectHandler",
+   "type": "function",
+   "name": "NewSubscriptionConnectHandler",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewSubscriptionConnectHandler (8 baris), parameter: subUC, lifecycleUC.",
+   "description": "Fungsi NewSubscriptionConnectHandler (8 baris), parameter: subUC, lifecycleUC. Didefinisikan pada baris 23-31.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newsubscriptionconnecthandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:ListSubscriptions",
+   "type": "function",
+   "name": "ListSubscriptions",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListSubscriptions (11 baris), parameter: ctx, req.",
+   "description": "Fungsi ListSubscriptions (11 baris), parameter: ctx, req. Didefinisikan pada baris 45-56.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listsubscriptions"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:GetSubscription",
+   "type": "function",
+   "name": "GetSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetSubscription (11 baris), parameter: ctx, req.",
+   "description": "Fungsi GetSubscription (11 baris), parameter: ctx, req. Didefinisikan pada baris 59-70.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getsubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:ChangePlan",
+   "type": "function",
+   "name": "ChangePlan",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ChangePlan (11 baris), parameter: ctx, req.",
+   "description": "Fungsi ChangePlan (11 baris), parameter: ctx, req. Didefinisikan pada baris 73-84.",
+   "tags": [
+    "go",
+    "fungsi",
+    "changeplan"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:SuspendSubscription",
+   "type": "function",
+   "name": "SuspendSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi SuspendSubscription (11 baris), parameter: ctx, req.",
+   "description": "Fungsi SuspendSubscription (11 baris), parameter: ctx, req. Didefinisikan pada baris 87-98.",
+   "tags": [
+    "go",
+    "fungsi",
+    "suspendsubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:ResumeSubscription",
+   "type": "function",
+   "name": "ResumeSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ResumeSubscription (11 baris), parameter: ctx, req.",
+   "description": "Fungsi ResumeSubscription (11 baris), parameter: ctx, req. Didefinisikan pada baris 101-112.",
+   "tags": [
+    "go",
+    "fungsi",
+    "resumesubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:TerminateSubscription",
+   "type": "function",
+   "name": "TerminateSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi TerminateSubscription (11 baris), parameter: ctx, req.",
+   "description": "Fungsi TerminateSubscription (11 baris), parameter: ctx, req. Didefinisikan pada baris 115-126.",
+   "tags": [
+    "go",
+    "fungsi",
+    "terminatesubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:ActivateSubscription",
+   "type": "function",
+   "name": "ActivateSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi ActivateSubscription (11 baris), parameter: ctx, req.",
+   "description": "Fungsi ActivateSubscription (11 baris), parameter: ctx, req. Didefinisikan pada baris 129-140.",
+   "tags": [
+    "go",
+    "fungsi",
+    "activatesubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:IsolateSubscription",
+   "type": "function",
+   "name": "IsolateSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi IsolateSubscription (12 baris), parameter: ctx, req.",
+   "description": "Fungsi IsolateSubscription (12 baris), parameter: ctx, req. Didefinisikan pada baris 143-155.",
+   "tags": [
+    "go",
+    "fungsi",
+    "isolatesubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:RestoreSubscription",
+   "type": "function",
+   "name": "RestoreSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi RestoreSubscription (12 baris), parameter: ctx, req.",
+   "description": "Fungsi RestoreSubscription (12 baris), parameter: ctx, req. Didefinisikan pada baris 158-170.",
+   "tags": [
+    "go",
+    "fungsi",
+    "restoresubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:CreateSubscription",
+   "type": "function",
+   "name": "CreateSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "moderate",
+   "summary": "Fungsi CreateSubscription (69 baris), parameter: ctx, req.",
+   "description": "Fungsi CreateSubscription (69 baris), parameter: ctx, req. Didefinisikan pada baris 173-242.",
+   "tags": [
+    "go",
+    "fungsi",
+    "createsubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:UpdateSubscription",
+   "type": "function",
+   "name": "UpdateSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "moderate",
+   "summary": "Fungsi UpdateSubscription (68 baris), parameter: ctx, req.",
+   "description": "Fungsi UpdateSubscription (68 baris), parameter: ctx, req. Didefinisikan pada baris 245-313.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatesubscription"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/connect/subscription/subscription_handler.go:DeleteSubscription",
+   "type": "function",
+   "name": "DeleteSubscription",
+   "filePath": "internal/adapter/connect/subscription/subscription_handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteSubscription (10 baris), parameter: ctx, req.",
+   "description": "Fungsi DeleteSubscription (10 baris), parameter: ctx, req. Didefinisikan pada baris 316-326.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deletesubscription"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/adminapi/handler_test.go",
+   "type": "file",
+   "name": "handler_test.go",
+   "filePath": "internal/adapter/http/adminapi/handler_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `adminapi` (41 baris, 2 fungsi, 0 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `adminapi` (41 baris, 2 fungsi, 0 tipe). Fungsi terbesar: assertHTTPErrorEnvelope, TestImportRouterMissingDeviceReturnsErrorEnvelope.",
+   "tags": [
+    "go",
+    "http",
+    "adminapi",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/adminapi/handler_test.go:TestImportRouterMissingDeviceReturnsErrorEnvelope",
+   "type": "function",
+   "name": "TestImportRouterMissingDeviceReturnsErrorEnvelope",
+   "filePath": "internal/adapter/http/adminapi/handler_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestImportRouterMissingDeviceReturnsErrorEnvelope (10 baris), parameter: t.",
+   "description": "Fungsi TestImportRouterMissingDeviceReturnsErrorEnvelope (10 baris), parameter: t. Didefinisikan pada baris 10-20.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testimportroutermissingdevicereturnserrorenvelope"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/adminapi/handler.go",
+   "type": "file",
+   "name": "handler.go",
+   "filePath": "internal/adapter/http/adminapi/handler.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `adminapi` (252 baris, 16 fungsi, 1 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `adminapi` (252 baris, 16 fungsi, 1 tipe). Tipe utama: Handler. Fungsi terbesar: importFile, importRouter, snapshotRefresh, reconcile, export. Bergantung pada 79 berkas internal.",
+   "tags": [
+    "go",
+    "http",
+    "adminapi",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/http/adminapi/handler.go:Handler",
+   "type": "class",
+   "name": "Handler",
+   "filePath": "internal/adapter/http/adminapi/handler.go",
+   "complexity": "simple",
+   "summary": "Tipe Handler di handler.go, dengan method: RegisterProtected, importFile, importRouter, reconcile, snapshotRefresh, export.",
+   "description": "Tipe Handler di handler.go, dengan method: RegisterProtected, importFile, importRouter, reconcile, snapshotRefresh, export. Didefinisikan pada baris 20-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "handler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/adminapi/handler.go:NewHandler",
+   "type": "function",
+   "name": "NewHandler",
+   "filePath": "internal/adapter/http/adminapi/handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewHandler (12 baris), parameter: upsert, routerSrc, reconciler, snapshotter, exporter.",
+   "description": "Fungsi NewHandler (12 baris), parameter: upsert, routerSrc, reconciler, snapshotter, exporter. Didefinisikan pada baris 30-42.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newhandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/adminapi/handler.go:RegisterProtected",
+   "type": "function",
+   "name": "RegisterProtected",
+   "filePath": "internal/adapter/http/adminapi/handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi RegisterProtected (6 baris), parameter: mux.",
+   "description": "Fungsi RegisterProtected (6 baris), parameter: mux. Didefinisikan pada baris 45-51.",
+   "tags": [
+    "go",
+    "fungsi",
+    "registerprotected"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/adminapi/handler.go:importFile",
+   "type": "function",
+   "name": "importFile",
+   "filePath": "internal/adapter/http/adminapi/handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi importFile (40 baris), parameter: w, r.",
+   "description": "Fungsi importFile (40 baris), parameter: w, r. Didefinisikan pada baris 55-95.",
+   "tags": [
+    "go",
+    "fungsi",
+    "importfile"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/adminapi/handler.go:importRouter",
+   "type": "function",
+   "name": "importRouter",
+   "filePath": "internal/adapter/http/adminapi/handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi importRouter (30 baris), parameter: w, r.",
+   "description": "Fungsi importRouter (30 baris), parameter: w, r. Didefinisikan pada baris 99-129.",
+   "tags": [
+    "go",
+    "fungsi",
+    "importrouter"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/gateway/handler_test.go",
+   "type": "file",
+   "name": "handler_test.go",
+   "filePath": "internal/adapter/http/gateway/handler_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `gateway` (40 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `gateway` (40 baris, 1 fungsi, 0 tipe). Fungsi terbesar: TestChargeMalformedJSONReturnsErrorEnvelope.",
+   "tags": [
+    "go",
+    "http",
+    "gateway",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/gateway/handler_test.go:TestChargeMalformedJSONReturnsErrorEnvelope",
+   "type": "function",
+   "name": "TestChargeMalformedJSONReturnsErrorEnvelope",
+   "filePath": "internal/adapter/http/gateway/handler_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestChargeMalformedJSONReturnsErrorEnvelope (30 baris), parameter: t.",
+   "description": "Fungsi TestChargeMalformedJSONReturnsErrorEnvelope (30 baris), parameter: t. Didefinisikan pada baris 10-40.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testchargemalformedjsonreturnserrorenvelope"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/gateway/handler.go",
+   "type": "file",
+   "name": "handler.go",
+   "filePath": "internal/adapter/http/gateway/handler.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `gateway` (132 baris, 9 fungsi, 1 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `gateway` (132 baris, 9 fungsi, 1 tipe). Tipe utama: Handler. Fungsi terbesar: charge, checkCharge, tripayWebhook, respond, writeMappedError. Bergantung pada 19 berkas internal.",
+   "tags": [
+    "go",
+    "http",
+    "gateway",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/http/gateway/handler.go:Handler",
+   "type": "class",
+   "name": "Handler",
+   "filePath": "internal/adapter/http/gateway/handler.go",
+   "complexity": "simple",
+   "summary": "Tipe Handler di handler.go, dengan method: RegisterPublic, RegisterProtected, tripayWebhook, charge, checkCharge.",
+   "description": "Tipe Handler di handler.go, dengan method: RegisterPublic, RegisterProtected, tripayWebhook, charge, checkCharge. Didefinisikan pada baris 15-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "handler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/gateway/handler.go:NewHandler",
+   "type": "function",
+   "name": "NewHandler",
+   "filePath": "internal/adapter/http/gateway/handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewHandler (2 baris), parameter: u.",
+   "description": "Fungsi NewHandler (2 baris), parameter: u. Didefinisikan pada baris 19-21.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newhandler"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/gateway/handler.go:RegisterPublic",
+   "type": "function",
+   "name": "RegisterPublic",
+   "filePath": "internal/adapter/http/gateway/handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi RegisterPublic (3 baris), parameter: mux.",
+   "description": "Fungsi RegisterPublic (3 baris), parameter: mux. Didefinisikan pada baris 25-28.",
+   "tags": [
+    "go",
+    "fungsi",
+    "registerpublic"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/gateway/handler.go:RegisterProtected",
+   "type": "function",
+   "name": "RegisterProtected",
+   "filePath": "internal/adapter/http/gateway/handler.go",
+   "complexity": "simple",
+   "summary": "Fungsi RegisterProtected (3 baris), parameter: mux.",
+   "description": "Fungsi RegisterProtected (3 baris), parameter: mux. Didefinisikan pada baris 31-34.",
+   "tags": [
+    "go",
+    "fungsi",
+    "registerprotected"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/middleware/auth.go",
+   "type": "file",
+   "name": "auth.go",
+   "filePath": "internal/adapter/http/middleware/auth.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (45 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (45 baris, 1 fungsi, 0 tipe). Fungsi terbesar: AuthenticateJWT. Bergantung pada 17 berkas internal.",
+   "tags": [
+    "go",
+    "http",
+    "middleware",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/auth.go:AuthenticateJWT",
+   "type": "function",
+   "name": "AuthenticateJWT",
+   "filePath": "internal/adapter/http/middleware/auth.go",
+   "complexity": "simple",
+   "summary": "Fungsi AuthenticateJWT (31 baris), parameter: jwtService.",
+   "description": "Fungsi AuthenticateJWT (31 baris), parameter: jwtService. Didefinisikan pada baris 14-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "authenticatejwt"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/middleware/chain.go",
+   "type": "file",
+   "name": "chain.go",
+   "filePath": "internal/adapter/http/middleware/chain.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (14 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (14 baris, 1 fungsi, 0 tipe). Fungsi terbesar: Chain.",
+   "tags": [
+    "go",
+    "http",
+    "middleware",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/chain.go:Chain",
+   "type": "function",
+   "name": "Chain",
+   "filePath": "internal/adapter/http/middleware/chain.go",
+   "complexity": "simple",
+   "summary": "Fungsi Chain (5 baris), parameter: handler.",
+   "description": "Fungsi Chain (5 baris), parameter: handler. Didefinisikan pada baris 9-14.",
+   "tags": [
+    "go",
+    "fungsi",
+    "chain"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/middleware/cors.go",
+   "type": "file",
+   "name": "cors.go",
+   "filePath": "internal/adapter/http/middleware/cors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (46 baris, 1 fungsi, 0 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (46 baris, 1 fungsi, 0 tipe). Fungsi terbesar: CORS.",
+   "tags": [
+    "go",
+    "http",
+    "middleware",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/cors.go:CORS",
+   "type": "function",
+   "name": "CORS",
+   "filePath": "internal/adapter/http/middleware/cors.go",
+   "complexity": "simple",
+   "summary": "Fungsi CORS (37 baris), parameter: allowedOrigins, appEnv.",
+   "description": "Fungsi CORS (37 baris), parameter: allowedOrigins, appEnv. Didefinisikan pada baris 9-46.",
+   "tags": [
+    "go",
+    "fungsi",
+    "cors"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/middleware/logger_test.go",
+   "type": "file",
+   "name": "logger_test.go",
+   "filePath": "internal/adapter/http/middleware/logger_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (69 baris, 3 fungsi, 0 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (69 baris, 3 fungsi, 0 tipe). Fungsi terbesar: TestRequestLoggerPreservesStreamingInterfaces, TestRequestIDPreservesIncomingID, TestRequestIDGeneratesMissingID.",
+   "tags": [
+    "go",
+    "http",
+    "middleware",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/logger_test.go:TestRequestLoggerPreservesStreamingInterfaces",
+   "type": "function",
+   "name": "TestRequestLoggerPreservesStreamingInterfaces",
+   "filePath": "internal/adapter/http/middleware/logger_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestRequestLoggerPreservesStreamingInterfaces (23 baris), parameter: t.",
+   "description": "Fungsi TestRequestLoggerPreservesStreamingInterfaces (23 baris), parameter: t. Didefinisikan pada baris 14-37.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testrequestloggerpreservesstreaminginterfaces"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/logger_test.go:TestRequestIDPreservesIncomingID",
+   "type": "function",
+   "name": "TestRequestIDPreservesIncomingID",
+   "filePath": "internal/adapter/http/middleware/logger_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestRequestIDPreservesIncomingID (14 baris), parameter: t.",
+   "description": "Fungsi TestRequestIDPreservesIncomingID (14 baris), parameter: t. Didefinisikan pada baris 39-53.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testrequestidpreservesincomingid"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/logger_test.go:TestRequestIDGeneratesMissingID",
+   "type": "function",
+   "name": "TestRequestIDGeneratesMissingID",
+   "filePath": "internal/adapter/http/middleware/logger_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestRequestIDGeneratesMissingID (14 baris), parameter: t.",
+   "description": "Fungsi TestRequestIDGeneratesMissingID (14 baris), parameter: t. Didefinisikan pada baris 55-69.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testrequestidgeneratesmissingid"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/middleware/logger.go",
+   "type": "file",
+   "name": "logger.go",
+   "filePath": "internal/adapter/http/middleware/logger.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (74 baris, 5 fungsi, 1 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (74 baris, 5 fungsi, 1 tipe). Tipe utama: responseWriterWrapper. Fungsi terbesar: RequestLogger, Write, Flush, WriteHeader, Unwrap. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "http",
+    "middleware",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/http/middleware/logger.go:responseWriterWrapper",
+   "type": "class",
+   "name": "responseWriterWrapper",
+   "filePath": "internal/adapter/http/middleware/logger.go",
+   "complexity": "simple",
+   "summary": "Tipe responseWriterWrapper di logger.go, dengan method: WriteHeader, Write, Flush, Unwrap.",
+   "description": "Tipe responseWriterWrapper di logger.go, dengan method: WriteHeader, Write, Flush, Unwrap. Didefinisikan pada baris 11-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "responsewriterwrapper"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/logger.go:WriteHeader",
+   "type": "function",
+   "name": "WriteHeader",
+   "filePath": "internal/adapter/http/middleware/logger.go",
+   "complexity": "simple",
+   "summary": "Fungsi WriteHeader (3 baris), parameter: statusCode.",
+   "description": "Fungsi WriteHeader (3 baris), parameter: statusCode. Didefinisikan pada baris 17-20.",
+   "tags": [
+    "go",
+    "fungsi",
+    "writeheader"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/logger.go:Write",
+   "type": "function",
+   "name": "Write",
+   "filePath": "internal/adapter/http/middleware/logger.go",
+   "complexity": "simple",
+   "summary": "Fungsi Write (7 baris), parameter: b.",
+   "description": "Fungsi Write (7 baris), parameter: b. Didefinisikan pada baris 22-29.",
+   "tags": [
+    "go",
+    "fungsi",
+    "write"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/logger.go:Flush",
+   "type": "function",
+   "name": "Flush",
+   "filePath": "internal/adapter/http/middleware/logger.go",
+   "complexity": "simple",
+   "summary": "Fungsi Flush (4 baris).",
+   "description": "Fungsi Flush (4 baris). Didefinisikan pada baris 33-37.",
+   "tags": [
+    "go",
+    "fungsi",
+    "flush"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/logger.go:Unwrap",
+   "type": "function",
+   "name": "Unwrap",
+   "filePath": "internal/adapter/http/middleware/logger.go",
+   "complexity": "simple",
+   "summary": "Fungsi Unwrap (2 baris).",
+   "description": "Fungsi Unwrap (2 baris). Didefinisikan pada baris 42-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "unwrap"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/logger.go:RequestLogger",
+   "type": "function",
+   "name": "RequestLogger",
+   "filePath": "internal/adapter/http/middleware/logger.go",
+   "complexity": "simple",
+   "summary": "Fungsi RequestLogger (25 baris).",
+   "description": "Fungsi RequestLogger (25 baris). Didefinisikan pada baris 49-74.",
+   "tags": [
+    "go",
+    "fungsi",
+    "requestlogger"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/http/middleware/rbac_test.go",
+   "type": "file",
+   "name": "rbac_test.go",
+   "filePath": "internal/adapter/http/middleware/rbac_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (105 baris, 3 fungsi, 1 tipe).",
+   "description": "Handler HTTP dan middleware (net/http.ServeMux) — paket `middleware` (105 baris, 3 fungsi, 1 tipe). Tipe utama: fakeEnforcer. Fungsi terbesar: TestAuthorizeProcedureMiddleware, Enforce, GetRolesForUser. Bergantung pada 22 berkas internal.",
+   "tags": [
+    "go",
+    "http",
+    "middleware",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/http/middleware/rbac_test.go:fakeEnforcer",
+   "type": "class",
+   "name": "fakeEnforcer",
+   "filePath": "internal/adapter/http/middleware/rbac_test.go",
+   "complexity": "simple",
+   "summary": "Tipe fakeEnforcer di rbac_test.go, dengan method: Enforce, GetRolesForUser.",
+   "description": "Tipe fakeEnforcer di rbac_test.go, dengan method: Enforce, GetRolesForUser. Didefinisikan pada baris 12-16.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakeenforcer"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/rbac_test.go:Enforce",
+   "type": "function",
+   "name": "Enforce",
+   "filePath": "internal/adapter/http/middleware/rbac_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi Enforce (5 baris), parameter: sub, obj, act.",
+   "description": "Fungsi Enforce (5 baris), parameter: sub, obj, act. Didefinisikan pada baris 18-23.",
+   "tags": [
+    "go",
+    "fungsi",
+    "enforce"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/rbac_test.go:GetRolesForUser",
+   "type": "function",
+   "name": "GetRolesForUser",
+   "filePath": "internal/adapter/http/middleware/rbac_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetRolesForUser (2 baris), parameter: user.",
+   "description": "Fungsi GetRolesForUser (2 baris), parameter: user. Didefinisikan pada baris 25-27.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getrolesforuser"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/http/middleware/rbac_test.go:TestAuthorizeProcedureMiddleware",
+   "type": "function",
+   "name": "TestAuthorizeProcedureMiddleware",
+   "filePath": "internal/adapter/http/middleware/rbac_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestAuthorizeProcedureMiddleware (76 baris), parameter: t.",
+   "description": "Fungsi TestAuthorizeProcedureMiddleware (76 baris), parameter: t. Didefinisikan pada baris 29-105.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testauthorizeproceduremiddleware"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/adapter/connect/registration/router.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "function:internal/adapter/connect/registration/router.go:NewRegistrationServiceHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "function:internal/adapter/connect/registration/router.go:NewPublicSubmitHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/adapter/connect/options.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/adapter/connect/provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/adapter/connect/request_id.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/usecase/registration/convert_artifacts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/usecase/registration/convert.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/usecase/registration/coverage_extra_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/usecase/registration/manage_registration_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/registration/router.go",
+   "target": "file:internal/usecase/registration/manage_registration.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/mapper.go",
+   "target": "file:internal/adapter/connect/report/mapper.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/mapper.go",
+   "target": "function:internal/adapter/connect/report/mapper.go:toProtoSummary",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/mapper.go",
+   "target": "file:internal/domain/reporting/daily_snapshot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/mapper.go",
+   "target": "file:internal/domain/reporting/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "file:internal/adapter/connect/report/report_handler.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "class:internal/adapter/connect/report/report_handler.go:ReportConnectHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "function:internal/adapter/connect/report/report_handler.go:NewReportConnectHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "function:internal/adapter/connect/report/report_handler.go:DailyReport",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "function:internal/adapter/connect/report/report_handler.go:MonthlyReport",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "function:internal/adapter/connect/report/report_handler.go:YearlyReport",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "function:internal/adapter/connect/report/report_handler.go:RefreshSnapshot",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "file:internal/usecase/report/manage_report_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "file:internal/usecase/report/manage_report.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/report_handler.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/router.go",
+   "target": "file:internal/adapter/connect/report/router.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/router.go",
+   "target": "function:internal/adapter/connect/report/router.go:NewReportServiceHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/report/router.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/router.go",
+   "target": "file:internal/adapter/connect/options.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/router.go",
+   "target": "file:internal/adapter/connect/provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/router.go",
+   "target": "file:internal/adapter/connect/request_id.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/router.go",
+   "target": "file:internal/usecase/report/manage_report_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/report/router.go",
+   "target": "file:internal/usecase/report/manage_report.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/request_id.go",
+   "target": "file:internal/adapter/connect/request_id.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/request_id.go",
+   "target": "class:internal/adapter/connect/request_id.go:requestIDInterceptor",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/request_id.go",
+   "target": "function:internal/adapter/connect/request_id.go:WrapUnary",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/request_id.go",
+   "target": "function:internal/adapter/connect/request_id.go:WrapStreamingClient",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/request_id.go",
+   "target": "function:internal/adapter/connect/request_id.go:WrapStreamingHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/request_id.go",
+   "target": "function:internal/adapter/connect/request_id.go:requestID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:internal/adapter/connect/request_id.go:WrapUnary",
+   "target": "function:internal/adapter/connect/request_id.go:requestID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/connect/request_id.go:WrapStreamingHandler",
+   "target": "function:internal/adapter/connect/request_id.go:requestID",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "file:internal/adapter/connect/setting/mapper.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "function:internal/adapter/connect/setting/mapper.go:DomainSettingToPb",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "function:internal/adapter/connect/setting/mapper.go:DomainSettingsToPb",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "function:internal/adapter/connect/setting/mapper.go:PbSettingToDomain",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "function:internal/adapter/connect/setting/mapper.go:DomainBotSettingsToPb",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "function:internal/adapter/connect/setting/mapper.go:PbBotSettingsToDomain",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "file:internal/domain/setting/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "file:internal/domain/setting/isp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/mapper.go",
+   "target": "file:internal/domain/setting/setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/adapter/connect/setting/mapper.go:DomainSettingsToPb",
+   "target": "function:internal/adapter/connect/setting/mapper.go:DomainSettingToPb",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/router.go",
+   "target": "file:internal/adapter/connect/setting/router.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/router.go",
+   "target": "function:internal/adapter/connect/setting/router.go:NewSettingServiceHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/router.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/router.go",
+   "target": "file:internal/adapter/connect/options.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/router.go",
+   "target": "file:internal/adapter/connect/provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/router.go",
+   "target": "file:internal/adapter/connect/request_id.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/router.go",
+   "target": "file:internal/usecase/setting/manage_setting_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/router.go",
+   "target": "file:internal/usecase/setting/manage_setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:internal/adapter/connect/setting/setting_handler.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "class:internal/adapter/connect/setting/setting_handler.go:SettingConnectHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "function:internal/adapter/connect/setting/setting_handler.go:NewSettingConnectHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "function:internal/adapter/connect/setting/setting_handler.go:GetAllSettings",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "function:internal/adapter/connect/setting/setting_handler.go:GetSettingsByCategory",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "function:internal/adapter/connect/setting/setting_handler.go:UpdateSetting",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "function:internal/adapter/connect/setting/setting_handler.go:BatchUpdateSettings",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "function:internal/adapter/connect/setting/setting_handler.go:GetBotSettings",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "function:internal/adapter/connect/setting/setting_handler.go:UpdateBotSettings",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:internal/domain/setting/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:internal/domain/setting/isp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:internal/domain/setting/setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:internal/usecase/setting/manage_setting_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:internal/usecase/setting/manage_setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/setting/setting_handler.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "file:internal/adapter/connect/skill/mapper.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillList",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillResource",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillResourceList",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoResourceContent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoGitRepoInfo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoGitRepoInfoList",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "file:internal/domain/skill/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "file:internal/domain/skill/frontmatter_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "file:internal/domain/skill/frontmatter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/mapper.go",
+   "target": "file:internal/domain/skill/skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillList",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkill",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillResourceList",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoSkillResource",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/connect/skill/mapper.go:ToProtoGitRepoInfoList",
+   "target": "function:internal/adapter/connect/skill/mapper.go:ToProtoGitRepoInfo",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/adapter/connect/skill/router.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "function:internal/adapter/connect/skill/router.go:NewSkillServiceHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/adapter/connect/options.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/adapter/connect/provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/adapter/connect/request_id.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/usecase/skill/manage_skill_git_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/usecase/skill/manage_skill_git.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/usecase/skill/manage_skill_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/usecase/skill/manage_skill_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/usecase/skill/manage_skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/usecase/skill/prompt_builder_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/router.go",
+   "target": "file:internal/usecase/skill/prompt_builder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:internal/adapter/connect/skill/skill_handler.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "class:internal/adapter/connect/skill/skill_handler.go:SkillConnectHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:NewSkillConnectHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:ListSkills",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:GetSkill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:CreateSkill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:UpdateSkill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:DeleteSkill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:ExportSkill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:ImportSkill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:ListResources",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:GetResource",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:SaveResource",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:DeleteResource",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:ListGitRepos",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:AddGitRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:UpdateGitRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:DeleteGitRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:SyncGitRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:ToggleGitRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:ToggleSkill",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:GetGlobalPrompt",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "function:internal/adapter/connect/skill/skill_handler.go:SaveGlobalPrompt",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:internal/usecase/skill/manage_skill_git_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:internal/usecase/skill/manage_skill_git.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:internal/usecase/skill/manage_skill_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:internal/usecase/skill/manage_skill_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:internal/usecase/skill/manage_skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:internal/usecase/skill/prompt_builder_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:internal/usecase/skill/prompt_builder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/skill/skill_handler.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/adapter/connect/subscription/mapper.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscriptionDetail",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscriptionDetailList",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/plan/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/plan/service_plan_rate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/plan/service_plan_rate.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/plan/service_plan.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/usecase/subscription/lifecycle.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/usecase/subscription/manage_subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/mapper.go",
+   "target": "file:internal/usecase/subscription/subscription_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscriptionDetail",
+   "target": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscription",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscriptionDetailList",
+   "target": "function:internal/adapter/connect/subscription/mapper.go:ToProtoSubscriptionDetail",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "file:internal/adapter/connect/subscription/router.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "function:internal/adapter/connect/subscription/router.go:NewSubscriptionServiceHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "file:internal/adapter/connect/options.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "file:internal/adapter/connect/provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "file:internal/adapter/connect/request_id.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "file:internal/usecase/subscription/lifecycle.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "file:internal/usecase/subscription/manage_subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/router.go",
+   "target": "file:internal/usecase/subscription/subscription_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler_test.go:TestSubscriptionConnectHandler_CRUDAndEnrichment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/adapter/connect/subscription/mapper.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/adapter/connect/subscription/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/plan/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/plan/service_plan_rate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/plan/service_plan_rate.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/plan/service_plan.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/port/mocktest/fakes_billing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/port/mocktest/fakes_core.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/port/mocktest/fakes_customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/port/mocktest/fakes_portal.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/port/mocktest/fakes_registration.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/port/mocktest/fakes_router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/port/mocktest/fakes_setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/port/mocktest/fakes_subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/usecase/subscription/lifecycle.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/usecase/subscription/manage_subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler_test.go",
+   "target": "file:internal/usecase/subscription/subscription_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "class:internal/adapter/connect/subscription/subscription_handler.go:SubscriptionConnectHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:NewSubscriptionConnectHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:toEnrichedProto",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:ListSubscriptions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:GetSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:ChangePlan",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:SuspendSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:ResumeSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:TerminateSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:ActivateSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:IsolateSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:RestoreSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:CreateSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:UpdateSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "function:internal/adapter/connect/subscription/subscription_handler.go:DeleteSubscription",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/usecase/subscription/lifecycle.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/usecase/subscription/manage_subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:internal/usecase/subscription/subscription_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/subscription/subscription_handler.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler_test.go",
+   "target": "file:internal/adapter/http/adminapi/handler_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler_test.go",
+   "target": "function:internal/adapter/http/adminapi/handler_test.go:TestImportRouterMissingDeviceReturnsErrorEnvelope",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler_test.go",
+   "target": "function:internal/adapter/http/adminapi/handler_test.go:assertHTTPErrorEnvelope",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler_test.go:TestImportRouterMissingDeviceReturnsErrorEnvelope",
+   "target": "function:internal/adapter/http/adminapi/handler_test.go:assertHTTPErrorEnvelope",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/adapter/http/adminapi/handler.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "class:internal/adapter/http/adminapi/handler.go:Handler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:NewHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:RegisterProtected",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:importFile",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:importRouter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:reconcile",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:snapshotRefresh",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:export",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:resolveDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:hasSuffix",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:orDefault",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:todayUTC",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:tenantDefault",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:errMsgs",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:previewRows",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeJSON",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeErr",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/comment_parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/comment_parser.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/e2e_vault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/export.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/file.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/parser_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/plan_source_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/plan_source.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/router_live_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/router_live.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/row.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/upsert_plans.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/upsert.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:internal/usecase/importer/util.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/adminapi/handler.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importFile",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeErr",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importFile",
+   "target": "function:internal/adapter/http/adminapi/handler.go:hasSuffix",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importFile",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importFile",
+   "target": "function:internal/adapter/http/adminapi/handler.go:errMsgs",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importRouter",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeErr",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importRouter",
+   "target": "function:internal/adapter/http/adminapi/handler.go:orDefault",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importRouter",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importRouter",
+   "target": "function:internal/adapter/http/adminapi/handler.go:errMsgs",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:importRouter",
+   "target": "function:internal/adapter/http/adminapi/handler.go:previewRows",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:reconcile",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeErr",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:reconcile",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:snapshotRefresh",
+   "target": "function:internal/adapter/http/adminapi/handler.go:todayUTC",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:snapshotRefresh",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeErr",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:snapshotRefresh",
+   "target": "function:internal/adapter/http/adminapi/handler.go:tenantDefault",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:snapshotRefresh",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:export",
+   "target": "function:internal/adapter/http/adminapi/handler.go:orDefault",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:export",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeErr",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/adminapi/handler.go:resolveDriver",
+   "target": "function:internal/adapter/http/adminapi/handler.go:writeErr",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler_test.go",
+   "target": "file:internal/adapter/http/gateway/handler_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler_test.go",
+   "target": "function:internal/adapter/http/gateway/handler_test.go:TestChargeMalformedJSONReturnsErrorEnvelope",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/adapter/http/gateway/handler.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "class:internal/adapter/http/gateway/handler.go:Handler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:NewHandler",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:RegisterPublic",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:RegisterProtected",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:tripayWebhook",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:charge",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:checkCharge",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:respond",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeMappedError",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeJSON",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/checkout_isolate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/checkout.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/coverage_extra_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/gateway_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/isolate_worker_settings_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/isolate_worker.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/manage_invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/run_billing_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/run_billing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/template.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:internal/usecase/billing/testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/gateway/handler.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:tripayWebhook",
+   "target": "function:internal/adapter/http/gateway/handler.go:respond",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:tripayWebhook",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeMappedError",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:tripayWebhook",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:charge",
+   "target": "function:internal/adapter/http/gateway/handler.go:respond",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:charge",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeMappedError",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:charge",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:checkCharge",
+   "target": "function:internal/adapter/http/gateway/handler.go:respond",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:checkCharge",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeMappedError",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:checkCharge",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/adapter/http/gateway/handler.go:respond",
+   "target": "function:internal/adapter/http/gateway/handler.go:writeJSON",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/http/middleware/auth.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "function:internal/adapter/http/middleware/auth.go:AuthenticateJWT",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/device_authorizer_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/identity.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/procedure_permissions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/rbac_enforce_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/refresh_token_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:internal/adapter/auth/refresh_token.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:pkg/response/connect_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:pkg/response/connect.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:pkg/response/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:pkg/response/http_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/auth.go",
+   "target": "file:pkg/response/http.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/chain.go",
+   "target": "file:internal/adapter/http/middleware/chain.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/chain.go",
+   "target": "function:internal/adapter/http/middleware/chain.go:Chain",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/cors.go",
+   "target": "file:internal/adapter/http/middleware/cors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/cors.go",
+   "target": "function:internal/adapter/http/middleware/cors.go:CORS",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger_test.go",
+   "target": "file:internal/adapter/http/middleware/logger_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger_test.go",
+   "target": "function:internal/adapter/http/middleware/logger_test.go:TestRequestLoggerPreservesStreamingInterfaces",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger_test.go",
+   "target": "function:internal/adapter/http/middleware/logger_test.go:TestRequestIDPreservesIncomingID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger_test.go",
+   "target": "function:internal/adapter/http/middleware/logger_test.go:TestRequestIDGeneratesMissingID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "file:internal/adapter/http/middleware/logger.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "class:internal/adapter/http/middleware/logger.go:responseWriterWrapper",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "function:internal/adapter/http/middleware/logger.go:WriteHeader",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "function:internal/adapter/http/middleware/logger.go:Write",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "function:internal/adapter/http/middleware/logger.go:Flush",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "function:internal/adapter/http/middleware/logger.go:Unwrap",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "function:internal/adapter/http/middleware/logger.go:RequestLogger",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/logger.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/rbac_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "class:internal/adapter/http/middleware/rbac_test.go:fakeEnforcer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "function:internal/adapter/http/middleware/rbac_test.go:Enforce",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "function:internal/adapter/http/middleware/rbac_test.go:GetRolesForUser",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "function:internal/adapter/http/middleware/rbac_test.go:TestAuthorizeProcedureMiddleware",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/device_authorizer_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/identity.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/procedure_permissions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/rbac_enforce_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/refresh_token_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/auth/refresh_token.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/auth.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/chain.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/cors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/rbac.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/recovery.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/request_id.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/http/middleware/rbac_test.go",
+   "target": "file:internal/adapter/http/middleware/validate.go",
+   "type": "imports",
+   "weight": 0.7
+  }
+ ]
+}

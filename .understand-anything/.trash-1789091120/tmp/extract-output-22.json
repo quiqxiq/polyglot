@@ -1,0 +1,4514 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/adapter/postgres/model/llm_config_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 69,
+      "nonEmptyLines": 63,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 29,
+          "endLine": 29,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 32,
+          "endLine": 49,
+          "params": []
+        },
+        {
+          "name": "LLMConfigModelFromDomain",
+          "startLine": 52,
+          "endLine": 69,
+          "params": [
+            "c"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LLMConfigModel",
+          "startLine": 14,
+          "endLine": 26,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "Provider",
+            "Model",
+            "APIKeyEncrypted",
+            "Params",
+            "MaxOutputTokens",
+            "IsActive",
+            "CostPer1MInput",
+            "CostPer1MOutput",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LLMConfigModel",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "LLMConfigModelFromDomain",
+          "line": 52,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/notification_models.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 126,
+      "nonEmptyLines": 112,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 26,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 31,
+          "endLine": 46,
+          "params": []
+        },
+        {
+          "name": "NotificationTemplateModelFromDomain",
+          "startLine": 49,
+          "endLine": 61,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TableName",
+          "startLine": 85,
+          "endLine": 87,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 90,
+          "endLine": 108,
+          "params": []
+        },
+        {
+          "name": "WANotificationModelFromDomain",
+          "startLine": 111,
+          "endLine": 126,
+          "params": [
+            "n"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "NotificationTemplateModel",
+          "startLine": 11,
+          "endLine": 23,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "TemplateKey",
+            "Name",
+            "Content",
+            "VariablesJSON",
+            "IsActive",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "WANotificationModel",
+          "startLine": 65,
+          "endLine": 82,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "TemplateID",
+            "CustomerID",
+            "InvoiceID",
+            "RecipientPhone",
+            "MessageType",
+            "MessageContent",
+            "Status",
+            "ErrorMessage",
+            "SentAt",
+            "Attempts",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationTemplateModel",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "NotificationTemplateModelFromDomain",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "WANotificationModel",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "WANotificationModelFromDomain",
+          "line": 111,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 6,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/payment_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 113,
+      "nonEmptyLines": 102,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 21,
+          "endLine": 23,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 26,
+          "endLine": 38,
+          "params": []
+        },
+        {
+          "name": "PaymentMethodModelFromDomain",
+          "startLine": 41,
+          "endLine": 50,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "TableName",
+          "startLine": 72,
+          "endLine": 74,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 77,
+          "endLine": 95,
+          "params": []
+        },
+        {
+          "name": "PaymentModelFromDomain",
+          "startLine": 98,
+          "endLine": 113,
+          "params": [
+            "p"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PaymentMethodModel",
+          "startLine": 11,
+          "endLine": 18,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Name",
+            "Type",
+            "IsActive",
+            "CreatedAt"
+          ]
+        },
+        {
+          "name": "PaymentModel",
+          "startLine": 55,
+          "endLine": 69,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "PaymentNo",
+            "InvoiceID",
+            "PaymentMethodID",
+            "Amount",
+            "PaymentDate",
+            "ReceivedBy",
+            "ScanMethod",
+            "Reference",
+            "Notes",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PaymentMethodModel",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "PaymentMethodModelFromDomain",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "PaymentModel",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "PaymentModelFromDomain",
+          "line": 98,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 6,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/ping_metric_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 73,
+      "nonEmptyLines": 67,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 28,
+          "endLine": 30,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 33,
+          "endLine": 50,
+          "params": []
+        },
+        {
+          "name": "PingMetricModelFromDomain",
+          "startLine": 53,
+          "endLine": 73,
+          "params": [
+            "p"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DevicePingMetricModel",
+          "startLine": 10,
+          "endLine": 25,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "RecordedAt",
+            "DeviceID",
+            "Target",
+            "Seq",
+            "Size",
+            "TTL",
+            "RTTMS",
+            "Status",
+            "Sent",
+            "Received",
+            "PacketLoss",
+            "MinRTTMS",
+            "AvgRTTMS",
+            "MaxRTTMS"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DevicePingMetricModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "PingMetricModelFromDomain",
+          "line": 53,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "PingMetricModelFromDomain",
+          "callee": "p.RecordedAt.IsZero",
+          "lineNumber": 54
+        },
+        {
+          "caller": "PingMetricModelFromDomain",
+          "callee": "time.Now().UTC",
+          "lineNumber": 55
+        },
+        {
+          "caller": "PingMetricModelFromDomain",
+          "callee": "time.Now",
+          "lineNumber": 55
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/portal_otp_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 38,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 24,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 27,
+          "endLine": 36,
+          "params": []
+        },
+        {
+          "name": "PortalOTPModelFromDomain",
+          "startLine": 38,
+          "endLine": 44,
+          "params": [
+            "o"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PortalOTPModel",
+          "startLine": 11,
+          "endLine": 21,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Phone",
+            "CodeHash",
+            "Purpose",
+            "Attempts",
+            "ExpiresAt",
+            "ConsumedAt",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PortalOTPModel",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "PortalOTPModelFromDomain",
+          "line": 38,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/portal_session_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 50,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 23,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 28,
+          "endLine": 42,
+          "params": []
+        },
+        {
+          "name": "PortalSessionModelFromDomain",
+          "startLine": 45,
+          "endLine": 56,
+          "params": [
+            "s"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PortalSessionModel",
+          "startLine": 11,
+          "endLine": 20,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "CustomerID",
+            "SessionToken",
+            "IPAddress",
+            "UserAgent",
+            "ExpiresAt",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PortalSessionModel",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "PortalSessionModelFromDomain",
+          "line": 45,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/registration_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 126,
+      "nonEmptyLines": 112,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 53,
+          "endLine": 55,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 57,
+          "endLine": 92,
+          "params": []
+        },
+        {
+          "name": "RegistrationModelFromDomain",
+          "startLine": 94,
+          "endLine": 126,
+          "params": [
+            "r"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RegistrationModel",
+          "startLine": 12,
+          "endLine": 51,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "RegistrationNo",
+            "PlanID",
+            "FullName",
+            "Phone",
+            "Email",
+            "Address",
+            "Latitude",
+            "Longitude",
+            "Notes",
+            "Status",
+            "ReviewedBy",
+            "ReviewedAt",
+            "AdminNotes",
+            "ScheduledInstallDate",
+            "ScheduledInstallTime",
+            "AssignedTechnicianID",
+            "InstalledAt",
+            "TechnicianNotes",
+            "CustomerID",
+            "SubscriptionID",
+            "InvoiceID",
+            "RejectedAt",
+            "RejectedReason",
+            "CancelledAt",
+            "CancelReason",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RegistrationModel",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationModelFromDomain",
+          "line": 94,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/reporting_audit_models.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 125,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 32,
+          "endLine": 34,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 36,
+          "endLine": 54,
+          "params": []
+        },
+        {
+          "name": "DailySnapshotModelFromDomain",
+          "startLine": 56,
+          "endLine": 71,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "TableName",
+          "startLine": 90,
+          "endLine": 92,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 94,
+          "endLine": 110,
+          "params": []
+        },
+        {
+          "name": "AuditLogModelFromDomain",
+          "startLine": 112,
+          "endLine": 125,
+          "params": [
+            "l"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DailySnapshotModel",
+          "startLine": 13,
+          "endLine": 30,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "SnapshotDate",
+            "InvoiceCount",
+            "InvoiceTotal",
+            "PaymentCount",
+            "PaymentTotal",
+            "Outstanding",
+            "ExpenseTotal",
+            "ActiveSubscriptions",
+            "CashBalanceJSON",
+            "CreatedAt"
+          ]
+        },
+        {
+          "name": "AuditLogModel",
+          "startLine": 75,
+          "endLine": 88,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "ActorType",
+            "ActorID",
+            "Action",
+            "EntityType",
+            "EntityID",
+            "Description",
+            "IPAddress",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DailySnapshotModel",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "DailySnapshotModelFromDomain",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "AuditLogModel",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "AuditLogModelFromDomain",
+          "line": 112,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 6,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/service_plan_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 143,
+      "nonEmptyLines": 133,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 39,
+          "endLine": 41,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 44,
+          "endLine": 90,
+          "params": []
+        },
+        {
+          "name": "ServicePlanModelFromDomain",
+          "startLine": 93,
+          "endLine": 143,
+          "params": [
+            "p"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ServicePlanModel",
+          "startLine": 11,
+          "endLine": 36,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Name",
+            "ServiceType",
+            "BandwidthDownloadKbps",
+            "BandwidthUploadKbps",
+            "BurstDownloadKbps",
+            "BurstUploadKbps",
+            "BurstThresholdKbps",
+            "BurstTimeSeconds",
+            "Price",
+            "InstallationFee",
+            "TaxPercent",
+            "IPPoolName",
+            "RemoteAddressPool",
+            "ParentQueue",
+            "AddressList",
+            "SharedUsers",
+            "IsActive",
+            "Description",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ServicePlanModel",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "ServicePlanModelFromDomain",
+          "line": 93,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/session_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 66,
+      "nonEmptyLines": 60,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 30,
+          "endLine": 30,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 33,
+          "endLine": 48,
+          "params": []
+        },
+        {
+          "name": "WASessionModelFromDomain",
+          "startLine": 51,
+          "endLine": 66,
+          "params": [
+            "s"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "WASessionModel",
+          "startLine": 17,
+          "endLine": 27,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "DeviceName",
+            "PhoneNumber",
+            "JID",
+            "Status",
+            "IsBotEnabled",
+            "ConnectedAt",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WASessionModel",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "WASessionModelFromDomain",
+          "line": 51,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ToDomain",
+          "callee": "bot.WASessionStatus",
+          "lineNumber": 42
+        },
+        {
+          "caller": "WASessionModelFromDomain",
+          "callee": "string",
+          "lineNumber": 60
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/setting_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 19,
+          "endLine": 19,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 22,
+          "endLine": 33,
+          "params": []
+        },
+        {
+          "name": "SystemSettingModelFromDomain",
+          "startLine": 36,
+          "endLine": 47,
+          "params": [
+            "s"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SystemSettingModel",
+          "startLine": 10,
+          "endLine": 16,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "Key",
+            "Value",
+            "Category",
+            "Description",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SystemSettingModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "SystemSettingModelFromDomain",
+          "line": 36,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/skill_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 77,
+      "nonEmptyLines": 69,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 24,
+          "endLine": 26,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 29,
+          "endLine": 45,
+          "params": []
+        },
+        {
+          "name": "SkillMetadataModelFromDomain",
+          "startLine": 48,
+          "endLine": 64,
+          "params": [
+            "r"
+          ]
+        },
+        {
+          "name": "TableName",
+          "startLine": 75,
+          "endLine": 77,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SkillMetadataModel",
+          "startLine": 10,
+          "endLine": 21,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "UserID",
+            "Name",
+            "Definition",
+            "SourceType",
+            "SourceURL",
+            "Version",
+            "Enabled",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "GlobalPromptModel",
+          "startLine": 67,
+          "endLine": 72,
+          "methods": [
+            "TableName"
+          ],
+          "properties": [
+            "ID",
+            "Key",
+            "Content",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SkillMetadataModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "SkillMetadataModelFromDomain",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "GlobalPromptModel",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 75,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 4,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/subscription_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 167,
+      "nonEmptyLines": 154,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 50,
+          "endLine": 52,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 55,
+          "endLine": 106,
+          "params": []
+        },
+        {
+          "name": "SubscriptionModelFromDomain",
+          "startLine": 109,
+          "endLine": 167,
+          "params": [
+            "s"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SubscriptionModel",
+          "startLine": 11,
+          "endLine": 47,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "CustomerID",
+            "PlanID",
+            "DeviceID",
+            "ServiceType",
+            "RemoteUsername",
+            "RemotePassword",
+            "LocalAddress",
+            "RemoteAddress",
+            "ParentQueue",
+            "RateLimit",
+            "RouterProfile",
+            "ProvisionStatus",
+            "BillingCycle",
+            "BillingDay",
+            "AutoIsolate",
+            "IsolationGraceDays",
+            "Status",
+            "StartDate",
+            "EndDate",
+            "CustomPrice",
+            "CurrentPeriodStart",
+            "CurrentPeriodEnd",
+            "Notes",
+            "DeletedAt",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SubscriptionModel",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "SubscriptionModelFromDomain",
+          "line": 109,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/user_device_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 26,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 18,
+          "endLine": 18,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 21,
+          "endLine": 31,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "UserDeviceModel",
+          "startLine": 10,
+          "endLine": 15,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "UserID",
+            "DeviceID",
+            "AssignedBy",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UserDeviceModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/user_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 68,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 34,
+          "endLine": 34,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 36,
+          "endLine": 54,
+          "params": []
+        },
+        {
+          "name": "UserModelFromDomain",
+          "startLine": 56,
+          "endLine": 74,
+          "params": [
+            "u"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "UserModel",
+          "startLine": 12,
+          "endLine": 31,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "Username",
+            "Email",
+            "PasswordHash",
+            "Role",
+            "FullName",
+            "PhoneNumber",
+            "Specialization",
+            "IsActive",
+            "TenantID",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UserModel",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "UserModelFromDomain",
+          "line": 56,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/model/wa_chat_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 135,
+      "nonEmptyLines": 125,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 31,
+          "endLine": 31,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 33,
+          "endLine": 51,
+          "params": []
+        },
+        {
+          "name": "WAChatModelFromDomain",
+          "startLine": 53,
+          "endLine": 71,
+          "params": [
+            "c"
+          ]
+        },
+        {
+          "name": "TableName",
+          "startLine": 93,
+          "endLine": 93,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 95,
+          "endLine": 114,
+          "params": []
+        },
+        {
+          "name": "WAMessageModelFromDomain",
+          "startLine": 116,
+          "endLine": 135,
+          "params": [
+            "m"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "WAChatModel",
+          "startLine": 15,
+          "endLine": 28,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "SessionID",
+            "ChatJID",
+            "DisplayName",
+            "IsGroup",
+            "LastMessageID",
+            "LastMessagePreview",
+            "LastMessageTime",
+            "UnreadCount",
+            "BotEnabled",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "WAMessageModel",
+          "startLine": 76,
+          "endLine": 90,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "SessionID",
+            "ChatJID",
+            "WAMessageID",
+            "SenderJID",
+            "SenderName",
+            "Content",
+            "MediaType",
+            "IsFromMe",
+            "IsRead",
+            "Status",
+            "Timestamp",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WAChatModel",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "WAChatModelFromDomain",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "WAMessageModel",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 95,
+          "isDefault": false
+        },
+        {
+          "name": "WAMessageModelFromDomain",
+          "line": 116,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 6,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/notification_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 166,
+      "nonEmptyLines": 149,
+      "functions": [
+        {
+          "name": "NewNotificationRepository",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "SaveTemplate",
+          "startLine": 26,
+          "endLine": 28,
+          "params": [
+            "ctx",
+            "t"
+          ]
+        },
+        {
+          "name": "FindTemplateByKey",
+          "startLine": 30,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "tenantID",
+            "key"
+          ]
+        },
+        {
+          "name": "ListTemplates",
+          "startLine": 41,
+          "endLine": 55,
+          "params": [
+            "ctx",
+            "activeOnly"
+          ]
+        },
+        {
+          "name": "Queue",
+          "startLine": 57,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "n"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 67,
+          "endLine": 74,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "Pending",
+          "startLine": 76,
+          "endLine": 90,
+          "params": [
+            "ctx",
+            "limit"
+          ]
+        },
+        {
+          "name": "MarkSent",
+          "startLine": 92,
+          "endLine": 103,
+          "params": [
+            "ctx",
+            "id",
+            "sentAt"
+          ]
+        },
+        {
+          "name": "MarkFailed",
+          "startLine": 105,
+          "endLine": 116,
+          "params": [
+            "ctx",
+            "id",
+            "errMsg"
+          ]
+        },
+        {
+          "name": "ListByCustomer",
+          "startLine": 118,
+          "endLine": 132,
+          "params": [
+            "ctx",
+            "customerID",
+            "limit"
+          ]
+        },
+        {
+          "name": "PendingWithRetryLimit",
+          "startLine": 135,
+          "endLine": 152,
+          "params": [
+            "ctx",
+            "limit",
+            "maxAttempts"
+          ]
+        },
+        {
+          "name": "MarkFailedWithAttempt",
+          "startLine": 155,
+          "endLine": 166,
+          "params": [
+            "ctx",
+            "id",
+            "errMsg",
+            "attempts"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "NotificationRepository",
+          "startLine": 15,
+          "endLine": 17,
+          "methods": [
+            "SaveTemplate",
+            "FindTemplateByKey",
+            "ListTemplates",
+            "Queue",
+            "FindByID",
+            "Pending",
+            "MarkSent",
+            "MarkFailed",
+            "ListByCustomer",
+            "PendingWithRetryLimit",
+            "MarkFailedWithAttempt"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationRepository",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "NewNotificationRepository",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "SaveTemplate",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "FindTemplateByKey",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "ListTemplates",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "Queue",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "Pending",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "MarkSent",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "MarkFailed",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "ListByCustomer",
+          "line": 118,
+          "isDefault": false
+        },
+        {
+          "name": "PendingWithRetryLimit",
+          "line": 135,
+          "isDefault": false
+        },
+        {
+          "name": "MarkFailedWithAttempt",
+          "line": 155,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SaveTemplate",
+          "callee": "r.db.WithContext(ctx).Save",
+          "lineNumber": 27
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "r.db.WithContext",
+          "lineNumber": 27
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "model.NotificationTemplateModelFromDomain",
+          "lineNumber": 27
+        },
+        {
+          "caller": "FindTemplateByKey",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere(\"tenant_id = ? AND template_key = ?\", tenantID, key).\n\t\tFirst",
+          "lineNumber": 32
+        },
+        {
+          "caller": "FindTemplateByKey",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere",
+          "lineNumber": 32
+        },
+        {
+          "caller": "FindTemplateByKey",
+          "callee": "r.db.WithContext",
+          "lineNumber": 32
+        },
+        {
+          "caller": "FindTemplateByKey",
+          "callee": "errors.Is",
+          "lineNumber": 35
+        },
+        {
+          "caller": "FindTemplateByKey",
+          "callee": "m.ToDomain",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "r.db.WithContext",
+          "lineNumber": 42
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "q.Where",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "q.Order(\"template_key\").Find",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "q.Order",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "make",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "len",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "mList[i].ToDomain",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Queue",
+          "callee": "model.WANotificationModelFromDomain",
+          "lineNumber": 58
+        },
+        {
+          "caller": "Queue",
+          "callee": "r.db.WithContext(ctx).Create",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Queue",
+          "callee": "r.db.WithContext",
+          "lineNumber": 59
+        },
+        {
+          "caller": "FindByID",
+          "callee": "r.db.WithContext(ctx).First",
+          "lineNumber": 69
+        },
+        {
+          "caller": "FindByID",
+          "callee": "r.db.WithContext",
+          "lineNumber": 69
+        },
+        {
+          "caller": "FindByID",
+          "callee": "errors.Is",
+          "lineNumber": 70
+        },
+        {
+          "caller": "FindByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Pending",
+          "callee": "r.db.WithContext(ctx).Where",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Pending",
+          "callee": "r.db.WithContext",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Pending",
+          "callee": "q.Limit",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Pending",
+          "callee": "q.Order(\"created_at asc\").Find",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Pending",
+          "callee": "q.Order",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Pending",
+          "callee": "make",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Pending",
+          "callee": "len",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Pending",
+          "callee": "mList[i].ToDomain",
+          "lineNumber": 87
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "r.db.WithContext(ctx).Model(&model.WANotificationModel{}).\n\t\tWhere(\"id = ?\", id).\n\t\tUpdates",
+          "lineNumber": 93
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "r.db.WithContext(ctx).Model(&model.WANotificationModel{}).\n\t\tWhere",
+          "lineNumber": 93
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "r.db.WithContext(ctx).Model",
+          "lineNumber": 93
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "r.db.WithContext",
+          "lineNumber": 93
+        },
+        {
+          "caller": "MarkFailed",
+          "callee": "r.db.WithContext(ctx).Model(&model.WANotificationModel{}).\n\t\tWhere(\"id = ?\", id).\n\t\tUpdates",
+          "lineNumber": 106
+        },
+        {
+          "caller": "MarkFailed",
+          "callee": "r.db.WithContext(ctx).Model(&model.WANotificationModel{}).\n\t\tWhere",
+          "lineNumber": 106
+        },
+        {
+          "caller": "MarkFailed",
+          "callee": "r.db.WithContext(ctx).Model",
+          "lineNumber": 106
+        },
+        {
+          "caller": "MarkFailed",
+          "callee": "r.db.WithContext",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "r.db.WithContext(ctx).Where",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "r.db.WithContext",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "q.Limit",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "q.Order(\"created_at desc\").Find",
+          "lineNumber": 124
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "q.Order",
+          "lineNumber": 124
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "make",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "len",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "mList[i].ToDomain",
+          "lineNumber": 129
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere",
+          "lineNumber": 138
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "r.db.WithContext",
+          "lineNumber": 138
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "q.Limit",
+          "lineNumber": 142
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "q.Order(\"created_at asc\").Find",
+          "lineNumber": 144
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "q.Order",
+          "lineNumber": 144
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "make",
+          "lineNumber": 147
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "len",
+          "lineNumber": 147
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "mList[i].ToDomain",
+          "lineNumber": 149
+        },
+        {
+          "caller": "MarkFailedWithAttempt",
+          "callee": "r.db.WithContext(ctx).Model(&model.WANotificationModel{}).\n\t\tWhere(\"id = ?\", id).\n\t\tUpdates",
+          "lineNumber": 156
+        },
+        {
+          "caller": "MarkFailedWithAttempt",
+          "callee": "r.db.WithContext(ctx).Model(&model.WANotificationModel{}).\n\t\tWhere",
+          "lineNumber": 156
+        },
+        {
+          "caller": "MarkFailedWithAttempt",
+          "callee": "r.db.WithContext(ctx).Model",
+          "lineNumber": 156
+        },
+        {
+          "caller": "MarkFailedWithAttempt",
+          "callee": "r.db.WithContext",
+          "lineNumber": 156
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 13,
+        "functionCount": 12,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/payment_processor.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 183,
+      "nonEmptyLines": 168,
+      "functions": [
+        {
+          "name": "NewPaymentProcessor",
+          "startLine": 31,
+          "endLine": 33,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "ProcessCashPayment",
+          "startLine": 35,
+          "endLine": 152,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "invokeOnPaid",
+          "startLine": 155,
+          "endLine": 164,
+          "params": [
+            "ctx",
+            "inv",
+            "pay"
+          ]
+        },
+        {
+          "name": "fillCustomerPhone",
+          "startLine": 167,
+          "endLine": 178,
+          "params": [
+            "tx",
+            "customerID",
+            "wa"
+          ]
+        },
+        {
+          "name": "receiptContent",
+          "startLine": 180,
+          "endLine": 183,
+          "params": [
+            "invoiceNo",
+            "amount",
+            "paidAt"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PaymentProcessor",
+          "startLine": 25,
+          "endLine": 28,
+          "methods": [
+            "ProcessCashPayment",
+            "invokeOnPaid",
+            "fillCustomerPhone"
+          ],
+          "properties": [
+            "db",
+            "OnPaid"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PaymentProcessor",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "NewPaymentProcessor",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessCashPayment",
+          "line": 35,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "fmt.Errorf",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "p.db.WithContext(ctx).Transaction",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "p.db.WithContext",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "p.db.Dialector.Name",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "q.Clauses",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "lockingClause",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "q.First",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "errors.Is",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "fmt.Errorf",
+          "lineNumber": 68
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "time.Now",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "tx.Model(&model.InvoiceModel{}).Where(\"id = ?\", inv.ID).Updates",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "tx.Model(&model.InvoiceModel{}).Where",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "tx.Model",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "newID",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "orDefault",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 90
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "now.Format",
+          "lineNumber": 90
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "now.UnixNano",
+          "lineNumber": 90
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "tx.Create",
+          "lineNumber": 100
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "newID",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "now.Format",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "now.UnixNano",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 116
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "tx.Create",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "newID",
+          "lineNumber": 125
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "strPtr",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "receiptContent",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "p.fillCustomerPhone",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "tx.Create",
+          "lineNumber": 137
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "payModel.ToDomain",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "inv.ToDomain",
+          "lineNumber": 142
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "p.invokeOnPaid",
+          "lineNumber": 149
+        },
+        {
+          "caller": "invokeOnPaid",
+          "callee": "func() {\n\t\tif r := recover(); r != nil {\n\t\t\tlogger.WithComponent(\"PaymentProcessor\").WithFields(map[string]any{\n\t\t\t\t\"invoice_id\": inv.ID, \"panic\": r,\n\t\t\t}).Error(\"OnPaid hook panicked\")\n\t\t}\n\t}",
+          "lineNumber": 156
+        },
+        {
+          "caller": "invokeOnPaid",
+          "callee": "recover",
+          "lineNumber": 157
+        },
+        {
+          "caller": "invokeOnPaid",
+          "callee": "logger.WithComponent(\"PaymentProcessor\").WithFields(map[string]any{\n\t\t\t\t\"invoice_id\": inv.ID, \"panic\": r,\n\t\t\t}).Error",
+          "lineNumber": 158
+        },
+        {
+          "caller": "invokeOnPaid",
+          "callee": "logger.WithComponent(\"PaymentProcessor\").WithFields",
+          "lineNumber": 158
+        },
+        {
+          "caller": "invokeOnPaid",
+          "callee": "logger.WithComponent",
+          "lineNumber": 158
+        },
+        {
+          "caller": "invokeOnPaid",
+          "callee": "p.OnPaid",
+          "lineNumber": 163
+        },
+        {
+          "caller": "fillCustomerPhone",
+          "callee": "tx.Select(\"id, phone\").First",
+          "lineNumber": 169
+        },
+        {
+          "caller": "fillCustomerPhone",
+          "callee": "tx.Select",
+          "lineNumber": 169
+        },
+        {
+          "caller": "fillCustomerPhone",
+          "callee": "errors.Is",
+          "lineNumber": 170
+        },
+        {
+          "caller": "receiptContent",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 181
+        },
+        {
+          "caller": "receiptContent",
+          "callee": "paidAt.Format",
+          "lineNumber": 182
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/payment_reader.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 57,
+      "functions": [
+        {
+          "name": "NewPaymentReader",
+          "startLine": 21,
+          "endLine": 23,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "ListByCustomer",
+          "startLine": 25,
+          "endLine": 64,
+          "params": [
+            "ctx",
+            "customerID",
+            "limit"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PaymentReader",
+          "startLine": 14,
+          "endLine": 16,
+          "methods": [
+            "ListByCustomer"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PaymentReader",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewPaymentReader",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ListByCustomer",
+          "line": 25,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListByCustomer",
+          "callee": "r.db.WithContext(ctx).Table(\"payments p\").\n\t\tSelect(\"p.id, p.tenant_id, p.payment_no, p.invoice_id, p.payment_method_id, \"+\n\t\t\t\"p.amount, p.payment_date, p.received_by, p.scan_method, p.reference, p.notes, p.created_at\").\n\t\tJoins(\"JOIN invoices i ON i.id = p.invoice_id\").\n\t\tWhere(\"i.customer_id = ?\", customerID).\n\t\tOrder",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "r.db.WithContext(ctx).Table(\"payments p\").\n\t\tSelect(\"p.id, p.tenant_id, p.payment_no, p.invoice_id, p.payment_method_id, \"+\n\t\t\t\"p.amount, p.payment_date, p.received_by, p.scan_method, p.reference, p.notes, p.created_at\").\n\t\tJoins(\"JOIN invoices i ON i.id = p.invoice_id\").\n\t\tWhere",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "r.db.WithContext(ctx).Table(\"payments p\").\n\t\tSelect(\"p.id, p.tenant_id, p.payment_no, p.invoice_id, p.payment_method_id, \"+\n\t\t\t\"p.amount, p.payment_date, p.received_by, p.scan_method, p.reference, p.notes, p.created_at\").\n\t\tJoins",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "r.db.WithContext(ctx).Table(\"payments p\").\n\t\tSelect",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "r.db.WithContext(ctx).Table",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "r.db.WithContext",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "q.Limit",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "q.Scan",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "make",
+          "lineNumber": 52
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "len",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/portal_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 125,
+      "nonEmptyLines": 112,
+      "functions": [
+        {
+          "name": "NewPortalRepository",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "SaveSession",
+          "startLine": 29,
+          "endLine": 36,
+          "params": [
+            "ctx",
+            "s"
+          ]
+        },
+        {
+          "name": "FindValidSession",
+          "startLine": 38,
+          "endLine": 54,
+          "params": [
+            "ctx",
+            "token"
+          ]
+        },
+        {
+          "name": "DeleteSession",
+          "startLine": 56,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "SaveOTP",
+          "startLine": 69,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "o"
+          ]
+        },
+        {
+          "name": "ConsumeOTP",
+          "startLine": 77,
+          "endLine": 125,
+          "params": [
+            "ctx",
+            "phone",
+            "codeHash",
+            "maxAttempts"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PortalRepository",
+          "startLine": 16,
+          "endLine": 18,
+          "methods": [
+            "SaveSession",
+            "FindValidSession",
+            "DeleteSession",
+            "SaveOTP",
+            "ConsumeOTP"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PortalRepository",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewPortalRepository",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "SaveSession",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "FindValidSession",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteSession",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "SaveOTP",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "ConsumeOTP",
+          "line": 77,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SaveSession",
+          "callee": "r.db.WithContext(ctx).Save",
+          "lineNumber": 35
+        },
+        {
+          "caller": "SaveSession",
+          "callee": "r.db.WithContext",
+          "lineNumber": 35
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere(\"session_token = ? AND expires_at > ?\", token, time.Now()).\n\t\tFirst",
+          "lineNumber": 40
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere",
+          "lineNumber": 40
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "r.db.WithContext",
+          "lineNumber": 40
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "time.Now",
+          "lineNumber": 41
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "errors.Is",
+          "lineNumber": 43
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "r.db.WithContext(ctx).Delete",
+          "lineNumber": 57
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "r.db.WithContext",
+          "lineNumber": 57
+        },
+        {
+          "caller": "SaveOTP",
+          "callee": "model.PortalOTPModelFromDomain",
+          "lineNumber": 70
+        },
+        {
+          "caller": "SaveOTP",
+          "callee": "r.db.WithContext(ctx).Create",
+          "lineNumber": 71
+        },
+        {
+          "caller": "SaveOTP",
+          "callee": "r.db.WithContext",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "r.db.WithContext(ctx).Transaction",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "r.db.WithContext",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "r.db.Dialector.Name",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "q.Clauses",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "q.\n\t\t\tWhere(\"phone = ? AND consumed_at IS NULL AND expires_at > ?\", phone, time.Now()).\n\t\t\tOrder(\"created_at desc\").First",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "q.\n\t\t\tWhere(\"phone = ? AND consumed_at IS NULL AND expires_at > ?\", phone, time.Now()).\n\t\t\tOrder",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "q.\n\t\t\tWhere",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "time.Now",
+          "lineNumber": 87
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "errors.Is",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "time.Now",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "tx.Model(&m).Update",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "tx.Model",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "tx.Model(&m).Updates",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "tx.Model",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "tx.Model(&m).Update",
+          "lineNumber": 115
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "tx.Model",
+          "lineNumber": 115
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "errors.Is",
+          "lineNumber": 117
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "errors.Is",
+          "lineNumber": 117
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/registration_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 100,
+      "nonEmptyLines": 88,
+      "functions": [
+        {
+          "name": "NewRegistrationRepository",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "Save",
+          "startLine": 26,
+          "endLine": 34,
+          "params": [
+            "ctx",
+            "reg"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 36,
+          "endLine": 43,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "FindByNo",
+          "startLine": 45,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "regNo"
+          ]
+        },
+        {
+          "name": "List",
+          "startLine": 54,
+          "endLine": 80,
+          "params": [
+            "ctx",
+            "f"
+          ]
+        },
+        {
+          "name": "UpdateStatus",
+          "startLine": 82,
+          "endLine": 92,
+          "params": [
+            "ctx",
+            "id",
+            "status"
+          ]
+        },
+        {
+          "name": "CountPendingSince",
+          "startLine": 94,
+          "endLine": 100,
+          "params": [
+            "ctx",
+            "since"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RegistrationRepository",
+          "startLine": 15,
+          "endLine": 17,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindByNo",
+            "List",
+            "UpdateStatus",
+            "CountPendingSince"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RegistrationRepository",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "NewRegistrationRepository",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "FindByNo",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "List",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateStatus",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "CountPendingSince",
+          "line": 94,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Save",
+          "callee": "model.RegistrationModelFromDomain",
+          "lineNumber": 27
+        },
+        {
+          "caller": "Save",
+          "callee": "r.db.WithContext(ctx).Save",
+          "lineNumber": 28
+        },
+        {
+          "caller": "Save",
+          "callee": "r.db.WithContext",
+          "lineNumber": 28
+        },
+        {
+          "caller": "FindByID",
+          "callee": "r.db.WithContext(ctx).First",
+          "lineNumber": 38
+        },
+        {
+          "caller": "FindByID",
+          "callee": "r.db.WithContext",
+          "lineNumber": 38
+        },
+        {
+          "caller": "FindByID",
+          "callee": "errors.Is",
+          "lineNumber": 39
+        },
+        {
+          "caller": "FindByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 42
+        },
+        {
+          "caller": "FindByNo",
+          "callee": "r.db.WithContext(ctx).First",
+          "lineNumber": 47
+        },
+        {
+          "caller": "FindByNo",
+          "callee": "r.db.WithContext",
+          "lineNumber": 47
+        },
+        {
+          "caller": "FindByNo",
+          "callee": "errors.Is",
+          "lineNumber": 48
+        },
+        {
+          "caller": "FindByNo",
+          "callee": "m.ToDomain",
+          "lineNumber": 51
+        },
+        {
+          "caller": "List",
+          "callee": "r.db.WithContext(ctx).Model",
+          "lineNumber": 55
+        },
+        {
+          "caller": "List",
+          "callee": "r.db.WithContext",
+          "lineNumber": 55
+        },
+        {
+          "caller": "List",
+          "callee": "q.Where",
+          "lineNumber": 57
+        },
+        {
+          "caller": "List",
+          "callee": "q.Where",
+          "lineNumber": 60
+        },
+        {
+          "caller": "List",
+          "callee": "q.Where",
+          "lineNumber": 63
+        },
+        {
+          "caller": "List",
+          "callee": "q.Where",
+          "lineNumber": 66
+        },
+        {
+          "caller": "List",
+          "callee": "q.Limit",
+          "lineNumber": 69
+        },
+        {
+          "caller": "List",
+          "callee": "q.Order(\"created_at desc\").Find",
+          "lineNumber": 72
+        },
+        {
+          "caller": "List",
+          "callee": "q.Order",
+          "lineNumber": 72
+        },
+        {
+          "caller": "List",
+          "callee": "make",
+          "lineNumber": 75
+        },
+        {
+          "caller": "List",
+          "callee": "len",
+          "lineNumber": 75
+        },
+        {
+          "caller": "List",
+          "callee": "mList[i].ToDomain",
+          "lineNumber": 77
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "r.db.WithContext(ctx).Model(&model.RegistrationModel{}).\n\t\tWhere(\"id = ?\", id).Update",
+          "lineNumber": 83
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "r.db.WithContext(ctx).Model(&model.RegistrationModel{}).\n\t\tWhere",
+          "lineNumber": 83
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "r.db.WithContext(ctx).Model",
+          "lineNumber": 83
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "r.db.WithContext",
+          "lineNumber": 83
+        },
+        {
+          "caller": "CountPendingSince",
+          "callee": "r.db.WithContext(ctx).Model(&model.RegistrationModel{}).\n\t\tWhere(\"status = ? AND created_at >= ?\", registration.StatusPending, since).\n\t\tCount",
+          "lineNumber": 96
+        },
+        {
+          "caller": "CountPendingSince",
+          "callee": "r.db.WithContext(ctx).Model(&model.RegistrationModel{}).\n\t\tWhere",
+          "lineNumber": 96
+        },
+        {
+          "caller": "CountPendingSince",
+          "callee": "r.db.WithContext(ctx).Model",
+          "lineNumber": 96
+        },
+        {
+          "caller": "CountPendingSince",
+          "callee": "r.db.WithContext",
+          "lineNumber": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/reporting_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 164,
+      "nonEmptyLines": 146,
+      "functions": [
+        {
+          "name": "NewReportingRepository",
+          "startLine": 24,
+          "endLine": 26,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "UpsertSnapshot",
+          "startLine": 28,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "s"
+          ]
+        },
+        {
+          "name": "GetByDate",
+          "startLine": 41,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "tenantID",
+            "date"
+          ]
+        },
+        {
+          "name": "ListRange",
+          "startLine": 52,
+          "endLine": 66,
+          "params": [
+            "ctx",
+            "tenantID",
+            "from",
+            "to"
+          ]
+        },
+        {
+          "name": "RecomputeDaily",
+          "startLine": 70,
+          "endLine": 138,
+          "params": [
+            "ctx",
+            "tenantID",
+            "date"
+          ]
+        },
+        {
+          "name": "balanceJSON",
+          "startLine": 141,
+          "endLine": 164,
+          "params": [
+            "tenantID"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ReportingRepository",
+          "startLine": 17,
+          "endLine": 19,
+          "methods": [
+            "UpsertSnapshot",
+            "GetByDate",
+            "ListRange",
+            "RecomputeDaily",
+            "balanceJSON"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ReportingRepository",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "NewReportingRepository",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "UpsertSnapshot",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "GetByDate",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "ListRange",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "RecomputeDaily",
+          "line": 70,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "UpsertSnapshot",
+          "callee": "model.DailySnapshotModelFromDomain",
+          "lineNumber": 29
+        },
+        {
+          "caller": "UpsertSnapshot",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere(\"tenant_id = ? AND snapshot_date = ?\", s.TenantID, s.SnapshotDate).\n\t\tAssign(*m).\n\t\tFirstOrCreate",
+          "lineNumber": 30
+        },
+        {
+          "caller": "UpsertSnapshot",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere(\"tenant_id = ? AND snapshot_date = ?\", s.TenantID, s.SnapshotDate).\n\t\tAssign",
+          "lineNumber": 30
+        },
+        {
+          "caller": "UpsertSnapshot",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere",
+          "lineNumber": 30
+        },
+        {
+          "caller": "UpsertSnapshot",
+          "callee": "r.db.WithContext",
+          "lineNumber": 30
+        },
+        {
+          "caller": "GetByDate",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere(\"tenant_id = ? AND snapshot_date = ?\", tenantID, date).\n\t\tFirst",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GetByDate",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GetByDate",
+          "callee": "r.db.WithContext",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GetByDate",
+          "callee": "errors.Is",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GetByDate",
+          "callee": "m.ToDomain",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ListRange",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere(\"tenant_id = ? AND snapshot_date >= ? AND snapshot_date <= ?\", tenantID, from, to).\n\t\tOrder(\"snapshot_date asc\").\n\t\tFind",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ListRange",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere(\"tenant_id = ? AND snapshot_date >= ? AND snapshot_date <= ?\", tenantID, from, to).\n\t\tOrder",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ListRange",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ListRange",
+          "callee": "r.db.WithContext",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ListRange",
+          "callee": "make",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ListRange",
+          "callee": "len",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ListRange",
+          "callee": "mList[i].ToDomain",
+          "lineNumber": 63
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "date.Format",
+          "lineNumber": 71
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw(`\n\t\tSELECT COUNT(*), COALESCE(SUM(total),0) FROM invoices\n\t\tWHERE tenant_id = ? AND created_at::date = ? AND deleted_at IS NULL`,\n\t\ttenantID, day).Row().Scan",
+          "lineNumber": 75
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw(`\n\t\tSELECT COUNT(*), COALESCE(SUM(total),0) FROM invoices\n\t\tWHERE tenant_id = ? AND created_at::date = ? AND deleted_at IS NULL`,\n\t\ttenantID, day).Row",
+          "lineNumber": 75
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw",
+          "lineNumber": 75
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext",
+          "lineNumber": 75
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "fmt.Errorf",
+          "lineNumber": 80
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw(`\n\t\tSELECT COUNT(*), COALESCE(SUM(amount),0) FROM payments\n\t\tWHERE tenant_id = ? AND payment_date::date = ?`,\n\t\ttenantID, day).Row().Scan",
+          "lineNumber": 85
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw(`\n\t\tSELECT COUNT(*), COALESCE(SUM(amount),0) FROM payments\n\t\tWHERE tenant_id = ? AND payment_date::date = ?`,\n\t\ttenantID, day).Row",
+          "lineNumber": 85
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw",
+          "lineNumber": 85
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext",
+          "lineNumber": 85
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "fmt.Errorf",
+          "lineNumber": 90
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw(`\n\t\tSELECT COALESCE(SUM(amount),0) FROM cash_transactions\n\t\tWHERE tenant_id = ? AND direction = 'OUT' AND trx_date::date = ?`,\n\t\ttenantID, day).Scan",
+          "lineNumber": 94
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw",
+          "lineNumber": 94
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext",
+          "lineNumber": 94
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "fmt.Errorf",
+          "lineNumber": 99
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw(`\n\t\tSELECT COALESCE(SUM(total - paid_amount),0) FROM invoices\n\t\tWHERE tenant_id = ? AND status IN ('UNPAID','PARTIAL','OVERDUE') AND deleted_at IS NULL`,\n\t\ttenantID).Scan",
+          "lineNumber": 103
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw",
+          "lineNumber": 103
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext",
+          "lineNumber": 103
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "fmt.Errorf",
+          "lineNumber": 108
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw(`\n\t\tSELECT COUNT(*) FROM subscriptions\n\t\tWHERE tenant_id = ? AND status = 'ACTIVE' AND deleted_at IS NULL`,\n\t\ttenantID).Scan",
+          "lineNumber": 112
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext(ctx).Raw",
+          "lineNumber": 112
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.db.WithContext",
+          "lineNumber": 112
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "fmt.Errorf",
+          "lineNumber": 117
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.balanceJSON",
+          "lineNumber": 120
+        },
+        {
+          "caller": "RecomputeDaily",
+          "callee": "r.UpsertSnapshot",
+          "lineNumber": 137
+        },
+        {
+          "caller": "balanceJSON",
+          "callee": "r.db.Raw(`\n\t\tSELECT account_id,\n\t\t       SUM(CASE WHEN direction='IN' THEN amount ELSE -amount END) AS signed\n\t\tFROM cash_transactions WHERE tenant_id = ?\n\t\tGROUP BY account_id`, tenantID).Scan",
+          "lineNumber": 147
+        },
+        {
+          "caller": "balanceJSON",
+          "callee": "r.db.Raw",
+          "lineNumber": 147
+        },
+        {
+          "caller": "balanceJSON",
+          "callee": "fmt.Errorf",
+          "lineNumber": 153
+        },
+        {
+          "caller": "balanceJSON",
+          "callee": "json.Marshal",
+          "lineNumber": 159
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/service_plan_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 68,
+      "functions": [
+        {
+          "name": "NewServicePlanRepository",
+          "startLine": 20,
+          "endLine": 22,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "Save",
+          "startLine": 24,
+          "endLine": 32,
+          "params": [
+            "ctx",
+            "p"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 34,
+          "endLine": 41,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "FindByName",
+          "startLine": 43,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "tenantID",
+            "name"
+          ]
+        },
+        {
+          "name": "List",
+          "startLine": 54,
+          "endLine": 68,
+          "params": [
+            "ctx",
+            "activeOnly"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 70,
+          "endLine": 79,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ServicePlanRepository",
+          "startLine": 13,
+          "endLine": 15,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindByName",
+            "List",
+            "Delete"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ServicePlanRepository",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewServicePlanRepository",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "FindByName",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "List",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 70,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Save",
+          "callee": "model.ServicePlanModelFromDomain",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Save",
+          "callee": "r.db.WithContext(ctx).Save",
+          "lineNumber": 26
+        },
+        {
+          "caller": "Save",
+          "callee": "r.db.WithContext",
+          "lineNumber": 26
+        },
+        {
+          "caller": "FindByID",
+          "callee": "r.db.WithContext(ctx).First",
+          "lineNumber": 36
+        },
+        {
+          "caller": "FindByID",
+          "callee": "r.db.WithContext",
+          "lineNumber": 36
+        },
+        {
+          "caller": "FindByID",
+          "callee": "mapNotFound",
+          "lineNumber": 38
+        },
+        {
+          "caller": "FindByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 40
+        },
+        {
+          "caller": "FindByName",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere(\"tenant_id = ? AND name = ?\", tenantID, name).\n\t\tFirst",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindByName",
+          "callee": "r.db.WithContext(ctx).\n\t\tWhere",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindByName",
+          "callee": "r.db.WithContext",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindByName",
+          "callee": "mapNotFound",
+          "lineNumber": 49
+        },
+        {
+          "caller": "FindByName",
+          "callee": "m.ToDomain",
+          "lineNumber": 51
+        },
+        {
+          "caller": "List",
+          "callee": "r.db.WithContext",
+          "lineNumber": 55
+        },
+        {
+          "caller": "List",
+          "callee": "q.Where",
+          "lineNumber": 57
+        },
+        {
+          "caller": "List",
+          "callee": "q.Order(\"name\").Find",
+          "lineNumber": 60
+        },
+        {
+          "caller": "List",
+          "callee": "q.Order",
+          "lineNumber": 60
+        },
+        {
+          "caller": "List",
+          "callee": "make",
+          "lineNumber": 63
+        },
+        {
+          "caller": "List",
+          "callee": "len",
+          "lineNumber": 63
+        },
+        {
+          "caller": "List",
+          "callee": "mList[i].ToDomain",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Delete",
+          "callee": "r.db.WithContext(ctx).Delete",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Delete",
+          "callee": "r.db.WithContext",
+          "lineNumber": 71
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/setting_repository_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 62,
+      "functions": [
+        {
+          "name": "setupSettingTestDB",
+          "startLine": 17,
+          "endLine": 26,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSettingRepository_CRUD",
+          "startLine": 28,
+          "endLine": 79,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestSettingRepository_CRUD",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "setupSettingTestDB",
+          "callee": "t.Helper",
+          "lineNumber": 18
+        },
+        {
+          "caller": "setupSettingTestDB",
+          "callee": "gorm.Open",
+          "lineNumber": 19
+        },
+        {
+          "caller": "setupSettingTestDB",
+          "callee": "sqlite.Open",
+          "lineNumber": 19
+        },
+        {
+          "caller": "setupSettingTestDB",
+          "callee": "require.NoError",
+          "lineNumber": 20
+        },
+        {
+          "caller": "setupSettingTestDB",
+          "callee": "db.AutoMigrate",
+          "lineNumber": 22
+        },
+        {
+          "caller": "setupSettingTestDB",
+          "callee": "require.NoError",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "setupSettingTestDB",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "postgres.NewSettingRepository",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "context.Background",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.Set",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.Get",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.GetValue",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.GetValue",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.BatchSet",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.GetByCategory",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "assert.Len",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.GetAll",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "assert.Len",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.GetBotSettings",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "assert.NotNil",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.SaveBotSettings",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "repo.GetBotSettings",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestSettingRepository_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 78
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/setting_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 216,
+      "nonEmptyLines": 188,
+      "functions": [
+        {
+          "name": "NewSettingRepository",
+          "startLine": 29,
+          "endLine": 34,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 36,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "key"
+          ]
+        },
+        {
+          "name": "GetValue",
+          "startLine": 47,
+          "endLine": 74,
+          "params": [
+            "ctx",
+            "key",
+            "fallback"
+          ]
+        },
+        {
+          "name": "Set",
+          "startLine": 76,
+          "endLine": 94,
+          "params": [
+            "ctx",
+            "key",
+            "value",
+            "category",
+            "description"
+          ]
+        },
+        {
+          "name": "GetByCategory",
+          "startLine": 96,
+          "endLine": 109,
+          "params": [
+            "ctx",
+            "category"
+          ]
+        },
+        {
+          "name": "GetAll",
+          "startLine": 111,
+          "endLine": 124,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "BatchSet",
+          "startLine": 126,
+          "endLine": 150,
+          "params": [
+            "ctx",
+            "settings"
+          ]
+        },
+        {
+          "name": "GetBotSettings",
+          "startLine": 152,
+          "endLine": 167,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "SaveBotSettings",
+          "startLine": 169,
+          "endLine": 188,
+          "params": [
+            "ctx",
+            "s"
+          ]
+        },
+        {
+          "name": "getIntValue",
+          "startLine": 190,
+          "endLine": 199,
+          "params": [
+            "ctx",
+            "key",
+            "fallback"
+          ]
+        },
+        {
+          "name": "getBoolValue",
+          "startLine": 201,
+          "endLine": 210,
+          "params": [
+            "ctx",
+            "key",
+            "fallback"
+          ]
+        },
+        {
+          "name": "invalidateCache",
+          "startLine": 212,
+          "endLine": 216,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SettingRepository",
+          "startLine": 19,
+          "endLine": 24,
+          "methods": [
+            "Get",
+            "GetValue",
+            "Set",
+            "GetByCategory",
+            "GetAll",
+            "BatchSet",
+            "GetBotSettings",
+            "SaveBotSettings",
+            "getIntValue",
+            "getBoolValue",
+            "invalidateCache"
+          ],
+          "properties": [
+            "db",
+            "cacheLock",
+            "cache",
+            "cacheTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SettingRepository",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "NewSettingRepository",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "GetValue",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "Set",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "GetByCategory",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "GetAll",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "BatchSet",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "GetBotSettings",
+          "line": 152,
+          "isDefault": false
+        },
+        {
+          "name": "SaveBotSettings",
+          "line": 169,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewSettingRepository",
+          "callee": "make",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Get",
+          "callee": "r.db.WithContext(ctx).Where(\"key = ?\", key).First",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Get",
+          "callee": "r.db.WithContext(ctx).Where",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Get",
+          "callee": "r.db.WithContext",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Get",
+          "callee": "errors.Is",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Get",
+          "callee": "m.ToDomain",
+          "lineNumber": 44
+        },
+        {
+          "caller": "GetValue",
+          "callee": "r.cacheLock.RLock",
+          "lineNumber": 48
+        },
+        {
+          "caller": "GetValue",
+          "callee": "time.Since",
+          "lineNumber": 49
+        },
+        {
+          "caller": "GetValue",
+          "callee": "r.cacheLock.RUnlock",
+          "lineNumber": 51
+        },
+        {
+          "caller": "GetValue",
+          "callee": "r.cacheLock.RUnlock",
+          "lineNumber": 55
+        },
+        {
+          "caller": "GetValue",
+          "callee": "r.db.WithContext(ctx).Find",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GetValue",
+          "callee": "r.db.WithContext",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GetValue",
+          "callee": "r.cacheLock.Lock",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GetValue",
+          "callee": "make",
+          "lineNumber": 61
+        },
+        {
+          "caller": "GetValue",
+          "callee": "len",
+          "lineNumber": 61
+        },
+        {
+          "caller": "GetValue",
+          "callee": "time.Now",
+          "lineNumber": 65
+        },
+        {
+          "caller": "GetValue",
+          "callee": "r.cacheLock.Unlock",
+          "lineNumber": 67
+        },
+        {
+          "caller": "Set",
+          "callee": "time.Now",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Set",
+          "callee": "r.db.WithContext(ctx).Clauses(clause.OnConflict{\n\t\tColumns:   []clause.Column{{Name: \"key\"}},\n\t\tDoUpdates: clause.AssignmentColumns([]string{\"value\", \"category\", \"description\", \"updated_at\"}),\n\t}).Create",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Set",
+          "callee": "r.db.WithContext(ctx).Clauses",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Set",
+          "callee": "r.db.WithContext",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Set",
+          "callee": "clause.AssignmentColumns",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Set",
+          "callee": "r.invalidateCache",
+          "lineNumber": 91
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "r.db.WithContext(ctx).Where(\"category = ?\", category).Order(\"key ASC\").Find",
+          "lineNumber": 98
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "r.db.WithContext(ctx).Where(\"category = ?\", category).Order",
+          "lineNumber": 98
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "r.db.WithContext(ctx).Where",
+          "lineNumber": 98
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "r.db.WithContext",
+          "lineNumber": 98
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "make",
+          "lineNumber": 102
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "len",
+          "lineNumber": 102
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "m.ToDomain",
+          "lineNumber": 104
+        },
+        {
+          "caller": "GetByCategory",
+          "callee": "append",
+          "lineNumber": 105
+        },
+        {
+          "caller": "GetAll",
+          "callee": "r.db.WithContext(ctx).Order(\"category ASC, key ASC\").Find",
+          "lineNumber": 113
+        },
+        {
+          "caller": "GetAll",
+          "callee": "r.db.WithContext(ctx).Order",
+          "lineNumber": 113
+        },
+        {
+          "caller": "GetAll",
+          "callee": "r.db.WithContext",
+          "lineNumber": 113
+        },
+        {
+          "caller": "GetAll",
+          "callee": "make",
+          "lineNumber": 117
+        },
+        {
+          "caller": "GetAll",
+          "callee": "len",
+          "lineNumber": 117
+        },
+        {
+          "caller": "GetAll",
+          "callee": "m.ToDomain",
+          "lineNumber": 119
+        },
+        {
+          "caller": "GetAll",
+          "callee": "append",
+          "lineNumber": 120
+        },
+        {
+          "caller": "BatchSet",
+          "callee": "len",
+          "lineNumber": 127
+        },
+        {
+          "caller": "BatchSet",
+          "callee": "r.db.WithContext(ctx).Transaction",
+          "lineNumber": 131
+        },
+        {
+          "caller": "BatchSet",
+          "callee": "r.db.WithContext",
+          "lineNumber": 131
+        },
+        {
+          "caller": "BatchSet",
+          "callee": "time.Now",
+          "lineNumber": 138
+        },
+        {
+          "caller": "BatchSet",
+          "callee": "tx.Clauses(clause.OnConflict{\n\t\t\t\tColumns:   []clause.Column{{Name: \"key\"}},\n\t\t\t\tDoUpdates: clause.AssignmentColumns([]string{\"value\", \"category\", \"description\", \"updated_at\"}),\n\t\t\t}).Create",
+          "lineNumber": 140
+        },
+        {
+          "caller": "BatchSet",
+          "callee": "tx.Clauses",
+          "lineNumber": 140
+        },
+        {
+          "caller": "BatchSet",
+          "callee": "clause.AssignmentColumns",
+          "lineNumber": 142
+        },
+        {
+          "caller": "BatchSet",
+          "callee": "r.invalidateCache",
+          "lineNumber": 147
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "setting.DefaultBotSettings",
+          "lineNumber": 153
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getIntValue",
+          "lineNumber": 155
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getIntValue",
+          "lineNumber": 156
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getIntValue",
+          "lineNumber": 157
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getIntValue",
+          "lineNumber": 158
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getIntValue",
+          "lineNumber": 159
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getIntValue",
+          "lineNumber": 160
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getIntValue",
+          "lineNumber": 161
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getIntValue",
+          "lineNumber": 162
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.getBoolValue",
+          "lineNumber": 163
+        },
+        {
+          "caller": "GetBotSettings",
+          "callee": "r.GetValue",
+          "lineNumber": 164
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "errors.New",
+          "lineNumber": 171
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.Itoa",
+          "lineNumber": 175
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.Itoa",
+          "lineNumber": 176
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.Itoa",
+          "lineNumber": 177
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.Itoa",
+          "lineNumber": 178
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.Itoa",
+          "lineNumber": 179
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.Itoa",
+          "lineNumber": 180
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.Itoa",
+          "lineNumber": 181
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.Itoa",
+          "lineNumber": 182
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strconv.FormatBool",
+          "lineNumber": 183
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 184
+        },
+        {
+          "caller": "SaveBotSettings",
+          "callee": "r.BatchSet",
+          "lineNumber": 187
+        },
+        {
+          "caller": "getIntValue",
+          "callee": "r.GetValue",
+          "lineNumber": 191
+        },
+        {
+          "caller": "getIntValue",
+          "callee": "strconv.Atoi",
+          "lineNumber": 195
+        },
+        {
+          "caller": "getBoolValue",
+          "callee": "r.GetValue",
+          "lineNumber": 202
+        },
+        {
+          "caller": "getBoolValue",
+          "callee": "strconv.ParseBool",
+          "lineNumber": 206
+        },
+        {
+          "caller": "invalidateCache",
+          "callee": "r.cacheLock.Lock",
+          "lineNumber": 213
+        },
+        {
+          "caller": "invalidateCache",
+          "callee": "r.cacheLock.Unlock",
+          "lineNumber": 215
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 12,
+        "classCount": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,3429 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/port/dhcp.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/port/event_publisher.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 6,
+      "nonEmptyLines": 5,
+      "classes": [
+        {
+          "name": "EventPublisher",
+          "startLine": 4,
+          "endLine": 6,
+          "methods": [
+            "PublishEvent"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "EventPublisher",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/firewall_gateway.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 38,
+      "classes": [
+        {
+          "name": "IsolationRedirectConfig",
+          "startLine": 7,
+          "endLine": 14,
+          "methods": [],
+          "properties": [
+            "SrcAddressList",
+            "PaymentHost",
+            "PaymentPort",
+            "Protocols",
+            "DstPorts",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "FirewallGateway",
+          "startLine": 19,
+          "endLine": 48,
+          "methods": [
+            "EnsureIsolationRedirect",
+            "EnsureIsolationFilter",
+            "DisableIsolationRedirect",
+            "HasIsolationRedirect",
+            "CountAddressListEntries",
+            "AddToAddressList",
+            "RemoveFromAddressList",
+            "RemoveFromAddressListByComment"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IsolationRedirectConfig",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "FirewallGateway",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/gateway_transaction_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 14,
+      "classes": [
+        {
+          "name": "GatewayTransactionRepository",
+          "startLine": 11,
+          "endLine": 17,
+          "methods": [
+            "Save",
+            "FindByExternalID",
+            "FindByInvoice",
+            "UpdateStatus",
+            "LinkPayment"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GatewayTransactionRepository",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/gateway.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 12,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/port/hotspot_active.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/port/hotspot_binding.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "HotspotIPBindingParams",
+          "startLine": 11,
+          "endLine": 19,
+          "methods": [],
+          "properties": [
+            "MACAddress",
+            "Address",
+            "ToAddress",
+            "Server",
+            "Type",
+            "Comment",
+            "Disabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HotspotIPBindingParams",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/hotspot_expire.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 6,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/port/hotspot_gateway.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 94,
+      "nonEmptyLines": 91,
+      "classes": [
+        {
+          "name": "HotspotGateway",
+          "startLine": 15,
+          "endLine": 94,
+          "methods": [
+            "GetSystemResource",
+            "GetSystemIdentity",
+            "GetUserProfiles",
+            "CreateUserProfile",
+            "UpdateUserProfile",
+            "DeleteUserProfile",
+            "GenerateVouchers",
+            "ListUsers",
+            "GetUser",
+            "AddUser",
+            "UpdateUser",
+            "RemoveUser",
+            "ResetUserCounters",
+            "ListActiveSessions",
+            "RemoveActiveSession",
+            "ListHosts",
+            "RemoveHost",
+            "ListHotspotServers",
+            "ListIPPools",
+            "ListParentQueues",
+            "ListNATRules",
+            "DeleteUsersByFilter",
+            "ListIPBindings",
+            "CreateIPBinding",
+            "UpdateIPBinding",
+            "DeleteIPBinding",
+            "ListCookies",
+            "DeleteCookie",
+            "SetupExpireMonitor",
+            "GetExpireMonitorStatus",
+            "SetExpireMonitorDisabled",
+            "RemoveExpireMonitor",
+            "ListReports",
+            "DeleteReport",
+            "ParseUserComment",
+            "EnsureWalledGarden"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "HotspotGateway",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/hotspot_profile.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 38,
+      "classes": [
+        {
+          "name": "MikhmonProfileParams",
+          "startLine": 24,
+          "endLine": 43,
+          "methods": [],
+          "properties": [
+            "Name",
+            "AddressPool",
+            "SharedUsers",
+            "RateLimit",
+            "ParentQueue",
+            "AddressList",
+            "SessionTimeout",
+            "IdleTimeout",
+            "Price",
+            "SellingPrice",
+            "Validity",
+            "ExpireMode",
+            "LockUser",
+            "LockServer",
+            "EnableRecording",
+            "Comment",
+            "OnLogin",
+            "OnLogout"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MikhmonProfileParams",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/hotspot_transaction.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 17,
+      "classes": [
+        {
+          "name": "ReportFilter",
+          "startLine": 16,
+          "endLine": 20,
+          "methods": [],
+          "properties": [
+            "Day",
+            "Month",
+            "Year"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ReportFilter",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/hotspot_user.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 30,
+      "classes": [
+        {
+          "name": "ListUsersFilter",
+          "startLine": 10,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Profile",
+            "Comment",
+            "OnlyUnused"
+          ]
+        },
+        {
+          "name": "HotspotUserParams",
+          "startLine": 19,
+          "endLine": 31,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Password",
+            "Profile",
+            "Server",
+            "MACAddress",
+            "Address",
+            "LimitUptime",
+            "LimitBytesIn",
+            "LimitBytesOut",
+            "Comment",
+            "Disabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListUsersFilter",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotUserParams",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/hotspot_voucher.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 31,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/port/invoice_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "InvoiceRepository",
+          "startLine": 10,
+          "endLine": 37,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindByCustomerID",
+            "FindAll",
+            "UpdateStatus",
+            "FindByPaymentCode",
+            "FindByQRPayload",
+            "FindBySubscriptionPeriod",
+            "SaveWithItems",
+            "HasForSubscription",
+            "Delete",
+            "DeleteByCustomerID"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "InvoiceRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/ip_pool.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/port/llm_config_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "LLMConfigRepository",
+          "startLine": 10,
+          "endLine": 18,
+          "methods": [
+            "Create",
+            "FindByID",
+            "FindActive",
+            "FindAll",
+            "Update",
+            "SetActive",
+            "Delete"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "LLMConfigRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/llm_provider.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "LLMProvider",
+          "startLine": 10,
+          "endLine": 14,
+          "methods": [
+            "Chat",
+            "ChatWithTools",
+            "TestConnection"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "LLMProvider",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/metrics_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "MetricsRepository",
+          "startLine": 10,
+          "endLine": 25,
+          "methods": [
+            "IsTimescaleDBAvailable",
+            "SavePingMetric",
+            "SavePingMetricsBatch",
+            "QueryPingMetrics",
+            "CleanupExpiredMetrics"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "MetricsRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/mocktest/fakes_billing.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 187,
+      "nonEmptyLines": 167,
+      "functions": [
+        {
+          "name": "NewFakeInvoiceRepo",
+          "startLine": 19,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "Save",
+          "startLine": 27,
+          "endLine": 32,
+          "params": [
+            "_",
+            "inv"
+          ]
+        },
+        {
+          "name": "SaveWithItems",
+          "startLine": 35,
+          "endLine": 41,
+          "params": [
+            "_",
+            "inv",
+            "items"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 44,
+          "endLine": 52,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "FindByCustomerID",
+          "startLine": 55,
+          "endLine": 65,
+          "params": [
+            "_",
+            "cid"
+          ]
+        },
+        {
+          "name": "FindAll",
+          "startLine": 68,
+          "endLine": 76,
+          "params": [
+            "_"
+          ]
+        },
+        {
+          "name": "UpdateStatus",
+          "startLine": 79,
+          "endLine": 89,
+          "params": [
+            "_",
+            "id",
+            "status"
+          ]
+        },
+        {
+          "name": "FindByPaymentCode",
+          "startLine": 92,
+          "endLine": 101,
+          "params": [
+            "_",
+            "code"
+          ]
+        },
+        {
+          "name": "FindByQRPayload",
+          "startLine": 104,
+          "endLine": 113,
+          "params": [
+            "_",
+            "qr"
+          ]
+        },
+        {
+          "name": "FindBySubscriptionPeriod",
+          "startLine": 116,
+          "endLine": 125,
+          "params": [
+            "_",
+            "subID",
+            "period"
+          ]
+        },
+        {
+          "name": "ItemsOf",
+          "startLine": 128,
+          "endLine": 132,
+          "params": [
+            "invoiceID"
+          ]
+        },
+        {
+          "name": "HasForSubscription",
+          "startLine": 135,
+          "endLine": 144,
+          "params": [
+            "_",
+            "subID"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 147,
+          "endLine": 153,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "DeleteByCustomerID",
+          "startLine": 156,
+          "endLine": 166,
+          "params": [
+            "_",
+            "customerID"
+          ]
+        },
+        {
+          "name": "ProcessCashPayment",
+          "startLine": 179,
+          "endLine": 187,
+          "params": [
+            "_",
+            "cmd"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeInvoiceRepo",
+          "startLine": 12,
+          "endLine": 16,
+          "methods": [
+            "Save",
+            "SaveWithItems",
+            "FindByID",
+            "FindByCustomerID",
+            "FindAll",
+            "UpdateStatus",
+            "FindByPaymentCode",
+            "FindByQRPayload",
+            "FindBySubscriptionPeriod",
+            "ItemsOf",
+            "HasForSubscription",
+            "Delete",
+            "DeleteByCustomerID"
+          ],
+          "properties": [
+            "mu",
+            "byID",
+            "items"
+          ]
+        },
+        {
+          "name": "FakePaymentProcessor",
+          "startLine": 171,
+          "endLine": 176,
+          "methods": [
+            "ProcessCashPayment"
+          ],
+          "properties": [
+            "mu",
+            "Cmds",
+            "Err",
+            "Pay"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FakeInvoiceRepo",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakeInvoiceRepo",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "SaveWithItems",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "FindByCustomerID",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "FindAll",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateStatus",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "FindByPaymentCode",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "FindByQRPayload",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "FindBySubscriptionPeriod",
+          "line": 116,
+          "isDefault": false
+        },
+        {
+          "name": "ItemsOf",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "HasForSubscription",
+          "line": 135,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 147,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteByCustomerID",
+          "line": 156,
+          "isDefault": false
+        },
+        {
+          "name": "FakePaymentProcessor",
+          "line": 171,
+          "isDefault": false
+        },
+        {
+          "name": "ProcessCashPayment",
+          "line": 179,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Save",
+          "callee": "f.mu.Lock",
+          "lineNumber": 28
+        },
+        {
+          "caller": "Save",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 29
+        },
+        {
+          "caller": "SaveWithItems",
+          "callee": "f.mu.Lock",
+          "lineNumber": 36
+        },
+        {
+          "caller": "SaveWithItems",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 37
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 46
+        },
+        {
+          "caller": "FindByCustomerID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 56
+        },
+        {
+          "caller": "FindByCustomerID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 57
+        },
+        {
+          "caller": "FindByCustomerID",
+          "callee": "append",
+          "lineNumber": 61
+        },
+        {
+          "caller": "FindAll",
+          "callee": "f.mu.Lock",
+          "lineNumber": 69
+        },
+        {
+          "caller": "FindAll",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 70
+        },
+        {
+          "caller": "FindAll",
+          "callee": "make",
+          "lineNumber": 71
+        },
+        {
+          "caller": "FindAll",
+          "callee": "len",
+          "lineNumber": 71
+        },
+        {
+          "caller": "FindAll",
+          "callee": "append",
+          "lineNumber": 73
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "f.mu.Lock",
+          "lineNumber": 80
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 81
+        },
+        {
+          "caller": "FindByPaymentCode",
+          "callee": "f.mu.Lock",
+          "lineNumber": 93
+        },
+        {
+          "caller": "FindByPaymentCode",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 94
+        },
+        {
+          "caller": "FindByQRPayload",
+          "callee": "f.mu.Lock",
+          "lineNumber": 105
+        },
+        {
+          "caller": "FindByQRPayload",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 106
+        },
+        {
+          "caller": "FindBySubscriptionPeriod",
+          "callee": "f.mu.Lock",
+          "lineNumber": 117
+        },
+        {
+          "caller": "FindBySubscriptionPeriod",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ItemsOf",
+          "callee": "f.mu.Lock",
+          "lineNumber": 129
+        },
+        {
+          "caller": "ItemsOf",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 130
+        },
+        {
+          "caller": "HasForSubscription",
+          "callee": "f.mu.Lock",
+          "lineNumber": 136
+        },
+        {
+          "caller": "HasForSubscription",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 137
+        },
+        {
+          "caller": "Delete",
+          "callee": "f.mu.Lock",
+          "lineNumber": 148
+        },
+        {
+          "caller": "Delete",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 149
+        },
+        {
+          "caller": "Delete",
+          "callee": "delete",
+          "lineNumber": 150
+        },
+        {
+          "caller": "Delete",
+          "callee": "delete",
+          "lineNumber": 151
+        },
+        {
+          "caller": "DeleteByCustomerID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 157
+        },
+        {
+          "caller": "DeleteByCustomerID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 158
+        },
+        {
+          "caller": "DeleteByCustomerID",
+          "callee": "delete",
+          "lineNumber": 161
+        },
+        {
+          "caller": "DeleteByCustomerID",
+          "callee": "delete",
+          "lineNumber": 162
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "f.mu.Lock",
+          "lineNumber": 180
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 181
+        },
+        {
+          "caller": "ProcessCashPayment",
+          "callee": "append",
+          "lineNumber": 182
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 17,
+        "functionCount": 15,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/mocktest/fakes_core.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 143,
+      "nonEmptyLines": 123,
+      "functions": [
+        {
+          "name": "NewFakeNotificationRepo",
+          "startLine": 20,
+          "endLine": 22,
+          "params": []
+        },
+        {
+          "name": "SeedTemplate",
+          "startLine": 24,
+          "endLine": 28,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "SaveTemplate",
+          "startLine": 30,
+          "endLine": 35,
+          "params": [
+            "_",
+            "t"
+          ]
+        },
+        {
+          "name": "FindTemplateByKey",
+          "startLine": 37,
+          "endLine": 45,
+          "params": [
+            "_",
+            "_",
+            "key"
+          ]
+        },
+        {
+          "name": "ListTemplates",
+          "startLine": 47,
+          "endLine": 49,
+          "params": [
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "Queue",
+          "startLine": 51,
+          "endLine": 56,
+          "params": [
+            "_",
+            "n"
+          ]
+        },
+        {
+          "name": "Queued",
+          "startLine": 58,
+          "endLine": 64,
+          "params": []
+        },
+        {
+          "name": "FindByID",
+          "startLine": 66,
+          "endLine": 75,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "Pending",
+          "startLine": 77,
+          "endLine": 90,
+          "params": [
+            "_",
+            "limit"
+          ]
+        },
+        {
+          "name": "MarkSent",
+          "startLine": 92,
+          "endLine": 103,
+          "params": [
+            "_",
+            "id",
+            "sentAt"
+          ]
+        },
+        {
+          "name": "MarkFailed",
+          "startLine": 105,
+          "endLine": 105,
+          "params": [
+            "_",
+            "id",
+            "errMsg"
+          ]
+        },
+        {
+          "name": "ListByCustomer",
+          "startLine": 107,
+          "endLine": 117,
+          "params": [
+            "_",
+            "cid",
+            "_"
+          ]
+        },
+        {
+          "name": "Write",
+          "startLine": 126,
+          "endLine": 131,
+          "params": [
+            "_",
+            "e"
+          ]
+        },
+        {
+          "name": "Count",
+          "startLine": 133,
+          "endLine": 143,
+          "params": [
+            "action"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeNotificationRepo",
+          "startLine": 14,
+          "endLine": 18,
+          "methods": [
+            "SeedTemplate",
+            "SaveTemplate",
+            "FindTemplateByKey",
+            "ListTemplates",
+            "Queue",
+            "Queued",
+            "FindByID",
+            "Pending",
+            "MarkSent",
+            "MarkFailed",
+            "ListByCustomer"
+          ],
+          "properties": [
+            "mu",
+            "queued",
+            "templates"
+          ]
+        },
+        {
+          "name": "FakeAuditWriter",
+          "startLine": 121,
+          "endLine": 124,
+          "methods": [
+            "Write",
+            "Count"
+          ],
+          "properties": [
+            "mu",
+            "Entries"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FakeNotificationRepo",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakeNotificationRepo",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "SeedTemplate",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "SaveTemplate",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "FindTemplateByKey",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "ListTemplates",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "Queue",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "Queued",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "Pending",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "MarkSent",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "MarkFailed",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "ListByCustomer",
+          "line": 107,
+          "isDefault": false
+        },
+        {
+          "name": "FakeAuditWriter",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "Write",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "Count",
+          "line": 133,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SeedTemplate",
+          "callee": "f.mu.Lock",
+          "lineNumber": 25
+        },
+        {
+          "caller": "SeedTemplate",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 26
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "f.mu.Lock",
+          "lineNumber": 31
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 32
+        },
+        {
+          "caller": "FindTemplateByKey",
+          "callee": "f.mu.Lock",
+          "lineNumber": 38
+        },
+        {
+          "caller": "FindTemplateByKey",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Queue",
+          "callee": "f.mu.Lock",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Queue",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Queue",
+          "callee": "append",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Queued",
+          "callee": "f.mu.Lock",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Queued",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Queued",
+          "callee": "make",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Queued",
+          "callee": "len",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Queued",
+          "callee": "copy",
+          "lineNumber": 62
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 67
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 68
+        },
+        {
+          "caller": "Pending",
+          "callee": "f.mu.Lock",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Pending",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 79
+        },
+        {
+          "caller": "Pending",
+          "callee": "append",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Pending",
+          "callee": "len",
+          "lineNumber": 84
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "f.mu.Lock",
+          "lineNumber": 93
+        },
+        {
+          "caller": "MarkSent",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 94
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "f.mu.Lock",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ListByCustomer",
+          "callee": "append",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Write",
+          "callee": "f.mu.Lock",
+          "lineNumber": 127
+        },
+        {
+          "caller": "Write",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 128
+        },
+        {
+          "caller": "Write",
+          "callee": "append",
+          "lineNumber": 129
+        },
+        {
+          "caller": "Count",
+          "callee": "f.mu.Lock",
+          "lineNumber": 134
+        },
+        {
+          "caller": "Count",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 135
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 16,
+        "functionCount": 14,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/mocktest/fakes_customer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 99,
+      "nonEmptyLines": 87,
+      "functions": [
+        {
+          "name": "NewFakeCustomerRepo",
+          "startLine": 18,
+          "endLine": 20,
+          "params": []
+        },
+        {
+          "name": "Save",
+          "startLine": 23,
+          "endLine": 28,
+          "params": [
+            "_",
+            "c"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 31,
+          "endLine": 39,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "FindAll",
+          "startLine": 42,
+          "endLine": 50,
+          "params": [
+            "_"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 53,
+          "endLine": 58,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "FindSubscriptions",
+          "startLine": 61,
+          "endLine": 63,
+          "params": [
+            "_",
+            "customerID"
+          ]
+        },
+        {
+          "name": "FindByPortalAccessCode",
+          "startLine": 66,
+          "endLine": 75,
+          "params": [
+            "_",
+            "code"
+          ]
+        },
+        {
+          "name": "FindByPhone",
+          "startLine": 78,
+          "endLine": 87,
+          "params": [
+            "_",
+            "phone"
+          ]
+        },
+        {
+          "name": "FindByCustomerCode",
+          "startLine": 90,
+          "endLine": 99,
+          "params": [
+            "_",
+            "code"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeCustomerRepo",
+          "startLine": 12,
+          "endLine": 15,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindAll",
+            "Delete",
+            "FindSubscriptions",
+            "FindByPortalAccessCode",
+            "FindByPhone",
+            "FindByCustomerCode"
+          ],
+          "properties": [
+            "mu",
+            "byID"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FakeCustomerRepo",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakeCustomerRepo",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "FindAll",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "FindSubscriptions",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "FindByPortalAccessCode",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "FindByPhone",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "FindByCustomerCode",
+          "line": 90,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Save",
+          "callee": "f.mu.Lock",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Save",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 25
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 32
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 33
+        },
+        {
+          "caller": "FindAll",
+          "callee": "f.mu.Lock",
+          "lineNumber": 43
+        },
+        {
+          "caller": "FindAll",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 44
+        },
+        {
+          "caller": "FindAll",
+          "callee": "make",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindAll",
+          "callee": "len",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindAll",
+          "callee": "append",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Delete",
+          "callee": "f.mu.Lock",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Delete",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Delete",
+          "callee": "delete",
+          "lineNumber": 56
+        },
+        {
+          "caller": "FindByPortalAccessCode",
+          "callee": "f.mu.Lock",
+          "lineNumber": 67
+        },
+        {
+          "caller": "FindByPortalAccessCode",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 68
+        },
+        {
+          "caller": "FindByPhone",
+          "callee": "f.mu.Lock",
+          "lineNumber": 79
+        },
+        {
+          "caller": "FindByPhone",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 80
+        },
+        {
+          "caller": "FindByCustomerCode",
+          "callee": "f.mu.Lock",
+          "lineNumber": 91
+        },
+        {
+          "caller": "FindByCustomerCode",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 92
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 9,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/mocktest/fakes_portal.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 291,
+      "nonEmptyLines": 256,
+      "functions": [
+        {
+          "name": "Sent",
+          "startLine": 23,
+          "endLine": 29,
+          "params": []
+        },
+        {
+          "name": "Send",
+          "startLine": 31,
+          "endLine": 39,
+          "params": [
+            "_",
+            "phone",
+            "content"
+          ]
+        },
+        {
+          "name": "NewFakePortalRepo",
+          "startLine": 49,
+          "endLine": 51,
+          "params": []
+        },
+        {
+          "name": "SaveSession",
+          "startLine": 53,
+          "endLine": 58,
+          "params": [
+            "_",
+            "s"
+          ]
+        },
+        {
+          "name": "FindValidSession",
+          "startLine": 60,
+          "endLine": 68,
+          "params": [
+            "_",
+            "token"
+          ]
+        },
+        {
+          "name": "DeleteSession",
+          "startLine": 70,
+          "endLine": 79,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "SaveOTP",
+          "startLine": 81,
+          "endLine": 86,
+          "params": [
+            "_",
+            "o"
+          ]
+        },
+        {
+          "name": "ConsumeOTP",
+          "startLine": 88,
+          "endLine": 113,
+          "params": [
+            "_",
+            "phoneN",
+            "codeHash",
+            "maxAttempts"
+          ]
+        },
+        {
+          "name": "NewFakeGatewayTxRepo",
+          "startLine": 122,
+          "endLine": 124,
+          "params": []
+        },
+        {
+          "name": "Save",
+          "startLine": 126,
+          "endLine": 131,
+          "params": [
+            "_",
+            "t"
+          ]
+        },
+        {
+          "name": "FindByExternalID",
+          "startLine": 133,
+          "endLine": 142,
+          "params": [
+            "_",
+            "gateway",
+            "ext"
+          ]
+        },
+        {
+          "name": "FindByInvoice",
+          "startLine": 144,
+          "endLine": 154,
+          "params": [
+            "_",
+            "invoiceID"
+          ]
+        },
+        {
+          "name": "UpdateStatus",
+          "startLine": 156,
+          "endLine": 166,
+          "params": [
+            "_",
+            "id",
+            "status"
+          ]
+        },
+        {
+          "name": "LinkPayment",
+          "startLine": 168,
+          "endLine": 179,
+          "params": [
+            "_",
+            "id",
+            "paymentID",
+            "fee"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 182,
+          "endLine": 186,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "Name",
+          "startLine": 198,
+          "endLine": 198,
+          "params": []
+        },
+        {
+          "name": "Enabled",
+          "startLine": 199,
+          "endLine": 199,
+          "params": []
+        },
+        {
+          "name": "CreateCharge",
+          "startLine": 200,
+          "endLine": 205,
+          "params": []
+        },
+        {
+          "name": "ParseWebhook",
+          "startLine": 206,
+          "endLine": 211,
+          "params": []
+        },
+        {
+          "name": "CheckStatus",
+          "startLine": 213,
+          "endLine": 218,
+          "params": []
+        },
+        {
+          "name": "All",
+          "startLine": 221,
+          "endLine": 229,
+          "params": []
+        },
+        {
+          "name": "ListByCustomer",
+          "startLine": 237,
+          "endLine": 239,
+          "params": []
+        },
+        {
+          "name": "NewFakePaymentReader",
+          "startLine": 242,
+          "endLine": 242,
+          "params": []
+        },
+        {
+          "name": "OTPCount",
+          "startLine": 245,
+          "endLine": 249,
+          "params": []
+        },
+        {
+          "name": "AllNotifications",
+          "startLine": 252,
+          "endLine": 258,
+          "params": []
+        },
+        {
+          "name": "MarkFailedWithAttempt",
+          "startLine": 261,
+          "endLine": 273,
+          "params": [
+            "_",
+            "id",
+            "errMsg",
+            "attempts"
+          ]
+        },
+        {
+          "name": "PendingWithRetryLimit",
+          "startLine": 276,
+          "endLine": 291,
+          "params": [
+            "_",
+            "limit",
+            "maxAttempts"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeNotificationSender",
+          "startLine": 16,
+          "endLine": 20,
+          "methods": [
+            "Sent",
+            "Send"
+          ],
+          "properties": [
+            "mu",
+            "Messages",
+            "Err"
+          ]
+        },
+        {
+          "name": "FakePortalRepo",
+          "startLine": 43,
+          "endLine": 47,
+          "methods": [
+            "SaveSession",
+            "FindValidSession",
+            "DeleteSession",
+            "SaveOTP",
+            "ConsumeOTP",
+            "OTPCount"
+          ],
+          "properties": [
+            "mu",
+            "sessions",
+            "otps"
+          ]
+        },
+        {
+          "name": "FakeGatewayTxRepo",
+          "startLine": 117,
+          "endLine": 120,
+          "methods": [
+            "Save",
+            "FindByExternalID",
+            "FindByInvoice",
+            "UpdateStatus",
+            "LinkPayment",
+            "Get",
+            "All"
+          ],
+          "properties": [
+            "mu",
+            "byID"
+          ]
+        },
+        {
+          "name": "FakePaymentGateway",
+          "startLine": 190,
+          "endLine": 196,
+          "methods": [
+            "Name",
+            "Enabled",
+            "CreateCharge",
+            "ParseWebhook",
+            "CheckStatus"
+          ],
+          "properties": [
+            "Charge",
+            "Err",
+            "Event",
+            "ParseErr",
+            "IsEnabled"
+          ]
+        },
+        {
+          "name": "FakePaymentReader",
+          "startLine": 233,
+          "endLine": 235,
+          "methods": [
+            "ListByCustomer"
+          ],
+          "properties": [
+            "Payments"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FakeNotificationSender",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Sent",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Send",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "FakePortalRepo",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakePortalRepo",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "SaveSession",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "FindValidSession",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteSession",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "SaveOTP",
+          "line": 81,
+          "isDefault": false
+        },
+        {
+          "name": "ConsumeOTP",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "FakeGatewayTxRepo",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakeGatewayTxRepo",
+          "line": 122,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "FindByExternalID",
+          "line": 133,
+          "isDefault": false
+        },
+        {
+          "name": "FindByInvoice",
+          "line": 144,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateStatus",
+          "line": 156,
+          "isDefault": false
+        },
+        {
+          "name": "LinkPayment",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 182,
+          "isDefault": false
+        },
+        {
+          "name": "FakePaymentGateway",
+          "line": 190,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 198,
+          "isDefault": false
+        },
+        {
+          "name": "Enabled",
+          "line": 199,
+          "isDefault": false
+        },
+        {
+          "name": "CreateCharge",
+          "line": 200,
+          "isDefault": false
+        },
+        {
+          "name": "ParseWebhook",
+          "line": 206,
+          "isDefault": false
+        },
+        {
+          "name": "CheckStatus",
+          "line": 213,
+          "isDefault": false
+        },
+        {
+          "name": "All",
+          "line": 221,
+          "isDefault": false
+        },
+        {
+          "name": "FakePaymentReader",
+          "line": 233,
+          "isDefault": false
+        },
+        {
+          "name": "ListByCustomer",
+          "line": 237,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakePaymentReader",
+          "line": 242,
+          "isDefault": false
+        },
+        {
+          "name": "OTPCount",
+          "line": 245,
+          "isDefault": false
+        },
+        {
+          "name": "AllNotifications",
+          "line": 252,
+          "isDefault": false
+        },
+        {
+          "name": "MarkFailedWithAttempt",
+          "line": 261,
+          "isDefault": false
+        },
+        {
+          "name": "PendingWithRetryLimit",
+          "line": 276,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Sent",
+          "callee": "f.mu.Lock",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Sent",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Sent",
+          "callee": "make",
+          "lineNumber": 26
+        },
+        {
+          "caller": "Sent",
+          "callee": "len",
+          "lineNumber": 26
+        },
+        {
+          "caller": "Sent",
+          "callee": "copy",
+          "lineNumber": 27
+        },
+        {
+          "caller": "Send",
+          "callee": "f.mu.Lock",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Send",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Send",
+          "callee": "append",
+          "lineNumber": 37
+        },
+        {
+          "caller": "SaveSession",
+          "callee": "f.mu.Lock",
+          "lineNumber": 54
+        },
+        {
+          "caller": "SaveSession",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 55
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "f.mu.Lock",
+          "lineNumber": 61
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 62
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "time.Now().After",
+          "lineNumber": 64
+        },
+        {
+          "caller": "FindValidSession",
+          "callee": "time.Now",
+          "lineNumber": 64
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "f.mu.Lock",
+          "lineNumber": 71
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 72
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "delete",
+          "lineNumber": 75
+        },
+        {
+          "caller": "SaveOTP",
+          "callee": "f.mu.Lock",
+          "lineNumber": 82
+        },
+        {
+          "caller": "SaveOTP",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SaveOTP",
+          "callee": "append",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "f.mu.Lock",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 90
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "len",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "time.Now().After",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "time.Now",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "time.Now",
+          "lineNumber": 100
+        },
+        {
+          "caller": "ConsumeOTP",
+          "callee": "time.Now",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Save",
+          "callee": "f.mu.Lock",
+          "lineNumber": 127
+        },
+        {
+          "caller": "Save",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 128
+        },
+        {
+          "caller": "FindByExternalID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 134
+        },
+        {
+          "caller": "FindByExternalID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 135
+        },
+        {
+          "caller": "FindByInvoice",
+          "callee": "f.mu.Lock",
+          "lineNumber": 145
+        },
+        {
+          "caller": "FindByInvoice",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 146
+        },
+        {
+          "caller": "FindByInvoice",
+          "callee": "append",
+          "lineNumber": 150
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "f.mu.Lock",
+          "lineNumber": 157
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 158
+        },
+        {
+          "caller": "LinkPayment",
+          "callee": "f.mu.Lock",
+          "lineNumber": 169
+        },
+        {
+          "caller": "LinkPayment",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 170
+        },
+        {
+          "caller": "Get",
+          "callee": "f.mu.Lock",
+          "lineNumber": 183
+        },
+        {
+          "caller": "Get",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 184
+        },
+        {
+          "caller": "All",
+          "callee": "f.mu.Lock",
+          "lineNumber": 222
+        },
+        {
+          "caller": "All",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 223
+        },
+        {
+          "caller": "All",
+          "callee": "make",
+          "lineNumber": 224
+        },
+        {
+          "caller": "All",
+          "callee": "len",
+          "lineNumber": 224
+        },
+        {
+          "caller": "All",
+          "callee": "append",
+          "lineNumber": 226
+        },
+        {
+          "caller": "OTPCount",
+          "callee": "f.mu.Lock",
+          "lineNumber": 246
+        },
+        {
+          "caller": "OTPCount",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 247
+        },
+        {
+          "caller": "OTPCount",
+          "callee": "len",
+          "lineNumber": 248
+        },
+        {
+          "caller": "AllNotifications",
+          "callee": "f.mu.Lock",
+          "lineNumber": 253
+        },
+        {
+          "caller": "AllNotifications",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 254
+        },
+        {
+          "caller": "AllNotifications",
+          "callee": "make",
+          "lineNumber": 255
+        },
+        {
+          "caller": "AllNotifications",
+          "callee": "len",
+          "lineNumber": 255
+        },
+        {
+          "caller": "AllNotifications",
+          "callee": "copy",
+          "lineNumber": 256
+        },
+        {
+          "caller": "MarkFailedWithAttempt",
+          "callee": "f.mu.Lock",
+          "lineNumber": 262
+        },
+        {
+          "caller": "MarkFailedWithAttempt",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 263
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "f.mu.Lock",
+          "lineNumber": 277
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 278
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "append",
+          "lineNumber": 284
+        },
+        {
+          "caller": "PendingWithRetryLimit",
+          "callee": "len",
+          "lineNumber": 285
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 32,
+        "functionCount": 27,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "internal/port/mocktest/fakes_registration.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 155,
+      "nonEmptyLines": 134,
+      "functions": [
+        {
+          "name": "NewFakeRegistrationRepo",
+          "startLine": 26,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "Save",
+          "startLine": 30,
+          "endLine": 35,
+          "params": [
+            "_",
+            "r"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 37,
+          "endLine": 45,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "FindByNo",
+          "startLine": 47,
+          "endLine": 56,
+          "params": [
+            "_",
+            "no"
+          ]
+        },
+        {
+          "name": "List",
+          "startLine": 58,
+          "endLine": 66,
+          "params": [
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "UpdateStatus",
+          "startLine": 68,
+          "endLine": 78,
+          "params": [
+            "_",
+            "id",
+            "status"
+          ]
+        },
+        {
+          "name": "CountPendingSince",
+          "startLine": 80,
+          "endLine": 90,
+          "params": [
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "NewFakeServicePlanRepo",
+          "startLine": 99,
+          "endLine": 101,
+          "params": []
+        },
+        {
+          "name": "Seed",
+          "startLine": 103,
+          "endLine": 107,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "Save",
+          "startLine": 109,
+          "endLine": 114,
+          "params": [
+            "_",
+            "p"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 116,
+          "endLine": 124,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "FindByName",
+          "startLine": 126,
+          "endLine": 135,
+          "params": [
+            "_",
+            "tenant",
+            "name"
+          ]
+        },
+        {
+          "name": "List",
+          "startLine": 137,
+          "endLine": 148,
+          "params": [
+            "_",
+            "activeOnly"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 150,
+          "endLine": 155,
+          "params": [
+            "_",
+            "id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeRegistrationRepo",
+          "startLine": 21,
+          "endLine": 24,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindByNo",
+            "List",
+            "UpdateStatus",
+            "CountPendingSince"
+          ],
+          "properties": [
+            "mu",
+            "byID"
+          ]
+        },
+        {
+          "name": "FakeServicePlanRepo",
+          "startLine": 94,
+          "endLine": 97,
+          "methods": [
+            "Seed",
+            "Save",
+            "FindByID",
+            "FindByName",
+            "List",
+            "Delete"
+          ],
+          "properties": [
+            "mu",
+            "byID"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FakeRegistrationRepo",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakeRegistrationRepo",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "FindByNo",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "List",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateStatus",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "CountPendingSince",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "FakeServicePlanRepo",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakeServicePlanRepo",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "Seed",
+          "line": 103,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 109,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 116,
+          "isDefault": false
+        },
+        {
+          "name": "FindByName",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "List",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 150,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Save",
+          "callee": "f.mu.Lock",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Save",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 32
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 38
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 39
+        },
+        {
+          "caller": "FindByNo",
+          "callee": "f.mu.Lock",
+          "lineNumber": 48
+        },
+        {
+          "caller": "FindByNo",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 49
+        },
+        {
+          "caller": "List",
+          "callee": "f.mu.Lock",
+          "lineNumber": 59
+        },
+        {
+          "caller": "List",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 60
+        },
+        {
+          "caller": "List",
+          "callee": "make",
+          "lineNumber": 61
+        },
+        {
+          "caller": "List",
+          "callee": "len",
+          "lineNumber": 61
+        },
+        {
+          "caller": "List",
+          "callee": "append",
+          "lineNumber": 63
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "f.mu.Lock",
+          "lineNumber": 69
+        },
+        {
+          "caller": "UpdateStatus",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 70
+        },
+        {
+          "caller": "CountPendingSince",
+          "callee": "f.mu.Lock",
+          "lineNumber": 81
+        },
+        {
+          "caller": "CountPendingSince",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Seed",
+          "callee": "f.mu.Lock",
+          "lineNumber": 104
+        },
+        {
+          "caller": "Seed",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Save",
+          "callee": "f.mu.Lock",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Save",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 111
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 117
+        },
+        {
+          "caller": "FindByID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 118
+        },
+        {
+          "caller": "FindByName",
+          "callee": "f.mu.Lock",
+          "lineNumber": 127
+        },
+        {
+          "caller": "FindByName",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 128
+        },
+        {
+          "caller": "List",
+          "callee": "f.mu.Lock",
+          "lineNumber": 138
+        },
+        {
+          "caller": "List",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 139
+        },
+        {
+          "caller": "List",
+          "callee": "append",
+          "lineNumber": 145
+        },
+        {
+          "caller": "Delete",
+          "callee": "f.mu.Lock",
+          "lineNumber": 151
+        },
+        {
+          "caller": "Delete",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 152
+        },
+        {
+          "caller": "Delete",
+          "callee": "delete",
+          "lineNumber": 153
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 16,
+        "functionCount": 14,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/mocktest/fakes_router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 125,
+      "nonEmptyLines": 102,
+      "functions": [
+        {
+          "name": "record",
+          "startLine": 25,
+          "endLine": 35,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Provision",
+          "startLine": 37,
+          "endLine": 39,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "a"
+          ]
+        },
+        {
+          "name": "ProvisionPPPoE",
+          "startLine": 42,
+          "endLine": 44,
+          "params": [
+            "_",
+            "_",
+            "spec"
+          ]
+        },
+        {
+          "name": "ProvisionHotspot",
+          "startLine": 47,
+          "endLine": 49,
+          "params": [
+            "_",
+            "_",
+            "spec"
+          ]
+        },
+        {
+          "name": "ProvisionDedicated",
+          "startLine": 52,
+          "endLine": 54,
+          "params": [
+            "_",
+            "_",
+            "spec"
+          ]
+        },
+        {
+          "name": "UpdateAccount",
+          "startLine": 56,
+          "endLine": 58,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "username",
+            "newProfile"
+          ]
+        },
+        {
+          "name": "EnsureProfile",
+          "startLine": 60,
+          "endLine": 62,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "profileName",
+            "rateLimit"
+          ]
+        },
+        {
+          "name": "Isolate",
+          "startLine": 64,
+          "endLine": 66,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "username",
+            "opt"
+          ]
+        },
+        {
+          "name": "Restore",
+          "startLine": 68,
+          "endLine": 70,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "username",
+            "normalProfile",
+            "addressList"
+          ]
+        },
+        {
+          "name": "Suspend",
+          "startLine": 72,
+          "endLine": 74,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "username"
+          ]
+        },
+        {
+          "name": "Terminate",
+          "startLine": 77,
+          "endLine": 79,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "username"
+          ]
+        },
+        {
+          "name": "EnsureIsolationInfrastructure",
+          "startLine": 82,
+          "endLine": 84,
+          "params": [
+            "_",
+            "deviceID",
+            "_"
+          ]
+        },
+        {
+          "name": "GetIsolationInfrastructureStatus",
+          "startLine": 87,
+          "endLine": 93,
+          "params": [
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "ApplyIntegrationScript",
+          "startLine": 96,
+          "endLine": 98,
+          "params": [
+            "_",
+            "deviceID",
+            "profileName",
+            "serviceType",
+            "scriptType",
+            "_"
+          ]
+        },
+        {
+          "name": "SyncPlanProfile",
+          "startLine": 101,
+          "endLine": 103,
+          "params": [
+            "_",
+            "deviceID",
+            "plan"
+          ]
+        },
+        {
+          "name": "DeletePlanProfile",
+          "startLine": 106,
+          "endLine": 108,
+          "params": [
+            "_",
+            "deviceID",
+            "serviceType",
+            "profileName"
+          ]
+        },
+        {
+          "name": "Count",
+          "startLine": 111,
+          "endLine": 121,
+          "params": [
+            "prefix"
+          ]
+        },
+        {
+          "name": "NewFakeRouterAccountManager",
+          "startLine": 123,
+          "endLine": 125,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeRouterAccountManager",
+          "startLine": 18,
+          "endLine": 23,
+          "methods": [
+            "record",
+            "Provision",
+            "ProvisionPPPoE",
+            "ProvisionHotspot",
+            "ProvisionDedicated",
+            "UpdateAccount",
+            "EnsureProfile",
+            "Isolate",
+            "Restore",
+            "Suspend",
+            "Terminate",
+            "EnsureIsolationInfrastructure",
+            "GetIsolationInfrastructureStatus",
+            "ApplyIntegrationScript",
+            "SyncPlanProfile",
+            "DeletePlanProfile",
+            "Count"
+          ],
+          "properties": [
+            "mu",
+            "Calls",
+            "Fail"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FakeRouterAccountManager",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Provision",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "ProvisionPPPoE",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "ProvisionHotspot",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "ProvisionDedicated",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAccount",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "EnsureProfile",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "Isolate",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "Restore",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "Suspend",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "Terminate",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "EnsureIsolationInfrastructure",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "GetIsolationInfrastructureStatus",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "ApplyIntegrationScript",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "SyncPlanProfile",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "DeletePlanProfile",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "Count",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakeRouterAccountManager",
+          "line": 123,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "record",
+          "callee": "f.mu.Lock",
+          "lineNumber": 26
+        },
+        {
+          "caller": "record",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 27
+        },
+        {
+          "caller": "record",
+          "callee": "append",
+          "lineNumber": 28
+        },
+        {
+          "caller": "record",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Provision",
+          "callee": "f.record",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ProvisionPPPoE",
+          "callee": "f.record",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ProvisionHotspot",
+          "callee": "f.record",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ProvisionDedicated",
+          "callee": "f.record",
+          "lineNumber": 53
+        },
+        {
+          "caller": "UpdateAccount",
+          "callee": "f.record",
+          "lineNumber": 57
+        },
+        {
+          "caller": "EnsureProfile",
+          "callee": "f.record",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Isolate",
+          "callee": "f.record",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Isolate",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Restore",
+          "callee": "f.record",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Suspend",
+          "callee": "f.record",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Terminate",
+          "callee": "f.record",
+          "lineNumber": 78
+        },
+        {
+          "caller": "EnsureIsolationInfrastructure",
+          "callee": "f.record",
+          "lineNumber": 83
+        },
+        {
+          "caller": "GetIsolationInfrastructureStatus",
+          "callee": "domainDevice.DefaultIsolationConfig",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ApplyIntegrationScript",
+          "callee": "f.record",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ApplyIntegrationScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 97
+        },
+        {
+          "caller": "SyncPlanProfile",
+          "callee": "f.record",
+          "lineNumber": 102
+        },
+        {
+          "caller": "SyncPlanProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 102
+        },
+        {
+          "caller": "DeletePlanProfile",
+          "callee": "f.record",
+          "lineNumber": 107
+        },
+        {
+          "caller": "DeletePlanProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Count",
+          "callee": "f.mu.Lock",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Count",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Count",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 116
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 18,
+        "functionCount": 18,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/mocktest/fakes_setting.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 25,
+      "functions": [
+        {
+          "name": "NewFakeSettingReader",
+          "startLine": 15,
+          "endLine": 21,
+          "params": [
+            "vals"
+          ]
+        },
+        {
+          "name": "GetValue",
+          "startLine": 23,
+          "endLine": 30,
+          "params": [
+            "_",
+            "key",
+            "fallback"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeSettingReader",
+          "startLine": 10,
+          "endLine": 13,
+          "methods": [
+            "GetValue"
+          ],
+          "properties": [
+            "mu",
+            "vals"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FakeSettingReader",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "NewFakeSettingReader",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "GetValue",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetValue",
+          "callee": "f.mu.Lock",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GetValue",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 25
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    }
+  ]
+}

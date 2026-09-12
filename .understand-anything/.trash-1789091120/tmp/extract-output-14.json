@@ -1,0 +1,3017 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 45,
+      "metrics": {}
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "sections": [
+        {
+          "heading": "outputLanguage",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "autoUpdate",
+          "level": 1,
+          "line": 3
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": ".understand-anything/intermediate/scan-result.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "sections": [
+        {
+          "heading": "scriptCompleted",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "files",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "totalFiles",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "filteredByIgnore",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "estimatedComplexity",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "stats",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "importMap",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 7
+      }
+    },
+    {
+      "path": "api/openapi.yaml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 5,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": "cmd/probe/main.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 146,
+      "nonEmptyLines": 121,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 19,
+          "endLine": 45,
+          "params": []
+        },
+        {
+          "name": "runHeartbeatLoop",
+          "startLine": 47,
+          "endLine": 75,
+          "params": [
+            "ctx",
+            "client",
+            "probeID"
+          ]
+        },
+        {
+          "name": "runTelemetryLoop",
+          "startLine": 77,
+          "endLine": 100,
+          "params": [
+            "ctx",
+            "client",
+            "probeID"
+          ]
+        },
+        {
+          "name": "measureTargetLatency",
+          "startLine": 102,
+          "endLine": 115,
+          "params": [
+            "target"
+          ]
+        },
+        {
+          "name": "newJSONConnectClient",
+          "startLine": 122,
+          "endLine": 127,
+          "params": [
+            "baseURL"
+          ]
+        },
+        {
+          "name": "ReportStatus",
+          "startLine": 129,
+          "endLine": 139,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "envOr",
+          "startLine": 141,
+          "endLine": 146,
+          "params": [
+            "key",
+            "fallback"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "probeClient",
+          "startLine": 117,
+          "endLine": 120,
+          "methods": [
+            "ReportStatus"
+          ],
+          "properties": [
+            "baseURL",
+            "httpClient"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ReportStatus",
+          "line": 129,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "signal.NotifyContext",
+          "lineNumber": 20
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 20
+        },
+        {
+          "caller": "main",
+          "callee": "stop",
+          "lineNumber": 21
+        },
+        {
+          "caller": "main",
+          "callee": "envOr",
+          "lineNumber": 23
+        },
+        {
+          "caller": "main",
+          "callee": "envOr",
+          "lineNumber": 24
+        },
+        {
+          "caller": "main",
+          "callee": "logger.Init",
+          "lineNumber": 25
+        },
+        {
+          "caller": "main",
+          "callee": "envOr",
+          "lineNumber": 27
+        },
+        {
+          "caller": "main",
+          "callee": "envOr",
+          "lineNumber": 28
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"ProbeAgent\").WithFields(map[string]any{\n\t\t\"probe_id\":   probeID,\n\t\t\"server_url\": serverURL,\n\t}).Info",
+          "lineNumber": 30
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"ProbeAgent\").WithFields",
+          "lineNumber": 30
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 30
+        },
+        {
+          "caller": "main",
+          "callee": "newJSONConnectClient",
+          "lineNumber": 35
+        },
+        {
+          "caller": "main",
+          "callee": "runHeartbeatLoop",
+          "lineNumber": 38
+        },
+        {
+          "caller": "main",
+          "callee": "runTelemetryLoop",
+          "lineNumber": 41
+        },
+        {
+          "caller": "main",
+          "callee": "ctx.Done",
+          "lineNumber": 43
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"ProbeAgent\").Info",
+          "lineNumber": 44
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 44
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "time.NewTicker",
+          "lineNumber": 48
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "ticker.Stop",
+          "lineNumber": 49
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "time.Now",
+          "lineNumber": 51
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "ctx.Done",
+          "lineNumber": 55
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "int64",
+          "lineNumber": 58
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "time.Since(startTime).Seconds",
+          "lineNumber": 58
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "time.Since",
+          "lineNumber": 58
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "connect.NewRequest",
+          "lineNumber": 59
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "client.ReportStatus",
+          "lineNumber": 64
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "logger.WithComponent(\"ProbeAgent\").WithError(err).Warn",
+          "lineNumber": 66
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "logger.WithComponent(\"ProbeAgent\").WithError",
+          "lineNumber": 66
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "logger.WithComponent",
+          "lineNumber": 66
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "logger.WithComponent(\"ProbeAgent\").WithFields(map[string]any{\n\t\t\t\t\t\"acknowledged\":     resp.Msg.Acknowledged,\n\t\t\t\t\t\"server_time_unix\": resp.Msg.ServerTimeUnix,\n\t\t\t\t}).Debug",
+          "lineNumber": 68
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "logger.WithComponent(\"ProbeAgent\").WithFields",
+          "lineNumber": 68
+        },
+        {
+          "caller": "runHeartbeatLoop",
+          "callee": "logger.WithComponent",
+          "lineNumber": 68
+        },
+        {
+          "caller": "runTelemetryLoop",
+          "callee": "time.NewTicker",
+          "lineNumber": 78
+        },
+        {
+          "caller": "runTelemetryLoop",
+          "callee": "ticker.Stop",
+          "lineNumber": 79
+        },
+        {
+          "caller": "runTelemetryLoop",
+          "callee": "ctx.Done",
+          "lineNumber": 86
+        },
+        {
+          "caller": "runTelemetryLoop",
+          "callee": "len",
+          "lineNumber": 89
+        },
+        {
+          "caller": "runTelemetryLoop",
+          "callee": "measureTargetLatency",
+          "lineNumber": 92
+        },
+        {
+          "caller": "runTelemetryLoop",
+          "callee": "logger.WithComponent(\"ProbeAgent\").WithFields(map[string]any{\n\t\t\t\t\"target\":     target,\n\t\t\t\t\"latency_ms\": latency,\n\t\t\t\t\"alive\":      alive,\n\t\t\t}).Debug",
+          "lineNumber": 93
+        },
+        {
+          "caller": "runTelemetryLoop",
+          "callee": "logger.WithComponent(\"ProbeAgent\").WithFields",
+          "lineNumber": 93
+        },
+        {
+          "caller": "runTelemetryLoop",
+          "callee": "logger.WithComponent",
+          "lineNumber": 93
+        },
+        {
+          "caller": "measureTargetLatency",
+          "callee": "time.Now",
+          "lineNumber": 103
+        },
+        {
+          "caller": "measureTargetLatency",
+          "callee": "net.DialTimeout",
+          "lineNumber": 108
+        },
+        {
+          "caller": "measureTargetLatency",
+          "callee": "net.JoinHostPort",
+          "lineNumber": 108
+        },
+        {
+          "caller": "measureTargetLatency",
+          "callee": "time.Since(start).Milliseconds",
+          "lineNumber": 109
+        },
+        {
+          "caller": "measureTargetLatency",
+          "callee": "time.Since",
+          "lineNumber": 109
+        },
+        {
+          "caller": "measureTargetLatency",
+          "callee": "conn.Close",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ReportStatus",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ReportStatus",
+          "callee": "connect.NewClient",
+          "lineNumber": 133
+        },
+        {
+          "caller": "ReportStatus",
+          "callee": "client.CallUnary",
+          "lineNumber": 138
+        },
+        {
+          "caller": "envOr",
+          "callee": "os.Getenv",
+          "lineNumber": 142
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "cmd/seed/main.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 222,
+      "nonEmptyLines": 197,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 20,
+          "endLine": 46,
+          "params": []
+        },
+        {
+          "name": "seedUsers",
+          "startLine": 48,
+          "endLine": 168,
+          "params": [
+            "ctx",
+            "pgStore"
+          ]
+        },
+        {
+          "name": "seedCasbin",
+          "startLine": 170,
+          "endLine": 191,
+          "params": [
+            "ctx",
+            "pgStore"
+          ]
+        },
+        {
+          "name": "seedLLMConfig",
+          "startLine": 193,
+          "endLine": 222,
+          "params": [
+            "ctx",
+            "pgStore",
+            "cfg"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "godotenv.Load",
+          "lineNumber": 21
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Seeder\").Debug",
+          "lineNumber": 22
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 22
+        },
+        {
+          "caller": "main",
+          "callee": "config.Load",
+          "lineNumber": 25
+        },
+        {
+          "caller": "main",
+          "callee": "logger.Init",
+          "lineNumber": 26
+        },
+        {
+          "caller": "main",
+          "callee": "cfg.Validate",
+          "lineNumber": 27
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).Fatal",
+          "lineNumber": 28
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 28
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Seeder\").Info",
+          "lineNumber": 31
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 31
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewStore",
+          "lineNumber": 33
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).Fatal",
+          "lineNumber": 35
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 35
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 35
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Seeder\").Info",
+          "lineNumber": 38
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 38
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 40
+        },
+        {
+          "caller": "main",
+          "callee": "seedUsers",
+          "lineNumber": 41
+        },
+        {
+          "caller": "main",
+          "callee": "seedLLMConfig",
+          "lineNumber": 42
+        },
+        {
+          "caller": "main",
+          "callee": "seedCasbin",
+          "lineNumber": 43
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Seeder\").Info",
+          "lineNumber": 45
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 45
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "os.Getenv",
+          "lineNumber": 49
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "os.Getenv",
+          "lineNumber": 53
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "os.Getenv",
+          "lineNumber": 57
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "len",
+          "lineNumber": 63
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "validatePassword",
+          "lineNumber": 114
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithField(\"username\", u.username).Fatal",
+          "lineNumber": 115
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithField",
+          "lineNumber": 115
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent",
+          "lineNumber": 115
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.FindUserByUsername",
+          "lineNumber": 118
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "bcrypt.GenerateFromPassword",
+          "lineNumber": 119
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(errHash).WithField(\"username\", u.username).Error",
+          "lineNumber": 121
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(errHash).WithField",
+          "lineNumber": 121
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 121
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent",
+          "lineNumber": 121
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "string",
+          "lineNumber": 127
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB().WithContext(ctx).Model(&model.UserModel{}).Where(\"username = ?\", u.username).Updates",
+          "lineNumber": 134
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB().WithContext(ctx).Model(&model.UserModel{}).Where",
+          "lineNumber": 134
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB().WithContext(ctx).Model",
+          "lineNumber": 134
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB().WithContext",
+          "lineNumber": 134
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB",
+          "lineNumber": 134
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).WithField(\"username\", u.username).Error",
+          "lineNumber": 135
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).WithField",
+          "lineNumber": 135
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 135
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent",
+          "lineNumber": 135
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithFields(map[string]any{\n\t\t\t\t\t\"username\": u.username,\n\t\t\t\t\t\"role\":     u.role,\n\t\t\t\t\t\"email\":    u.email,\n\t\t\t\t}).Info",
+          "lineNumber": 137
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithFields",
+          "lineNumber": 137
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent",
+          "lineNumber": 137
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "string",
+          "lineNumber": 149
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.CreateUser",
+          "lineNumber": 158
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).WithField(\"username\", u.username).Error",
+          "lineNumber": 159
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).WithField",
+          "lineNumber": 159
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 159
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent",
+          "lineNumber": 159
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithFields(map[string]any{\n\t\t\t\t\"username\": u.username,\n\t\t\t\t\"role\":     u.role,\n\t\t\t\t\"email\":    u.email,\n\t\t\t}).Info",
+          "lineNumber": 161
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent(\"Seeder\").WithFields",
+          "lineNumber": 161
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "logger.WithComponent",
+          "lineNumber": 161
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "auth.NewCasbinEnforcer",
+          "lineNumber": 171
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "pgStore.DB",
+          "lineNumber": 171
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).Error",
+          "lineNumber": 173
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 173
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent",
+          "lineNumber": 173
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "auth.SeedSystemPolicies",
+          "lineNumber": 177
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent(\"Seeder\").Info",
+          "lineNumber": 178
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent",
+          "lineNumber": 178
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "pgStore.FindAllUsers",
+          "lineNumber": 180
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).Error",
+          "lineNumber": 182
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 182
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent",
+          "lineNumber": 182
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "make",
+          "lineNumber": 185
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "len",
+          "lineNumber": 185
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "append",
+          "lineNumber": 187
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 187
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "auth.EnsureUserRoleAssignments",
+          "lineNumber": 189
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent(\"Seeder\").Info",
+          "lineNumber": 190
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "logger.WithComponent",
+          "lineNumber": 190
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "pgStore.FindAll",
+          "lineNumber": 194
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "len",
+          "lineNumber": 195
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent(\"Seeder\").Info",
+          "lineNumber": 196
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent",
+          "lineNumber": 196
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "config.Encrypt",
+          "lineNumber": 200
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).Error",
+          "lineNumber": 202
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 202
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent",
+          "lineNumber": 202
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "pgStore.Create",
+          "lineNumber": 214
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent(\"Seeder\").WithError(err).Error",
+          "lineNumber": 215
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent(\"Seeder\").WithError",
+          "lineNumber": 215
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent",
+          "lineNumber": 215
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent(\"Seeder\").WithFields(map[string]any{\n\t\t\t\"provider\": defaultConfig.Provider,\n\t\t\t\"model\":    defaultConfig.Model,\n\t\t}).Info",
+          "lineNumber": 217
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent(\"Seeder\").WithFields",
+          "lineNumber": 217
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "logger.WithComponent",
+          "lineNumber": 217
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "cmd/server/main.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 53,
+      "nonEmptyLines": 44,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 15,
+          "endLine": 53,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "signal.NotifyContext",
+          "lineNumber": 16
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 16
+        },
+        {
+          "caller": "main",
+          "callee": "stop",
+          "lineNumber": 17
+        },
+        {
+          "caller": "main",
+          "callee": "config.Load",
+          "lineNumber": 19
+        },
+        {
+          "caller": "main",
+          "callee": "logger.Init",
+          "lineNumber": 20
+        },
+        {
+          "caller": "main",
+          "callee": "cfg.Validate",
+          "lineNumber": 21
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Server\").WithError(err).Error",
+          "lineNumber": 22
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Server\").WithError",
+          "lineNumber": 22
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 22
+        },
+        {
+          "caller": "main",
+          "callee": "os.Exit",
+          "lineNumber": 23
+        },
+        {
+          "caller": "main",
+          "callee": "app.New",
+          "lineNumber": 26
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Server\").WithError(err).Error",
+          "lineNumber": 28
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Server\").WithError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 28
+        },
+        {
+          "caller": "main",
+          "callee": "os.Exit",
+          "lineNumber": 29
+        },
+        {
+          "caller": "main",
+          "callee": "make",
+          "lineNumber": 32
+        },
+        {
+          "caller": "main",
+          "callee": "func() {\n\t\trunErr <- application.Run()\n\t}",
+          "lineNumber": 33
+        },
+        {
+          "caller": "main",
+          "callee": "application.Run",
+          "lineNumber": 34
+        },
+        {
+          "caller": "main",
+          "callee": "ctx.Done",
+          "lineNumber": 38
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Server\").WithError(err).Error",
+          "lineNumber": 41
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Server\").WithError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 41
+        },
+        {
+          "caller": "main",
+          "callee": "os.Exit",
+          "lineNumber": 42
+        },
+        {
+          "caller": "main",
+          "callee": "context.WithTimeout",
+          "lineNumber": 47
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 47
+        },
+        {
+          "caller": "main",
+          "callee": "cancel",
+          "lineNumber": 48
+        },
+        {
+          "caller": "main",
+          "callee": "application.Shutdown",
+          "lineNumber": 50
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Server\").WithError(err).Error",
+          "lineNumber": 51
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent(\"Server\").WithError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "main",
+          "callee": "logger.WithComponent",
+          "lineNumber": 51
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "data/skills/ghaib-network-cs/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 83,
+      "nonEmptyLines": 61,
+      "sections": [
+        {
+          "heading": "Ghaib Network — Customer Service Jaringan",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "Identitas & Persona",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "Ruang Lingkup — PENTING",
+          "level": 2,
+          "line": 19
+        },
+        {
+          "heading": "Prinsip Dasar",
+          "level": 2,
+          "line": 31
+        },
+        {
+          "heading": "Alur Kerja per Topik",
+          "level": 2,
+          "line": 39
+        },
+        {
+          "heading": "Format Respons",
+          "level": 2,
+          "line": 54
+        },
+        {
+          "heading": "Pelaporan & Kunjungan Teknisi Lapangan (Tool Calling)",
+          "level": 2,
+          "line": 61
+        },
+        {
+          "heading": "File Referensi",
+          "level": 2,
+          "line": 73
+        },
+        {
+          "heading": "Terkait Deployment di Luar Claude",
+          "level": 2,
+          "line": 81
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "data/skills/template.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 30,
+      "nonEmptyLines": 23,
+      "sections": [
+        {
+          "heading": "[Judul Lengkap Skill]",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "1. Ruang Lingkup & Batasan",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "2. Alur Prosedur / SOP",
+          "level": 2,
+          "line": 14
+        },
+        {
+          "heading": "3. Dokumen Referensi Pendukung",
+          "level": 2,
+          "line": 19
+        },
+        {
+          "heading": "4. Kriteria Eskalasi ke Manusia",
+          "level": 2,
+          "line": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": "data/system-prompt.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 21,
+      "nonEmptyLines": 17,
+      "sections": [
+        {
+          "heading": "System Prompt — Bot Customer Service Ghaib Network",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "1. Identitas & Nada Bicara",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "2. Ruang Lingkup & Batasan",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "3. Prinsip Penanganan Troubleshooting",
+          "level": 2,
+          "line": 17
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "deployments/docker-compose.prod.yml",
+      "language": "yaml",
+      "fileCategory": "infra",
+      "totalLines": 105,
+      "nonEmptyLines": 100,
+      "sections": [
+        {
+          "heading": "services",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "volumes",
+          "level": 1,
+          "line": 101
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": "deployments/docker-compose.yml",
+      "language": "yaml",
+      "fileCategory": "infra",
+      "totalLines": 90,
+      "nonEmptyLines": 86,
+      "sections": [
+        {
+          "heading": "services",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "volumes",
+          "level": 1,
+          "line": 88
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": "deployments/docker/Dockerfile.gateway",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 28,
+      "nonEmptyLines": 23,
+      "metrics": {}
+    },
+    {
+      "path": "deployments/docker/Dockerfile.server",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 35,
+      "nonEmptyLines": 28,
+      "metrics": {}
+    },
+    {
+      "path": "deployments/nginx/conf.d/default.conf",
+      "language": "conf",
+      "fileCategory": "code",
+      "totalLines": 165,
+      "nonEmptyLines": 140,
+      "metrics": {}
+    },
+    {
+      "path": "deployments/nginx/nginx.conf",
+      "language": "conf",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 25,
+      "metrics": {}
+    },
+    {
+      "path": "docs/backend/request-validation-inventory.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 61,
+      "nonEmptyLines": 48,
+      "sections": [
+        {
+          "heading": "Request Validation Inventory",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Rules",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "Current Inventory",
+          "level": 2,
+          "line": 15
+        },
+        {
+          "heading": "Contract Tests",
+          "level": 2,
+          "line": 33
+        },
+        {
+          "heading": "ID Policy Gaps",
+          "level": 2,
+          "line": 53
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": "internal/adapter/auth/casbin.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 220,
+      "nonEmptyLines": 192,
+      "functions": [
+        {
+          "name": "NewCasbinEnforcer",
+          "startLine": 29,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "db"
+          ]
+        },
+        {
+          "name": "Enforce",
+          "startLine": 54,
+          "endLine": 59,
+          "params": [
+            "sub",
+            "obj",
+            "act"
+          ]
+        },
+        {
+          "name": "AddPolicy",
+          "startLine": 62,
+          "endLine": 71,
+          "params": [
+            "role",
+            "obj",
+            "act"
+          ]
+        },
+        {
+          "name": "RemovePolicy",
+          "startLine": 74,
+          "endLine": 83,
+          "params": [
+            "role",
+            "obj",
+            "act"
+          ]
+        },
+        {
+          "name": "GetPolicies",
+          "startLine": 86,
+          "endLine": 91,
+          "params": []
+        },
+        {
+          "name": "GetGroupingPolicies",
+          "startLine": 94,
+          "endLine": 99,
+          "params": []
+        },
+        {
+          "name": "SyncRolePermissions",
+          "startLine": 102,
+          "endLine": 130,
+          "params": [
+            "role",
+            "permissions"
+          ]
+        },
+        {
+          "name": "DeleteRole",
+          "startLine": 133,
+          "endLine": 150,
+          "params": [
+            "role"
+          ]
+        },
+        {
+          "name": "AddRoleForUser",
+          "startLine": 153,
+          "endLine": 162,
+          "params": [
+            "user",
+            "role"
+          ]
+        },
+        {
+          "name": "DeleteRoleForUser",
+          "startLine": 165,
+          "endLine": 174,
+          "params": [
+            "user",
+            "role"
+          ]
+        },
+        {
+          "name": "DeleteRolesForUser",
+          "startLine": 177,
+          "endLine": 186,
+          "params": [
+            "user"
+          ]
+        },
+        {
+          "name": "GetRolesForUser",
+          "startLine": 189,
+          "endLine": 194,
+          "params": [
+            "user"
+          ]
+        },
+        {
+          "name": "GetImplicitPermissionsForUser",
+          "startLine": 197,
+          "endLine": 212,
+          "params": [
+            "user"
+          ]
+        },
+        {
+          "name": "persist",
+          "startLine": 215,
+          "endLine": 220,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "CasbinEnforcer",
+          "startLine": 17,
+          "endLine": 19,
+          "methods": [
+            "Enforce",
+            "AddPolicy",
+            "RemovePolicy",
+            "GetPolicies",
+            "GetGroupingPolicies",
+            "SyncRolePermissions",
+            "DeleteRole",
+            "AddRoleForUser",
+            "DeleteRoleForUser",
+            "DeleteRolesForUser",
+            "GetRolesForUser",
+            "GetImplicitPermissionsForUser",
+            "persist"
+          ],
+          "properties": [
+            "enforcer"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CasbinEnforcer",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "NewCasbinEnforcer",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "Enforce",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "AddPolicy",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "RemovePolicy",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "GetPolicies",
+          "line": 86,
+          "isDefault": false
+        },
+        {
+          "name": "GetGroupingPolicies",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "SyncRolePermissions",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteRole",
+          "line": 133,
+          "isDefault": false
+        },
+        {
+          "name": "AddRoleForUser",
+          "line": 153,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteRoleForUser",
+          "line": 165,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteRolesForUser",
+          "line": 177,
+          "isDefault": false
+        },
+        {
+          "name": "GetRolesForUser",
+          "line": 189,
+          "isDefault": false
+        },
+        {
+          "name": "GetImplicitPermissionsForUser",
+          "line": 197,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewCasbinEnforcer",
+          "callee": "gormadapter.NewAdapterByDB",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewCasbinEnforcer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewCasbinEnforcer",
+          "callee": "model.NewModelFromString",
+          "lineNumber": 35
+        },
+        {
+          "caller": "NewCasbinEnforcer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 37
+        },
+        {
+          "caller": "NewCasbinEnforcer",
+          "callee": "casbin.NewEnforcer",
+          "lineNumber": 40
+        },
+        {
+          "caller": "NewCasbinEnforcer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 42
+        },
+        {
+          "caller": "NewCasbinEnforcer",
+          "callee": "e.LoadPolicy",
+          "lineNumber": 45
+        },
+        {
+          "caller": "NewCasbinEnforcer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "Enforce",
+          "callee": "ce.enforcer.Enforce",
+          "lineNumber": 58
+        },
+        {
+          "caller": "AddPolicy",
+          "callee": "fmt.Errorf",
+          "lineNumber": 64
+        },
+        {
+          "caller": "AddPolicy",
+          "callee": "ce.enforcer.AddPolicy",
+          "lineNumber": 66
+        },
+        {
+          "caller": "AddPolicy",
+          "callee": "ce.persist",
+          "lineNumber": 68
+        },
+        {
+          "caller": "RemovePolicy",
+          "callee": "fmt.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "RemovePolicy",
+          "callee": "ce.enforcer.RemovePolicy",
+          "lineNumber": 78
+        },
+        {
+          "caller": "RemovePolicy",
+          "callee": "ce.persist",
+          "lineNumber": 80
+        },
+        {
+          "caller": "GetPolicies",
+          "callee": "ce.enforcer.GetPolicy",
+          "lineNumber": 90
+        },
+        {
+          "caller": "GetGroupingPolicies",
+          "callee": "ce.enforcer.GetGroupingPolicy",
+          "lineNumber": 98
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "fmt.Errorf",
+          "lineNumber": 104
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "fmt.Errorf",
+          "lineNumber": 107
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "ce.enforcer.RemoveFilteredPolicy",
+          "lineNumber": 111
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "fmt.Errorf",
+          "lineNumber": 112
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "make",
+          "lineNumber": 116
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "len",
+          "lineNumber": 116
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "append",
+          "lineNumber": 119
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "len",
+          "lineNumber": 122
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "ce.enforcer.AddPolicies",
+          "lineNumber": 123
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "fmt.Errorf",
+          "lineNumber": 124
+        },
+        {
+          "caller": "SyncRolePermissions",
+          "callee": "ce.persist",
+          "lineNumber": 128
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "fmt.Errorf",
+          "lineNumber": 135
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "fmt.Errorf",
+          "lineNumber": 138
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "ce.enforcer.RemoveFilteredPolicy",
+          "lineNumber": 141
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "fmt.Errorf",
+          "lineNumber": 142
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "ce.enforcer.RemoveFilteredGroupingPolicy",
+          "lineNumber": 144
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "fmt.Errorf",
+          "lineNumber": 145
+        },
+        {
+          "caller": "DeleteRole",
+          "callee": "ce.persist",
+          "lineNumber": 148
+        },
+        {
+          "caller": "AddRoleForUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 155
+        },
+        {
+          "caller": "AddRoleForUser",
+          "callee": "ce.enforcer.AddRoleForUser",
+          "lineNumber": 157
+        },
+        {
+          "caller": "AddRoleForUser",
+          "callee": "ce.persist",
+          "lineNumber": 159
+        },
+        {
+          "caller": "DeleteRoleForUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 167
+        },
+        {
+          "caller": "DeleteRoleForUser",
+          "callee": "ce.enforcer.DeleteRoleForUser",
+          "lineNumber": 169
+        },
+        {
+          "caller": "DeleteRoleForUser",
+          "callee": "ce.persist",
+          "lineNumber": 171
+        },
+        {
+          "caller": "DeleteRolesForUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 179
+        },
+        {
+          "caller": "DeleteRolesForUser",
+          "callee": "ce.enforcer.DeleteRolesForUser",
+          "lineNumber": 181
+        },
+        {
+          "caller": "DeleteRolesForUser",
+          "callee": "ce.persist",
+          "lineNumber": 183
+        },
+        {
+          "caller": "GetRolesForUser",
+          "callee": "ce.enforcer.GetRolesForUser",
+          "lineNumber": 193
+        },
+        {
+          "caller": "GetImplicitPermissionsForUser",
+          "callee": "ce.enforcer.GetImplicitPermissionsForUser",
+          "lineNumber": 201
+        },
+        {
+          "caller": "GetImplicitPermissionsForUser",
+          "callee": "make",
+          "lineNumber": 205
+        },
+        {
+          "caller": "GetImplicitPermissionsForUser",
+          "callee": "len",
+          "lineNumber": 205
+        },
+        {
+          "caller": "GetImplicitPermissionsForUser",
+          "callee": "len",
+          "lineNumber": 207
+        },
+        {
+          "caller": "GetImplicitPermissionsForUser",
+          "callee": "append",
+          "lineNumber": 208
+        },
+        {
+          "caller": "persist",
+          "callee": "ce.enforcer.GetAdapter",
+          "lineNumber": 216
+        },
+        {
+          "caller": "persist",
+          "callee": "ce.enforcer.SavePolicy",
+          "lineNumber": 218
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 14,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/auth/device_authorizer_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 116,
+      "nonEmptyLines": 108,
+      "functions": [
+        {
+          "name": "Create",
+          "startLine": 14,
+          "endLine": 16,
+          "params": [
+            "ctx",
+            "user"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 17,
+          "endLine": 19,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "FindByUsername",
+          "startLine": 20,
+          "endLine": 22,
+          "params": [
+            "ctx",
+            "username"
+          ]
+        },
+        {
+          "name": "FindByEmail",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "ctx",
+            "email"
+          ]
+        },
+        {
+          "name": "Count",
+          "startLine": 26,
+          "endLine": 26,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "List",
+          "startLine": 27,
+          "endLine": 29,
+          "params": [
+            "ctx",
+            "page",
+            "pageSize",
+            "search"
+          ]
+        },
+        {
+          "name": "FindAll",
+          "startLine": 30,
+          "endLine": 32,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "FindByRoles",
+          "startLine": 33,
+          "endLine": 35,
+          "params": [
+            "ctx",
+            "roles",
+            "activeOnly"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 36,
+          "endLine": 38,
+          "params": [
+            "ctx",
+            "user"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 39,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "UpdatePassword",
+          "startLine": 40,
+          "endLine": 42,
+          "params": [
+            "ctx",
+            "id",
+            "passwordHash"
+          ]
+        },
+        {
+          "name": "UpdateStatus",
+          "startLine": 43,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "id",
+            "isActive"
+          ]
+        },
+        {
+          "name": "AssignDevices",
+          "startLine": 46,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "userID",
+            "deviceIDs",
+            "assignedBy"
+          ]
+        },
+        {
+          "name": "GetAssignedDeviceIDs",
+          "startLine": 49,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "userID"
+          ]
+        },
+        {
+          "name": "IsDeviceAccessibleByUser",
+          "startLine": 52,
+          "endLine": 55,
+          "params": [
+            "ctx",
+            "userID",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "TestDeviceAuthorizer_CanAccessDevice",
+          "startLine": 57,
+          "endLine": 116,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockUserRepoForDeviceAuth",
+          "startLine": 10,
+          "endLine": 12,
+          "methods": [
+            "Create",
+            "FindByID",
+            "FindByUsername",
+            "FindByEmail",
+            "Count",
+            "List",
+            "FindAll",
+            "FindByRoles",
+            "Update",
+            "Delete",
+            "UpdatePassword",
+            "UpdateStatus",
+            "AssignDevices",
+            "GetAssignedDeviceIDs",
+            "IsDeviceAccessibleByUser"
+          ],
+          "properties": [
+            "accessibleMap"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Create",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "FindByUsername",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "FindByEmail",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Count",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "List",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "FindAll",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "FindByRoles",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "UpdatePassword",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateStatus",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "AssignDevices",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "GetAssignedDeviceIDs",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "IsDeviceAccessibleByUser",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "TestDeviceAuthorizer_CanAccessDevice",
+          "line": 57,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "IsDeviceAccessibleByUser",
+          "callee": "string",
+          "lineNumber": 53
+        },
+        {
+          "caller": "IsDeviceAccessibleByUser",
+          "callee": "rune",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "string",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "rune",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "string",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "rune",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "NewDeviceAuthorizer",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "context.Background",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "t.Run",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "authorizer.CanAccessDevice",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "t.Fatalf",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestDeviceAuthorizer_CanAccessDevice",
+          "callee": "t.Fatalf",
+          "lineNumber": 112
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 16,
+        "functionCount": 16,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/auth/device_authorizer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "NewDeviceAuthorizer",
+          "startLine": 18,
+          "endLine": 22,
+          "params": [
+            "userRepo"
+          ]
+        },
+        {
+          "name": "CanAccessDevice",
+          "startLine": 27,
+          "endLine": 44,
+          "params": [
+            "ctx",
+            "userID",
+            "userRoles",
+            "deviceID"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DefaultDeviceAuthorizer",
+          "startLine": 11,
+          "endLine": 13,
+          "methods": [
+            "CanAccessDevice"
+          ],
+          "properties": [
+            "userRepo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DefaultDeviceAuthorizer",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewDeviceAuthorizer",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "CanAccessDevice",
+          "line": 27,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CanAccessDevice",
+          "callee": "strings.EqualFold",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CanAccessDevice",
+          "callee": "a.userRepo.IsDeviceAccessibleByUser",
+          "lineNumber": 43
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/auth/identity.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 42,
+      "nonEmptyLines": 36,
+      "functions": [
+        {
+          "name": "WithIdentity",
+          "startLine": 19,
+          "endLine": 23,
+          "params": [
+            "ctx",
+            "userID",
+            "roles"
+          ]
+        },
+        {
+          "name": "IdentityFromContext",
+          "startLine": 26,
+          "endLine": 33,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "IdentityStringFromContext",
+          "startLine": 36,
+          "endLine": 42,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WithIdentity",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "IdentityFromContext",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "IdentityStringFromContext",
+          "line": 36,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "WithIdentity",
+          "callee": "context.WithValue",
+          "lineNumber": 20
+        },
+        {
+          "caller": "WithIdentity",
+          "callee": "context.WithValue",
+          "lineNumber": 21
+        },
+        {
+          "caller": "IdentityFromContext",
+          "callee": "ctx.Value",
+          "lineNumber": 27
+        },
+        {
+          "caller": "IdentityFromContext",
+          "callee": "ctx.Value",
+          "lineNumber": 31
+        },
+        {
+          "caller": "IdentityStringFromContext",
+          "callee": "IdentityFromContext",
+          "lineNumber": 37
+        },
+        {
+          "caller": "IdentityStringFromContext",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 41
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/auth/jwt_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "TestJWTService",
+          "startLine": 9,
+          "endLine": 40,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestJWTService",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestJWTService",
+          "callee": "NewJWTService",
+          "lineNumber": 10
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "t.Run",
+          "lineNumber": 12
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "jwtSvc.GenerateToken",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.NoError",
+          "lineNumber": 14
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "jwtSvc.ValidateToken",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.NoError",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.Equal",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "uint",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.Equal",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.Equal",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.Equal",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.Equal",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "t.Run",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "jwtSvc.GenerateToken",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.NoError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "jwtSvc.ValidateToken",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.NoError",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.Equal",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.Equal",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "t.Run",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "jwtSvc.ValidateToken",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestJWTService",
+          "callee": "assert.Error",
+          "lineNumber": 38
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/auth/jwt.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 118,
+      "nonEmptyLines": 101,
+      "functions": [
+        {
+          "name": "NewJWTService",
+          "startLine": 37,
+          "endLine": 45,
+          "params": [
+            "secret",
+            "expiryHours"
+          ]
+        },
+        {
+          "name": "GenerateToken",
+          "startLine": 48,
+          "endLine": 74,
+          "params": [
+            "userID",
+            "email",
+            "roles",
+            "tenantID"
+          ]
+        },
+        {
+          "name": "GenerateAccessToken",
+          "startLine": 77,
+          "endLine": 80,
+          "params": [
+            "userID",
+            "username",
+            "role"
+          ]
+        },
+        {
+          "name": "ValidateAccessToken",
+          "startLine": 83,
+          "endLine": 89,
+          "params": [
+            "tokenString"
+          ]
+        },
+        {
+          "name": "ExpiryDuration",
+          "startLine": 92,
+          "endLine": 97,
+          "params": []
+        },
+        {
+          "name": "ValidateToken",
+          "startLine": 100,
+          "endLine": 118,
+          "params": [
+            "tokenStr"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Claims",
+          "startLine": 19,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "UserID",
+            "Email",
+            "Role",
+            "Roles",
+            "TenantID"
+          ]
+        },
+        {
+          "name": "JWTService",
+          "startLine": 29,
+          "endLine": 32,
+          "methods": [
+            "GenerateToken",
+            "GenerateAccessToken",
+            "ValidateAccessToken",
+            "ExpiryDuration",
+            "ValidateToken"
+          ],
+          "properties": [
+            "secretKey",
+            "expiry"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Claims",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "JWTService",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "NewJWTService",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateToken",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateAccessToken",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateAccessToken",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "ExpiryDuration",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateToken",
+          "line": 100,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewJWTService",
+          "callee": "time.Duration",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "len",
+          "lineNumber": 49
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "time.Now",
+          "lineNumber": 52
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "jwt.NewNumericDate",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "now.Add",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "jwt.NewNumericDate",
+          "lineNumber": 61
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "jwt.NewNumericDate",
+          "lineNumber": 62
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "jwt.NewWithClaims",
+          "lineNumber": 67
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "token.SignedString",
+          "lineNumber": 68
+        },
+        {
+          "caller": "GenerateToken",
+          "callee": "fmt.Errorf",
+          "lineNumber": 70
+        },
+        {
+          "caller": "GenerateAccessToken",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 78
+        },
+        {
+          "caller": "GenerateAccessToken",
+          "callee": "s.GenerateToken",
+          "lineNumber": 79
+        },
+        {
+          "caller": "GenerateAccessToken",
+          "callee": "uint",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ValidateAccessToken",
+          "callee": "s.ValidateToken",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ValidateAccessToken",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ValidateToken",
+          "callee": "jwt.ParseWithClaims",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ValidateToken",
+          "callee": "fmt.Errorf",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ValidateToken",
+          "callee": "fmt.Errorf",
+          "lineNumber": 109
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 6,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/auth/policy_seeder.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 168,
+      "nonEmptyLines": 155,
+      "functions": [
+        {
+          "name": "SeedSystemPolicies",
+          "startLine": 23,
+          "endLine": 113,
+          "params": [
+            "ce"
+          ]
+        },
+        {
+          "name": "removeLegacyPathPolicies",
+          "startLine": 118,
+          "endLine": 135,
+          "params": [
+            "ce"
+          ]
+        },
+        {
+          "name": "EnsureUserRoleAssignments",
+          "startLine": 140,
+          "endLine": 162,
+          "params": [
+            "ce",
+            "users"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "UserRef",
+          "startLine": 165,
+          "endLine": 168,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Role"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SeedSystemPolicies",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "EnsureUserRoleAssignments",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "UserRef",
+          "line": 165,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SeedSystemPolicies",
+          "callee": "removeLegacyPathPolicies",
+          "lineNumber": 28
+        },
+        {
+          "caller": "SeedSystemPolicies",
+          "callee": "ce.AddPolicy",
+          "lineNumber": 104
+        },
+        {
+          "caller": "SeedSystemPolicies",
+          "callee": "logger.WithComponent(\"PolicySeeder\").WithField(\"policy_count\", added).Info",
+          "lineNumber": 111
+        },
+        {
+          "caller": "SeedSystemPolicies",
+          "callee": "logger.WithComponent(\"PolicySeeder\").WithField",
+          "lineNumber": 111
+        },
+        {
+          "caller": "SeedSystemPolicies",
+          "callee": "logger.WithComponent",
+          "lineNumber": 111
+        },
+        {
+          "caller": "removeLegacyPathPolicies",
+          "callee": "ce.GetPolicies",
+          "lineNumber": 119
+        },
+        {
+          "caller": "removeLegacyPathPolicies",
+          "callee": "len",
+          "lineNumber": 125
+        },
+        {
+          "caller": "removeLegacyPathPolicies",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 125
+        },
+        {
+          "caller": "removeLegacyPathPolicies",
+          "callee": "ce.RemovePolicy",
+          "lineNumber": 128
+        },
+        {
+          "caller": "removeLegacyPathPolicies",
+          "callee": "logger.WithComponent(\"PolicySeeder\").WithField(\"policy_count\", removed).Info",
+          "lineNumber": 133
+        },
+        {
+          "caller": "removeLegacyPathPolicies",
+          "callee": "logger.WithComponent(\"PolicySeeder\").WithField",
+          "lineNumber": 133
+        },
+        {
+          "caller": "removeLegacyPathPolicies",
+          "callee": "logger.WithComponent",
+          "lineNumber": 133
+        },
+        {
+          "caller": "EnsureUserRoleAssignments",
+          "callee": "ce.GetRolesForUser",
+          "lineNumber": 149
+        },
+        {
+          "caller": "EnsureUserRoleAssignments",
+          "callee": "ce.DeleteRoleForUser",
+          "lineNumber": 152
+        },
+        {
+          "caller": "EnsureUserRoleAssignments",
+          "callee": "ce.AddRoleForUser",
+          "lineNumber": 155
+        },
+        {
+          "caller": "EnsureUserRoleAssignments",
+          "callee": "logger.WithComponent(\"PolicySeeder\").WithField(\"assignment_count\", synced).Info",
+          "lineNumber": 160
+        },
+        {
+          "caller": "EnsureUserRoleAssignments",
+          "callee": "logger.WithComponent(\"PolicySeeder\").WithField",
+          "lineNumber": 160
+        },
+        {
+          "caller": "EnsureUserRoleAssignments",
+          "callee": "logger.WithComponent",
+          "lineNumber": 160
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/auth/procedure_permissions_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 128,
+      "nonEmptyLines": 123,
+      "functions": [
+        {
+          "name": "TestPermissionFor",
+          "startLine": 7,
+          "endLine": 50,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestIspProceduresMapped",
+          "startLine": 52,
+          "endLine": 128,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestPermissionFor",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "TestIspProceduresMapped",
+          "line": 52,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestPermissionFor",
+          "callee": "t.Run",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestPermissionFor",
+          "callee": "PermissionFor",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestPermissionFor",
+          "callee": "t.Fatalf",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestPermissionFor",
+          "callee": "t.Fatalf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestIspProceduresMapped",
+          "callee": "PermissionFor",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestIspProceduresMapped",
+          "callee": "t.Errorf",
+          "lineNumber": 125
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    }
+  ]
+}

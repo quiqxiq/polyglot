@@ -1,0 +1,1549 @@
+{
+ "batchIndex": 25,
+ "nodes": [
+  {
+   "id": "file:internal/domain/bot/message.go",
+   "type": "file",
+   "name": "message.go",
+   "filePath": "internal/domain/bot/message.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (24 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (24 baris, 0 fungsi, 1 tipe). Tipe utama: Message.",
+   "tags": [
+    "go",
+    "domain",
+    "bot",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/bot/message.go:Message",
+   "type": "class",
+   "name": "Message",
+   "filePath": "internal/domain/bot/message.go",
+   "complexity": "simple",
+   "summary": "Tipe Message di message.go.",
+   "description": "Tipe Message di message.go. Didefinisikan pada baris 15-24.",
+   "tags": [
+    "go",
+    "tipe",
+    "message"
+   ]
+  },
+  {
+   "id": "file:internal/domain/bot/session.go",
+   "type": "file",
+   "name": "session.go",
+   "filePath": "internal/domain/bot/session.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (31 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `bot` (31 baris, 0 fungsi, 1 tipe). Tipe utama: WASession.",
+   "tags": [
+    "go",
+    "domain",
+    "bot",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/bot/session.go:WASession",
+   "type": "class",
+   "name": "WASession",
+   "filePath": "internal/domain/bot/session.go",
+   "complexity": "simple",
+   "summary": "Tipe WASession di session.go.",
+   "description": "Tipe WASession di session.go. Didefinisikan pada baris 21-31.",
+   "tags": [
+    "go",
+    "tipe",
+    "wasession"
+   ]
+  },
+  {
+   "id": "file:internal/domain/cashbook/account.go",
+   "type": "file",
+   "name": "account.go",
+   "filePath": "internal/domain/cashbook/account.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `cashbook` (23 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `cashbook` (23 baris, 0 fungsi, 1 tipe). Tipe utama: CashAccount.",
+   "tags": [
+    "go",
+    "domain",
+    "cashbook",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/cashbook/account.go:CashAccount",
+   "type": "class",
+   "name": "CashAccount",
+   "filePath": "internal/domain/cashbook/account.go",
+   "complexity": "simple",
+   "summary": "Tipe CashAccount di account.go.",
+   "description": "Tipe CashAccount di account.go. Didefinisikan pada baris 13-23.",
+   "tags": [
+    "go",
+    "tipe",
+    "cashaccount"
+   ]
+  },
+  {
+   "id": "file:internal/domain/cashbook/category.go",
+   "type": "file",
+   "name": "category.go",
+   "filePath": "internal/domain/cashbook/category.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `cashbook` (22 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `cashbook` (22 baris, 0 fungsi, 1 tipe). Tipe utama: CashCategory.",
+   "tags": [
+    "go",
+    "domain",
+    "cashbook",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/cashbook/category.go:CashCategory",
+   "type": "class",
+   "name": "CashCategory",
+   "filePath": "internal/domain/cashbook/category.go",
+   "complexity": "simple",
+   "summary": "Tipe CashCategory di category.go.",
+   "description": "Tipe CashCategory di category.go. Didefinisikan pada baris 13-22.",
+   "tags": [
+    "go",
+    "tipe",
+    "cashcategory"
+   ]
+  },
+  {
+   "id": "file:internal/domain/cashbook/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/cashbook/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `cashbook` (10 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `cashbook` (10 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "cashbook",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/cashbook/transaction.go",
+   "type": "file",
+   "name": "transaction.go",
+   "filePath": "internal/domain/cashbook/transaction.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `cashbook` (35 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `cashbook` (35 baris, 0 fungsi, 1 tipe). Tipe utama: CashTransaction.",
+   "tags": [
+    "go",
+    "domain",
+    "cashbook",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/cashbook/transaction.go:CashTransaction",
+   "type": "class",
+   "name": "CashTransaction",
+   "filePath": "internal/domain/cashbook/transaction.go",
+   "complexity": "simple",
+   "summary": "Tipe CashTransaction di transaction.go.",
+   "description": "Tipe CashTransaction di transaction.go. Didefinisikan pada baris 20-35.",
+   "tags": [
+    "go",
+    "tipe",
+    "cashtransaction"
+   ]
+  },
+  {
+   "id": "file:internal/domain/command/command.go",
+   "type": "file",
+   "name": "command.go",
+   "filePath": "internal/domain/command/command.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `command` (52 baris, 0 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `command` (52 baris, 0 fungsi, 2 tipe). Tipe utama: Command, Result.",
+   "tags": [
+    "go",
+    "domain",
+    "command",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/command/command.go:Command",
+   "type": "class",
+   "name": "Command",
+   "filePath": "internal/domain/command/command.go",
+   "complexity": "simple",
+   "summary": "Tipe Command di command.go.",
+   "description": "Tipe Command di command.go. Didefinisikan pada baris 9-12.",
+   "tags": [
+    "go",
+    "tipe",
+    "command"
+   ]
+  },
+  {
+   "id": "class:internal/domain/command/command.go:Result",
+   "type": "class",
+   "name": "Result",
+   "filePath": "internal/domain/command/command.go",
+   "complexity": "simple",
+   "summary": "Tipe Result di command.go.",
+   "description": "Tipe Result di command.go. Didefinisikan pada baris 24-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "result"
+   ]
+  },
+  {
+   "id": "file:internal/domain/command/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/command/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `command` (18 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `command` (18 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "command",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/command/policy.go",
+   "type": "file",
+   "name": "policy.go",
+   "filePath": "internal/domain/command/policy.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `command` (24 baris, 1 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `command` (24 baris, 1 fungsi, 0 tipe). Fungsi terbesar: Decide.",
+   "tags": [
+    "go",
+    "domain",
+    "command",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/domain/command/policy.go:Decide",
+   "type": "function",
+   "name": "Decide",
+   "filePath": "internal/domain/command/policy.go",
+   "complexity": "simple",
+   "summary": "Fungsi Decide (5 baris), parameter: class.",
+   "description": "Fungsi Decide (5 baris), parameter: class. Didefinisikan pada baris 19-24.",
+   "tags": [
+    "go",
+    "fungsi",
+    "decide"
+   ]
+  },
+  {
+   "id": "file:internal/domain/customer/customer.go",
+   "type": "file",
+   "name": "customer.go",
+   "filePath": "internal/domain/customer/customer.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (31 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (31 baris, 0 fungsi, 1 tipe). Tipe utama: Customer.",
+   "tags": [
+    "go",
+    "domain",
+    "customer",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/customer/customer.go:Customer",
+   "type": "class",
+   "name": "Customer",
+   "filePath": "internal/domain/customer/customer.go",
+   "complexity": "simple",
+   "summary": "Tipe Customer di customer.go.",
+   "description": "Tipe Customer di customer.go. Didefinisikan pada baris 14-31.",
+   "tags": [
+    "go",
+    "tipe",
+    "customer"
+   ]
+  },
+  {
+   "id": "file:internal/domain/customer/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/customer/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (44 baris, 0 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (44 baris, 0 fungsi, 0 tipe). Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "customer",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/domain/customer/portal_otp.go",
+   "type": "file",
+   "name": "portal_otp.go",
+   "filePath": "internal/domain/customer/portal_otp.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (17 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (17 baris, 0 fungsi, 1 tipe). Tipe utama: PortalOTP.",
+   "tags": [
+    "go",
+    "domain",
+    "customer",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/customer/portal_otp.go:PortalOTP",
+   "type": "class",
+   "name": "PortalOTP",
+   "filePath": "internal/domain/customer/portal_otp.go",
+   "complexity": "simple",
+   "summary": "Tipe PortalOTP di portal_otp.go.",
+   "description": "Tipe PortalOTP di portal_otp.go. Didefinisikan pada baris 7-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "portalotp"
+   ]
+  },
+  {
+   "id": "file:internal/domain/customer/portal_session.go",
+   "type": "file",
+   "name": "portal_session.go",
+   "filePath": "internal/domain/customer/portal_session.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (16 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (16 baris, 0 fungsi, 1 tipe). Tipe utama: PortalSession.",
+   "tags": [
+    "go",
+    "domain",
+    "customer",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/customer/portal_session.go:PortalSession",
+   "type": "class",
+   "name": "PortalSession",
+   "filePath": "internal/domain/customer/portal_session.go",
+   "complexity": "simple",
+   "summary": "Tipe PortalSession di portal_session.go.",
+   "description": "Tipe PortalSession di portal_session.go. Didefinisikan pada baris 7-16.",
+   "tags": [
+    "go",
+    "tipe",
+    "portalsession"
+   ]
+  },
+  {
+   "id": "file:internal/domain/customer/user.go",
+   "type": "file",
+   "name": "user.go",
+   "filePath": "internal/domain/customer/user.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (28 baris, 0 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `customer` (28 baris, 0 fungsi, 2 tipe). Tipe utama: User, UserDeviceAssignment.",
+   "tags": [
+    "go",
+    "domain",
+    "customer",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/customer/user.go:User",
+   "type": "class",
+   "name": "User",
+   "filePath": "internal/domain/customer/user.go",
+   "complexity": "simple",
+   "summary": "Tipe User di user.go.",
+   "description": "Tipe User di user.go. Didefinisikan pada baris 6-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "user"
+   ]
+  },
+  {
+   "id": "class:internal/domain/customer/user.go:UserDeviceAssignment",
+   "type": "class",
+   "name": "UserDeviceAssignment",
+   "filePath": "internal/domain/customer/user.go",
+   "complexity": "simple",
+   "summary": "Tipe UserDeviceAssignment di user.go.",
+   "description": "Tipe UserDeviceAssignment di user.go. Didefinisikan pada baris 23-28.",
+   "tags": [
+    "go",
+    "tipe",
+    "userdeviceassignment"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/credentials.go",
+   "type": "file",
+   "name": "credentials.go",
+   "filePath": "internal/domain/device/credentials.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (18 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (18 baris, 0 fungsi, 1 tipe). Tipe utama: Credentials.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/credentials.go:Credentials",
+   "type": "class",
+   "name": "Credentials",
+   "filePath": "internal/domain/device/credentials.go",
+   "complexity": "simple",
+   "summary": "Tipe Credentials di credentials.go.",
+   "description": "Tipe Credentials di credentials.go. Didefinisikan pada baris 14-18.",
+   "tags": [
+    "go",
+    "tipe",
+    "credentials"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/device.go",
+   "type": "file",
+   "name": "device.go",
+   "filePath": "internal/domain/device/device.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (112 baris, 3 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (112 baris, 3 fungsi, 2 tipe). Tipe utama: Target, Device. Fungsi terbesar: ToTarget, SetPingConfig, PingConfig.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/device.go:Target",
+   "type": "class",
+   "name": "Target",
+   "filePath": "internal/domain/device/device.go",
+   "complexity": "simple",
+   "summary": "Tipe Target di device.go.",
+   "description": "Tipe Target di device.go. Didefinisikan pada baris 14-21.",
+   "tags": [
+    "go",
+    "tipe",
+    "target"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/device.go:Device",
+   "type": "class",
+   "name": "Device",
+   "filePath": "internal/domain/device/device.go",
+   "complexity": "simple",
+   "summary": "Tipe Device di device.go, dengan method: ToTarget, PingConfig, SetPingConfig.",
+   "description": "Tipe Device di device.go, dengan method: ToTarget, PingConfig, SetPingConfig. Didefinisikan pada baris 31-45.",
+   "tags": [
+    "go",
+    "tipe",
+    "device"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/device.go:ToTarget",
+   "type": "function",
+   "name": "ToTarget",
+   "filePath": "internal/domain/device/device.go",
+   "complexity": "simple",
+   "summary": "Fungsi ToTarget (22 baris), parameter: c.",
+   "description": "Fungsi ToTarget (22 baris), parameter: c. Didefinisikan pada baris 49-71.",
+   "tags": [
+    "go",
+    "fungsi",
+    "totarget"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/device.go:PingConfig",
+   "type": "function",
+   "name": "PingConfig",
+   "filePath": "internal/domain/device/device.go",
+   "complexity": "simple",
+   "summary": "Fungsi PingConfig (17 baris).",
+   "description": "Fungsi PingConfig (17 baris). Didefinisikan pada baris 74-91.",
+   "tags": [
+    "go",
+    "fungsi",
+    "pingconfig"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/device.go:SetPingConfig",
+   "type": "function",
+   "name": "SetPingConfig",
+   "filePath": "internal/domain/device/device.go",
+   "complexity": "simple",
+   "summary": "Fungsi SetPingConfig (18 baris), parameter: cfg.",
+   "description": "Fungsi SetPingConfig (18 baris), parameter: cfg. Didefinisikan pada baris 94-112.",
+   "tags": [
+    "go",
+    "fungsi",
+    "setpingconfig"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/dhcp.go",
+   "type": "file",
+   "name": "dhcp.go",
+   "filePath": "internal/domain/device/dhcp.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (42 baris, 0 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (42 baris, 0 fungsi, 2 tipe). Tipe utama: DHCPLease, DHCPLeaseBlockParams.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/dhcp.go:DHCPLease",
+   "type": "class",
+   "name": "DHCPLease",
+   "filePath": "internal/domain/device/dhcp.go",
+   "complexity": "simple",
+   "summary": "Tipe DHCPLease di dhcp.go.",
+   "description": "Tipe DHCPLease di dhcp.go. Didefinisikan pada baris 23-34.",
+   "tags": [
+    "go",
+    "tipe",
+    "dhcplease"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/dhcp.go:DHCPLeaseBlockParams",
+   "type": "class",
+   "name": "DHCPLeaseBlockParams",
+   "filePath": "internal/domain/device/dhcp.go",
+   "complexity": "simple",
+   "summary": "Tipe DHCPLeaseBlockParams di dhcp.go.",
+   "description": "Tipe DHCPLeaseBlockParams di dhcp.go. Didefinisikan pada baris 39-42.",
+   "tags": [
+    "go",
+    "tipe",
+    "dhcpleaseblockparams"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/device/errors.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (34 baris, 1 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (34 baris, 1 fungsi, 0 tipe). Fungsi terbesar: IsNotFound. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/errors.go:IsNotFound",
+   "type": "function",
+   "name": "IsNotFound",
+   "filePath": "internal/domain/device/errors.go",
+   "complexity": "simple",
+   "summary": "Fungsi IsNotFound (2 baris), parameter: err.",
+   "description": "Fungsi IsNotFound (2 baris), parameter: err. Didefinisikan pada baris 32-34.",
+   "tags": [
+    "go",
+    "fungsi",
+    "isnotfound"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/interface.go",
+   "type": "file",
+   "name": "interface.go",
+   "filePath": "internal/domain/device/interface.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (51 baris, 0 fungsi, 2 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (51 baris, 0 fungsi, 2 tipe). Tipe utama: Interface, InterfaceTrafficStats.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/interface.go:Interface",
+   "type": "class",
+   "name": "Interface",
+   "filePath": "internal/domain/device/interface.go",
+   "complexity": "simple",
+   "summary": "Tipe Interface di interface.go.",
+   "description": "Tipe Interface di interface.go. Didefinisikan pada baris 20-35.",
+   "tags": [
+    "go",
+    "tipe",
+    "interface"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/interface.go:InterfaceTrafficStats",
+   "type": "class",
+   "name": "InterfaceTrafficStats",
+   "filePath": "internal/domain/device/interface.go",
+   "complexity": "simple",
+   "summary": "Tipe InterfaceTrafficStats di interface.go.",
+   "description": "Tipe InterfaceTrafficStats di interface.go. Didefinisikan pada baris 42-51.",
+   "tags": [
+    "go",
+    "tipe",
+    "interfacetrafficstats"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/ip_pool.go",
+   "type": "file",
+   "name": "ip_pool.go",
+   "filePath": "internal/domain/device/ip_pool.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (10 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (10 baris, 0 fungsi, 1 tipe). Tipe utama: IPPool.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/ip_pool.go:IPPool",
+   "type": "class",
+   "name": "IPPool",
+   "filePath": "internal/domain/device/ip_pool.go",
+   "complexity": "simple",
+   "summary": "Tipe IPPool di ip_pool.go.",
+   "description": "Tipe IPPool di ip_pool.go. Didefinisikan pada baris 4-10.",
+   "tags": [
+    "go",
+    "tipe",
+    "ippool"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/isolation.go",
+   "type": "file",
+   "name": "isolation.go",
+   "filePath": "internal/domain/device/isolation.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (63 baris, 1 fungsi, 3 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (63 baris, 1 fungsi, 3 tipe). Tipe utama: IsolationConfig, IsolationStatus, RouterIntegrationScripts. Fungsi terbesar: DefaultIsolationConfig.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/isolation.go:IsolationConfig",
+   "type": "class",
+   "name": "IsolationConfig",
+   "filePath": "internal/domain/device/isolation.go",
+   "complexity": "simple",
+   "summary": "Tipe IsolationConfig di isolation.go.",
+   "description": "Tipe IsolationConfig di isolation.go. Didefinisikan pada baris 4-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "isolationconfig"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/isolation.go:IsolationStatus",
+   "type": "class",
+   "name": "IsolationStatus",
+   "filePath": "internal/domain/device/isolation.go",
+   "complexity": "simple",
+   "summary": "Tipe IsolationStatus di isolation.go.",
+   "description": "Tipe IsolationStatus di isolation.go. Didefinisikan pada baris 47-54.",
+   "tags": [
+    "go",
+    "tipe",
+    "isolationstatus"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/isolation.go:RouterIntegrationScripts",
+   "type": "class",
+   "name": "RouterIntegrationScripts",
+   "filePath": "internal/domain/device/isolation.go",
+   "complexity": "simple",
+   "summary": "Tipe RouterIntegrationScripts di isolation.go.",
+   "description": "Tipe RouterIntegrationScripts di isolation.go. Didefinisikan pada baris 57-63.",
+   "tags": [
+    "go",
+    "tipe",
+    "routerintegrationscripts"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/isolation.go:DefaultIsolationConfig",
+   "type": "function",
+   "name": "DefaultIsolationConfig",
+   "filePath": "internal/domain/device/isolation.go",
+   "complexity": "simple",
+   "summary": "Fungsi DefaultIsolationConfig (24 baris).",
+   "description": "Fungsi DefaultIsolationConfig (24 baris). Didefinisikan pada baris 20-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "defaultisolationconfig"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/metrics.go",
+   "type": "file",
+   "name": "metrics.go",
+   "filePath": "internal/domain/device/metrics.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (56 baris, 1 fungsi, 4 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (56 baris, 1 fungsi, 4 tipe). Tipe utama: DevicePingConfig, PingMetricPoint, PingSummary, PingMetricsFilter. Fungsi terbesar: DefaultPingConfig.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/metrics.go:DevicePingConfig",
+   "type": "class",
+   "name": "DevicePingConfig",
+   "filePath": "internal/domain/device/metrics.go",
+   "complexity": "simple",
+   "summary": "Tipe DevicePingConfig di metrics.go.",
+   "description": "Tipe DevicePingConfig di metrics.go. Didefinisikan pada baris 8-12.",
+   "tags": [
+    "go",
+    "tipe",
+    "devicepingconfig"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/metrics.go:PingMetricPoint",
+   "type": "class",
+   "name": "PingMetricPoint",
+   "filePath": "internal/domain/device/metrics.go",
+   "complexity": "simple",
+   "summary": "Tipe PingMetricPoint di metrics.go.",
+   "description": "Tipe PingMetricPoint di metrics.go. Didefinisikan pada baris 24-39.",
+   "tags": [
+    "go",
+    "tipe",
+    "pingmetricpoint"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/metrics.go:PingSummary",
+   "type": "class",
+   "name": "PingSummary",
+   "filePath": "internal/domain/device/metrics.go",
+   "complexity": "simple",
+   "summary": "Tipe PingSummary di metrics.go.",
+   "description": "Tipe PingSummary di metrics.go. Didefinisikan pada baris 42-48.",
+   "tags": [
+    "go",
+    "tipe",
+    "pingsummary"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/metrics.go:PingMetricsFilter",
+   "type": "class",
+   "name": "PingMetricsFilter",
+   "filePath": "internal/domain/device/metrics.go",
+   "complexity": "simple",
+   "summary": "Tipe PingMetricsFilter di metrics.go.",
+   "description": "Tipe PingMetricsFilter di metrics.go. Didefinisikan pada baris 51-56.",
+   "tags": [
+    "go",
+    "tipe",
+    "pingmetricsfilter"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/metrics.go:DefaultPingConfig",
+   "type": "function",
+   "name": "DefaultPingConfig",
+   "filePath": "internal/domain/device/metrics.go",
+   "complexity": "simple",
+   "summary": "Fungsi DefaultPingConfig (6 baris).",
+   "description": "Fungsi DefaultPingConfig (6 baris). Didefinisikan pada baris 15-21.",
+   "tags": [
+    "go",
+    "fungsi",
+    "defaultpingconfig"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/resource.go",
+   "type": "file",
+   "name": "resource.go",
+   "filePath": "internal/domain/device/resource.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (68 baris, 0 fungsi, 6 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (68 baris, 0 fungsi, 6 tipe). Tipe utama: SystemResource, SystemIdentity, LogEntry, SystemHealth, SystemClock, ….",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/resource.go:SystemResource",
+   "type": "class",
+   "name": "SystemResource",
+   "filePath": "internal/domain/device/resource.go",
+   "complexity": "simple",
+   "summary": "Tipe SystemResource di resource.go.",
+   "description": "Tipe SystemResource di resource.go. Didefinisikan pada baris 5-23.",
+   "tags": [
+    "go",
+    "tipe",
+    "systemresource"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/resource.go:SystemIdentity",
+   "type": "class",
+   "name": "SystemIdentity",
+   "filePath": "internal/domain/device/resource.go",
+   "complexity": "simple",
+   "summary": "Tipe SystemIdentity di resource.go.",
+   "description": "Tipe SystemIdentity di resource.go. Didefinisikan pada baris 26-28.",
+   "tags": [
+    "go",
+    "tipe",
+    "systemidentity"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/resource.go:LogEntry",
+   "type": "class",
+   "name": "LogEntry",
+   "filePath": "internal/domain/device/resource.go",
+   "complexity": "simple",
+   "summary": "Tipe LogEntry di resource.go.",
+   "description": "Tipe LogEntry di resource.go. Didefinisikan pada baris 31-36.",
+   "tags": [
+    "go",
+    "tipe",
+    "logentry"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/resource.go:SystemHealth",
+   "type": "class",
+   "name": "SystemHealth",
+   "filePath": "internal/domain/device/resource.go",
+   "complexity": "simple",
+   "summary": "Tipe SystemHealth di resource.go.",
+   "description": "Tipe SystemHealth di resource.go. Didefinisikan pada baris 39-48.",
+   "tags": [
+    "go",
+    "tipe",
+    "systemhealth"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/resource.go:SystemClock",
+   "type": "class",
+   "name": "SystemClock",
+   "filePath": "internal/domain/device/resource.go",
+   "complexity": "simple",
+   "summary": "Tipe SystemClock di resource.go.",
+   "description": "Tipe SystemClock di resource.go. Didefinisikan pada baris 51-57.",
+   "tags": [
+    "go",
+    "tipe",
+    "systemclock"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/resource.go:SystemRouterboard",
+   "type": "class",
+   "name": "SystemRouterboard",
+   "filePath": "internal/domain/device/resource.go",
+   "complexity": "simple",
+   "summary": "Tipe SystemRouterboard di resource.go.",
+   "description": "Tipe SystemRouterboard di resource.go. Didefinisikan pada baris 60-68.",
+   "tags": [
+    "go",
+    "tipe",
+    "systemrouterboard"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/scripts.go",
+   "type": "file",
+   "name": "scripts.go",
+   "filePath": "internal/domain/device/scripts.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (67 baris, 5 fungsi, 0 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (67 baris, 5 fungsi, 0 tipe). Fungsi terbesar: BuildPPPOnUpScript, BuildHotspotOnLoginScript, BuildHotspotOnLogoutScript, GenerateRouterIntegrationScripts, BuildPPPOnDownScript.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/scripts.go:BuildPPPOnUpScript",
+   "type": "function",
+   "name": "BuildPPPOnUpScript",
+   "filePath": "internal/domain/device/scripts.go",
+   "complexity": "simple",
+   "summary": "Fungsi BuildPPPOnUpScript (10 baris), parameter: webhookURL, token.",
+   "description": "Fungsi BuildPPPOnUpScript (10 baris), parameter: webhookURL, token. Didefinisikan pada baris 9-19.",
+   "tags": [
+    "go",
+    "fungsi",
+    "buildppponupscript"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/scripts.go:BuildPPPOnDownScript",
+   "type": "function",
+   "name": "BuildPPPOnDownScript",
+   "filePath": "internal/domain/device/scripts.go",
+   "complexity": "simple",
+   "summary": "Fungsi BuildPPPOnDownScript (8 baris), parameter: webhookURL, token.",
+   "description": "Fungsi BuildPPPOnDownScript (8 baris), parameter: webhookURL, token. Didefinisikan pada baris 22-30.",
+   "tags": [
+    "go",
+    "fungsi",
+    "buildpppondownscript"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/scripts.go:BuildHotspotOnLoginScript",
+   "type": "function",
+   "name": "BuildHotspotOnLoginScript",
+   "filePath": "internal/domain/device/scripts.go",
+   "complexity": "simple",
+   "summary": "Fungsi BuildHotspotOnLoginScript (10 baris), parameter: webhookURL, token.",
+   "description": "Fungsi BuildHotspotOnLoginScript (10 baris), parameter: webhookURL, token. Didefinisikan pada baris 33-43.",
+   "tags": [
+    "go",
+    "fungsi",
+    "buildhotspotonloginscript"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/scripts.go:BuildHotspotOnLogoutScript",
+   "type": "function",
+   "name": "BuildHotspotOnLogoutScript",
+   "filePath": "internal/domain/device/scripts.go",
+   "complexity": "simple",
+   "summary": "Fungsi BuildHotspotOnLogoutScript (9 baris), parameter: webhookURL, token.",
+   "description": "Fungsi BuildHotspotOnLogoutScript (9 baris), parameter: webhookURL, token. Didefinisikan pada baris 46-55.",
+   "tags": [
+    "go",
+    "fungsi",
+    "buildhotspotonlogoutscript"
+   ]
+  },
+  {
+   "id": "function:internal/domain/device/scripts.go:GenerateRouterIntegrationScripts",
+   "type": "function",
+   "name": "GenerateRouterIntegrationScripts",
+   "filePath": "internal/domain/device/scripts.go",
+   "complexity": "simple",
+   "summary": "Fungsi GenerateRouterIntegrationScripts (9 baris), parameter: webhookURL, token.",
+   "description": "Fungsi GenerateRouterIntegrationScripts (9 baris), parameter: webhookURL, token. Didefinisikan pada baris 58-67.",
+   "tags": [
+    "go",
+    "fungsi",
+    "generaterouterintegrationscripts"
+   ]
+  },
+  {
+   "id": "file:internal/domain/device/simple_queue.go",
+   "type": "file",
+   "name": "simple_queue.go",
+   "filePath": "internal/domain/device/simple_queue.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Model domain murni: entitas, invariant, dan error domain — paket `device` (26 baris, 0 fungsi, 1 tipe).",
+   "description": "Model domain murni: entitas, invariant, dan error domain — paket `device` (26 baris, 0 fungsi, 1 tipe). Tipe utama: SimpleQueue.",
+   "tags": [
+    "go",
+    "domain",
+    "device",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/domain/device/simple_queue.go:SimpleQueue",
+   "type": "class",
+   "name": "SimpleQueue",
+   "filePath": "internal/domain/device/simple_queue.go",
+   "complexity": "simple",
+   "summary": "Tipe SimpleQueue di simple_queue.go.",
+   "description": "Tipe SimpleQueue di simple_queue.go. Didefinisikan pada baris 7-26.",
+   "tags": [
+    "go",
+    "tipe",
+    "simplequeue"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/domain/bot/message.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/message.go",
+   "target": "class:internal/domain/bot/message.go:Message",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/session.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/session.go",
+   "target": "class:internal/domain/bot/session.go:WASession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/cashbook/account.go",
+   "target": "file:internal/domain/cashbook/account.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/cashbook/account.go",
+   "target": "class:internal/domain/cashbook/account.go:CashAccount",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/cashbook/category.go",
+   "target": "file:internal/domain/cashbook/category.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/cashbook/category.go",
+   "target": "class:internal/domain/cashbook/category.go:CashCategory",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/cashbook/errors.go",
+   "target": "file:internal/domain/cashbook/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/cashbook/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/cashbook/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/cashbook/transaction.go",
+   "target": "file:internal/domain/cashbook/transaction.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/cashbook/transaction.go",
+   "target": "class:internal/domain/cashbook/transaction.go:CashTransaction",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/command/command.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/command/command.go",
+   "target": "class:internal/domain/command/command.go:Command",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/command/command.go",
+   "target": "class:internal/domain/command/command.go:Result",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/command/errors.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/command/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/command/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/command/policy.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/command/policy.go",
+   "target": "function:internal/domain/command/policy.go:Decide",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/customer.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/customer.go",
+   "target": "class:internal/domain/customer/customer.go:Customer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/errors.go",
+   "target": "file:internal/domain/customer/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/customer/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/customer/portal_otp.go",
+   "target": "file:internal/domain/customer/portal_otp.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/portal_otp.go",
+   "target": "class:internal/domain/customer/portal_otp.go:PortalOTP",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/portal_session.go",
+   "target": "file:internal/domain/customer/portal_session.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/portal_session.go",
+   "target": "class:internal/domain/customer/portal_session.go:PortalSession",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/user.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/user.go",
+   "target": "class:internal/domain/customer/user.go:User",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/user.go",
+   "target": "class:internal/domain/customer/user.go:UserDeviceAssignment",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/credentials.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/credentials.go",
+   "target": "class:internal/domain/device/credentials.go:Credentials",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/device.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/device.go",
+   "target": "class:internal/domain/device/device.go:Target",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/device.go",
+   "target": "class:internal/domain/device/device.go:Device",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/device.go",
+   "target": "function:internal/domain/device/device.go:ToTarget",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/device.go",
+   "target": "function:internal/domain/device/device.go:PingConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/device.go",
+   "target": "function:internal/domain/device/device.go:SetPingConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/dhcp.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/dhcp.go",
+   "target": "class:internal/domain/device/dhcp.go:DHCPLease",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/dhcp.go",
+   "target": "class:internal/domain/device/dhcp.go:DHCPLeaseBlockParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/errors.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/errors.go",
+   "target": "function:internal/domain/device/errors.go:IsNotFound",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/errors.go",
+   "target": "file:pkg/fault/fault_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/device/errors.go",
+   "target": "file:pkg/fault/fault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/device/interface.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/interface.go",
+   "target": "class:internal/domain/device/interface.go:Interface",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/interface.go",
+   "target": "class:internal/domain/device/interface.go:InterfaceTrafficStats",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/ip_pool.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/ip_pool.go",
+   "target": "class:internal/domain/device/ip_pool.go:IPPool",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/isolation.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/isolation.go",
+   "target": "class:internal/domain/device/isolation.go:IsolationConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/isolation.go",
+   "target": "class:internal/domain/device/isolation.go:IsolationStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/isolation.go",
+   "target": "class:internal/domain/device/isolation.go:RouterIntegrationScripts",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/isolation.go",
+   "target": "function:internal/domain/device/isolation.go:DefaultIsolationConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/metrics.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/metrics.go",
+   "target": "class:internal/domain/device/metrics.go:DevicePingConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/metrics.go",
+   "target": "class:internal/domain/device/metrics.go:PingMetricPoint",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/metrics.go",
+   "target": "class:internal/domain/device/metrics.go:PingSummary",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/metrics.go",
+   "target": "class:internal/domain/device/metrics.go:PingMetricsFilter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/metrics.go",
+   "target": "function:internal/domain/device/metrics.go:DefaultPingConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/resource.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/resource.go",
+   "target": "class:internal/domain/device/resource.go:SystemResource",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/resource.go",
+   "target": "class:internal/domain/device/resource.go:SystemIdentity",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/resource.go",
+   "target": "class:internal/domain/device/resource.go:LogEntry",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/resource.go",
+   "target": "class:internal/domain/device/resource.go:SystemHealth",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/resource.go",
+   "target": "class:internal/domain/device/resource.go:SystemClock",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/resource.go",
+   "target": "class:internal/domain/device/resource.go:SystemRouterboard",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/scripts.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/scripts.go",
+   "target": "function:internal/domain/device/scripts.go:BuildPPPOnUpScript",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/scripts.go",
+   "target": "function:internal/domain/device/scripts.go:BuildPPPOnDownScript",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/scripts.go",
+   "target": "function:internal/domain/device/scripts.go:BuildHotspotOnLoginScript",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/scripts.go",
+   "target": "function:internal/domain/device/scripts.go:BuildHotspotOnLogoutScript",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/scripts.go",
+   "target": "function:internal/domain/device/scripts.go:GenerateRouterIntegrationScripts",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:internal/domain/device/scripts.go:GenerateRouterIntegrationScripts",
+   "target": "function:internal/domain/device/scripts.go:BuildPPPOnUpScript",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/domain/device/scripts.go:GenerateRouterIntegrationScripts",
+   "target": "function:internal/domain/device/scripts.go:BuildPPPOnDownScript",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/domain/device/scripts.go:GenerateRouterIntegrationScripts",
+   "target": "function:internal/domain/device/scripts.go:BuildHotspotOnLoginScript",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:internal/domain/device/scripts.go:GenerateRouterIntegrationScripts",
+   "target": "function:internal/domain/device/scripts.go:BuildHotspotOnLogoutScript",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/device/simple_queue.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/simple_queue.go",
+   "target": "class:internal/domain/device/simple_queue.go:SimpleQueue",
+   "type": "contains",
+   "weight": 1
+  }
+ ]
+}

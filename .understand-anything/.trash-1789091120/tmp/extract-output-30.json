@@ -1,0 +1,5782 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/driver/mikrotik/ppp/parser_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 72,
+      "functions": [
+        {
+          "name": "TestParseSecrets",
+          "startLine": 9,
+          "endLine": 41,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParseActiveSessions",
+          "startLine": 43,
+          "endLine": 66,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestEnrichActiveSessionsWithProfiles",
+          "startLine": 68,
+          "endLine": 79,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestParseSecrets",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TestParseActiveSessions",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "TestEnrichActiveSessionsWithProfiles",
+          "line": 68,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestParseSecrets",
+          "callee": "ParseSecrets",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestParseSecrets",
+          "callee": "len",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestParseSecrets",
+          "callee": "t.Fatalf",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestParseSecrets",
+          "callee": "len",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestParseSecrets",
+          "callee": "t.Fatalf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestParseSecrets",
+          "callee": "t.Fatalf",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestParseActiveSessions",
+          "callee": "ParseActiveSessions",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestParseActiveSessions",
+          "callee": "len",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestParseActiveSessions",
+          "callee": "t.Fatalf",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestParseActiveSessions",
+          "callee": "len",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestParseActiveSessions",
+          "callee": "t.Fatalf",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestEnrichActiveSessionsWithProfiles",
+          "callee": "EnrichActiveSessionsWithProfiles",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestEnrichActiveSessionsWithProfiles",
+          "callee": "t.Fatalf",
+          "lineNumber": 77
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp/parser.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 105,
+      "nonEmptyLines": 98,
+      "functions": [
+        {
+          "name": "ParseSecrets",
+          "startLine": 11,
+          "endLine": 37,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseActiveSessions",
+          "startLine": 40,
+          "endLine": 62,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseProfiles",
+          "startLine": 65,
+          "endLine": 95,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "FilterInactiveSecrets",
+          "startLine": 98,
+          "endLine": 100,
+          "params": [
+            "secrets",
+            "active"
+          ]
+        },
+        {
+          "name": "EnrichActiveSessionsWithProfiles",
+          "startLine": 103,
+          "endLine": 105,
+          "params": [
+            "active",
+            "secrets"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ParseSecrets",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "ParseActiveSessions",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "ParseProfiles",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "FilterInactiveSecrets",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "EnrichActiveSessionsWithProfiles",
+          "line": 103,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseSecrets",
+          "callee": "make",
+          "lineNumber": 12
+        },
+        {
+          "caller": "ParseSecrets",
+          "callee": "len",
+          "lineNumber": 12
+        },
+        {
+          "caller": "ParseSecrets",
+          "callee": "append",
+          "lineNumber": 23
+        },
+        {
+          "caller": "ParseSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ParseActiveSessions",
+          "callee": "make",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ParseActiveSessions",
+          "callee": "len",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ParseActiveSessions",
+          "callee": "append",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ParseActiveSessions",
+          "callee": "strings.EqualFold",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ParseProfiles",
+          "callee": "make",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ParseProfiles",
+          "callee": "len",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ParseProfiles",
+          "callee": "append",
+          "lineNumber": 73
+        },
+        {
+          "caller": "FilterInactiveSecrets",
+          "callee": "domainPPP.FilterInactiveSecrets",
+          "lineNumber": 99
+        },
+        {
+          "caller": "EnrichActiveSessionsWithProfiles",
+          "callee": "domainPPP.EnrichActiveSessionsWithProfiles",
+          "lineNumber": 104
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp/types.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 26,
+      "functions": [
+        {
+          "name": "IsolirProfileParams",
+          "startLine": 24,
+          "endLine": 33,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IsolirProfileParams",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/queue/commands_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 31,
+      "functions": [
+        {
+          "name": "TestNewPrintSimpleQueuesCommand",
+          "startLine": 7,
+          "endLine": 17,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSuspendQueueParams",
+          "startLine": 19,
+          "endLine": 24,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewAddSimpleQueueCommand",
+          "startLine": 26,
+          "endLine": 36,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestNewPrintSimpleQueuesCommand",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "TestSuspendQueueParams",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewAddSimpleQueueCommand",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestNewPrintSimpleQueuesCommand",
+          "callee": "NewPrintSimpleQueuesCommand",
+          "lineNumber": 8
+        },
+        {
+          "caller": "TestNewPrintSimpleQueuesCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 10
+        },
+        {
+          "caller": "TestNewPrintSimpleQueuesCommand",
+          "callee": "NewPrintSimpleQueuesCommand",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestNewPrintSimpleQueuesCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestSuspendQueueParams",
+          "callee": "SuspendQueueParams",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestSuspendQueueParams",
+          "callee": "t.Fatalf",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestNewAddSimpleQueueCommand",
+          "callee": "NewAddSimpleQueueCommand",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestNewAddSimpleQueueCommand",
+          "callee": "t.Fatalf",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/queue/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 151,
+      "nonEmptyLines": 141,
+      "functions": [
+        {
+          "name": "SuspendQueueParams",
+          "startLine": 11,
+          "endLine": 24,
+          "params": [
+            "targetIP",
+            "reason",
+            "throttleSpeed"
+          ]
+        },
+        {
+          "name": "NewPrintSimpleQueuesCommand",
+          "startLine": 27,
+          "endLine": 36,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewPrintParentQueuesCommand",
+          "startLine": 40,
+          "endLine": 45,
+          "params": []
+        },
+        {
+          "name": "NewStreamQueueStatsCommand",
+          "startLine": 48,
+          "endLine": 70,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewAddSimpleQueueCommand",
+          "startLine": 73,
+          "endLine": 108,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "DedicatedQueueToROS",
+          "startLine": 111,
+          "endLine": 131,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveSimpleQueueCommand",
+          "startLine": 134,
+          "endLine": 139,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewSetSimpleQueueEnabledCommand",
+          "startLine": 142,
+          "endLine": 151,
+          "params": [
+            "rosID",
+            "enabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SuspendQueueParams",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintSimpleQueuesCommand",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintParentQueuesCommand",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamQueueStatsCommand",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddSimpleQueueCommand",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "DedicatedQueueToROS",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveSimpleQueueCommand",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetSimpleQueueEnabledCommand",
+          "line": 142,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SuspendQueueParams",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/queue/gateway.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "NewGateway",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "exec"
+          ]
+        },
+        {
+          "name": "ListQueues",
+          "startLine": 23,
+          "endLine": 29,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "AddQueue",
+          "startLine": 32,
+          "endLine": 34,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "RemoveQueue",
+          "startLine": 37,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "SetQueueEnabled",
+          "startLine": 42,
+          "endLine": 44,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "enabled"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Gateway",
+          "startLine": 11,
+          "endLine": 13,
+          "methods": [
+            "ListQueues",
+            "AddQueue",
+            "RemoveQueue",
+            "SetQueueEnabled"
+          ],
+          "properties": [
+            "exec"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Gateway",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewGateway",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "ListQueues",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "AddQueue",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveQueue",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "SetQueueEnabled",
+          "line": 42,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListQueues",
+          "callee": "g.exec",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListQueues",
+          "callee": "NewPrintSimpleQueuesCommand",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListQueues",
+          "callee": "ParseSimpleQueues",
+          "lineNumber": 28
+        },
+        {
+          "caller": "AddQueue",
+          "callee": "g.exec",
+          "lineNumber": 33
+        },
+        {
+          "caller": "AddQueue",
+          "callee": "DedicatedQueueToROS",
+          "lineNumber": 33
+        },
+        {
+          "caller": "RemoveQueue",
+          "callee": "g.exec",
+          "lineNumber": 38
+        },
+        {
+          "caller": "RemoveQueue",
+          "callee": "NewRemoveSimpleQueueCommand",
+          "lineNumber": 38
+        },
+        {
+          "caller": "SetQueueEnabled",
+          "callee": "g.exec",
+          "lineNumber": 43
+        },
+        {
+          "caller": "SetQueueEnabled",
+          "callee": "NewSetSimpleQueueEnabledCommand",
+          "lineNumber": 43
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/queue/parser_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 25,
+      "functions": [
+        {
+          "name": "TestParseSimpleQueues",
+          "startLine": 9,
+          "endLine": 29,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestParseSimpleQueues",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestParseSimpleQueues",
+          "callee": "ParseSimpleQueues",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestParseSimpleQueues",
+          "callee": "len",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestParseSimpleQueues",
+          "callee": "t.Fatalf",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestParseSimpleQueues",
+          "callee": "len",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestParseSimpleQueues",
+          "callee": "t.Fatalf",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/queue/parser.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 38,
+      "functions": [
+        {
+          "name": "ParseSimpleQueues",
+          "startLine": 11,
+          "endLine": 41,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ParseSimpleQueues",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseSimpleQueues",
+          "callee": "make",
+          "lineNumber": 12
+        },
+        {
+          "caller": "ParseSimpleQueues",
+          "callee": "len",
+          "lineNumber": 12
+        },
+        {
+          "caller": "ParseSimpleQueues",
+          "callee": "append",
+          "lineNumber": 19
+        },
+        {
+          "caller": "ParseSimpleQueues",
+          "callee": "strings.EqualFold",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/queue/types.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 27,
+      "classes": [
+        {
+          "name": "SimpleQueueParams",
+          "startLine": 17,
+          "endLine": 29,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Target",
+            "MaxLimit",
+            "LimitAt",
+            "BurstLimit",
+            "BurstThreshold",
+            "BurstTime",
+            "Priority",
+            "Parent",
+            "Comment",
+            "Disabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SimpleQueueParams",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/scripts.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 69,
+      "nonEmptyLines": 62,
+      "functions": [
+        {
+          "name": "BuildPPPOnUpScript",
+          "startLine": 11,
+          "endLine": 21,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        },
+        {
+          "name": "BuildPPPOnDownScript",
+          "startLine": 24,
+          "endLine": 32,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        },
+        {
+          "name": "BuildHotspotOnLoginScript",
+          "startLine": 35,
+          "endLine": 45,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        },
+        {
+          "name": "BuildHotspotOnLogoutScript",
+          "startLine": 48,
+          "endLine": 57,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        },
+        {
+          "name": "GenerateRouterIntegrationScripts",
+          "startLine": 60,
+          "endLine": 69,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BuildPPPOnUpScript",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "BuildPPPOnDownScript",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "BuildHotspotOnLoginScript",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "BuildHotspotOnLogoutScript",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateRouterIntegrationScripts",
+          "line": 60,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "BuildPPPOnUpScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 12
+        },
+        {
+          "caller": "BuildPPPOnDownScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "BuildHotspotOnLoginScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "BuildHotspotOnLogoutScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 49
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 61
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "BuildPPPOnUpScript",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "BuildPPPOnDownScript",
+          "lineNumber": 64
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "BuildHotspotOnLoginScript",
+          "lineNumber": 65
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "BuildHotspotOnLogoutScript",
+          "lineNumber": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/stream_gateway.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 124,
+      "nonEmptyLines": 94,
+      "functions": [
+        {
+          "name": "NewMonitorStreamGateway",
+          "startLine": 18,
+          "endLine": 20,
+          "params": []
+        },
+        {
+          "name": "StreamTraffic",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "ctx",
+            "driver",
+            "ifaceName"
+          ]
+        },
+        {
+          "name": "StreamResource",
+          "startLine": 26,
+          "endLine": 28,
+          "params": [
+            "ctx",
+            "driver",
+            "interval"
+          ]
+        },
+        {
+          "name": "StreamInterfaces",
+          "startLine": 30,
+          "endLine": 32,
+          "params": [
+            "ctx",
+            "driver",
+            "typeFilter",
+            "nameFilter",
+            "interval"
+          ]
+        },
+        {
+          "name": "StreamIdentity",
+          "startLine": 34,
+          "endLine": 36,
+          "params": [
+            "ctx",
+            "driver",
+            "interval"
+          ]
+        },
+        {
+          "name": "StreamPing",
+          "startLine": 38,
+          "endLine": 40,
+          "params": [
+            "ctx",
+            "driver",
+            "target"
+          ]
+        },
+        {
+          "name": "StreamLogs",
+          "startLine": 42,
+          "endLine": 44,
+          "params": [
+            "ctx",
+            "driver",
+            "topics"
+          ]
+        },
+        {
+          "name": "StreamQueueStats",
+          "startLine": 46,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "driver",
+            "params"
+          ]
+        },
+        {
+          "name": "StreamPPPActive",
+          "startLine": 50,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "StreamPPPSecrets",
+          "startLine": 54,
+          "endLine": 56,
+          "params": [
+            "ctx",
+            "driver",
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "StreamHotspotActive",
+          "startLine": 58,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "driver",
+            "userFilter"
+          ]
+        },
+        {
+          "name": "StreamHotspotActiveStats",
+          "startLine": 62,
+          "endLine": 64,
+          "params": [
+            "ctx",
+            "driver",
+            "interval"
+          ]
+        },
+        {
+          "name": "StreamClock",
+          "startLine": 66,
+          "endLine": 68,
+          "params": [
+            "ctx",
+            "driver",
+            "interval"
+          ]
+        },
+        {
+          "name": "StreamRouterboard",
+          "startLine": 70,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "driver",
+            "interval"
+          ]
+        },
+        {
+          "name": "StreamHealth",
+          "startLine": 74,
+          "endLine": 76,
+          "params": [
+            "ctx",
+            "driver",
+            "interval"
+          ]
+        },
+        {
+          "name": "ParseInterfaceTraffic",
+          "startLine": 78,
+          "endLine": 80,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseResource",
+          "startLine": 82,
+          "endLine": 84,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseInterfaces",
+          "startLine": 86,
+          "endLine": 88,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseIdentity",
+          "startLine": 90,
+          "endLine": 92,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseLogEntries",
+          "startLine": 94,
+          "endLine": 96,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseQueues",
+          "startLine": 98,
+          "endLine": 100,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParsePPPActive",
+          "startLine": 102,
+          "endLine": 104,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseHotspotActive",
+          "startLine": 106,
+          "endLine": 108,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseHotspotActiveStats",
+          "startLine": 110,
+          "endLine": 112,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseClock",
+          "startLine": 114,
+          "endLine": 116,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseRouterboard",
+          "startLine": 118,
+          "endLine": 120,
+          "params": [
+            "res"
+          ]
+        },
+        {
+          "name": "ParseHealth",
+          "startLine": 122,
+          "endLine": 124,
+          "params": [
+            "res"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "monitorStreamGateway",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [
+            "StreamTraffic",
+            "StreamResource",
+            "StreamInterfaces",
+            "StreamIdentity",
+            "StreamPing",
+            "StreamLogs",
+            "StreamQueueStats",
+            "StreamPPPActive",
+            "StreamPPPSecrets",
+            "StreamHotspotActive",
+            "StreamHotspotActiveStats",
+            "StreamClock",
+            "StreamRouterboard",
+            "StreamHealth",
+            "ParseInterfaceTraffic",
+            "ParseResource",
+            "ParseInterfaces",
+            "ParseIdentity",
+            "ParseLogEntries",
+            "ParseQueues",
+            "ParsePPPActive",
+            "ParseHotspotActive",
+            "ParseHotspotActiveStats",
+            "ParseClock",
+            "ParseRouterboard",
+            "ParseHealth"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewMonitorStreamGateway",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "StreamTraffic",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "StreamResource",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "StreamInterfaces",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "StreamIdentity",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "StreamPing",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "StreamLogs",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "StreamQueueStats",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "StreamPPPActive",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "StreamPPPSecrets",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "StreamHotspotActive",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "StreamHotspotActiveStats",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "StreamClock",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "StreamRouterboard",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "StreamHealth",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "ParseInterfaceTraffic",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "ParseResource",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "ParseInterfaces",
+          "line": 86,
+          "isDefault": false
+        },
+        {
+          "name": "ParseIdentity",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "ParseLogEntries",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "ParseQueues",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "ParsePPPActive",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "ParseHotspotActive",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "ParseHotspotActiveStats",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "ParseClock",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "ParseRouterboard",
+          "line": 118,
+          "isDefault": false
+        },
+        {
+          "name": "ParseHealth",
+          "line": 122,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamTraffic",
+          "callee": "driver.Stream",
+          "lineNumber": 23
+        },
+        {
+          "caller": "StreamTraffic",
+          "callee": "iface.NewMonitorTrafficStreamCommand",
+          "lineNumber": 23
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "driver.Stream",
+          "lineNumber": 27
+        },
+        {
+          "caller": "StreamResource",
+          "callee": "mikrotiksystem.NewStreamResourceCommand",
+          "lineNumber": 27
+        },
+        {
+          "caller": "StreamInterfaces",
+          "callee": "driver.Stream",
+          "lineNumber": 31
+        },
+        {
+          "caller": "StreamInterfaces",
+          "callee": "iface.NewStreamInterfacesCommand",
+          "lineNumber": 31
+        },
+        {
+          "caller": "StreamIdentity",
+          "callee": "driver.Stream",
+          "lineNumber": 35
+        },
+        {
+          "caller": "StreamIdentity",
+          "callee": "mikrotiksystem.NewStreamIdentityCommand",
+          "lineNumber": 35
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "driver.Stream",
+          "lineNumber": 39
+        },
+        {
+          "caller": "StreamPing",
+          "callee": "mikrotiksystem.NewPingStreamCommand",
+          "lineNumber": 39
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "driver.Stream",
+          "lineNumber": 43
+        },
+        {
+          "caller": "StreamLogs",
+          "callee": "mikrotiksystem.NewStreamLogsCommand",
+          "lineNumber": 43
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "driver.Stream",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamQueueStats",
+          "callee": "mikrotikqueue.NewStreamQueueStatsCommand",
+          "lineNumber": 47
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "driver.Stream",
+          "lineNumber": 51
+        },
+        {
+          "caller": "StreamPPPActive",
+          "callee": "mikrotikppp.NewStreamActiveCommand",
+          "lineNumber": 51
+        },
+        {
+          "caller": "StreamPPPSecrets",
+          "callee": "driver.Stream",
+          "lineNumber": 55
+        },
+        {
+          "caller": "StreamPPPSecrets",
+          "callee": "mikrotikppp.NewStreamSecretsCommand",
+          "lineNumber": 55
+        },
+        {
+          "caller": "StreamHotspotActive",
+          "callee": "driver.Stream",
+          "lineNumber": 59
+        },
+        {
+          "caller": "StreamHotspotActive",
+          "callee": "hotspot.NewStreamActiveCommand",
+          "lineNumber": 59
+        },
+        {
+          "caller": "StreamHotspotActiveStats",
+          "callee": "driver.Stream",
+          "lineNumber": 63
+        },
+        {
+          "caller": "StreamHotspotActiveStats",
+          "callee": "hotspot.NewStreamActiveStatsCommand",
+          "lineNumber": 63
+        },
+        {
+          "caller": "StreamClock",
+          "callee": "driver.Stream",
+          "lineNumber": 67
+        },
+        {
+          "caller": "StreamClock",
+          "callee": "mikrotiksystem.NewStreamClockCommand",
+          "lineNumber": 67
+        },
+        {
+          "caller": "StreamRouterboard",
+          "callee": "driver.Stream",
+          "lineNumber": 71
+        },
+        {
+          "caller": "StreamRouterboard",
+          "callee": "mikrotiksystem.NewStreamRouterboardCommand",
+          "lineNumber": 71
+        },
+        {
+          "caller": "StreamHealth",
+          "callee": "driver.Stream",
+          "lineNumber": 75
+        },
+        {
+          "caller": "StreamHealth",
+          "callee": "mikrotiksystem.NewStreamHealthCommand",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ParseInterfaceTraffic",
+          "callee": "iface.ParseInterfaceTrafficStats",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ParseResource",
+          "callee": "mikrotiksystem.ParseResource",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ParseInterfaces",
+          "callee": "iface.ParseInterfaces",
+          "lineNumber": 87
+        },
+        {
+          "caller": "ParseIdentity",
+          "callee": "mikrotiksystem.ParseIdentity",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ParseLogEntries",
+          "callee": "mikrotiksystem.ParseLogs",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ParseQueues",
+          "callee": "mikrotikqueue.ParseSimpleQueues",
+          "lineNumber": 99
+        },
+        {
+          "caller": "ParsePPPActive",
+          "callee": "mikrotikppp.ParseActiveSessions",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ParseHotspotActive",
+          "callee": "hotspot.ParseActiveSessions",
+          "lineNumber": 107
+        },
+        {
+          "caller": "ParseHotspotActiveStats",
+          "callee": "hotspot.ParseActiveStats",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ParseClock",
+          "callee": "mikrotiksystem.ParseClock",
+          "lineNumber": 115
+        },
+        {
+          "caller": "ParseRouterboard",
+          "callee": "mikrotiksystem.ParseRouterboard",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ParseHealth",
+          "callee": "mikrotiksystem.ParseHealth",
+          "lineNumber": 123
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 27,
+        "functionCount": 27,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/stream.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 161,
+      "nonEmptyLines": 142,
+      "functions": [
+        {
+          "name": "Stream",
+          "startLine": 37,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "newStreamHandle",
+          "startLine": 83,
+          "endLine": 93,
+          "params": [
+            "listen"
+          ]
+        },
+        {
+          "name": "Chan",
+          "startLine": 98,
+          "endLine": 100,
+          "params": []
+        },
+        {
+          "name": "Cancel",
+          "startLine": 105,
+          "endLine": 121,
+          "params": []
+        },
+        {
+          "name": "Err",
+          "startLine": 125,
+          "endLine": 129,
+          "params": []
+        },
+        {
+          "name": "pump",
+          "startLine": 136,
+          "endLine": 161,
+          "params": [
+            "d"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "streamHandle",
+          "startLine": 71,
+          "endLine": 81,
+          "methods": [
+            "Chan",
+            "Cancel",
+            "Err",
+            "pump"
+          ],
+          "properties": [
+            "listen",
+            "out",
+            "doneCh",
+            "cancelCh",
+            "mu",
+            "err",
+            "closed"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Stream",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "Chan",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "Cancel",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "Err",
+          "line": 125,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Stream",
+          "callee": "isStreamingCommand",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Stream",
+          "callee": "fmt.Errorf",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Stream",
+          "callee": "ctx.Done",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Stream",
+          "callee": "fmt.Errorf",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Stream",
+          "callee": "ctx.Err",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Stream",
+          "callee": "func() { <-d.streamSem }",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Stream",
+          "callee": "d.stream.get",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Stream",
+          "callee": "buildArgs",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Stream",
+          "callee": "client.ListenArgsContext",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Stream",
+          "callee": "context.Background",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Stream",
+          "callee": "fmt.Errorf",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Stream",
+          "callee": "newStreamHandle",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Stream",
+          "callee": "d.registerStream",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Stream",
+          "callee": "h.pump",
+          "lineNumber": 62
+        },
+        {
+          "caller": "newStreamHandle",
+          "callee": "make",
+          "lineNumber": 89
+        },
+        {
+          "caller": "newStreamHandle",
+          "callee": "make",
+          "lineNumber": 90
+        },
+        {
+          "caller": "newStreamHandle",
+          "callee": "make",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Cancel",
+          "callee": "h.mu.Lock",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Cancel",
+          "callee": "h.mu.Unlock",
+          "lineNumber": 108
+        },
+        {
+          "caller": "Cancel",
+          "callee": "close",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Cancel",
+          "callee": "h.mu.Unlock",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Cancel",
+          "callee": "h.listen.CancelContext",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Cancel",
+          "callee": "context.Background",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Cancel",
+          "callee": "fmt.Errorf",
+          "lineNumber": 118
+        },
+        {
+          "caller": "Err",
+          "callee": "h.mu.Lock",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Err",
+          "callee": "h.mu.Unlock",
+          "lineNumber": 127
+        },
+        {
+          "caller": "pump",
+          "callee": "close",
+          "lineNumber": 137
+        },
+        {
+          "caller": "pump",
+          "callee": "close",
+          "lineNumber": 138
+        },
+        {
+          "caller": "pump",
+          "callee": "d.unregisterStream",
+          "lineNumber": 139
+        },
+        {
+          "caller": "pump",
+          "callee": "h.listen.Chan",
+          "lineNumber": 145
+        },
+        {
+          "caller": "pump",
+          "callee": "h.mu.Lock",
+          "lineNumber": 148
+        },
+        {
+          "caller": "pump",
+          "callee": "fmt.Errorf",
+          "lineNumber": 149
+        },
+        {
+          "caller": "pump",
+          "callee": "h.mu.Unlock",
+          "lineNumber": 150
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/system/commands_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 22,
+      "functions": [
+        {
+          "name": "TestSystemCommands",
+          "startLine": 7,
+          "endLine": 27,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestSystemCommands",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestSystemCommands",
+          "callee": "NewPrintResourceCommand",
+          "lineNumber": 8
+        },
+        {
+          "caller": "TestSystemCommands",
+          "callee": "t.Fatalf",
+          "lineNumber": 10
+        },
+        {
+          "caller": "TestSystemCommands",
+          "callee": "NewPrintHealthCommand",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestSystemCommands",
+          "callee": "t.Fatalf",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestSystemCommands",
+          "callee": "NewSetIdentityCommand",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestSystemCommands",
+          "callee": "t.Fatalf",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestSystemCommands",
+          "callee": "NewPingCommand",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestSystemCommands",
+          "callee": "t.Fatalf",
+          "lineNumber": 25
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/system/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 260,
+      "nonEmptyLines": 234,
+      "functions": [
+        {
+          "name": "NewPrintResourceCommand",
+          "startLine": 11,
+          "endLine": 16,
+          "params": []
+        },
+        {
+          "name": "NewStreamResourceCommand",
+          "startLine": 19,
+          "endLine": 27,
+          "params": [
+            "interval"
+          ]
+        },
+        {
+          "name": "NewPrintHealthCommand",
+          "startLine": 30,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "NewStreamHealthCommand",
+          "startLine": 38,
+          "endLine": 46,
+          "params": [
+            "interval"
+          ]
+        },
+        {
+          "name": "NewPrintClockCommand",
+          "startLine": 49,
+          "endLine": 54,
+          "params": []
+        },
+        {
+          "name": "NewStreamClockCommand",
+          "startLine": 57,
+          "endLine": 65,
+          "params": [
+            "interval"
+          ]
+        },
+        {
+          "name": "NewPrintIdentityCommand",
+          "startLine": 68,
+          "endLine": 73,
+          "params": []
+        },
+        {
+          "name": "NewStreamIdentityCommand",
+          "startLine": 76,
+          "endLine": 84,
+          "params": [
+            "interval"
+          ]
+        },
+        {
+          "name": "NewSetIdentityCommand",
+          "startLine": 87,
+          "endLine": 92,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "NewPrintRouterboardCommand",
+          "startLine": 95,
+          "endLine": 100,
+          "params": []
+        },
+        {
+          "name": "NewStreamRouterboardCommand",
+          "startLine": 103,
+          "endLine": 111,
+          "params": [
+            "interval"
+          ]
+        },
+        {
+          "name": "NewPrintLogsCommand",
+          "startLine": 114,
+          "endLine": 123,
+          "params": [
+            "topicsFilter"
+          ]
+        },
+        {
+          "name": "NewStreamLogsCommand",
+          "startLine": 126,
+          "endLine": 135,
+          "params": [
+            "topicsFilter"
+          ]
+        },
+        {
+          "name": "NewPingCommand",
+          "startLine": 138,
+          "endLine": 149,
+          "params": [
+            "host",
+            "count"
+          ]
+        },
+        {
+          "name": "NewPingStreamCommand",
+          "startLine": 152,
+          "endLine": 160,
+          "params": [
+            "host"
+          ]
+        },
+        {
+          "name": "NewPrintSchedulerCommand",
+          "startLine": 163,
+          "endLine": 172,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewAddSchedulerCommand",
+          "startLine": 175,
+          "endLine": 190,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetSchedulerCommand",
+          "startLine": 193,
+          "endLine": 202,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveSchedulerCommand",
+          "startLine": 205,
+          "endLine": 210,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewPrintScriptCommand",
+          "startLine": 213,
+          "endLine": 222,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewAddScriptCommand",
+          "startLine": 225,
+          "endLine": 235,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetScriptCommand",
+          "startLine": 238,
+          "endLine": 244,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveScriptCommand",
+          "startLine": 247,
+          "endLine": 252,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewRunScriptCommand",
+          "startLine": 255,
+          "endLine": 260,
+          "params": [
+            "scriptName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewPrintResourceCommand",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamResourceCommand",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintHealthCommand",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamHealthCommand",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintClockCommand",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamClockCommand",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintIdentityCommand",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamIdentityCommand",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetIdentityCommand",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintRouterboardCommand",
+          "line": 95,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamRouterboardCommand",
+          "line": 103,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintLogsCommand",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamLogsCommand",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "NewPingCommand",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "NewPingStreamCommand",
+          "line": 152,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintSchedulerCommand",
+          "line": 163,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddSchedulerCommand",
+          "line": 175,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetSchedulerCommand",
+          "line": 193,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveSchedulerCommand",
+          "line": 205,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintScriptCommand",
+          "line": 213,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddScriptCommand",
+          "line": 225,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetScriptCommand",
+          "line": 238,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveScriptCommand",
+          "line": 247,
+          "isDefault": false
+        },
+        {
+          "name": "NewRunScriptCommand",
+          "line": 255,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewAddSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 180
+        },
+        {
+          "caller": "NewAddSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 181
+        },
+        {
+          "caller": "NewAddSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 182
+        },
+        {
+          "caller": "NewAddSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 183
+        },
+        {
+          "caller": "NewSetSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 195
+        },
+        {
+          "caller": "NewSetSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 196
+        },
+        {
+          "caller": "NewSetSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 197
+        },
+        {
+          "caller": "NewSetSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 198
+        },
+        {
+          "caller": "NewSetSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 199
+        },
+        {
+          "caller": "NewSetSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 200
+        },
+        {
+          "caller": "NewAddScriptCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 230
+        },
+        {
+          "caller": "NewSetScriptCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 240
+        },
+        {
+          "caller": "NewSetScriptCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 241
+        },
+        {
+          "caller": "NewSetScriptCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 242
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 24,
+        "functionCount": 24,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/system/operations.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 42,
+      "functions": [
+        {
+          "name": "GetSystemResource",
+          "startLine": 11,
+          "endLine": 18,
+          "params": [
+            "ctx",
+            "driver",
+            "exec"
+          ]
+        },
+        {
+          "name": "GetSystemIdentity",
+          "startLine": 21,
+          "endLine": 28,
+          "params": [
+            "ctx",
+            "driver",
+            "exec"
+          ]
+        },
+        {
+          "name": "GetSystemHealth",
+          "startLine": 31,
+          "endLine": 38,
+          "params": [
+            "ctx",
+            "driver",
+            "exec"
+          ]
+        },
+        {
+          "name": "GetSystemRouterboard",
+          "startLine": 41,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "driver",
+            "exec"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetSystemResource",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "GetSystemIdentity",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "GetSystemHealth",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "GetSystemRouterboard",
+          "line": 41,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetSystemResource",
+          "callee": "NewPrintResourceCommand",
+          "lineNumber": 12
+        },
+        {
+          "caller": "GetSystemResource",
+          "callee": "exec",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GetSystemResource",
+          "callee": "fmt.Errorf",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GetSystemResource",
+          "callee": "ParseResource",
+          "lineNumber": 17
+        },
+        {
+          "caller": "GetSystemIdentity",
+          "callee": "NewPrintIdentityCommand",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GetSystemIdentity",
+          "callee": "exec",
+          "lineNumber": 23
+        },
+        {
+          "caller": "GetSystemIdentity",
+          "callee": "fmt.Errorf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "GetSystemIdentity",
+          "callee": "ParseIdentity",
+          "lineNumber": 27
+        },
+        {
+          "caller": "GetSystemHealth",
+          "callee": "NewPrintHealthCommand",
+          "lineNumber": 32
+        },
+        {
+          "caller": "GetSystemHealth",
+          "callee": "exec",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GetSystemHealth",
+          "callee": "fmt.Errorf",
+          "lineNumber": 35
+        },
+        {
+          "caller": "GetSystemHealth",
+          "callee": "ParseHealth",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GetSystemRouterboard",
+          "callee": "NewPrintRouterboardCommand",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GetSystemRouterboard",
+          "callee": "exec",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GetSystemRouterboard",
+          "callee": "fmt.Errorf",
+          "lineNumber": 45
+        },
+        {
+          "caller": "GetSystemRouterboard",
+          "callee": "ParseRouterboard",
+          "lineNumber": 47
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/system/parser_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 49,
+      "nonEmptyLines": 43,
+      "functions": [
+        {
+          "name": "TestParseResource",
+          "startLine": 9,
+          "endLine": 28,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParsePing",
+          "startLine": 30,
+          "endLine": 49,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestParseResource",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TestParsePing",
+          "line": 30,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestParseResource",
+          "callee": "ParseResource",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestParseResource",
+          "callee": "t.Fatalf",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestParsePing",
+          "callee": "ParsePing",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestParsePing",
+          "callee": "len",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestParsePing",
+          "callee": "t.Fatalf",
+          "lineNumber": 47
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/system/parser.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 203,
+      "nonEmptyLines": 186,
+      "functions": [
+        {
+          "name": "ParseResource",
+          "startLine": 13,
+          "endLine": 45,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseHealth",
+          "startLine": 48,
+          "endLine": 63,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseClock",
+          "startLine": 66,
+          "endLine": 78,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseIdentity",
+          "startLine": 81,
+          "endLine": 86,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseRouterboard",
+          "startLine": 89,
+          "endLine": 103,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseLogs",
+          "startLine": 106,
+          "endLine": 130,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParsePing",
+          "startLine": 133,
+          "endLine": 155,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseScheduler",
+          "startLine": 158,
+          "endLine": 180,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseScript",
+          "startLine": 183,
+          "endLine": 203,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ParseResource",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "ParseHealth",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "ParseClock",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "ParseIdentity",
+          "line": 81,
+          "isDefault": false
+        },
+        {
+          "name": "ParseRouterboard",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "ParseLogs",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "ParsePing",
+          "line": 133,
+          "isDefault": false
+        },
+        {
+          "name": "ParseScheduler",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "ParseScript",
+          "line": 183,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseResource",
+          "callee": "len",
+          "lineNumber": 14
+        },
+        {
+          "caller": "ParseResource",
+          "callee": "strconv.Atoi",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ParseResource",
+          "callee": "strconv.Atoi",
+          "lineNumber": 19
+        },
+        {
+          "caller": "ParseHealth",
+          "callee": "len",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ParseClock",
+          "callee": "len",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ParseClock",
+          "callee": "strings.EqualFold",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ParseClock",
+          "callee": "strings.EqualFold",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ParseIdentity",
+          "callee": "len",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ParseRouterboard",
+          "callee": "len",
+          "lineNumber": 90
+        },
+        {
+          "caller": "ParseLogs",
+          "callee": "make",
+          "lineNumber": 107
+        },
+        {
+          "caller": "ParseLogs",
+          "callee": "len",
+          "lineNumber": 107
+        },
+        {
+          "caller": "ParseLogs",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ParseLogs",
+          "callee": "time.Now().UnixNano",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ParseLogs",
+          "callee": "time.Now",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ParseLogs",
+          "callee": "append",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ParsePing",
+          "callee": "make",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ParsePing",
+          "callee": "len",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ParsePing",
+          "callee": "strconv.Atoi",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ParsePing",
+          "callee": "strconv.Atoi",
+          "lineNumber": 137
+        },
+        {
+          "caller": "ParsePing",
+          "callee": "strconv.Atoi",
+          "lineNumber": 138
+        },
+        {
+          "caller": "ParsePing",
+          "callee": "strconv.Atoi",
+          "lineNumber": 139
+        },
+        {
+          "caller": "ParsePing",
+          "callee": "append",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ParseScheduler",
+          "callee": "make",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ParseScheduler",
+          "callee": "len",
+          "lineNumber": 159
+        },
+        {
+          "caller": "ParseScheduler",
+          "callee": "append",
+          "lineNumber": 166
+        },
+        {
+          "caller": "ParseScheduler",
+          "callee": "strings.EqualFold",
+          "lineNumber": 176
+        },
+        {
+          "caller": "ParseScript",
+          "callee": "make",
+          "lineNumber": 184
+        },
+        {
+          "caller": "ParseScript",
+          "callee": "len",
+          "lineNumber": 184
+        },
+        {
+          "caller": "ParseScript",
+          "callee": "append",
+          "lineNumber": 191
+        },
+        {
+          "caller": "ParseScript",
+          "callee": "strings.EqualFold",
+          "lineNumber": 199
+        },
+        {
+          "caller": "ParseScript",
+          "callee": "strings.EqualFold",
+          "lineNumber": 199
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 9,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/system/types.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 82,
+      "nonEmptyLines": 70,
+      "classes": [
+        {
+          "name": "PingResult",
+          "startLine": 26,
+          "endLine": 37,
+          "methods": [],
+          "properties": [
+            "Seq",
+            "Host",
+            "Sent",
+            "Received",
+            "PacketLoss",
+            "MinRTT",
+            "AvgRTT",
+            "MaxRTT",
+            "TTL",
+            "Time"
+          ]
+        },
+        {
+          "name": "SystemScheduler",
+          "startLine": 40,
+          "endLine": 51,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "StartDate",
+            "StartTime",
+            "Interval",
+            "OnEvent",
+            "RunCount",
+            "NextRun",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "SystemSchedulerParams",
+          "startLine": 54,
+          "endLine": 62,
+          "methods": [],
+          "properties": [
+            "Name",
+            "StartDate",
+            "StartTime",
+            "Interval",
+            "OnEvent",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "SystemScript",
+          "startLine": 65,
+          "endLine": 74,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Source",
+            "Owner",
+            "RunCount",
+            "LastRun",
+            "Comment",
+            "DontReqPwr"
+          ]
+        },
+        {
+          "name": "SystemScriptParams",
+          "startLine": 77,
+          "endLine": 82,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Source",
+            "Comment",
+            "DontReqPwr"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PingResult",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "SystemScheduler",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "SystemSchedulerParams",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "SystemScript",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "SystemScriptParams",
+          "line": 77,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "internal/driver/netconf/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 34,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 26,
+          "endLine": 31,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 34,
+          "endLine": 40,
+          "params": [
+            "op"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/netconf/driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 36,
+      "functions": [
+        {
+          "name": "NewDriver",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "ctx",
+            "target"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 28,
+          "endLine": 30,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 33,
+          "endLine": 35,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 38,
+          "endLine": 40,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 43,
+          "endLine": 45,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Driver",
+          "startLine": 14,
+          "endLine": 14,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Driver",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewDriver",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 43,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Classify",
+          "callee": "Classify",
+          "lineNumber": 34
+        },
+        {
+          "caller": "Translate",
+          "callee": "Translate",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/client.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 166,
+      "nonEmptyLines": 140,
+      "functions": [
+        {
+          "name": "init",
+          "startLine": 27,
+          "endLine": 29,
+          "params": []
+        },
+        {
+          "name": "NewClient",
+          "startLine": 49,
+          "endLine": 66,
+          "params": [
+            "sessionID",
+            "deviceStore",
+            "onMsg",
+            "onStat",
+            "chatRepo"
+          ]
+        },
+        {
+          "name": "SetMessageCallback",
+          "startLine": 69,
+          "endLine": 73,
+          "params": [
+            "cb"
+          ]
+        },
+        {
+          "name": "getMessageCallback",
+          "startLine": 75,
+          "endLine": 79,
+          "params": []
+        },
+        {
+          "name": "SetChatUpdateCallback",
+          "startLine": 82,
+          "endLine": 86,
+          "params": [
+            "cb"
+          ]
+        },
+        {
+          "name": "getChatUpdateCallback",
+          "startLine": 88,
+          "endLine": 92,
+          "params": []
+        },
+        {
+          "name": "notifyChatUpdate",
+          "startLine": 94,
+          "endLine": 98,
+          "params": [
+            "chatJID"
+          ]
+        },
+        {
+          "name": "SetChatPresenceCallback",
+          "startLine": 101,
+          "endLine": 105,
+          "params": [
+            "cb"
+          ]
+        },
+        {
+          "name": "getChatPresenceCallback",
+          "startLine": 107,
+          "endLine": 111,
+          "params": []
+        },
+        {
+          "name": "Connect",
+          "startLine": 113,
+          "endLine": 140,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "Disconnect",
+          "startLine": 142,
+          "endLine": 146,
+          "params": []
+        },
+        {
+          "name": "Logout",
+          "startLine": 148,
+          "endLine": 159,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "Reconnect",
+          "startLine": 161,
+          "endLine": 166,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Client",
+          "startLine": 31,
+          "endLine": 47,
+          "methods": [
+            "SetMessageCallback",
+            "getMessageCallback",
+            "SetChatUpdateCallback",
+            "getChatUpdateCallback",
+            "notifyChatUpdate",
+            "SetChatPresenceCallback",
+            "getChatPresenceCallback",
+            "Connect",
+            "Disconnect",
+            "Logout",
+            "Reconnect"
+          ],
+          "properties": [
+            "SessionID",
+            "deviceStore",
+            "waClient",
+            "qrCode",
+            "qrBase64",
+            "qrMutex",
+            "onMessage",
+            "callbackMu",
+            "onStatus",
+            "onChatUpd",
+            "onChatPres",
+            "chatRepo",
+            "qrFlowMu",
+            "qrFlowActive"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Client",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "NewClient",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "SetMessageCallback",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "SetChatUpdateCallback",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "SetChatPresenceCallback",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "Connect",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "Disconnect",
+          "line": 142,
+          "isDefault": false
+        },
+        {
+          "name": "Logout",
+          "line": 148,
+          "isDefault": false
+        },
+        {
+          "name": "Reconnect",
+          "line": 161,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "init",
+          "callee": "store.SetOSInfo",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewClient",
+          "callee": "waLog.Stdout",
+          "lineNumber": 50
+        },
+        {
+          "caller": "NewClient",
+          "callee": "whatsmeow.NewClient",
+          "lineNumber": 51
+        },
+        {
+          "caller": "NewClient",
+          "callee": "client.AddEventHandler",
+          "lineNumber": 64
+        },
+        {
+          "caller": "SetMessageCallback",
+          "callee": "c.callbackMu.Lock",
+          "lineNumber": 70
+        },
+        {
+          "caller": "SetMessageCallback",
+          "callee": "c.callbackMu.Unlock",
+          "lineNumber": 71
+        },
+        {
+          "caller": "getMessageCallback",
+          "callee": "c.callbackMu.RLock",
+          "lineNumber": 76
+        },
+        {
+          "caller": "getMessageCallback",
+          "callee": "c.callbackMu.RUnlock",
+          "lineNumber": 77
+        },
+        {
+          "caller": "SetChatUpdateCallback",
+          "callee": "c.callbackMu.Lock",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SetChatUpdateCallback",
+          "callee": "c.callbackMu.Unlock",
+          "lineNumber": 84
+        },
+        {
+          "caller": "getChatUpdateCallback",
+          "callee": "c.callbackMu.RLock",
+          "lineNumber": 89
+        },
+        {
+          "caller": "getChatUpdateCallback",
+          "callee": "c.callbackMu.RUnlock",
+          "lineNumber": 90
+        },
+        {
+          "caller": "notifyChatUpdate",
+          "callee": "c.getChatUpdateCallback",
+          "lineNumber": 95
+        },
+        {
+          "caller": "notifyChatUpdate",
+          "callee": "cb",
+          "lineNumber": 96
+        },
+        {
+          "caller": "SetChatPresenceCallback",
+          "callee": "c.callbackMu.Lock",
+          "lineNumber": 102
+        },
+        {
+          "caller": "SetChatPresenceCallback",
+          "callee": "c.callbackMu.Unlock",
+          "lineNumber": 103
+        },
+        {
+          "caller": "getChatPresenceCallback",
+          "callee": "c.callbackMu.RLock",
+          "lineNumber": 108
+        },
+        {
+          "caller": "getChatPresenceCallback",
+          "callee": "c.callbackMu.RUnlock",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Connect",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 114
+        },
+        {
+          "caller": "Connect",
+          "callee": "c.EnsureQRFlow",
+          "lineNumber": 116
+        },
+        {
+          "caller": "Connect",
+          "callee": "c.startQRFlow",
+          "lineNumber": 122
+        },
+        {
+          "caller": "Connect",
+          "callee": "c.waClient.Connect",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Connect",
+          "callee": "fmt.Errorf",
+          "lineNumber": 127
+        },
+        {
+          "caller": "Connect",
+          "callee": "c.waClient.Store.ID.String",
+          "lineNumber": 133
+        },
+        {
+          "caller": "Connect",
+          "callee": "c.onStatus",
+          "lineNumber": 136
+        },
+        {
+          "caller": "Disconnect",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 143
+        },
+        {
+          "caller": "Disconnect",
+          "callee": "c.waClient.Disconnect",
+          "lineNumber": 144
+        },
+        {
+          "caller": "Logout",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 149
+        },
+        {
+          "caller": "Logout",
+          "callee": "c.waClient.Logout",
+          "lineNumber": 150
+        },
+        {
+          "caller": "Logout",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Warn",
+          "lineNumber": 151
+        },
+        {
+          "caller": "Logout",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 151
+        },
+        {
+          "caller": "Logout",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 151
+        },
+        {
+          "caller": "Logout",
+          "callee": "logger.WithComponent",
+          "lineNumber": 151
+        },
+        {
+          "caller": "Logout",
+          "callee": "c.Disconnect",
+          "lineNumber": 154
+        },
+        {
+          "caller": "Logout",
+          "callee": "c.deviceStore.Delete",
+          "lineNumber": 156
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField(\"session_id\", c.SessionID).Info",
+          "lineNumber": 162
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField",
+          "lineNumber": 162
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "logger.WithComponent",
+          "lineNumber": 162
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "c.Disconnect",
+          "lineNumber": 163
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "time.Sleep",
+          "lineNumber": 164
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "c.Connect",
+          "lineNumber": 165
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 9,
+        "functionCount": 13,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/event_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 115,
+      "nonEmptyLines": 104,
+      "functions": [
+        {
+          "name": "NewEventHandler",
+          "startLine": 18,
+          "endLine": 23,
+          "params": [
+            "sessionRepo",
+            "sseHub"
+          ]
+        },
+        {
+          "name": "MakeStatusCallback",
+          "startLine": 25,
+          "endLine": 29,
+          "params": []
+        },
+        {
+          "name": "MakeChatUpdateCallback",
+          "startLine": 34,
+          "endLine": 43,
+          "params": []
+        },
+        {
+          "name": "MakeChatPresenceCallback",
+          "startLine": 50,
+          "endLine": 63,
+          "params": []
+        },
+        {
+          "name": "handleStatusUpdate",
+          "startLine": 65,
+          "endLine": 96,
+          "params": [
+            "sessionID",
+            "status",
+            "qrCode",
+            "jid",
+            "phoneNumber"
+          ]
+        },
+        {
+          "name": "MakeMessageCallback",
+          "startLine": 98,
+          "endLine": 115,
+          "params": [
+            "engineHandler"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "EventHandler",
+          "startLine": 13,
+          "endLine": 16,
+          "methods": [
+            "MakeStatusCallback",
+            "MakeChatUpdateCallback",
+            "MakeChatPresenceCallback",
+            "handleStatusUpdate",
+            "MakeMessageCallback"
+          ],
+          "properties": [
+            "sessionRepo",
+            "sseHub"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EventHandler",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewEventHandler",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "MakeStatusCallback",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "MakeChatUpdateCallback",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "MakeChatPresenceCallback",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "MakeMessageCallback",
+          "line": 98,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "MakeStatusCallback",
+          "callee": "eh.handleStatusUpdate",
+          "lineNumber": 27
+        },
+        {
+          "caller": "MakeChatUpdateCallback",
+          "callee": "eh.sseHub.Broadcast",
+          "lineNumber": 37
+        },
+        {
+          "caller": "MakeChatPresenceCallback",
+          "callee": "eh.sseHub.Broadcast",
+          "lineNumber": 53
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "context.Background",
+          "lineNumber": 70
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "eh.sessionRepo.FindSessionByID",
+          "lineNumber": 71
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "bot.WASessionStatus",
+          "lineNumber": 73
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "string",
+          "lineNumber": 74
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "time.Now",
+          "lineNumber": 75
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "eh.sessionRepo.UpdateSession",
+          "lineNumber": 83
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "eh.sseHub.Broadcast",
+          "lineNumber": 87
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "string",
+          "lineNumber": 93
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "func() {\n\t\t\tdefer func() {\n\t\t\t\tif r := recover(); r != nil {\n\t\t\t\t\tlogger.WithComponent(\"EventHandler\").WithFields(map[string]any{\n\t\t\t\t\t\t\"session_id\": sessionID,\n\t\t\t\t\t\t\"panic\":      r,\n\t\t\t\t\t}).Error(\"panic during incoming message processing\")\n\t\t\t\t}\n\t\t\t}()\n\t\t\tctx := context.Background()\n\t\t\tif err := engineHandler(ctx, sessionID, chatJID, customerNumber, content); err != nil {\n\t\t\t\tlogger.WithComponent(\"EventHandler\").WithError(err).WithField(\"session_id\", sessionID).Error(\"failed to process incoming message\")\n\t\t\t}\n\t\t}",
+          "lineNumber": 100
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "func() {\n\t\t\t\tif r := recover(); r != nil {\n\t\t\t\t\tlogger.WithComponent(\"EventHandler\").WithFields(map[string]any{\n\t\t\t\t\t\t\"session_id\": sessionID,\n\t\t\t\t\t\t\"panic\":      r,\n\t\t\t\t\t}).Error(\"panic during incoming message processing\")\n\t\t\t\t}\n\t\t\t}",
+          "lineNumber": 101
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "recover",
+          "lineNumber": 102
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "logger.WithComponent(\"EventHandler\").WithFields(map[string]any{\n\t\t\t\t\t\t\"session_id\": sessionID,\n\t\t\t\t\t\t\"panic\":      r,\n\t\t\t\t\t}).Error",
+          "lineNumber": 103
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "logger.WithComponent(\"EventHandler\").WithFields",
+          "lineNumber": 103
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "logger.WithComponent",
+          "lineNumber": 103
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "context.Background",
+          "lineNumber": 109
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "engineHandler",
+          "lineNumber": 110
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "logger.WithComponent(\"EventHandler\").WithError(err).WithField(\"session_id\", sessionID).Error",
+          "lineNumber": 111
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "logger.WithComponent(\"EventHandler\").WithError(err).WithField",
+          "lineNumber": 111
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "logger.WithComponent(\"EventHandler\").WithError",
+          "lineNumber": 111
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "logger.WithComponent",
+          "lineNumber": 111
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/events.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 168,
+      "nonEmptyLines": 150,
+      "functions": [
+        {
+          "name": "handleEvent",
+          "startLine": 14,
+          "endLine": 53,
+          "params": [
+            "evt"
+          ]
+        },
+        {
+          "name": "handleIncomingMessage",
+          "startLine": 55,
+          "endLine": 100,
+          "params": [
+            "evt"
+          ]
+        },
+        {
+          "name": "sendPresenceAvailable",
+          "startLine": 102,
+          "endLine": 111,
+          "params": []
+        },
+        {
+          "name": "handleChatPresenceEvent",
+          "startLine": 113,
+          "endLine": 124,
+          "params": [
+            "evt"
+          ]
+        },
+        {
+          "name": "handleReceiptEvent",
+          "startLine": 126,
+          "endLine": 149,
+          "params": [
+            "evt"
+          ]
+        },
+        {
+          "name": "extractMessageBody",
+          "startLine": 151,
+          "endLine": 168,
+          "params": [
+            "msg"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "handleEvent",
+          "callee": "c.persistMirrorMessage",
+          "lineNumber": 17
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.handleIncomingMessage",
+          "lineNumber": 19
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.handleReceiptEvent",
+          "lineNumber": 22
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.handleChatPresenceEvent",
+          "lineNumber": 24
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField(\"session_id\", c.SessionID).Info",
+          "lineNumber": 26
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField",
+          "lineNumber": 26
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent",
+          "lineNumber": 26
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.qrMutex.Lock",
+          "lineNumber": 27
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.qrMutex.Unlock",
+          "lineNumber": 30
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.onStatus",
+          "lineNumber": 32
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.waClient.Store.ID.String",
+          "lineNumber": 32
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.sendPresenceAvailable",
+          "lineNumber": 34
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.sendPresenceAvailable",
+          "lineNumber": 36
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField(\"session_id\", c.SessionID).Info",
+          "lineNumber": 38
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField",
+          "lineNumber": 38
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent",
+          "lineNumber": 38
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.onStatus",
+          "lineNumber": 40
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.handleHistorySync",
+          "lineNumber": 43
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField(\"session_id\", c.SessionID).Warn",
+          "lineNumber": 45
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField",
+          "lineNumber": 45
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "logger.WithComponent",
+          "lineNumber": 45
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.deviceStore.Delete",
+          "lineNumber": 47
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "context.Background",
+          "lineNumber": 47
+        },
+        {
+          "caller": "handleEvent",
+          "callee": "c.onStatus",
+          "lineNumber": 50
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "evt.Info.IsIncomingBroadcast",
+          "lineNumber": 62
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "strings.Contains",
+          "lineNumber": 62
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "evt.Info.SourceString",
+          "lineNumber": 62
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).ToNonAD",
+          "lineNumber": 71
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 71
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "context.Background",
+          "lineNumber": 71
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "normChat.String",
+          "lineNumber": 72
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "isSkippedJID",
+          "lineNumber": 73
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 73
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 73
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 73
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 73
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "normalizeJIDFromLID(context.Background(), evt.Info.Sender, c.waClient).ToNonAD",
+          "lineNumber": 79
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 79
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "context.Background",
+          "lineNumber": 79
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "extractMessageBody",
+          "lineNumber": 86
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithFields(map[string]any{\n\t\t\"session_id\":     c.SessionID,\n\t\t\"chat_jid\":       chatJID,\n\t\t\"message_length\": len(body),\n\t}).Debug",
+          "lineNumber": 91
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithFields",
+          "lineNumber": 91
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "logger.WithComponent",
+          "lineNumber": 91
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "len",
+          "lineNumber": 94
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "c.getMessageCallback",
+          "lineNumber": 97
+        },
+        {
+          "caller": "handleIncomingMessage",
+          "callee": "cb",
+          "lineNumber": 98
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 103
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "c.waClient.SendPresence",
+          "lineNumber": 106
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "context.Background",
+          "lineNumber": 106
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Debug",
+          "lineNumber": 107
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 107
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 107
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "logger.WithComponent",
+          "lineNumber": 107
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField(\"session_id\", c.SessionID).Debug",
+          "lineNumber": 110
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField",
+          "lineNumber": 110
+        },
+        {
+          "caller": "sendPresenceAvailable",
+          "callee": "logger.WithComponent",
+          "lineNumber": 110
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 114
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "context.Background",
+          "lineNumber": 114
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "evt.Chat.ToNonAD().String",
+          "lineNumber": 115
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "evt.Chat.ToNonAD",
+          "lineNumber": 115
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "senderJID.ToNonAD().String",
+          "lineNumber": 116
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "senderJID.ToNonAD",
+          "lineNumber": 116
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "string",
+          "lineNumber": 118
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "string",
+          "lineNumber": 119
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "c.getChatPresenceCallback",
+          "lineNumber": 121
+        },
+        {
+          "caller": "handleChatPresenceEvent",
+          "callee": "cb",
+          "lineNumber": 122
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "len",
+          "lineNumber": 127
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "normalizeJIDFromLID(context.Background(), evt.Chat, c.waClient).String",
+          "lineNumber": 139
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 139
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "context.Background",
+          "lineNumber": 139
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "make",
+          "lineNumber": 140
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "len",
+          "lineNumber": 140
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "string",
+          "lineNumber": 142
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "c.chatRepo.MarkMessagesStatus",
+          "lineNumber": 144
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "context.Background",
+          "lineNumber": 144
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithFields(map[string]any{\"session_id\": c.SessionID, \"status\": status, \"chat_jid\": chatJID}).Debug",
+          "lineNumber": 145
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithFields",
+          "lineNumber": 145
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 145
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "logger.WithComponent",
+          "lineNumber": 145
+        },
+        {
+          "caller": "handleReceiptEvent",
+          "callee": "c.notifyChatUpdate",
+          "lineNumber": 148
+        },
+        {
+          "caller": "extractMessageBody",
+          "callee": "msg.GetConversation",
+          "lineNumber": 155
+        },
+        {
+          "caller": "extractMessageBody",
+          "callee": "msg.GetConversation",
+          "lineNumber": 156
+        },
+        {
+          "caller": "extractMessageBody",
+          "callee": "msg.ExtendedTextMessage.GetText",
+          "lineNumber": 158
+        },
+        {
+          "caller": "extractMessageBody",
+          "callee": "msg.ExtendedTextMessage.GetText",
+          "lineNumber": 159
+        },
+        {
+          "caller": "extractMessageBody",
+          "callee": "msg.ImageMessage.GetCaption",
+          "lineNumber": 161
+        },
+        {
+          "caller": "extractMessageBody",
+          "callee": "msg.ImageMessage.GetCaption",
+          "lineNumber": 162
+        },
+        {
+          "caller": "extractMessageBody",
+          "callee": "msg.VideoMessage.GetCaption",
+          "lineNumber": 164
+        },
+        {
+          "caller": "extractMessageBody",
+          "callee": "msg.VideoMessage.GetCaption",
+          "lineNumber": 165
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/history_sync_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 354,
+      "nonEmptyLines": 319,
+      "functions": [
+        {
+          "name": "newFakeHistoryRepo",
+          "startLine": 41,
+          "endLine": 47,
+          "params": []
+        },
+        {
+          "name": "UpsertChat",
+          "startLine": 49,
+          "endLine": 54,
+          "params": [
+            "_",
+            "c"
+          ]
+        },
+        {
+          "name": "UpsertMessage",
+          "startLine": 56,
+          "endLine": 62,
+          "params": [
+            "_",
+            "m"
+          ]
+        },
+        {
+          "name": "UpsertMessagesBatch",
+          "startLine": 64,
+          "endLine": 72,
+          "params": [
+            "_",
+            "msgs"
+          ]
+        },
+        {
+          "name": "IncrementUnread",
+          "startLine": 74,
+          "endLine": 74,
+          "params": [
+            "_",
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "MarkChatRead",
+          "startLine": 75,
+          "endLine": 75,
+          "params": [
+            "_",
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "SetChatUnread",
+          "startLine": 76,
+          "endLine": 81,
+          "params": [
+            "_",
+            "_",
+            "chatJID",
+            "count"
+          ]
+        },
+        {
+          "name": "ListChats",
+          "startLine": 82,
+          "endLine": 84,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "ListChatMessages",
+          "startLine": 85,
+          "endLine": 87,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "SetChatBotEnabled",
+          "startLine": 88,
+          "endLine": 90,
+          "params": [
+            "_",
+            "_",
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "IsChatBotEnabled",
+          "startLine": 91,
+          "endLine": 93,
+          "params": [
+            "_",
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "MarkMessagesStatus",
+          "startLine": 94,
+          "endLine": 99,
+          "params": [
+            "_",
+            "_",
+            "chatJID",
+            "messageIDs",
+            "status"
+          ]
+        },
+        {
+          "name": "MergeChatLID",
+          "startLine": 101,
+          "endLine": 111,
+          "params": [
+            "_",
+            "_",
+            "lidJID",
+            "pnJID"
+          ]
+        },
+        {
+          "name": "TestHandleHistorySyncMirrorsConversations",
+          "startLine": 115,
+          "endLine": 244,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestHandleHistorySyncPushNames",
+          "startLine": 246,
+          "endLine": 273,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "waitFor",
+          "startLine": 277,
+          "endLine": 287,
+          "params": [
+            "t",
+            "timeout",
+            "cond"
+          ]
+        },
+        {
+          "name": "TestHandleReceiptEventMarksStatus",
+          "startLine": 293,
+          "endLine": 333,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestHandleReceiptEventIgnoresUnrelated",
+          "startLine": 337,
+          "endLine": 354,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "fakeHistoryRepo",
+          "startLine": 24,
+          "endLine": 32,
+          "methods": [
+            "UpsertChat",
+            "UpsertMessage",
+            "UpsertMessagesBatch",
+            "IncrementUnread",
+            "MarkChatRead",
+            "SetChatUnread",
+            "ListChats",
+            "ListChatMessages",
+            "SetChatBotEnabled",
+            "IsChatBotEnabled",
+            "MarkMessagesStatus",
+            "MergeChatLID"
+          ],
+          "properties": [
+            "mu",
+            "chats",
+            "messages",
+            "unread",
+            "statusUpdates",
+            "batchCalls",
+            "singleCalls"
+          ]
+        },
+        {
+          "name": "statusUpdate",
+          "startLine": 35,
+          "endLine": 39,
+          "methods": [],
+          "properties": [
+            "chatJID",
+            "messageIDs",
+            "status"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UpsertChat",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "UpsertMessage",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "UpsertMessagesBatch",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "IncrementUnread",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "MarkChatRead",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "SetChatUnread",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "ListChats",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "ListChatMessages",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "SetChatBotEnabled",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "IsChatBotEnabled",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "MarkMessagesStatus",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "MergeChatLID",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "TestHandleHistorySyncMirrorsConversations",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "TestHandleHistorySyncPushNames",
+          "line": 246,
+          "isDefault": false
+        },
+        {
+          "name": "TestHandleReceiptEventMarksStatus",
+          "line": 293,
+          "isDefault": false
+        },
+        {
+          "name": "TestHandleReceiptEventIgnoresUnrelated",
+          "line": 337,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newFakeHistoryRepo",
+          "callee": "make",
+          "lineNumber": 43
+        },
+        {
+          "caller": "newFakeHistoryRepo",
+          "callee": "make",
+          "lineNumber": 44
+        },
+        {
+          "caller": "newFakeHistoryRepo",
+          "callee": "make",
+          "lineNumber": 45
+        },
+        {
+          "caller": "UpsertChat",
+          "callee": "f.mu.Lock",
+          "lineNumber": 50
+        },
+        {
+          "caller": "UpsertChat",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 51
+        },
+        {
+          "caller": "UpsertMessage",
+          "callee": "f.mu.Lock",
+          "lineNumber": 57
+        },
+        {
+          "caller": "UpsertMessage",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 58
+        },
+        {
+          "caller": "UpsertMessage",
+          "callee": "append",
+          "lineNumber": 60
+        },
+        {
+          "caller": "UpsertMessagesBatch",
+          "callee": "f.mu.Lock",
+          "lineNumber": 65
+        },
+        {
+          "caller": "UpsertMessagesBatch",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 66
+        },
+        {
+          "caller": "UpsertMessagesBatch",
+          "callee": "append",
+          "lineNumber": 69
+        },
+        {
+          "caller": "UpsertMessagesBatch",
+          "callee": "len",
+          "lineNumber": 71
+        },
+        {
+          "caller": "SetChatUnread",
+          "callee": "f.mu.Lock",
+          "lineNumber": 77
+        },
+        {
+          "caller": "SetChatUnread",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 78
+        },
+        {
+          "caller": "MarkMessagesStatus",
+          "callee": "f.mu.Lock",
+          "lineNumber": 95
+        },
+        {
+          "caller": "MarkMessagesStatus",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 96
+        },
+        {
+          "caller": "MarkMessagesStatus",
+          "callee": "append",
+          "lineNumber": 97
+        },
+        {
+          "caller": "MergeChatLID",
+          "callee": "f.mu.Lock",
+          "lineNumber": 102
+        },
+        {
+          "caller": "MergeChatLID",
+          "callee": "f.mu.Unlock",
+          "lineNumber": 103
+        },
+        {
+          "caller": "MergeChatLID",
+          "callee": "append",
+          "lineNumber": 106
+        },
+        {
+          "caller": "MergeChatLID",
+          "callee": "delete",
+          "lineNumber": 107
+        },
+        {
+          "caller": "MergeChatLID",
+          "callee": "delete",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "newFakeHistoryRepo",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "uint64",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.Uint32",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.Bool",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.Uint64",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.Bool",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.Uint64",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 155
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 156
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 161
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.Bool",
+          "lineNumber": 162
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 163
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 165
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.Uint64",
+          "lineNumber": 166
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 167
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "proto.String",
+          "lineNumber": 168
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "waHistorySync.HistorySync_INITIAL_BOOTSTRAP.Enum",
+          "lineNumber": 175
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "c.handleHistorySync",
+          "lineNumber": 178
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "waitFor",
+          "lineNumber": 181
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "fake.mu.Lock",
+          "lineNumber": 182
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "fake.mu.Unlock",
+          "lineNumber": 183
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "len",
+          "lineNumber": 184
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "len",
+          "lineNumber": 185
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "len",
+          "lineNumber": 186
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "fake.mu.Lock",
+          "lineNumber": 189
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "fake.mu.Unlock",
+          "lineNumber": 190
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 194
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 197
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Fatal",
+          "lineNumber": 203
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 206
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 209
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 212
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Fatal",
+          "lineNumber": 218
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 221
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 225
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "len",
+          "lineNumber": 229
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Fatalf",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "len",
+          "lineNumber": 230
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 234
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Error",
+          "lineNumber": 238
+        },
+        {
+          "caller": "TestHandleHistorySyncMirrorsConversations",
+          "callee": "t.Errorf",
+          "lineNumber": 242
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "newFakeHistoryRepo",
+          "lineNumber": 247
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "waHistorySync.HistorySync_PUSH_NAME.Enum",
+          "lineNumber": 251
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "proto.String",
+          "lineNumber": 253
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "proto.String",
+          "lineNumber": 253
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "c.handleHistorySync",
+          "lineNumber": 256
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "waitFor",
+          "lineNumber": 258
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "fake.mu.Lock",
+          "lineNumber": 259
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "fake.mu.Unlock",
+          "lineNumber": 260
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "len",
+          "lineNumber": 261
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "fake.mu.Lock",
+          "lineNumber": 264
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "fake.mu.Unlock",
+          "lineNumber": 265
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "t.Fatal",
+          "lineNumber": 268
+        },
+        {
+          "caller": "TestHandleHistorySyncPushNames",
+          "callee": "t.Errorf",
+          "lineNumber": 271
+        },
+        {
+          "caller": "waitFor",
+          "callee": "t.Helper",
+          "lineNumber": 278
+        },
+        {
+          "caller": "waitFor",
+          "callee": "time.Now().Add",
+          "lineNumber": 279
+        },
+        {
+          "caller": "waitFor",
+          "callee": "time.Now",
+          "lineNumber": 279
+        },
+        {
+          "caller": "waitFor",
+          "callee": "time.Now().Before",
+          "lineNumber": 280
+        },
+        {
+          "caller": "waitFor",
+          "callee": "time.Now",
+          "lineNumber": 280
+        },
+        {
+          "caller": "waitFor",
+          "callee": "cond",
+          "lineNumber": 281
+        },
+        {
+          "caller": "waitFor",
+          "callee": "time.Sleep",
+          "lineNumber": 284
+        },
+        {
+          "caller": "waitFor",
+          "callee": "t.Fatal",
+          "lineNumber": 286
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "newFakeHistoryRepo",
+          "lineNumber": 294
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "types.NewJID",
+          "lineNumber": 299
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "types.NewJID",
+          "lineNumber": 300
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "time.Now",
+          "lineNumber": 304
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "c.handleReceiptEvent",
+          "lineNumber": 306
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "types.NewJID",
+          "lineNumber": 310
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "types.NewJID",
+          "lineNumber": 311
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "time.Now",
+          "lineNumber": 315
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "c.handleReceiptEvent",
+          "lineNumber": 317
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "repo.mu.Lock",
+          "lineNumber": 319
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "repo.mu.Unlock",
+          "lineNumber": 320
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "len",
+          "lineNumber": 321
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "t.Fatalf",
+          "lineNumber": 322
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "len",
+          "lineNumber": 322
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "len",
+          "lineNumber": 324
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "t.Errorf",
+          "lineNumber": 325
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "t.Errorf",
+          "lineNumber": 328
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "len",
+          "lineNumber": 330
+        },
+        {
+          "caller": "TestHandleReceiptEventMarksStatus",
+          "callee": "t.Errorf",
+          "lineNumber": 331
+        },
+        {
+          "caller": "TestHandleReceiptEventIgnoresUnrelated",
+          "callee": "newFakeHistoryRepo",
+          "lineNumber": 338
+        },
+        {
+          "caller": "TestHandleReceiptEventIgnoresUnrelated",
+          "callee": "c.handleReceiptEvent",
+          "lineNumber": 341
+        },
+        {
+          "caller": "TestHandleReceiptEventIgnoresUnrelated",
+          "callee": "types.NewJID",
+          "lineNumber": 343
+        },
+        {
+          "caller": "TestHandleReceiptEventIgnoresUnrelated",
+          "callee": "repo.mu.Lock",
+          "lineNumber": 349
+        },
+        {
+          "caller": "TestHandleReceiptEventIgnoresUnrelated",
+          "callee": "repo.mu.Unlock",
+          "lineNumber": 350
+        },
+        {
+          "caller": "TestHandleReceiptEventIgnoresUnrelated",
+          "callee": "len",
+          "lineNumber": 351
+        },
+        {
+          "caller": "TestHandleReceiptEventIgnoresUnrelated",
+          "callee": "t.Errorf",
+          "lineNumber": 352
+        },
+        {
+          "caller": "TestHandleReceiptEventIgnoresUnrelated",
+          "callee": "len",
+          "lineNumber": 352
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 16,
+        "functionCount": 18,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/history_sync.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 269,
+      "nonEmptyLines": 249,
+      "functions": [
+        {
+          "name": "handleHistorySync",
+          "startLine": 25,
+          "endLine": 52,
+          "params": [
+            "evt"
+          ]
+        },
+        {
+          "name": "processHistoryConversations",
+          "startLine": 57,
+          "endLine": 226,
+          "params": [
+            "data"
+          ]
+        },
+        {
+          "name": "processHistoryPushNames",
+          "startLine": 236,
+          "endLine": 269,
+          "params": [
+            "data"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "handleHistorySync",
+          "callee": "func() {\n\t\t// Data history sync berasal dari server WhatsApp (untrusted) — panic di\n\t\t// goroutine latar belakang akan meruntuhkan seluruh proses, jadi di-recover\n\t\t// dan dicatat saja.\n\t\tdefer func() {\n\t\t\tif r := recover(); r != nil {\n\t\t\t\tlogger.WithComponent(\"HistorySync\").WithFields(map[string]any{\"session_id\": c.SessionID, \"panic\": r}).Error(\"panic during history sync mirror\")\n\t\t\t}\n\t\t}()\n\t\tswitch evt.Data.GetSyncType() {\n\t\tcase waHistorySync.HistorySync_INITIAL_BOOTSTRAP, waHistorySync.HistorySync_RECENT:\n\t\t\tc.processHistoryConversations(evt.Data)\n\t\tcase waHistorySync.HistorySync_FULL, waHistorySync.HistorySync_ON_DEMAND:\n\t\t\t// FULL terjadi saat user membuka chat di HP (lazy load); ON_DEMAND\n\t\t\t// saat aplikasi merequest sync manual — keduanya membawa conversations\n\t\t\t// nyata yang harus di-mirror. Referensi memproses keduanya.\n\t\t\tc.processHistoryConversations(evt.Data)\n\t\tcase waHistorySync.HistorySync_PUSH_NAME:\n\t\t\tc.processHistoryPushNames(evt.Data)\n\t\tdefault:\n\t\t\t// Tipe lain yang genuinely tidak membawa conversations.\n\t\t}\n\t}",
+          "lineNumber": 29
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "func() {\n\t\t\tif r := recover(); r != nil {\n\t\t\t\tlogger.WithComponent(\"HistorySync\").WithFields(map[string]any{\"session_id\": c.SessionID, \"panic\": r}).Error(\"panic during history sync mirror\")\n\t\t\t}\n\t\t}",
+          "lineNumber": 33
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "recover",
+          "lineNumber": 34
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "logger.WithComponent(\"HistorySync\").WithFields(map[string]any{\"session_id\": c.SessionID, \"panic\": r}).Error",
+          "lineNumber": 35
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "logger.WithComponent(\"HistorySync\").WithFields",
+          "lineNumber": 35
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "logger.WithComponent",
+          "lineNumber": 35
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "evt.Data.GetSyncType",
+          "lineNumber": 38
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "c.processHistoryConversations",
+          "lineNumber": 40
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "c.processHistoryConversations",
+          "lineNumber": 45
+        },
+        {
+          "caller": "handleHistorySync",
+          "callee": "c.processHistoryPushNames",
+          "lineNumber": 47
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "data.GetConversations",
+          "lineNumber": 58
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "len",
+          "lineNumber": 59
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithFields(map[string]any{\"session_id\": c.SessionID, \"conversation_count\": len(conversations)}).Info",
+          "lineNumber": 62
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithFields",
+          "lineNumber": 62
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent",
+          "lineNumber": 62
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "len",
+          "lineNumber": 62
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "c.waClient.Store.ID.ToNonAD().String",
+          "lineNumber": 66
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "c.waClient.Store.ID.ToNonAD",
+          "lineNumber": 66
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "conv.GetID",
+          "lineNumber": 70
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "types.ParseJID",
+          "lineNumber": 74
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithField(\"session_id\", c.SessionID).Warn",
+          "lineNumber": 76
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithField",
+          "lineNumber": 76
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError",
+          "lineNumber": 76
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent",
+          "lineNumber": 76
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 82
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "context.Background",
+          "lineNumber": 82
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "jid.String",
+          "lineNumber": 83
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "c.reconcileLIDChat",
+          "lineNumber": 87
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "context.Background",
+          "lineNumber": 87
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "isSkippedJID",
+          "lineNumber": 90
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "len",
+          "lineNumber": 107
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "c.chatRepo.UpsertMessagesBatch",
+          "lineNumber": 110
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "context.Background",
+          "lineNumber": 110
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithFields(map[string]any{\"session_id\": c.SessionID, \"message_count\": len(batch), \"chat_jid\": chatJID}).Error",
+          "lineNumber": 111
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithFields",
+          "lineNumber": 111
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError",
+          "lineNumber": 111
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent",
+          "lineNumber": 111
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "len",
+          "lineNumber": 111
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "conv.GetMessages",
+          "lineNumber": 116
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetKey",
+          "lineNumber": 121
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "key.GetID",
+          "lineNumber": 122
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetMessage",
+          "lineNumber": 127
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "extractMessageBody",
+          "lineNumber": 131
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetMessage",
+          "lineNumber": 131
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "extractMediaType",
+          "lineNumber": 132
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetMessage",
+          "lineNumber": 132
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "key.GetFromMe",
+          "lineNumber": 140
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "key.GetParticipant",
+          "lineNumber": 145
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "types.ParseJID",
+          "lineNumber": 147
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "key.GetParticipant",
+          "lineNumber": 147
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "normalizeJIDFromLID(context.Background(), parsedSender, c.waClient).String",
+          "lineNumber": 149
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 149
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "context.Background",
+          "lineNumber": 149
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "key.GetParticipant",
+          "lineNumber": 151
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetParticipant",
+          "lineNumber": 153
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "types.ParseJID",
+          "lineNumber": 157
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetParticipant",
+          "lineNumber": 157
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "normalizeJIDFromLID(context.Background(), parsedSender, c.waClient).String",
+          "lineNumber": 159
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 159
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "context.Background",
+          "lineNumber": 159
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetParticipant",
+          "lineNumber": 161
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "time.Unix",
+          "lineNumber": 170
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "int64",
+          "lineNumber": 170
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetMessageTimestamp",
+          "lineNumber": 170
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "append",
+          "lineNumber": 171
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "key.GetID",
+          "lineNumber": 174
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetPushName",
+          "lineNumber": 176
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "len",
+          "lineNumber": 182
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "flush",
+          "lineNumber": 183
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "ts.After",
+          "lineNumber": 185
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "previewOf",
+          "lineNumber": 187
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "key.GetID",
+          "lineNumber": 188
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetPushName",
+          "lineNumber": 190
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "info.GetPushName",
+          "lineNumber": 191
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "flush",
+          "lineNumber": 194
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "c.resolveChatDisplayName",
+          "lineNumber": 196
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "context.Background",
+          "lineNumber": 196
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "conv.GetName",
+          "lineNumber": 196
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "c.chatRepo.UpsertChat",
+          "lineNumber": 213
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "context.Background",
+          "lineNumber": 213
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithFields(map[string]any{\"session_id\": c.SessionID, \"chat_jid\": chatJID}).Error",
+          "lineNumber": 214
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithFields",
+          "lineNumber": 214
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError",
+          "lineNumber": 214
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent",
+          "lineNumber": 214
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "c.chatRepo.SetChatUnread",
+          "lineNumber": 219
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "context.Background",
+          "lineNumber": 219
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "conv.GetUnreadCount",
+          "lineNumber": 219
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithFields(map[string]any{\"session_id\": c.SessionID, \"chat_jid\": chatJID}).Warn",
+          "lineNumber": 220
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithFields",
+          "lineNumber": 220
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError",
+          "lineNumber": 220
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "logger.WithComponent",
+          "lineNumber": 220
+        },
+        {
+          "caller": "processHistoryConversations",
+          "callee": "c.notifyChatUpdate",
+          "lineNumber": 224
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "data.GetPushnames",
+          "lineNumber": 237
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "len",
+          "lineNumber": 238
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "pn.GetID",
+          "lineNumber": 245
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "pn.GetPushname",
+          "lineNumber": 246
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "types.ParseJID",
+          "lineNumber": 250
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 257
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "context.Background",
+          "lineNumber": 257
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "c.reconcileLIDChat",
+          "lineNumber": 259
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "context.Background",
+          "lineNumber": 259
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "jid.String",
+          "lineNumber": 262
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "c.chatRepo.UpsertChat",
+          "lineNumber": 265
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "context.Background",
+          "lineNumber": 265
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithField(\"session_id\", c.SessionID).Warn",
+          "lineNumber": 266
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError(err).WithField",
+          "lineNumber": 266
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "logger.WithComponent(\"HistorySync\").WithError",
+          "lineNumber": 266
+        },
+        {
+          "caller": "processHistoryPushNames",
+          "callee": "logger.WithComponent",
+          "lineNumber": 266
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    }
+  ]
+}

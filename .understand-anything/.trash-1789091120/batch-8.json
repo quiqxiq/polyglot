@@ -1,0 +1,47 @@
+{
+ "batchIndex": 8,
+ "nodes": [
+  {
+   "id": "document:docs/BACKEND-MIGRATION-ROADMAP.md",
+   "type": "document",
+   "name": "BACKEND-MIGRATION-ROADMAP.md",
+   "filePath": "docs/BACKEND-MIGRATION-ROADMAP.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: BACKEND-MIGRATION-ROADMAP (84 baris).",
+   "description": "Dokumentasi: BACKEND-MIGRATION-ROADMAP (84 baris).",
+   "tags": [
+    "document",
+    "backend-migration-roadmap"
+   ]
+  },
+  {
+   "id": "document:docs/DATABASE-SCHEMA-ISP.md",
+   "type": "document",
+   "name": "DATABASE-SCHEMA-ISP.md",
+   "filePath": "docs/DATABASE-SCHEMA-ISP.md",
+   "complexity": "moderate",
+   "summary": "Dokumentasi: DATABASE-SCHEMA-ISP (647 baris).",
+   "description": "Dokumentasi: DATABASE-SCHEMA-ISP (647 baris).",
+   "tags": [
+    "document",
+    "database-schema-isp"
+   ]
+  },
+  {
+   "id": "document:docs/database-schema.md",
+   "type": "document",
+   "name": "database-schema.md",
+   "filePath": "docs/database-schema.md",
+   "complexity": "complex",
+   "summary": "Skema basis data manajemen ISP lengkap: pelanggan, subscription PPPoE/Hotspot, plans, invoices, transaksi.",
+   "description": "Referensi skema database untuk domain ISP: pelanggan, langganan, paket layanan, tagihan, pembayaran, kas, dan laporan.",
+   "tags": [
+    "documentasi",
+    "database",
+    "isp",
+    "billing"
+   ]
+  }
+ ],
+ "edges": []
+}

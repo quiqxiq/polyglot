@@ -1,0 +1,1479 @@
+{
+ "batchIndex": 2,
+ "nodes": [
+  {
+   "id": "table:migrations/000001_create_devices_table.down.sql",
+   "type": "table",
+   "name": "000001_create_devices_table.down.sql",
+   "filePath": "migrations/000001_create_devices_table.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (7 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (7 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000001_create_devices_table.up.sql",
+   "type": "table",
+   "name": "000001_create_devices_table.up.sql",
+   "filePath": "migrations/000001_create_devices_table.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 2 tabel. (70 baris)",
+   "description": "Migrasi skema — membuat/mengubah 2 tabel. (70 baris) Tabel: devices, credentials. Objek lain: idx_devices_tenant_id, idx_devices_driver_type, idx_devices_vendor, idx_devices_tags.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000001_create_devices_table.up.sql:devices",
+   "type": "table",
+   "name": "devices",
+   "filePath": "migrations/000001_create_devices_table.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `devices` — 15 kolom.",
+   "description": "Tabel `devices` dibuat/diubah oleh 000001_create_devices_table.up.sql (baris 14-30). Kolom: id, tenant_id, name, vendor, driver_type, host, port, ssh_port, timeout_ms, poll_interval_ms, extra, tags, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "devices"
+   ]
+  },
+  {
+   "id": "table:migrations/000001_create_devices_table.up.sql:credentials",
+   "type": "table",
+   "name": "credentials",
+   "filePath": "migrations/000001_create_devices_table.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `credentials` — 2 kolom.",
+   "description": "Tabel `credentials` dibuat/diubah oleh 000001_create_devices_table.up.sql (baris 37-52). Kolom: and, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "credentials"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.down.sql",
+   "type": "table",
+   "name": "000002_create_bot_tables.down.sql",
+   "filePath": "migrations/000002_create_bot_tables.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (9 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (9 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.up.sql",
+   "type": "table",
+   "name": "000002_create_bot_tables.up.sql",
+   "filePath": "migrations/000002_create_bot_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 7 tabel. (85 baris)",
+   "description": "Migrasi skema — membuat/mengubah 7 tabel. (85 baris) Tabel: users, wa_sessions, conversations, messages, llm_configs, knowledge_entries, technicians. Objek lain: idx_conversations_session_id, idx_conversations_customer_wa_number, idx_messages_conversation_id.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.up.sql:users",
+   "type": "table",
+   "name": "users",
+   "filePath": "migrations/000002_create_bot_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `users` — 8 kolom.",
+   "description": "Tabel `users` dibuat/diubah oleh 000002_create_bot_tables.up.sql (baris 3-12). Kolom: id, username, email, password_hash, role, tenant_id, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "users"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.up.sql:wa_sessions",
+   "type": "table",
+   "name": "wa_sessions",
+   "filePath": "migrations/000002_create_bot_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `wa_sessions` — 9 kolom.",
+   "description": "Tabel `wa_sessions` dibuat/diubah oleh 000002_create_bot_tables.up.sql (baris 14-24). Kolom: id, device_name, phone_number, jid, status, is_bot_enabled, connected_at, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "wa-sessions"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.up.sql:conversations",
+   "type": "table",
+   "name": "conversations",
+   "filePath": "migrations/000002_create_bot_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `conversations` — 8 kolom.",
+   "description": "Tabel `conversations` dibuat/diubah oleh 000002_create_bot_tables.up.sql (baris 26-35). Kolom: id, session_id, customer_wa_number, status, assigned_agent_id, started_at, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "conversations"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.up.sql:messages",
+   "type": "table",
+   "name": "messages",
+   "filePath": "migrations/000002_create_bot_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `messages` — 8 kolom.",
+   "description": "Tabel `messages` dibuat/diubah oleh 000002_create_bot_tables.up.sql (baris 40-49). Kolom: id, conversation_id, sender_type, content, token_in, token_out, llm_config_id, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "messages"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.up.sql:llm_configs",
+   "type": "table",
+   "name": "llm_configs",
+   "filePath": "migrations/000002_create_bot_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `llm_configs` — 11 kolom.",
+   "description": "Tabel `llm_configs` dibuat/diubah oleh 000002_create_bot_tables.up.sql (baris 53-65). Kolom: id, provider, model, api_key_encrypted, params, max_output_tokens, is_active, cost_per_1m_input, cost_per_1m_output, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "llm-configs"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.up.sql:knowledge_entries",
+   "type": "table",
+   "name": "knowledge_entries",
+   "filePath": "migrations/000002_create_bot_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `knowledge_entries` — 6 kolom.",
+   "description": "Tabel `knowledge_entries` dibuat/diubah oleh 000002_create_bot_tables.up.sql (baris 67-74). Kolom: id, title, content, tags, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "knowledge-entries"
+   ]
+  },
+  {
+   "id": "table:migrations/000002_create_bot_tables.up.sql:technicians",
+   "type": "table",
+   "name": "technicians",
+   "filePath": "migrations/000002_create_bot_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `technicians` — 8 kolom.",
+   "description": "Tabel `technicians` dibuat/diubah oleh 000002_create_bot_tables.up.sql (baris 76-85). Kolom: id, full_name, username, phone_number, specialization, is_active, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "technicians"
+   ]
+  },
+  {
+   "id": "table:migrations/000003_add_ssh_port_to_devices.down.sql",
+   "type": "table",
+   "name": "000003_add_ssh_port_to_devices.down.sql",
+   "filePath": "migrations/000003_add_ssh_port_to_devices.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000003_add_ssh_port_to_devices.up.sql",
+   "type": "table",
+   "name": "000003_add_ssh_port_to_devices.up.sql",
+   "filePath": "migrations/000003_add_ssh_port_to_devices.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (2 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (2 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000004_create_wa_chat_mirror_tables.down.sql",
+   "type": "table",
+   "name": "000004_create_wa_chat_mirror_tables.down.sql",
+   "filePath": "migrations/000004_create_wa_chat_mirror_tables.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (4 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (4 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000004_create_wa_chat_mirror_tables.up.sql",
+   "type": "table",
+   "name": "000004_create_wa_chat_mirror_tables.up.sql",
+   "filePath": "migrations/000004_create_wa_chat_mirror_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 2 tabel. (41 baris)",
+   "description": "Migrasi skema — membuat/mengubah 2 tabel. (41 baris) Tabel: wa_chats, wa_messages. Objek lain: idx_wa_chats_session_last_time, idx_wa_messages_session_chat_time.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000004_create_wa_chat_mirror_tables.up.sql:wa_chats",
+   "type": "table",
+   "name": "wa_chats",
+   "filePath": "migrations/000004_create_wa_chat_mirror_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `wa_chats` — 11 kolom.",
+   "description": "Tabel `wa_chats` dibuat/diubah oleh 000004_create_wa_chat_mirror_tables.up.sql (baris 8-21). Kolom: id, session_id, chat_jid, display_name, is_group, last_message_id, last_message_preview, last_message_time, unread_count, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "wa-chats"
+   ]
+  },
+  {
+   "id": "table:migrations/000004_create_wa_chat_mirror_tables.up.sql:wa_messages",
+   "type": "table",
+   "name": "wa_messages",
+   "filePath": "migrations/000004_create_wa_chat_mirror_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `wa_messages` — 12 kolom.",
+   "description": "Tabel `wa_messages` dibuat/diubah oleh 000004_create_wa_chat_mirror_tables.up.sql (baris 25-39). Kolom: id, session_id, chat_jid, wa_message_id, sender_jid, sender_name, content, media_type, is_from_me, is_read, timestamp, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "wa-messages"
+   ]
+  },
+  {
+   "id": "table:migrations/000005_add_bot_enabled_to_wa_chats.down.sql",
+   "type": "table",
+   "name": "000005_add_bot_enabled_to_wa_chats.down.sql",
+   "filePath": "migrations/000005_add_bot_enabled_to_wa_chats.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000005_add_bot_enabled_to_wa_chats.up.sql",
+   "type": "table",
+   "name": "000005_add_bot_enabled_to_wa_chats.up.sql",
+   "filePath": "migrations/000005_add_bot_enabled_to_wa_chats.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (8 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (8 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000006_create_billing_tables.down.sql",
+   "type": "table",
+   "name": "000006_create_billing_tables.down.sql",
+   "filePath": "migrations/000006_create_billing_tables.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (5 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (5 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000006_create_billing_tables.up.sql",
+   "type": "table",
+   "name": "000006_create_billing_tables.up.sql",
+   "filePath": "migrations/000006_create_billing_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 4 tabel. (53 baris)",
+   "description": "Migrasi skema — membuat/mengubah 4 tabel. (53 baris) Tabel: customers, subscriptions, invoices, plans. Objek lain: idx_subscriptions_customer_id, idx_invoices_customer_id.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000006_create_billing_tables.up.sql:customers",
+   "type": "table",
+   "name": "customers",
+   "filePath": "migrations/000006_create_billing_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `customers` — 9 kolom.",
+   "description": "Tabel `customers` dibuat/diubah oleh 000006_create_billing_tables.up.sql (baris 8-18). Kolom: id, tenant_id, name, email, phone, address, status, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "customers"
+   ]
+  },
+  {
+   "id": "table:migrations/000006_create_billing_tables.up.sql:subscriptions",
+   "type": "table",
+   "name": "subscriptions",
+   "filePath": "migrations/000006_create_billing_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `subscriptions` — 9 kolom.",
+   "description": "Tabel `subscriptions` dibuat/diubah oleh 000006_create_billing_tables.up.sql (baris 20-30). Kolom: id, customer_id, plan_id, status, start_date, end_date, price, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "subscriptions"
+   ]
+  },
+  {
+   "id": "table:migrations/000006_create_billing_tables.up.sql:invoices",
+   "type": "table",
+   "name": "invoices",
+   "filePath": "migrations/000006_create_billing_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `invoices` — 8 kolom.",
+   "description": "Tabel `invoices` dibuat/diubah oleh 000006_create_billing_tables.up.sql (baris 34-43). Kolom: id, customer_id, amount, status, due_date, paid_at, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "invoices"
+   ]
+  },
+  {
+   "id": "table:migrations/000006_create_billing_tables.up.sql:plans",
+   "type": "table",
+   "name": "plans",
+   "filePath": "migrations/000006_create_billing_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `plans` — 5 kolom.",
+   "description": "Tabel `plans` dibuat/diubah oleh 000006_create_billing_tables.up.sql (baris 47-53). Kolom: id, name, speed_mbps, price, description.",
+   "tags": [
+    "sql",
+    "tabel",
+    "plans"
+   ]
+  },
+  {
+   "id": "table:migrations/000007_add_message_status.down.sql",
+   "type": "table",
+   "name": "000007_add_message_status.down.sql",
+   "filePath": "migrations/000007_add_message_status.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000007_add_message_status.up.sql",
+   "type": "table",
+   "name": "000007_add_message_status.up.sql",
+   "filePath": "migrations/000007_add_message_status.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (6 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (6 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000008_knowledge_embed_sync.down.sql",
+   "type": "table",
+   "name": "000008_knowledge_embed_sync.down.sql",
+   "filePath": "migrations/000008_knowledge_embed_sync.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (9 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (9 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000008_knowledge_embed_sync.up.sql",
+   "type": "table",
+   "name": "000008_knowledge_embed_sync.up.sql",
+   "filePath": "migrations/000008_knowledge_embed_sync.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (17 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (17 baris) Objek lain: idx_knowledge_embed_status.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000009_add_user_is_active.down.sql",
+   "type": "table",
+   "name": "000009_add_user_is_active.down.sql",
+   "filePath": "migrations/000009_add_user_is_active.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (4 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (4 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000009_add_user_is_active.up.sql",
+   "type": "table",
+   "name": "000009_add_user_is_active.up.sql",
+   "filePath": "migrations/000009_add_user_is_active.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (7 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (7 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000010_create_skills_tables.down.sql",
+   "type": "table",
+   "name": "000010_create_skills_tables.down.sql",
+   "filePath": "migrations/000010_create_skills_tables.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (3 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (3 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000010_create_skills_tables.up.sql",
+   "type": "table",
+   "name": "000010_create_skills_tables.up.sql",
+   "filePath": "migrations/000010_create_skills_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 3 tabel. (32 baris)",
+   "description": "Migrasi skema — membuat/mengubah 3 tabel. (32 baris) Tabel: bot_skills, bot_skill_files, bot_global_prompts. Objek lain: idx_bot_skills_slug, idx_bot_skills_enabled, idx_bot_skill_files_skill_id, idx_bot_skill_files_path.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000010_create_skills_tables.up.sql:bot_skills",
+   "type": "table",
+   "name": "bot_skills",
+   "filePath": "migrations/000010_create_skills_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `bot_skills` — 7 kolom.",
+   "description": "Tabel `bot_skills` dibuat/diubah oleh 000010_create_skills_tables.up.sql (baris 1-9). Kolom: id, slug, name, description, is_enabled, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "bot-skills"
+   ]
+  },
+  {
+   "id": "table:migrations/000010_create_skills_tables.up.sql:bot_skill_files",
+   "type": "table",
+   "name": "bot_skill_files",
+   "filePath": "migrations/000010_create_skills_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `bot_skill_files` — 7 kolom.",
+   "description": "Tabel `bot_skill_files` dibuat/diubah oleh 000010_create_skills_tables.up.sql (baris 14-22). Kolom: id, skill_id, name, file_path, content, is_reference, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "bot-skill-files"
+   ]
+  },
+  {
+   "id": "table:migrations/000010_create_skills_tables.up.sql:bot_global_prompts",
+   "type": "table",
+   "name": "bot_global_prompts",
+   "filePath": "migrations/000010_create_skills_tables.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `bot_global_prompts` — 3 kolom.",
+   "description": "Tabel `bot_global_prompts` dibuat/diubah oleh 000010_create_skills_tables.up.sql (baris 27-32). Kolom: id, content, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "bot-global-prompts"
+   ]
+  },
+  {
+   "id": "table:migrations/000011_create_skills_metadata_table.down.sql",
+   "type": "table",
+   "name": "000011_create_skills_metadata_table.down.sql",
+   "filePath": "migrations/000011_create_skills_metadata_table.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (1 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (1 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000011_create_skills_metadata_table.up.sql",
+   "type": "table",
+   "name": "000011_create_skills_metadata_table.up.sql",
+   "filePath": "migrations/000011_create_skills_metadata_table.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 1 tabel. (16 baris)",
+   "description": "Migrasi skema — membuat/mengubah 1 tabel. (16 baris) Tabel: skills_metadata. Objek lain: idx_skills_metadata_user_id, idx_skills_metadata_name, idx_skills_metadata_enabled.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000011_create_skills_metadata_table.up.sql:skills_metadata",
+   "type": "table",
+   "name": "skills_metadata",
+   "filePath": "migrations/000011_create_skills_metadata_table.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `skills_metadata` — 10 kolom.",
+   "description": "Tabel `skills_metadata` dibuat/diubah oleh 000011_create_skills_metadata_table.up.sql (baris 1-12). Kolom: id, user_id, name, definition, source_type, source_url, version, enabled, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "skills-metadata"
+   ]
+  },
+  {
+   "id": "table:migrations/000012_merge_technicians_into_users.down.sql",
+   "type": "table",
+   "name": "000012_merge_technicians_into_users.down.sql",
+   "filePath": "migrations/000012_merge_technicians_into_users.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (1 tabel terdampak). (16 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (1 tabel terdampak). (16 baris) Tabel: technicians.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000012_merge_technicians_into_users.up.sql",
+   "type": "table",
+   "name": "000012_merge_technicians_into_users.up.sql",
+   "filePath": "migrations/000012_merge_technicians_into_users.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (32 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (32 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000013_create_system_settings_table.down.sql",
+   "type": "table",
+   "name": "000013_create_system_settings_table.down.sql",
+   "filePath": "migrations/000013_create_system_settings_table.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (3 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (3 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000013_create_system_settings_table.up.sql",
+   "type": "table",
+   "name": "000013_create_system_settings_table.up.sql",
+   "filePath": "migrations/000013_create_system_settings_table.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 1 tabel. (23 baris)",
+   "description": "Migrasi skema — membuat/mengubah 1 tabel. (23 baris) Tabel: system_settings.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000013_create_system_settings_table.up.sql:system_settings",
+   "type": "table",
+   "name": "system_settings",
+   "filePath": "migrations/000013_create_system_settings_table.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `system_settings` — 4 kolom.",
+   "description": "Tabel `system_settings` dibuat/diubah oleh 000013_create_system_settings_table.up.sql (baris 3-9). Kolom: value, category, description, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "system-settings"
+   ]
+  },
+  {
+   "id": "table:migrations/000014_rebuild_service_plans.down.sql",
+   "type": "table",
+   "name": "000014_rebuild_service_plans.down.sql",
+   "filePath": "migrations/000014_rebuild_service_plans.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (1 tabel terdampak). (12 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (1 tabel terdampak). (12 baris) Tabel: plans.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000014_rebuild_service_plans.up.sql",
+   "type": "table",
+   "name": "000014_rebuild_service_plans.up.sql",
+   "filePath": "migrations/000014_rebuild_service_plans.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 1 tabel. (47 baris)",
+   "description": "Migrasi skema — membuat/mengubah 1 tabel. (47 baris) Tabel: service_plans. Objek lain: idx_service_plans_type, idx_service_plans_active.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000014_rebuild_service_plans.up.sql:service_plans",
+   "type": "table",
+   "name": "service_plans",
+   "filePath": "migrations/000014_rebuild_service_plans.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `service_plans` — 29 kolom.",
+   "description": "Tabel `service_plans` dibuat/diubah oleh 000014_rebuild_service_plans.up.sql (baris 9-41). Kolom: id, tenant_id, name, service_type, bandwidth_upload_kbps, burst_download_kbps, burst_upload_kbps, burst_threshold_kbps, burst_time_seconds, price, selling_price, installation_fee, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "service-plans"
+   ]
+  },
+  {
+   "id": "table:migrations/000015_rebuild_isp_core.down.sql",
+   "type": "table",
+   "name": "000015_rebuild_isp_core.down.sql",
+   "filePath": "migrations/000015_rebuild_isp_core.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (3 tabel terdampak). (47 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (3 tabel terdampak). (47 baris) Tabel: customers, subscriptions, invoices. Objek lain: idx_subscriptions_customer_id, idx_invoices_customer_id.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000015_rebuild_isp_core.up.sql",
+   "type": "table",
+   "name": "000015_rebuild_isp_core.up.sql",
+   "filePath": "migrations/000015_rebuild_isp_core.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 5 tabel. (138 baris)",
+   "description": "Migrasi skema — membuat/mengubah 5 tabel. (138 baris) Tabel: customers, customer_portal_sessions, subscriptions, invoices, invoice_items. Objek lain: idx_customers_code, idx_customers_phone, idx_customers_portal, idx_customers_status, idx_portal_sessions_token, ….",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000015_rebuild_isp_core.up.sql:customers",
+   "type": "table",
+   "name": "customers",
+   "filePath": "migrations/000015_rebuild_isp_core.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `customers` — 16 kolom.",
+   "description": "Tabel `customers` dibuat/diubah oleh 000015_rebuild_isp_core.up.sql (baris 15-32). Kolom: id, tenant_id, customer_code, name, phone, email, address, latitude, longitude, portal_access_code, status, notes, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "customers"
+   ]
+  },
+  {
+   "id": "table:migrations/000015_rebuild_isp_core.up.sql:customer_portal_sessions",
+   "type": "table",
+   "name": "customer_portal_sessions",
+   "filePath": "migrations/000015_rebuild_isp_core.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `customer_portal_sessions` — 8 kolom.",
+   "description": "Tabel `customer_portal_sessions` dibuat/diubah oleh 000015_rebuild_isp_core.up.sql (baris 41-50). Kolom: id, tenant_id, customer_id, session_token, ip_address, user_agent, expires_at, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "customer-portal-sessions"
+   ]
+  },
+  {
+   "id": "table:migrations/000015_rebuild_isp_core.up.sql:subscriptions",
+   "type": "table",
+   "name": "subscriptions",
+   "filePath": "migrations/000015_rebuild_isp_core.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `subscriptions` — 24 kolom.",
+   "description": "Tabel `subscriptions` dibuat/diubah oleh 000015_rebuild_isp_core.up.sql (baris 55-86). Kolom: id, tenant_id, customer_id, plan_id, device_id, remote_password_cipher, local_address, remote_address, parent_queue, rate_limit, billing_cycle, billing_day, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "subscriptions"
+   ]
+  },
+  {
+   "id": "table:migrations/000015_rebuild_isp_core.up.sql:invoices",
+   "type": "table",
+   "name": "invoices",
+   "filePath": "migrations/000015_rebuild_isp_core.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `invoices` — 21 kolom.",
+   "description": "Tabel `invoices` dibuat/diubah oleh 000015_rebuild_isp_core.up.sql (baris 95-118). Kolom: id, tenant_id, invoice_number, customer_id, subscription_id, period, discount, tax_amount, total, paid_amount, due_date, paid_at, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "invoices"
+   ]
+  },
+  {
+   "id": "table:migrations/000015_rebuild_isp_core.up.sql:invoice_items",
+   "type": "table",
+   "name": "invoice_items",
+   "filePath": "migrations/000015_rebuild_isp_core.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `invoice_items` — 8 kolom.",
+   "description": "Tabel `invoice_items` dibuat/diubah oleh 000015_rebuild_isp_core.up.sql (baris 127-136). Kolom: id, invoice_id, description, quantity, unit_price, amount, item_type, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "invoice-items"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.down.sql",
+   "type": "table",
+   "name": "000016_create_registrations_financial.down.sql",
+   "filePath": "migrations/000016_create_registrations_financial.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (9 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (9 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.up.sql",
+   "type": "table",
+   "name": "000016_create_registrations_financial.up.sql",
+   "filePath": "migrations/000016_create_registrations_financial.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 7 tabel. (161 baris)",
+   "description": "Migrasi skema — membuat/mengubah 7 tabel. (161 baris) Tabel: registrations, payment_methods, payments, gateway_transactions, cash_accounts, cash_categories, cash_transactions. Objek lain: idx_registrations_status, idx_registrations_phone, idx_registrations_tech, idx_payments_invoice, idx_payments_date, ….",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.up.sql:registrations",
+   "type": "table",
+   "name": "registrations",
+   "filePath": "migrations/000016_create_registrations_financial.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `registrations` — 28 kolom.",
+   "description": "Tabel `registrations` dibuat/diubah oleh 000016_create_registrations_financial.up.sql (baris 6-37). Kolom: id, tenant_id, registration_no, full_name, phone, email, address, latitude, longitude, notes, status, reviewed_by, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "registrations"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.up.sql:payment_methods",
+   "type": "table",
+   "name": "payment_methods",
+   "filePath": "migrations/000016_create_registrations_financial.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `payment_methods` — 6 kolom.",
+   "description": "Tabel `payment_methods` dibuat/diubah oleh 000016_create_registrations_financial.up.sql (baris 45-52). Kolom: id, tenant_id, name, type, is_active, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "payment-methods"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.up.sql:payments",
+   "type": "table",
+   "name": "payments",
+   "filePath": "migrations/000016_create_registrations_financial.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `payments` — 12 kolom.",
+   "description": "Tabel `payments` dibuat/diubah oleh 000016_create_registrations_financial.up.sql (baris 55-68). Kolom: id, tenant_id, payment_no, invoice_id, payment_method_id, amount, payment_date, received_by, scan_method, reference, notes, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "payments"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.up.sql:gateway_transactions",
+   "type": "table",
+   "name": "gateway_transactions",
+   "filePath": "migrations/000016_create_registrations_financial.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `gateway_transactions` — 18 kolom.",
+   "description": "Tabel `gateway_transactions` dibuat/diubah oleh 000016_create_registrations_financial.up.sql (baris 74-94). Kolom: id, tenant_id, gateway, external_id, invoice_id, payment_id, amount, fee_amount, status, payment_channel, payment_url, qr_string, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "gateway-transactions"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.up.sql:cash_accounts",
+   "type": "table",
+   "name": "cash_accounts",
+   "filePath": "migrations/000016_create_registrations_financial.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `cash_accounts` — 8 kolom.",
+   "description": "Tabel `cash_accounts` dibuat/diubah oleh 000016_create_registrations_financial.up.sql (baris 101-110). Kolom: id, tenant_id, account_code, name, type, is_active, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "cash-accounts"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.up.sql:cash_categories",
+   "type": "table",
+   "name": "cash_categories",
+   "filePath": "migrations/000016_create_registrations_financial.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `cash_categories` — 5 kolom.",
+   "description": "Tabel `cash_categories` dibuat/diubah oleh 000016_create_registrations_financial.up.sql (baris 113-120). Kolom: id, tenant_id, name, type, is_active.",
+   "tags": [
+    "sql",
+    "tabel",
+    "cash-categories"
+   ]
+  },
+  {
+   "id": "table:migrations/000016_create_registrations_financial.up.sql:cash_transactions",
+   "type": "table",
+   "name": "cash_transactions",
+   "filePath": "migrations/000016_create_registrations_financial.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `cash_transactions` — 13 kolom.",
+   "description": "Tabel `cash_transactions` dibuat/diubah oleh 000016_create_registrations_financial.up.sql (baris 123-138). Kolom: id, tenant_id, transaction_no, account_id, category_id, direction, amount, trx_date, source_type, source_id, description, recorded_by, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "cash-transactions"
+   ]
+  },
+  {
+   "id": "table:migrations/000017_create_notifications_reporting_audit.down.sql",
+   "type": "table",
+   "name": "000017_create_notifications_reporting_audit.down.sql",
+   "filePath": "migrations/000017_create_notifications_reporting_audit.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (6 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (6 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000017_create_notifications_reporting_audit.up.sql",
+   "type": "table",
+   "name": "000017_create_notifications_reporting_audit.up.sql",
+   "filePath": "migrations/000017_create_notifications_reporting_audit.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 4 tabel. (98 baris)",
+   "description": "Migrasi skema — membuat/mengubah 4 tabel. (98 baris) Tabel: notification_templates, wa_notifications, daily_financial_snapshots, audit_logs. Objek lain: idx_wa_notif_cust, idx_wa_notif_status, idx_daily_snapshot_date, idx_audit_logs_entity, idx_audit_logs_date.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000017_create_notifications_reporting_audit.up.sql:notification_templates",
+   "type": "table",
+   "name": "notification_templates",
+   "filePath": "migrations/000017_create_notifications_reporting_audit.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `notification_templates` — 9 kolom.",
+   "description": "Tabel `notification_templates` dibuat/diubah oleh 000017_create_notifications_reporting_audit.up.sql (baris 6-17). Kolom: id, tenant_id, template_key, name, content, variables_json, is_active, created_at, updated_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "notification-templates"
+   ]
+  },
+  {
+   "id": "table:migrations/000017_create_notifications_reporting_audit.up.sql:wa_notifications",
+   "type": "table",
+   "name": "wa_notifications",
+   "filePath": "migrations/000017_create_notifications_reporting_audit.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `wa_notifications` — 12 kolom.",
+   "description": "Tabel `wa_notifications` dibuat/diubah oleh 000017_create_notifications_reporting_audit.up.sql (baris 23-36). Kolom: id, tenant_id, template_id, customer_id, invoice_id, recipient_phone, message_type, message_content, status, error_message, sent_at, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "wa-notifications"
+   ]
+  },
+  {
+   "id": "table:migrations/000017_create_notifications_reporting_audit.up.sql:daily_financial_snapshots",
+   "type": "table",
+   "name": "daily_financial_snapshots",
+   "filePath": "migrations/000017_create_notifications_reporting_audit.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `daily_financial_snapshots` — 12 kolom.",
+   "description": "Tabel `daily_financial_snapshots` dibuat/diubah oleh 000017_create_notifications_reporting_audit.up.sql (baris 42-56). Kolom: id, tenant_id, snapshot_date, invoice_count, invoice_total, payment_count, payment_total, outstanding_total, expense_total, active_subscriptions, cash_balance_json, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "daily-financial-snapshots"
+   ]
+  },
+  {
+   "id": "table:migrations/000017_create_notifications_reporting_audit.up.sql:audit_logs",
+   "type": "table",
+   "name": "audit_logs",
+   "filePath": "migrations/000017_create_notifications_reporting_audit.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `audit_logs` — 9 kolom.",
+   "description": "Tabel `audit_logs` dibuat/diubah oleh 000017_create_notifications_reporting_audit.up.sql (baris 61-72). Kolom: id, tenant_id, actor_type, action, entity_type, entity_id, description, ip_address, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "audit-logs"
+   ]
+  },
+  {
+   "id": "table:migrations/000018_isp_settings_and_provision_status.down.sql",
+   "type": "table",
+   "name": "000018_isp_settings_and_provision_status.down.sql",
+   "filePath": "migrations/000018_isp_settings_and_provision_status.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (5 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (5 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000018_isp_settings_and_provision_status.up.sql",
+   "type": "table",
+   "name": "000018_isp_settings_and_provision_status.up.sql",
+   "filePath": "migrations/000018_isp_settings_and_provision_status.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (30 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (30 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000019_portal_otp_wa_and_settings.down.sql",
+   "type": "table",
+   "name": "000019_portal_otp_wa_and_settings.down.sql",
+   "filePath": "migrations/000019_portal_otp_wa_and_settings.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (8 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (8 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000019_portal_otp_wa_and_settings.up.sql",
+   "type": "table",
+   "name": "000019_portal_otp_wa_and_settings.up.sql",
+   "filePath": "migrations/000019_portal_otp_wa_and_settings.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 1 tabel. (49 baris)",
+   "description": "Migrasi skema — membuat/mengubah 1 tabel. (49 baris) Tabel: portal_otps. Objek lain: idx_portal_otps_phone.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000019_portal_otp_wa_and_settings.up.sql:portal_otps",
+   "type": "table",
+   "name": "portal_otps",
+   "filePath": "migrations/000019_portal_otp_wa_and_settings.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `portal_otps` — 9 kolom.",
+   "description": "Tabel `portal_otps` dibuat/diubah oleh 000019_portal_otp_wa_and_settings.up.sql (baris 6-16). Kolom: id, tenant_id, phone, code_hash, purpose, attempts, expires_at, consumed_at, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "portal-otps"
+   ]
+  },
+  {
+   "id": "table:migrations/000020_add_remote_address_pool.down.sql",
+   "type": "table",
+   "name": "000020_add_remote_address_pool.down.sql",
+   "filePath": "migrations/000020_add_remote_address_pool.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (3 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (3 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000020_add_remote_address_pool.up.sql",
+   "type": "table",
+   "name": "000020_add_remote_address_pool.up.sql",
+   "filePath": "migrations/000020_add_remote_address_pool.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (5 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (5 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000021_create_user_devices_table.down.sql",
+   "type": "table",
+   "name": "000021_create_user_devices_table.down.sql",
+   "filePath": "migrations/000021_create_user_devices_table.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000021_create_user_devices_table.up.sql",
+   "type": "table",
+   "name": "000021_create_user_devices_table.up.sql",
+   "filePath": "migrations/000021_create_user_devices_table.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 1 tabel. (13 baris)",
+   "description": "Migrasi skema — membuat/mengubah 1 tabel. (13 baris) Tabel: user_devices. Objek lain: idx_user_devices_user_id, idx_user_devices_device_id.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000021_create_user_devices_table.up.sql:user_devices",
+   "type": "table",
+   "name": "user_devices",
+   "filePath": "migrations/000021_create_user_devices_table.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `user_devices` — 4 kolom.",
+   "description": "Tabel `user_devices` dibuat/diubah oleh 000021_create_user_devices_table.up.sql (baris 4-10). Kolom: user_id, device_id, assigned_by, created_at.",
+   "tags": [
+    "sql",
+    "tabel",
+    "user-devices"
+   ]
+  },
+  {
+   "id": "table:migrations/000022_create_device_ping_metrics_table.down.sql",
+   "type": "table",
+   "name": "000022_create_device_ping_metrics_table.down.sql",
+   "filePath": "migrations/000022_create_device_ping_metrics_table.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (2 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000022_create_device_ping_metrics_table.up.sql",
+   "type": "table",
+   "name": "000022_create_device_ping_metrics_table.up.sql",
+   "filePath": "migrations/000022_create_device_ping_metrics_table.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 1 tabel. (27 baris)",
+   "description": "Migrasi skema — membuat/mengubah 1 tabel. (27 baris) Tabel: device_ping_metrics. Objek lain: idx_device_ping_metrics_device_time.",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000022_create_device_ping_metrics_table.up.sql:device_ping_metrics",
+   "type": "table",
+   "name": "device_ping_metrics",
+   "filePath": "migrations/000022_create_device_ping_metrics_table.up.sql",
+   "complexity": "simple",
+   "summary": "Tabel `device_ping_metrics` — 14 kolom.",
+   "description": "Tabel `device_ping_metrics` dibuat/diubah oleh 000022_create_device_ping_metrics_table.up.sql (baris 5-20). Kolom: recorded_at, device_id, target, seq, size, ttl, rtt_ms, status, sent, received, packet_loss, min_rtt_ms, ….",
+   "tags": [
+    "sql",
+    "tabel",
+    "device-ping-metrics"
+   ]
+  },
+  {
+   "id": "table:migrations/000023_add_username_pattern_settings.down.sql",
+   "type": "table",
+   "name": "000023_add_username_pattern_settings.down.sql",
+   "filePath": "migrations/000023_add_username_pattern_settings.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (6 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (6 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000023_add_username_pattern_settings.up.sql",
+   "type": "table",
+   "name": "000023_add_username_pattern_settings.up.sql",
+   "filePath": "migrations/000023_add_username_pattern_settings.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (11 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (11 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  },
+  {
+   "id": "table:migrations/000024_optimize_ping_metrics_timescale.down.sql",
+   "type": "table",
+   "name": "000024_optimize_ping_metrics_timescale.down.sql",
+   "filePath": "migrations/000024_optimize_ping_metrics_timescale.down.sql",
+   "complexity": "simple",
+   "summary": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (13 baris)",
+   "description": "Migrasi rollback — menghapus/perubahan mundur skema (0 tabel terdampak). (13 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "rollback"
+   ]
+  },
+  {
+   "id": "table:migrations/000024_optimize_ping_metrics_timescale.up.sql",
+   "type": "table",
+   "name": "000024_optimize_ping_metrics_timescale.up.sql",
+   "filePath": "migrations/000024_optimize_ping_metrics_timescale.up.sql",
+   "complexity": "simple",
+   "summary": "Migrasi skema — membuat/mengubah 0 tabel. (45 baris)",
+   "description": "Migrasi skema — membuat/mengubah 0 tabel. (45 baris)",
+   "tags": [
+    "sql",
+    "migrasi",
+    "naik"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "table:migrations/000001_create_devices_table.up.sql",
+   "target": "table:migrations/000001_create_devices_table.up.sql:devices",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000001_create_devices_table.up.sql",
+   "target": "table:migrations/000001_create_devices_table.up.sql:credentials",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000002_create_bot_tables.up.sql",
+   "target": "table:migrations/000002_create_bot_tables.up.sql:users",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000002_create_bot_tables.up.sql",
+   "target": "table:migrations/000002_create_bot_tables.up.sql:wa_sessions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000002_create_bot_tables.up.sql",
+   "target": "table:migrations/000002_create_bot_tables.up.sql:conversations",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000002_create_bot_tables.up.sql",
+   "target": "table:migrations/000002_create_bot_tables.up.sql:messages",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000002_create_bot_tables.up.sql",
+   "target": "table:migrations/000002_create_bot_tables.up.sql:llm_configs",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000002_create_bot_tables.up.sql",
+   "target": "table:migrations/000002_create_bot_tables.up.sql:knowledge_entries",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000002_create_bot_tables.up.sql",
+   "target": "table:migrations/000002_create_bot_tables.up.sql:technicians",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000004_create_wa_chat_mirror_tables.up.sql",
+   "target": "table:migrations/000004_create_wa_chat_mirror_tables.up.sql:wa_chats",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000004_create_wa_chat_mirror_tables.up.sql",
+   "target": "table:migrations/000004_create_wa_chat_mirror_tables.up.sql:wa_messages",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000006_create_billing_tables.up.sql",
+   "target": "table:migrations/000006_create_billing_tables.up.sql:customers",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000006_create_billing_tables.up.sql",
+   "target": "table:migrations/000006_create_billing_tables.up.sql:subscriptions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000006_create_billing_tables.up.sql",
+   "target": "table:migrations/000006_create_billing_tables.up.sql:invoices",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000006_create_billing_tables.up.sql",
+   "target": "table:migrations/000006_create_billing_tables.up.sql:plans",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000010_create_skills_tables.up.sql",
+   "target": "table:migrations/000010_create_skills_tables.up.sql:bot_skills",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000010_create_skills_tables.up.sql",
+   "target": "table:migrations/000010_create_skills_tables.up.sql:bot_skill_files",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000010_create_skills_tables.up.sql",
+   "target": "table:migrations/000010_create_skills_tables.up.sql:bot_global_prompts",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000011_create_skills_metadata_table.up.sql",
+   "target": "table:migrations/000011_create_skills_metadata_table.up.sql:skills_metadata",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000013_create_system_settings_table.up.sql",
+   "target": "table:migrations/000013_create_system_settings_table.up.sql:system_settings",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000014_rebuild_service_plans.up.sql",
+   "target": "table:migrations/000014_rebuild_service_plans.up.sql:service_plans",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000015_rebuild_isp_core.up.sql",
+   "target": "table:migrations/000015_rebuild_isp_core.up.sql:customers",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000015_rebuild_isp_core.up.sql",
+   "target": "table:migrations/000015_rebuild_isp_core.up.sql:customer_portal_sessions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000015_rebuild_isp_core.up.sql",
+   "target": "table:migrations/000015_rebuild_isp_core.up.sql:subscriptions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000015_rebuild_isp_core.up.sql",
+   "target": "table:migrations/000015_rebuild_isp_core.up.sql:invoices",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000015_rebuild_isp_core.up.sql",
+   "target": "table:migrations/000015_rebuild_isp_core.up.sql:invoice_items",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000016_create_registrations_financial.up.sql",
+   "target": "table:migrations/000016_create_registrations_financial.up.sql:registrations",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000016_create_registrations_financial.up.sql",
+   "target": "table:migrations/000016_create_registrations_financial.up.sql:payment_methods",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000016_create_registrations_financial.up.sql",
+   "target": "table:migrations/000016_create_registrations_financial.up.sql:payments",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000016_create_registrations_financial.up.sql",
+   "target": "table:migrations/000016_create_registrations_financial.up.sql:gateway_transactions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000016_create_registrations_financial.up.sql",
+   "target": "table:migrations/000016_create_registrations_financial.up.sql:cash_accounts",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000016_create_registrations_financial.up.sql",
+   "target": "table:migrations/000016_create_registrations_financial.up.sql:cash_categories",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000016_create_registrations_financial.up.sql",
+   "target": "table:migrations/000016_create_registrations_financial.up.sql:cash_transactions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000017_create_notifications_reporting_audit.up.sql",
+   "target": "table:migrations/000017_create_notifications_reporting_audit.up.sql:notification_templates",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000017_create_notifications_reporting_audit.up.sql",
+   "target": "table:migrations/000017_create_notifications_reporting_audit.up.sql:wa_notifications",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000017_create_notifications_reporting_audit.up.sql",
+   "target": "table:migrations/000017_create_notifications_reporting_audit.up.sql:daily_financial_snapshots",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000017_create_notifications_reporting_audit.up.sql",
+   "target": "table:migrations/000017_create_notifications_reporting_audit.up.sql:audit_logs",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000019_portal_otp_wa_and_settings.up.sql",
+   "target": "table:migrations/000019_portal_otp_wa_and_settings.up.sql:portal_otps",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000021_create_user_devices_table.up.sql",
+   "target": "table:migrations/000021_create_user_devices_table.up.sql:user_devices",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "table:migrations/000022_create_device_ping_metrics_table.up.sql",
+   "target": "table:migrations/000022_create_device_ping_metrics_table.up.sql:device_ping_metrics",
+   "type": "contains",
+   "weight": 1
+  }
+ ]
+}

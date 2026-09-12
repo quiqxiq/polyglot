@@ -1,0 +1,2938 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/driver/whatsapp/jid_filter.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 95,
+      "nonEmptyLines": 88,
+      "functions": [
+        {
+          "name": "isSystemBroadcastJID",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "jid"
+          ]
+        },
+        {
+          "name": "isNewsletterJID",
+          "startLine": 24,
+          "endLine": 26,
+          "params": [
+            "jid"
+          ]
+        },
+        {
+          "name": "isSkippedJID",
+          "startLine": 31,
+          "endLine": 33,
+          "params": [
+            "jid"
+          ]
+        },
+        {
+          "name": "resolveChatDisplayName",
+          "startLine": 45,
+          "endLine": 67,
+          "params": [
+            "ctx",
+            "jid",
+            "fallback"
+          ]
+        },
+        {
+          "name": "normalizeJIDFromLID",
+          "startLine": 78,
+          "endLine": 95,
+          "params": [
+            "ctx",
+            "jid",
+            "client"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "isNewsletterJID",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 25
+        },
+        {
+          "caller": "isSkippedJID",
+          "callee": "isSystemBroadcastJID",
+          "lineNumber": 32
+        },
+        {
+          "caller": "isSkippedJID",
+          "callee": "isNewsletterJID",
+          "lineNumber": 32
+        },
+        {
+          "caller": "resolveChatDisplayName",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 49
+        },
+        {
+          "caller": "resolveChatDisplayName",
+          "callee": "c.waClient.Store.Contacts.GetContact",
+          "lineNumber": 51
+        },
+        {
+          "caller": "resolveChatDisplayName",
+          "callee": "pnJID.ToNonAD",
+          "lineNumber": 66
+        },
+        {
+          "caller": "normalizeJIDFromLID",
+          "callee": "logger.WithComponent(\"JIDFilter\").Warn",
+          "lineNumber": 83
+        },
+        {
+          "caller": "normalizeJIDFromLID",
+          "callee": "logger.WithComponent",
+          "lineNumber": 83
+        },
+        {
+          "caller": "normalizeJIDFromLID",
+          "callee": "client.Store.LIDs.GetPNForLID",
+          "lineNumber": 86
+        },
+        {
+          "caller": "normalizeJIDFromLID",
+          "callee": "logger.WithComponent(\"JIDFilter\").WithError(err).Warn",
+          "lineNumber": 88
+        },
+        {
+          "caller": "normalizeJIDFromLID",
+          "callee": "logger.WithComponent(\"JIDFilter\").WithError",
+          "lineNumber": 88
+        },
+        {
+          "caller": "normalizeJIDFromLID",
+          "callee": "logger.WithComponent",
+          "lineNumber": 88
+        },
+        {
+          "caller": "normalizeJIDFromLID",
+          "callee": "pn.IsEmpty",
+          "lineNumber": 91
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/mirror.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 198,
+      "nonEmptyLines": 176,
+      "functions": [
+        {
+          "name": "reconcileLIDChat",
+          "startLine": 16,
+          "endLine": 27,
+          "params": [
+            "ctx",
+            "resolved"
+          ]
+        },
+        {
+          "name": "persistMirrorMessage",
+          "startLine": 29,
+          "endLine": 96,
+          "params": [
+            "evt"
+          ]
+        },
+        {
+          "name": "recordOutgoingMessage",
+          "startLine": 98,
+          "endLine": 138,
+          "params": [
+            "jid",
+            "waMessageID",
+            "content",
+            "mediaType"
+          ]
+        },
+        {
+          "name": "extractMediaType",
+          "startLine": 140,
+          "endLine": 172,
+          "params": [
+            "msg"
+          ]
+        },
+        {
+          "name": "previewOf",
+          "startLine": 174,
+          "endLine": 198,
+          "params": [
+            "content",
+            "mediaType"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "c.waClient.Store.LIDs.GetLIDForPN",
+          "lineNumber": 20
+        },
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "lid.IsEmpty",
+          "lineNumber": 21
+        },
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "c.chatRepo.MergeChatLID",
+          "lineNumber": 24
+        },
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "lid.String",
+          "lineNumber": 24
+        },
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "resolved.String",
+          "lineNumber": 24
+        },
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Debug",
+          "lineNumber": 25
+        },
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 25
+        },
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 25
+        },
+        {
+          "caller": "reconcileLIDChat",
+          "callee": "logger.WithComponent",
+          "lineNumber": 25
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).String",
+          "lineNumber": 34
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 34
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "context.Background",
+          "lineNumber": 34
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "isSkippedJID",
+          "lineNumber": 35
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "c.resolveChatDisplayName",
+          "lineNumber": 41
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "context.Background",
+          "lineNumber": 41
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "extractMessageBody",
+          "lineNumber": 44
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "extractMediaType",
+          "lineNumber": 45
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "normalizeJIDFromLID(context.Background(), evt.Info.Sender, c.waClient).String",
+          "lineNumber": 51
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "normalizeJIDFromLID",
+          "lineNumber": 51
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "context.Background",
+          "lineNumber": 51
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 68
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "evt.Info.Timestamp.UnixNano",
+          "lineNumber": 68
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "c.chatRepo.UpsertMessage",
+          "lineNumber": 71
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "context.Background",
+          "lineNumber": 71
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Error",
+          "lineNumber": 73
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 73
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 73
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent",
+          "lineNumber": 73
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "previewOf",
+          "lineNumber": 82
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "c.chatRepo.UpsertChat",
+          "lineNumber": 85
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "context.Background",
+          "lineNumber": 85
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Error",
+          "lineNumber": 86
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 86
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 86
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent",
+          "lineNumber": 86
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "c.chatRepo.IncrementUnread",
+          "lineNumber": 90
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "context.Background",
+          "lineNumber": 90
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Debug",
+          "lineNumber": 91
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 91
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 91
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "logger.WithComponent",
+          "lineNumber": 91
+        },
+        {
+          "caller": "persistMirrorMessage",
+          "callee": "c.notifyChatUpdate",
+          "lineNumber": 95
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "jid.String",
+          "lineNumber": 103
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 108
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "time.Now().UnixNano",
+          "lineNumber": 108
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "time.Now",
+          "lineNumber": 108
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "time.Now",
+          "lineNumber": 110
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "c.chatRepo.UpsertMessage",
+          "lineNumber": 122
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "context.Background",
+          "lineNumber": 122
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Error",
+          "lineNumber": 123
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 123
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 123
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "logger.WithComponent",
+          "lineNumber": 123
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "previewOf",
+          "lineNumber": 130
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "c.chatRepo.UpsertChat",
+          "lineNumber": 133
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "context.Background",
+          "lineNumber": 133
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Error",
+          "lineNumber": 134
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 134
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 134
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "logger.WithComponent",
+          "lineNumber": 134
+        },
+        {
+          "caller": "recordOutgoingMessage",
+          "callee": "c.notifyChatUpdate",
+          "lineNumber": 137
+        },
+        {
+          "caller": "extractMediaType",
+          "callee": "msg.GetConversation",
+          "lineNumber": 145
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/qr.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 129,
+      "nonEmptyLines": 117,
+      "functions": [
+        {
+          "name": "EnsureQRFlow",
+          "startLine": 17,
+          "endLine": 22,
+          "params": []
+        },
+        {
+          "name": "startQRFlow",
+          "startLine": 25,
+          "endLine": 107,
+          "params": []
+        },
+        {
+          "name": "GetQRCode",
+          "startLine": 109,
+          "endLine": 116,
+          "params": []
+        },
+        {
+          "name": "GetPairingCode",
+          "startLine": 118,
+          "endLine": 129,
+          "params": [
+            "ctx",
+            "phoneNumber"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EnsureQRFlow",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "GetQRCode",
+          "line": 109,
+          "isDefault": false
+        },
+        {
+          "name": "GetPairingCode",
+          "line": 118,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "EnsureQRFlow",
+          "callee": "c.startQRFlow",
+          "lineNumber": 21
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Lock",
+          "lineNumber": 26
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Unlock",
+          "lineNumber": 28
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Unlock",
+          "lineNumber": 32
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.onStatus",
+          "lineNumber": 35
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.waClient.Disconnect",
+          "lineNumber": 37
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "context.WithTimeout",
+          "lineNumber": 39
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "context.Background",
+          "lineNumber": 39
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.waClient.GetQRChannel",
+          "lineNumber": 40
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "qrCancel",
+          "lineNumber": 42
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Lock",
+          "lineNumber": 43
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Unlock",
+          "lineNumber": 45
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "errors.Is",
+          "lineNumber": 46
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField(\"session_id\", c.SessionID).Info",
+          "lineNumber": 47
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField",
+          "lineNumber": 47
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent",
+          "lineNumber": 47
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.waClient.Connect",
+          "lineNumber": 48
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Error",
+          "lineNumber": 49
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 49
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 49
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent",
+          "lineNumber": 49
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Error",
+          "lineNumber": 53
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 53
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 53
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent",
+          "lineNumber": 53
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.onStatus",
+          "lineNumber": 55
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 60
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.waClient.Connect",
+          "lineNumber": 61
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "qrCancel",
+          "lineNumber": 62
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Lock",
+          "lineNumber": 63
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Unlock",
+          "lineNumber": 65
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.onStatus",
+          "lineNumber": 67
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField(\"session_id\", c.SessionID).Error",
+          "lineNumber": 69
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError(err).WithField",
+          "lineNumber": 69
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithError",
+          "lineNumber": 69
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent",
+          "lineNumber": 69
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "func() {\n\t\tdefer qrCancel()\n\t\tdefer func() {\n\t\t\tc.qrFlowMu.Lock()\n\t\t\tc.qrFlowActive = false\n\t\t\tc.qrFlowMu.Unlock()\n\t\t}()\n\t\tfor evt := range qrChan {\n\t\t\tif evt.Event == \"code\" {\n\t\t\t\tc.qrMutex.Lock()\n\t\t\t\tc.qrCode = evt.Code\n\t\t\t\tif pngBytes, err := qrcode.Encode(evt.Code, qrcode.Medium, 256); err == nil {\n\t\t\t\t\tc.qrBase64 = \"data:image/png;base64,\" + base64.StdEncoding.EncodeToString(pngBytes)\n\t\t\t\t}\n\t\t\t\tc.qrMutex.Unlock()\n\n\t\t\t\tif c.onStatus != nil {\n\t\t\t\t\tc.onStatus(c.SessionID, \"needs_rescan\", c.qrBase64, \"\", \"\")\n\t\t\t\t}\n\t\t\t} else if evt.Event == \"timeout\" {\n\t\t\t\tlogger.WithComponent(\"WhatsAppDriver\").WithField(\"session_id\", c.SessionID).Info(\"QR code expired\")\n\t\t\t\tc.qrMutex.Lock()\n\t\t\t\tc.qrCode = \"\"\n\t\t\t\tc.qrBase64 = \"\"\n\t\t\t\tc.qrMutex.Unlock()\n\t\t\t\tif c.onStatus != nil {\n\t\t\t\t\tc.onStatus(c.SessionID, \"needs_rescan\", \"\", \"\", \"\")\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tlogger.WithComponent(\"WhatsAppDriver\").WithFields(map[string]any{\"session_id\": c.SessionID, \"event\": evt.Event}).Debug(\"QR event received\")\n\t\t\t}\n\t\t}\n\t}",
+          "lineNumber": 74
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "qrCancel",
+          "lineNumber": 75
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "func() {\n\t\t\tc.qrFlowMu.Lock()\n\t\t\tc.qrFlowActive = false\n\t\t\tc.qrFlowMu.Unlock()\n\t\t}",
+          "lineNumber": 76
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Lock",
+          "lineNumber": 77
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrFlowMu.Unlock",
+          "lineNumber": 79
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrMutex.Lock",
+          "lineNumber": 83
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "qrcode.Encode",
+          "lineNumber": 85
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "base64.StdEncoding.EncodeToString",
+          "lineNumber": 86
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrMutex.Unlock",
+          "lineNumber": 88
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.onStatus",
+          "lineNumber": 91
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField(\"session_id\", c.SessionID).Info",
+          "lineNumber": 94
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithField",
+          "lineNumber": 94
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent",
+          "lineNumber": 94
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrMutex.Lock",
+          "lineNumber": 95
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.qrMutex.Unlock",
+          "lineNumber": 98
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "c.onStatus",
+          "lineNumber": 100
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithFields(map[string]any{\"session_id\": c.SessionID, \"event\": evt.Event}).Debug",
+          "lineNumber": 103
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent(\"WhatsAppDriver\").WithFields",
+          "lineNumber": 103
+        },
+        {
+          "caller": "startQRFlow",
+          "callee": "logger.WithComponent",
+          "lineNumber": 103
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "c.qrMutex.RLock",
+          "lineNumber": 110
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "c.qrMutex.RUnlock",
+          "lineNumber": 111
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 119
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "c.waClient.Connect",
+          "lineNumber": 120
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "fmt.Errorf",
+          "lineNumber": 121
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "c.waClient.PairPhone",
+          "lineNumber": 124
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "fmt.Errorf",
+          "lineNumber": 126
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/sender.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 150,
+      "nonEmptyLines": 123,
+      "functions": [
+        {
+          "name": "SendMessage",
+          "startLine": 15,
+          "endLine": 36,
+          "params": [
+            "ctx",
+            "to",
+            "content"
+          ]
+        },
+        {
+          "name": "SendDocument",
+          "startLine": 38,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "to",
+            "fileBytes",
+            "fileName",
+            "contentType",
+            "caption"
+          ]
+        },
+        {
+          "name": "SendImage",
+          "startLine": 87,
+          "endLine": 130,
+          "params": [
+            "ctx",
+            "to",
+            "imageBytes",
+            "contentType",
+            "caption"
+          ]
+        },
+        {
+          "name": "parseJID",
+          "startLine": 132,
+          "endLine": 150,
+          "params": [
+            "target"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SendMessage",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "SendDocument",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "SendImage",
+          "line": 87,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SendMessage",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 16
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 17
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "parseJID",
+          "lineNumber": 20
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 22
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "proto.String",
+          "lineNumber": 26
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "c.waClient.SendMessage",
+          "lineNumber": 29
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "c.recordOutgoingMessage",
+          "lineNumber": 34
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "string",
+          "lineNumber": 34
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 39
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "fmt.Errorf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "parseJID",
+          "lineNumber": 43
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "fmt.Errorf",
+          "lineNumber": 45
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "http.DetectContentType",
+          "lineNumber": 49
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 50
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "strings.ToLower",
+          "lineNumber": 50
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "c.waClient.Upload",
+          "lineNumber": 55
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "fmt.Errorf",
+          "lineNumber": 57
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "proto.String",
+          "lineNumber": 61
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "proto.String",
+          "lineNumber": 62
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "proto.String",
+          "lineNumber": 64
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "proto.Uint64",
+          "lineNumber": 67
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "proto.String",
+          "lineNumber": 68
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "proto.String",
+          "lineNumber": 71
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "c.waClient.SendMessage",
+          "lineNumber": 78
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "fmt.Errorf",
+          "lineNumber": 80
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "c.recordOutgoingMessage",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "string",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SendImage",
+          "callee": "c.waClient.IsConnected",
+          "lineNumber": 88
+        },
+        {
+          "caller": "SendImage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 89
+        },
+        {
+          "caller": "SendImage",
+          "callee": "parseJID",
+          "lineNumber": 92
+        },
+        {
+          "caller": "SendImage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 94
+        },
+        {
+          "caller": "SendImage",
+          "callee": "http.DetectContentType",
+          "lineNumber": 98
+        },
+        {
+          "caller": "SendImage",
+          "callee": "c.waClient.Upload",
+          "lineNumber": 101
+        },
+        {
+          "caller": "SendImage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 103
+        },
+        {
+          "caller": "SendImage",
+          "callee": "proto.String",
+          "lineNumber": 107
+        },
+        {
+          "caller": "SendImage",
+          "callee": "proto.String",
+          "lineNumber": 108
+        },
+        {
+          "caller": "SendImage",
+          "callee": "proto.String",
+          "lineNumber": 110
+        },
+        {
+          "caller": "SendImage",
+          "callee": "proto.Uint64",
+          "lineNumber": 113
+        },
+        {
+          "caller": "SendImage",
+          "callee": "proto.String",
+          "lineNumber": 116
+        },
+        {
+          "caller": "SendImage",
+          "callee": "c.waClient.SendMessage",
+          "lineNumber": 123
+        },
+        {
+          "caller": "SendImage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 125
+        },
+        {
+          "caller": "SendImage",
+          "callee": "c.recordOutgoingMessage",
+          "lineNumber": 128
+        },
+        {
+          "caller": "SendImage",
+          "callee": "string",
+          "lineNumber": 128
+        },
+        {
+          "caller": "parseJID",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 133
+        },
+        {
+          "caller": "parseJID",
+          "callee": "strings.Contains",
+          "lineNumber": 134
+        },
+        {
+          "caller": "parseJID",
+          "callee": "types.ParseJID",
+          "lineNumber": 135
+        },
+        {
+          "caller": "parseJID",
+          "callee": "strings.Map",
+          "lineNumber": 138
+        },
+        {
+          "caller": "parseJID",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 145
+        },
+        {
+          "caller": "parseJID",
+          "callee": "types.NewJID",
+          "lineNumber": 149
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/session_manager.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 373,
+      "nonEmptyLines": 325,
+      "functions": [
+        {
+          "name": "NewSessionManager",
+          "startLine": 31,
+          "endLine": 46,
+          "params": [
+            "postgresConnStr",
+            "chatRepo",
+            "onMsg",
+            "onStat"
+          ]
+        },
+        {
+          "name": "ConnectWithContext",
+          "startLine": 48,
+          "endLine": 112,
+          "params": [
+            "ctx",
+            "session"
+          ]
+        },
+        {
+          "name": "Connect",
+          "startLine": 114,
+          "endLine": 116,
+          "params": [
+            "session"
+          ]
+        },
+        {
+          "name": "DisconnectAll",
+          "startLine": 121,
+          "endLine": 137,
+          "params": []
+        },
+        {
+          "name": "Disconnect",
+          "startLine": 142,
+          "endLine": 155,
+          "params": [
+            "sessionID"
+          ]
+        },
+        {
+          "name": "Logout",
+          "startLine": 161,
+          "endLine": 178,
+          "params": [
+            "sessionID"
+          ]
+        },
+        {
+          "name": "Purge",
+          "startLine": 184,
+          "endLine": 186,
+          "params": [
+            "sessionID"
+          ]
+        },
+        {
+          "name": "Reconnect",
+          "startLine": 188,
+          "endLine": 201,
+          "params": [
+            "sessionID"
+          ]
+        },
+        {
+          "name": "SendMessage",
+          "startLine": 203,
+          "endLine": 205,
+          "params": [
+            "sessionID",
+            "to",
+            "content"
+          ]
+        },
+        {
+          "name": "SendMessageContext",
+          "startLine": 207,
+          "endLine": 220,
+          "params": [
+            "ctx",
+            "sessionID",
+            "to",
+            "content"
+          ]
+        },
+        {
+          "name": "SendDocument",
+          "startLine": 222,
+          "endLine": 235,
+          "params": [
+            "ctx",
+            "sessionID",
+            "to",
+            "fileBytes",
+            "fileName",
+            "contentType",
+            "caption"
+          ]
+        },
+        {
+          "name": "SendImage",
+          "startLine": 237,
+          "endLine": 250,
+          "params": [
+            "ctx",
+            "sessionID",
+            "to",
+            "imageBytes",
+            "contentType",
+            "caption"
+          ]
+        },
+        {
+          "name": "GetStatus",
+          "startLine": 252,
+          "endLine": 270,
+          "params": [
+            "sessionID"
+          ]
+        },
+        {
+          "name": "GetQRCode",
+          "startLine": 272,
+          "endLine": 293,
+          "params": [
+            "sessionID"
+          ]
+        },
+        {
+          "name": "GetPairingCode",
+          "startLine": 295,
+          "endLine": 308,
+          "params": [
+            "sessionID",
+            "phoneNumber"
+          ]
+        },
+        {
+          "name": "RestoreAllSessions",
+          "startLine": 310,
+          "endLine": 327,
+          "params": [
+            "sessions"
+          ]
+        },
+        {
+          "name": "SetMessageCallback",
+          "startLine": 332,
+          "endLine": 343,
+          "params": [
+            "cb"
+          ]
+        },
+        {
+          "name": "SetChatUpdateCallback",
+          "startLine": 348,
+          "endLine": 358,
+          "params": [
+            "cb"
+          ]
+        },
+        {
+          "name": "SetChatPresenceCallback",
+          "startLine": 363,
+          "endLine": 373,
+          "params": [
+            "cb"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SessionManager",
+          "startLine": 18,
+          "endLine": 27,
+          "methods": [
+            "ConnectWithContext",
+            "Connect",
+            "DisconnectAll",
+            "Disconnect",
+            "Logout",
+            "Purge",
+            "Reconnect",
+            "SendMessage",
+            "SendMessageContext",
+            "SendDocument",
+            "SendImage",
+            "GetStatus",
+            "GetQRCode",
+            "GetPairingCode",
+            "RestoreAllSessions",
+            "SetMessageCallback",
+            "SetChatUpdateCallback",
+            "SetChatPresenceCallback"
+          ],
+          "properties": [
+            "container",
+            "clients",
+            "mutex",
+            "onMessage",
+            "onStatus",
+            "onChatUpd",
+            "onChatPres",
+            "chatRepo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SessionManager",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "NewSessionManager",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "ConnectWithContext",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "Connect",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "DisconnectAll",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "Disconnect",
+          "line": 142,
+          "isDefault": false
+        },
+        {
+          "name": "Logout",
+          "line": 161,
+          "isDefault": false
+        },
+        {
+          "name": "Purge",
+          "line": 184,
+          "isDefault": false
+        },
+        {
+          "name": "Reconnect",
+          "line": 188,
+          "isDefault": false
+        },
+        {
+          "name": "SendMessage",
+          "line": 203,
+          "isDefault": false
+        },
+        {
+          "name": "SendMessageContext",
+          "line": 207,
+          "isDefault": false
+        },
+        {
+          "name": "SendDocument",
+          "line": 222,
+          "isDefault": false
+        },
+        {
+          "name": "SendImage",
+          "line": 237,
+          "isDefault": false
+        },
+        {
+          "name": "GetStatus",
+          "line": 252,
+          "isDefault": false
+        },
+        {
+          "name": "GetQRCode",
+          "line": 272,
+          "isDefault": false
+        },
+        {
+          "name": "GetPairingCode",
+          "line": 295,
+          "isDefault": false
+        },
+        {
+          "name": "RestoreAllSessions",
+          "line": 310,
+          "isDefault": false
+        },
+        {
+          "name": "SetMessageCallback",
+          "line": 332,
+          "isDefault": false
+        },
+        {
+          "name": "SetChatUpdateCallback",
+          "line": 348,
+          "isDefault": false
+        },
+        {
+          "name": "SetChatPresenceCallback",
+          "line": 363,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewSessionManager",
+          "callee": "waLog.Stdout",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewSessionManager",
+          "callee": "context.Background",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewSessionManager",
+          "callee": "sqlstore.New",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewSessionManager",
+          "callee": "fmt.Errorf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "NewSessionManager",
+          "callee": "make",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "sm.mutex.Lock",
+          "lineNumber": 52
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "sm.mutex.Unlock",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "client.waClient.IsConnected",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "sm.container.GetAllDevices",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "fmt.Errorf",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "d.ID.String",
+          "lineNumber": 68
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "len",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "sm.container.NewDevice",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "NewClient",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "client.SetChatUpdateCallback",
+          "lineNumber": 107
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "client.SetChatPresenceCallback",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ConnectWithContext",
+          "callee": "client.Connect",
+          "lineNumber": 111
+        },
+        {
+          "caller": "Connect",
+          "callee": "sm.ConnectWithContext",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Connect",
+          "callee": "context.Background",
+          "lineNumber": 115
+        },
+        {
+          "caller": "DisconnectAll",
+          "callee": "sm.mutex.RLock",
+          "lineNumber": 125
+        },
+        {
+          "caller": "DisconnectAll",
+          "callee": "make",
+          "lineNumber": 126
+        },
+        {
+          "caller": "DisconnectAll",
+          "callee": "len",
+          "lineNumber": 126
+        },
+        {
+          "caller": "DisconnectAll",
+          "callee": "append",
+          "lineNumber": 128
+        },
+        {
+          "caller": "DisconnectAll",
+          "callee": "sm.mutex.RUnlock",
+          "lineNumber": 130
+        },
+        {
+          "caller": "DisconnectAll",
+          "callee": "c.Disconnect",
+          "lineNumber": 135
+        },
+        {
+          "caller": "Disconnect",
+          "callee": "sm.mutex.RLock",
+          "lineNumber": 146
+        },
+        {
+          "caller": "Disconnect",
+          "callee": "sm.mutex.RUnlock",
+          "lineNumber": 148
+        },
+        {
+          "caller": "Disconnect",
+          "callee": "client.Disconnect",
+          "lineNumber": 153
+        },
+        {
+          "caller": "Logout",
+          "callee": "sm.mutex.Lock",
+          "lineNumber": 165
+        },
+        {
+          "caller": "Logout",
+          "callee": "client.Logout",
+          "lineNumber": 168
+        },
+        {
+          "caller": "Logout",
+          "callee": "context.Background",
+          "lineNumber": 168
+        },
+        {
+          "caller": "Logout",
+          "callee": "delete",
+          "lineNumber": 169
+        },
+        {
+          "caller": "Logout",
+          "callee": "sm.mutex.Unlock",
+          "lineNumber": 171
+        },
+        {
+          "caller": "Logout",
+          "callee": "sm.onStatus",
+          "lineNumber": 175
+        },
+        {
+          "caller": "Purge",
+          "callee": "sm.Logout",
+          "lineNumber": 185
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "sm.mutex.Lock",
+          "lineNumber": 192
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "sm.mutex.Unlock",
+          "lineNumber": 194
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "sm.Connect",
+          "lineNumber": 198
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "client.Reconnect",
+          "lineNumber": 200
+        },
+        {
+          "caller": "Reconnect",
+          "callee": "context.Background",
+          "lineNumber": 200
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "sm.SendMessageContext",
+          "lineNumber": 204
+        },
+        {
+          "caller": "SendMessage",
+          "callee": "context.Background",
+          "lineNumber": 204
+        },
+        {
+          "caller": "SendMessageContext",
+          "callee": "fmt.Errorf",
+          "lineNumber": 209
+        },
+        {
+          "caller": "SendMessageContext",
+          "callee": "sm.mutex.RLock",
+          "lineNumber": 211
+        },
+        {
+          "caller": "SendMessageContext",
+          "callee": "sm.mutex.RUnlock",
+          "lineNumber": 213
+        },
+        {
+          "caller": "SendMessageContext",
+          "callee": "fmt.Errorf",
+          "lineNumber": 216
+        },
+        {
+          "caller": "SendMessageContext",
+          "callee": "client.SendMessage",
+          "lineNumber": 219
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "fmt.Errorf",
+          "lineNumber": 224
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "sm.mutex.RLock",
+          "lineNumber": 226
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "sm.mutex.RUnlock",
+          "lineNumber": 228
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "fmt.Errorf",
+          "lineNumber": 231
+        },
+        {
+          "caller": "SendDocument",
+          "callee": "client.SendDocument",
+          "lineNumber": 234
+        },
+        {
+          "caller": "SendImage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 239
+        },
+        {
+          "caller": "SendImage",
+          "callee": "sm.mutex.RLock",
+          "lineNumber": 241
+        },
+        {
+          "caller": "SendImage",
+          "callee": "sm.mutex.RUnlock",
+          "lineNumber": 243
+        },
+        {
+          "caller": "SendImage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 246
+        },
+        {
+          "caller": "SendImage",
+          "callee": "client.SendImage",
+          "lineNumber": 249
+        },
+        {
+          "caller": "GetStatus",
+          "callee": "sm.mutex.RLock",
+          "lineNumber": 256
+        },
+        {
+          "caller": "GetStatus",
+          "callee": "sm.mutex.RUnlock",
+          "lineNumber": 257
+        },
+        {
+          "caller": "GetStatus",
+          "callee": "client.waClient.IsConnected",
+          "lineNumber": 263
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "sm.mutex.RLock",
+          "lineNumber": 276
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "sm.mutex.RUnlock",
+          "lineNumber": 277
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "fmt.Errorf",
+          "lineNumber": 281
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "client.GetQRCode",
+          "lineNumber": 284
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "client.EnsureQRFlow",
+          "lineNumber": 289
+        },
+        {
+          "caller": "GetQRCode",
+          "callee": "client.GetQRCode",
+          "lineNumber": 290
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "sm.mutex.RLock",
+          "lineNumber": 299
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "sm.mutex.RUnlock",
+          "lineNumber": 301
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "fmt.Errorf",
+          "lineNumber": 304
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "context.Background",
+          "lineNumber": 306
+        },
+        {
+          "caller": "GetPairingCode",
+          "callee": "client.GetPairingCode",
+          "lineNumber": 307
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "logger.WithComponent(\"SessionManager\").WithField(\"session_count\", len(sessions)).Info",
+          "lineNumber": 314
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "logger.WithComponent(\"SessionManager\").WithField",
+          "lineNumber": 314
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "logger.WithComponent",
+          "lineNumber": 314
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "len",
+          "lineNumber": 314
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "sm.Connect",
+          "lineNumber": 321
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "logger.WithComponent(\"SessionManager\").WithError(err).WithField(\"session_id\", sess.ID).Warn",
+          "lineNumber": 322
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "logger.WithComponent(\"SessionManager\").WithError(err).WithField",
+          "lineNumber": 322
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "logger.WithComponent(\"SessionManager\").WithError",
+          "lineNumber": 322
+        },
+        {
+          "caller": "RestoreAllSessions",
+          "callee": "logger.WithComponent",
+          "lineNumber": 322
+        },
+        {
+          "caller": "SetMessageCallback",
+          "callee": "sm.mutex.Lock",
+          "lineNumber": 337
+        },
+        {
+          "caller": "SetMessageCallback",
+          "callee": "sm.mutex.Unlock",
+          "lineNumber": 338
+        },
+        {
+          "caller": "SetMessageCallback",
+          "callee": "c.SetMessageCallback",
+          "lineNumber": 341
+        },
+        {
+          "caller": "SetChatUpdateCallback",
+          "callee": "sm.mutex.Lock",
+          "lineNumber": 352
+        },
+        {
+          "caller": "SetChatUpdateCallback",
+          "callee": "sm.mutex.Unlock",
+          "lineNumber": 353
+        },
+        {
+          "caller": "SetChatUpdateCallback",
+          "callee": "c.SetChatUpdateCallback",
+          "lineNumber": 356
+        },
+        {
+          "caller": "SetChatPresenceCallback",
+          "callee": "sm.mutex.Lock",
+          "lineNumber": 367
+        },
+        {
+          "caller": "SetChatPresenceCallback",
+          "callee": "sm.mutex.Unlock",
+          "lineNumber": 368
+        },
+        {
+          "caller": "SetChatPresenceCallback",
+          "callee": "c.SetChatPresenceCallback",
+          "lineNumber": 371
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 20,
+        "functionCount": 19,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/zteolt/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 24,
+          "endLine": 29,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 32,
+          "endLine": 38,
+          "params": [
+            "op"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/zteolt/driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 55,
+      "functions": [
+        {
+          "name": "NewDriver",
+          "startLine": 28,
+          "endLine": 36,
+          "params": [
+            "ctx",
+            "target"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 39,
+          "endLine": 41,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 44,
+          "endLine": 46,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 54,
+          "endLine": 56,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 59,
+          "endLine": 64,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Driver",
+          "startLine": 18,
+          "endLine": 21,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "snmp",
+            "telnet"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Driver",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "NewDriver",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 59,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewDriver",
+          "callee": "NewSNMPClient",
+          "lineNumber": 29
+        },
+        {
+          "caller": "Classify",
+          "callee": "Classify",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Translate",
+          "callee": "Translate",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Close",
+          "callee": "d.telnet.close",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Close",
+          "callee": "d.snmp.Close",
+          "lineNumber": 63
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/zteolt/snmp.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 22,
+      "functions": [
+        {
+          "name": "NewSNMPClient",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "ctx",
+            "target"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 21,
+          "endLine": 23,
+          "params": [
+            "ctx",
+            "oid"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 26,
+          "endLine": 28,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SNMPClient",
+          "startLine": 11,
+          "endLine": 11,
+          "methods": [
+            "Get",
+            "Close"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SNMPClient",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewSNMPClient",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/zteolt/telnet.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "functions": [
+        {
+          "name": "close",
+          "startLine": 11,
+          "endLine": 13,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "telnetClient",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [
+            "close"
+          ],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/platformdef/mikrotik_routeros.yaml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 168,
+      "nonEmptyLines": 162,
+      "sections": [
+        {
+          "heading": "platform-type",
+          "level": 1,
+          "line": 64
+        },
+        {
+          "heading": "default",
+          "level": 1,
+          "line": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": "internal/platformdef/README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 10,
+      "nonEmptyLines": 7,
+      "sections": [
+        {
+          "heading": "Platform Definitions",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "internal/port/audit.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "AuditWriter",
+          "startLine": 15,
+          "endLine": 17,
+          "methods": [
+            "Write"
+          ],
+          "properties": []
+        },
+        {
+          "name": "AuditLogWriter",
+          "startLine": 22,
+          "endLine": 24,
+          "methods": [
+            "Write"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AuditWriter",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "AuditLogWriter",
+          "line": 22,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/auth_service.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 46,
+      "nonEmptyLines": 40,
+      "classes": [
+        {
+          "name": "RateLimiter",
+          "startLine": 9,
+          "endLine": 13,
+          "methods": [
+            "IncrementRateLimit",
+            "GetRateLimitCount",
+            "ResetRateLimit"
+          ],
+          "properties": []
+        },
+        {
+          "name": "RoleAuthorizer",
+          "startLine": 16,
+          "endLine": 21,
+          "methods": [
+            "GetRolesForUser",
+            "GetImplicitPermissionsForUser",
+            "AddRoleForUser",
+            "DeleteRolesForUser"
+          ],
+          "properties": []
+        },
+        {
+          "name": "RBACManager",
+          "startLine": 24,
+          "endLine": 33,
+          "methods": [
+            "GetPolicies",
+            "AddPolicy",
+            "RemovePolicy",
+            "GetGroupingPolicies",
+            "AddRoleForUser",
+            "DeleteRoleForUser",
+            "SyncRolePermissions",
+            "DeleteRole"
+          ],
+          "properties": []
+        },
+        {
+          "name": "TokenService",
+          "startLine": 36,
+          "endLine": 39,
+          "methods": [
+            "GenerateAccessToken",
+            "ValidateAccessToken"
+          ],
+          "properties": []
+        },
+        {
+          "name": "RefreshTokenManager",
+          "startLine": 42,
+          "endLine": 46,
+          "methods": [
+            "IssueToken",
+            "RotateToken",
+            "RevokeToken"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "RateLimiter",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "RoleAuthorizer",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "RBACManager",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "TokenService",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "RefreshTokenManager",
+          "line": 42,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "internal/port/authorizer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 14,
+      "classes": [
+        {
+          "name": "Authorizer",
+          "startLine": 6,
+          "endLine": 15,
+          "methods": [
+            "Enforce",
+            "AddPolicy",
+            "RemovePolicy",
+            "GetPolicies",
+            "AddRoleForUser",
+            "DeleteRoleForUser",
+            "GetRolesForUser",
+            "GetGroupingPolicies"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Authorizer",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/bot_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 27,
+      "classes": [
+        {
+          "name": "WASessionRepository",
+          "startLine": 10,
+          "endLine": 16,
+          "methods": [
+            "CreateSession",
+            "FindSessionByID",
+            "FindAllSessions",
+            "UpdateSession",
+            "DeleteSession"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ConversationRepository",
+          "startLine": 19,
+          "endLine": 31,
+          "methods": [
+            "FindActiveConversationByCustomer",
+            "CreateConversation",
+            "FindConversationByID",
+            "FindConversationByIDWithMessages",
+            "FindConversationsByStatus",
+            "FindConversationsBySessionID",
+            "FindAllConversations",
+            "UpdateConversation",
+            "CreateMessage",
+            "FindMessagesByConversationID",
+            "FindRecentMessages"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "WASessionRepository",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ConversationRepository",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/cache_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "classes": [
+        {
+          "name": "CacheStore",
+          "startLine": 8,
+          "endLine": 12,
+          "methods": [
+            "Get",
+            "Set",
+            "Delete"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CacheStore",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/cashbook_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 37,
+      "classes": [
+        {
+          "name": "CashTransactionFilter",
+          "startLine": 12,
+          "endLine": 21,
+          "methods": [],
+          "properties": [
+            "AccountID",
+            "CategoryID",
+            "Direction",
+            "From",
+            "To",
+            "SourceType",
+            "SourceID",
+            "Limit"
+          ]
+        },
+        {
+          "name": "CashbookRepository",
+          "startLine": 26,
+          "endLine": 44,
+          "methods": [
+            "SaveAccount",
+            "FindAccounts",
+            "FindAccountByID",
+            "SaveCategory",
+            "FindCategories",
+            "FindCategoryByID",
+            "SaveTransaction",
+            "FindTransactions",
+            "BalanceByAccounts"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CashTransactionFilter",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "CashbookRepository",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/chat_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 48,
+      "classes": [
+        {
+          "name": "ChatRepository",
+          "startLine": 11,
+          "endLine": 51,
+          "methods": [
+            "UpsertChat",
+            "UpsertMessage",
+            "UpsertMessagesBatch",
+            "IncrementUnread",
+            "MarkChatRead",
+            "SetChatUnread",
+            "ListChats",
+            "ListChatMessages",
+            "MarkMessagesStatus",
+            "MergeChatLID",
+            "SetChatBotEnabled",
+            "IsChatBotEnabled"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ChatRepository",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/credential_vault.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 26,
+      "classes": [
+        {
+          "name": "CredentialVault",
+          "startLine": 17,
+          "endLine": 32,
+          "methods": [
+            "Get",
+            "Save",
+            "EncryptString",
+            "DecryptString"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CredentialVault",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/customer_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "CustomerRepository",
+          "startLine": 11,
+          "endLine": 22,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindAll",
+            "Delete",
+            "FindSubscriptions",
+            "FindByPortalAccessCode",
+            "FindByPhone",
+            "FindByCustomerCode"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CustomerRepository",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/device_authorizer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 6,
+      "classes": [
+        {
+          "name": "DeviceAuthorizer",
+          "startLine": 6,
+          "endLine": 8,
+          "methods": [
+            "CanAccessDevice"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceAuthorizer",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/device_diagnostics.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 30,
+      "classes": [
+        {
+          "name": "DeviceDiagnostics",
+          "startLine": 28,
+          "endLine": 38,
+          "methods": [
+            "GetSystemResource",
+            "GetSystemIdentity",
+            "ListInterfaces",
+            "MonitorTrafficOnce"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceDiagnostics",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/device_driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 43,
+      "classes": [
+        {
+          "name": "DeviceDriver",
+          "startLine": 23,
+          "endLine": 35,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": []
+        },
+        {
+          "name": "TerminalSession",
+          "startLine": 38,
+          "endLine": 43,
+          "methods": [
+            "Stdin",
+            "Stdout",
+            "Resize",
+            "Close"
+          ],
+          "properties": []
+        },
+        {
+          "name": "TerminalDeviceDriver",
+          "startLine": 46,
+          "endLine": 48,
+          "methods": [
+            "OpenTerminalSession"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceDriver",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "TerminalSession",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "TerminalDeviceDriver",
+          "line": 46,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/port/device_interface.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 9,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/port/device_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 23,
+      "classes": [
+        {
+          "name": "DeviceRepository",
+          "startLine": 12,
+          "endLine": 26,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindAll",
+            "Update",
+            "Delete",
+            "FindByUserScope"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceRepository",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

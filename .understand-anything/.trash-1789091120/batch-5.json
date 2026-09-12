@@ -1,0 +1,4027 @@
+{
+ "batchIndex": 5,
+ "nodes": [
+  {
+   "id": "schema:api/proto/v1/auth.proto",
+   "type": "schema",
+   "name": "auth.proto",
+   "filePath": "api/proto/v1/auth.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf auth.proto — 13 definisi (1 jenis) dan 6 rpc.",
+   "description": "Skema protobuf auth.proto — 13 definisi (1 jenis) dan 6 rpc. Definisi utama: LoginRequest, UserProfile, LoginResponse, GetMeRequest, GetMeResponse, UpdateMeRequest, …. Layanan: AuthService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "auth"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.Login",
+   "type": "endpoint",
+   "name": "AuthService.Login",
+   "filePath": "api/proto/v1/auth.proto",
+   "complexity": "simple",
+   "summary": "RPC AuthService.Login (proto).",
+   "description": "Endpoint rpc AuthService.Login pada baris 81 dari auth.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "auth",
+    "login"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.GetMe",
+   "type": "endpoint",
+   "name": "AuthService.GetMe",
+   "filePath": "api/proto/v1/auth.proto",
+   "complexity": "simple",
+   "summary": "RPC AuthService.GetMe (proto).",
+   "description": "Endpoint rpc AuthService.GetMe pada baris 82 dari auth.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "auth",
+    "get-me"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.UpdateMe",
+   "type": "endpoint",
+   "name": "AuthService.UpdateMe",
+   "filePath": "api/proto/v1/auth.proto",
+   "complexity": "simple",
+   "summary": "RPC AuthService.UpdateMe (proto).",
+   "description": "Endpoint rpc AuthService.UpdateMe pada baris 83 dari auth.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "auth",
+    "update-me"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.ChangePassword",
+   "type": "endpoint",
+   "name": "AuthService.ChangePassword",
+   "filePath": "api/proto/v1/auth.proto",
+   "complexity": "simple",
+   "summary": "RPC AuthService.ChangePassword (proto).",
+   "description": "Endpoint rpc AuthService.ChangePassword pada baris 84 dari auth.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "auth",
+    "change-password"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.RefreshToken",
+   "type": "endpoint",
+   "name": "AuthService.RefreshToken",
+   "filePath": "api/proto/v1/auth.proto",
+   "complexity": "simple",
+   "summary": "RPC AuthService.RefreshToken (proto).",
+   "description": "Endpoint rpc AuthService.RefreshToken pada baris 85 dari auth.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "auth",
+    "refresh-token"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.Logout",
+   "type": "endpoint",
+   "name": "AuthService.Logout",
+   "filePath": "api/proto/v1/auth.proto",
+   "complexity": "simple",
+   "summary": "RPC AuthService.Logout (proto).",
+   "description": "Endpoint rpc AuthService.Logout pada baris 86 dari auth.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "auth",
+    "logout"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/billing.proto",
+   "type": "schema",
+   "name": "billing.proto",
+   "filePath": "api/proto/v1/billing.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf billing.proto — 15 definisi (2 jenis) dan 6 rpc.",
+   "description": "Skema protobuf billing.proto — 15 definisi (2 jenis) dan 6 rpc. Definisi utama: Invoice, InvoiceItem, ListInvoicesRequest, ListInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, …. Layanan: BillingService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "billing"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.ListInvoices",
+   "type": "endpoint",
+   "name": "BillingService.ListInvoices",
+   "filePath": "api/proto/v1/billing.proto",
+   "complexity": "simple",
+   "summary": "RPC BillingService.ListInvoices (proto).",
+   "description": "Endpoint rpc BillingService.ListInvoices pada baris 108 dari billing.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "billing",
+    "list-invoices"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.GetInvoice",
+   "type": "endpoint",
+   "name": "BillingService.GetInvoice",
+   "filePath": "api/proto/v1/billing.proto",
+   "complexity": "simple",
+   "summary": "RPC BillingService.GetInvoice (proto).",
+   "description": "Endpoint rpc BillingService.GetInvoice pada baris 109 dari billing.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "billing",
+    "get-invoice"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.CancelInvoice",
+   "type": "endpoint",
+   "name": "BillingService.CancelInvoice",
+   "filePath": "api/proto/v1/billing.proto",
+   "complexity": "simple",
+   "summary": "RPC BillingService.CancelInvoice (proto).",
+   "description": "Endpoint rpc BillingService.CancelInvoice pada baris 110 dari billing.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "billing",
+    "cancel-invoice"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.GenerateInvoices",
+   "type": "endpoint",
+   "name": "BillingService.GenerateInvoices",
+   "filePath": "api/proto/v1/billing.proto",
+   "complexity": "simple",
+   "summary": "RPC BillingService.GenerateInvoices (proto).",
+   "description": "Endpoint rpc BillingService.GenerateInvoices pada baris 111 dari billing.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "billing",
+    "generate-invoices"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.CashierResolve",
+   "type": "endpoint",
+   "name": "BillingService.CashierResolve",
+   "filePath": "api/proto/v1/billing.proto",
+   "complexity": "simple",
+   "summary": "RPC BillingService.CashierResolve (proto).",
+   "description": "Endpoint rpc BillingService.CashierResolve pada baris 114 dari billing.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "billing",
+    "cashier-resolve"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.CashierPay",
+   "type": "endpoint",
+   "name": "BillingService.CashierPay",
+   "filePath": "api/proto/v1/billing.proto",
+   "complexity": "simple",
+   "summary": "RPC BillingService.CashierPay (proto).",
+   "description": "Endpoint rpc BillingService.CashierPay pada baris 115 dari billing.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "billing",
+    "cashier-pay"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/bot.proto",
+   "type": "schema",
+   "name": "bot.proto",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf bot.proto — 30 definisi (1 jenis) dan 13 rpc.",
+   "description": "Skema protobuf bot.proto — 30 definisi (1 jenis) dan 13 rpc. Definisi utama: ConversationMessage, Conversation, ListConversationsRequest, ListConversationsResponse, GetConversationRequest, GetConversationResponse, …. Layanan: BotService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "bot"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.ListConversations",
+   "type": "endpoint",
+   "name": "BotService.ListConversations",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.ListConversations (proto).",
+   "description": "Endpoint rpc BotService.ListConversations pada baris 10 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "list-conversations"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.GetConversation",
+   "type": "endpoint",
+   "name": "BotService.GetConversation",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.GetConversation (proto).",
+   "description": "Endpoint rpc BotService.GetConversation pada baris 11 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "get-conversation"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.GetConversationContext",
+   "type": "endpoint",
+   "name": "BotService.GetConversationContext",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.GetConversationContext (proto).",
+   "description": "Endpoint rpc BotService.GetConversationContext pada baris 12 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "get-conversation-context"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.TakeOverConversation",
+   "type": "endpoint",
+   "name": "BotService.TakeOverConversation",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.TakeOverConversation (proto).",
+   "description": "Endpoint rpc BotService.TakeOverConversation pada baris 13 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "take-over-conversation"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.ResetConversationBot",
+   "type": "endpoint",
+   "name": "BotService.ResetConversationBot",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.ResetConversationBot (proto).",
+   "description": "Endpoint rpc BotService.ResetConversationBot pada baris 14 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "reset-conversation-bot"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.CloseConversation",
+   "type": "endpoint",
+   "name": "BotService.CloseConversation",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.CloseConversation (proto).",
+   "description": "Endpoint rpc BotService.CloseConversation pada baris 15 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "close-conversation"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.ResetRateLimit",
+   "type": "endpoint",
+   "name": "BotService.ResetRateLimit",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.ResetRateLimit (proto).",
+   "description": "Endpoint rpc BotService.ResetRateLimit pada baris 16 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "reset-rate-limit"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.GetRateLimitStatus",
+   "type": "endpoint",
+   "name": "BotService.GetRateLimitStatus",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.GetRateLimitStatus (proto).",
+   "description": "Endpoint rpc BotService.GetRateLimitStatus pada baris 17 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "get-rate-limit-status"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.ListTechnicians",
+   "type": "endpoint",
+   "name": "BotService.ListTechnicians",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.ListTechnicians (proto).",
+   "description": "Endpoint rpc BotService.ListTechnicians pada baris 20 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "list-technicians"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.CreateTechnician",
+   "type": "endpoint",
+   "name": "BotService.CreateTechnician",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.CreateTechnician (proto).",
+   "description": "Endpoint rpc BotService.CreateTechnician pada baris 21 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "create-technician"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.UpdateTechnician",
+   "type": "endpoint",
+   "name": "BotService.UpdateTechnician",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.UpdateTechnician (proto).",
+   "description": "Endpoint rpc BotService.UpdateTechnician pada baris 22 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "update-technician"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.ToggleTechnicianActive",
+   "type": "endpoint",
+   "name": "BotService.ToggleTechnicianActive",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.ToggleTechnicianActive (proto).",
+   "description": "Endpoint rpc BotService.ToggleTechnicianActive pada baris 23 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "toggle-technician-active"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.DeleteTechnician",
+   "type": "endpoint",
+   "name": "BotService.DeleteTechnician",
+   "filePath": "api/proto/v1/bot.proto",
+   "complexity": "simple",
+   "summary": "RPC BotService.DeleteTechnician (proto).",
+   "description": "Endpoint rpc BotService.DeleteTechnician pada baris 24 dari bot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "bot",
+    "delete-technician"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/cashbook.proto",
+   "type": "schema",
+   "name": "cashbook.proto",
+   "filePath": "api/proto/v1/cashbook.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf cashbook.proto — 17 definisi (1 jenis) dan 7 rpc.",
+   "description": "Skema protobuf cashbook.proto — 17 definisi (1 jenis) dan 7 rpc. Definisi utama: CashAccount, CashCategory, CashTransaction, ListAccountsRequest, ListAccountsResponse, SaveAccountRequest, …. Layanan: CashbookService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "cashbook"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/cashbook.proto:CashbookService.ListAccounts",
+   "type": "endpoint",
+   "name": "CashbookService.ListAccounts",
+   "filePath": "api/proto/v1/cashbook.proto",
+   "complexity": "simple",
+   "summary": "RPC CashbookService.ListAccounts (proto).",
+   "description": "Endpoint rpc CashbookService.ListAccounts pada baris 80 dari cashbook.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "cashbook",
+    "list-accounts"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/cashbook.proto:CashbookService.SaveAccount",
+   "type": "endpoint",
+   "name": "CashbookService.SaveAccount",
+   "filePath": "api/proto/v1/cashbook.proto",
+   "complexity": "simple",
+   "summary": "RPC CashbookService.SaveAccount (proto).",
+   "description": "Endpoint rpc CashbookService.SaveAccount pada baris 81 dari cashbook.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "cashbook",
+    "save-account"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/cashbook.proto:CashbookService.ListCategories",
+   "type": "endpoint",
+   "name": "CashbookService.ListCategories",
+   "filePath": "api/proto/v1/cashbook.proto",
+   "complexity": "simple",
+   "summary": "RPC CashbookService.ListCategories (proto).",
+   "description": "Endpoint rpc CashbookService.ListCategories pada baris 82 dari cashbook.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "cashbook",
+    "list-categories"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/cashbook.proto:CashbookService.SaveCategory",
+   "type": "endpoint",
+   "name": "CashbookService.SaveCategory",
+   "filePath": "api/proto/v1/cashbook.proto",
+   "complexity": "simple",
+   "summary": "RPC CashbookService.SaveCategory (proto).",
+   "description": "Endpoint rpc CashbookService.SaveCategory pada baris 83 dari cashbook.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "cashbook",
+    "save-category"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/cashbook.proto:CashbookService.AddTransaction",
+   "type": "endpoint",
+   "name": "CashbookService.AddTransaction",
+   "filePath": "api/proto/v1/cashbook.proto",
+   "complexity": "simple",
+   "summary": "RPC CashbookService.AddTransaction (proto).",
+   "description": "Endpoint rpc CashbookService.AddTransaction pada baris 84 dari cashbook.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "cashbook",
+    "add-transaction"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/cashbook.proto:CashbookService.ListTransactions",
+   "type": "endpoint",
+   "name": "CashbookService.ListTransactions",
+   "filePath": "api/proto/v1/cashbook.proto",
+   "complexity": "simple",
+   "summary": "RPC CashbookService.ListTransactions (proto).",
+   "description": "Endpoint rpc CashbookService.ListTransactions pada baris 85 dari cashbook.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "cashbook",
+    "list-transactions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/cashbook.proto:CashbookService.Balances",
+   "type": "endpoint",
+   "name": "CashbookService.Balances",
+   "filePath": "api/proto/v1/cashbook.proto",
+   "complexity": "simple",
+   "summary": "RPC CashbookService.Balances (proto).",
+   "description": "Endpoint rpc CashbookService.Balances pada baris 86 dari cashbook.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "cashbook",
+    "balances"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/customer.proto",
+   "type": "schema",
+   "name": "customer.proto",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf customer.proto — 15 definisi (1 jenis) dan 9 rpc.",
+   "description": "Skema protobuf customer.proto — 15 definisi (1 jenis) dan 9 rpc. Definisi utama: Customer, ListCustomersRequest, ListCustomersResponse, GetCustomerRequest, GetCustomerResponse, CreateCustomerRequest, …. Layanan: CustomerService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "customer"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.ListCustomers",
+   "type": "endpoint",
+   "name": "CustomerService.ListCustomers",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.ListCustomers (proto).",
+   "description": "Endpoint rpc CustomerService.ListCustomers pada baris 58 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "list-customers"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.GetCustomer",
+   "type": "endpoint",
+   "name": "CustomerService.GetCustomer",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.GetCustomer (proto).",
+   "description": "Endpoint rpc CustomerService.GetCustomer pada baris 59 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "get-customer"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.CreateCustomer",
+   "type": "endpoint",
+   "name": "CustomerService.CreateCustomer",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.CreateCustomer (proto).",
+   "description": "Endpoint rpc CustomerService.CreateCustomer pada baris 60 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "create-customer"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.UpdateCustomer",
+   "type": "endpoint",
+   "name": "CustomerService.UpdateCustomer",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.UpdateCustomer (proto).",
+   "description": "Endpoint rpc CustomerService.UpdateCustomer pada baris 61 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "update-customer"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.DeleteCustomer",
+   "type": "endpoint",
+   "name": "CustomerService.DeleteCustomer",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.DeleteCustomer (proto).",
+   "description": "Endpoint rpc CustomerService.DeleteCustomer pada baris 62 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "delete-customer"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.FindByPhone",
+   "type": "endpoint",
+   "name": "CustomerService.FindByPhone",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.FindByPhone (proto).",
+   "description": "Endpoint rpc CustomerService.FindByPhone pada baris 65 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "find-by-phone"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.FindByCustomerCode",
+   "type": "endpoint",
+   "name": "CustomerService.FindByCustomerCode",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.FindByCustomerCode (proto).",
+   "description": "Endpoint rpc CustomerService.FindByCustomerCode pada baris 66 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "find-by-customer-code"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.FindByPortalCode",
+   "type": "endpoint",
+   "name": "CustomerService.FindByPortalCode",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.FindByPortalCode (proto).",
+   "description": "Endpoint rpc CustomerService.FindByPortalCode pada baris 67 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "find-by-portal-code"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.ListSubscriptions",
+   "type": "endpoint",
+   "name": "CustomerService.ListSubscriptions",
+   "filePath": "api/proto/v1/customer.proto",
+   "complexity": "simple",
+   "summary": "RPC CustomerService.ListSubscriptions (proto).",
+   "description": "Endpoint rpc CustomerService.ListSubscriptions pada baris 70 dari customer.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "customer",
+    "list-subscriptions"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/device.proto",
+   "type": "schema",
+   "name": "device.proto",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "moderate",
+   "summary": "Skema protobuf device.proto — 42 definisi (1 jenis) dan 18 rpc.",
+   "description": "Skema protobuf device.proto — 42 definisi (1 jenis) dan 18 rpc. Definisi utama: Device, ListDevicesRequest, ListDevicesResponse, GetDeviceRequest, GetDeviceResponse, UpdateDeviceRequest, …. Layanan: DeviceService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "device"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.ListDevices",
+   "type": "endpoint",
+   "name": "DeviceService.ListDevices",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.ListDevices (proto).",
+   "description": "Endpoint rpc DeviceService.ListDevices pada baris 315 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "list-devices"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.GetDevice",
+   "type": "endpoint",
+   "name": "DeviceService.GetDevice",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.GetDevice (proto).",
+   "description": "Endpoint rpc DeviceService.GetDevice pada baris 316 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "get-device"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.UpdateDevice",
+   "type": "endpoint",
+   "name": "DeviceService.UpdateDevice",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.UpdateDevice (proto).",
+   "description": "Endpoint rpc DeviceService.UpdateDevice pada baris 317 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "update-device"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.DeleteDevice",
+   "type": "endpoint",
+   "name": "DeviceService.DeleteDevice",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.DeleteDevice (proto).",
+   "description": "Endpoint rpc DeviceService.DeleteDevice pada baris 318 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "delete-device"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.TestDeviceConnection",
+   "type": "endpoint",
+   "name": "DeviceService.TestDeviceConnection",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.TestDeviceConnection (proto).",
+   "description": "Endpoint rpc DeviceService.TestDeviceConnection pada baris 319 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "test-device-connection"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.StreamDeviceStatus",
+   "type": "endpoint",
+   "name": "DeviceService.StreamDeviceStatus",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.StreamDeviceStatus (proto).",
+   "description": "Endpoint rpc DeviceService.StreamDeviceStatus pada baris 320 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "stream-device-status"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.StreamPing",
+   "type": "endpoint",
+   "name": "DeviceService.StreamPing",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.StreamPing (proto).",
+   "description": "Endpoint rpc DeviceService.StreamPing pada baris 321 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "stream-ping"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.StreamInterfaceTraffic",
+   "type": "endpoint",
+   "name": "DeviceService.StreamInterfaceTraffic",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.StreamInterfaceTraffic (proto).",
+   "description": "Endpoint rpc DeviceService.StreamInterfaceTraffic pada baris 322 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "stream-interface-traffic"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.StreamTerminal",
+   "type": "endpoint",
+   "name": "DeviceService.StreamTerminal",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.StreamTerminal (proto).",
+   "description": "Endpoint rpc DeviceService.StreamTerminal pada baris 323 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "stream-terminal"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.GetDevicePingConfig",
+   "type": "endpoint",
+   "name": "DeviceService.GetDevicePingConfig",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.GetDevicePingConfig (proto).",
+   "description": "Endpoint rpc DeviceService.GetDevicePingConfig pada baris 324 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "get-device-ping-config"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.UpdateDevicePingConfig",
+   "type": "endpoint",
+   "name": "DeviceService.UpdateDevicePingConfig",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.UpdateDevicePingConfig (proto).",
+   "description": "Endpoint rpc DeviceService.UpdateDevicePingConfig pada baris 325 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "update-device-ping-config"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.QueryDevicePingMetrics",
+   "type": "endpoint",
+   "name": "DeviceService.QueryDevicePingMetrics",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.QueryDevicePingMetrics (proto).",
+   "description": "Endpoint rpc DeviceService.QueryDevicePingMetrics pada baris 326 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "query-device-ping-metrics"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.GetIsolationStatus",
+   "type": "endpoint",
+   "name": "DeviceService.GetIsolationStatus",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.GetIsolationStatus (proto).",
+   "description": "Endpoint rpc DeviceService.GetIsolationStatus pada baris 329 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "get-isolation-status"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.CreateIsolationProfile",
+   "type": "endpoint",
+   "name": "DeviceService.CreateIsolationProfile",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.CreateIsolationProfile (proto).",
+   "description": "Endpoint rpc DeviceService.CreateIsolationProfile pada baris 330 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "create-isolation-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.UpdateIsolationProfile",
+   "type": "endpoint",
+   "name": "DeviceService.UpdateIsolationProfile",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.UpdateIsolationProfile (proto).",
+   "description": "Endpoint rpc DeviceService.UpdateIsolationProfile pada baris 331 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "update-isolation-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.DeleteIsolationProfile",
+   "type": "endpoint",
+   "name": "DeviceService.DeleteIsolationProfile",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.DeleteIsolationProfile (proto).",
+   "description": "Endpoint rpc DeviceService.DeleteIsolationProfile pada baris 332 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "delete-isolation-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.GetRouterIntegrationScript",
+   "type": "endpoint",
+   "name": "DeviceService.GetRouterIntegrationScript",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.GetRouterIntegrationScript (proto).",
+   "description": "Endpoint rpc DeviceService.GetRouterIntegrationScript pada baris 333 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "get-router-integration-script"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.ApplyRouterIntegrationScript",
+   "type": "endpoint",
+   "name": "DeviceService.ApplyRouterIntegrationScript",
+   "filePath": "api/proto/v1/device.proto",
+   "complexity": "simple",
+   "summary": "RPC DeviceService.ApplyRouterIntegrationScript (proto).",
+   "description": "Endpoint rpc DeviceService.ApplyRouterIntegrationScript pada baris 334 dari device.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "device",
+    "apply-router-integration-script"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/hotspot.proto",
+   "type": "schema",
+   "name": "hotspot.proto",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "moderate",
+   "summary": "Skema protobuf hotspot.proto — 78 definisi (1 jenis) dan 34 rpc.",
+   "description": "Skema protobuf hotspot.proto — 78 definisi (1 jenis) dan 34 rpc. Definisi utama: HotspotProfile, HotspotProfileParams, ListHotspotProfilesRequest, ListHotspotProfilesResponse, CreateHotspotProfileRequest, CreateHotspotProfileResponse, …. Layanan: HotspotService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "hotspot"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListProfiles",
+   "type": "endpoint",
+   "name": "HotspotService.ListProfiles",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListProfiles (proto).",
+   "description": "Endpoint rpc HotspotService.ListProfiles pada baris 512 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-profiles"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.CreateProfile",
+   "type": "endpoint",
+   "name": "HotspotService.CreateProfile",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.CreateProfile (proto).",
+   "description": "Endpoint rpc HotspotService.CreateProfile pada baris 513 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "create-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.UpdateProfile",
+   "type": "endpoint",
+   "name": "HotspotService.UpdateProfile",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.UpdateProfile (proto).",
+   "description": "Endpoint rpc HotspotService.UpdateProfile pada baris 514 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "update-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteProfile",
+   "type": "endpoint",
+   "name": "HotspotService.DeleteProfile",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.DeleteProfile (proto).",
+   "description": "Endpoint rpc HotspotService.DeleteProfile pada baris 515 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "delete-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListUsers",
+   "type": "endpoint",
+   "name": "HotspotService.ListUsers",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListUsers (proto).",
+   "description": "Endpoint rpc HotspotService.ListUsers pada baris 518 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-users"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GetUser",
+   "type": "endpoint",
+   "name": "HotspotService.GetUser",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.GetUser (proto).",
+   "description": "Endpoint rpc HotspotService.GetUser pada baris 519 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "get-user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.CreateUser",
+   "type": "endpoint",
+   "name": "HotspotService.CreateUser",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.CreateUser (proto).",
+   "description": "Endpoint rpc HotspotService.CreateUser pada baris 520 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "create-user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.UpdateUser",
+   "type": "endpoint",
+   "name": "HotspotService.UpdateUser",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.UpdateUser (proto).",
+   "description": "Endpoint rpc HotspotService.UpdateUser pada baris 521 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "update-user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ResetUserCounters",
+   "type": "endpoint",
+   "name": "HotspotService.ResetUserCounters",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ResetUserCounters (proto).",
+   "description": "Endpoint rpc HotspotService.ResetUserCounters pada baris 522 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "reset-user-counters"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteUser",
+   "type": "endpoint",
+   "name": "HotspotService.DeleteUser",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.DeleteUser (proto).",
+   "description": "Endpoint rpc HotspotService.DeleteUser pada baris 523 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "delete-user"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteHotspotUsers",
+   "type": "endpoint",
+   "name": "HotspotService.DeleteHotspotUsers",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.DeleteHotspotUsers (proto).",
+   "description": "Endpoint rpc HotspotService.DeleteHotspotUsers pada baris 524 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "delete-hotspot-users"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListActiveSessions",
+   "type": "endpoint",
+   "name": "HotspotService.ListActiveSessions",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListActiveSessions (proto).",
+   "description": "Endpoint rpc HotspotService.ListActiveSessions pada baris 527 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-active-sessions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.KickActiveSession",
+   "type": "endpoint",
+   "name": "HotspotService.KickActiveSession",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.KickActiveSession (proto).",
+   "description": "Endpoint rpc HotspotService.KickActiveSession pada baris 528 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "kick-active-session"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GenerateVouchers",
+   "type": "endpoint",
+   "name": "HotspotService.GenerateVouchers",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.GenerateVouchers (proto).",
+   "description": "Endpoint rpc HotspotService.GenerateVouchers pada baris 531 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "generate-vouchers"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GetVoucherBatch",
+   "type": "endpoint",
+   "name": "HotspotService.GetVoucherBatch",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.GetVoucherBatch (proto).",
+   "description": "Endpoint rpc HotspotService.GetVoucherBatch pada baris 532 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "get-voucher-batch"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.CheckVoucherStatus",
+   "type": "endpoint",
+   "name": "HotspotService.CheckVoucherStatus",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.CheckVoucherStatus (proto).",
+   "description": "Endpoint rpc HotspotService.CheckVoucherStatus pada baris 533 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "check-voucher-status"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListHosts",
+   "type": "endpoint",
+   "name": "HotspotService.ListHosts",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListHosts (proto).",
+   "description": "Endpoint rpc HotspotService.ListHosts pada baris 536 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-hosts"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.RemoveHost",
+   "type": "endpoint",
+   "name": "HotspotService.RemoveHost",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.RemoveHost (proto).",
+   "description": "Endpoint rpc HotspotService.RemoveHost pada baris 537 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "remove-host"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListHotspotServers",
+   "type": "endpoint",
+   "name": "HotspotService.ListHotspotServers",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListHotspotServers (proto).",
+   "description": "Endpoint rpc HotspotService.ListHotspotServers pada baris 538 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-hotspot-servers"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListHotspotIPBindings",
+   "type": "endpoint",
+   "name": "HotspotService.ListHotspotIPBindings",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListHotspotIPBindings (proto).",
+   "description": "Endpoint rpc HotspotService.ListHotspotIPBindings pada baris 541 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-hotspot-ipbindings"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.CreateHotspotIPBinding",
+   "type": "endpoint",
+   "name": "HotspotService.CreateHotspotIPBinding",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.CreateHotspotIPBinding (proto).",
+   "description": "Endpoint rpc HotspotService.CreateHotspotIPBinding pada baris 542 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "create-hotspot-ipbinding"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.UpdateHotspotIPBinding",
+   "type": "endpoint",
+   "name": "HotspotService.UpdateHotspotIPBinding",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.UpdateHotspotIPBinding (proto).",
+   "description": "Endpoint rpc HotspotService.UpdateHotspotIPBinding pada baris 543 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "update-hotspot-ipbinding"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteHotspotIPBinding",
+   "type": "endpoint",
+   "name": "HotspotService.DeleteHotspotIPBinding",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.DeleteHotspotIPBinding (proto).",
+   "description": "Endpoint rpc HotspotService.DeleteHotspotIPBinding pada baris 544 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "delete-hotspot-ipbinding"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListHotspotCookies",
+   "type": "endpoint",
+   "name": "HotspotService.ListHotspotCookies",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListHotspotCookies (proto).",
+   "description": "Endpoint rpc HotspotService.ListHotspotCookies pada baris 547 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-hotspot-cookies"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteHotspotCookie",
+   "type": "endpoint",
+   "name": "HotspotService.DeleteHotspotCookie",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.DeleteHotspotCookie (proto).",
+   "description": "Endpoint rpc HotspotService.DeleteHotspotCookie pada baris 548 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "delete-hotspot-cookie"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListReports",
+   "type": "endpoint",
+   "name": "HotspotService.ListReports",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListReports (proto).",
+   "description": "Endpoint rpc HotspotService.ListReports pada baris 551 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-reports"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteReport",
+   "type": "endpoint",
+   "name": "HotspotService.DeleteReport",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.DeleteReport (proto).",
+   "description": "Endpoint rpc HotspotService.DeleteReport pada baris 552 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "delete-report"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GetExpireMonitorStatus",
+   "type": "endpoint",
+   "name": "HotspotService.GetExpireMonitorStatus",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.GetExpireMonitorStatus (proto).",
+   "description": "Endpoint rpc HotspotService.GetExpireMonitorStatus pada baris 555 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "get-expire-monitor-status"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.SetupExpireMonitor",
+   "type": "endpoint",
+   "name": "HotspotService.SetupExpireMonitor",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.SetupExpireMonitor (proto).",
+   "description": "Endpoint rpc HotspotService.SetupExpireMonitor pada baris 556 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "setup-expire-monitor"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DisableExpireMonitor",
+   "type": "endpoint",
+   "name": "HotspotService.DisableExpireMonitor",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.DisableExpireMonitor (proto).",
+   "description": "Endpoint rpc HotspotService.DisableExpireMonitor pada baris 557 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "disable-expire-monitor"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.RemoveExpireMonitor",
+   "type": "endpoint",
+   "name": "HotspotService.RemoveExpireMonitor",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.RemoveExpireMonitor (proto).",
+   "description": "Endpoint rpc HotspotService.RemoveExpireMonitor pada baris 558 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "remove-expire-monitor"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListTemplates",
+   "type": "endpoint",
+   "name": "HotspotService.ListTemplates",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.ListTemplates (proto).",
+   "description": "Endpoint rpc HotspotService.ListTemplates pada baris 561 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "list-templates"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GetTemplateSection",
+   "type": "endpoint",
+   "name": "HotspotService.GetTemplateSection",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.GetTemplateSection (proto).",
+   "description": "Endpoint rpc HotspotService.GetTemplateSection pada baris 562 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "get-template-section"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/hotspot.proto:HotspotService.RenderVouchers",
+   "type": "endpoint",
+   "name": "HotspotService.RenderVouchers",
+   "filePath": "api/proto/v1/hotspot.proto",
+   "complexity": "simple",
+   "summary": "RPC HotspotService.RenderVouchers (proto).",
+   "description": "Endpoint rpc HotspotService.RenderVouchers pada baris 563 dari hotspot.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "hotspot",
+    "render-vouchers"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/ispadmin.proto",
+   "type": "schema",
+   "name": "ispadmin.proto",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf ispadmin.proto — 20 definisi (2 jenis) dan 8 rpc.",
+   "description": "Skema protobuf ispadmin.proto — 20 definisi (2 jenis) dan 8 rpc. Definisi utama: ImportFileRequest, ImportResult, ImportFileResponse, ImportRouterRequest, ImportRouterResponse, ExportCustomersRequest, …. Layanan: IspAdminService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "ispadmin"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.ImportFile",
+   "type": "endpoint",
+   "name": "IspAdminService.ImportFile",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "RPC IspAdminService.ImportFile (proto).",
+   "description": "Endpoint rpc IspAdminService.ImportFile pada baris 174 dari ispadmin.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ispadmin",
+    "import-file"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.ImportRouter",
+   "type": "endpoint",
+   "name": "IspAdminService.ImportRouter",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "RPC IspAdminService.ImportRouter (proto).",
+   "description": "Endpoint rpc IspAdminService.ImportRouter pada baris 175 dari ispadmin.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ispadmin",
+    "import-router"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.ExportCustomers",
+   "type": "endpoint",
+   "name": "IspAdminService.ExportCustomers",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "RPC IspAdminService.ExportCustomers (proto).",
+   "description": "Endpoint rpc IspAdminService.ExportCustomers pada baris 176 dari ispadmin.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ispadmin",
+    "export-customers"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.Reconcile",
+   "type": "endpoint",
+   "name": "IspAdminService.Reconcile",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "RPC IspAdminService.Reconcile (proto).",
+   "description": "Endpoint rpc IspAdminService.Reconcile pada baris 177 dari ispadmin.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ispadmin",
+    "reconcile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.PullRouterPlans",
+   "type": "endpoint",
+   "name": "IspAdminService.PullRouterPlans",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "RPC IspAdminService.PullRouterPlans (proto).",
+   "description": "Endpoint rpc IspAdminService.PullRouterPlans pada baris 180 dari ispadmin.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ispadmin",
+    "pull-router-plans"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.CommitPlans",
+   "type": "endpoint",
+   "name": "IspAdminService.CommitPlans",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "RPC IspAdminService.CommitPlans (proto).",
+   "description": "Endpoint rpc IspAdminService.CommitPlans pada baris 181 dari ispadmin.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ispadmin",
+    "commit-plans"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.PullRouterCustomers",
+   "type": "endpoint",
+   "name": "IspAdminService.PullRouterCustomers",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "RPC IspAdminService.PullRouterCustomers (proto).",
+   "description": "Endpoint rpc IspAdminService.PullRouterCustomers pada baris 182 dari ispadmin.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ispadmin",
+    "pull-router-customers"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.CommitCustomers",
+   "type": "endpoint",
+   "name": "IspAdminService.CommitCustomers",
+   "filePath": "api/proto/v1/ispadmin.proto",
+   "complexity": "simple",
+   "summary": "RPC IspAdminService.CommitCustomers (proto).",
+   "description": "Endpoint rpc IspAdminService.CommitCustomers pada baris 183 dari ispadmin.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ispadmin",
+    "commit-customers"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/llm.proto",
+   "type": "schema",
+   "name": "llm.proto",
+   "filePath": "api/proto/v1/llm.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf llm.proto — 13 definisi (1 jenis) dan 6 rpc.",
+   "description": "Skema protobuf llm.proto — 13 definisi (1 jenis) dan 6 rpc. Definisi utama: LLMConfig, ListLLMConfigsRequest, ListLLMConfigsResponse, CreateLLMConfigRequest, CreateLLMConfigResponse, UpdateLLMConfigRequest, …. Layanan: LLMConfigService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "llmconfig"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/llm.proto:LLMConfigService.ListLLMConfigs",
+   "type": "endpoint",
+   "name": "LLMConfigService.ListLLMConfigs",
+   "filePath": "api/proto/v1/llm.proto",
+   "complexity": "simple",
+   "summary": "RPC LLMConfigService.ListLLMConfigs (proto).",
+   "description": "Endpoint rpc LLMConfigService.ListLLMConfigs pada baris 94 dari llm.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "llmconfig",
+    "list-llmconfigs"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/llm.proto:LLMConfigService.CreateLLMConfig",
+   "type": "endpoint",
+   "name": "LLMConfigService.CreateLLMConfig",
+   "filePath": "api/proto/v1/llm.proto",
+   "complexity": "simple",
+   "summary": "RPC LLMConfigService.CreateLLMConfig (proto).",
+   "description": "Endpoint rpc LLMConfigService.CreateLLMConfig pada baris 95 dari llm.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "llmconfig",
+    "create-llmconfig"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/llm.proto:LLMConfigService.UpdateLLMConfig",
+   "type": "endpoint",
+   "name": "LLMConfigService.UpdateLLMConfig",
+   "filePath": "api/proto/v1/llm.proto",
+   "complexity": "simple",
+   "summary": "RPC LLMConfigService.UpdateLLMConfig (proto).",
+   "description": "Endpoint rpc LLMConfigService.UpdateLLMConfig pada baris 96 dari llm.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "llmconfig",
+    "update-llmconfig"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/llm.proto:LLMConfigService.ActivateLLMConfig",
+   "type": "endpoint",
+   "name": "LLMConfigService.ActivateLLMConfig",
+   "filePath": "api/proto/v1/llm.proto",
+   "complexity": "simple",
+   "summary": "RPC LLMConfigService.ActivateLLMConfig (proto).",
+   "description": "Endpoint rpc LLMConfigService.ActivateLLMConfig pada baris 97 dari llm.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "llmconfig",
+    "activate-llmconfig"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/llm.proto:LLMConfigService.TestLLMConfig",
+   "type": "endpoint",
+   "name": "LLMConfigService.TestLLMConfig",
+   "filePath": "api/proto/v1/llm.proto",
+   "complexity": "simple",
+   "summary": "RPC LLMConfigService.TestLLMConfig (proto).",
+   "description": "Endpoint rpc LLMConfigService.TestLLMConfig pada baris 98 dari llm.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "llmconfig",
+    "test-llmconfig"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/llm.proto:LLMConfigService.DeleteLLMConfig",
+   "type": "endpoint",
+   "name": "LLMConfigService.DeleteLLMConfig",
+   "filePath": "api/proto/v1/llm.proto",
+   "complexity": "simple",
+   "summary": "RPC LLMConfigService.DeleteLLMConfig (proto).",
+   "description": "Endpoint rpc LLMConfigService.DeleteLLMConfig pada baris 99 dari llm.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "llmconfig",
+    "delete-llmconfig"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/network.proto",
+   "type": "schema",
+   "name": "network.proto",
+   "filePath": "api/proto/v1/network.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf network.proto — 11 definisi (1 jenis) dan 4 rpc.",
+   "description": "Skema protobuf network.proto — 11 definisi (1 jenis) dan 4 rpc. Definisi utama: DHCPLease, ListDHCPLeasesRequest, ListDHCPLeasesResponse, BlockDHCPLeaseRequest, BlockDHCPLeaseResponse, ParentQueueEntry, …. Layanan: NetworkService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "network"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network.proto:NetworkService.ListDHCPLeases",
+   "type": "endpoint",
+   "name": "NetworkService.ListDHCPLeases",
+   "filePath": "api/proto/v1/network.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkService.ListDHCPLeases (proto).",
+   "description": "Endpoint rpc NetworkService.ListDHCPLeases pada baris 72 dari network.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "network",
+    "list-dhcpleases"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network.proto:NetworkService.BlockDHCPLease",
+   "type": "endpoint",
+   "name": "NetworkService.BlockDHCPLease",
+   "filePath": "api/proto/v1/network.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkService.BlockDHCPLease (proto).",
+   "description": "Endpoint rpc NetworkService.BlockDHCPLease pada baris 73 dari network.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "network",
+    "block-dhcplease"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network.proto:NetworkService.ListParentQueues",
+   "type": "endpoint",
+   "name": "NetworkService.ListParentQueues",
+   "filePath": "api/proto/v1/network.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkService.ListParentQueues (proto).",
+   "description": "Endpoint rpc NetworkService.ListParentQueues pada baris 74 dari network.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "network",
+    "list-parent-queues"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network.proto:NetworkService.ListIPPools",
+   "type": "endpoint",
+   "name": "NetworkService.ListIPPools",
+   "filePath": "api/proto/v1/network.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkService.ListIPPools (proto).",
+   "description": "Endpoint rpc NetworkService.ListIPPools pada baris 75 dari network.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "network",
+    "list-ippools"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/network_monitor.proto",
+   "type": "schema",
+   "name": "network_monitor.proto",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf network_monitor.proto — 32 definisi (1 jenis) dan 11 rpc.",
+   "description": "Skema protobuf network_monitor.proto — 32 definisi (1 jenis) dan 11 rpc. Definisi utama: StreamTrafficRequest, TrafficStreamData, StreamResourceRequest, ResourceStreamData, StreamActiveSessionsRequest, ActiveSessionsStreamData, …. Layanan: NetworkMonitorService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "networkmonitor"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamTraffic",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamTraffic",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamTraffic (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamTraffic pada baris 288 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-traffic"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamResource",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamResource",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamResource (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamResource pada baris 289 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-resource"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamActiveSessions",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamActiveSessions",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamActiveSessions (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamActiveSessions pada baris 290 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-active-sessions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamActiveStats",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamActiveStats",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamActiveStats (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamActiveStats pada baris 291 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-active-stats"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamSystemSnapshot",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamSystemSnapshot",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamSystemSnapshot (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamSystemSnapshot pada baris 292 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-system-snapshot"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamInterfaceEthernet",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamInterfaceEthernet",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamInterfaceEthernet (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamInterfaceEthernet pada baris 293 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-interface-ethernet"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamQueueStats",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamQueueStats",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamQueueStats (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamQueueStats pada baris 294 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-queue-stats"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamLogs",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamLogs",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamLogs (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamLogs pada baris 295 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-logs"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamHotspotInactive",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamHotspotInactive",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamHotspotInactive (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamHotspotInactive pada baris 296 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-hotspot-inactive"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamPPPActive",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamPPPActive",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamPPPActive (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamPPPActive pada baris 297 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-pppactive"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamPPPInactive",
+   "type": "endpoint",
+   "name": "NetworkMonitorService.StreamPPPInactive",
+   "filePath": "api/proto/v1/network_monitor.proto",
+   "complexity": "simple",
+   "summary": "RPC NetworkMonitorService.StreamPPPInactive (proto).",
+   "description": "Endpoint rpc NetworkMonitorService.StreamPPPInactive pada baris 298 dari network_monitor.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "networkmonitor",
+    "stream-pppinactive"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/notification.proto",
+   "type": "schema",
+   "name": "notification.proto",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf notification.proto — 18 definisi (1 jenis) dan 8 rpc.",
+   "description": "Skema protobuf notification.proto — 18 definisi (1 jenis) dan 8 rpc. Definisi utama: NotificationTemplate, WANotification, ListNotificationTemplatesRequest, ListNotificationTemplatesResponse, GetNotificationTemplateRequest, GetNotificationTemplateResponse, …. Layanan: NotificationService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "notification"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/notification.proto:NotificationService.ListTemplates",
+   "type": "endpoint",
+   "name": "NotificationService.ListTemplates",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "RPC NotificationService.ListTemplates (proto).",
+   "description": "Endpoint rpc NotificationService.ListTemplates pada baris 72 dari notification.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "notification",
+    "list-templates"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/notification.proto:NotificationService.GetTemplate",
+   "type": "endpoint",
+   "name": "NotificationService.GetTemplate",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "RPC NotificationService.GetTemplate (proto).",
+   "description": "Endpoint rpc NotificationService.GetTemplate pada baris 73 dari notification.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "notification",
+    "get-template"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/notification.proto:NotificationService.SaveTemplate",
+   "type": "endpoint",
+   "name": "NotificationService.SaveTemplate",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "RPC NotificationService.SaveTemplate (proto).",
+   "description": "Endpoint rpc NotificationService.SaveTemplate pada baris 74 dari notification.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "notification",
+    "save-template"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/notification.proto:NotificationService.ListNotifications",
+   "type": "endpoint",
+   "name": "NotificationService.ListNotifications",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "RPC NotificationService.ListNotifications (proto).",
+   "description": "Endpoint rpc NotificationService.ListNotifications pada baris 76 dari notification.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "notification",
+    "list-notifications"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/notification.proto:NotificationService.PendingCount",
+   "type": "endpoint",
+   "name": "NotificationService.PendingCount",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "RPC NotificationService.PendingCount (proto).",
+   "description": "Endpoint rpc NotificationService.PendingCount pada baris 77 dari notification.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "notification",
+    "pending-count"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/notification.proto:NotificationService.MarkNotificationSent",
+   "type": "endpoint",
+   "name": "NotificationService.MarkNotificationSent",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "RPC NotificationService.MarkNotificationSent (proto).",
+   "description": "Endpoint rpc NotificationService.MarkNotificationSent pada baris 78 dari notification.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "notification",
+    "mark-notification-sent"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/notification.proto:NotificationService.MarkNotificationFailed",
+   "type": "endpoint",
+   "name": "NotificationService.MarkNotificationFailed",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "RPC NotificationService.MarkNotificationFailed (proto).",
+   "description": "Endpoint rpc NotificationService.MarkNotificationFailed pada baris 79 dari notification.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "notification",
+    "mark-notification-failed"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/notification.proto:NotificationService.TestSend",
+   "type": "endpoint",
+   "name": "NotificationService.TestSend",
+   "filePath": "api/proto/v1/notification.proto",
+   "complexity": "simple",
+   "summary": "RPC NotificationService.TestSend (proto).",
+   "description": "Endpoint rpc NotificationService.TestSend pada baris 81 dari notification.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "notification",
+    "test-send"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/plan.proto",
+   "type": "schema",
+   "name": "plan.proto",
+   "filePath": "api/proto/v1/plan.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf plan.proto — 13 definisi (1 jenis) dan 5 rpc.",
+   "description": "Skema protobuf plan.proto — 13 definisi (1 jenis) dan 5 rpc. Definisi utama: PPPoEPlanConfig, HotspotPlanConfig, Plan, ListPlansRequest, ListPlansResponse, GetPlanRequest, …. Layanan: PlanService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "plan"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/plan.proto:PlanService.ListPlans",
+   "type": "endpoint",
+   "name": "PlanService.ListPlans",
+   "filePath": "api/proto/v1/plan.proto",
+   "complexity": "simple",
+   "summary": "RPC PlanService.ListPlans (proto).",
+   "description": "Endpoint rpc PlanService.ListPlans pada baris 80 dari plan.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "plan",
+    "list-plans"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/plan.proto:PlanService.GetPlan",
+   "type": "endpoint",
+   "name": "PlanService.GetPlan",
+   "filePath": "api/proto/v1/plan.proto",
+   "complexity": "simple",
+   "summary": "RPC PlanService.GetPlan (proto).",
+   "description": "Endpoint rpc PlanService.GetPlan pada baris 81 dari plan.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "plan",
+    "get-plan"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/plan.proto:PlanService.CreatePlan",
+   "type": "endpoint",
+   "name": "PlanService.CreatePlan",
+   "filePath": "api/proto/v1/plan.proto",
+   "complexity": "simple",
+   "summary": "RPC PlanService.CreatePlan (proto).",
+   "description": "Endpoint rpc PlanService.CreatePlan pada baris 82 dari plan.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "plan",
+    "create-plan"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/plan.proto:PlanService.UpdatePlan",
+   "type": "endpoint",
+   "name": "PlanService.UpdatePlan",
+   "filePath": "api/proto/v1/plan.proto",
+   "complexity": "simple",
+   "summary": "RPC PlanService.UpdatePlan (proto).",
+   "description": "Endpoint rpc PlanService.UpdatePlan pada baris 83 dari plan.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "plan",
+    "update-plan"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/plan.proto:PlanService.DeletePlan",
+   "type": "endpoint",
+   "name": "PlanService.DeletePlan",
+   "filePath": "api/proto/v1/plan.proto",
+   "complexity": "simple",
+   "summary": "RPC PlanService.DeletePlan (proto).",
+   "description": "Endpoint rpc PlanService.DeletePlan pada baris 84 dari plan.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "plan",
+    "delete-plan"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/portal.proto",
+   "type": "schema",
+   "name": "portal.proto",
+   "filePath": "api/proto/v1/portal.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf portal.proto — 15 definisi (1 jenis) dan 6 rpc.",
+   "description": "Skema protobuf portal.proto — 15 definisi (1 jenis) dan 6 rpc. Definisi utama: RequestOTPRequest, RequestOTPResponse, PortalLoginRequest, PortalLoginResponse, PortalOverviewRequest, UnpaidInvoiceSummary, …. Layanan: PortalService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "portal"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/portal.proto:PortalService.RequestOTP",
+   "type": "endpoint",
+   "name": "PortalService.RequestOTP",
+   "filePath": "api/proto/v1/portal.proto",
+   "complexity": "simple",
+   "summary": "RPC PortalService.RequestOTP (proto).",
+   "description": "Endpoint rpc PortalService.RequestOTP pada baris 96 dari portal.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "portal",
+    "request-otp"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/portal.proto:PortalService.Login",
+   "type": "endpoint",
+   "name": "PortalService.Login",
+   "filePath": "api/proto/v1/portal.proto",
+   "complexity": "simple",
+   "summary": "RPC PortalService.Login (proto).",
+   "description": "Endpoint rpc PortalService.Login pada baris 97 dari portal.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "portal",
+    "login"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/portal.proto:PortalService.Overview",
+   "type": "endpoint",
+   "name": "PortalService.Overview",
+   "filePath": "api/proto/v1/portal.proto",
+   "complexity": "simple",
+   "summary": "RPC PortalService.Overview (proto).",
+   "description": "Endpoint rpc PortalService.Overview pada baris 98 dari portal.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "portal",
+    "overview"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/portal.proto:PortalService.MyInvoices",
+   "type": "endpoint",
+   "name": "PortalService.MyInvoices",
+   "filePath": "api/proto/v1/portal.proto",
+   "complexity": "simple",
+   "summary": "RPC PortalService.MyInvoices (proto).",
+   "description": "Endpoint rpc PortalService.MyInvoices pada baris 99 dari portal.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "portal",
+    "my-invoices"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/portal.proto:PortalService.MyPayments",
+   "type": "endpoint",
+   "name": "PortalService.MyPayments",
+   "filePath": "api/proto/v1/portal.proto",
+   "complexity": "simple",
+   "summary": "RPC PortalService.MyPayments (proto).",
+   "description": "Endpoint rpc PortalService.MyPayments pada baris 100 dari portal.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "portal",
+    "my-payments"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/portal.proto:PortalService.Logout",
+   "type": "endpoint",
+   "name": "PortalService.Logout",
+   "filePath": "api/proto/v1/portal.proto",
+   "complexity": "simple",
+   "summary": "RPC PortalService.Logout (proto).",
+   "description": "Endpoint rpc PortalService.Logout pada baris 101 dari portal.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "portal",
+    "logout"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/ppp.proto",
+   "type": "schema",
+   "name": "ppp.proto",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf ppp.proto — 37 definisi (1 jenis) dan 17 rpc.",
+   "description": "Skema protobuf ppp.proto — 37 definisi (1 jenis) dan 17 rpc. Definisi utama: PPPSecret, PPPProfile, PPPActiveSession, ListPPPSecretsRequest, ListPPPSecretsResponse, GetPPPSecretRequest, …. Layanan: PPPService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "ppp"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.ListSecrets",
+   "type": "endpoint",
+   "name": "PPPService.ListSecrets",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.ListSecrets (proto).",
+   "description": "Endpoint rpc PPPService.ListSecrets pada baris 275 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "list-secrets"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.GetSecret",
+   "type": "endpoint",
+   "name": "PPPService.GetSecret",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.GetSecret (proto).",
+   "description": "Endpoint rpc PPPService.GetSecret pada baris 276 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "get-secret"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.CreateSecret",
+   "type": "endpoint",
+   "name": "PPPService.CreateSecret",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.CreateSecret (proto).",
+   "description": "Endpoint rpc PPPService.CreateSecret pada baris 277 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "create-secret"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.UpdateSecret",
+   "type": "endpoint",
+   "name": "PPPService.UpdateSecret",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.UpdateSecret (proto).",
+   "description": "Endpoint rpc PPPService.UpdateSecret pada baris 278 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "update-secret"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.DeleteSecret",
+   "type": "endpoint",
+   "name": "PPPService.DeleteSecret",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.DeleteSecret (proto).",
+   "description": "Endpoint rpc PPPService.DeleteSecret pada baris 279 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "delete-secret"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.SetSecretDisabled",
+   "type": "endpoint",
+   "name": "PPPService.SetSecretDisabled",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.SetSecretDisabled (proto).",
+   "description": "Endpoint rpc PPPService.SetSecretDisabled pada baris 280 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "set-secret-disabled"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.ListProfiles",
+   "type": "endpoint",
+   "name": "PPPService.ListProfiles",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.ListProfiles (proto).",
+   "description": "Endpoint rpc PPPService.ListProfiles pada baris 283 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "list-profiles"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.GetProfile",
+   "type": "endpoint",
+   "name": "PPPService.GetProfile",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.GetProfile (proto).",
+   "description": "Endpoint rpc PPPService.GetProfile pada baris 284 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "get-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.CreateProfile",
+   "type": "endpoint",
+   "name": "PPPService.CreateProfile",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.CreateProfile (proto).",
+   "description": "Endpoint rpc PPPService.CreateProfile pada baris 285 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "create-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.UpdateProfile",
+   "type": "endpoint",
+   "name": "PPPService.UpdateProfile",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.UpdateProfile (proto).",
+   "description": "Endpoint rpc PPPService.UpdateProfile pada baris 286 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "update-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.DeleteProfile",
+   "type": "endpoint",
+   "name": "PPPService.DeleteProfile",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.DeleteProfile (proto).",
+   "description": "Endpoint rpc PPPService.DeleteProfile pada baris 287 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "delete-profile"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.ListActiveSessions",
+   "type": "endpoint",
+   "name": "PPPService.ListActiveSessions",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.ListActiveSessions (proto).",
+   "description": "Endpoint rpc PPPService.ListActiveSessions pada baris 290 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "list-active-sessions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.KickActiveSession",
+   "type": "endpoint",
+   "name": "PPPService.KickActiveSession",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.KickActiveSession (proto).",
+   "description": "Endpoint rpc PPPService.KickActiveSession pada baris 291 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "kick-active-session"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.KickActiveSessions",
+   "type": "endpoint",
+   "name": "PPPService.KickActiveSessions",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.KickActiveSessions (proto).",
+   "description": "Endpoint rpc PPPService.KickActiveSessions pada baris 292 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "kick-active-sessions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.ListInactiveSecrets",
+   "type": "endpoint",
+   "name": "PPPService.ListInactiveSecrets",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.ListInactiveSecrets (proto).",
+   "description": "Endpoint rpc PPPService.ListInactiveSecrets pada baris 293 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "list-inactive-secrets"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.StreamActiveSessions",
+   "type": "endpoint",
+   "name": "PPPService.StreamActiveSessions",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.StreamActiveSessions (proto).",
+   "description": "Endpoint rpc PPPService.StreamActiveSessions pada baris 296 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "stream-active-sessions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/ppp.proto:PPPService.StreamInactiveSecrets",
+   "type": "endpoint",
+   "name": "PPPService.StreamInactiveSecrets",
+   "filePath": "api/proto/v1/ppp.proto",
+   "complexity": "simple",
+   "summary": "RPC PPPService.StreamInactiveSecrets (proto).",
+   "description": "Endpoint rpc PPPService.StreamInactiveSecrets pada baris 297 dari ppp.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "ppp",
+    "stream-inactive-secrets"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/probe.proto",
+   "type": "schema",
+   "name": "probe.proto",
+   "filePath": "api/proto/v1/probe.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf probe.proto — 4 definisi (1 jenis) dan 2 rpc.",
+   "description": "Skema protobuf probe.proto — 4 definisi (1 jenis) dan 2 rpc. Definisi utama: PingTelemetry, ProbeControlCommand, ProbeStatusRequest, ProbeStatusResponse. Layanan: ProbeService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "probe"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/probe.proto:ProbeService.ReportStatus",
+   "type": "endpoint",
+   "name": "ProbeService.ReportStatus",
+   "filePath": "api/proto/v1/probe.proto",
+   "complexity": "simple",
+   "summary": "RPC ProbeService.ReportStatus (proto).",
+   "description": "Endpoint rpc ProbeService.ReportStatus pada baris 35 dari probe.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "probe",
+    "report-status"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/probe.proto:ProbeService.StreamTelemetry",
+   "type": "endpoint",
+   "name": "ProbeService.StreamTelemetry",
+   "filePath": "api/proto/v1/probe.proto",
+   "complexity": "simple",
+   "summary": "RPC ProbeService.StreamTelemetry (proto).",
+   "description": "Endpoint rpc ProbeService.StreamTelemetry pada baris 36 dari probe.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "probe",
+    "stream-telemetry"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/rbac.proto",
+   "type": "schema",
+   "name": "rbac.proto",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf rbac.proto — 18 definisi (1 jenis) dan 8 rpc.",
+   "description": "Skema protobuf rbac.proto — 18 definisi (1 jenis) dan 8 rpc. Definisi utama: Policy, RoleAssignment, ListPoliciesRequest, ListPoliciesResponse, AddPolicyRequest, AddPolicyResponse, …. Layanan: RBACService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "rbac"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/rbac.proto:RBACService.ListPolicies",
+   "type": "endpoint",
+   "name": "RBACService.ListPolicies",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "RPC RBACService.ListPolicies (proto).",
+   "description": "Endpoint rpc RBACService.ListPolicies pada baris 78 dari rbac.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "rbac",
+    "list-policies"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/rbac.proto:RBACService.AddPolicy",
+   "type": "endpoint",
+   "name": "RBACService.AddPolicy",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "RPC RBACService.AddPolicy (proto).",
+   "description": "Endpoint rpc RBACService.AddPolicy pada baris 79 dari rbac.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "rbac",
+    "add-policy"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/rbac.proto:RBACService.RemovePolicy",
+   "type": "endpoint",
+   "name": "RBACService.RemovePolicy",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "RPC RBACService.RemovePolicy (proto).",
+   "description": "Endpoint rpc RBACService.RemovePolicy pada baris 80 dari rbac.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "rbac",
+    "remove-policy"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/rbac.proto:RBACService.ListRoleAssignments",
+   "type": "endpoint",
+   "name": "RBACService.ListRoleAssignments",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "RPC RBACService.ListRoleAssignments (proto).",
+   "description": "Endpoint rpc RBACService.ListRoleAssignments pada baris 81 dari rbac.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "rbac",
+    "list-role-assignments"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/rbac.proto:RBACService.AssignRole",
+   "type": "endpoint",
+   "name": "RBACService.AssignRole",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "RPC RBACService.AssignRole (proto).",
+   "description": "Endpoint rpc RBACService.AssignRole pada baris 82 dari rbac.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "rbac",
+    "assign-role"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/rbac.proto:RBACService.UnassignRole",
+   "type": "endpoint",
+   "name": "RBACService.UnassignRole",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "RPC RBACService.UnassignRole (proto).",
+   "description": "Endpoint rpc RBACService.UnassignRole pada baris 83 dari rbac.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "rbac",
+    "unassign-role"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/rbac.proto:RBACService.SyncRolePermissions",
+   "type": "endpoint",
+   "name": "RBACService.SyncRolePermissions",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "RPC RBACService.SyncRolePermissions (proto).",
+   "description": "Endpoint rpc RBACService.SyncRolePermissions pada baris 84 dari rbac.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "rbac",
+    "sync-role-permissions"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/rbac.proto:RBACService.DeleteRole",
+   "type": "endpoint",
+   "name": "RBACService.DeleteRole",
+   "filePath": "api/proto/v1/rbac.proto",
+   "complexity": "simple",
+   "summary": "RPC RBACService.DeleteRole (proto).",
+   "description": "Endpoint rpc RBACService.DeleteRole pada baris 85 dari rbac.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "rbac",
+    "delete-role"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/registration.proto",
+   "type": "schema",
+   "name": "registration.proto",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf registration.proto — 19 definisi (1 jenis) dan 9 rpc.",
+   "description": "Skema protobuf registration.proto — 19 definisi (1 jenis) dan 9 rpc. Definisi utama: Registration, SubmitRegistrationRequest, SubmitRegistrationResponse, ListRegistrationsRequest, ListRegistrationsResponse, GetRegistrationRequest, …. Layanan: RegistrationService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "registration"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.SubmitRegistration",
+   "type": "endpoint",
+   "name": "RegistrationService.SubmitRegistration",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.SubmitRegistration (proto).",
+   "description": "Endpoint rpc RegistrationService.SubmitRegistration pada baris 113 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "submit-registration"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.ListRegistrations",
+   "type": "endpoint",
+   "name": "RegistrationService.ListRegistrations",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.ListRegistrations (proto).",
+   "description": "Endpoint rpc RegistrationService.ListRegistrations pada baris 114 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "list-registrations"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.GetRegistration",
+   "type": "endpoint",
+   "name": "RegistrationService.GetRegistration",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.GetRegistration (proto).",
+   "description": "Endpoint rpc RegistrationService.GetRegistration pada baris 115 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "get-registration"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.ApproveRegistration",
+   "type": "endpoint",
+   "name": "RegistrationService.ApproveRegistration",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.ApproveRegistration (proto).",
+   "description": "Endpoint rpc RegistrationService.ApproveRegistration pada baris 116 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "approve-registration"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.ScheduleInstall",
+   "type": "endpoint",
+   "name": "RegistrationService.ScheduleInstall",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.ScheduleInstall (proto).",
+   "description": "Endpoint rpc RegistrationService.ScheduleInstall pada baris 117 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "schedule-install"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.MarkInstalled",
+   "type": "endpoint",
+   "name": "RegistrationService.MarkInstalled",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.MarkInstalled (proto).",
+   "description": "Endpoint rpc RegistrationService.MarkInstalled pada baris 118 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "mark-installed"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.RejectRegistration",
+   "type": "endpoint",
+   "name": "RegistrationService.RejectRegistration",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.RejectRegistration (proto).",
+   "description": "Endpoint rpc RegistrationService.RejectRegistration pada baris 119 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "reject-registration"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.CancelRegistration",
+   "type": "endpoint",
+   "name": "RegistrationService.CancelRegistration",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.CancelRegistration (proto).",
+   "description": "Endpoint rpc RegistrationService.CancelRegistration pada baris 120 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "cancel-registration"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/registration.proto:RegistrationService.ConvertRegistration",
+   "type": "endpoint",
+   "name": "RegistrationService.ConvertRegistration",
+   "filePath": "api/proto/v1/registration.proto",
+   "complexity": "simple",
+   "summary": "RPC RegistrationService.ConvertRegistration (proto).",
+   "description": "Endpoint rpc RegistrationService.ConvertRegistration pada baris 121 dari registration.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "registration",
+    "convert-registration"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/report.proto",
+   "type": "schema",
+   "name": "report.proto",
+   "filePath": "api/proto/v1/report.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf report.proto — 9 definisi (1 jenis) dan 4 rpc.",
+   "description": "Skema protobuf report.proto — 9 definisi (1 jenis) dan 4 rpc. Definisi utama: ReportSummary, DailyReportRequest, DailyReportResponse, MonthlyReportRequest, MonthlyReportResponse, YearlyReportRequest, …. Layanan: ReportService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "report"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/report.proto:ReportService.DailyReport",
+   "type": "endpoint",
+   "name": "ReportService.DailyReport",
+   "filePath": "api/proto/v1/report.proto",
+   "complexity": "simple",
+   "summary": "RPC ReportService.DailyReport (proto).",
+   "description": "Endpoint rpc ReportService.DailyReport pada baris 48 dari report.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "report",
+    "daily-report"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/report.proto:ReportService.MonthlyReport",
+   "type": "endpoint",
+   "name": "ReportService.MonthlyReport",
+   "filePath": "api/proto/v1/report.proto",
+   "complexity": "simple",
+   "summary": "RPC ReportService.MonthlyReport (proto).",
+   "description": "Endpoint rpc ReportService.MonthlyReport pada baris 49 dari report.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "report",
+    "monthly-report"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/report.proto:ReportService.YearlyReport",
+   "type": "endpoint",
+   "name": "ReportService.YearlyReport",
+   "filePath": "api/proto/v1/report.proto",
+   "complexity": "simple",
+   "summary": "RPC ReportService.YearlyReport (proto).",
+   "description": "Endpoint rpc ReportService.YearlyReport pada baris 50 dari report.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "report",
+    "yearly-report"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/report.proto:ReportService.RefreshSnapshot",
+   "type": "endpoint",
+   "name": "ReportService.RefreshSnapshot",
+   "filePath": "api/proto/v1/report.proto",
+   "complexity": "simple",
+   "summary": "RPC ReportService.RefreshSnapshot (proto).",
+   "description": "Endpoint rpc ReportService.RefreshSnapshot pada baris 52 dari report.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "report",
+    "refresh-snapshot"
+   ]
+  },
+  {
+   "id": "schema:api/proto/v1/settings.proto",
+   "type": "schema",
+   "name": "settings.proto",
+   "filePath": "api/proto/v1/settings.proto",
+   "complexity": "simple",
+   "summary": "Skema protobuf settings.proto — 14 definisi (1 jenis) dan 6 rpc.",
+   "description": "Skema protobuf settings.proto — 14 definisi (1 jenis) dan 6 rpc. Definisi utama: SettingItem, BotSettings, GetAllSettingsRequest, GetAllSettingsResponse, GetSettingsByCategoryRequest, GetSettingsByCategoryResponse, …. Layanan: SettingService. Nama field, nomor, dan semantik wire bersifat backward-compatible.",
+   "tags": [
+    "protobuf",
+    "skema",
+    "setting"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/settings.proto:SettingService.GetAllSettings",
+   "type": "endpoint",
+   "name": "SettingService.GetAllSettings",
+   "filePath": "api/proto/v1/settings.proto",
+   "complexity": "simple",
+   "summary": "RPC SettingService.GetAllSettings (proto).",
+   "description": "Endpoint rpc SettingService.GetAllSettings pada baris 76 dari settings.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "setting",
+    "get-all-settings"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/settings.proto:SettingService.GetSettingsByCategory",
+   "type": "endpoint",
+   "name": "SettingService.GetSettingsByCategory",
+   "filePath": "api/proto/v1/settings.proto",
+   "complexity": "simple",
+   "summary": "RPC SettingService.GetSettingsByCategory (proto).",
+   "description": "Endpoint rpc SettingService.GetSettingsByCategory pada baris 77 dari settings.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "setting",
+    "get-settings-by-category"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/settings.proto:SettingService.UpdateSetting",
+   "type": "endpoint",
+   "name": "SettingService.UpdateSetting",
+   "filePath": "api/proto/v1/settings.proto",
+   "complexity": "simple",
+   "summary": "RPC SettingService.UpdateSetting (proto).",
+   "description": "Endpoint rpc SettingService.UpdateSetting pada baris 78 dari settings.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "setting",
+    "update-setting"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/settings.proto:SettingService.BatchUpdateSettings",
+   "type": "endpoint",
+   "name": "SettingService.BatchUpdateSettings",
+   "filePath": "api/proto/v1/settings.proto",
+   "complexity": "simple",
+   "summary": "RPC SettingService.BatchUpdateSettings (proto).",
+   "description": "Endpoint rpc SettingService.BatchUpdateSettings pada baris 79 dari settings.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "setting",
+    "batch-update-settings"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/settings.proto:SettingService.GetBotSettings",
+   "type": "endpoint",
+   "name": "SettingService.GetBotSettings",
+   "filePath": "api/proto/v1/settings.proto",
+   "complexity": "simple",
+   "summary": "RPC SettingService.GetBotSettings (proto).",
+   "description": "Endpoint rpc SettingService.GetBotSettings pada baris 80 dari settings.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "setting",
+    "get-bot-settings"
+   ]
+  },
+  {
+   "id": "endpoint:api/proto/v1/settings.proto:SettingService.UpdateBotSettings",
+   "type": "endpoint",
+   "name": "SettingService.UpdateBotSettings",
+   "filePath": "api/proto/v1/settings.proto",
+   "complexity": "simple",
+   "summary": "RPC SettingService.UpdateBotSettings (proto).",
+   "description": "Endpoint rpc SettingService.UpdateBotSettings pada baris 81 dari settings.proto. Ditangani oleh handler ConnectRPC yang sesuai di internal/adapter/connect.",
+   "tags": [
+    "rpc",
+    "setting",
+    "update-bot-settings"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.Login",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.GetMe",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.UpdateMe",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.ChangePassword",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.RefreshToken",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.Logout",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.ListInvoices",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.GetInvoice",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.CancelInvoice",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.GenerateInvoices",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.CashierResolve",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.CashierPay",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.ListConversations",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.GetConversation",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.GetConversationContext",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.TakeOverConversation",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.ResetConversationBot",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.CloseConversation",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.ResetRateLimit",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.GetRateLimitStatus",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.ListTechnicians",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.CreateTechnician",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.UpdateTechnician",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.ToggleTechnicianActive",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.DeleteTechnician",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/cashbook.proto",
+   "target": "endpoint:api/proto/v1/cashbook.proto:CashbookService.ListAccounts",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/cashbook.proto",
+   "target": "endpoint:api/proto/v1/cashbook.proto:CashbookService.SaveAccount",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/cashbook.proto",
+   "target": "endpoint:api/proto/v1/cashbook.proto:CashbookService.ListCategories",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/cashbook.proto",
+   "target": "endpoint:api/proto/v1/cashbook.proto:CashbookService.SaveCategory",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/cashbook.proto",
+   "target": "endpoint:api/proto/v1/cashbook.proto:CashbookService.AddTransaction",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/cashbook.proto",
+   "target": "endpoint:api/proto/v1/cashbook.proto:CashbookService.ListTransactions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/cashbook.proto",
+   "target": "endpoint:api/proto/v1/cashbook.proto:CashbookService.Balances",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.ListCustomers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.GetCustomer",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.CreateCustomer",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.UpdateCustomer",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.DeleteCustomer",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.FindByPhone",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.FindByCustomerCode",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.FindByPortalCode",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.ListSubscriptions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.ListDevices",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.GetDevice",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.UpdateDevice",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.DeleteDevice",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.TestDeviceConnection",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.StreamDeviceStatus",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.StreamPing",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.StreamInterfaceTraffic",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.StreamTerminal",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.GetDevicePingConfig",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.UpdateDevicePingConfig",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.QueryDevicePingMetrics",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.GetIsolationStatus",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.CreateIsolationProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.UpdateIsolationProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.DeleteIsolationProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.GetRouterIntegrationScript",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.ApplyRouterIntegrationScript",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListProfiles",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.CreateProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.UpdateProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListUsers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GetUser",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.CreateUser",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.UpdateUser",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ResetUserCounters",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteUser",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteHotspotUsers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListActiveSessions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.KickActiveSession",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GenerateVouchers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GetVoucherBatch",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.CheckVoucherStatus",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListHosts",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.RemoveHost",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListHotspotServers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListHotspotIPBindings",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.CreateHotspotIPBinding",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.UpdateHotspotIPBinding",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteHotspotIPBinding",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListHotspotCookies",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteHotspotCookie",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListReports",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DeleteReport",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GetExpireMonitorStatus",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.SetupExpireMonitor",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.DisableExpireMonitor",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.RemoveExpireMonitor",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.ListTemplates",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.GetTemplateSection",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/hotspot.proto",
+   "target": "endpoint:api/proto/v1/hotspot.proto:HotspotService.RenderVouchers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ispadmin.proto",
+   "target": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.ImportFile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ispadmin.proto",
+   "target": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.ImportRouter",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ispadmin.proto",
+   "target": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.ExportCustomers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ispadmin.proto",
+   "target": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.Reconcile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ispadmin.proto",
+   "target": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.PullRouterPlans",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ispadmin.proto",
+   "target": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.CommitPlans",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ispadmin.proto",
+   "target": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.PullRouterCustomers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ispadmin.proto",
+   "target": "endpoint:api/proto/v1/ispadmin.proto:IspAdminService.CommitCustomers",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/llm.proto",
+   "target": "endpoint:api/proto/v1/llm.proto:LLMConfigService.ListLLMConfigs",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/llm.proto",
+   "target": "endpoint:api/proto/v1/llm.proto:LLMConfigService.CreateLLMConfig",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/llm.proto",
+   "target": "endpoint:api/proto/v1/llm.proto:LLMConfigService.UpdateLLMConfig",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/llm.proto",
+   "target": "endpoint:api/proto/v1/llm.proto:LLMConfigService.ActivateLLMConfig",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/llm.proto",
+   "target": "endpoint:api/proto/v1/llm.proto:LLMConfigService.TestLLMConfig",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/llm.proto",
+   "target": "endpoint:api/proto/v1/llm.proto:LLMConfigService.DeleteLLMConfig",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network.proto",
+   "target": "endpoint:api/proto/v1/network.proto:NetworkService.ListDHCPLeases",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network.proto",
+   "target": "endpoint:api/proto/v1/network.proto:NetworkService.BlockDHCPLease",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network.proto",
+   "target": "endpoint:api/proto/v1/network.proto:NetworkService.ListParentQueues",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network.proto",
+   "target": "endpoint:api/proto/v1/network.proto:NetworkService.ListIPPools",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamTraffic",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamResource",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamActiveSessions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamActiveStats",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamSystemSnapshot",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamInterfaceEthernet",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamQueueStats",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamLogs",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamHotspotInactive",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamPPPActive",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/network_monitor.proto",
+   "target": "endpoint:api/proto/v1/network_monitor.proto:NetworkMonitorService.StreamPPPInactive",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/notification.proto",
+   "target": "endpoint:api/proto/v1/notification.proto:NotificationService.ListTemplates",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/notification.proto",
+   "target": "endpoint:api/proto/v1/notification.proto:NotificationService.GetTemplate",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/notification.proto",
+   "target": "endpoint:api/proto/v1/notification.proto:NotificationService.SaveTemplate",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/notification.proto",
+   "target": "endpoint:api/proto/v1/notification.proto:NotificationService.ListNotifications",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/notification.proto",
+   "target": "endpoint:api/proto/v1/notification.proto:NotificationService.PendingCount",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/notification.proto",
+   "target": "endpoint:api/proto/v1/notification.proto:NotificationService.MarkNotificationSent",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/notification.proto",
+   "target": "endpoint:api/proto/v1/notification.proto:NotificationService.MarkNotificationFailed",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/notification.proto",
+   "target": "endpoint:api/proto/v1/notification.proto:NotificationService.TestSend",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/plan.proto",
+   "target": "endpoint:api/proto/v1/plan.proto:PlanService.ListPlans",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/plan.proto",
+   "target": "endpoint:api/proto/v1/plan.proto:PlanService.GetPlan",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/plan.proto",
+   "target": "endpoint:api/proto/v1/plan.proto:PlanService.CreatePlan",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/plan.proto",
+   "target": "endpoint:api/proto/v1/plan.proto:PlanService.UpdatePlan",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/plan.proto",
+   "target": "endpoint:api/proto/v1/plan.proto:PlanService.DeletePlan",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/portal.proto",
+   "target": "endpoint:api/proto/v1/portal.proto:PortalService.RequestOTP",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/portal.proto",
+   "target": "endpoint:api/proto/v1/portal.proto:PortalService.Login",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/portal.proto",
+   "target": "endpoint:api/proto/v1/portal.proto:PortalService.Overview",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/portal.proto",
+   "target": "endpoint:api/proto/v1/portal.proto:PortalService.MyInvoices",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/portal.proto",
+   "target": "endpoint:api/proto/v1/portal.proto:PortalService.MyPayments",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/portal.proto",
+   "target": "endpoint:api/proto/v1/portal.proto:PortalService.Logout",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.ListSecrets",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.GetSecret",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.CreateSecret",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.UpdateSecret",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.DeleteSecret",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.SetSecretDisabled",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.ListProfiles",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.GetProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.CreateProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.UpdateProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.DeleteProfile",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.ListActiveSessions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.KickActiveSession",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.KickActiveSessions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.ListInactiveSecrets",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.StreamActiveSessions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/ppp.proto",
+   "target": "endpoint:api/proto/v1/ppp.proto:PPPService.StreamInactiveSecrets",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/probe.proto",
+   "target": "endpoint:api/proto/v1/probe.proto:ProbeService.ReportStatus",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/probe.proto",
+   "target": "endpoint:api/proto/v1/probe.proto:ProbeService.StreamTelemetry",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/rbac.proto",
+   "target": "endpoint:api/proto/v1/rbac.proto:RBACService.ListPolicies",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/rbac.proto",
+   "target": "endpoint:api/proto/v1/rbac.proto:RBACService.AddPolicy",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/rbac.proto",
+   "target": "endpoint:api/proto/v1/rbac.proto:RBACService.RemovePolicy",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/rbac.proto",
+   "target": "endpoint:api/proto/v1/rbac.proto:RBACService.ListRoleAssignments",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/rbac.proto",
+   "target": "endpoint:api/proto/v1/rbac.proto:RBACService.AssignRole",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/rbac.proto",
+   "target": "endpoint:api/proto/v1/rbac.proto:RBACService.UnassignRole",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/rbac.proto",
+   "target": "endpoint:api/proto/v1/rbac.proto:RBACService.SyncRolePermissions",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/rbac.proto",
+   "target": "endpoint:api/proto/v1/rbac.proto:RBACService.DeleteRole",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.SubmitRegistration",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.ListRegistrations",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.GetRegistration",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.ApproveRegistration",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.ScheduleInstall",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.MarkInstalled",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.RejectRegistration",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.CancelRegistration",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/registration.proto",
+   "target": "endpoint:api/proto/v1/registration.proto:RegistrationService.ConvertRegistration",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/report.proto",
+   "target": "endpoint:api/proto/v1/report.proto:ReportService.DailyReport",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/report.proto",
+   "target": "endpoint:api/proto/v1/report.proto:ReportService.MonthlyReport",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/report.proto",
+   "target": "endpoint:api/proto/v1/report.proto:ReportService.YearlyReport",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/report.proto",
+   "target": "endpoint:api/proto/v1/report.proto:ReportService.RefreshSnapshot",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/settings.proto",
+   "target": "endpoint:api/proto/v1/settings.proto:SettingService.GetAllSettings",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/settings.proto",
+   "target": "endpoint:api/proto/v1/settings.proto:SettingService.GetSettingsByCategory",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/settings.proto",
+   "target": "endpoint:api/proto/v1/settings.proto:SettingService.UpdateSetting",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/settings.proto",
+   "target": "endpoint:api/proto/v1/settings.proto:SettingService.BatchUpdateSettings",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/settings.proto",
+   "target": "endpoint:api/proto/v1/settings.proto:SettingService.GetBotSettings",
+   "type": "defines_schema",
+   "weight": 0.8
+  },
+  {
+   "source": "schema:api/proto/v1/settings.proto",
+   "target": "endpoint:api/proto/v1/settings.proto:SettingService.UpdateBotSettings",
+   "type": "defines_schema",
+   "weight": 0.8
+  }
+ ]
+}

@@ -1,0 +1,2175 @@
+{
+ "batchIndex": 33,
+ "nodes": [
+  {
+   "id": "file:internal/port/mocktest/fakes_subscription.go",
+   "type": "file",
+   "name": "fakes_subscription.go",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (147 baris, 12 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `mocktest` (147 baris, 12 fungsi, 1 tipe). Tipe utama: FakeSubscriptionRepo. Fungsi terbesar: ListLifecycle, FindByCustomerID, UpdateStatus, ListActive, HasActiveForPlan. Bergantung pada 6 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "mocktest",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/mocktest/fakes_subscription.go:FakeSubscriptionRepo",
+   "type": "class",
+   "name": "FakeSubscriptionRepo",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Tipe FakeSubscriptionRepo di fakes_subscription.go, dengan method: Seed, Save, FindByID, FindByCustomerID, FindAll, UpdateStatus.",
+   "description": "Tipe FakeSubscriptionRepo di fakes_subscription.go, dengan method: Seed, Save, FindByID, FindByCustomerID, FindAll, UpdateStatus. Didefinisikan pada baris 11-14.",
+   "tags": [
+    "go",
+    "tipe",
+    "fakesubscriptionrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:NewFakeSubscriptionRepo",
+   "type": "function",
+   "name": "NewFakeSubscriptionRepo",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewFakeSubscriptionRepo (2 baris).",
+   "description": "Fungsi NewFakeSubscriptionRepo (2 baris). Didefinisikan pada baris 17-19.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newfakesubscriptionrepo"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:Seed",
+   "type": "function",
+   "name": "Seed",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi Seed (4 baris), parameter: s.",
+   "description": "Fungsi Seed (4 baris), parameter: s. Didefinisikan pada baris 22-26.",
+   "tags": [
+    "go",
+    "fungsi",
+    "seed"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:Save",
+   "type": "function",
+   "name": "Save",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi Save (5 baris), parameter: _, s.",
+   "description": "Fungsi Save (5 baris), parameter: _, s. Didefinisikan pada baris 29-34.",
+   "tags": [
+    "go",
+    "fungsi",
+    "save"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:FindByID",
+   "type": "function",
+   "name": "FindByID",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByID (8 baris), parameter: _, id.",
+   "description": "Fungsi FindByID (8 baris), parameter: _, id. Didefinisikan pada baris 37-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:FindByCustomerID",
+   "type": "function",
+   "name": "FindByCustomerID",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByCustomerID (10 baris), parameter: _, cid.",
+   "description": "Fungsi FindByCustomerID (10 baris), parameter: _, cid. Didefinisikan pada baris 48-58.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbycustomerid"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:FindAll",
+   "type": "function",
+   "name": "FindAll",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindAll (8 baris), parameter: _.",
+   "description": "Fungsi FindAll (8 baris), parameter: _. Didefinisikan pada baris 61-69.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findall"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:UpdateStatus",
+   "type": "function",
+   "name": "UpdateStatus",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateStatus (10 baris), parameter: _, id, status.",
+   "description": "Fungsi UpdateStatus (10 baris), parameter: _, id, status. Didefinisikan pada baris 72-82.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatestatus"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:FindByDeviceAndUsername",
+   "type": "function",
+   "name": "FindByDeviceAndUsername",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByDeviceAndUsername (9 baris), parameter: _, deviceID, username.",
+   "description": "Fungsi FindByDeviceAndUsername (9 baris), parameter: _, deviceID, username. Didefinisikan pada baris 85-94.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbydeviceandusername"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:ListActive",
+   "type": "function",
+   "name": "ListActive",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListActive (10 baris), parameter: _.",
+   "description": "Fungsi ListActive (10 baris), parameter: _. Didefinisikan pada baris 97-107.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listactive"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:ListLifecycle",
+   "type": "function",
+   "name": "ListLifecycle",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi ListLifecycle (13 baris), parameter: _.",
+   "description": "Fungsi ListLifecycle (13 baris), parameter: _. Didefinisikan pada baris 110-123.",
+   "tags": [
+    "go",
+    "fungsi",
+    "listlifecycle"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:HasActiveForPlan",
+   "type": "function",
+   "name": "HasActiveForPlan",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi HasActiveForPlan (10 baris), parameter: _, planID.",
+   "description": "Fungsi HasActiveForPlan (10 baris), parameter: _, planID. Didefinisikan pada baris 126-136.",
+   "tags": [
+    "go",
+    "fungsi",
+    "hasactiveforplan"
+   ]
+  },
+  {
+   "id": "function:internal/port/mocktest/fakes_subscription.go:Delete",
+   "type": "function",
+   "name": "Delete",
+   "filePath": "internal/port/mocktest/fakes_subscription.go",
+   "complexity": "simple",
+   "summary": "Fungsi Delete (8 baris), parameter: _, id.",
+   "description": "Fungsi Delete (8 baris), parameter: _, id. Didefinisikan pada baris 139-147.",
+   "tags": [
+    "go",
+    "fungsi",
+    "delete"
+   ]
+  },
+  {
+   "id": "file:internal/port/monitor_stream_gateway.go",
+   "type": "file",
+   "name": "monitor_stream_gateway.go",
+   "filePath": "internal/port/monitor_stream_gateway.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (46 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (46 baris, 0 fungsi, 2 tipe). Tipe utama: QueueStreamParams, MonitorStreamGateway. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/monitor_stream_gateway.go:QueueStreamParams",
+   "type": "class",
+   "name": "QueueStreamParams",
+   "filePath": "internal/port/monitor_stream_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe QueueStreamParams di monitor_stream_gateway.go.",
+   "description": "Tipe QueueStreamParams di monitor_stream_gateway.go. Didefinisikan pada baris 10-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "queuestreamparams"
+   ]
+  },
+  {
+   "id": "class:internal/port/monitor_stream_gateway.go:MonitorStreamGateway",
+   "type": "class",
+   "name": "MonitorStreamGateway",
+   "filePath": "internal/port/monitor_stream_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe MonitorStreamGateway di monitor_stream_gateway.go, dengan method: StreamTraffic, StreamResource, StreamInterfaces, StreamIdentity, StreamPing, StreamLogs.",
+   "description": "Tipe MonitorStreamGateway di monitor_stream_gateway.go, dengan method: StreamTraffic, StreamResource, StreamInterfaces, StreamIdentity, StreamPing, StreamLogs. Didefinisikan pada baris 18-46.",
+   "tags": [
+    "go",
+    "tipe",
+    "monitorstreamgateway"
+   ]
+  },
+  {
+   "id": "file:internal/port/notification_repository.go",
+   "type": "file",
+   "name": "notification_repository.go",
+   "filePath": "internal/port/notification_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (39 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (39 baris, 0 fungsi, 2 tipe). Tipe utama: NotificationRepository, NotificationRetryRepository. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/notification_repository.go:NotificationRepository",
+   "type": "class",
+   "name": "NotificationRepository",
+   "filePath": "internal/port/notification_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe NotificationRepository di notification_repository.go, dengan method: SaveTemplate, FindTemplateByKey, ListTemplates, Queue, FindByID, Pending.",
+   "description": "Tipe NotificationRepository di notification_repository.go, dengan method: SaveTemplate, FindTemplateByKey, ListTemplates, Queue, FindByID, Pending. Didefinisikan pada baris 13-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "notificationrepository"
+   ]
+  },
+  {
+   "id": "class:internal/port/notification_repository.go:NotificationRetryRepository",
+   "type": "class",
+   "name": "NotificationRetryRepository",
+   "filePath": "internal/port/notification_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe NotificationRetryRepository di notification_repository.go, dengan method: PendingWithRetryLimit, MarkFailedWithAttempt.",
+   "description": "Tipe NotificationRetryRepository di notification_repository.go, dengan method: PendingWithRetryLimit, MarkFailedWithAttempt. Didefinisikan pada baris 34-39.",
+   "tags": [
+    "go",
+    "tipe",
+    "notificationretryrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/payment_gateway.go",
+   "type": "file",
+   "name": "payment_gateway.go",
+   "filePath": "internal/port/payment_gateway.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (55 baris, 0 fungsi, 4 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (55 baris, 0 fungsi, 4 tipe). Tipe utama: ChargeRequest, ChargeResult, WebhookEvent, PaymentGateway.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/payment_gateway.go:ChargeRequest",
+   "type": "class",
+   "name": "ChargeRequest",
+   "filePath": "internal/port/payment_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe ChargeRequest di payment_gateway.go.",
+   "description": "Tipe ChargeRequest di payment_gateway.go. Didefinisikan pada baris 13-23.",
+   "tags": [
+    "go",
+    "tipe",
+    "chargerequest"
+   ]
+  },
+  {
+   "id": "class:internal/port/payment_gateway.go:ChargeResult",
+   "type": "class",
+   "name": "ChargeResult",
+   "filePath": "internal/port/payment_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe ChargeResult di payment_gateway.go.",
+   "description": "Tipe ChargeResult di payment_gateway.go. Didefinisikan pada baris 26-34.",
+   "tags": [
+    "go",
+    "tipe",
+    "chargeresult"
+   ]
+  },
+  {
+   "id": "class:internal/port/payment_gateway.go:WebhookEvent",
+   "type": "class",
+   "name": "WebhookEvent",
+   "filePath": "internal/port/payment_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe WebhookEvent di payment_gateway.go.",
+   "description": "Tipe WebhookEvent di payment_gateway.go. Didefinisikan pada baris 37-43.",
+   "tags": [
+    "go",
+    "tipe",
+    "webhookevent"
+   ]
+  },
+  {
+   "id": "class:internal/port/payment_gateway.go:PaymentGateway",
+   "type": "class",
+   "name": "PaymentGateway",
+   "filePath": "internal/port/payment_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe PaymentGateway di payment_gateway.go, dengan method: Name, Enabled, CreateCharge, ParseWebhook, CheckStatus.",
+   "description": "Tipe PaymentGateway di payment_gateway.go, dengan method: Name, Enabled, CreateCharge, ParseWebhook, CheckStatus. Didefinisikan pada baris 47-55.",
+   "tags": [
+    "go",
+    "tipe",
+    "paymentgateway"
+   ]
+  },
+  {
+   "id": "file:internal/port/payment_processor.go",
+   "type": "file",
+   "name": "payment_processor.go",
+   "filePath": "internal/port/payment_processor.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (34 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (34 baris, 0 fungsi, 2 tipe). Tipe utama: CashPaymentCommand, PaymentProcessor. Bergantung pada 5 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/payment_processor.go:CashPaymentCommand",
+   "type": "class",
+   "name": "CashPaymentCommand",
+   "filePath": "internal/port/payment_processor.go",
+   "complexity": "simple",
+   "summary": "Tipe CashPaymentCommand di payment_processor.go.",
+   "description": "Tipe CashPaymentCommand di payment_processor.go. Didefinisikan pada baris 16-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "cashpaymentcommand"
+   ]
+  },
+  {
+   "id": "class:internal/port/payment_processor.go:PaymentProcessor",
+   "type": "class",
+   "name": "PaymentProcessor",
+   "filePath": "internal/port/payment_processor.go",
+   "complexity": "simple",
+   "summary": "Tipe PaymentProcessor di payment_processor.go, dengan method: ProcessCashPayment.",
+   "description": "Tipe PaymentProcessor di payment_processor.go, dengan method: ProcessCashPayment. Didefinisikan pada baris 32-34.",
+   "tags": [
+    "go",
+    "tipe",
+    "paymentprocessor"
+   ]
+  },
+  {
+   "id": "file:internal/port/payment_reader.go",
+   "type": "file",
+   "name": "payment_reader.go",
+   "filePath": "internal/port/payment_reader.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (13 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (13 baris, 0 fungsi, 1 tipe). Tipe utama: PaymentReader. Bergantung pada 5 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/payment_reader.go:PaymentReader",
+   "type": "class",
+   "name": "PaymentReader",
+   "filePath": "internal/port/payment_reader.go",
+   "complexity": "simple",
+   "summary": "Tipe PaymentReader di payment_reader.go, dengan method: ListByCustomer.",
+   "description": "Tipe PaymentReader di payment_reader.go, dengan method: ListByCustomer. Didefinisikan pada baris 11-13.",
+   "tags": [
+    "go",
+    "tipe",
+    "paymentreader"
+   ]
+  },
+  {
+   "id": "file:internal/port/portal_repository.go",
+   "type": "file",
+   "name": "portal_repository.go",
+   "filePath": "internal/port/portal_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (32 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (32 baris, 0 fungsi, 2 tipe). Tipe utama: NotificationSender, PortalRepository. Bergantung pada 5 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/portal_repository.go:NotificationSender",
+   "type": "class",
+   "name": "NotificationSender",
+   "filePath": "internal/port/portal_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe NotificationSender di portal_repository.go, dengan method: Send.",
+   "description": "Tipe NotificationSender di portal_repository.go, dengan method: Send. Didefinisikan pada baris 15-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "notificationsender"
+   ]
+  },
+  {
+   "id": "class:internal/port/portal_repository.go:PortalRepository",
+   "type": "class",
+   "name": "PortalRepository",
+   "filePath": "internal/port/portal_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe PortalRepository di portal_repository.go, dengan method: SaveSession, FindValidSession, DeleteSession, SaveOTP, ConsumeOTP.",
+   "description": "Tipe PortalRepository di portal_repository.go, dengan method: SaveSession, FindValidSession, DeleteSession, SaveOTP, ConsumeOTP. Didefinisikan pada baris 20-32.",
+   "tags": [
+    "go",
+    "tipe",
+    "portalrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/ppp_gateway.go",
+   "type": "file",
+   "name": "ppp_gateway.go",
+   "filePath": "internal/port/ppp_gateway.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (31 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (31 baris, 0 fungsi, 1 tipe). Tipe utama: PPPGateway. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/ppp_gateway.go:PPPGateway",
+   "type": "class",
+   "name": "PPPGateway",
+   "filePath": "internal/port/ppp_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPGateway di ppp_gateway.go, dengan method: ListSecrets, GetSecret, AddSecret, UpdateSecret, RemoveSecret, SetSecretDisabled.",
+   "description": "Tipe PPPGateway di ppp_gateway.go, dengan method: ListSecrets, GetSecret, AddSecret, UpdateSecret, RemoveSecret, SetSecretDisabled. Didefinisikan pada baris 11-31.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppgateway"
+   ]
+  },
+  {
+   "id": "file:internal/port/ppp_session.go",
+   "type": "file",
+   "name": "ppp_session.go",
+   "filePath": "internal/port/ppp_session.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (50 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (50 baris, 0 fungsi, 2 tipe). Tipe utama: PPPoESecretParams, PPPProfileParams. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/ppp_session.go:PPPoESecretParams",
+   "type": "class",
+   "name": "PPPoESecretParams",
+   "filePath": "internal/port/ppp_session.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPoESecretParams di ppp_session.go.",
+   "description": "Tipe PPPoESecretParams di ppp_session.go. Didefinisikan pada baris 17-27.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppoesecretparams"
+   ]
+  },
+  {
+   "id": "class:internal/port/ppp_session.go:PPPProfileParams",
+   "type": "class",
+   "name": "PPPProfileParams",
+   "filePath": "internal/port/ppp_session.go",
+   "complexity": "simple",
+   "summary": "Tipe PPPProfileParams di ppp_session.go.",
+   "description": "Tipe PPPProfileParams di ppp_session.go. Didefinisikan pada baris 30-50.",
+   "tags": [
+    "go",
+    "tipe",
+    "pppprofileparams"
+   ]
+  },
+  {
+   "id": "file:internal/port/provisioner.go",
+   "type": "file",
+   "name": "provisioner.go",
+   "filePath": "internal/port/provisioner.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (54 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (54 baris, 0 fungsi, 2 tipe). Tipe utama: IsolationOptions, RouterAccountManager. Bergantung pada 21 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/provisioner.go:IsolationOptions",
+   "type": "class",
+   "name": "IsolationOptions",
+   "filePath": "internal/port/provisioner.go",
+   "complexity": "simple",
+   "summary": "Tipe IsolationOptions di provisioner.go.",
+   "description": "Tipe IsolationOptions di provisioner.go. Didefinisikan pada baris 16-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "isolationoptions"
+   ]
+  },
+  {
+   "id": "class:internal/port/provisioner.go:RouterAccountManager",
+   "type": "class",
+   "name": "RouterAccountManager",
+   "filePath": "internal/port/provisioner.go",
+   "complexity": "simple",
+   "summary": "Tipe RouterAccountManager di provisioner.go, dengan method: Provision, ProvisionPPPoE, ProvisionHotspot, ProvisionDedicated, UpdateAccount, EnsureProfile.",
+   "description": "Tipe RouterAccountManager di provisioner.go, dengan method: Provision, ProvisionPPPoE, ProvisionHotspot, ProvisionDedicated, UpdateAccount, EnsureProfile. Didefinisikan pada baris 31-54.",
+   "tags": [
+    "go",
+    "tipe",
+    "routeraccountmanager"
+   ]
+  },
+  {
+   "id": "file:internal/port/queue_gateway.go",
+   "type": "file",
+   "name": "queue_gateway.go",
+   "filePath": "internal/port/queue_gateway.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (33 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (33 baris, 0 fungsi, 2 tipe). Tipe utama: DedicatedQueueParams, QueueGateway. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/queue_gateway.go:DedicatedQueueParams",
+   "type": "class",
+   "name": "DedicatedQueueParams",
+   "filePath": "internal/port/queue_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe DedicatedQueueParams di queue_gateway.go.",
+   "description": "Tipe DedicatedQueueParams di queue_gateway.go. Didefinisikan pada baris 11-20.",
+   "tags": [
+    "go",
+    "tipe",
+    "dedicatedqueueparams"
+   ]
+  },
+  {
+   "id": "class:internal/port/queue_gateway.go:QueueGateway",
+   "type": "class",
+   "name": "QueueGateway",
+   "filePath": "internal/port/queue_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe QueueGateway di queue_gateway.go, dengan method: ListQueues, AddQueue, RemoveQueue, SetQueueEnabled.",
+   "description": "Tipe QueueGateway di queue_gateway.go, dengan method: ListQueues, AddQueue, RemoveQueue, SetQueueEnabled. Didefinisikan pada baris 24-33.",
+   "tags": [
+    "go",
+    "tipe",
+    "queuegateway"
+   ]
+  },
+  {
+   "id": "file:internal/port/refresh_token_store.go",
+   "type": "file",
+   "name": "refresh_token_store.go",
+   "filePath": "internal/port/refresh_token_store.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (15 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (15 baris, 0 fungsi, 1 tipe). Tipe utama: RefreshTokenStore.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/refresh_token_store.go:RefreshTokenStore",
+   "type": "class",
+   "name": "RefreshTokenStore",
+   "filePath": "internal/port/refresh_token_store.go",
+   "complexity": "simple",
+   "summary": "Tipe RefreshTokenStore di refresh_token_store.go, dengan method: Set, Get, Delete.",
+   "description": "Tipe RefreshTokenStore di refresh_token_store.go, dengan method: Set, Get, Delete. Didefinisikan pada baris 8-15.",
+   "tags": [
+    "go",
+    "tipe",
+    "refreshtokenstore"
+   ]
+  },
+  {
+   "id": "file:internal/port/registration_repository.go",
+   "type": "file",
+   "name": "registration_repository.go",
+   "filePath": "internal/port/registration_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (30 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (30 baris, 0 fungsi, 2 tipe). Tipe utama: RegistrationFilter, RegistrationRepository. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/registration_repository.go:RegistrationFilter",
+   "type": "class",
+   "name": "RegistrationFilter",
+   "filePath": "internal/port/registration_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe RegistrationFilter di registration_repository.go.",
+   "description": "Tipe RegistrationFilter di registration_repository.go. Didefinisikan pada baris 11-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "registrationfilter"
+   ]
+  },
+  {
+   "id": "class:internal/port/registration_repository.go:RegistrationRepository",
+   "type": "class",
+   "name": "RegistrationRepository",
+   "filePath": "internal/port/registration_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe RegistrationRepository di registration_repository.go, dengan method: Save, FindByID, FindByNo, List, UpdateStatus, CountPendingSince.",
+   "description": "Tipe RegistrationRepository di registration_repository.go, dengan method: Save, FindByID, FindByNo, List, UpdateStatus, CountPendingSince. Didefinisikan pada baris 22-30.",
+   "tags": [
+    "go",
+    "tipe",
+    "registrationrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/reporting_repository.go",
+   "type": "file",
+   "name": "reporting_repository.go",
+   "filePath": "internal/port/reporting_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (24 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (24 baris, 0 fungsi, 2 tipe). Tipe utama: ReportingRepository, SnapshotComputer. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/reporting_repository.go:ReportingRepository",
+   "type": "class",
+   "name": "ReportingRepository",
+   "filePath": "internal/port/reporting_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe ReportingRepository di reporting_repository.go, dengan method: UpsertSnapshot, GetByDate, ListRange.",
+   "description": "Tipe ReportingRepository di reporting_repository.go, dengan method: UpsertSnapshot, GetByDate, ListRange. Didefinisikan pada baris 12-18.",
+   "tags": [
+    "go",
+    "tipe",
+    "reportingrepository"
+   ]
+  },
+  {
+   "id": "class:internal/port/reporting_repository.go:SnapshotComputer",
+   "type": "class",
+   "name": "SnapshotComputer",
+   "filePath": "internal/port/reporting_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe SnapshotComputer di reporting_repository.go, dengan method: RecomputeDaily.",
+   "description": "Tipe SnapshotComputer di reporting_repository.go, dengan method: RecomputeDaily. Didefinisikan pada baris 22-24.",
+   "tags": [
+    "go",
+    "tipe",
+    "snapshotcomputer"
+   ]
+  },
+  {
+   "id": "file:internal/port/service_plan_repository.go",
+   "type": "file",
+   "name": "service_plan_repository.go",
+   "filePath": "internal/port/service_plan_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (17 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (17 baris, 0 fungsi, 1 tipe). Tipe utama: ServicePlanRepository. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/service_plan_repository.go:ServicePlanRepository",
+   "type": "class",
+   "name": "ServicePlanRepository",
+   "filePath": "internal/port/service_plan_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe ServicePlanRepository di service_plan_repository.go, dengan method: Save, FindByID, FindByName, List, Delete.",
+   "description": "Tipe ServicePlanRepository di service_plan_repository.go, dengan method: Save, FindByID, FindByName, List, Delete. Didefinisikan pada baris 11-17.",
+   "tags": [
+    "go",
+    "tipe",
+    "serviceplanrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/session_gateway.go",
+   "type": "file",
+   "name": "session_gateway.go",
+   "filePath": "internal/port/session_gateway.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (30 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (30 baris, 0 fungsi, 1 tipe). Tipe utama: SessionGateway. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/session_gateway.go:SessionGateway",
+   "type": "class",
+   "name": "SessionGateway",
+   "filePath": "internal/port/session_gateway.go",
+   "complexity": "simple",
+   "summary": "Tipe SessionGateway di session_gateway.go, dengan method: ListPPPActive, ListPPPInactive, KickPPPSession, ListHotspotActive, ListHotspotInactiveUsers, KickHotspotSession.",
+   "description": "Tipe SessionGateway di session_gateway.go, dengan method: ListPPPActive, ListPPPInactive, KickPPPSession, ListHotspotActive, ListHotspotInactiveUsers, KickHotspotSession. Didefinisikan pada baris 13-30.",
+   "tags": [
+    "go",
+    "tipe",
+    "sessiongateway"
+   ]
+  },
+  {
+   "id": "file:internal/port/setting_reader.go",
+   "type": "file",
+   "name": "setting_reader.go",
+   "filePath": "internal/port/setting_reader.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (40 baris, 2 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (40 baris, 2 fungsi, 1 tipe). Tipe utama: SettingReader. Fungsi terbesar: LoadISPSettings, atoiOrDefault. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/setting_reader.go:SettingReader",
+   "type": "class",
+   "name": "SettingReader",
+   "filePath": "internal/port/setting_reader.go",
+   "complexity": "simple",
+   "summary": "Tipe SettingReader di setting_reader.go, dengan method: GetValue.",
+   "description": "Tipe SettingReader di setting_reader.go, dengan method: GetValue. Didefinisikan pada baris 12-14.",
+   "tags": [
+    "go",
+    "tipe",
+    "settingreader"
+   ]
+  },
+  {
+   "id": "function:internal/port/setting_reader.go:LoadISPSettings",
+   "type": "function",
+   "name": "LoadISPSettings",
+   "filePath": "internal/port/setting_reader.go",
+   "complexity": "simple",
+   "summary": "Fungsi LoadISPSettings (12 baris), parameter: ctx, r.",
+   "description": "Fungsi LoadISPSettings (12 baris), parameter: ctx, r. Didefinisikan pada baris 20-32.",
+   "tags": [
+    "go",
+    "fungsi",
+    "loadispsettings"
+   ]
+  },
+  {
+   "id": "file:internal/port/setting_repository.go",
+   "type": "file",
+   "name": "setting_repository.go",
+   "filePath": "internal/port/setting_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (21 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (21 baris, 0 fungsi, 1 tipe). Tipe utama: SettingRepository. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/setting_repository.go:SettingRepository",
+   "type": "class",
+   "name": "SettingRepository",
+   "filePath": "internal/port/setting_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe SettingRepository di setting_repository.go, dengan method: Get, GetValue, Set, GetByCategory, GetAll, BatchSet.",
+   "description": "Tipe SettingRepository di setting_repository.go, dengan method: Get, GetValue, Set, GetByCategory, GetAll, BatchSet. Didefinisikan pada baris 10-21.",
+   "tags": [
+    "go",
+    "tipe",
+    "settingrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/simple_queue.go",
+   "type": "file",
+   "name": "simple_queue.go",
+   "filePath": "internal/port/simple_queue.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (7 baris, 0 fungsi, 0 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (7 baris, 0 fungsi, 0 tipe). Bergantung pada 11 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "file:internal/port/skill_git_syncer.go",
+   "type": "file",
+   "name": "skill_git_syncer.go",
+   "filePath": "internal/port/skill_git_syncer.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (10 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (10 baris, 0 fungsi, 1 tipe). Tipe utama: SkillGitSyncer.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/skill_git_syncer.go:SkillGitSyncer",
+   "type": "class",
+   "name": "SkillGitSyncer",
+   "filePath": "internal/port/skill_git_syncer.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillGitSyncer di skill_git_syncer.go, dengan method: SyncRepo.",
+   "description": "Tipe SkillGitSyncer di skill_git_syncer.go, dengan method: SyncRepo. Didefinisikan pada baris 8-10.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillgitsyncer"
+   ]
+  },
+  {
+   "id": "file:internal/port/skill_provider.go",
+   "type": "file",
+   "name": "skill_provider.go",
+   "filePath": "internal/port/skill_provider.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (13 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (13 baris, 0 fungsi, 1 tipe). Tipe utama: SkillProvider. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/skill_provider.go:SkillProvider",
+   "type": "class",
+   "name": "SkillProvider",
+   "filePath": "internal/port/skill_provider.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillProvider di skill_provider.go, dengan method: ListSkills, GetSkillContent.",
+   "description": "Tipe SkillProvider di skill_provider.go, dengan method: ListSkills, GetSkillContent. Didefinisikan pada baris 10-13.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillprovider"
+   ]
+  },
+  {
+   "id": "file:internal/port/skill_repository.go",
+   "type": "file",
+   "name": "skill_repository.go",
+   "filePath": "internal/port/skill_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (21 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (21 baris, 0 fungsi, 1 tipe). Tipe utama: SkillRepository. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/skill_repository.go:SkillRepository",
+   "type": "class",
+   "name": "SkillRepository",
+   "filePath": "internal/port/skill_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillRepository di skill_repository.go, dengan method: ListSkills, GetSkill, SaveSkillMetadata, DeleteSkillMetadata, ListGitSkills, ToggleSkillEnabled.",
+   "description": "Tipe SkillRepository di skill_repository.go, dengan method: ListSkills, GetSkill, SaveSkillMetadata, DeleteSkillMetadata, ListGitSkills, ToggleSkillEnabled. Didefinisikan pada baris 10-21.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillrepository"
+   ]
+  },
+  {
+   "id": "file:internal/port/skill_store.go",
+   "type": "file",
+   "name": "skill_store.go",
+   "filePath": "internal/port/skill_store.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (35 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (35 baris, 0 fungsi, 1 tipe). Tipe utama: SkillStore. Bergantung pada 4 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/skill_store.go:SkillStore",
+   "type": "class",
+   "name": "SkillStore",
+   "filePath": "internal/port/skill_store.go",
+   "complexity": "simple",
+   "summary": "Tipe SkillStore di skill_store.go, dengan method: ListSkillsFromDisk, ReadSkillFromDisk, CreateSkillOnDisk, UpdateSkillOnDisk, DeleteSkillFromDisk, ExportSkillZip.",
+   "description": "Tipe SkillStore di skill_store.go, dengan method: ListSkillsFromDisk, ReadSkillFromDisk, CreateSkillOnDisk, UpdateSkillOnDisk, DeleteSkillFromDisk, ExportSkillZip. Didefinisikan pada baris 8-35.",
+   "tags": [
+    "go",
+    "tipe",
+    "skillstore"
+   ]
+  },
+  {
+   "id": "file:internal/port/streaming_driver.go",
+   "type": "file",
+   "name": "streaming_driver.go",
+   "filePath": "internal/port/streaming_driver.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (60 baris, 0 fungsi, 2 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (60 baris, 0 fungsi, 2 tipe). Tipe utama: StreamHandle, StreamingDeviceDriver. Bergantung pada 3 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/streaming_driver.go:StreamHandle",
+   "type": "class",
+   "name": "StreamHandle",
+   "filePath": "internal/port/streaming_driver.go",
+   "complexity": "simple",
+   "summary": "Tipe StreamHandle di streaming_driver.go, dengan method: Chan, Cancel, Err.",
+   "description": "Tipe StreamHandle di streaming_driver.go, dengan method: Chan, Cancel, Err. Didefinisikan pada baris 14-30.",
+   "tags": [
+    "go",
+    "tipe",
+    "streamhandle"
+   ]
+  },
+  {
+   "id": "class:internal/port/streaming_driver.go:StreamingDeviceDriver",
+   "type": "class",
+   "name": "StreamingDeviceDriver",
+   "filePath": "internal/port/streaming_driver.go",
+   "complexity": "simple",
+   "summary": "Tipe StreamingDeviceDriver di streaming_driver.go, dengan method: Stream.",
+   "description": "Tipe StreamingDeviceDriver di streaming_driver.go, dengan method: Stream. Didefinisikan pada baris 50-60.",
+   "tags": [
+    "go",
+    "tipe",
+    "streamingdevicedriver"
+   ]
+  },
+  {
+   "id": "file:internal/port/subscription_repository.go",
+   "type": "file",
+   "name": "subscription_repository.go",
+   "filePath": "internal/port/subscription_repository.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Kontrak interface milik consumer (port hexagonal) — paket `port` (36 baris, 0 fungsi, 1 tipe).",
+   "description": "Kontrak interface milik consumer (port hexagonal) — paket `port` (36 baris, 0 fungsi, 1 tipe). Tipe utama: SubscriptionRepository. Bergantung pada 6 berkas internal.",
+   "tags": [
+    "go",
+    "port",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/port/subscription_repository.go:SubscriptionRepository",
+   "type": "class",
+   "name": "SubscriptionRepository",
+   "filePath": "internal/port/subscription_repository.go",
+   "complexity": "simple",
+   "summary": "Tipe SubscriptionRepository di subscription_repository.go, dengan method: Save, FindByID, FindByCustomerID, FindAll, UpdateStatus, FindByDeviceAndUsername.",
+   "description": "Tipe SubscriptionRepository di subscription_repository.go, dengan method: Save, FindByID, FindByCustomerID, FindAll, UpdateStatus, FindByDeviceAndUsername. Didefinisikan pada baris 10-36.",
+   "tags": [
+    "go",
+    "tipe",
+    "subscriptionrepository"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "file:internal/port/mocktest/fakes_subscription.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "class:internal/port/mocktest/fakes_subscription.go:FakeSubscriptionRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:NewFakeSubscriptionRepo",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:Seed",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:Save",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:FindByID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:FindByCustomerID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:FindAll",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:UpdateStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:FindByDeviceAndUsername",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:ListActive",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:ListLifecycle",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:HasActiveForPlan",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "function:internal/port/mocktest/fakes_subscription.go:Delete",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/mocktest/fakes_subscription.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/monitor_stream_gateway.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/monitor_stream_gateway.go",
+   "target": "class:internal/port/monitor_stream_gateway.go:QueueStreamParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/monitor_stream_gateway.go",
+   "target": "class:internal/port/monitor_stream_gateway.go:MonitorStreamGateway",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/monitor_stream_gateway.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/monitor_stream_gateway.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/monitor_stream_gateway.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/notification_repository.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/notification_repository.go",
+   "target": "class:internal/port/notification_repository.go:NotificationRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/notification_repository.go",
+   "target": "class:internal/port/notification_repository.go:NotificationRetryRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/notification_repository.go",
+   "target": "file:internal/domain/notification/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/notification_repository.go",
+   "target": "file:internal/domain/notification/template.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/notification_repository.go",
+   "target": "file:internal/domain/notification/wa_notification.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_gateway.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_gateway.go",
+   "target": "class:internal/port/payment_gateway.go:ChargeRequest",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_gateway.go",
+   "target": "class:internal/port/payment_gateway.go:ChargeResult",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_gateway.go",
+   "target": "class:internal/port/payment_gateway.go:WebhookEvent",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_gateway.go",
+   "target": "class:internal/port/payment_gateway.go:PaymentGateway",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_processor.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_processor.go",
+   "target": "class:internal/port/payment_processor.go:CashPaymentCommand",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_processor.go",
+   "target": "class:internal/port/payment_processor.go:PaymentProcessor",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_processor.go",
+   "target": "file:internal/domain/billing/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_processor.go",
+   "target": "file:internal/domain/billing/gateway_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_processor.go",
+   "target": "file:internal/domain/billing/invoice_item.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_processor.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_processor.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_reader.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_reader.go",
+   "target": "class:internal/port/payment_reader.go:PaymentReader",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/payment_reader.go",
+   "target": "file:internal/domain/billing/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_reader.go",
+   "target": "file:internal/domain/billing/gateway_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_reader.go",
+   "target": "file:internal/domain/billing/invoice_item.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_reader.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/payment_reader.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/portal_repository.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/portal_repository.go",
+   "target": "class:internal/port/portal_repository.go:NotificationSender",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/portal_repository.go",
+   "target": "class:internal/port/portal_repository.go:PortalRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/portal_repository.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/portal_repository.go",
+   "target": "file:internal/domain/customer/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/portal_repository.go",
+   "target": "file:internal/domain/customer/portal_otp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/portal_repository.go",
+   "target": "file:internal/domain/customer/portal_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/portal_repository.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ppp_gateway.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/ppp_gateway.go",
+   "target": "class:internal/port/ppp_gateway.go:PPPGateway",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/ppp_gateway.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ppp_gateway.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ppp_gateway.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ppp_session.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/ppp_session.go",
+   "target": "class:internal/port/ppp_session.go:PPPoESecretParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/ppp_session.go",
+   "target": "class:internal/port/ppp_session.go:PPPProfileParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/ppp_session.go",
+   "target": "file:internal/domain/ppp/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/ppp_session.go",
+   "target": "file:internal/domain/ppp/ppp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "class:internal/port/provisioner.go:IsolationOptions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "class:internal/port/provisioner.go:RouterAccountManager",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/plan/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/plan/service_plan_rate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/plan/service_plan_rate.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/plan/service_plan.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/provisioner.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/queue_gateway.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/queue_gateway.go",
+   "target": "class:internal/port/queue_gateway.go:DedicatedQueueParams",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/queue_gateway.go",
+   "target": "class:internal/port/queue_gateway.go:QueueGateway",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/queue_gateway.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/queue_gateway.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/queue_gateway.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/refresh_token_store.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/refresh_token_store.go",
+   "target": "class:internal/port/refresh_token_store.go:RefreshTokenStore",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/registration_repository.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/registration_repository.go",
+   "target": "class:internal/port/registration_repository.go:RegistrationFilter",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/registration_repository.go",
+   "target": "class:internal/port/registration_repository.go:RegistrationRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/registration_repository.go",
+   "target": "file:internal/domain/registration/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/registration_repository.go",
+   "target": "file:internal/domain/registration/registration.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/reporting_repository.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/reporting_repository.go",
+   "target": "class:internal/port/reporting_repository.go:ReportingRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/reporting_repository.go",
+   "target": "class:internal/port/reporting_repository.go:SnapshotComputer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/reporting_repository.go",
+   "target": "file:internal/domain/reporting/daily_snapshot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/reporting_repository.go",
+   "target": "file:internal/domain/reporting/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/service_plan_repository.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/service_plan_repository.go",
+   "target": "class:internal/port/service_plan_repository.go:ServicePlanRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/service_plan_repository.go",
+   "target": "file:internal/domain/plan/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/service_plan_repository.go",
+   "target": "file:internal/domain/plan/service_plan_rate_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/service_plan_repository.go",
+   "target": "file:internal/domain/plan/service_plan_rate.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/service_plan_repository.go",
+   "target": "file:internal/domain/plan/service_plan.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/session_gateway.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/session_gateway.go",
+   "target": "class:internal/port/session_gateway.go:SessionGateway",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/session_gateway.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/session_gateway.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/session_gateway.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/setting_reader.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/setting_reader.go",
+   "target": "class:internal/port/setting_reader.go:SettingReader",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/setting_reader.go",
+   "target": "function:internal/port/setting_reader.go:LoadISPSettings",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/setting_reader.go",
+   "target": "function:internal/port/setting_reader.go:atoiOrDefault",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/setting_reader.go",
+   "target": "file:internal/domain/setting/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/setting_reader.go",
+   "target": "file:internal/domain/setting/isp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/setting_reader.go",
+   "target": "file:internal/domain/setting/setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/port/setting_reader.go:LoadISPSettings",
+   "target": "function:internal/port/setting_reader.go:atoiOrDefault",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/setting_repository.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/setting_repository.go",
+   "target": "class:internal/port/setting_repository.go:SettingRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/setting_repository.go",
+   "target": "file:internal/domain/setting/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/setting_repository.go",
+   "target": "file:internal/domain/setting/isp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/setting_repository.go",
+   "target": "file:internal/domain/setting/setting.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/isolation.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/metrics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/scripts.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/simple_queue.go",
+   "target": "file:internal/domain/device/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_git_syncer.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/skill_git_syncer.go",
+   "target": "class:internal/port/skill_git_syncer.go:SkillGitSyncer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/skill_provider.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/skill_provider.go",
+   "target": "class:internal/port/skill_provider.go:SkillProvider",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/skill_provider.go",
+   "target": "file:internal/domain/skill/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_provider.go",
+   "target": "file:internal/domain/skill/frontmatter_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_provider.go",
+   "target": "file:internal/domain/skill/frontmatter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_provider.go",
+   "target": "file:internal/domain/skill/skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_repository.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/skill_repository.go",
+   "target": "class:internal/port/skill_repository.go:SkillRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/skill_repository.go",
+   "target": "file:internal/domain/skill/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_repository.go",
+   "target": "file:internal/domain/skill/frontmatter_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_repository.go",
+   "target": "file:internal/domain/skill/frontmatter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_repository.go",
+   "target": "file:internal/domain/skill/skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_store.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/skill_store.go",
+   "target": "class:internal/port/skill_store.go:SkillStore",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/skill_store.go",
+   "target": "file:internal/domain/skill/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_store.go",
+   "target": "file:internal/domain/skill/frontmatter_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_store.go",
+   "target": "file:internal/domain/skill/frontmatter.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/skill_store.go",
+   "target": "file:internal/domain/skill/skill.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "class:internal/port/streaming_driver.go:StreamHandle",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "class:internal/port/streaming_driver.go:StreamingDeviceDriver",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "file:internal/domain/command/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "class:internal/port/subscription_repository.go:SubscriptionRepository",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "file:internal/domain/subscription/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "file:internal/domain/subscription/provision_dedicated.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "file:internal/domain/subscription/provision_hotspot.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "file:internal/domain/subscription/provision_pppoe.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "file:internal/domain/subscription/subscriber.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "weight": 0.7
+  }
+ ]
+}

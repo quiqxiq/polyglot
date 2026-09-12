@@ -1,0 +1,4946 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/adapter/connect/network/network_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 146,
+      "nonEmptyLines": 125,
+      "functions": [
+        {
+          "name": "NewNetworkConnectHandler",
+          "startLine": 31,
+          "endLine": 41,
+          "params": [
+            "hsUC",
+            "activeUC",
+            "provider"
+          ]
+        },
+        {
+          "name": "getDriver",
+          "startLine": 43,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "ListDHCPLeases",
+          "startLine": 55,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "BlockDHCPLease",
+          "startLine": 75,
+          "endLine": 92,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListParentQueues",
+          "startLine": 95,
+          "endLine": 119,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListIPPools",
+          "startLine": 122,
+          "endLine": 146,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "NetworkConnectHandler",
+          "startLine": 24,
+          "endLine": 28,
+          "methods": [
+            "getDriver",
+            "ListDHCPLeases",
+            "BlockDHCPLease",
+            "ListParentQueues",
+            "ListIPPools"
+          ],
+          "properties": [
+            "hotspotUC",
+            "activeSessionsUseCase",
+            "driverProvider"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NetworkConnectHandler",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "NewNetworkConnectHandler",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "ListDHCPLeases",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "BlockDHCPLease",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "ListParentQueues",
+          "line": 95,
+          "isDefault": false
+        },
+        {
+          "name": "ListIPPools",
+          "line": 122,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getDriver",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 45
+        },
+        {
+          "caller": "getDriver",
+          "callee": "h.driverProvider",
+          "lineNumber": 47
+        },
+        {
+          "caller": "getDriver",
+          "callee": "response.MapDomainError",
+          "lineNumber": 49
+        },
+        {
+          "caller": "getDriver",
+          "callee": "fault.Wrap",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ListDHCPLeases",
+          "callee": "h.getDriver",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ListDHCPLeases",
+          "callee": "response.Unavailable",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ListDHCPLeases",
+          "callee": "h.activeSessionsUseCase.GetDHCPLeases",
+          "lineNumber": 64
+        },
+        {
+          "caller": "ListDHCPLeases",
+          "callee": "response.MapDomainError",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ListDHCPLeases",
+          "callee": "connect.NewResponse",
+          "lineNumber": 69
+        },
+        {
+          "caller": "ListDHCPLeases",
+          "callee": "ToProtoDHCPLeases",
+          "lineNumber": 70
+        },
+        {
+          "caller": "BlockDHCPLease",
+          "callee": "h.getDriver",
+          "lineNumber": 76
+        },
+        {
+          "caller": "BlockDHCPLease",
+          "callee": "response.Unavailable",
+          "lineNumber": 81
+        },
+        {
+          "caller": "BlockDHCPLease",
+          "callee": "h.activeSessionsUseCase.SetDHCPLeaseBlock",
+          "lineNumber": 84
+        },
+        {
+          "caller": "BlockDHCPLease",
+          "callee": "response.MapDomainError",
+          "lineNumber": 86
+        },
+        {
+          "caller": "BlockDHCPLease",
+          "callee": "connect.NewResponse",
+          "lineNumber": 89
+        },
+        {
+          "caller": "BlockDHCPLease",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 90
+        },
+        {
+          "caller": "ListParentQueues",
+          "callee": "h.getDriver",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ListParentQueues",
+          "callee": "response.Unavailable",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ListParentQueues",
+          "callee": "h.hotspotUC.GetParentQueues",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ListParentQueues",
+          "callee": "response.MapDomainError",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ListParentQueues",
+          "callee": "make",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ListParentQueues",
+          "callee": "len",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ListParentQueues",
+          "callee": "append",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ListParentQueues",
+          "callee": "connect.NewResponse",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ListIPPools",
+          "callee": "h.getDriver",
+          "lineNumber": 123
+        },
+        {
+          "caller": "ListIPPools",
+          "callee": "response.Unavailable",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ListIPPools",
+          "callee": "h.hotspotUC.GetIPPools",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ListIPPools",
+          "callee": "response.MapDomainError",
+          "lineNumber": 133
+        },
+        {
+          "caller": "ListIPPools",
+          "callee": "make",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ListIPPools",
+          "callee": "len",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ListIPPools",
+          "callee": "append",
+          "lineNumber": 138
+        },
+        {
+          "caller": "ListIPPools",
+          "callee": "connect.NewResponse",
+          "lineNumber": 145
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/network/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 24,
+      "functions": [
+        {
+          "name": "NewNetworkServiceHandler",
+          "startLine": 14,
+          "endLine": 31,
+          "params": [
+            "hsUC",
+            "activeUC",
+            "provider"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewNetworkServiceHandler",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "NewNetworkConnectHandler",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 20
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewNetworkServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 28
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/notification/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 59,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "toProtoTemplate",
+          "startLine": 8,
+          "endLine": 16,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "toProtoTemplateList",
+          "startLine": 18,
+          "endLine": 24,
+          "params": [
+            "list"
+          ]
+        },
+        {
+          "name": "toProtoWANotification",
+          "startLine": 26,
+          "endLine": 51,
+          "params": [
+            "n"
+          ]
+        },
+        {
+          "name": "toProtoWANotificationList",
+          "startLine": 53,
+          "endLine": 59,
+          "params": [
+            "list"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoTemplateList",
+          "callee": "make",
+          "lineNumber": 19
+        },
+        {
+          "caller": "toProtoTemplateList",
+          "callee": "len",
+          "lineNumber": 19
+        },
+        {
+          "caller": "toProtoTemplateList",
+          "callee": "toProtoTemplate",
+          "lineNumber": 21
+        },
+        {
+          "caller": "toProtoWANotification",
+          "callee": "n.SentAt.Unix",
+          "lineNumber": 42
+        },
+        {
+          "caller": "toProtoWANotification",
+          "callee": "int32",
+          "lineNumber": 48
+        },
+        {
+          "caller": "toProtoWANotification",
+          "callee": "n.CreatedAt.Unix",
+          "lineNumber": 49
+        },
+        {
+          "caller": "toProtoWANotificationList",
+          "callee": "make",
+          "lineNumber": 54
+        },
+        {
+          "caller": "toProtoWANotificationList",
+          "callee": "len",
+          "lineNumber": 54
+        },
+        {
+          "caller": "toProtoWANotificationList",
+          "callee": "toProtoWANotification",
+          "lineNumber": 56
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/notification/notification_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 136,
+      "nonEmptyLines": 123,
+      "functions": [
+        {
+          "name": "NewNotificationConnectHandler",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "uc"
+          ]
+        },
+        {
+          "name": "ListTemplates",
+          "startLine": 27,
+          "endLine": 38,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetTemplate",
+          "startLine": 41,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "SaveTemplate",
+          "startLine": 55,
+          "endLine": 75,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListNotifications",
+          "startLine": 78,
+          "endLine": 89,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "PendingCount",
+          "startLine": 92,
+          "endLine": 103,
+          "params": [
+            "ctx",
+            "_"
+          ]
+        },
+        {
+          "name": "MarkNotificationSent",
+          "startLine": 106,
+          "endLine": 114,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "MarkNotificationFailed",
+          "startLine": 117,
+          "endLine": 125,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "TestSend",
+          "startLine": 128,
+          "endLine": 136,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "NotificationConnectHandler",
+          "startLine": 17,
+          "endLine": 19,
+          "methods": [
+            "ListTemplates",
+            "GetTemplate",
+            "SaveTemplate",
+            "ListNotifications",
+            "PendingCount",
+            "MarkNotificationSent",
+            "MarkNotificationFailed",
+            "TestSend"
+          ],
+          "properties": [
+            "useCase"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationConnectHandler",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "NewNotificationConnectHandler",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "ListTemplates",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "GetTemplate",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "SaveTemplate",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "ListNotifications",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "PendingCount",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "MarkNotificationSent",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "MarkNotificationFailed",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "TestSend",
+          "line": 128,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListTemplates",
+          "callee": "response.Unavailable",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "h.useCase.ListTemplates",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "response.MapDomainError",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "connect.NewResponse",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListTemplates",
+          "callee": "toProtoTemplateList",
+          "lineNumber": 36
+        },
+        {
+          "caller": "GetTemplate",
+          "callee": "response.Unavailable",
+          "lineNumber": 43
+        },
+        {
+          "caller": "GetTemplate",
+          "callee": "h.useCase.GetTemplate",
+          "lineNumber": 45
+        },
+        {
+          "caller": "GetTemplate",
+          "callee": "response.MapDomainError",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GetTemplate",
+          "callee": "connect.NewResponse",
+          "lineNumber": 49
+        },
+        {
+          "caller": "GetTemplate",
+          "callee": "toProtoTemplate",
+          "lineNumber": 50
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "response.Unavailable",
+          "lineNumber": 57
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "h.useCase.SaveTemplate",
+          "lineNumber": 68
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "response.MapDomainError",
+          "lineNumber": 70
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "connect.NewResponse",
+          "lineNumber": 72
+        },
+        {
+          "caller": "SaveTemplate",
+          "callee": "toProtoTemplate",
+          "lineNumber": 73
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "response.Unavailable",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "h.useCase.ListNotifications",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "int",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "response.MapDomainError",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "connect.NewResponse",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ListNotifications",
+          "callee": "toProtoWANotificationList",
+          "lineNumber": 87
+        },
+        {
+          "caller": "PendingCount",
+          "callee": "response.Unavailable",
+          "lineNumber": 94
+        },
+        {
+          "caller": "PendingCount",
+          "callee": "h.useCase.PendingCount",
+          "lineNumber": 96
+        },
+        {
+          "caller": "PendingCount",
+          "callee": "response.MapDomainError",
+          "lineNumber": 98
+        },
+        {
+          "caller": "PendingCount",
+          "callee": "connect.NewResponse",
+          "lineNumber": 100
+        },
+        {
+          "caller": "PendingCount",
+          "callee": "int32",
+          "lineNumber": 101
+        },
+        {
+          "caller": "MarkNotificationSent",
+          "callee": "response.Unavailable",
+          "lineNumber": 108
+        },
+        {
+          "caller": "MarkNotificationSent",
+          "callee": "h.useCase.MarkSent",
+          "lineNumber": 110
+        },
+        {
+          "caller": "MarkNotificationSent",
+          "callee": "response.MapDomainError",
+          "lineNumber": 111
+        },
+        {
+          "caller": "MarkNotificationSent",
+          "callee": "connect.NewResponse",
+          "lineNumber": 113
+        },
+        {
+          "caller": "MarkNotificationFailed",
+          "callee": "response.Unavailable",
+          "lineNumber": 119
+        },
+        {
+          "caller": "MarkNotificationFailed",
+          "callee": "h.useCase.MarkFailed",
+          "lineNumber": 121
+        },
+        {
+          "caller": "MarkNotificationFailed",
+          "callee": "response.MapDomainError",
+          "lineNumber": 122
+        },
+        {
+          "caller": "MarkNotificationFailed",
+          "callee": "connect.NewResponse",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestSend",
+          "callee": "response.Unavailable",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestSend",
+          "callee": "h.useCase.TestSend",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestSend",
+          "callee": "response.MapDomainError",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestSend",
+          "callee": "connect.NewResponse",
+          "lineNumber": 135
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 9,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/notification/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 23,
+      "functions": [
+        {
+          "name": "NewNotificationServiceHandler",
+          "startLine": 13,
+          "endLine": 30,
+          "params": [
+            "uc"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewNotificationServiceHandler",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "NewNotificationConnectHandler",
+          "lineNumber": 14
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 15
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 16
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 20
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 20
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewNotificationServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/options.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 14,
+      "functions": [
+        {
+          "name": "DefaultHandlerOptions",
+          "startLine": 10,
+          "endLine": 16,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DefaultHandlerOptions",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "DefaultHandlerOptions",
+          "callee": "validate.NewInterceptor",
+          "lineNumber": 11
+        },
+        {
+          "caller": "DefaultHandlerOptions",
+          "callee": "connect.WithCodec",
+          "lineNumber": 13
+        },
+        {
+          "caller": "DefaultHandlerOptions",
+          "callee": "JSONCodec",
+          "lineNumber": 13
+        },
+        {
+          "caller": "DefaultHandlerOptions",
+          "callee": "connect.WithInterceptors",
+          "lineNumber": 14
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/plan/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 184,
+      "nonEmptyLines": 178,
+      "functions": [
+        {
+          "name": "ToProtoPlan",
+          "startLine": 9,
+          "endLine": 91,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "ToProtoPlanList",
+          "startLine": 94,
+          "endLine": 100,
+          "params": [
+            "plans"
+          ]
+        },
+        {
+          "name": "FromProtoPlan",
+          "startLine": 103,
+          "endLine": 184,
+          "params": [
+            "pb"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ToProtoPlan",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ToProtoPlanList",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "FromProtoPlan",
+          "line": 103,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ToProtoPlan",
+          "callee": "int32",
+          "lineNumber": 13
+        },
+        {
+          "caller": "ToProtoPlan",
+          "callee": "int32",
+          "lineNumber": 21
+        },
+        {
+          "caller": "ToProtoPlan",
+          "callee": "int32",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ToProtoPlan",
+          "callee": "int32",
+          "lineNumber": 23
+        },
+        {
+          "caller": "ToProtoPlan",
+          "callee": "int32",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ToProtoPlan",
+          "callee": "int32",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ToProtoPlan",
+          "callee": "int32",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ToProtoPlan",
+          "callee": "int32",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ToProtoPlanList",
+          "callee": "make",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ToProtoPlanList",
+          "callee": "len",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ToProtoPlanList",
+          "callee": "ToProtoPlan",
+          "lineNumber": 97
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 107
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 115
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 116
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 117
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 118
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 119
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 120
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 156
+        },
+        {
+          "caller": "FromProtoPlan",
+          "callee": "int",
+          "lineNumber": 174
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/plan/plan_handler_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 70,
+      "nonEmptyLines": 60,
+      "functions": [
+        {
+          "name": "TestPlanConnectHandler_PlanCRUD",
+          "startLine": 17,
+          "endLine": 70,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestPlanConnectHandler_PlanCRUD",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "mocktest.NewFakeServicePlanRepo",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "mocktest.NewFakeRouterAccountManager",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "planUC.NewManagePlanUseCase",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "connectPlan.NewPlanConnectHandler",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "context.Background",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "handler.CreatePlan",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "connect.NewRequest",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "handler.GetPlan",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "connect.NewRequest",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "handler.ListPlans",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "connect.NewRequest",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "assert.Len",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "handler.UpdatePlan",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "connect.NewRequest",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "assert.InDelta",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "handler.DeletePlan",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "connect.NewRequest",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "require.NoError",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestPlanConnectHandler_PlanCRUD",
+          "callee": "assert.Contains",
+          "lineNumber": 69
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/plan/plan_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 96,
+      "nonEmptyLines": 86,
+      "functions": [
+        {
+          "name": "NewPlanConnectHandler",
+          "startLine": 21,
+          "endLine": 25,
+          "params": [
+            "planUC"
+          ]
+        },
+        {
+          "name": "ListPlans",
+          "startLine": 28,
+          "endLine": 39,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetPlan",
+          "startLine": 42,
+          "endLine": 53,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CreatePlan",
+          "startLine": 56,
+          "endLine": 68,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdatePlan",
+          "startLine": 71,
+          "endLine": 83,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeletePlan",
+          "startLine": 86,
+          "endLine": 96,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PlanConnectHandler",
+          "startLine": 16,
+          "endLine": 18,
+          "methods": [
+            "ListPlans",
+            "GetPlan",
+            "CreatePlan",
+            "UpdatePlan",
+            "DeletePlan"
+          ],
+          "properties": [
+            "planUC"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PlanConnectHandler",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewPlanConnectHandler",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ListPlans",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "GetPlan",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "CreatePlan",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "UpdatePlan",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "DeletePlan",
+          "line": 86,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListPlans",
+          "callee": "response.Unavailable",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ListPlans",
+          "callee": "h.planUC.List",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ListPlans",
+          "callee": "response.MapDomainError",
+          "lineNumber": 34
+        },
+        {
+          "caller": "ListPlans",
+          "callee": "connect.NewResponse",
+          "lineNumber": 36
+        },
+        {
+          "caller": "ListPlans",
+          "callee": "ToProtoPlanList",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GetPlan",
+          "callee": "response.Unavailable",
+          "lineNumber": 44
+        },
+        {
+          "caller": "GetPlan",
+          "callee": "h.planUC.Get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GetPlan",
+          "callee": "response.MapDomainError",
+          "lineNumber": 48
+        },
+        {
+          "caller": "GetPlan",
+          "callee": "connect.NewResponse",
+          "lineNumber": 50
+        },
+        {
+          "caller": "GetPlan",
+          "callee": "ToProtoPlan",
+          "lineNumber": 51
+        },
+        {
+          "caller": "CreatePlan",
+          "callee": "response.Unavailable",
+          "lineNumber": 58
+        },
+        {
+          "caller": "CreatePlan",
+          "callee": "FromProtoPlan",
+          "lineNumber": 60
+        },
+        {
+          "caller": "CreatePlan",
+          "callee": "h.planUC.Create",
+          "lineNumber": 61
+        },
+        {
+          "caller": "CreatePlan",
+          "callee": "response.MapDomainError",
+          "lineNumber": 63
+        },
+        {
+          "caller": "CreatePlan",
+          "callee": "connect.NewResponse",
+          "lineNumber": 65
+        },
+        {
+          "caller": "CreatePlan",
+          "callee": "ToProtoPlan",
+          "lineNumber": 66
+        },
+        {
+          "caller": "UpdatePlan",
+          "callee": "response.Unavailable",
+          "lineNumber": 73
+        },
+        {
+          "caller": "UpdatePlan",
+          "callee": "FromProtoPlan",
+          "lineNumber": 75
+        },
+        {
+          "caller": "UpdatePlan",
+          "callee": "h.planUC.Update",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdatePlan",
+          "callee": "response.MapDomainError",
+          "lineNumber": 78
+        },
+        {
+          "caller": "UpdatePlan",
+          "callee": "connect.NewResponse",
+          "lineNumber": 80
+        },
+        {
+          "caller": "UpdatePlan",
+          "callee": "ToProtoPlan",
+          "lineNumber": 81
+        },
+        {
+          "caller": "DeletePlan",
+          "callee": "response.Unavailable",
+          "lineNumber": 88
+        },
+        {
+          "caller": "DeletePlan",
+          "callee": "h.planUC.Delete",
+          "lineNumber": 90
+        },
+        {
+          "caller": "DeletePlan",
+          "callee": "response.MapDomainError",
+          "lineNumber": 91
+        },
+        {
+          "caller": "DeletePlan",
+          "callee": "connect.NewResponse",
+          "lineNumber": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/plan/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 22,
+      "functions": [
+        {
+          "name": "NewPlanServiceHandler",
+          "startLine": 13,
+          "endLine": 29,
+          "params": [
+            "planUC"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewPlanServiceHandler",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "NewPlanConnectHandler",
+          "lineNumber": 16
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 17
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 18
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewPlanServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/portal/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 93,
+      "nonEmptyLines": 86,
+      "functions": [
+        {
+          "name": "toProtoCustomerPortal",
+          "startLine": 12,
+          "endLine": 26,
+          "params": [
+            "c"
+          ]
+        },
+        {
+          "name": "toProtoSubscriptionSummary",
+          "startLine": 28,
+          "endLine": 47,
+          "params": [
+            "sub"
+          ]
+        },
+        {
+          "name": "toProtoUnpaidInvoiceSummary",
+          "startLine": 49,
+          "endLine": 61,
+          "params": [
+            "inv"
+          ]
+        },
+        {
+          "name": "toProtoInvoicePortalList",
+          "startLine": 63,
+          "endLine": 78,
+          "params": [
+            "list"
+          ]
+        },
+        {
+          "name": "toProtoPaymentEntries",
+          "startLine": 80,
+          "endLine": 93,
+          "params": [
+            "payments"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoSubscriptionSummary",
+          "callee": "time.Parse",
+          "lineNumber": 34
+        },
+        {
+          "caller": "toProtoSubscriptionSummary",
+          "callee": "t.Unix",
+          "lineNumber": 35
+        },
+        {
+          "caller": "toProtoSubscriptionSummary",
+          "callee": "int32",
+          "lineNumber": 44
+        },
+        {
+          "caller": "toProtoInvoicePortalList",
+          "callee": "make",
+          "lineNumber": 64
+        },
+        {
+          "caller": "toProtoInvoicePortalList",
+          "callee": "len",
+          "lineNumber": 64
+        },
+        {
+          "caller": "toProtoInvoicePortalList",
+          "callee": "inv.DueDate.Unix",
+          "lineNumber": 73
+        },
+        {
+          "caller": "toProtoPaymentEntries",
+          "callee": "make",
+          "lineNumber": 81
+        },
+        {
+          "caller": "toProtoPaymentEntries",
+          "callee": "len",
+          "lineNumber": 81
+        },
+        {
+          "caller": "toProtoPaymentEntries",
+          "callee": "p.PaymentDate.Unix",
+          "lineNumber": 87
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/portal/portal_handler_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 66,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "newPortalConnectFixture",
+          "startLine": 19,
+          "endLine": 40,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestPortalConnectHandler_RequestOTP_Validation",
+          "startLine": 42,
+          "endLine": 54,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestPortalConnectHandler_Overview_Unauthenticated",
+          "startLine": 56,
+          "endLine": 66,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestPortalConnectHandler_RequestOTP_Validation",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "TestPortalConnectHandler_Overview_Unauthenticated",
+          "line": 56,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "t.Helper",
+          "lineNumber": 20
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "mocktest.NewFakePortalRepo",
+          "lineNumber": 21
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "mocktest.NewFakeCustomerRepo",
+          "lineNumber": 22
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "mocktest.NewFakeSettingReader",
+          "lineNumber": 24
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "uc.NewUseCase",
+          "lineNumber": 29
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 30
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "mocktest.NewFakeInvoiceRepo",
+          "lineNumber": 30
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "mocktest.NewFakePaymentReader",
+          "lineNumber": 31
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "require.NoError",
+          "lineNumber": 33
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "customers.Save",
+          "lineNumber": 33
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "context.Background",
+          "lineNumber": 33
+        },
+        {
+          "caller": "newPortalConnectFixture",
+          "callee": "connectPortal.NewPortalConnectHandler",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "newPortalConnectFixture",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "context.Background",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "handler.RequestOTP",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "connect.NewRequest",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "assert.Error",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "handler.RequestOTP",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "connect.NewRequest",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "require.NoError",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestPortalConnectHandler_RequestOTP_Validation",
+          "callee": "assert.Contains",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestPortalConnectHandler_Overview_Unauthenticated",
+          "callee": "newPortalConnectFixture",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestPortalConnectHandler_Overview_Unauthenticated",
+          "callee": "context.Background",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestPortalConnectHandler_Overview_Unauthenticated",
+          "callee": "handler.Overview",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestPortalConnectHandler_Overview_Unauthenticated",
+          "callee": "connect.NewRequest",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestPortalConnectHandler_Overview_Unauthenticated",
+          "callee": "assert.Error",
+          "lineNumber": 62
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/portal/portal_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 119,
+      "nonEmptyLines": 108,
+      "functions": [
+        {
+          "name": "NewPortalConnectHandler",
+          "startLine": 18,
+          "endLine": 20,
+          "params": [
+            "u"
+          ]
+        },
+        {
+          "name": "RequestOTP",
+          "startLine": 22,
+          "endLine": 34,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "Login",
+          "startLine": 36,
+          "endLine": 49,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "Overview",
+          "startLine": 51,
+          "endLine": 73,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "MyInvoices",
+          "startLine": 75,
+          "endLine": 90,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "MyPayments",
+          "startLine": 92,
+          "endLine": 111,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "Logout",
+          "startLine": 113,
+          "endLine": 119,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PortalConnectHandler",
+          "startLine": 14,
+          "endLine": 16,
+          "methods": [
+            "RequestOTP",
+            "Login",
+            "Overview",
+            "MyInvoices",
+            "MyPayments",
+            "Logout"
+          ],
+          "properties": [
+            "usecase"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PortalConnectHandler",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewPortalConnectHandler",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "RequestOTP",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Login",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "Overview",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "MyInvoices",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "MyPayments",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "Logout",
+          "line": 113,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RequestOTP",
+          "callee": "response.Unavailable",
+          "lineNumber": 24
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "h.usecase.RequestOTP",
+          "lineNumber": 26
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "response.MapDomainError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "RequestOTP",
+          "callee": "connect.NewResponse",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Login",
+          "callee": "response.Unavailable",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Login",
+          "callee": "h.usecase.Login",
+          "lineNumber": 40
+        },
+        {
+          "caller": "Login",
+          "callee": "response.MapDomainError",
+          "lineNumber": 42
+        },
+        {
+          "caller": "Login",
+          "callee": "connect.NewResponse",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Login",
+          "callee": "time.Now().Add(12 * time.Hour).Unix",
+          "lineNumber": 46
+        },
+        {
+          "caller": "Login",
+          "callee": "time.Now().Add",
+          "lineNumber": 46
+        },
+        {
+          "caller": "Login",
+          "callee": "time.Now",
+          "lineNumber": 46
+        },
+        {
+          "caller": "Login",
+          "callee": "toProtoCustomerPortal",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Overview",
+          "callee": "response.Unavailable",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Overview",
+          "callee": "h.usecase.Authenticate",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Overview",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Overview",
+          "callee": "h.usecase.Overview",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Overview",
+          "callee": "response.MapDomainError",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Overview",
+          "callee": "toProtoCustomerPortal",
+          "lineNumber": 64
+        },
+        {
+          "caller": "Overview",
+          "callee": "toProtoSubscriptionSummary",
+          "lineNumber": 67
+        },
+        {
+          "caller": "Overview",
+          "callee": "append",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Overview",
+          "callee": "toProtoUnpaidInvoiceSummary",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Overview",
+          "callee": "connect.NewResponse",
+          "lineNumber": 72
+        },
+        {
+          "caller": "MyInvoices",
+          "callee": "response.Unavailable",
+          "lineNumber": 77
+        },
+        {
+          "caller": "MyInvoices",
+          "callee": "h.usecase.Authenticate",
+          "lineNumber": 79
+        },
+        {
+          "caller": "MyInvoices",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 81
+        },
+        {
+          "caller": "MyInvoices",
+          "callee": "h.usecase.Invoices",
+          "lineNumber": 83
+        },
+        {
+          "caller": "MyInvoices",
+          "callee": "response.MapDomainError",
+          "lineNumber": 85
+        },
+        {
+          "caller": "MyInvoices",
+          "callee": "connect.NewResponse",
+          "lineNumber": 87
+        },
+        {
+          "caller": "MyInvoices",
+          "callee": "toProtoInvoicePortalList",
+          "lineNumber": 88
+        },
+        {
+          "caller": "MyPayments",
+          "callee": "response.Unavailable",
+          "lineNumber": 94
+        },
+        {
+          "caller": "MyPayments",
+          "callee": "h.usecase.Authenticate",
+          "lineNumber": 96
+        },
+        {
+          "caller": "MyPayments",
+          "callee": "response.Unauthenticated",
+          "lineNumber": 98
+        },
+        {
+          "caller": "MyPayments",
+          "callee": "int",
+          "lineNumber": 100
+        },
+        {
+          "caller": "MyPayments",
+          "callee": "h.usecase.Payments",
+          "lineNumber": 104
+        },
+        {
+          "caller": "MyPayments",
+          "callee": "response.MapDomainError",
+          "lineNumber": 106
+        },
+        {
+          "caller": "MyPayments",
+          "callee": "connect.NewResponse",
+          "lineNumber": 108
+        },
+        {
+          "caller": "MyPayments",
+          "callee": "toProtoPaymentEntries",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Logout",
+          "callee": "response.Unavailable",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Logout",
+          "callee": "h.usecase.Logout",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Logout",
+          "callee": "connect.NewResponse",
+          "lineNumber": 118
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/portal/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 23,
+      "functions": [
+        {
+          "name": "NewPortalServiceHandler",
+          "startLine": 15,
+          "endLine": 29,
+          "params": [
+            "u"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewPortalServiceHandler",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "NewPortalConnectHandler",
+          "lineNumber": 16
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 17
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 18
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewPortalServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ppp/active_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 80,
+      "nonEmptyLines": 65,
+      "functions": [
+        {
+          "name": "ListActiveSessions",
+          "startLine": 14,
+          "endLine": 28,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "KickActiveSession",
+          "startLine": 31,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "KickActiveSessions",
+          "startLine": 48,
+          "endLine": 63,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListInactiveSecrets",
+          "startLine": 66,
+          "endLine": 80,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListActiveSessions",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "KickActiveSession",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "KickActiveSessions",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "ListInactiveSecrets",
+          "line": 66,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListActiveSessions",
+          "callee": "h.getDriver",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ListActiveSessions",
+          "callee": "h.useCase.ListActive",
+          "lineNumber": 20
+        },
+        {
+          "caller": "ListActiveSessions",
+          "callee": "response.MapDomainError",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ListActiveSessions",
+          "callee": "connect.NewResponse",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ListActiveSessions",
+          "callee": "toProtoPPPActiveSessions",
+          "lineNumber": 26
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "h.getDriver",
+          "lineNumber": 32
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "h.useCase.KickActive",
+          "lineNumber": 37
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "response.MapDomainError",
+          "lineNumber": 39
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "connect.NewResponse",
+          "lineNumber": 42
+        },
+        {
+          "caller": "KickActiveSession",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 43
+        },
+        {
+          "caller": "KickActiveSessions",
+          "callee": "h.getDriver",
+          "lineNumber": 49
+        },
+        {
+          "caller": "KickActiveSessions",
+          "callee": "h.useCase.KickActiveBatch",
+          "lineNumber": 54
+        },
+        {
+          "caller": "KickActiveSessions",
+          "callee": "response.MapDomainError",
+          "lineNumber": 56
+        },
+        {
+          "caller": "KickActiveSessions",
+          "callee": "connect.NewResponse",
+          "lineNumber": 59
+        },
+        {
+          "caller": "KickActiveSessions",
+          "callee": "int32",
+          "lineNumber": 60
+        },
+        {
+          "caller": "KickActiveSessions",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ListInactiveSecrets",
+          "callee": "h.getDriver",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ListInactiveSecrets",
+          "callee": "h.useCase.ListInactive",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ListInactiveSecrets",
+          "callee": "response.MapDomainError",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ListInactiveSecrets",
+          "callee": "connect.NewResponse",
+          "lineNumber": 77
+        },
+        {
+          "caller": "ListInactiveSecrets",
+          "callee": "toProtoPPPSecrets",
+          "lineNumber": 78
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ppp/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 159,
+      "nonEmptyLines": 148,
+      "functions": [
+        {
+          "name": "toProtoPPPSecret",
+          "startLine": 9,
+          "endLine": 23,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "toProtoPPPSecrets",
+          "startLine": 26,
+          "endLine": 32,
+          "params": [
+            "secrets"
+          ]
+        },
+        {
+          "name": "toProtoPPPProfile",
+          "startLine": 35,
+          "endLine": 54,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "toProtoPPPProfiles",
+          "startLine": 57,
+          "endLine": 63,
+          "params": [
+            "profiles"
+          ]
+        },
+        {
+          "name": "toProtoPPPActiveSession",
+          "startLine": 66,
+          "endLine": 79,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "toProtoPPPActiveSessions",
+          "startLine": 82,
+          "endLine": 88,
+          "params": [
+            "sessions"
+          ]
+        },
+        {
+          "name": "FromProtoCreateSecretRequest",
+          "startLine": 91,
+          "endLine": 103,
+          "params": [
+            "req"
+          ]
+        },
+        {
+          "name": "FromProtoUpdateSecretRequest",
+          "startLine": 106,
+          "endLine": 117,
+          "params": [
+            "req"
+          ]
+        },
+        {
+          "name": "FromProtoCreateProfileRequest",
+          "startLine": 120,
+          "endLine": 138,
+          "params": [
+            "req"
+          ]
+        },
+        {
+          "name": "FromProtoUpdateProfileRequest",
+          "startLine": 141,
+          "endLine": 159,
+          "params": [
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FromProtoCreateSecretRequest",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "FromProtoUpdateSecretRequest",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "FromProtoCreateProfileRequest",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "FromProtoUpdateProfileRequest",
+          "line": 141,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoPPPSecrets",
+          "callee": "make",
+          "lineNumber": 27
+        },
+        {
+          "caller": "toProtoPPPSecrets",
+          "callee": "len",
+          "lineNumber": 27
+        },
+        {
+          "caller": "toProtoPPPSecrets",
+          "callee": "toProtoPPPSecret",
+          "lineNumber": 29
+        },
+        {
+          "caller": "toProtoPPPProfiles",
+          "callee": "make",
+          "lineNumber": 58
+        },
+        {
+          "caller": "toProtoPPPProfiles",
+          "callee": "len",
+          "lineNumber": 58
+        },
+        {
+          "caller": "toProtoPPPProfiles",
+          "callee": "toProtoPPPProfile",
+          "lineNumber": 60
+        },
+        {
+          "caller": "toProtoPPPActiveSessions",
+          "callee": "make",
+          "lineNumber": 83
+        },
+        {
+          "caller": "toProtoPPPActiveSessions",
+          "callee": "len",
+          "lineNumber": 83
+        },
+        {
+          "caller": "toProtoPPPActiveSessions",
+          "callee": "toProtoPPPActiveSession",
+          "lineNumber": 85
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 10,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ppp/ppp_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "NewPPPConnectHandler",
+          "startLine": 24,
+          "endLine": 30,
+          "params": [
+            "uc",
+            "provider",
+            "streamGW"
+          ]
+        },
+        {
+          "name": "getDriver",
+          "startLine": 32,
+          "endLine": 41,
+          "params": [
+            "ctx",
+            "deviceID"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PPPConnectHandler",
+          "startLine": 17,
+          "endLine": 21,
+          "methods": [
+            "getDriver"
+          ],
+          "properties": [
+            "useCase",
+            "driverProvider",
+            "streamGW"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PPPConnectHandler",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "NewPPPConnectHandler",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getDriver",
+          "callee": "response.InvalidArgument",
+          "lineNumber": 34
+        },
+        {
+          "caller": "getDriver",
+          "callee": "h.driverProvider",
+          "lineNumber": 36
+        },
+        {
+          "caller": "getDriver",
+          "callee": "response.MapDomainError",
+          "lineNumber": 38
+        },
+        {
+          "caller": "getDriver",
+          "callee": "fault.Wrap",
+          "lineNumber": 38
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ppp/profile_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 111,
+      "nonEmptyLines": 91,
+      "functions": [
+        {
+          "name": "ListProfiles",
+          "startLine": 14,
+          "endLine": 28,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetProfile",
+          "startLine": 31,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CreateProfile",
+          "startLine": 48,
+          "endLine": 71,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdateProfile",
+          "startLine": 74,
+          "endLine": 94,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteProfile",
+          "startLine": 97,
+          "endLine": 111,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListProfiles",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "GetProfile",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "CreateProfile",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProfile",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteProfile",
+          "line": 97,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListProfiles",
+          "callee": "h.getDriver",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "h.useCase.ListProfiles",
+          "lineNumber": 20
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "response.MapDomainError",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "connect.NewResponse",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ListProfiles",
+          "callee": "toProtoPPPProfiles",
+          "lineNumber": 26
+        },
+        {
+          "caller": "GetProfile",
+          "callee": "h.getDriver",
+          "lineNumber": 32
+        },
+        {
+          "caller": "GetProfile",
+          "callee": "h.useCase.GetProfile",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GetProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetProfile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GetProfile",
+          "callee": "toProtoPPPProfile",
+          "lineNumber": 43
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "h.getDriver",
+          "lineNumber": 49
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "FromProtoCreateProfileRequest",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "h.useCase.AddProfile",
+          "lineNumber": 55
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 56
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "h.useCase.ListProfiles",
+          "lineNumber": 59
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 61
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "len",
+          "lineNumber": 63
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "response.Internal",
+          "lineNumber": 64
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 67
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "toProtoPPPProfile",
+          "lineNumber": 68
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 69
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "h.getDriver",
+          "lineNumber": 75
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "FromProtoUpdateProfileRequest",
+          "lineNumber": 80
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "h.useCase.UpdateProfile",
+          "lineNumber": 81
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 82
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "h.useCase.GetProfile",
+          "lineNumber": 85
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 87
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 90
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "toProtoPPPProfile",
+          "lineNumber": 91
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 92
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "h.getDriver",
+          "lineNumber": 98
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "h.useCase.RemoveProfile",
+          "lineNumber": 103
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "response.MapDomainError",
+          "lineNumber": 105
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "connect.NewResponse",
+          "lineNumber": 108
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 109
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ppp/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 46,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "NewPPPServiceHandler",
+          "startLine": 13,
+          "endLine": 46,
+          "params": [
+            "uc",
+            "provider",
+            "streamGW"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewPPPServiceHandler",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "NewPPPConnectHandler",
+          "lineNumber": 14
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "http.NewServeMux",
+          "lineNumber": 15
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "iconnect.DefaultHandlerOptions",
+          "lineNumber": 16
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 23
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 32
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 33
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 36
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 36
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 37
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 37
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 38
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 38
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 39
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewUnaryHandler",
+          "lineNumber": 39
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 42
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 42
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "mux.Handle",
+          "lineNumber": 43
+        },
+        {
+          "caller": "NewPPPServiceHandler",
+          "callee": "connect.NewServerStreamHandler",
+          "lineNumber": 43
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ppp/secret_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 133,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "ListSecrets",
+          "startLine": 14,
+          "endLine": 28,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetSecret",
+          "startLine": 31,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CreateSecret",
+          "startLine": 48,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "UpdateSecret",
+          "startLine": 75,
+          "endLine": 95,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "DeleteSecret",
+          "startLine": 98,
+          "endLine": 112,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "SetSecretDisabled",
+          "startLine": 115,
+          "endLine": 133,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ListSecrets",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "GetSecret",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "CreateSecret",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateSecret",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteSecret",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "SetSecretDisabled",
+          "line": 115,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListSecrets",
+          "callee": "h.getDriver",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ListSecrets",
+          "callee": "h.useCase.ListSecrets",
+          "lineNumber": 20
+        },
+        {
+          "caller": "ListSecrets",
+          "callee": "response.MapDomainError",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ListSecrets",
+          "callee": "connect.NewResponse",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ListSecrets",
+          "callee": "toProtoPPPSecrets",
+          "lineNumber": 26
+        },
+        {
+          "caller": "GetSecret",
+          "callee": "h.getDriver",
+          "lineNumber": 32
+        },
+        {
+          "caller": "GetSecret",
+          "callee": "h.useCase.GetSecret",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GetSecret",
+          "callee": "response.MapDomainError",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetSecret",
+          "callee": "connect.NewResponse",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GetSecret",
+          "callee": "toProtoPPPSecret",
+          "lineNumber": 43
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "h.getDriver",
+          "lineNumber": 49
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "FromProtoCreateSecretRequest",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "h.useCase.AddSecret",
+          "lineNumber": 55
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "response.MapDomainError",
+          "lineNumber": 56
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "h.useCase.ListSecrets",
+          "lineNumber": 60
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "response.MapDomainError",
+          "lineNumber": 62
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "len",
+          "lineNumber": 64
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "response.Internal",
+          "lineNumber": 65
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "connect.NewResponse",
+          "lineNumber": 68
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "toProtoPPPSecret",
+          "lineNumber": 69
+        },
+        {
+          "caller": "CreateSecret",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 70
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "h.getDriver",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "FromProtoUpdateSecretRequest",
+          "lineNumber": 81
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "h.useCase.UpdateSecret",
+          "lineNumber": 82
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "response.MapDomainError",
+          "lineNumber": 83
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "h.useCase.GetSecret",
+          "lineNumber": 86
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "response.MapDomainError",
+          "lineNumber": 88
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "connect.NewResponse",
+          "lineNumber": 91
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "toProtoPPPSecret",
+          "lineNumber": 92
+        },
+        {
+          "caller": "UpdateSecret",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 93
+        },
+        {
+          "caller": "DeleteSecret",
+          "callee": "h.getDriver",
+          "lineNumber": 99
+        },
+        {
+          "caller": "DeleteSecret",
+          "callee": "h.useCase.RemoveSecret",
+          "lineNumber": 104
+        },
+        {
+          "caller": "DeleteSecret",
+          "callee": "response.MapDomainError",
+          "lineNumber": 106
+        },
+        {
+          "caller": "DeleteSecret",
+          "callee": "connect.NewResponse",
+          "lineNumber": 109
+        },
+        {
+          "caller": "DeleteSecret",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 110
+        },
+        {
+          "caller": "SetSecretDisabled",
+          "callee": "h.getDriver",
+          "lineNumber": 116
+        },
+        {
+          "caller": "SetSecretDisabled",
+          "callee": "h.useCase.SetSecretDisabled",
+          "lineNumber": 121
+        },
+        {
+          "caller": "SetSecretDisabled",
+          "callee": "response.MapDomainError",
+          "lineNumber": 122
+        },
+        {
+          "caller": "SetSecretDisabled",
+          "callee": "connect.NewResponse",
+          "lineNumber": 130
+        },
+        {
+          "caller": "SetSecretDisabled",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 131
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/ppp/stream_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 317,
+      "nonEmptyLines": 292,
+      "functions": [
+        {
+          "name": "StreamActiveSessions",
+          "startLine": 17,
+          "endLine": 136,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        },
+        {
+          "name": "StreamInactiveSecrets",
+          "startLine": 139,
+          "endLine": 317,
+          "params": [
+            "ctx",
+            "req",
+            "stream"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamActiveSessions",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "StreamInactiveSecrets",
+          "line": 139,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "h.getDriver",
+          "lineNumber": 18
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "response.Unimplemented",
+          "lineNumber": 25
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "make",
+          "lineNumber": 28
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "h.useCase.ListActive",
+          "lineNumber": 31
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "make",
+          "lineNumber": 37
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "len",
+          "lineNumber": 37
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "append",
+          "lineNumber": 39
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "toProtoPPPActiveSession",
+          "lineNumber": 39
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "stream.Send",
+          "lineNumber": 43
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "time.Now().Unix",
+          "lineNumber": 45
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "time.Now",
+          "lineNumber": 45
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "h.streamGW.StreamPPPActive",
+          "lineNumber": 49
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "response.MapDomainError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "func() { _ = handle.Cancel() }",
+          "lineNumber": 53
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "handle.Cancel",
+          "lineNumber": 53
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "make",
+          "lineNumber": 55
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "h.useCase.ListSecrets",
+          "lineNumber": 56
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "ctx.Done",
+          "lineNumber": 66
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "handle.Chan",
+          "lineNumber": 68
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "handle.Err",
+          "lineNumber": 70
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "append",
+          "lineNumber": 72
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "handle.Chan",
+          "lineNumber": 76
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "append",
+          "lineNumber": 80
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "strings.EqualFold",
+          "lineNumber": 91
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "strings.EqualFold",
+          "lineNumber": 91
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "strings.EqualFold",
+          "lineNumber": 91
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "delete",
+          "lineNumber": 92
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "strings.EqualFold",
+          "lineNumber": 113
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "make",
+          "lineNumber": 119
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "len",
+          "lineNumber": 119
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "append",
+          "lineNumber": 121
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "toProtoPPPActiveSession",
+          "lineNumber": 121
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "sort.Slice",
+          "lineNumber": 123
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "stream.Send",
+          "lineNumber": 127
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "time.Now().Unix",
+          "lineNumber": 129
+        },
+        {
+          "caller": "StreamActiveSessions",
+          "callee": "time.Now",
+          "lineNumber": 129
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "h.getDriver",
+          "lineNumber": 140
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "response.Unimplemented",
+          "lineNumber": 147
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "h.useCase.ListSecrets",
+          "lineNumber": 150
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "response.MapDomainError",
+          "lineNumber": 152
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "h.useCase.ListActive",
+          "lineNumber": 154
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "response.MapDomainError",
+          "lineNumber": 156
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "make",
+          "lineNumber": 159
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "make",
+          "lineNumber": 164
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "make",
+          "lineNumber": 170
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "append",
+          "lineNumber": 173
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "toProtoPPPSecret",
+          "lineNumber": 173
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "sort.Slice",
+          "lineNumber": 176
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "stream.Send",
+          "lineNumber": 183
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "time.Now().Unix",
+          "lineNumber": 185
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "time.Now",
+          "lineNumber": 185
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "getInactiveList",
+          "lineNumber": 186
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "h.streamGW.StreamPPPActive",
+          "lineNumber": 191
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "response.MapDomainError",
+          "lineNumber": 193
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "func() { _ = handleActive.Cancel() }",
+          "lineNumber": 195
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "handleActive.Cancel",
+          "lineNumber": 195
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "h.streamGW.StreamPPPSecrets",
+          "lineNumber": 197
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "response.MapDomainError",
+          "lineNumber": 199
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "func() { _ = handleSecrets.Cancel() }",
+          "lineNumber": 201
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "handleSecrets.Cancel",
+          "lineNumber": 201
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "ctx.Done",
+          "lineNumber": 205
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "handleActive.Chan",
+          "lineNumber": 207
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "handleActive.Err",
+          "lineNumber": 209
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "append",
+          "lineNumber": 211
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "handleActive.Chan",
+          "lineNumber": 215
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "append",
+          "lineNumber": 219
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 230
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 230
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 230
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "delete",
+          "lineNumber": 233
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "stream.Send",
+          "lineNumber": 244
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "time.Now().Unix",
+          "lineNumber": 246
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "time.Now",
+          "lineNumber": 246
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "getInactiveList",
+          "lineNumber": 247
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "handleSecrets.Chan",
+          "lineNumber": 252
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "handleSecrets.Err",
+          "lineNumber": 254
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "append",
+          "lineNumber": 256
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "handleSecrets.Chan",
+          "lineNumber": 260
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "append",
+          "lineNumber": 264
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 275
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 275
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 275
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "delete",
+          "lineNumber": 278
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 291
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 291
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "stream.Send",
+          "lineNumber": 307
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "time.Now().Unix",
+          "lineNumber": 309
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "time.Now",
+          "lineNumber": 309
+        },
+        {
+          "caller": "StreamInactiveSecrets",
+          "callee": "getInactiveList",
+          "lineNumber": 310
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/provider.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/registration/mapper.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 77,
+      "nonEmptyLines": 72,
+      "functions": [
+        {
+          "name": "toProtoRegistration",
+          "startLine": 10,
+          "endLine": 65,
+          "params": [
+            "r"
+          ]
+        },
+        {
+          "name": "toProtoRegistrationList",
+          "startLine": 67,
+          "endLine": 73,
+          "params": [
+            "regs"
+          ]
+        },
+        {
+          "name": "fmtInt",
+          "startLine": 75,
+          "endLine": 77,
+          "params": [
+            "n"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toProtoRegistration",
+          "callee": "r.ScheduledInstallDate.Unix",
+          "lineNumber": 26
+        },
+        {
+          "caller": "toProtoRegistration",
+          "callee": "r.ScheduledInstallTime.Format",
+          "lineNumber": 29
+        },
+        {
+          "caller": "toProtoRegistration",
+          "callee": "fmtInt",
+          "lineNumber": 33
+        },
+        {
+          "caller": "toProtoRegistration",
+          "callee": "r.InstalledAt.Unix",
+          "lineNumber": 37
+        },
+        {
+          "caller": "toProtoRegistration",
+          "callee": "r.CreatedAt.Unix",
+          "lineNumber": 63
+        },
+        {
+          "caller": "toProtoRegistrationList",
+          "callee": "make",
+          "lineNumber": 68
+        },
+        {
+          "caller": "toProtoRegistrationList",
+          "callee": "len",
+          "lineNumber": 68
+        },
+        {
+          "caller": "toProtoRegistrationList",
+          "callee": "toProtoRegistration",
+          "lineNumber": 70
+        },
+        {
+          "caller": "fmtInt",
+          "callee": "strconv.FormatUint",
+          "lineNumber": 76
+        },
+        {
+          "caller": "fmtInt",
+          "callee": "uint64",
+          "lineNumber": 76
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/registration/registration_handler_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 113,
+      "nonEmptyLines": 95,
+      "functions": [
+        {
+          "name": "newHandlerFixture",
+          "startLine": 19,
+          "endLine": 43,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "startLine": 45,
+          "endLine": 93,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRegistrationConnectHandler_ValidationErrors",
+          "startLine": 95,
+          "endLine": 113,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "TestRegistrationConnectHandler_ValidationErrors",
+          "line": 95,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newHandlerFixture",
+          "callee": "t.Helper",
+          "lineNumber": 20
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "mocktest.NewFakeRegistrationRepo",
+          "lineNumber": 21
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "mocktest.NewFakeServicePlanRepo",
+          "lineNumber": 22
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "mocktest.NewFakeCustomerRepo",
+          "lineNumber": 23
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "mocktest.NewFakeSubscriptionRepo",
+          "lineNumber": 24
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "mocktest.NewFakeInvoiceRepo",
+          "lineNumber": 25
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "mocktest.NewFakeNotificationRepo",
+          "lineNumber": 26
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "plans.Seed",
+          "lineNumber": 29
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "uc.NewManageRegistrationUseCase",
+          "lineNumber": 35
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "uc.NewConvertUseCase",
+          "lineNumber": 36
+        },
+        {
+          "caller": "newHandlerFixture",
+          "callee": "connectReg.NewRegistrationConnectHandler",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "newHandlerFixture",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "context.Background",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "handler.SubmitRegistration",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "connect.NewRequest",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "require.NoError",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.Equal",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "handler.GetRegistration",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "connect.NewRequest",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "require.NoError",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.Equal",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "handler.ApproveRegistration",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "connect.NewRequest",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "require.NoError",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.Equal",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "handler.MarkInstalled",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "connect.NewRequest",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "require.NoError",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.Equal",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "handler.ConvertRegistration",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "connect.NewRequest",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "require.NoError",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.Equal",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_Submit_Approve_Convert",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_ValidationErrors",
+          "callee": "newHandlerFixture",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_ValidationErrors",
+          "callee": "context.Background",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_ValidationErrors",
+          "callee": "handler.SubmitRegistration",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_ValidationErrors",
+          "callee": "connect.NewRequest",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_ValidationErrors",
+          "callee": "assert.Error",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_ValidationErrors",
+          "callee": "handler.GetRegistration",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_ValidationErrors",
+          "callee": "connect.NewRequest",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestRegistrationConnectHandler_ValidationErrors",
+          "callee": "assert.Error",
+          "lineNumber": 110
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/connect/registration/registration_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 180,
+      "nonEmptyLines": 166,
+      "functions": [
+        {
+          "name": "NewRegistrationConnectHandler",
+          "startLine": 22,
+          "endLine": 27,
+          "params": [
+            "managerUC",
+            "convertUC"
+          ]
+        },
+        {
+          "name": "SubmitRegistration",
+          "startLine": 30,
+          "endLine": 56,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ListRegistrations",
+          "startLine": 58,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "GetRegistration",
+          "startLine": 74,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ApproveRegistration",
+          "startLine": 87,
+          "endLine": 98,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ScheduleInstall",
+          "startLine": 100,
+          "endLine": 125,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "MarkInstalled",
+          "startLine": 127,
+          "endLine": 138,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "RejectRegistration",
+          "startLine": 140,
+          "endLine": 151,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "CancelRegistration",
+          "startLine": 153,
+          "endLine": 164,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        },
+        {
+          "name": "ConvertRegistration",
+          "startLine": 166,
+          "endLine": 180,
+          "params": [
+            "ctx",
+            "req"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RegistrationConnectHandler",
+          "startLine": 17,
+          "endLine": 20,
+          "methods": [
+            "SubmitRegistration",
+            "ListRegistrations",
+            "GetRegistration",
+            "ApproveRegistration",
+            "ScheduleInstall",
+            "MarkInstalled",
+            "RejectRegistration",
+            "CancelRegistration",
+            "ConvertRegistration"
+          ],
+          "properties": [
+            "managerUC",
+            "convertUC"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RegistrationConnectHandler",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "NewRegistrationConnectHandler",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "SubmitRegistration",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "ListRegistrations",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "GetRegistration",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "ApproveRegistration",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "ScheduleInstall",
+          "line": 100,
+          "isDefault": false
+        },
+        {
+          "name": "MarkInstalled",
+          "line": 127,
+          "isDefault": false
+        },
+        {
+          "name": "RejectRegistration",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "CancelRegistration",
+          "line": 153,
+          "isDefault": false
+        },
+        {
+          "name": "ConvertRegistration",
+          "line": 166,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SubmitRegistration",
+          "callee": "response.Unavailable",
+          "lineNumber": 32
+        },
+        {
+          "caller": "SubmitRegistration",
+          "callee": "h.managerUC.Submit",
+          "lineNumber": 49
+        },
+        {
+          "caller": "SubmitRegistration",
+          "callee": "response.MapDomainError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "SubmitRegistration",
+          "callee": "connect.NewResponse",
+          "lineNumber": 53
+        },
+        {
+          "caller": "SubmitRegistration",
+          "callee": "toProtoRegistration",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ListRegistrations",
+          "callee": "response.Unavailable",
+          "lineNumber": 60
+        },
+        {
+          "caller": "ListRegistrations",
+          "callee": "h.managerUC.List",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ListRegistrations",
+          "callee": "response.MapDomainError",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ListRegistrations",
+          "callee": "connect.NewResponse",
+          "lineNumber": 69
+        },
+        {
+          "caller": "ListRegistrations",
+          "callee": "toProtoRegistrationList",
+          "lineNumber": 70
+        },
+        {
+          "caller": "GetRegistration",
+          "callee": "response.Unavailable",
+          "lineNumber": 76
+        },
+        {
+          "caller": "GetRegistration",
+          "callee": "h.managerUC.FindByID",
+          "lineNumber": 78
+        },
+        {
+          "caller": "GetRegistration",
+          "callee": "response.MapDomainError",
+          "lineNumber": 80
+        },
+        {
+          "caller": "GetRegistration",
+          "callee": "connect.NewResponse",
+          "lineNumber": 82
+        },
+        {
+          "caller": "GetRegistration",
+          "callee": "toProtoRegistration",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ApproveRegistration",
+          "callee": "response.Unavailable",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ApproveRegistration",
+          "callee": "h.managerUC.Approve",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ApproveRegistration",
+          "callee": "response.MapDomainError",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ApproveRegistration",
+          "callee": "connect.NewResponse",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ApproveRegistration",
+          "callee": "toProtoRegistration",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "response.Unavailable",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "time.Unix(req.Msg.InstallDateUnix, 0).UTC",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "time.Unix",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "time.Parse",
+          "lineNumber": 107
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "strconv.ParseUint",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "uint",
+          "lineNumber": 114
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "h.managerUC.ScheduleInstall",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "response.MapDomainError",
+          "lineNumber": 120
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "connect.NewResponse",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ScheduleInstall",
+          "callee": "toProtoRegistration",
+          "lineNumber": 123
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "response.Unavailable",
+          "lineNumber": 129
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "h.managerUC.MarkInstalled",
+          "lineNumber": 131
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "response.MapDomainError",
+          "lineNumber": 133
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "connect.NewResponse",
+          "lineNumber": 135
+        },
+        {
+          "caller": "MarkInstalled",
+          "callee": "toProtoRegistration",
+          "lineNumber": 136
+        },
+        {
+          "caller": "RejectRegistration",
+          "callee": "response.Unavailable",
+          "lineNumber": 142
+        },
+        {
+          "caller": "RejectRegistration",
+          "callee": "h.managerUC.Reject",
+          "lineNumber": 144
+        },
+        {
+          "caller": "RejectRegistration",
+          "callee": "response.MapDomainError",
+          "lineNumber": 146
+        },
+        {
+          "caller": "RejectRegistration",
+          "callee": "connect.NewResponse",
+          "lineNumber": 148
+        },
+        {
+          "caller": "RejectRegistration",
+          "callee": "toProtoRegistration",
+          "lineNumber": 149
+        },
+        {
+          "caller": "CancelRegistration",
+          "callee": "response.Unavailable",
+          "lineNumber": 155
+        },
+        {
+          "caller": "CancelRegistration",
+          "callee": "h.managerUC.Cancel",
+          "lineNumber": 157
+        },
+        {
+          "caller": "CancelRegistration",
+          "callee": "response.MapDomainError",
+          "lineNumber": 159
+        },
+        {
+          "caller": "CancelRegistration",
+          "callee": "connect.NewResponse",
+          "lineNumber": 161
+        },
+        {
+          "caller": "CancelRegistration",
+          "callee": "toProtoRegistration",
+          "lineNumber": 162
+        },
+        {
+          "caller": "ConvertRegistration",
+          "callee": "response.Unavailable",
+          "lineNumber": 168
+        },
+        {
+          "caller": "ConvertRegistration",
+          "callee": "h.convertUC.ConvertWithDevice",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ConvertRegistration",
+          "callee": "response.MapDomainError",
+          "lineNumber": 172
+        },
+        {
+          "caller": "ConvertRegistration",
+          "callee": "connect.NewResponse",
+          "lineNumber": 174
+        },
+        {
+          "caller": "ConvertRegistration",
+          "callee": "toProtoRegistration",
+          "lineNumber": 175
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 10,
+        "classCount": 1
+      }
+    }
+  ]
+}

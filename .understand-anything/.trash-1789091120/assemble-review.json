@@ -1,0 +1,32 @@
+{
+  "issues": [],
+  "warnings": [],
+  "stats": {
+    "scannedFiles": 804,
+    "nodes": 4181,
+    "edges": 23076,
+    "nodeTypes": {
+      "service": 7,
+      "table": 88,
+      "config": 33,
+      "document": 63,
+      "schema": 24,
+      "endpoint": 240,
+      "file": 629,
+      "class": 549,
+      "function": 2548
+    },
+    "edgeTypes": {
+      "contains": 3766,
+      "defines_schema": 240,
+      "imports": 18824,
+      "calls": 147,
+      "configures": 2,
+      "tested_by": 97
+    },
+    "filesWithoutFileLevelNode": 0,
+    "nodesMissingRequiredFields": 0,
+    "danglingEdges": 0,
+    "orphanNodes": 135
+  }
+}

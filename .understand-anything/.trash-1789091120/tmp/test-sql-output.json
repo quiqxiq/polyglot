@@ -1,0 +1,1938 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 48,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "migrations/000001_create_devices_table.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 7,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000001_create_devices_table.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 70,
+      "nonEmptyLines": 64,
+      "definitions": [
+        {
+          "name": "devices",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "name",
+            "vendor",
+            "driver_type",
+            "host",
+            "port",
+            "ssh_port",
+            "timeout_ms",
+            "poll_interval_ms",
+            "extra",
+            "tags",
+            "enabled",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 14,
+          "endLine": 30
+        },
+        {
+          "name": "credentials",
+          "kind": "table",
+          "fields": [
+            "and",
+            "updated_at"
+          ],
+          "startLine": 37,
+          "endLine": 52
+        },
+        {
+          "name": "idx_devices_tenant_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 32,
+          "endLine": 32
+        },
+        {
+          "name": "idx_devices_driver_type",
+          "kind": "index",
+          "fields": [],
+          "startLine": 33,
+          "endLine": 33
+        },
+        {
+          "name": "idx_devices_vendor",
+          "kind": "index",
+          "fields": [],
+          "startLine": 34,
+          "endLine": 34
+        },
+        {
+          "name": "idx_devices_tags",
+          "kind": "index",
+          "fields": [],
+          "startLine": 35,
+          "endLine": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 6
+      }
+    },
+    {
+      "path": "migrations/000002_create_bot_tables.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 9,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000002_create_bot_tables.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 85,
+      "nonEmptyLines": 76,
+      "definitions": [
+        {
+          "name": "users",
+          "kind": "table",
+          "fields": [
+            "id",
+            "username",
+            "email",
+            "password_hash",
+            "role",
+            "tenant_id",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 3,
+          "endLine": 12
+        },
+        {
+          "name": "wa_sessions",
+          "kind": "table",
+          "fields": [
+            "id",
+            "device_name",
+            "phone_number",
+            "jid",
+            "status",
+            "is_bot_enabled",
+            "connected_at",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 14,
+          "endLine": 24
+        },
+        {
+          "name": "conversations",
+          "kind": "table",
+          "fields": [
+            "id",
+            "session_id",
+            "customer_wa_number",
+            "status",
+            "assigned_agent_id",
+            "started_at",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 26,
+          "endLine": 35
+        },
+        {
+          "name": "messages",
+          "kind": "table",
+          "fields": [
+            "id",
+            "conversation_id",
+            "sender_type",
+            "content",
+            "token_in",
+            "token_out",
+            "llm_config_id",
+            "created_at"
+          ],
+          "startLine": 40,
+          "endLine": 49
+        },
+        {
+          "name": "llm_configs",
+          "kind": "table",
+          "fields": [
+            "id",
+            "provider",
+            "model",
+            "api_key_encrypted",
+            "params",
+            "max_output_tokens",
+            "is_active",
+            "cost_per_1m_input",
+            "cost_per_1m_output",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 53,
+          "endLine": 65
+        },
+        {
+          "name": "knowledge_entries",
+          "kind": "table",
+          "fields": [
+            "id",
+            "title",
+            "content",
+            "tags",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 67,
+          "endLine": 74
+        },
+        {
+          "name": "technicians",
+          "kind": "table",
+          "fields": [
+            "id",
+            "full_name",
+            "username",
+            "phone_number",
+            "specialization",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 76,
+          "endLine": 85
+        },
+        {
+          "name": "idx_conversations_session_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 37,
+          "endLine": 37
+        },
+        {
+          "name": "idx_conversations_customer_wa_number",
+          "kind": "index",
+          "fields": [],
+          "startLine": 38,
+          "endLine": 38
+        },
+        {
+          "name": "idx_messages_conversation_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 51,
+          "endLine": 51
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 10
+      }
+    },
+    {
+      "path": "migrations/000003_add_ssh_port_to_devices.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000003_add_ssh_port_to_devices.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000004_create_wa_chat_mirror_tables.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 4,
+      "nonEmptyLines": 3,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000004_create_wa_chat_mirror_tables.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 41,
+      "nonEmptyLines": 37,
+      "definitions": [
+        {
+          "name": "wa_chats",
+          "kind": "table",
+          "fields": [
+            "id",
+            "session_id",
+            "chat_jid",
+            "display_name",
+            "is_group",
+            "last_message_id",
+            "last_message_preview",
+            "last_message_time",
+            "unread_count",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 8,
+          "endLine": 21
+        },
+        {
+          "name": "wa_messages",
+          "kind": "table",
+          "fields": [
+            "id",
+            "session_id",
+            "chat_jid",
+            "wa_message_id",
+            "sender_jid",
+            "sender_name",
+            "content",
+            "media_type",
+            "is_from_me",
+            "is_read",
+            "timestamp",
+            "created_at"
+          ],
+          "startLine": 25,
+          "endLine": 39
+        },
+        {
+          "name": "idx_wa_chats_session_last_time",
+          "kind": "index",
+          "fields": [],
+          "startLine": 23,
+          "endLine": 23
+        },
+        {
+          "name": "idx_wa_messages_session_chat_time",
+          "kind": "index",
+          "fields": [],
+          "startLine": 41,
+          "endLine": 41
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 4
+      }
+    },
+    {
+      "path": "migrations/000005_add_bot_enabled_to_wa_chats.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000005_add_bot_enabled_to_wa_chats.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 8,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000006_create_billing_tables.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 5,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000006_create_billing_tables.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 53,
+      "nonEmptyLines": 47,
+      "definitions": [
+        {
+          "name": "customers",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "name",
+            "email",
+            "phone",
+            "address",
+            "status",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 8,
+          "endLine": 18
+        },
+        {
+          "name": "subscriptions",
+          "kind": "table",
+          "fields": [
+            "id",
+            "customer_id",
+            "plan_id",
+            "status",
+            "start_date",
+            "end_date",
+            "price",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 20,
+          "endLine": 30
+        },
+        {
+          "name": "invoices",
+          "kind": "table",
+          "fields": [
+            "id",
+            "customer_id",
+            "amount",
+            "status",
+            "due_date",
+            "paid_at",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 34,
+          "endLine": 43
+        },
+        {
+          "name": "plans",
+          "kind": "table",
+          "fields": [
+            "id",
+            "name",
+            "speed_mbps",
+            "price",
+            "description"
+          ],
+          "startLine": 47,
+          "endLine": 53
+        },
+        {
+          "name": "idx_subscriptions_customer_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 32,
+          "endLine": 32
+        },
+        {
+          "name": "idx_invoices_customer_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 45,
+          "endLine": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 6
+      }
+    },
+    {
+      "path": "migrations/000007_add_message_status.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000007_add_message_status.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 6,
+      "nonEmptyLines": 6,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000008_knowledge_embed_sync.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 9,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000008_knowledge_embed_sync.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 17,
+      "nonEmptyLines": 15,
+      "definitions": [
+        {
+          "name": "idx_knowledge_embed_status",
+          "kind": "index",
+          "fields": [],
+          "startLine": 17,
+          "endLine": 17
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 1
+      }
+    },
+    {
+      "path": "migrations/000009_add_user_is_active.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 4,
+      "nonEmptyLines": 3,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000009_add_user_is_active.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 7,
+      "nonEmptyLines": 6,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000010_create_skills_tables.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000010_create_skills_tables.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 32,
+      "nonEmptyLines": 28,
+      "definitions": [
+        {
+          "name": "bot_skills",
+          "kind": "table",
+          "fields": [
+            "id",
+            "slug",
+            "name",
+            "description",
+            "is_enabled",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 1,
+          "endLine": 9
+        },
+        {
+          "name": "bot_skill_files",
+          "kind": "table",
+          "fields": [
+            "id",
+            "skill_id",
+            "name",
+            "file_path",
+            "content",
+            "is_reference",
+            "updated_at"
+          ],
+          "startLine": 14,
+          "endLine": 22
+        },
+        {
+          "name": "bot_global_prompts",
+          "kind": "table",
+          "fields": [
+            "id",
+            "content",
+            "updated_at"
+          ],
+          "startLine": 27,
+          "endLine": 32
+        },
+        {
+          "name": "idx_bot_skills_slug",
+          "kind": "index",
+          "fields": [],
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "name": "idx_bot_skills_enabled",
+          "kind": "index",
+          "fields": [],
+          "startLine": 12,
+          "endLine": 12
+        },
+        {
+          "name": "idx_bot_skill_files_skill_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "name": "idx_bot_skill_files_path",
+          "kind": "index",
+          "fields": [],
+          "startLine": 25,
+          "endLine": 25
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 7
+      }
+    },
+    {
+      "path": "migrations/000011_create_skills_metadata_table.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000011_create_skills_metadata_table.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 16,
+      "nonEmptyLines": 15,
+      "definitions": [
+        {
+          "name": "skills_metadata",
+          "kind": "table",
+          "fields": [
+            "id",
+            "user_id",
+            "name",
+            "definition",
+            "source_type",
+            "source_url",
+            "version",
+            "enabled",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 1,
+          "endLine": 12
+        },
+        {
+          "name": "idx_skills_metadata_user_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 14,
+          "endLine": 14
+        },
+        {
+          "name": "idx_skills_metadata_name",
+          "kind": "index",
+          "fields": [],
+          "startLine": 15,
+          "endLine": 15
+        },
+        {
+          "name": "idx_skills_metadata_enabled",
+          "kind": "index",
+          "fields": [],
+          "startLine": 16,
+          "endLine": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 4
+      }
+    },
+    {
+      "path": "migrations/000012_merge_technicians_into_users.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 16,
+      "nonEmptyLines": 14,
+      "definitions": [
+        {
+          "name": "technicians",
+          "kind": "table",
+          "fields": [
+            "id",
+            "full_name",
+            "username",
+            "phone_number",
+            "specialization",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 7,
+          "endLine": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 1
+      }
+    },
+    {
+      "path": "migrations/000012_merge_technicians_into_users.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 32,
+      "nonEmptyLines": 29,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000013_create_system_settings_table.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 3,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000013_create_system_settings_table.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 23,
+      "nonEmptyLines": 21,
+      "definitions": [
+        {
+          "name": "system_settings",
+          "kind": "table",
+          "fields": [
+            "value",
+            "category",
+            "description",
+            "updated_at"
+          ],
+          "startLine": 3,
+          "endLine": 9
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 1
+      }
+    },
+    {
+      "path": "migrations/000014_rebuild_service_plans.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "definitions": [
+        {
+          "name": "plans",
+          "kind": "table",
+          "fields": [
+            "id",
+            "name",
+            "speed_mbps",
+            "price",
+            "description"
+          ],
+          "startLine": 6,
+          "endLine": 12
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 1
+      }
+    },
+    {
+      "path": "migrations/000014_rebuild_service_plans.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 47,
+      "nonEmptyLines": 43,
+      "definitions": [
+        {
+          "name": "service_plans",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "name",
+            "service_type",
+            "bandwidth_upload_kbps",
+            "burst_download_kbps",
+            "burst_upload_kbps",
+            "burst_threshold_kbps",
+            "burst_time_seconds",
+            "price",
+            "selling_price",
+            "installation_fee",
+            "tax_percent",
+            "validity",
+            "validity_mode",
+            "simultaneous_use",
+            "ip_pool_name",
+            "parent_queue",
+            "address_list",
+            "shared_users",
+            "expire_mode",
+            "lock_user",
+            "lock_server",
+            "limit_uptime",
+            "limit_bytes",
+            "is_active",
+            "description",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 9,
+          "endLine": 41
+        },
+        {
+          "name": "idx_service_plans_type",
+          "kind": "index",
+          "fields": [],
+          "startLine": 43,
+          "endLine": 43
+        },
+        {
+          "name": "idx_service_plans_active",
+          "kind": "index",
+          "fields": [],
+          "startLine": 44,
+          "endLine": 44
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 3
+      }
+    },
+    {
+      "path": "migrations/000015_rebuild_isp_core.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 47,
+      "nonEmptyLines": 41,
+      "definitions": [
+        {
+          "name": "customers",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "name",
+            "email",
+            "phone",
+            "address",
+            "status",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 10,
+          "endLine": 20
+        },
+        {
+          "name": "subscriptions",
+          "kind": "table",
+          "fields": [
+            "id",
+            "customer_id",
+            "plan_id",
+            "status",
+            "start_date",
+            "end_date",
+            "price",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 22,
+          "endLine": 32
+        },
+        {
+          "name": "invoices",
+          "kind": "table",
+          "fields": [
+            "id",
+            "customer_id",
+            "amount",
+            "status",
+            "due_date",
+            "paid_at",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 36,
+          "endLine": 45
+        },
+        {
+          "name": "idx_subscriptions_customer_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 34,
+          "endLine": 34
+        },
+        {
+          "name": "idx_invoices_customer_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 47,
+          "endLine": 47
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 5
+      }
+    },
+    {
+      "path": "migrations/000015_rebuild_isp_core.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 138,
+      "nonEmptyLines": 125,
+      "definitions": [
+        {
+          "name": "customers",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "customer_code",
+            "name",
+            "phone",
+            "email",
+            "address",
+            "latitude",
+            "longitude",
+            "portal_access_code",
+            "status",
+            "notes",
+            "registered_at",
+            "deleted_at",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 15,
+          "endLine": 32
+        },
+        {
+          "name": "customer_portal_sessions",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "customer_id",
+            "session_token",
+            "ip_address",
+            "user_agent",
+            "expires_at",
+            "created_at"
+          ],
+          "startLine": 41,
+          "endLine": 50
+        },
+        {
+          "name": "subscriptions",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "customer_id",
+            "plan_id",
+            "device_id",
+            "remote_password_cipher",
+            "local_address",
+            "remote_address",
+            "parent_queue",
+            "rate_limit",
+            "billing_cycle",
+            "billing_day",
+            "auto_isolate",
+            "isolation_grace_days",
+            "status",
+            "start_date",
+            "end_date",
+            "custom_price",
+            "current_period_start",
+            "current_period_end",
+            "notes",
+            "deleted_at",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 55,
+          "endLine": 86
+        },
+        {
+          "name": "invoices",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "invoice_number",
+            "customer_id",
+            "subscription_id",
+            "period",
+            "discount",
+            "tax_amount",
+            "total",
+            "paid_amount",
+            "due_date",
+            "paid_at",
+            "status",
+            "qr_payload",
+            "manual_payment_code",
+            "notes",
+            "cancelled_at",
+            "cancel_reason",
+            "deleted_at",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 95,
+          "endLine": 118
+        },
+        {
+          "name": "invoice_items",
+          "kind": "table",
+          "fields": [
+            "id",
+            "invoice_id",
+            "description",
+            "quantity",
+            "unit_price",
+            "amount",
+            "item_type",
+            "created_at"
+          ],
+          "startLine": 127,
+          "endLine": 136
+        },
+        {
+          "name": "idx_customers_code",
+          "kind": "index",
+          "fields": [],
+          "startLine": 34,
+          "endLine": 34
+        },
+        {
+          "name": "idx_customers_phone",
+          "kind": "index",
+          "fields": [],
+          "startLine": 35,
+          "endLine": 35
+        },
+        {
+          "name": "idx_customers_portal",
+          "kind": "index",
+          "fields": [],
+          "startLine": 36,
+          "endLine": 36
+        },
+        {
+          "name": "idx_customers_status",
+          "kind": "index",
+          "fields": [],
+          "startLine": 37,
+          "endLine": 37
+        },
+        {
+          "name": "idx_portal_sessions_token",
+          "kind": "index",
+          "fields": [],
+          "startLine": 52,
+          "endLine": 52
+        },
+        {
+          "name": "idx_subscriptions_customer",
+          "kind": "index",
+          "fields": [],
+          "startLine": 88,
+          "endLine": 88
+        },
+        {
+          "name": "idx_subscriptions_plan",
+          "kind": "index",
+          "fields": [],
+          "startLine": 89,
+          "endLine": 89
+        },
+        {
+          "name": "idx_subscriptions_device",
+          "kind": "index",
+          "fields": [],
+          "startLine": 90,
+          "endLine": 90
+        },
+        {
+          "name": "idx_subscriptions_status",
+          "kind": "index",
+          "fields": [],
+          "startLine": 91,
+          "endLine": 91
+        },
+        {
+          "name": "idx_invoices_customer",
+          "kind": "index",
+          "fields": [],
+          "startLine": 120,
+          "endLine": 120
+        },
+        {
+          "name": "idx_invoices_period",
+          "kind": "index",
+          "fields": [],
+          "startLine": 121,
+          "endLine": 121
+        },
+        {
+          "name": "idx_invoices_status",
+          "kind": "index",
+          "fields": [],
+          "startLine": 122,
+          "endLine": 122
+        },
+        {
+          "name": "idx_invoices_due_date",
+          "kind": "index",
+          "fields": [],
+          "startLine": 123,
+          "endLine": 123
+        },
+        {
+          "name": "idx_invoice_items_invoice",
+          "kind": "index",
+          "fields": [],
+          "startLine": 138,
+          "endLine": 138
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 19
+      }
+    },
+    {
+      "path": "migrations/000016_create_registrations_financial.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 9,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000016_create_registrations_financial.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 161,
+      "nonEmptyLines": 147,
+      "definitions": [
+        {
+          "name": "registrations",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "registration_no",
+            "full_name",
+            "phone",
+            "email",
+            "address",
+            "latitude",
+            "longitude",
+            "notes",
+            "status",
+            "reviewed_by",
+            "reviewed_at",
+            "admin_notes",
+            "scheduled_install_date",
+            "scheduled_install_time",
+            "assigned_technician_id",
+            "installed_at",
+            "technician_notes",
+            "customer_id",
+            "subscription_id",
+            "invoice_id",
+            "rejected_at",
+            "rejected_reason",
+            "cancelled_at",
+            "cancel_reason",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 6,
+          "endLine": 37
+        },
+        {
+          "name": "payment_methods",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "name",
+            "type",
+            "is_active",
+            "created_at"
+          ],
+          "startLine": 45,
+          "endLine": 52
+        },
+        {
+          "name": "payments",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "payment_no",
+            "invoice_id",
+            "payment_method_id",
+            "amount",
+            "payment_date",
+            "received_by",
+            "scan_method",
+            "reference",
+            "notes",
+            "created_at"
+          ],
+          "startLine": 55,
+          "endLine": 68
+        },
+        {
+          "name": "gateway_transactions",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "gateway",
+            "external_id",
+            "invoice_id",
+            "payment_id",
+            "amount",
+            "fee_amount",
+            "status",
+            "payment_channel",
+            "payment_url",
+            "qr_string",
+            "raw_callback",
+            "callback_count",
+            "paid_at",
+            "expires_at",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 74,
+          "endLine": 94
+        },
+        {
+          "name": "cash_accounts",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "account_code",
+            "name",
+            "type",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 101,
+          "endLine": 110
+        },
+        {
+          "name": "cash_categories",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "name",
+            "type",
+            "is_active"
+          ],
+          "startLine": 113,
+          "endLine": 120
+        },
+        {
+          "name": "cash_transactions",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "transaction_no",
+            "account_id",
+            "category_id",
+            "direction",
+            "amount",
+            "trx_date",
+            "source_type",
+            "source_id",
+            "description",
+            "recorded_by",
+            "created_at"
+          ],
+          "startLine": 123,
+          "endLine": 138
+        },
+        {
+          "name": "idx_registrations_status",
+          "kind": "index",
+          "fields": [],
+          "startLine": 39,
+          "endLine": 39
+        },
+        {
+          "name": "idx_registrations_phone",
+          "kind": "index",
+          "fields": [],
+          "startLine": 40,
+          "endLine": 40
+        },
+        {
+          "name": "idx_registrations_tech",
+          "kind": "index",
+          "fields": [],
+          "startLine": 41,
+          "endLine": 41
+        },
+        {
+          "name": "idx_payments_invoice",
+          "kind": "index",
+          "fields": [],
+          "startLine": 70,
+          "endLine": 70
+        },
+        {
+          "name": "idx_payments_date",
+          "kind": "index",
+          "fields": [],
+          "startLine": 71,
+          "endLine": 71
+        },
+        {
+          "name": "idx_gateway_tx_invoice",
+          "kind": "index",
+          "fields": [],
+          "startLine": 96,
+          "endLine": 96
+        },
+        {
+          "name": "idx_gateway_tx_status",
+          "kind": "index",
+          "fields": [],
+          "startLine": 97,
+          "endLine": 97
+        },
+        {
+          "name": "idx_cash_trx_account",
+          "kind": "index",
+          "fields": [],
+          "startLine": 140,
+          "endLine": 140
+        },
+        {
+          "name": "idx_cash_trx_cat",
+          "kind": "index",
+          "fields": [],
+          "startLine": 141,
+          "endLine": 141
+        },
+        {
+          "name": "idx_cash_trx_date",
+          "kind": "index",
+          "fields": [],
+          "startLine": 142,
+          "endLine": 142
+        },
+        {
+          "name": "idx_cash_trx_source",
+          "kind": "index",
+          "fields": [],
+          "startLine": 143,
+          "endLine": 143
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 18
+      }
+    },
+    {
+      "path": "migrations/000017_create_notifications_reporting_audit.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 6,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000017_create_notifications_reporting_audit.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 98,
+      "nonEmptyLines": 89,
+      "definitions": [
+        {
+          "name": "notification_templates",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "template_key",
+            "name",
+            "content",
+            "variables_json",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 6,
+          "endLine": 17
+        },
+        {
+          "name": "wa_notifications",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "template_id",
+            "customer_id",
+            "invoice_id",
+            "recipient_phone",
+            "message_type",
+            "message_content",
+            "status",
+            "error_message",
+            "sent_at",
+            "created_at"
+          ],
+          "startLine": 23,
+          "endLine": 36
+        },
+        {
+          "name": "daily_financial_snapshots",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "snapshot_date",
+            "invoice_count",
+            "invoice_total",
+            "payment_count",
+            "payment_total",
+            "outstanding_total",
+            "expense_total",
+            "active_subscriptions",
+            "cash_balance_json",
+            "created_at"
+          ],
+          "startLine": 42,
+          "endLine": 56
+        },
+        {
+          "name": "audit_logs",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "actor_type",
+            "action",
+            "entity_type",
+            "entity_id",
+            "description",
+            "ip_address",
+            "created_at"
+          ],
+          "startLine": 61,
+          "endLine": 72
+        },
+        {
+          "name": "idx_wa_notif_cust",
+          "kind": "index",
+          "fields": [],
+          "startLine": 38,
+          "endLine": 38
+        },
+        {
+          "name": "idx_wa_notif_status",
+          "kind": "index",
+          "fields": [],
+          "startLine": 39,
+          "endLine": 39
+        },
+        {
+          "name": "idx_daily_snapshot_date",
+          "kind": "index",
+          "fields": [],
+          "startLine": 58,
+          "endLine": 58
+        },
+        {
+          "name": "idx_audit_logs_entity",
+          "kind": "index",
+          "fields": [],
+          "startLine": 74,
+          "endLine": 74
+        },
+        {
+          "name": "idx_audit_logs_date",
+          "kind": "index",
+          "fields": [],
+          "startLine": 75,
+          "endLine": 75
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 9
+      }
+    },
+    {
+      "path": "migrations/000018_isp_settings_and_provision_status.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 5,
+      "nonEmptyLines": 3,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000018_isp_settings_and_provision_status.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 30,
+      "nonEmptyLines": 28,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000019_portal_otp_wa_and_settings.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 8,
+      "nonEmptyLines": 6,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000019_portal_otp_wa_and_settings.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 49,
+      "nonEmptyLines": 45,
+      "definitions": [
+        {
+          "name": "portal_otps",
+          "kind": "table",
+          "fields": [
+            "id",
+            "tenant_id",
+            "phone",
+            "code_hash",
+            "purpose",
+            "attempts",
+            "expires_at",
+            "consumed_at",
+            "created_at"
+          ],
+          "startLine": 6,
+          "endLine": 16
+        },
+        {
+          "name": "idx_portal_otps_phone",
+          "kind": "index",
+          "fields": [],
+          "startLine": 18,
+          "endLine": 18
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 2
+      }
+    },
+    {
+      "path": "migrations/000020_add_remote_address_pool.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000020_add_remote_address_pool.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 5,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000021_create_user_devices_table.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000021_create_user_devices_table.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "definitions": [
+        {
+          "name": "user_devices",
+          "kind": "table",
+          "fields": [
+            "user_id",
+            "device_id",
+            "assigned_by",
+            "created_at"
+          ],
+          "startLine": 4,
+          "endLine": 10
+        },
+        {
+          "name": "idx_user_devices_user_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 12,
+          "endLine": 12
+        },
+        {
+          "name": "idx_user_devices_device_id",
+          "kind": "index",
+          "fields": [],
+          "startLine": 13,
+          "endLine": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 3
+      }
+    },
+    {
+      "path": "migrations/000022_create_device_ping_metrics_table.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000022_create_device_ping_metrics_table.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 27,
+      "nonEmptyLines": 24,
+      "definitions": [
+        {
+          "name": "device_ping_metrics",
+          "kind": "table",
+          "fields": [
+            "recorded_at",
+            "device_id",
+            "target",
+            "seq",
+            "size",
+            "ttl",
+            "rtt_ms",
+            "status",
+            "sent",
+            "received",
+            "packet_loss",
+            "min_rtt_ms",
+            "avg_rtt_ms",
+            "max_rtt_ms"
+          ],
+          "startLine": 5,
+          "endLine": 20
+        },
+        {
+          "name": "idx_device_ping_metrics_device_time",
+          "kind": "index",
+          "fields": [],
+          "startLine": 26,
+          "endLine": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 2
+      }
+    },
+    {
+      "path": "migrations/000023_add_username_pattern_settings.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 6,
+      "nonEmptyLines": 6,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000023_add_username_pattern_settings.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 11,
+      "nonEmptyLines": 10,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000024_optimize_ping_metrics_timescale.down.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 13,
+      "nonEmptyLines": 10,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "migrations/000024_optimize_ping_metrics_timescale.up.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 45,
+      "nonEmptyLines": 38,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    }
+  ]
+}

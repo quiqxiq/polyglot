@@ -1,0 +1,1397 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/domain/bot/message.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "Message",
+          "startLine": 15,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "ID",
+            "ConversationID",
+            "SenderType",
+            "Content",
+            "TokenIn",
+            "TokenOut",
+            "LLMConfigID",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Message",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/bot/session.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 27,
+      "classes": [
+        {
+          "name": "WASession",
+          "startLine": 21,
+          "endLine": 31,
+          "methods": [],
+          "properties": [
+            "ID",
+            "DeviceName",
+            "PhoneNumber",
+            "JID",
+            "Status",
+            "IsBotEnabled",
+            "ConnectedAt",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WASession",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/cashbook/account.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "CashAccount",
+          "startLine": 13,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "AccountCode",
+            "Name",
+            "Type",
+            "IsActive",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CashAccount",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/cashbook/category.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "CashCategory",
+          "startLine": 13,
+          "endLine": 22,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Name",
+            "Type",
+            "IsActive",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CashCategory",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/cashbook/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/cashbook/transaction.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 30,
+      "classes": [
+        {
+          "name": "CashTransaction",
+          "startLine": 20,
+          "endLine": 35,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "TransactionNo",
+            "AccountID",
+            "CategoryID",
+            "Direction",
+            "Amount",
+            "TrxDate",
+            "SourceType",
+            "SourceID",
+            "Description",
+            "RecordedBy",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CashTransaction",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/command/command.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 46,
+      "classes": [
+        {
+          "name": "Command",
+          "startLine": 9,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "Raw",
+            "Args"
+          ]
+        },
+        {
+          "name": "Result",
+          "startLine": 24,
+          "endLine": 27,
+          "methods": [],
+          "properties": [
+            "Output",
+            "Rows"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Command",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "Result",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/command/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 16,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/command/policy.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 21,
+      "functions": [
+        {
+          "name": "Decide",
+          "startLine": 19,
+          "endLine": 24,
+          "params": [
+            "class"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Decide",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/customer/customer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "Customer",
+          "startLine": 14,
+          "endLine": 31,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "CustomerCode",
+            "Name",
+            "Phone",
+            "Email",
+            "Address",
+            "Latitude",
+            "Longitude",
+            "PortalAccessCode",
+            "Status",
+            "Notes",
+            "RegisteredAt",
+            "DeletedAt",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Customer",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/customer/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 39,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/customer/portal_otp.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "PortalOTP",
+          "startLine": 7,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Phone",
+            "CodeHash",
+            "Purpose",
+            "Attempts",
+            "ExpiresAt",
+            "ConsumedAt",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PortalOTP",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/customer/portal_session.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 14,
+      "classes": [
+        {
+          "name": "PortalSession",
+          "startLine": 7,
+          "endLine": 16,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "CustomerID",
+            "SessionToken",
+            "IPAddress",
+            "UserAgent",
+            "ExpiresAt",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PortalSession",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/customer/user.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 25,
+      "classes": [
+        {
+          "name": "User",
+          "startLine": 6,
+          "endLine": 20,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Username",
+            "Email",
+            "PasswordHash",
+            "Role",
+            "FullName",
+            "PhoneNumber",
+            "Specialization",
+            "IsActive",
+            "TenantID",
+            "AssignedDeviceIDs",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "UserDeviceAssignment",
+          "startLine": 23,
+          "endLine": 28,
+          "methods": [],
+          "properties": [
+            "UserID",
+            "DeviceID",
+            "AssignedBy",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "User",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "UserDeviceAssignment",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/device/credentials.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 17,
+      "classes": [
+        {
+          "name": "Credentials",
+          "startLine": 14,
+          "endLine": 18,
+          "methods": [],
+          "properties": [
+            "Username",
+            "Password",
+            "Extra"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Credentials",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/device/device.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 112,
+      "nonEmptyLines": 105,
+      "functions": [
+        {
+          "name": "ToTarget",
+          "startLine": 49,
+          "endLine": 71,
+          "params": [
+            "c"
+          ]
+        },
+        {
+          "name": "PingConfig",
+          "startLine": 74,
+          "endLine": 91,
+          "params": []
+        },
+        {
+          "name": "SetPingConfig",
+          "startLine": 94,
+          "endLine": 112,
+          "params": [
+            "cfg"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Target",
+          "startLine": 14,
+          "endLine": 21,
+          "methods": [],
+          "properties": [
+            "Host",
+            "Port",
+            "Username",
+            "Password",
+            "Timeout",
+            "Extra"
+          ]
+        },
+        {
+          "name": "Device",
+          "startLine": 31,
+          "endLine": 45,
+          "methods": [
+            "ToTarget",
+            "PingConfig",
+            "SetPingConfig"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Name",
+            "Vendor",
+            "DriverType",
+            "Host",
+            "Port",
+            "SSHPort",
+            "TimeoutMS",
+            "PollIntervalMS",
+            "Extra",
+            "Tags",
+            "Enabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Target",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Device",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "ToTarget",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "PingConfig",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "SetPingConfig",
+          "line": 94,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ToTarget",
+          "callee": "make",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ToTarget",
+          "callee": "len",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ToTarget",
+          "callee": "len",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ToTarget",
+          "callee": "strconv.Itoa",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ToTarget",
+          "callee": "time.Duration",
+          "lineNumber": 68
+        },
+        {
+          "caller": "PingConfig",
+          "callee": "DefaultPingConfig",
+          "lineNumber": 75
+        },
+        {
+          "caller": "PingConfig",
+          "callee": "strconv.Atoi",
+          "lineNumber": 86
+        },
+        {
+          "caller": "SetPingConfig",
+          "callee": "make",
+          "lineNumber": 96
+        },
+        {
+          "caller": "SetPingConfig",
+          "callee": "strconv.Itoa",
+          "lineNumber": 111
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 3,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/device/dhcp.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 42,
+      "nonEmptyLines": 40,
+      "classes": [
+        {
+          "name": "DHCPLease",
+          "startLine": 23,
+          "endLine": 34,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Address",
+            "MACAddress",
+            "ClientID",
+            "Server",
+            "Status",
+            "ActiveAddress",
+            "HostName",
+            "Blocked",
+            "Comment"
+          ]
+        },
+        {
+          "name": "DHCPLeaseBlockParams",
+          "startLine": 39,
+          "endLine": 42,
+          "methods": [],
+          "properties": [
+            "Blocked",
+            "Comment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DHCPLease",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "DHCPLeaseBlockParams",
+          "line": 39,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/device/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 24,
+      "functions": [
+        {
+          "name": "IsNotFound",
+          "startLine": 32,
+          "endLine": 34,
+          "params": [
+            "err"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IsNotFound",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "IsNotFound",
+          "callee": "errors.Is",
+          "lineNumber": 33
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/device/interface.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 49,
+      "classes": [
+        {
+          "name": "Interface",
+          "startLine": 20,
+          "endLine": 35,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Type",
+            "MTU",
+            "ActualMTU",
+            "L2MTU",
+            "MACAddress",
+            "Running",
+            "Disabled",
+            "RxByte",
+            "TxByte",
+            "RxPacket",
+            "TxPacket",
+            "Comment"
+          ]
+        },
+        {
+          "name": "InterfaceTrafficStats",
+          "startLine": 42,
+          "endLine": 51,
+          "methods": [],
+          "properties": [
+            "RxBitsPerSecond",
+            "TxBitsPerSecond",
+            "RxPacketsPerSecond",
+            "TxPacketsPerSecond",
+            "RxDropsPerSecond",
+            "TxDropsPerSecond",
+            "RxErrorsPerSecond",
+            "TxErrorsPerSecond"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Interface",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "InterfaceTrafficStats",
+          "line": 42,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/device/ip_pool.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 9,
+      "classes": [
+        {
+          "name": "IPPool",
+          "startLine": 4,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Ranges",
+            "NextPool",
+            "Comment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IPPool",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/device/isolation.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 63,
+      "nonEmptyLines": 59,
+      "functions": [
+        {
+          "name": "DefaultIsolationConfig",
+          "startLine": 20,
+          "endLine": 44,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "IsolationConfig",
+          "startLine": 4,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "PPPoEProfileName",
+            "HotspotProfileName",
+            "AddressListName",
+            "RateLimit",
+            "LocalAddress",
+            "RemoteAddressPool",
+            "RedirectIP",
+            "RedirectPort",
+            "NATRedirectEnabled",
+            "PPPoERedirectURL",
+            "HotspotRedirectURL",
+            "WalledGardenDomains"
+          ]
+        },
+        {
+          "name": "IsolationStatus",
+          "startLine": 47,
+          "endLine": 54,
+          "methods": [],
+          "properties": [
+            "PPPoEProfileExists",
+            "HotspotProfileExists",
+            "AddressListExists",
+            "NATRedirectExists",
+            "IsolatedUsersCount",
+            "Config"
+          ]
+        },
+        {
+          "name": "RouterIntegrationScripts",
+          "startLine": 57,
+          "endLine": 63,
+          "methods": [],
+          "properties": [
+            "PPPOnUpScript",
+            "PPPOnDownScript",
+            "HotspotOnLoginScript",
+            "HotspotOnLogoutScript",
+            "WebhookToken"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IsolationConfig",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "DefaultIsolationConfig",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "IsolationStatus",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "RouterIntegrationScripts",
+          "line": 57,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 1,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/domain/device/metrics.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 50,
+      "functions": [
+        {
+          "name": "DefaultPingConfig",
+          "startLine": 15,
+          "endLine": 21,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "DevicePingConfig",
+          "startLine": 8,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "Enabled",
+            "Target",
+            "RetentionDays"
+          ]
+        },
+        {
+          "name": "PingMetricPoint",
+          "startLine": 24,
+          "endLine": 39,
+          "methods": [],
+          "properties": [
+            "RecordedAt",
+            "DeviceID",
+            "Target",
+            "Seq",
+            "Size",
+            "TTL",
+            "RTTMS",
+            "Status",
+            "Sent",
+            "Received",
+            "PacketLoss",
+            "MinRTTMS",
+            "AvgRTTMS",
+            "MaxRTTMS"
+          ]
+        },
+        {
+          "name": "PingSummary",
+          "startLine": 42,
+          "endLine": 48,
+          "methods": [],
+          "properties": [
+            "MinRTT",
+            "AvgRTT",
+            "MaxRTT",
+            "PacketLossPct",
+            "TotalSamples"
+          ]
+        },
+        {
+          "name": "PingMetricsFilter",
+          "startLine": 51,
+          "endLine": 56,
+          "methods": [],
+          "properties": [
+            "DeviceID",
+            "StartTime",
+            "EndTime",
+            "BucketInterval"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DevicePingConfig",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "DefaultPingConfig",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "PingMetricPoint",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "PingSummary",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "PingMetricsFilter",
+          "line": 51,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 1,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "internal/domain/device/resource.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 68,
+      "nonEmptyLines": 62,
+      "classes": [
+        {
+          "name": "SystemResource",
+          "startLine": 5,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "CPULoad",
+            "CPUCount",
+            "CPUFrequency",
+            "FreeMemory",
+            "TotalMemory",
+            "FreeHDDSpace",
+            "TotalHDDSpace",
+            "Architecture",
+            "Model",
+            "SerialNumber",
+            "FirmwareType",
+            "Voltage",
+            "Temperature",
+            "BadBlocks",
+            "Uptime",
+            "Version",
+            "BoardName"
+          ]
+        },
+        {
+          "name": "SystemIdentity",
+          "startLine": 26,
+          "endLine": 28,
+          "methods": [],
+          "properties": [
+            "Name"
+          ]
+        },
+        {
+          "name": "LogEntry",
+          "startLine": 31,
+          "endLine": 36,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Time",
+            "Topics",
+            "Message"
+          ]
+        },
+        {
+          "name": "SystemHealth",
+          "startLine": 39,
+          "endLine": 48,
+          "methods": [],
+          "properties": [
+            "Voltage",
+            "Temperature",
+            "CPUTemperature",
+            "PSUVoltage",
+            "PSUCurrent",
+            "PSUTemperature",
+            "Fan1Speed",
+            "Fan2Speed"
+          ]
+        },
+        {
+          "name": "SystemClock",
+          "startLine": 51,
+          "endLine": 57,
+          "methods": [],
+          "properties": [
+            "Time",
+            "Date",
+            "TimeZoneName",
+            "GMTOffset",
+            "DSTActive"
+          ]
+        },
+        {
+          "name": "SystemRouterboard",
+          "startLine": 60,
+          "endLine": 68,
+          "methods": [],
+          "properties": [
+            "BoardName",
+            "Model",
+            "SerialNumber",
+            "FirmwareType",
+            "FactoryFirmware",
+            "CurrentFirmware",
+            "UpgradeFirmware"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SystemResource",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "SystemIdentity",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "LogEntry",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "SystemHealth",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "SystemClock",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "SystemRouterboard",
+          "line": 60,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "internal/domain/device/scripts.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 61,
+      "functions": [
+        {
+          "name": "BuildPPPOnUpScript",
+          "startLine": 9,
+          "endLine": 19,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        },
+        {
+          "name": "BuildPPPOnDownScript",
+          "startLine": 22,
+          "endLine": 30,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        },
+        {
+          "name": "BuildHotspotOnLoginScript",
+          "startLine": 33,
+          "endLine": 43,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        },
+        {
+          "name": "BuildHotspotOnLogoutScript",
+          "startLine": 46,
+          "endLine": 55,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        },
+        {
+          "name": "GenerateRouterIntegrationScripts",
+          "startLine": 58,
+          "endLine": 67,
+          "params": [
+            "webhookURL",
+            "token"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BuildPPPOnUpScript",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "BuildPPPOnDownScript",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "BuildHotspotOnLoginScript",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "BuildHotspotOnLogoutScript",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateRouterIntegrationScripts",
+          "line": 58,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "BuildPPPOnUpScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 10
+        },
+        {
+          "caller": "BuildPPPOnDownScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 23
+        },
+        {
+          "caller": "BuildHotspotOnLoginScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 34
+        },
+        {
+          "caller": "BuildHotspotOnLogoutScript",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "BuildPPPOnUpScript",
+          "lineNumber": 61
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "BuildPPPOnDownScript",
+          "lineNumber": 62
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "BuildHotspotOnLoginScript",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GenerateRouterIntegrationScripts",
+          "callee": "BuildHotspotOnLogoutScript",
+          "lineNumber": 64
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/domain/device/simple_queue.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 25,
+      "classes": [
+        {
+          "name": "SimpleQueue",
+          "startLine": 7,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Target",
+            "Parent",
+            "MaxLimit",
+            "LimitAt",
+            "BurstLimit",
+            "BurstThreshold",
+            "BurstTime",
+            "Priority",
+            "Queue",
+            "Bytes",
+            "Packets",
+            "Dropped",
+            "Rate",
+            "PacketRate",
+            "Comment",
+            "Disabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SimpleQueue",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

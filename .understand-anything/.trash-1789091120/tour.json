@@ -1,0 +1,124 @@
+[
+ {
+  "order": 1,
+  "title": "Peta Besar: Engine NetOps & ISP Polyglot",
+  "description": "Mulailah dari README dan dokumentasi arsitektur. Polyglot adalah engine backend Go murni (net/http.ServeMux, Go 1.26) untuk otomasi jaringan multi-vendor, billing ISP, hotspot voucher, dan bot AI WhatsApp — mengekspos ConnectRPC, MCP, serta SSE/WebSocket. Arsitektur mengikuti Clean Hexagonal: domain di tengah, port sebagai kontrak, adapter/driver di tepi. Dokumen AGENTS.md adalah sumber aturan non-negotiable (batas layer, error handling, logging).",
+  "nodeIds": [
+   "document:README.md",
+   "document:AGENTS.md",
+   "document:Polyglot-Architecture.md",
+   "document:SYSTEM-STRUCTURE-AND-ARCHITECTURE.md"
+  ]
+ },
+ {
+  "order": 2,
+  "title": "Bootstrap: main.go, App, dan Router",
+  "description": "Alur program dimulai di cmd/server/main.go: memuat konfigurasi (internal/config), menyiapkan logger terpusat (pkg/logger), membuka PostgreSQL dan Redis, lalu menyusun dependency injection melalui registry (internal/registry) dan wiring di internal/app/app.go. router.go memasang mux: /connect/* untuk ConnectRPC, jalur MCP, serta streaming WS/SSE. scheduler.go menjalankan pekerjaan periodik (polling perangkat, notifikasi) dengan ownership goroutine yang jelas.",
+  "nodeIds": [
+   "file:cmd/server/main.go",
+   "file:internal/config/config.go",
+   "file:internal/registry/registry.go",
+   "file:internal/app/app.go",
+   "file:internal/app/router.go",
+   "file:internal/app/scheduler.go",
+   "file:pkg/logger/logger.go"
+  ]
+ },
+ {
+  "order": 3,
+  "title": "Kontrak API: Protobuf & ConnectRPC",
+  "description": "Setiap layanan didefinisikan sebagai skema protobuf di api/proto/v1/ (auth, billing, device, hotspot, ppp, whatsapp, dst.). Endpoint rpc (240 total) menjadi kontrak yang di-handoff ke handler ConnectRPC. Kode generated (api/gen/) tidak pernah diedit manual — buf lint + make proto-check menjaga konsistensi dan kompatibilitas wire. Konfigurasi buf.yaml/buf.gen.yaml mengatur lint, breaking check, dan generasi.",
+  "nodeIds": [
+   "schema:api/proto/v1/auth.proto",
+   "schema:api/proto/v1/billing.proto",
+   "schema:api/proto/v1/device.proto",
+   "schema:api/proto/v1/hotspot.proto",
+   "schema:api/proto/v1/ppp.proto",
+   "endpoint:api/proto/v1/auth.proto:AuthService.Login"
+  ]
+ },
+ {
+  "order": 4,
+  "title": "Adapter Transport: Handler ConnectRPC, HTTP, WS/SSE, MCP",
+  "description": "Handler di internal/adapter/connect/<context>/ menerima permintaan RPC, memvalidasi, memanggil use case, lalu memetakan error melalui pkg/response — tidak ada connect.NewError ad hoc. Context besar: auth, billing, device, hotspot, ppp, whatsapp, portal, dll. internal/adapter/http menyediakan endpoint HTTP murni dan middleware (Chain), internal/adapter/ws menangani streaming terminal & log realtime (hub.go), dan internal/adapter/mcp mengekspos kemampuan engine ke klien MCP.",
+  "nodeIds": [
+   "file:internal/adapter/connect/provider.go",
+   "file:internal/adapter/connect/codec.go",
+   "file:internal/adapter/http/middleware/chain.go",
+   "file:internal/adapter/ws/hub.go",
+   "file:internal/adapter/connect/auth/auth_handler.go",
+   "file:internal/adapter/connect/auth/rbac_handler.go",
+   "file:internal/adapter/connect/auth/user_handler.go"
+  ]
+ },
+ {
+  "order": 5,
+  "title": "Use Case: Orkestrasi Bisnis",
+  "description": "Use case di internal/usecase/<context>/ mengorkestrasi domain dan port tanpa tahu transport maupun vendor: auth (login, RBAC), billing (tagihan & pembayaran), hotspot (voucher Mikhmon-parity), ppp (secrets, profile, sesi aktif/nonaktif), device (ping metrics & stream), bot & llm (AI CS WhatsApp). Pola konstruktor dengan dependency injection membuat semuanya mudah diuji.",
+  "nodeIds": [
+   "file:internal/usecase/auth/login.go",
+   "file:internal/usecase/auth/refresh_token.go",
+   "file:internal/usecase/billing/checkout.go",
+   "file:internal/usecase/billing/run_billing.go",
+   "file:internal/usecase/hotspot/hotspot_usecase.go",
+   "file:internal/usecase/hotspot/manage_voucher.go"
+  ]
+ },
+ {
+  "order": 6,
+  "title": "Domain & Port: Jantung Heksagonal",
+  "description": "internal/domain/<context>/ berisi model murni: entitas (User, Invoice, PPPSecret, Device), value object, invariant, dan error domain dibuat dengan fault.New — tanpa import transport, database, atau framework. internal/port/ mendeklarasikan kontrak yang dibutuhkan use case: repository (customer_repository.go, cashbook_repository.go), device_driver.go untuk vendor, credential_vault.go, authorizer.go (Casbin RBAC). Ketergantungan selalu mengarah keluar: domain ← usecase ← port ← adapter.",
+  "nodeIds": [
+   "file:internal/domain/billing/invoice.go",
+   "file:internal/domain/device/device.go",
+   "file:internal/domain/ppp/ppp.go",
+   "file:internal/port/authorizer.go",
+   "file:internal/port/customer_repository.go",
+   "file:internal/port/device_driver.go"
+  ]
+ },
+ {
+  "order": 7,
+  "title": "Driver & Adapter Infrastruktur: Vendor, DB, WhatsApp",
+  "description": "internal/driver/ mengimplementasikan port device_driver untuk vendor nyata: mikrotik (API+SSH), genericcli/genericssh/generictelnet via Scrapli (didefinisikan deklaratif di platformdef/mikrotik_routeros.yaml), genieacs (TR-069), huaweiolt/zteolt (OLT), netconf, dan cisco. Sisi data: internal/adapter/postgres (GORM+store) dan redis untuk cache. WhatsApp berjalan di whatsmeow (adapter/whatsapp), LLM via Genkit/OpenAI (adapter/llm), pembayaran via adapter/tripay.",
+  "nodeIds": [
+   "file:internal/adapter/llm/provider.go",
+   "file:internal/adapter/postgres/store.go",
+   "file:internal/adapter/whatsapp/sender_adapter.go",
+   "file:internal/driver/genericcli/catalog.go",
+   "file:internal/driver/genericcli/session.go",
+   "file:internal/driver/genieacs/driver.go",
+   "file:internal/driver/mikrotik/connect.go"
+  ]
+ },
+ {
+  "order": 8,
+  "title": "Skema Database: Migrasi & Tabel Inti ISP",
+  "description": "Skema berevolusi lewat golang-migrate (migrations/): 000001 devices, 000006 billing, 000015 rebuild ISP core (pelanggan, langganan, paket), 000022 device_ping_metrics (TimescaleDB hypertable), 000024 optimisasi ping metrics. Setiap migrasi berpasangan up/down dan diuji oleh migrations_smoke_test.go. Lihat docs/database-schema.md untuk peta domain data ISP.",
+  "nodeIds": [
+   "table:migrations/000001_create_devices_table.up.sql",
+   "table:migrations/000006_create_billing_tables.up.sql",
+   "table:migrations/000015_rebuild_isp_core.up.sql",
+   "table:migrations/000022_create_device_ping_metrics_table.up.sql",
+   "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "document:docs/database-schema.md"
+  ]
+ },
+ {
+  "order": 9,
+  "title": "Kualitas, Test Integrasi, dan Operasional",
+  "description": "Gerbang kualitas dijalankan lewat Makefile: make check (build+vet+test+lint+boundary checks), make proto-check, make test-integration (PostgreSQL/Redis/testcontainers: driver MikroTik, streaming, Timescale, migrasi), make security. Docker Compose dev/prod dan Nginx menutup sisi operasional. Skrip smoke-test di scripts/ menguji endpoint ConnectRPC dan SSE secara end-to-end. Untuk kontribusi baru, ikuti DEVELOPMENT-GUIDELINES.md dan EFFECTIVE_GO.md.",
+  "nodeIds": [
+   "service:Makefile",
+   "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "document:DEVELOPMENT-GUIDELINES.md",
+   "document:EFFECTIVE_GO.md",
+   "service:deployments/docker-compose.yml",
+   "config:deployments/nginx/nginx.conf",
+   "file:test/integration/device_test.go",
+   "file:test/integration/mikhmon_test.go",
+   "file:test/integration/mikrotik_builders_test.go",
+   "file:test/integration/mikrotik_dual_connection_test.go"
+  ]
+ }
+]

@@ -1,0 +1,3439 @@
+{
+ "batchIndex": 14,
+ "nodes": [
+  {
+   "id": "config:.understand-anything/.understandignore",
+   "type": "config",
+   "name": ".understandignore",
+   "filePath": ".understand-anything/.understandignore",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: .understandignore.",
+   "description": "Berkas config proyek: .understandignore.",
+   "tags": [
+    "config"
+   ]
+  },
+  {
+   "id": "config:.understand-anything/config.json",
+   "type": "config",
+   "name": "config.json",
+   "filePath": ".understand-anything/config.json",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: config.json.",
+   "description": "Berkas config proyek: config.json.",
+   "tags": [
+    "config"
+   ]
+  },
+  {
+   "id": "config:.understand-anything/intermediate/scan-result.json",
+   "type": "config",
+   "name": "scan-result.json",
+   "filePath": ".understand-anything/intermediate/scan-result.json",
+   "complexity": "complex",
+   "summary": "Berkas config proyek: scan-result.json.",
+   "description": "Berkas config proyek: scan-result.json.",
+   "tags": [
+    "config",
+    "scan-result"
+   ]
+  },
+  {
+   "id": "config:api/openapi.yaml",
+   "type": "config",
+   "name": "openapi.yaml",
+   "filePath": "api/openapi.yaml",
+   "complexity": "simple",
+   "summary": "Spesifikasi OpenAPI untuk permukaan HTTP API proyek.",
+   "description": "Kontrak API HTTP yang di-serve di samping ConnectRPC — dipakai sebagai referensi endpoint REST dan dokumentasi.",
+   "tags": [
+    "config",
+    "openapi"
+   ]
+  },
+  {
+   "id": "file:cmd/probe/main.go",
+   "type": "file",
+   "name": "main.go",
+   "filePath": "cmd/probe/main.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Titik masuk aplikasi — paket `probe` (146 baris, 7 fungsi, 1 tipe).",
+   "description": "Titik masuk aplikasi — paket `probe` (146 baris, 7 fungsi, 1 tipe). Tipe utama: probeClient. Fungsi terbesar: runHeartbeatLoop, main, runTelemetryLoop, measureTargetLatency, ReportStatus. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "entrypoint",
+    "probe",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:cmd/probe/main.go:probeClient",
+   "type": "class",
+   "name": "probeClient",
+   "filePath": "cmd/probe/main.go",
+   "complexity": "simple",
+   "summary": "Tipe probeClient di main.go, dengan method: ReportStatus.",
+   "description": "Tipe probeClient di main.go, dengan method: ReportStatus. Didefinisikan pada baris 117-120.",
+   "tags": [
+    "go",
+    "tipe",
+    "probeclient"
+   ]
+  },
+  {
+   "id": "function:cmd/probe/main.go:main",
+   "type": "function",
+   "name": "main",
+   "filePath": "cmd/probe/main.go",
+   "complexity": "simple",
+   "summary": "Fungsi main (26 baris).",
+   "description": "Fungsi main (26 baris). Didefinisikan pada baris 19-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "main"
+   ]
+  },
+  {
+   "id": "function:cmd/probe/main.go:runHeartbeatLoop",
+   "type": "function",
+   "name": "runHeartbeatLoop",
+   "filePath": "cmd/probe/main.go",
+   "complexity": "simple",
+   "summary": "Fungsi runHeartbeatLoop (28 baris), parameter: ctx, client, probeID.",
+   "description": "Fungsi runHeartbeatLoop (28 baris), parameter: ctx, client, probeID. Didefinisikan pada baris 47-75.",
+   "tags": [
+    "go",
+    "fungsi",
+    "runheartbeatloop"
+   ]
+  },
+  {
+   "id": "function:cmd/probe/main.go:ReportStatus",
+   "type": "function",
+   "name": "ReportStatus",
+   "filePath": "cmd/probe/main.go",
+   "complexity": "simple",
+   "summary": "Fungsi ReportStatus (10 baris), parameter: ctx, req.",
+   "description": "Fungsi ReportStatus (10 baris), parameter: ctx, req. Didefinisikan pada baris 129-139.",
+   "tags": [
+    "go",
+    "fungsi",
+    "reportstatus"
+   ]
+  },
+  {
+   "id": "file:cmd/seed/main.go",
+   "type": "file",
+   "name": "main.go",
+   "filePath": "cmd/seed/main.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Titik masuk aplikasi — paket `seed` (222 baris, 4 fungsi, 0 tipe).",
+   "description": "Titik masuk aplikasi — paket `seed` (222 baris, 4 fungsi, 0 tipe). Fungsi terbesar: seedUsers, seedLLMConfig, main, seedCasbin. Bergantung pada 84 berkas internal.",
+   "tags": [
+    "go",
+    "entrypoint",
+    "seed",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:cmd/seed/main.go:main",
+   "type": "function",
+   "name": "main",
+   "filePath": "cmd/seed/main.go",
+   "complexity": "simple",
+   "summary": "Fungsi main (26 baris).",
+   "description": "Fungsi main (26 baris). Didefinisikan pada baris 20-46.",
+   "tags": [
+    "go",
+    "fungsi",
+    "main"
+   ]
+  },
+  {
+   "id": "function:cmd/seed/main.go:seedUsers",
+   "type": "function",
+   "name": "seedUsers",
+   "filePath": "cmd/seed/main.go",
+   "complexity": "moderate",
+   "summary": "Fungsi seedUsers (120 baris), parameter: ctx, pgStore.",
+   "description": "Fungsi seedUsers (120 baris), parameter: ctx, pgStore. Didefinisikan pada baris 48-168.",
+   "tags": [
+    "go",
+    "fungsi",
+    "seedusers"
+   ]
+  },
+  {
+   "id": "function:cmd/seed/main.go:seedLLMConfig",
+   "type": "function",
+   "name": "seedLLMConfig",
+   "filePath": "cmd/seed/main.go",
+   "complexity": "simple",
+   "summary": "Fungsi seedLLMConfig (29 baris), parameter: ctx, pgStore, cfg.",
+   "description": "Fungsi seedLLMConfig (29 baris), parameter: ctx, pgStore, cfg. Didefinisikan pada baris 193-222.",
+   "tags": [
+    "go",
+    "fungsi",
+    "seedllmconfig"
+   ]
+  },
+  {
+   "id": "file:cmd/server/main.go",
+   "type": "file",
+   "name": "main.go",
+   "filePath": "cmd/server/main.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Titik masuk aplikasi — paket `server` (53 baris, 1 fungsi, 0 tipe).",
+   "description": "Titik masuk aplikasi — paket `server` (53 baris, 1 fungsi, 0 tipe). Fungsi terbesar: main. Bergantung pada 9 berkas internal.",
+   "tags": [
+    "go",
+    "entrypoint",
+    "server",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:cmd/server/main.go:main",
+   "type": "function",
+   "name": "main",
+   "filePath": "cmd/server/main.go",
+   "complexity": "simple",
+   "summary": "Fungsi main (38 baris).",
+   "description": "Fungsi main (38 baris). Didefinisikan pada baris 15-53.",
+   "tags": [
+    "go",
+    "fungsi",
+    "main"
+   ]
+  },
+  {
+   "id": "document:data/skills/ghaib-network-cs/SKILL.md",
+   "type": "document",
+   "name": "SKILL.md",
+   "filePath": "data/skills/ghaib-network-cs/SKILL.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: SKILL (83 baris).",
+   "description": "Dokumentasi: SKILL (83 baris).",
+   "tags": [
+    "document",
+    "skill"
+   ]
+  },
+  {
+   "id": "document:data/skills/template.md",
+   "type": "document",
+   "name": "template.md",
+   "filePath": "data/skills/template.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: template (30 baris).",
+   "description": "Dokumentasi: template (30 baris).",
+   "tags": [
+    "document",
+    "template"
+   ]
+  },
+  {
+   "id": "document:data/system-prompt.md",
+   "type": "document",
+   "name": "system-prompt.md",
+   "filePath": "data/system-prompt.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: system-prompt (21 baris).",
+   "description": "Dokumentasi: system-prompt (21 baris).",
+   "tags": [
+    "document",
+    "system-prompt"
+   ]
+  },
+  {
+   "id": "service:deployments/docker-compose.prod.yml",
+   "type": "service",
+   "name": "docker-compose.prod.yml",
+   "filePath": "deployments/docker-compose.prod.yml",
+   "complexity": "simple",
+   "summary": "Komposisi layanan produksi: container aplikasi, PostgreSQL, Redis, reverse proxy.",
+   "description": "Konfigurasi deployment produksi untuk engine Polyglot beserta dependensi layanannya.",
+   "tags": [
+    "service",
+    "docker-compose-prod"
+   ]
+  },
+  {
+   "id": "service:deployments/docker-compose.yml",
+   "type": "service",
+   "name": "docker-compose.yml",
+   "filePath": "deployments/docker-compose.yml",
+   "complexity": "simple",
+   "summary": "Komposisi layanan pengembangan: PostgreSQL, Redis, dan layanan pendukung.",
+   "description": "Dipakai untuk menjalankan dependensi lokal (make db-up) sebelum menjalankan server atau test integrasi.",
+   "tags": [
+    "service",
+    "docker-compose"
+   ]
+  },
+  {
+   "id": "service:deployments/docker/Dockerfile.gateway",
+   "type": "service",
+   "name": "Dockerfile.gateway",
+   "filePath": "deployments/docker/Dockerfile.gateway",
+   "complexity": "simple",
+   "summary": "Berkas service proyek: Dockerfile.gateway.",
+   "description": "Berkas service proyek: Dockerfile.gateway.",
+   "tags": [
+    "service",
+    "dockerfile"
+   ]
+  },
+  {
+   "id": "service:deployments/docker/Dockerfile.server",
+   "type": "service",
+   "name": "Dockerfile.server",
+   "filePath": "deployments/docker/Dockerfile.server",
+   "complexity": "simple",
+   "summary": "Berkas service proyek: Dockerfile.server.",
+   "description": "Berkas service proyek: Dockerfile.server.",
+   "tags": [
+    "service",
+    "dockerfile"
+   ]
+  },
+  {
+   "id": "config:deployments/nginx/conf.d/default.conf",
+   "type": "config",
+   "name": "default.conf",
+   "filePath": "deployments/nginx/conf.d/default.conf",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: default.conf.",
+   "description": "Berkas config proyek: default.conf.",
+   "tags": [
+    "config",
+    "default"
+   ]
+  },
+  {
+   "id": "config:deployments/nginx/nginx.conf",
+   "type": "config",
+   "name": "nginx.conf",
+   "filePath": "deployments/nginx/nginx.conf",
+   "complexity": "simple",
+   "summary": "Berkas config proyek: nginx.conf.",
+   "description": "Berkas config proyek: nginx.conf.",
+   "tags": [
+    "config",
+    "nginx"
+   ]
+  },
+  {
+   "id": "document:docs/backend/request-validation-inventory.md",
+   "type": "document",
+   "name": "request-validation-inventory.md",
+   "filePath": "docs/backend/request-validation-inventory.md",
+   "complexity": "simple",
+   "summary": "Dokumentasi: request-validation-inventory (61 baris).",
+   "description": "Dokumentasi: request-validation-inventory (61 baris).",
+   "tags": [
+    "document",
+    "request-validation-inventory"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/auth/casbin.go",
+   "type": "file",
+   "name": "casbin.go",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (220 baris, 14 fungsi, 1 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (220 baris, 14 fungsi, 1 tipe). Tipe utama: CasbinEnforcer. Fungsi terbesar: SyncRolePermissions, NewCasbinEnforcer, DeleteRole, GetImplicitPermissionsForUser, AddPolicy. Bergantung pada 62 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "auth",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/auth/casbin.go:CasbinEnforcer",
+   "type": "class",
+   "name": "CasbinEnforcer",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Tipe CasbinEnforcer di casbin.go, dengan method: Enforce, AddPolicy, RemovePolicy, GetPolicies, GetGroupingPolicies, SyncRolePermissions.",
+   "description": "Tipe CasbinEnforcer di casbin.go, dengan method: Enforce, AddPolicy, RemovePolicy, GetPolicies, GetGroupingPolicies, SyncRolePermissions. Didefinisikan pada baris 17-19.",
+   "tags": [
+    "go",
+    "tipe",
+    "casbinenforcer"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:NewCasbinEnforcer",
+   "type": "function",
+   "name": "NewCasbinEnforcer",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewCasbinEnforcer (22 baris), parameter: ctx, db.",
+   "description": "Fungsi NewCasbinEnforcer (22 baris), parameter: ctx, db. Didefinisikan pada baris 29-51.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newcasbinenforcer"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:Enforce",
+   "type": "function",
+   "name": "Enforce",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi Enforce (5 baris), parameter: sub, obj, act.",
+   "description": "Fungsi Enforce (5 baris), parameter: sub, obj, act. Didefinisikan pada baris 54-59.",
+   "tags": [
+    "go",
+    "fungsi",
+    "enforce"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:AddPolicy",
+   "type": "function",
+   "name": "AddPolicy",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi AddPolicy (9 baris), parameter: role, obj, act.",
+   "description": "Fungsi AddPolicy (9 baris), parameter: role, obj, act. Didefinisikan pada baris 62-71.",
+   "tags": [
+    "go",
+    "fungsi",
+    "addpolicy"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:RemovePolicy",
+   "type": "function",
+   "name": "RemovePolicy",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi RemovePolicy (9 baris), parameter: role, obj, act.",
+   "description": "Fungsi RemovePolicy (9 baris), parameter: role, obj, act. Didefinisikan pada baris 74-83.",
+   "tags": [
+    "go",
+    "fungsi",
+    "removepolicy"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:GetPolicies",
+   "type": "function",
+   "name": "GetPolicies",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetPolicies (5 baris).",
+   "description": "Fungsi GetPolicies (5 baris). Didefinisikan pada baris 86-91.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getpolicies"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:GetGroupingPolicies",
+   "type": "function",
+   "name": "GetGroupingPolicies",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetGroupingPolicies (5 baris).",
+   "description": "Fungsi GetGroupingPolicies (5 baris). Didefinisikan pada baris 94-99.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getgroupingpolicies"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:SyncRolePermissions",
+   "type": "function",
+   "name": "SyncRolePermissions",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi SyncRolePermissions (28 baris), parameter: role, permissions.",
+   "description": "Fungsi SyncRolePermissions (28 baris), parameter: role, permissions. Didefinisikan pada baris 102-130.",
+   "tags": [
+    "go",
+    "fungsi",
+    "syncrolepermissions"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:DeleteRole",
+   "type": "function",
+   "name": "DeleteRole",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteRole (17 baris), parameter: role.",
+   "description": "Fungsi DeleteRole (17 baris), parameter: role. Didefinisikan pada baris 133-150.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deleterole"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:AddRoleForUser",
+   "type": "function",
+   "name": "AddRoleForUser",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi AddRoleForUser (9 baris), parameter: user, role.",
+   "description": "Fungsi AddRoleForUser (9 baris), parameter: user, role. Didefinisikan pada baris 153-162.",
+   "tags": [
+    "go",
+    "fungsi",
+    "addroleforuser"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:DeleteRoleForUser",
+   "type": "function",
+   "name": "DeleteRoleForUser",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteRoleForUser (9 baris), parameter: user, role.",
+   "description": "Fungsi DeleteRoleForUser (9 baris), parameter: user, role. Didefinisikan pada baris 165-174.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deleteroleforuser"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:DeleteRolesForUser",
+   "type": "function",
+   "name": "DeleteRolesForUser",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi DeleteRolesForUser (9 baris), parameter: user.",
+   "description": "Fungsi DeleteRolesForUser (9 baris), parameter: user. Didefinisikan pada baris 177-186.",
+   "tags": [
+    "go",
+    "fungsi",
+    "deleterolesforuser"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:GetRolesForUser",
+   "type": "function",
+   "name": "GetRolesForUser",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetRolesForUser (5 baris), parameter: user.",
+   "description": "Fungsi GetRolesForUser (5 baris), parameter: user. Didefinisikan pada baris 189-194.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getrolesforuser"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:GetImplicitPermissionsForUser",
+   "type": "function",
+   "name": "GetImplicitPermissionsForUser",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetImplicitPermissionsForUser (15 baris), parameter: user.",
+   "description": "Fungsi GetImplicitPermissionsForUser (15 baris), parameter: user. Didefinisikan pada baris 197-212.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getimplicitpermissionsforuser"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/auth/device_authorizer_test.go",
+   "type": "file",
+   "name": "device_authorizer_test.go",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (116 baris, 16 fungsi, 1 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (116 baris, 16 fungsi, 1 tipe). Tipe utama: mockUserRepoForDeviceAuth. Fungsi terbesar: TestDeviceAuthorizer_CanAccessDevice, IsDeviceAccessibleByUser, Create, FindByID, FindByUsername. Bergantung pada 5 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "auth",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/auth/device_authorizer_test.go:mockUserRepoForDeviceAuth",
+   "type": "class",
+   "name": "mockUserRepoForDeviceAuth",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Tipe mockUserRepoForDeviceAuth di device_authorizer_test.go, dengan method: Create, FindByID, FindByUsername, FindByEmail, Count, List.",
+   "description": "Tipe mockUserRepoForDeviceAuth di device_authorizer_test.go, dengan method: Create, FindByID, FindByUsername, FindByEmail, Count, List. Didefinisikan pada baris 10-12.",
+   "tags": [
+    "go",
+    "tipe",
+    "mockuserrepofordeviceauth"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:Create",
+   "type": "function",
+   "name": "Create",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi Create (2 baris), parameter: ctx, user.",
+   "description": "Fungsi Create (2 baris), parameter: ctx, user. Didefinisikan pada baris 14-16.",
+   "tags": [
+    "go",
+    "fungsi",
+    "create"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:FindByID",
+   "type": "function",
+   "name": "FindByID",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByID (2 baris), parameter: ctx, id.",
+   "description": "Fungsi FindByID (2 baris), parameter: ctx, id. Didefinisikan pada baris 17-19.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyid"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:FindByUsername",
+   "type": "function",
+   "name": "FindByUsername",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByUsername (2 baris), parameter: ctx, username.",
+   "description": "Fungsi FindByUsername (2 baris), parameter: ctx, username. Didefinisikan pada baris 20-22.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyusername"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:FindByEmail",
+   "type": "function",
+   "name": "FindByEmail",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByEmail (2 baris), parameter: ctx, email.",
+   "description": "Fungsi FindByEmail (2 baris), parameter: ctx, email. Didefinisikan pada baris 23-25.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyemail"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:Count",
+   "type": "function",
+   "name": "Count",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi Count (0 baris), parameter: ctx.",
+   "description": "Fungsi Count (0 baris), parameter: ctx. Didefinisikan pada baris 26-26.",
+   "tags": [
+    "go",
+    "fungsi",
+    "count"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:List",
+   "type": "function",
+   "name": "List",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi List (2 baris), parameter: ctx, page, pageSize, search.",
+   "description": "Fungsi List (2 baris), parameter: ctx, page, pageSize, search. Didefinisikan pada baris 27-29.",
+   "tags": [
+    "go",
+    "fungsi",
+    "list"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:FindAll",
+   "type": "function",
+   "name": "FindAll",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindAll (2 baris), parameter: ctx.",
+   "description": "Fungsi FindAll (2 baris), parameter: ctx. Didefinisikan pada baris 30-32.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findall"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:FindByRoles",
+   "type": "function",
+   "name": "FindByRoles",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi FindByRoles (2 baris), parameter: ctx, roles, activeOnly.",
+   "description": "Fungsi FindByRoles (2 baris), parameter: ctx, roles, activeOnly. Didefinisikan pada baris 33-35.",
+   "tags": [
+    "go",
+    "fungsi",
+    "findbyroles"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:Update",
+   "type": "function",
+   "name": "Update",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi Update (2 baris), parameter: ctx, user.",
+   "description": "Fungsi Update (2 baris), parameter: ctx, user. Didefinisikan pada baris 36-38.",
+   "tags": [
+    "go",
+    "fungsi",
+    "update"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:Delete",
+   "type": "function",
+   "name": "Delete",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi Delete (0 baris), parameter: ctx, id.",
+   "description": "Fungsi Delete (0 baris), parameter: ctx, id. Didefinisikan pada baris 39-39.",
+   "tags": [
+    "go",
+    "fungsi",
+    "delete"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:UpdatePassword",
+   "type": "function",
+   "name": "UpdatePassword",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdatePassword (2 baris), parameter: ctx, id, passwordHash.",
+   "description": "Fungsi UpdatePassword (2 baris), parameter: ctx, id, passwordHash. Didefinisikan pada baris 40-42.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatepassword"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:UpdateStatus",
+   "type": "function",
+   "name": "UpdateStatus",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi UpdateStatus (2 baris), parameter: ctx, id, isActive.",
+   "description": "Fungsi UpdateStatus (2 baris), parameter: ctx, id, isActive. Didefinisikan pada baris 43-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "updatestatus"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:AssignDevices",
+   "type": "function",
+   "name": "AssignDevices",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi AssignDevices (2 baris), parameter: ctx, userID, deviceIDs, assignedBy.",
+   "description": "Fungsi AssignDevices (2 baris), parameter: ctx, userID, deviceIDs, assignedBy. Didefinisikan pada baris 46-48.",
+   "tags": [
+    "go",
+    "fungsi",
+    "assigndevices"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:GetAssignedDeviceIDs",
+   "type": "function",
+   "name": "GetAssignedDeviceIDs",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi GetAssignedDeviceIDs (2 baris), parameter: ctx, userID.",
+   "description": "Fungsi GetAssignedDeviceIDs (2 baris), parameter: ctx, userID. Didefinisikan pada baris 49-51.",
+   "tags": [
+    "go",
+    "fungsi",
+    "getassigneddeviceids"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:IsDeviceAccessibleByUser",
+   "type": "function",
+   "name": "IsDeviceAccessibleByUser",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi IsDeviceAccessibleByUser (3 baris), parameter: ctx, userID, deviceID.",
+   "description": "Fungsi IsDeviceAccessibleByUser (3 baris), parameter: ctx, userID, deviceID. Didefinisikan pada baris 52-55.",
+   "tags": [
+    "go",
+    "fungsi",
+    "isdeviceaccessiblebyuser"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer_test.go:TestDeviceAuthorizer_CanAccessDevice",
+   "type": "function",
+   "name": "TestDeviceAuthorizer_CanAccessDevice",
+   "filePath": "internal/adapter/auth/device_authorizer_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestDeviceAuthorizer_CanAccessDevice (59 baris), parameter: t.",
+   "description": "Fungsi TestDeviceAuthorizer_CanAccessDevice (59 baris), parameter: t. Didefinisikan pada baris 57-116.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testdeviceauthorizer-canaccessdevice"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/auth/device_authorizer.go",
+   "type": "file",
+   "name": "device_authorizer.go",
+   "filePath": "internal/adapter/auth/device_authorizer.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (44 baris, 2 fungsi, 1 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (44 baris, 2 fungsi, 1 tipe). Tipe utama: DefaultDeviceAuthorizer. Fungsi terbesar: CanAccessDevice, NewDeviceAuthorizer. Bergantung pada 60 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "auth",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/auth/device_authorizer.go:DefaultDeviceAuthorizer",
+   "type": "class",
+   "name": "DefaultDeviceAuthorizer",
+   "filePath": "internal/adapter/auth/device_authorizer.go",
+   "complexity": "simple",
+   "summary": "Tipe DefaultDeviceAuthorizer di device_authorizer.go, dengan method: CanAccessDevice.",
+   "description": "Tipe DefaultDeviceAuthorizer di device_authorizer.go, dengan method: CanAccessDevice. Didefinisikan pada baris 11-13.",
+   "tags": [
+    "go",
+    "tipe",
+    "defaultdeviceauthorizer"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer.go:NewDeviceAuthorizer",
+   "type": "function",
+   "name": "NewDeviceAuthorizer",
+   "filePath": "internal/adapter/auth/device_authorizer.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewDeviceAuthorizer (4 baris), parameter: userRepo.",
+   "description": "Fungsi NewDeviceAuthorizer (4 baris), parameter: userRepo. Didefinisikan pada baris 18-22.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newdeviceauthorizer"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/device_authorizer.go:CanAccessDevice",
+   "type": "function",
+   "name": "CanAccessDevice",
+   "filePath": "internal/adapter/auth/device_authorizer.go",
+   "complexity": "simple",
+   "summary": "Fungsi CanAccessDevice (17 baris), parameter: ctx, userID, userRoles, deviceID.",
+   "description": "Fungsi CanAccessDevice (17 baris), parameter: ctx, userID, userRoles, deviceID. Didefinisikan pada baris 27-44.",
+   "tags": [
+    "go",
+    "fungsi",
+    "canaccessdevice"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/auth/identity.go",
+   "type": "file",
+   "name": "identity.go",
+   "filePath": "internal/adapter/auth/identity.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (42 baris, 3 fungsi, 0 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (42 baris, 3 fungsi, 0 tipe). Fungsi terbesar: IdentityFromContext, IdentityStringFromContext, WithIdentity.",
+   "tags": [
+    "go",
+    "adapter",
+    "auth",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/identity.go:WithIdentity",
+   "type": "function",
+   "name": "WithIdentity",
+   "filePath": "internal/adapter/auth/identity.go",
+   "complexity": "simple",
+   "summary": "Fungsi WithIdentity (4 baris), parameter: ctx, userID, roles.",
+   "description": "Fungsi WithIdentity (4 baris), parameter: ctx, userID, roles. Didefinisikan pada baris 19-23.",
+   "tags": [
+    "go",
+    "fungsi",
+    "withidentity"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/identity.go:IdentityFromContext",
+   "type": "function",
+   "name": "IdentityFromContext",
+   "filePath": "internal/adapter/auth/identity.go",
+   "complexity": "simple",
+   "summary": "Fungsi IdentityFromContext (7 baris), parameter: ctx.",
+   "description": "Fungsi IdentityFromContext (7 baris), parameter: ctx. Didefinisikan pada baris 26-33.",
+   "tags": [
+    "go",
+    "fungsi",
+    "identityfromcontext"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/identity.go:IdentityStringFromContext",
+   "type": "function",
+   "name": "IdentityStringFromContext",
+   "filePath": "internal/adapter/auth/identity.go",
+   "complexity": "simple",
+   "summary": "Fungsi IdentityStringFromContext (6 baris), parameter: ctx.",
+   "description": "Fungsi IdentityStringFromContext (6 baris), parameter: ctx. Didefinisikan pada baris 36-42.",
+   "tags": [
+    "go",
+    "fungsi",
+    "identitystringfromcontext"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/auth/jwt_test.go",
+   "type": "file",
+   "name": "jwt_test.go",
+   "filePath": "internal/adapter/auth/jwt_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (40 baris, 1 fungsi, 0 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (40 baris, 1 fungsi, 0 tipe). Fungsi terbesar: TestJWTService.",
+   "tags": [
+    "go",
+    "adapter",
+    "auth",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/jwt_test.go:TestJWTService",
+   "type": "function",
+   "name": "TestJWTService",
+   "filePath": "internal/adapter/auth/jwt_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestJWTService (31 baris), parameter: t.",
+   "description": "Fungsi TestJWTService (31 baris), parameter: t. Didefinisikan pada baris 9-40.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testjwtservice"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/auth/jwt.go",
+   "type": "file",
+   "name": "jwt.go",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (118 baris, 6 fungsi, 2 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (118 baris, 6 fungsi, 2 tipe). Tipe utama: Claims, JWTService. Fungsi terbesar: GenerateToken, ValidateToken, NewJWTService, ValidateAccessToken, ExpiryDuration. Bergantung pada 62 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "auth",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/auth/jwt.go:Claims",
+   "type": "class",
+   "name": "Claims",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "complexity": "simple",
+   "summary": "Tipe Claims di jwt.go.",
+   "description": "Tipe Claims di jwt.go. Didefinisikan pada baris 19-26.",
+   "tags": [
+    "go",
+    "tipe",
+    "claims"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/auth/jwt.go:JWTService",
+   "type": "class",
+   "name": "JWTService",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "complexity": "simple",
+   "summary": "Tipe JWTService di jwt.go, dengan method: GenerateToken, GenerateAccessToken, ValidateAccessToken, ExpiryDuration, ValidateToken.",
+   "description": "Tipe JWTService di jwt.go, dengan method: GenerateToken, GenerateAccessToken, ValidateAccessToken, ExpiryDuration, ValidateToken. Didefinisikan pada baris 29-32.",
+   "tags": [
+    "go",
+    "tipe",
+    "jwtservice"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/jwt.go:NewJWTService",
+   "type": "function",
+   "name": "NewJWTService",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "complexity": "simple",
+   "summary": "Fungsi NewJWTService (8 baris), parameter: secret, expiryHours.",
+   "description": "Fungsi NewJWTService (8 baris), parameter: secret, expiryHours. Didefinisikan pada baris 37-45.",
+   "tags": [
+    "go",
+    "fungsi",
+    "newjwtservice"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/jwt.go:GenerateToken",
+   "type": "function",
+   "name": "GenerateToken",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "complexity": "simple",
+   "summary": "Fungsi GenerateToken (26 baris), parameter: userID, email, roles, tenantID.",
+   "description": "Fungsi GenerateToken (26 baris), parameter: userID, email, roles, tenantID. Didefinisikan pada baris 48-74.",
+   "tags": [
+    "go",
+    "fungsi",
+    "generatetoken"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/jwt.go:GenerateAccessToken",
+   "type": "function",
+   "name": "GenerateAccessToken",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "complexity": "simple",
+   "summary": "Fungsi GenerateAccessToken (3 baris), parameter: userID, username, role.",
+   "description": "Fungsi GenerateAccessToken (3 baris), parameter: userID, username, role. Didefinisikan pada baris 77-80.",
+   "tags": [
+    "go",
+    "fungsi",
+    "generateaccesstoken"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/jwt.go:ValidateAccessToken",
+   "type": "function",
+   "name": "ValidateAccessToken",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "complexity": "simple",
+   "summary": "Fungsi ValidateAccessToken (6 baris), parameter: tokenString.",
+   "description": "Fungsi ValidateAccessToken (6 baris), parameter: tokenString. Didefinisikan pada baris 83-89.",
+   "tags": [
+    "go",
+    "fungsi",
+    "validateaccesstoken"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/jwt.go:ExpiryDuration",
+   "type": "function",
+   "name": "ExpiryDuration",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "complexity": "simple",
+   "summary": "Fungsi ExpiryDuration (5 baris).",
+   "description": "Fungsi ExpiryDuration (5 baris). Didefinisikan pada baris 92-97.",
+   "tags": [
+    "go",
+    "fungsi",
+    "expiryduration"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/jwt.go:ValidateToken",
+   "type": "function",
+   "name": "ValidateToken",
+   "filePath": "internal/adapter/auth/jwt.go",
+   "complexity": "simple",
+   "summary": "Fungsi ValidateToken (18 baris), parameter: tokenStr.",
+   "description": "Fungsi ValidateToken (18 baris), parameter: tokenStr. Didefinisikan pada baris 100-118.",
+   "tags": [
+    "go",
+    "fungsi",
+    "validatetoken"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "file",
+   "name": "policy_seeder.go",
+   "filePath": "internal/adapter/auth/policy_seeder.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (168 baris, 3 fungsi, 1 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (168 baris, 3 fungsi, 1 tipe). Tipe utama: UserRef. Fungsi terbesar: SeedSystemPolicies, EnsureUserRoleAssignments, removeLegacyPathPolicies. Bergantung pada 2 berkas internal.",
+   "tags": [
+    "go",
+    "adapter",
+    "auth",
+    "inti"
+   ]
+  },
+  {
+   "id": "class:internal/adapter/auth/policy_seeder.go:UserRef",
+   "type": "class",
+   "name": "UserRef",
+   "filePath": "internal/adapter/auth/policy_seeder.go",
+   "complexity": "simple",
+   "summary": "Tipe UserRef di policy_seeder.go.",
+   "description": "Tipe UserRef di policy_seeder.go. Didefinisikan pada baris 165-168.",
+   "tags": [
+    "go",
+    "tipe",
+    "userref"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/policy_seeder.go:SeedSystemPolicies",
+   "type": "function",
+   "name": "SeedSystemPolicies",
+   "filePath": "internal/adapter/auth/policy_seeder.go",
+   "complexity": "moderate",
+   "summary": "Fungsi SeedSystemPolicies (90 baris), parameter: ce.",
+   "description": "Fungsi SeedSystemPolicies (90 baris), parameter: ce. Didefinisikan pada baris 23-113.",
+   "tags": [
+    "go",
+    "fungsi",
+    "seedsystempolicies"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/policy_seeder.go:EnsureUserRoleAssignments",
+   "type": "function",
+   "name": "EnsureUserRoleAssignments",
+   "filePath": "internal/adapter/auth/policy_seeder.go",
+   "complexity": "simple",
+   "summary": "Fungsi EnsureUserRoleAssignments (22 baris), parameter: ce, users.",
+   "description": "Fungsi EnsureUserRoleAssignments (22 baris), parameter: ce, users. Didefinisikan pada baris 140-162.",
+   "tags": [
+    "go",
+    "fungsi",
+    "ensureuserroleassignments"
+   ]
+  },
+  {
+   "id": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "type": "file",
+   "name": "procedure_permissions_test.go",
+   "filePath": "internal/adapter/auth/procedure_permissions_test.go",
+   "language": "go",
+   "complexity": "simple",
+   "summary": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (128 baris, 2 fungsi, 0 tipe).",
+   "description": "Adapter infrastruktur: implementasi konkrit dari port — paket `auth` (128 baris, 2 fungsi, 0 tipe). Fungsi terbesar: TestIspProceduresMapped, TestPermissionFor.",
+   "tags": [
+    "go",
+    "adapter",
+    "auth",
+    "inti"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/procedure_permissions_test.go:TestPermissionFor",
+   "type": "function",
+   "name": "TestPermissionFor",
+   "filePath": "internal/adapter/auth/procedure_permissions_test.go",
+   "complexity": "simple",
+   "summary": "Fungsi TestPermissionFor (43 baris), parameter: t.",
+   "description": "Fungsi TestPermissionFor (43 baris), parameter: t. Didefinisikan pada baris 7-50.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testpermissionfor"
+   ]
+  },
+  {
+   "id": "function:internal/adapter/auth/procedure_permissions_test.go:TestIspProceduresMapped",
+   "type": "function",
+   "name": "TestIspProceduresMapped",
+   "filePath": "internal/adapter/auth/procedure_permissions_test.go",
+   "complexity": "moderate",
+   "summary": "Fungsi TestIspProceduresMapped (76 baris), parameter: t.",
+   "description": "Fungsi TestIspProceduresMapped (76 baris), parameter: t. Didefinisikan pada baris 52-128.",
+   "tags": [
+    "go",
+    "fungsi",
+    "testispproceduresmapped"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:cmd/probe/main.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "class:cmd/probe/main.go:probeClient",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:main",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:runHeartbeatLoop",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:runTelemetryLoop",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:measureTargetLatency",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:newJSONConnectClient",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:ReportStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:envOr",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:cmd/probe/main.go:main",
+   "target": "function:cmd/probe/main.go:envOr",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:cmd/probe/main.go:main",
+   "target": "function:cmd/probe/main.go:newJSONConnectClient",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:cmd/probe/main.go:main",
+   "target": "function:cmd/probe/main.go:runHeartbeatLoop",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:cmd/probe/main.go:main",
+   "target": "function:cmd/probe/main.go:runTelemetryLoop",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:cmd/probe/main.go:runTelemetryLoop",
+   "target": "function:cmd/probe/main.go:measureTargetLatency",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:cmd/seed/main.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:main",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:seedUsers",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:seedCasbin",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:seedLLMConfig",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/device_authorizer_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/identity.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/procedure_permissions.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/rbac_enforce_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/refresh_token_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/refresh_token.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/audit_log_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/bot_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/chat_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/fase4_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/helpers.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/isp_repositories_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/isp_testutil_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/metrics_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/migrations_smoke_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/cashbook_models.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/conversation_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/customer_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/device_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/gateway_transaction_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/invoice_item_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/invoice_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/llm_config_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/notification_models.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/payment_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/ping_metric_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/portal_otp_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/portal_session_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/registration_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/reporting_audit_models.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/service_plan_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/session_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/setting_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/skill_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/subscription_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/user_device_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/user_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/model/wa_chat_model.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/setting_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/skill_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/user_repository_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/customer/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/customer/portal_otp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/customer/portal_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/llm/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/llm/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/llm/pricing.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/llm/tool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:cmd/seed/main.go:main",
+   "target": "function:cmd/seed/main.go:seedUsers",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:cmd/seed/main.go:main",
+   "target": "function:cmd/seed/main.go:seedLLMConfig",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "function:cmd/seed/main.go:main",
+   "target": "function:cmd/seed/main.go:seedCasbin",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:cmd/server/main.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "function:cmd/server/main.go:main",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:internal/app/app.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:internal/app/router.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:internal/app/scheduler_lifecycle_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:internal/app/scheduler.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:internal/app/shutdown_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/server/main.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "service:deployments/docker-compose.prod.yml",
+   "target": "file:cmd/server/main.go",
+   "type": "configures",
+   "weight": 0.6
+  },
+  {
+   "source": "service:deployments/docker-compose.yml",
+   "target": "file:cmd/server/main.go",
+   "type": "configures",
+   "weight": 0.6
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "class:internal/adapter/auth/casbin.go:CasbinEnforcer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:NewCasbinEnforcer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:Enforce",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:AddPolicy",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:RemovePolicy",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetPolicies",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetGroupingPolicies",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:SyncRolePermissions",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:DeleteRole",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:AddRoleForUser",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:DeleteRoleForUser",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:DeleteRolesForUser",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetRolesForUser",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetImplicitPermissionsForUser",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:persist",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "file:internal/adapter/auth/device_authorizer_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "class:internal/adapter/auth/device_authorizer_test.go:mockUserRepoForDeviceAuth",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:Create",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:FindByID",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:FindByUsername",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:FindByEmail",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:Count",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:List",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:FindAll",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:FindByRoles",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:Update",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:Delete",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:UpdatePassword",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:UpdateStatus",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:AssignDevices",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:GetAssignedDeviceIDs",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:IsDeviceAccessibleByUser",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "function:internal/adapter/auth/device_authorizer_test.go:TestDeviceAuthorizer_CanAccessDevice",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "file:internal/domain/customer/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "file:internal/domain/customer/portal_otp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "file:internal/domain/customer/portal_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer_test.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/adapter/auth/device_authorizer.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "class:internal/adapter/auth/device_authorizer.go:DefaultDeviceAuthorizer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "function:internal/adapter/auth/device_authorizer.go:NewDeviceAuthorizer",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "function:internal/adapter/auth/device_authorizer.go:CanAccessDevice",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/device_authorizer.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/identity.go",
+   "target": "file:internal/adapter/auth/identity.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/identity.go",
+   "target": "function:internal/adapter/auth/identity.go:WithIdentity",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/identity.go",
+   "target": "function:internal/adapter/auth/identity.go:IdentityFromContext",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/identity.go",
+   "target": "function:internal/adapter/auth/identity.go:IdentityStringFromContext",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "function:internal/adapter/auth/identity.go:IdentityStringFromContext",
+   "target": "function:internal/adapter/auth/identity.go:IdentityFromContext",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt_test.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt_test.go",
+   "target": "function:internal/adapter/auth/jwt_test.go:TestJWTService",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "class:internal/adapter/auth/jwt.go:Claims",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "class:internal/adapter/auth/jwt.go:JWTService",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "function:internal/adapter/auth/jwt.go:NewJWTService",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "function:internal/adapter/auth/jwt.go:GenerateToken",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "function:internal/adapter/auth/jwt.go:GenerateAccessToken",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "function:internal/adapter/auth/jwt.go:ValidateAccessToken",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "function:internal/adapter/auth/jwt.go:ExpiryDuration",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "function:internal/adapter/auth/jwt.go:ValidateToken",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/domain/session/errors.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/domain/session/session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/audit.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/auth_service.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/cashbook_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/chat_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/device_authorizer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/device_diagnostics.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/device_interface.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/dhcp.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/event_publisher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/firewall_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/gateway_transaction_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/hotspot_active.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/hotspot_binding.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/hotspot_expire.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/hotspot_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/hotspot_profile.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/hotspot_transaction.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/hotspot_user.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/hotspot_voucher.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/ip_pool.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/llm_config_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/metrics_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/monitor_stream_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/notification_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/payment_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/payment_processor.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/payment_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/portal_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/ppp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/ppp_session.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/provisioner.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/queue_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/refresh_token_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/registration_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/reporting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/service_plan_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/session_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/setting_reader.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/setting_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/simple_queue.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/skill_git_syncer.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/skill_provider.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/skill_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/skill_store.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/system_resource.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/user_repository.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/validating_driver.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/jwt.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/policy_seeder.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/policy_seeder.go",
+   "target": "class:internal/adapter/auth/policy_seeder.go:UserRef",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/policy_seeder.go",
+   "target": "function:internal/adapter/auth/policy_seeder.go:SeedSystemPolicies",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/policy_seeder.go",
+   "target": "function:internal/adapter/auth/policy_seeder.go:removeLegacyPathPolicies",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/policy_seeder.go",
+   "target": "function:internal/adapter/auth/policy_seeder.go:EnsureUserRoleAssignments",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/policy_seeder.go",
+   "target": "file:pkg/logger/logger_test.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/policy_seeder.go",
+   "target": "file:pkg/logger/logger.go",
+   "type": "imports",
+   "weight": 0.7
+  },
+  {
+   "source": "function:internal/adapter/auth/policy_seeder.go:SeedSystemPolicies",
+   "target": "function:internal/adapter/auth/policy_seeder.go:removeLegacyPathPolicies",
+   "type": "calls",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "target": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "target": "function:internal/adapter/auth/procedure_permissions_test.go:TestPermissionFor",
+   "type": "contains",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/procedure_permissions_test.go",
+   "target": "function:internal/adapter/auth/procedure_permissions_test.go:TestIspProceduresMapped",
+   "type": "contains",
+   "weight": 1
+  }
+ ]
+}
