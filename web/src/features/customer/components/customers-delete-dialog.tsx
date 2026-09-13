@@ -7,12 +7,14 @@ type CustomersDeleteDialogProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
   currentRow: Customer | null
+  onDeleted?: () => void
 }
 
 export function CustomersDeleteDialog({
   open,
   onOpenChange,
   currentRow,
+  onDeleted,
 }: CustomersDeleteDialogProps) {
   const deleteMutation = useDeleteCustomerMutation()
 
@@ -25,6 +27,7 @@ export function CustomersDeleteDialog({
       )
       toast.success('Pelanggan dihapus')
       onOpenChange(false)
+      onDeleted?.()
     } catch (err: unknown) {
       const errorMessage =
         err instanceof Error ? err.message : 'Gagal menghapus pelanggan'

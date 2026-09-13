@@ -30,6 +30,14 @@ vi.mock('@/features/devices/api/use-devices', () => ({
   useDevicesQuery: () => ({ data: [], isPending: false }),
 }))
 
+vi.mock('@tanstack/react-router', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/react-router')>()
+  return {
+    ...actual,
+    useNavigate: () => vi.fn(),
+  }
+})
+
 vi.mock('@/features/billing/api/use-billing', async (orig) => {
   const actual = await orig<typeof import('@/features/billing/api/use-billing')>()
   return {

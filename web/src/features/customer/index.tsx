@@ -15,7 +15,7 @@ import { CustomersPrimaryButtons } from './components/customers-primary-buttons'
 import { CustomersProvider } from './components/customers-provider'
 import { CustomersTable } from './components/customers-table'
 
-export function Customers() {
+export function CustomersPage() {
   const { selectedDeviceId } = useDeviceStore()
   const { data: devices = [] } = useDevicesQuery()
   const { data: customers = [], isLoading: isLoadingCustomers } = useCustomersQuery()
@@ -53,9 +53,9 @@ export function Customers() {
           <div>
             <div className='flex items-center gap-2'>
               <Contact className='size-6 text-primary' />
-              <h2 className='text-2xl font-bold tracking-tight'>Customers</h2>
+              <h2 className='text-2xl font-bold tracking-tight'>Pelanggan</h2>
             </div>
-            <p className='text-sm text-muted-foreground mt-0.5'>
+            <p className='mt-0.5 text-sm text-muted-foreground'>
               {currentDevice ? (
                 <>
                   Router:{' '}
@@ -73,11 +73,12 @@ export function Customers() {
         </div>
 
         {!selectedDeviceId ? (
-          <div className='flex flex-col items-center justify-center p-12 text-center rounded-lg border border-dashed'>
-            <AlertCircle className='size-10 text-muted-foreground mb-3' />
-            <h3 className='text-lg font-semibold'>No Router Selected</h3>
-            <p className='text-sm text-muted-foreground max-w-sm mt-1'>
-              Silakan pilih router MikroTik dari dropdown di sidebar untuk melihat pelanggan.
+          <div className='flex flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center'>
+            <AlertCircle className='mb-3 size-10 text-muted-foreground' />
+            <h3 className='text-lg font-semibold'>Router Belum Dipilih</h3>
+            <p className='mt-1 max-w-sm text-sm text-muted-foreground'>
+              Pilih salah satu router MikroTik dari dropdown di sidebar untuk
+              menampilkan daftar pelanggan pada router tersebut.
             </p>
           </div>
         ) : (

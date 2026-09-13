@@ -1,4 +1,5 @@
 import { Eye, MoreHorizontal, Pencil, Repeat, Trash2 } from 'lucide-react'
+import { useNavigate } from '@tanstack/react-router'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +18,7 @@ interface CustomersRowActionsProps {
 }
 
 export function CustomersRowActions({ customer }: CustomersRowActionsProps) {
+  const navigate = useNavigate()
   const { setOpen, setCurrentRow } = useCustomers()
   const permissions = useAuthStore((s) => s.auth.user?.permissions)
   const canManage = canPermission(permissions, 'customer:manage')
@@ -25,8 +27,7 @@ export function CustomersRowActions({ customer }: CustomersRowActionsProps) {
   if (!canManage) return null
 
   const handleDetail = () => {
-    setCurrentRow(customer)
-    setOpen('detail')
+    navigate({ to: '/customers/$customerId', params: { customerId: customer.id } })
   }
 
   const handleEdit = () => {
@@ -73,7 +74,7 @@ export function CustomersRowActions({ customer }: CustomersRowActionsProps) {
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleDelete} className='text-destructive focus:text-destructive'>
           <Trash2 className='mr-2 h-4 w-4' />
-          Delete
+          Hapus
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

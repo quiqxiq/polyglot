@@ -13,8 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { Cross2Icon } from '@radix-ui/react-icons'
-import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -23,8 +22,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { DataTablePagination } from '@/components/data-table'
+import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
 import type { Customer } from '@/gen/v1/customer_pb'
+import { CUSTOMER_STATUS_OPTIONS } from '../data/constants'
 import { useCustomersColumns } from './customers-columns'
 
 interface CustomersTableProps {
@@ -78,35 +78,19 @@ export function CustomersTable({ data, isLoading }: CustomersTableProps) {
     }
   }, [pageCount, pagination.pageIndex])
 
-
   return (
     <div className='flex flex-1 flex-col gap-4'>
-      <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
-        <div className='relative w-full sm:w-72'>
-          <Input
-            placeholder='Cari nama, phone, kode pelanggan...'
-            className='h-9 pr-8 text-xs sm:text-sm'
-            value={globalFilter}
-            onChange={(e) => {
-              setPagination((prev) => ({ ...prev, pageIndex: 0 }))
-              setGlobalFilter(e.target.value)
-            }}
-          />
-          {globalFilter && (
-            <button
-              type='button'
-              onClick={() => {
-                setPagination((prev) => ({ ...prev, pageIndex: 0 }))
-                setGlobalFilter('')
-              }}
-              className='absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground'
-              title='Clear search'
-            >
-              <Cross2Icon className='h-3.5 w-3.5' />
-            </button>
-          )}
-        </div>
-      </div>
+      <DataTableToolbar
+        table={table}
+        searchPlaceholder='Cari nama, HP, atau kode pelanggan...'
+        filters={[
+          {
+            columnId: 'status',
+            title: 'Status',
+            options: CUSTOMER_STATUS_OPTIONS,
+          },
+        ]}
+      />
 
       <div className='overflow-hidden rounded-md border bg-card'>
         <Table>
@@ -125,11 +109,15 @@ export function CustomersTable({ data, isLoading }: CustomersTableProps) {
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} className='h-24 text-center text-muted-foreground'>
-                  Memuat data pelanggan...
-                </TableCell>
-              </TableRow>
+              Array.from({ length: 5 }).map((_, rowIndex) => (
+                <TableRow key={`skeleton-${rowIndex}`}>
+                  {columns.map((_, colIndex) => (
+                    <TableCell key={`skeleton-${rowIndex}-${colIndex}`}>
+                      <Skeleton className='h-5 w-full max-w-[160px]' />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
             ) : table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
@@ -137,7 +125,6 @@ export function CustomersTable({ data, isLoading }: CustomersTableProps) {
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>

@@ -55,6 +55,7 @@ import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_auth
 import { Route as AuthenticatedPlansImportRouteImport } from './routes/_authenticated/plans/import'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as AuthenticatedCustomersImportRouteImport } from './routes/_authenticated/customers/import'
+import { Route as AuthenticatedCustomersCustomerIdRouteImport } from './routes/_authenticated/customers/$customerId'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -307,6 +308,12 @@ const AuthenticatedCustomersImportRoute =
     path: '/customers/import',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCustomersCustomerIdRoute =
+  AuthenticatedCustomersCustomerIdRouteImport.update({
+    id: '/customers/$customerId',
+    path: '/customers/$customerId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -323,6 +330,7 @@ export interface FileRoutesByFullPath {
   '/503': typeof errors503Route
   '/portal/login': typeof PortalLoginRoute
   '/portal/': typeof PortalIndexRoute
+  '/customers/$customerId': typeof AuthenticatedCustomersCustomerIdRoute
   '/customers/import': typeof AuthenticatedCustomersImportRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/plans/import': typeof AuthenticatedPlansImportRoute
@@ -369,6 +377,7 @@ export interface FileRoutesByTo {
   '/portal/login': typeof PortalLoginRoute
   '/': typeof AuthenticatedIndexRoute
   '/portal': typeof PortalIndexRoute
+  '/customers/$customerId': typeof AuthenticatedCustomersCustomerIdRoute
   '/customers/import': typeof AuthenticatedCustomersImportRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/plans/import': typeof AuthenticatedPlansImportRoute
@@ -418,6 +427,7 @@ export interface FileRoutesById {
   '/portal/login': typeof PortalLoginRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/portal/': typeof PortalIndexRoute
+  '/_authenticated/customers/$customerId': typeof AuthenticatedCustomersCustomerIdRoute
   '/_authenticated/customers/import': typeof AuthenticatedCustomersImportRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/_authenticated/plans/import': typeof AuthenticatedPlansImportRoute
@@ -467,6 +477,7 @@ export interface FileRouteTypes {
     | '/503'
     | '/portal/login'
     | '/portal/'
+    | '/customers/$customerId'
     | '/customers/import'
     | '/errors/$error'
     | '/plans/import'
@@ -513,6 +524,7 @@ export interface FileRouteTypes {
     | '/portal/login'
     | '/'
     | '/portal'
+    | '/customers/$customerId'
     | '/customers/import'
     | '/errors/$error'
     | '/plans/import'
@@ -561,6 +573,7 @@ export interface FileRouteTypes {
     | '/portal/login'
     | '/_authenticated/'
     | '/portal/'
+    | '/_authenticated/customers/$customerId'
     | '/_authenticated/customers/import'
     | '/_authenticated/errors/$error'
     | '/_authenticated/plans/import'
@@ -937,6 +950,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCustomersImportRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/customers/$customerId': {
+      id: '/_authenticated/customers/$customerId'
+      path: '/customers/$customerId'
+      fullPath: '/customers/$customerId'
+      preLoaderRoute: typeof AuthenticatedCustomersCustomerIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -970,6 +990,7 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedCustomersCustomerIdRoute: typeof AuthenticatedCustomersCustomerIdRoute
   AuthenticatedCustomersImportRoute: typeof AuthenticatedCustomersImportRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedPlansImportRoute: typeof AuthenticatedPlansImportRoute
@@ -996,6 +1017,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedCustomersCustomerIdRoute: AuthenticatedCustomersCustomerIdRoute,
   AuthenticatedCustomersImportRoute: AuthenticatedCustomersImportRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedPlansImportRoute: AuthenticatedPlansImportRoute,

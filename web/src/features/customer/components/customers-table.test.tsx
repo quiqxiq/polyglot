@@ -5,6 +5,28 @@ import { Customer } from '@/gen/v1/customer_pb'
 import { CustomersProvider } from './customers-provider'
 import { CustomersTable } from './customers-table'
 
+vi.mock('@tanstack/react-router', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/react-router')>()
+  return {
+    ...actual,
+    Link: ({
+      children,
+      to,
+      className,
+      ...rest
+    }: {
+      children: React.ReactNode
+      to: string
+      className?: string
+    }) => (
+      <a href={to} className={className} {...rest}>
+        {children}
+      </a>
+    ),
+    useNavigate: () => vi.fn(),
+  }
+})
+
 vi.mock('@/features/billing/api/use-billing', async (importOriginal) => {
   const actual = await importOriginal<Record<string, unknown>>()
   return {
@@ -68,10 +90,10 @@ describe('CustomersTable', () => {
     const { getByText } = await renderTable({ data: customers })
 
     await expect
-      .element(getByText('Active', { exact: true }))
+      .element(getByText('Aktif', { exact: true }))
       .toBeInTheDocument()
     await expect
-      .element(getByText('Suspended', { exact: true }))
+      .element(getByText('Ditangguhkan', { exact: true }))
       .toBeInTheDocument()
   })
 

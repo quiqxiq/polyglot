@@ -8,7 +8,6 @@ type CustomersDialogType =
   | 'delete'
   | 'import'
   | 'create-subscription'
-  | 'detail'
 
 type CustomersContextType = {
   open: CustomersDialogType | null

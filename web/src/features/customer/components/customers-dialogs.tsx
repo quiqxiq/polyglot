@@ -1,7 +1,6 @@
 import { CustomersMutateDrawer } from './customers-mutate-drawer'
 import { CustomersDeleteDialog } from './customers-delete-dialog'
 import { CustomersImportDialog } from './customers-import-dialog'
-import { CustomersDetailSheet } from './customers-detail-sheet'
 import { SubscriptionsCreateDialog } from '@/features/subscriptions/components/subscriptions-create-dialog'
 import { useCustomers } from './customers-provider'
 
@@ -45,14 +44,6 @@ export function CustomersDialogs() {
           onOpenChange={() => setOpen('create-subscription')}
           initialCustomerId={currentRow.id}
           lockCustomer
-        />
-      )}
-      {currentRow && (
-        <CustomersDetailSheet
-          key={`cust-detail-${currentRow.id}`}
-          open={open === 'detail'}
-          onOpenChange={(isOpen) => setOpen(isOpen ? 'detail' : null)}
-          customer={currentRow}
         />
       )}
     </>

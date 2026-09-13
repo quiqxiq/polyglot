@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { Customers } from '@/features/customer'
+import { CustomersPage } from '@/features/customer'
 import { useAuthStore } from '@/stores/auth-store'
 import { canPermission } from '@/hooks/use-can'
 
@@ -10,5 +10,5 @@ export const Route = createFileRoute('/_authenticated/customers/')({
       throw redirect({ to: '/403' })
     }
   },
-  component: Customers,
+  component: CustomersPage,
 })
