@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   type CashierPayRequest,
   type GenerateInvoicesRequest,
-  ResolveMethod,
+  type ResolveMethod,
 } from '@/gen/v1/billing_pb'
 import {
   type CreateSubscriptionRequest,
@@ -16,8 +16,9 @@ import {
   type IsolateSubscriptionRequest,
   type RestoreSubscriptionRequest,
 } from '@/gen/v1/subscription_pb'
-import { billingClient, subscriptionClient } from '@/lib/api-client'
 import { useAuthStore } from '@/stores/auth-store'
+import { API_BASE_URL } from '@/lib/api-base'
+import { billingClient, subscriptionClient } from '@/lib/api-client'
 import { billingKeys } from './keys'
 
 export function useInvoicesQuery(
@@ -114,7 +115,9 @@ export function useCashierPayMutation() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.invoices.all() })
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
     },
   })
 }
@@ -136,8 +139,10 @@ export interface CashierChargeResponse {
 
 export function useCashierChargeMutation() {
   return useMutation({
-    mutationFn: async (req: CashierChargeRequest): Promise<CashierChargeResponse> => {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+    mutationFn: async (
+      req: CashierChargeRequest
+    ): Promise<CashierChargeResponse> => {
+      const baseUrl = API_BASE_URL
       const token = useAuthStore.getState().auth.accessToken
       const res = await fetch(`${baseUrl}/api/cashier/charge`, {
         method: 'POST',
@@ -164,7 +169,9 @@ export function useChangePlanMutation() {
       return await subscriptionClient.changePlan(req)
     },
     onSuccess: (_, vars) => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
       queryClient.invalidateQueries({
         queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
       })
@@ -180,7 +187,9 @@ export function useSuspendSubscriptionMutation() {
       return await subscriptionClient.suspendSubscription(req)
     },
     onSuccess: (_, vars) => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
       queryClient.invalidateQueries({
         queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
       })
@@ -196,7 +205,9 @@ export function useResumeSubscriptionMutation() {
       return await subscriptionClient.resumeSubscription(req)
     },
     onSuccess: (_, vars) => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
       queryClient.invalidateQueries({
         queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
       })
@@ -212,7 +223,9 @@ export function useTerminateSubscriptionMutation() {
       return await subscriptionClient.terminateSubscription(req)
     },
     onSuccess: (_, vars) => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
       queryClient.invalidateQueries({
         queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
       })
@@ -228,7 +241,9 @@ export function useActivateSubscriptionMutation() {
       return await subscriptionClient.activateSubscription(req)
     },
     onSuccess: (_, vars) => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
       queryClient.invalidateQueries({
         queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
       })
@@ -244,7 +259,9 @@ export function useIsolateSubscriptionMutation() {
       return await subscriptionClient.isolateSubscription(req)
     },
     onSuccess: (_, vars) => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
       queryClient.invalidateQueries({
         queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
       })
@@ -260,7 +277,9 @@ export function useRestoreSubscriptionMutation() {
       return await subscriptionClient.restoreSubscription(req)
     },
     onSuccess: (_, vars) => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
       queryClient.invalidateQueries({
         queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
       })
@@ -276,7 +295,9 @@ export function useCreateSubscriptionMutation() {
       return await subscriptionClient.createSubscription(req)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
     },
   })
 }
@@ -289,7 +310,9 @@ export function useUpdateSubscriptionMutation() {
       return await subscriptionClient.updateSubscription(req)
     },
     onSuccess: (_, vars) => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
       if (vars.id) {
         queryClient.invalidateQueries({
           queryKey: billingKeys.subscriptions.detail(vars.id),
@@ -307,7 +330,9 @@ export function useDeleteSubscriptionMutation() {
       return await subscriptionClient.deleteSubscription(req)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
     },
   })
 }

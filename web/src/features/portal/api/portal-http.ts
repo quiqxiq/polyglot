@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/lib/api-base'
 import { PORTAL_STORAGE_KEY } from '../data/constants'
 
 // Data tagihan publik (tanpa sesi) dari GET /api/portal/bill.
@@ -44,10 +45,14 @@ export function clearPortalToken() {
 }
 
 function baseUrl() {
-  return import.meta.env.VITE_API_URL || 'http://localhost:8080'
+  return API_BASE_URL
 }
 
-function toHttpError(status: number, fallback: string, data: { message?: string } | null): PortalHttpError {
+function toHttpError(
+  status: number,
+  fallback: string,
+  data: { message?: string } | null
+): PortalHttpError {
   const err: PortalHttpError = new Error(data?.message || fallback)
   err.status = status
   return err
@@ -55,10 +60,16 @@ function toHttpError(status: number, fallback: string, data: { message?: string 
 
 // fetchPublicBill mencari tagihan terbuka via kode bayar / no HP / kode portal.
 export async function fetchPublicBill(identifier: string): Promise<PublicBill> {
-  const res = await fetch(`${baseUrl()}/api/portal/bill?identifier=${encodeURIComponent(identifier)}`)
+  const res = await fetch(
+    `${baseUrl()}/api/portal/bill?identifier=${encodeURIComponent(identifier)}`
+  )
   if (!res.ok) {
     const data = await res.json().catch(() => null)
-    throw toHttpError(res.status, 'Tagihan tidak ditemukan atau sudah lunas', data)
+    throw toHttpError(
+      res.status,
+      'Tagihan tidak ditemukan atau sudah lunas',
+      data
+    )
   }
   return res.json()
 }
@@ -67,7 +78,12 @@ export async function fetchPublicBill(identifier: string): Promise<PublicBill> {
 // portal (F5-4): endpoint wajib bearer token sesi pelanggan.
 export async function chargePortalInvoice(
   token: string,
-  payload: { invoice_id: string; gateway?: string; channel?: string; expire_minutes?: number }
+  payload: {
+    invoice_id: string
+    gateway?: string
+    channel?: string
+    expire_minutes?: number
+  }
 ): Promise<ChargeResult> {
   const res = await fetch(`${baseUrl()}/api/portal/charge`, {
     method: 'POST',

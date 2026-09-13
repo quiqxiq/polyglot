@@ -27,9 +27,10 @@ func CORS(allowedOrigins []string, appEnv string) Middleware {
 				w.Header().Set("Access-Control-Allow-Origin", origin)
 			} else if origin != "" && isDev {
 				w.Header().Set("Access-Control-Allow-Origin", origin)
-			} else if len(allowedOrigins) > 0 {
-				w.Header().Set("Access-Control-Allow-Origin", allowedOrigins[0])
 			}
+			// Origin yang tidak diizinkan sengaja tidak diberi header ACAO:
+			// mengirim origin lain (allowedOrigins[0]) menyesatkan browser
+			// dan menyalahi spesifikasi CORS.
 
 			w.Header().Set("Access-Control-Allow-Credentials", "true")
 			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, Connect-Protocol-Version, Connect-Content-Type, Connect-Timeout-Ms")

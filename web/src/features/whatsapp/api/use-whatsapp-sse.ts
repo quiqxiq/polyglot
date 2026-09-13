@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { GetWASessionQRResponse, type WASession } from '@/gen/v1/whatsapp_pb'
+import { API_BASE_URL } from '@/lib/api-base'
 import type { WARealtimeStatus } from '@/lib/realtime'
 import { botKeys } from '@/features/chats/api/keys'
 import { waDeviceKeys } from './keys'
 
 // Endpoint /events ter-register publik di backend (tanpa guard JWT), sehingga
 // EventSource native bisa dipakai tanpa header Authorization.
-const SSE_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+const SSE_BASE = API_BASE_URL
 
 interface SessionStatusPayload {
   session_id: number

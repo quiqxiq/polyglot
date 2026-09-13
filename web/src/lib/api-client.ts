@@ -7,8 +7,8 @@ import { DeviceService } from '@/gen/v1/device_connect'
 import { HotspotService } from '@/gen/v1/hotspot_connect'
 import { IspAdminService } from '@/gen/v1/ispadmin_connect'
 import { LLMConfigService } from '@/gen/v1/llm_connect'
-import { NetworkMonitorService } from '@/gen/v1/network_monitor_connect'
 import { NetworkService } from '@/gen/v1/network_connect'
+import { NetworkMonitorService } from '@/gen/v1/network_monitor_connect'
 import { NotificationService } from '@/gen/v1/notification_connect'
 import { PlanService } from '@/gen/v1/plan_connect'
 import { PortalService } from '@/gen/v1/portal_connect'
@@ -25,6 +25,7 @@ import { WhatsAppService } from '@/gen/v1/whatsapp_connect'
 import { createPromiseClient, Code, ConnectError } from '@connectrpc/connect'
 import { createConnectTransport } from '@connectrpc/connect-web'
 import { useAuthStore } from '@/stores/auth-store'
+import { API_BASE_URL } from '@/lib/api-base'
 
 function isUnauthenticated(err: unknown): boolean {
   return (
@@ -71,7 +72,7 @@ function handleAuthFailure() {
 }
 
 const transport = createConnectTransport({
-  baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:8080',
+  baseUrl: API_BASE_URL,
   credentials: 'include',
   interceptors: [
     (next) => async (req) => {
@@ -107,17 +108,29 @@ export const hotspotClient = createPromiseClient(HotspotService, transport)
 export const ispAdminClient = createPromiseClient(IspAdminService, transport)
 export const llmConfigClient = createPromiseClient(LLMConfigService, transport)
 export const networkClient = createPromiseClient(NetworkService, transport)
-export const networkMonitorClient = createPromiseClient(NetworkMonitorService, transport)
-export const notificationClient = createPromiseClient(NotificationService, transport)
+export const networkMonitorClient = createPromiseClient(
+  NetworkMonitorService,
+  transport
+)
+export const notificationClient = createPromiseClient(
+  NotificationService,
+  transport
+)
 export const planClient = createPromiseClient(PlanService, transport)
 export const portalClient = createPromiseClient(PortalService, transport)
 export const pppClient = createPromiseClient(PPPService, transport)
 export const probeClient = createPromiseClient(ProbeService, transport)
 export const rbacClient = createPromiseClient(RBACService, transport)
-export const registrationClient = createPromiseClient(RegistrationService, transport)
+export const registrationClient = createPromiseClient(
+  RegistrationService,
+  transport
+)
 export const reportClient = createPromiseClient(ReportService, transport)
 export const settingClient = createPromiseClient(SettingService, transport)
 export const skillClient = createPromiseClient(SkillService, transport)
-export const subscriptionClient = createPromiseClient(SubscriptionService, transport)
+export const subscriptionClient = createPromiseClient(
+  SubscriptionService,
+  transport
+)
 export const userClient = createPromiseClient(UserService, transport)
 export const whatsappClient = createPromiseClient(WhatsAppService, transport)
