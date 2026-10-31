@@ -5,6 +5,7 @@ import type { Registration } from '@/gen/v1/registration_pb'
 export type RegistrationDialogType =
   | 'submit'
   | 'schedule'
+  | 'survey'
   | 'install'
   | 'convert'
   | 'reject'

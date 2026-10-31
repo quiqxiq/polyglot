@@ -18,6 +18,8 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { LanguageSwitch } from '@/components/language-switch'
+import { useI18n } from '@/context/i18n-provider'
 import { DevicesProvider, useDevicesContext } from './components/devices-provider'
 import { DevicesPrimaryButtons } from './components/devices-primary-buttons'
 import { DevicesCardGrid } from './components/devices-card-grid'
@@ -55,10 +57,13 @@ function DevicesContent() {
       return b.name.localeCompare(a.name)
     }), [devices, searchTerm, sortOrder, vendorFilter])
 
+  const { t } = useI18n()
+
   return (
     <>
       <Header fixed>
         <Search className='me-auto' />
+        <LanguageSwitch />
         <ThemeSwitch />
         <ConfigDrawer />
         <ProfileDropdown />
@@ -68,9 +73,9 @@ function DevicesContent() {
         {/* ===== Title & Top Toolbar ===== */}
         <div className='flex flex-wrap items-end justify-between gap-2'>
           <div>
-            <h1 className='text-2xl font-bold tracking-tight'>Device Inventory</h1>
+            <h1 className='text-2xl font-bold tracking-tight'>{t('devices.title')}</h1>
             <p className='text-muted-foreground text-sm'>
-              Kelola router jaringan, access point, dan perangkat OLT dengan pemantauan realtime.
+              {t('devices.router_list')}
             </p>
           </div>
           <DevicesPrimaryButtons />

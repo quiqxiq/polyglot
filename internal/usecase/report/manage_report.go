@@ -14,6 +14,7 @@ import (
 type ManageReportUseCase struct {
 	repo        port.ReportingRepository
 	snapshotter port.SnapshotComputer
+	advanced    port.AdvancedReportRepository
 }
 
 // NewManageReportUseCase constructs a new ManageReportUseCase.

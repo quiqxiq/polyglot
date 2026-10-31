@@ -1,0 +1,269 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// OltDevice adalah inventori OLT EPON HiOSO.
+message OltDevice {
+  string id = 1;
+  string name = 2;
+  string host = 3;
+  int32 telnet_port = 4;
+  int32 ssh_port = 5;
+  int32 snmp_port = 6;
+  string transport = 7;
+  string variant = 8;
+  int32 pon_count = 9;
+  bool enabled = 10;
+  int32 total_onus = 11;
+  int32 online_onus = 12;
+  int32 offline_onus = 13;
+  int32 unknown_onus = 14;
+  int32 removed_onus = 15;
+}
+
+message OltHealth {
+  bool reachable = 1;
+  string variant = 2;
+  string firmware = 3;
+  string sys_descr = 4;
+  string uptime = 5;
+  int64 latency_ms = 6;
+}
+
+// Onu adalah satu ONT/ONU pelanggan pada OLT.
+message Onu {
+  string id = 1;
+  string olt_device_id = 2;
+  int32 pon_index = 3;
+  int32 onu_index = 4;
+  int32 llid = 5;
+  string mac_address = 6;
+  string serial_number = 7;
+  string name = 8;
+  string model = 9;
+  string firmware = 10;
+  string state = 11;
+  string admin_state = 12;
+  optional double rx_power_dbm = 13;
+  optional double tx_power_dbm = 14;
+  optional int32 distance_m = 15;
+  optional double temperature_c = 16;
+  int32 missed_polls = 17;
+  int32 offline_strikes = 18;
+  string last_seen_at = 19;
+  string last_polled_at = 20;
+  string customer_id = 21;
+  string subscription_id = 22;
+  string pppoe_username = 23;
+  string acs_device_id = 24;
+  string acs_last_inform_at = 25;
+  string rx_class = 26;
+}
+
+message OnuEvent {
+  string id = 1;
+  string onu_id = 2;
+  string event_type = 3;
+  string old_state = 4;
+  string new_state = 5;
+  string message = 6;
+  string created_at = 7;
+}
+
+message OnuMetricSample {
+  string sampled_at = 1;
+  optional double rx_power_dbm = 2;
+  optional double tx_power_dbm = 3;
+  optional double temperature_c = 4;
+  optional int32 distance_m = 5;
+  bool online = 6;
+}
+
+// ---- OLT CRUD ----
+
+message ListOltsRequest {}
+
+message ListOltsResponse {
+  repeated OltDevice olts = 1;
+}
+
+message GetOltRequest {
+  string id = 1;
+}
+
+message GetOltResponse {
+  OltDevice olt = 1;
+  OltHealth health = 2;
+}
+
+message CreateOltRequest {
+  string name = 1;
+  string host = 2;
+  int32 telnet_port = 3;
+  int32 ssh_port = 4;
+  int32 snmp_port = 5;
+  string transport = 6;
+  string variant = 7;
+  int32 pon_count = 8;
+  string username = 9;
+  string password = 10;
+  string community_ro = 11;
+  string community_rw = 12;
+  bool enabled = 13;
+}
+
+message CreateOltResponse {
+  OltDevice olt = 1;
+}
+
+message UpdateOltRequest {
+  string id = 1;
+  string name = 2;
+  string host = 3;
+  int32 telnet_port = 4;
+  int32 ssh_port = 5;
+  int32 snmp_port = 6;
+  string transport = 7;
+  string variant = 8;
+  int32 pon_count = 9;
+  string username = 10;
+  string password = 11;
+  string community_ro = 12;
+  string community_rw = 13;
+  bool enabled = 14;
+}
+
+message UpdateOltResponse {
+  OltDevice olt = 1;
+}
+
+message DeleteOltRequest {
+  string id = 1;
+}
+
+message DeleteOltResponse {
+  string message = 1;
+}
+
+message TestOltConnectionRequest {
+  string id = 1;
+}
+
+message TestOltConnectionResponse {
+  OltHealth health = 1;
+}
+
+// ---- ONT/ONU ----
+
+message ListOnusRequest {
+  string olt_device_id = 1;
+  int32 pon_index = 2;
+  string state = 3;
+  string search = 4;
+  int32 limit = 5;
+  int32 offset = 6;
+}
+
+message ListOnusResponse {
+  repeated Onu onus = 1;
+  int32 total = 2;
+}
+
+message GetOnuRequest {
+  string id = 1;
+}
+
+message GetOnuResponse {
+  Onu onu = 1;
+}
+
+message ListOnuEventsRequest {
+  string onu_id = 1;
+  int32 limit = 2;
+}
+
+message ListOnuEventsResponse {
+  repeated OnuEvent events = 1;
+}
+
+message GetOnuOpticalHistoryRequest {
+  string onu_id = 1;
+  int32 hours = 2;
+}
+
+message GetOnuOpticalHistoryResponse {
+  repeated OnuMetricSample samples = 1;
+}
+
+// ---- Aksi tulis (async job) ----
+
+message SyncOltRequest {
+  string olt_device_id = 1;
+}
+
+message SyncOltResponse {
+  string job_id = 1;
+}
+
+message SaveOltConfigRequest {
+  string olt_device_id = 1;
+}
+
+message SaveOltConfigResponse {
+  string job_id = 1;
+}
+
+message RenameOnuRequest {
+  string onu_id = 1;
+  string name = 2;
+}
+
+message RenameOnuResponse {
+  string job_id = 1;
+}
+
+message RebootOnuRequest {
+  string onu_id = 1;
+}
+
+message RebootOnuResponse {
+  string job_id = 1;
+}
+
+message SetOnuAdminStateRequest {
+  string onu_id = 1;
+  bool enabled = 2;
+}
+
+message SetOnuAdminStateResponse {
+  string job_id = 1;
+}
+
+message DeleteOnuRequest {
+  string onu_id = 1;
+}
+
+message DeleteOnuResponse {
+  string job_id = 1;
+}
+
+service OltService {
+  rpc ListOlts(ListOltsRequest) returns (ListOltsResponse);
+  rpc GetOlt(GetOltRequest) returns (GetOltResponse);
+  rpc CreateOlt(CreateOltRequest) returns (CreateOltResponse);
+  rpc UpdateOlt(UpdateOltRequest) returns (UpdateOltResponse);
+  rpc DeleteOlt(DeleteOltRequest) returns (DeleteOltResponse);
+  rpc TestOltConnection(TestOltConnectionRequest) returns (TestOltConnectionResponse);
+  rpc ListOnus(ListOnusRequest) returns (ListOnusResponse);
+  rpc GetOnu(GetOnuRequest) returns (GetOnuResponse);
+  rpc ListOnuEvents(ListOnuEventsRequest) returns (ListOnuEventsResponse);
+  rpc GetOnuOpticalHistory(GetOnuOpticalHistoryRequest) returns (GetOnuOpticalHistoryResponse);
+  rpc SyncOlt(SyncOltRequest) returns (SyncOltResponse);
+  rpc SaveOltConfig(SaveOltConfigRequest) returns (SaveOltConfigResponse);
+  rpc RenameOnu(RenameOnuRequest) returns (RenameOnuResponse);
+  rpc RebootOnu(RebootOnuRequest) returns (RebootOnuResponse);
+  rpc SetOnuAdminState(SetOnuAdminStateRequest) returns (SetOnuAdminStateResponse);
+  rpc DeleteOnu(DeleteOnuRequest) returns (DeleteOnuResponse);
+}

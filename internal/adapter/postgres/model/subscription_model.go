@@ -28,8 +28,16 @@ type SubscriptionModel struct {
 	RouterProfile   string `gorm:"column:router_profile;type:varchar(100)"`
 	ProvisionStatus string `gorm:"type:varchar(20);not null;default:NONE"`
 
-	BillingCycle       string     `gorm:"type:varchar(20);not null;default:MONTHLY"`
-	BillingDay         int        `gorm:"not null;default:1"`
+	BillingCycle string `gorm:"type:varchar(20);not null;default:MONTHLY"`
+	BillingDay   int    `gorm:"not null;default:1"`
+
+	// Kolom billing v2 (migrasi 000032).
+	BillingAnchorDay   int        `gorm:"column:billing_anchor_day;not null;default:1"`
+	PaidThrough        *time.Time `gorm:"column:paid_through;type:date"`
+	NextDueDate        *time.Time `gorm:"column:next_due_date;type:date"`
+	LastProvisionError string     `gorm:"column:last_provision_error;type:text"`
+	ProvisionAttempts  int        `gorm:"column:provision_attempts;not null;default:0"`
+
 	AutoIsolate        bool       `gorm:"not null;default:true"`
 	IsolationGraceDays int        `gorm:"not null;default:3"`
 	Status             string     `gorm:"type:varchar(20);not null;default:ACTIVE;index"`
@@ -73,6 +81,11 @@ func (m *SubscriptionModel) ToDomain() subscription.Subscription {
 		ProvisionStatus:    m.ProvisionStatus,
 		BillingCycle:       m.BillingCycle,
 		BillingDay:         m.BillingDay,
+		BillingAnchorDay:   m.BillingAnchorDay,
+		PaidThrough:        m.PaidThrough,
+		NextDueDate:        m.NextDueDate,
+		LastProvisionError: m.LastProvisionError,
+		ProvisionAttempts:  m.ProvisionAttempts,
 		AutoIsolate:        m.AutoIsolate,
 		IsolationGraceDays: m.IsolationGraceDays,
 		Status:             m.Status,
@@ -124,6 +137,11 @@ func SubscriptionModelFromDomain(s subscription.Subscription) *SubscriptionModel
 		ProvisionStatus:    s.ProvisionStatus,
 		BillingCycle:       s.BillingCycle,
 		BillingDay:         s.BillingDay,
+		BillingAnchorDay:   s.BillingAnchorDay,
+		PaidThrough:        s.PaidThrough,
+		NextDueDate:        s.NextDueDate,
+		LastProvisionError: s.LastProvisionError,
+		ProvisionAttempts:  s.ProvisionAttempts,
 		AutoIsolate:        s.AutoIsolate,
 		IsolationGraceDays: s.IsolationGraceDays,
 		Status:             s.Status,

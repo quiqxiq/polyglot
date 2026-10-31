@@ -89,3 +89,94 @@ export function useDeleteHotspotReportMutation() {
     },
   })
 }
+
+// ─── Laporan operasional lanjutan (planning v2 Fase 5) ──────────────────
+
+export function useARAgingQuery(asOf = '') {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'ar-aging', asOf] as const,
+    queryFn: async () => {
+      const res = await reportClient.aRAging({ asOf })
+      return res
+    },
+  })
+}
+
+export function useGatewayReconciliationQuery(from = '', to = '') {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'gateway-recon', from, to] as const,
+    queryFn: async () => {
+      const res = await reportClient.gatewayReconciliation({ from, to })
+      return res
+    },
+  })
+}
+
+export function usePSBStatsQuery(from = '', to = '') {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'psb-stats', from, to] as const,
+    queryFn: async () => {
+      const res = await reportClient.pSBStats({ from, to })
+      return res
+    },
+  })
+}
+
+// ─── Laporan Keuangan Billing Ops v3 ────────────────────────────────────
+
+export function useTaxReportQuery(period = '') {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'tax', period] as const,
+    queryFn: async () => await reportClient.taxReport({ period }),
+  })
+}
+
+export function useSalesReportQuery(period = '') {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'sales', period] as const,
+    queryFn: async () => await reportClient.salesReport({ period }),
+  })
+}
+
+export function useCollectionReportQuery(period = '') {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'collection', period] as const,
+    queryFn: async () => await reportClient.collectionReport({ period }),
+  })
+}
+
+export function useCashflowReportQuery(from = '', to = '') {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'cashflow', from, to] as const,
+    queryFn: async () => await reportClient.cashflowReport({ from, to }),
+  })
+}
+
+export function useAgingDetailQuery(asOf = '', limit = 200) {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'aging-detail', asOf, limit] as const,
+    queryFn: async () => await reportClient.agingDetail({ asOf, limit }),
+  })
+}
+
+export function useClosingReportQuery(period = '') {
+  return useQuery({
+    queryKey: [...reportsKeys.all, 'closing', period] as const,
+    queryFn: async () => await reportClient.closingReport({ period }),
+  })
+}
+
+export function useExportReportMutation() {
+  return useMutation({
+    mutationFn: async (req: {
+      reportType: string
+      format?: string
+      params?: Record<string, string>
+    }) =>
+      await reportClient.exportReport({
+        reportType: req.reportType,
+        format: req.format || 'xlsx',
+        params: req.params || {},
+      }),
+  })
+}

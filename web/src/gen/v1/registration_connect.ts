@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ApproveRegistrationRequest, ApproveRegistrationResponse, CancelRegistrationRequest, CancelRegistrationResponse, ConvertRegistrationRequest, ConvertRegistrationResponse, GetRegistrationRequest, GetRegistrationResponse, ListRegistrationsRequest, ListRegistrationsResponse, MarkInstalledRequest, MarkInstalledResponse, RejectRegistrationRequest, RejectRegistrationResponse, ScheduleInstallRequest, ScheduleInstallResponse, SubmitRegistrationRequest, SubmitRegistrationResponse } from "./registration_pb.js";
+import { ApproveRegistrationRequest, ApproveRegistrationResponse, CancelRegistrationRequest, CancelRegistrationResponse, ConvertRegistrationRequest, ConvertRegistrationResponse, GetRegistrationRequest, GetRegistrationResponse, ListPublicPlansRequest, ListPublicPlansResponse, ListRegistrationEventsRequest, ListRegistrationEventsResponse, ListRegistrationsRequest, ListRegistrationsResponse, MarkInstalledRequest, MarkInstalledResponse, RecordSurveyRequest, RecordSurveyResponse, RejectRegistrationRequest, RejectRegistrationResponse, ScheduleInstallRequest, ScheduleInstallResponse, StartInstallationRequest, StartInstallationResponse, SubmitRegistrationRequest, SubmitRegistrationResponse, TrackRegistrationRequest, TrackRegistrationResponse } from "./registration_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -58,12 +58,57 @@ export const RegistrationService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc polyglot.v1.RegistrationService.RecordSurvey
+     */
+    recordSurvey: {
+      name: "RecordSurvey",
+      I: RecordSurveyRequest,
+      O: RecordSurveyResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.RegistrationService.StartInstallation
+     */
+    startInstallation: {
+      name: "StartInstallation",
+      I: StartInstallationRequest,
+      O: StartInstallationResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
      * @generated from rpc polyglot.v1.RegistrationService.MarkInstalled
      */
     markInstalled: {
       name: "MarkInstalled",
       I: MarkInstalledRequest,
       O: MarkInstalledResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.RegistrationService.TrackRegistration
+     */
+    trackRegistration: {
+      name: "TrackRegistration",
+      I: TrackRegistrationRequest,
+      O: TrackRegistrationResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.RegistrationService.ListPublicPlans
+     */
+    listPublicPlans: {
+      name: "ListPublicPlans",
+      I: ListPublicPlansRequest,
+      O: ListPublicPlansResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.RegistrationService.ListRegistrationEvents
+     */
+    listRegistrationEvents: {
+      name: "ListRegistrationEvents",
+      I: ListRegistrationEventsRequest,
+      O: ListRegistrationEventsResponse,
       kind: MethodKind.Unary,
     },
     /**

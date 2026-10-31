@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActivateSubscriptionRequest, ActivateSubscriptionResponse, ChangePlanRequest, ChangePlanResponse, CreateSubscriptionRequest, CreateSubscriptionResponse, DeleteSubscriptionRequest, DeleteSubscriptionResponse, GetSubscriptionRequest, GetSubscriptionResponse, IsolateSubscriptionRequest, IsolateSubscriptionResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, RestoreSubscriptionRequest, RestoreSubscriptionResponse, ResumeSubscriptionRequest, ResumeSubscriptionResponse, SuspendSubscriptionRequest, SuspendSubscriptionResponse, TerminateSubscriptionRequest, TerminateSubscriptionResponse, UpdateSubscriptionRequest, UpdateSubscriptionResponse } from "./subscription_pb.js";
+import { ActivateSubscriptionRequest, ActivateSubscriptionResponse, ChangePlanRequest, ChangePlanResponse, CreateSubscriptionRequest, CreateSubscriptionResponse, DeleteSubscriptionRequest, DeleteSubscriptionResponse, GetSubscriptionRequest, GetSubscriptionResponse, IsolateSubscriptionRequest, IsolateSubscriptionResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, RestoreSubscriptionRequest, RestoreSubscriptionResponse, ResumeSubscriptionRequest, ResumeSubscriptionResponse, RetryProvisionRequest, RetryProvisionResponse, SuspendSubscriptionRequest, SuspendSubscriptionResponse, TerminateSubscriptionRequest, TerminateSubscriptionResponse, UpdateSubscriptionRequest, UpdateSubscriptionResponse } from "./subscription_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -118,6 +118,18 @@ export const SubscriptionService = {
       name: "RestoreSubscription",
       I: RestoreSubscriptionRequest,
       O: RestoreSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * RetryProvision mengantrekan ulang job provisioning langganan ke router
+     * (planning v2 Fase 4 — retry manual dari dashboard).
+     *
+     * @generated from rpc polyglot.v1.SubscriptionService.RetryProvision
+     */
+    retryProvision: {
+      name: "RetryProvision",
+      I: RetryProvisionRequest,
+      O: RetryProvisionResponse,
       kind: MethodKind.Unary,
     },
   }

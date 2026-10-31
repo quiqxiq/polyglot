@@ -1,4 +1,5 @@
 import { CashierDialog } from './cashier-dialog'
+import { CreateInvoiceDialog } from './create-invoice-dialog'
 import { GenerateInvoicesDialog } from './generate-invoices-dialog'
 import { InvoiceDetailSheet } from './invoice-detail-sheet'
 import { InvoicePrintDialog } from './invoice-print-dialog'
@@ -19,6 +20,14 @@ export function InvoicesDialogs() {
           open={open === 'cashier'}
           onOpenChange={() => close('cashier')}
           currentInvoice={currentInvoice}
+        />
+      )}
+
+      {/* Dialog Tagihan Manual */}
+      {open === 'create' && (
+        <CreateInvoiceDialog
+          open={open === 'create'}
+          onOpenChange={() => close('create')}
         />
       )}
 

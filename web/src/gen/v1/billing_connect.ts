@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CancelInvoiceRequest, CancelInvoiceResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, ListInvoicesRequest, ListInvoicesResponse } from "./billing_pb.js";
+import { ApplyInvoiceDiscountRequest, ApplyInvoiceDiscountResponse, ApprovePaymentSubmissionRequest, ApprovePaymentSubmissionResponse, CancelInvoiceRequest, CancelInvoiceResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, CreateInvoiceRequest, CreateInvoiceResponse, CreateMassPaymentRequest, CreateMassPaymentResponse, DeletePaymentMethodRequest, DeletePaymentMethodResponse, ExportInvoicesRequest, ExportInvoicesResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, GetMassPaymentRequest, GetMassPaymentResponse, ListGatewaySettlementsRequest, ListGatewaySettlementsResponse, ListGatewayTransactionsRequest, ListGatewayTransactionsResponse, ListInvoicesRequest, ListInvoicesResponse, ListMassPaymentsRequest, ListMassPaymentsResponse, ListPaymentMethodsRequest, ListPaymentMethodsResponse, ListPaymentSubmissionsRequest, ListPaymentSubmissionsResponse, RejectPaymentSubmissionRequest, RejectPaymentSubmissionResponse, ResolveManualPaymentRequest, ResolveManualPaymentResponse, ReversePaymentRequest, ReversePaymentResponse, SaveGatewaySettlementRequest, SaveGatewaySettlementResponse, SavePaymentMethodRequest, SavePaymentMethodResponse, SubmitManualPaymentRequest, SubmitManualPaymentResponse, SyncGatewayTransactionsRequest, SyncGatewayTransactionsResponse } from "./billing_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -33,6 +33,15 @@ export const BillingService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc polyglot.v1.BillingService.CreateInvoice
+     */
+    createInvoice: {
+      name: "CreateInvoice",
+      I: CreateInvoiceRequest,
+      O: CreateInvoiceResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
      * @generated from rpc polyglot.v1.BillingService.CancelInvoice
      */
     cancelInvoice: {
@@ -42,12 +51,30 @@ export const BillingService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc polyglot.v1.BillingService.ApplyInvoiceDiscount
+     */
+    applyInvoiceDiscount: {
+      name: "ApplyInvoiceDiscount",
+      I: ApplyInvoiceDiscountRequest,
+      O: ApplyInvoiceDiscountResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
      * @generated from rpc polyglot.v1.BillingService.GenerateInvoices
      */
     generateInvoices: {
       name: "GenerateInvoices",
       I: GenerateInvoicesRequest,
       O: GenerateInvoicesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.ExportInvoices
+     */
+    exportInvoices: {
+      name: "ExportInvoices",
+      I: ExportInvoicesRequest,
+      O: ExportInvoicesResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -68,6 +95,158 @@ export const BillingService = {
       name: "CashierPay",
       I: CashierPayRequest,
       O: CashierPayResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Pembayaran manual & reversal (Fase 3)
+     *
+     * @generated from rpc polyglot.v1.BillingService.ResolveManualPayment
+     */
+    resolveManualPayment: {
+      name: "ResolveManualPayment",
+      I: ResolveManualPaymentRequest,
+      O: ResolveManualPaymentResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.SubmitManualPayment
+     */
+    submitManualPayment: {
+      name: "SubmitManualPayment",
+      I: SubmitManualPaymentRequest,
+      O: SubmitManualPaymentResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.ListPaymentSubmissions
+     */
+    listPaymentSubmissions: {
+      name: "ListPaymentSubmissions",
+      I: ListPaymentSubmissionsRequest,
+      O: ListPaymentSubmissionsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.ApprovePaymentSubmission
+     */
+    approvePaymentSubmission: {
+      name: "ApprovePaymentSubmission",
+      I: ApprovePaymentSubmissionRequest,
+      O: ApprovePaymentSubmissionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.RejectPaymentSubmission
+     */
+    rejectPaymentSubmission: {
+      name: "RejectPaymentSubmission",
+      I: RejectPaymentSubmissionRequest,
+      O: RejectPaymentSubmissionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.ReversePayment
+     */
+    reversePayment: {
+      name: "ReversePayment",
+      I: ReversePaymentRequest,
+      O: ReversePaymentResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Master Metode Pembayaran (W3)
+     *
+     * @generated from rpc polyglot.v1.BillingService.ListPaymentMethods
+     */
+    listPaymentMethods: {
+      name: "ListPaymentMethods",
+      I: ListPaymentMethodsRequest,
+      O: ListPaymentMethodsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.SavePaymentMethod
+     */
+    savePaymentMethod: {
+      name: "SavePaymentMethod",
+      I: SavePaymentMethodRequest,
+      O: SavePaymentMethodResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.DeletePaymentMethod
+     */
+    deletePaymentMethod: {
+      name: "DeletePaymentMethod",
+      I: DeletePaymentMethodRequest,
+      O: DeletePaymentMethodResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Mass Payment (W3)
+     *
+     * @generated from rpc polyglot.v1.BillingService.CreateMassPayment
+     */
+    createMassPayment: {
+      name: "CreateMassPayment",
+      I: CreateMassPaymentRequest,
+      O: CreateMassPaymentResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.ListMassPayments
+     */
+    listMassPayments: {
+      name: "ListMassPayments",
+      I: ListMassPaymentsRequest,
+      O: ListMassPaymentsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.GetMassPayment
+     */
+    getMassPayment: {
+      name: "GetMassPayment",
+      I: GetMassPaymentRequest,
+      O: GetMassPaymentResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Gateway Transaksi & Settlement (W4)
+     *
+     * @generated from rpc polyglot.v1.BillingService.ListGatewayTransactions
+     */
+    listGatewayTransactions: {
+      name: "ListGatewayTransactions",
+      I: ListGatewayTransactionsRequest,
+      O: ListGatewayTransactionsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.SyncGatewayTransactions
+     */
+    syncGatewayTransactions: {
+      name: "SyncGatewayTransactions",
+      I: SyncGatewayTransactionsRequest,
+      O: SyncGatewayTransactionsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.ListGatewaySettlements
+     */
+    listGatewaySettlements: {
+      name: "ListGatewaySettlements",
+      I: ListGatewaySettlementsRequest,
+      O: ListGatewaySettlementsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.SaveGatewaySettlement
+     */
+    saveGatewaySettlement: {
+      name: "SaveGatewaySettlement",
+      I: SaveGatewaySettlementRequest,
+      O: SaveGatewaySettlementResponse,
       kind: MethodKind.Unary,
     },
   }

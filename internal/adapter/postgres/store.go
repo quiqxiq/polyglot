@@ -64,6 +64,9 @@ func NewStore(dsn string) (*Store, error) {
 			&model.GatewayTransactionModel{},
 			&model.ServicePlanModel{},
 			&model.RegistrationModel{},
+			&model.RegistrationEventModel{},
+			&model.PaymentSubmissionModel{},
+			&model.RouterJobModel{},
 			&model.CashAccountModel{},
 			&model.CashCategoryModel{},
 			&model.CashTransactionModel{},
@@ -72,6 +75,26 @@ func NewStore(dsn string) (*Store, error) {
 			&model.DailySnapshotModel{},
 			&model.AuditLogModel{},
 			&model.SystemSettingModel{},
+			// Fase A PLAN-ACS-OLT-HIOSO.md: inventori ONT/OLT + cache ACS.
+			&model.ONTModel{},
+			&model.ONTEventModel{},
+			&model.ONTMetricSampleModel{},
+			&model.ACSDeviceModel{},
+			&model.ACSPresetModel{},
+			// W0 PLAN-BILLING-OPS-V3: hutang, batch mass payment, gateway settlement.
+			&model.DebtModel{},
+			&model.DebtPaymentModel{},
+			&model.BulkPaymentBatchModel{},
+			&model.BulkPaymentItemModel{},
+			&model.GatewaySettlementModel{},
+			// M1 PLAN-AI-ROUTER-OPS v2: restore point, approval, audit, active device.
+			&model.RestorePointModel{},
+			&model.ArtifactModel{},
+			&model.ApprovalModel{},
+			&model.CommandLogModel{},
+			&model.ActiveDeviceModel{},
+			&model.AIConversationModel{},
+			&model.AIChatEventModel{},
 		); err != nil {
 			return nil, fmt.Errorf("failed to auto-migrate: %w", err)
 		}

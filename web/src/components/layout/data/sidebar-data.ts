@@ -1,9 +1,12 @@
 import {
+  BarChart3,
   BellRing,
+  Bot,
   ClipboardList,
   Contact,
   FileText,
   Globe,
+  HandCoins,
   LayoutDashboard,
   MessageCircleMore,
   MessagesSquare,
@@ -13,6 +16,7 @@ import {
   Radio,
   Receipt,
   Repeat,
+  Router,
   ScrollText,
   Settings,
   ShieldCheck,
@@ -24,7 +28,7 @@ import {
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
-export const sidebarData: SidebarData = {
+export const getSidebarData = (t: (key: string) => string): SidebarData => ({
   user: {
     name: 'Operator',
     email: 'operator@polyglot.local',
@@ -39,194 +43,238 @@ export const sidebarData: SidebarData = {
   ],
   navGroups: [
     {
-      title: 'General',
+      title: t('nav.general'),
       items: [
         {
-          title: 'Dashboard',
+          title: t('nav.dashboard'),
           url: '/',
           icon: LayoutDashboard,
         },
         {
-          title: 'Devices',
+          title: t('nav.devices'),
           url: '/devices',
           icon: Monitor,
           permission: 'device:read',
         },
         {
-          title: 'Hotspot',
+          title: t('nav.hotspot'),
           url: '/hotspot',
           icon: Wifi,
           permission: 'hotspot:read',
         },
         {
-          title: 'PPPoE / PPP',
+          title: t('nav.ppp'),
           url: '/ppp',
           icon: Network,
           permission: 'ppp:read',
         },
         {
-          title: 'Router Logs',
+          title: t('nav.olt'),
+          url: '/olt',
+          icon: Router,
+          permission: 'olt:read',
+        },
+        {
+          title: t('nav.logs'),
           url: '/logs',
           icon: ScrollText,
           permission: 'log:read',
         },
         {
-          title: 'Sales Report',
+          title: t('nav.finance_report'),
+          url: '/reports/finance',
+          icon: BarChart3,
+          permission: 'report:read',
+        },
+        {
+          title: t('nav.reports'),
           url: '/reports',
           icon: FileText,
           permission: 'hotspot:read',
         },
         {
-          title: 'POP Remote Probes',
+          title: t('nav.probes'),
           url: '/probes',
           icon: Radio,
           disabled: true,
-          badge: 'Pengembangan',
+          badge: t('common.in_development'),
         },
       ],
     },
     {
-      title: 'ISP & Billing',
+      title: t('nav.isp_billing'),
       items: [
         {
-          title: 'Customers',
+          title: t('nav.customers'),
           url: '/customers',
           icon: Contact,
           permission: 'customer:read',
         },
         {
-          title: 'Service Plans',
+          title: t('nav.plans'),
           url: '/plans',
           icon: Package,
           permission: 'billing:read',
         },
         {
-          title: 'Subscriptions',
+          title: t('nav.subscriptions'),
           url: '/subscriptions',
           icon: Repeat,
           permission: 'billing:read',
         },
         {
-          title: 'Registrations',
+          title: t('nav.registrations'),
           url: '/registrations',
           icon: UserPlus,
           permission: 'customer:read',
         },
         {
-          title: 'Invoices & Billing',
+          title: t('nav.invoices'),
           url: '/invoices',
           icon: Receipt,
           permission: 'billing:read',
         },
         {
-          title: 'Cashbook',
+          title: t('nav.payments'),
+          url: '/payments',
+          icon: Wallet,
+          permission: 'billing:read',
+        },
+        {
+          title: t('nav.cashbook'),
           url: '/cashbook',
           icon: Wallet,
           permission: 'cashbook:read',
         },
         {
-          title: 'Customer Portal',
+          title: t('nav.debts'),
+          url: '/debts',
+          icon: HandCoins,
+          permission: 'debt:read',
+        },
+        {
+          title: t('nav.portal'),
           url: '/portal',
           icon: Globe,
           disabled: true,
-          badge: 'Pengembangan',
+          badge: t('common.in_development'),
         },
       ],
     },
     {
-      title: 'AI & Omnichannel',
+      title: t('nav.ai_omnichannel'),
       items: [
         {
-          title: 'WhatsApp Devices',
+          title: t('nav.whatsapp'),
           url: '/whatsapp',
           icon: MessageCircleMore,
           permission: 'whatsapp:read',
         },
         {
-          title: 'Chats',
+          title: t('nav.chats'),
           url: '/chats',
           icon: MessagesSquare,
           permission: 'conversation:read',
         },
         {
-          title: 'Skills & Prompts',
+          title: t('nav.skills'),
           url: '/skills',
           icon: Sparkles,
           permission: 'skill:read',
         },
         {
-          title: 'Broadcast & Alerts',
+          title: t('nav.ai_ops'),
+          url: '/ai-ops',
+          icon: Bot,
+          permission: 'ai:ops',
+        },
+        {
+          title: t('nav.broadcast'),
           url: '/broadcast',
           icon: BellRing,
           permission: 'notification:read',
           disabled: true,
-          badge: 'Pengembangan',
+          badge: t('common.in_development'),
         },
         {
-          title: 'Audit Logs',
+          title: t('nav.audit_logs'),
           url: '/audit-logs',
           icon: ClipboardList,
           permission: 'audit:read',
           disabled: true,
-          badge: 'Pengembangan',
+          badge: t('common.in_development'),
         },
       ],
     },
     {
-      title: 'System',
+      title: t('nav.system'),
       items: [
         {
-          title: 'Users',
+          title: t('nav.users'),
           url: '/users',
           icon: Users,
           permission: 'user:read',
         },
         {
-          title: 'RBAC',
+          title: t('nav.rbac'),
           url: '/rbac',
           icon: ShieldCheck,
           permission: 'rbac:manage',
         },
         {
-          title: 'Settings',
+          title: t('nav.settings'),
           icon: Settings,
           items: [
             {
-              title: 'Profile',
+              title: t('nav.profile'),
               url: '/settings',
             },
             {
-              title: 'Account Security',
+              title: t('nav.account_security'),
               url: '/settings/account',
             },
             {
-              title: 'Bot & Anti-Spam',
+              title: t('nav.bot_anti_spam'),
               url: '/settings/bot',
               permission: 'setting:read',
             },
             {
-              title: 'Appearance',
+              title: t('nav.appearance'),
               url: '/settings/appearance',
             },
             {
-              title: 'Display',
+              title: t('nav.display'),
               url: '/settings/display',
             },
             {
-              title: 'Notification Templates',
+              title: t('nav.notifications'),
               url: '/settings/notifications',
               disabled: true,
-              badge: 'Pengembangan',
+              badge: t('common.in_development'),
             },
             {
-              title: 'Payment Gateway',
-              url: '/settings/payment-gateway',
-              disabled: true,
-              badge: 'Pengembangan',
+              title: t('nav.payment_gateway'),
+              url: '/settings/gateway',
+              permission: 'setting:read',
+            },
+            {
+              title: t('nav.billing_settings'),
+              url: '/settings/billing',
+              permission: 'setting:read',
+            },
+            {
+              title: t('nav.payment_methods'),
+              url: '/settings/payment-methods',
+              permission: 'billing:read',
             },
           ],
         },
       ],
     },
   ],
-}
+})
+
+export const sidebarData = getSidebarData((key: string) => {
+  const parts = key.split('.')
+  return parts[parts.length - 1] || key
+})

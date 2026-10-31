@@ -2,6 +2,7 @@ package mikrotik
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"sync"
 	"time"
@@ -12,7 +13,21 @@ import (
 )
 
 // defaultAPIPort is RouterOS's default plain (non-TLS) API port.
-const defaultAPIPort = 8728
+const (
+	defaultAPIPort    = 8728
+	defaultAPISSLPort = 8729
+)
+
+func isTLS(target device.Target) bool {
+	if target.Extra == nil {
+		return false
+	}
+	v := target.Extra["tls"]
+	if v == "" {
+		v = target.Extra["use_tls"]
+	}
+	return v == "true" || v == "1" || v == "yes"
+}
 
 // managedConn holds one *routeros.Client plus its Async() error channel,
 // safely swappable in place whenever superviseConnection reconnects it.
@@ -71,9 +86,20 @@ func dialAndLogin(ctx context.Context, target device.Target) (*routeros.Client, 
 
 	address := fmt.Sprintf("%s:%d", target.Host, portOrDefault(target))
 
-	client, err := routeros.DialContext(dialCtx, address, target.Username, target.Password)
-	if err != nil {
-		return nil, nil, fmt.Errorf("mikrotik: dial %s: %w", address, err)
+	var client *routeros.Client
+	if isTLS(target) {
+		tlsConfig := &tls.Config{InsecureSkipVerify: true}
+		c, err := routeros.DialTLSContext(dialCtx, address, target.Username, target.Password, tlsConfig)
+		if err != nil {
+			return nil, nil, fmt.Errorf("mikrotik: dial tls %s: %w", address, err)
+		}
+		client = c
+	} else {
+		c, err := routeros.DialContext(dialCtx, address, target.Username, target.Password)
+		if err != nil {
+			return nil, nil, fmt.Errorf("mikrotik: dial %s: %w", address, err)
+		}
+		client = c
 	}
 
 	// Buffer generously: Queue sizes the channel Listen() allocates for
@@ -91,6 +117,9 @@ func dialAndLogin(ctx context.Context, target device.Target) (*routeros.Client, 
 func portOrDefault(target device.Target) int {
 	if target.Port != 0 {
 		return target.Port
+	}
+	if isTLS(target) {
+		return defaultAPISSLPort
 	}
 	return defaultAPIPort
 }

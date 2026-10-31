@@ -32,6 +32,7 @@ func NewSubscriptionServiceHandler(
 	mux.Handle("/"+serviceName+"/ActivateSubscription", connect.NewUnaryHandler("/"+serviceName+"/ActivateSubscription", handler.ActivateSubscription, opts...))
 	mux.Handle("/"+serviceName+"/IsolateSubscription", connect.NewUnaryHandler("/"+serviceName+"/IsolateSubscription", handler.IsolateSubscription, opts...))
 	mux.Handle("/"+serviceName+"/RestoreSubscription", connect.NewUnaryHandler("/"+serviceName+"/RestoreSubscription", handler.RestoreSubscription, opts...))
+	mux.Handle("/"+serviceName+"/RetryProvision", connect.NewUnaryHandler("/"+serviceName+"/RetryProvision", handler.RetryProvision, opts...))
 
 	return "/" + serviceName + "/", mux
 }

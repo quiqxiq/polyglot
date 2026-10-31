@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// RouterJob adalah satu entri antrean job asynchronous per perangkat router
+// (planning v2 Fase 4 — tab router_jobs).
+message RouterJob {
+  string id = 1;
+  string tenant_id = 2;
+  string device_id = 3;
+  string job_type = 4; // PROVISION_PPPOE | PROVISION_HOTSPOT | ... | SYNC_PROFILE
+  string payload_json = 5;
+  string idempotency_key = 6;
+  string status = 7; // QUEUED | RUNNING | SUCCEEDED | FAILED | RETRY_WAIT | DEAD
+  int32 attempts = 8;
+  int32 max_attempts = 9;
+  int64 next_run_at_unix = 10;
+  string last_error = 11;
+  int64 created_at_unix = 12;
+  int64 updated_at_unix = 13;
+}
+
+message ListRouterJobsRequest {
+  string status = 1; // kosong = semua
+}
+message ListRouterJobsResponse { repeated RouterJob jobs = 1; }
+
+message RetryRouterJobRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message RetryRouterJobResponse { RouterJob job = 1; }
+
+message ExportRouterJobScriptRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message ExportRouterJobScriptResponse {
+  string filename = 1;
+  string script = 2; // isi file .rsc untuk dieksekusi manual di router
+}
+
+service RouterJobService {
+  rpc ListRouterJobs(ListRouterJobsRequest) returns (ListRouterJobsResponse);
+  rpc RetryRouterJob(RetryRouterJobRequest) returns (RetryRouterJobResponse);
+  rpc ExportRouterJobScript(ExportRouterJobScriptRequest) returns (ExportRouterJobScriptResponse);
+}

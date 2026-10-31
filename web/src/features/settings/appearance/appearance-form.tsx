@@ -7,6 +7,7 @@ import { showSubmittedData } from '@/lib/show-submitted-data'
 import { cn } from '@/lib/utils'
 import { useFont } from '@/context/font-provider'
 import { useTheme } from '@/context/theme-provider'
+import { useI18n } from '@/context/i18n-provider'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Form,
@@ -27,6 +28,7 @@ const appearanceFormSchema = z.object({
 type AppearanceFormValues = z.infer<typeof appearanceFormSchema>
 
 export function AppearanceForm() {
+  const { t } = useI18n()
   const { font, setFont } = useFont()
   const { theme, setTheme } = useTheme()
 
@@ -56,7 +58,7 @@ export function AppearanceForm() {
           name='font'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Font</FormLabel>
+              <FormLabel>{t('settings.font_label')}</FormLabel>
               <div className='relative w-max'>
                 <FormControl>
                   <select
@@ -77,7 +79,7 @@ export function AppearanceForm() {
                 <ChevronDownIcon className='absolute inset-e-3 top-2.5 h-4 w-4 opacity-50' />
               </div>
               <FormDescription className='font-manrope'>
-                Set the font you want to use in the dashboard.
+                {t('settings.font_desc')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -88,9 +90,9 @@ export function AppearanceForm() {
           name='theme'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Theme</FormLabel>
+              <FormLabel>{t('settings.theme_label')}</FormLabel>
               <FormDescription>
-                Select the theme for the dashboard.
+                {t('settings.theme_desc')}
               </FormDescription>
               <FormMessage />
               <RadioGroup
@@ -155,7 +157,7 @@ export function AppearanceForm() {
           )}
         />
 
-        <Button type='submit'>Update preferences</Button>
+        <Button type='submit'>{t('settings.update_preferences')}</Button>
       </form>
     </Form>
   )

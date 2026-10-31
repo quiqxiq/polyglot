@@ -23,6 +23,12 @@ type ServicePlanModel struct {
 	InstallationFee       float64 `gorm:"type:numeric(15,2)"`
 	TaxPercent            float64 `gorm:"type:numeric(5,2)"`
 
+	// Kolom billing v2 (migrasi 000032).
+	RouterProfileName string `gorm:"column:router_profile_name;type:varchar(100)"`
+	ProrateMode       string `gorm:"column:prorate_mode;type:varchar(20);not null;default:CALENDAR_DAY"`
+	TaxMode           string `gorm:"column:tax_mode;type:varchar(20);not null;default:EXCLUSIVE"`
+	Version           int    `gorm:"column:version;not null;default:1"`
+
 	IPPoolName        string `gorm:"type:varchar(50)"`
 	RemoteAddressPool string `gorm:"type:varchar(50)"`
 	ParentQueue       string `gorm:"type:varchar(50);default:none"`
@@ -74,6 +80,10 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 		Price:                 m.Price,
 		InstallationFee:       m.InstallationFee,
 		TaxPercent:            m.TaxPercent,
+		RouterProfileName:     m.RouterProfileName,
+		ProrateMode:           m.ProrateMode,
+		TaxMode:               m.TaxMode,
+		Version:               m.Version,
 		IPPoolName:            m.IPPoolName,
 		RemoteAddressPool:     m.RemoteAddressPool,
 		ParentQueue:           m.ParentQueue,
@@ -129,6 +139,10 @@ func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
 		Price:                 p.Price,
 		InstallationFee:       p.InstallationFee,
 		TaxPercent:            p.TaxPercent,
+		RouterProfileName:     p.RouterProfileName,
+		ProrateMode:           p.ProrateMode,
+		TaxMode:               p.TaxMode,
+		Version:               p.Version,
 		IPPoolName:            p.IPPoolName,
 		RemoteAddressPool:     p.RemoteAddressPool,
 		ParentQueue:           p.ParentQueue,

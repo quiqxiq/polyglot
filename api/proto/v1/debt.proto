@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message Debt {
+  string id = 1;
+  string customer_id = 2;
+  string subscription_id = 3;
+  double amount = 4;
+  double remaining_amount = 5;
+  string description = 6;
+  int64 debt_date_unix = 7;
+  int64 due_date_unix = 8;
+  string status = 9; // OPEN | PARTIAL | PAID | CANCELLED
+  int64 paid_at_unix = 10;
+  int64 created_at_unix = 11;
+}
+
+message DebtPayment {
+  string id = 1;
+  string debt_id = 2;
+  double amount = 3;
+  string payment_method_id = 4;
+  int64 payment_date_unix = 5;
+  string notes = 6;
+}
+
+message DebtSummary {
+  int32 count = 1;
+  double total_amount = 2;
+  double outstanding = 3;
+  int32 overdue = 4;
+}
+
+message ListDebtsRequest {
+  string customer_id = 1;
+  string status = 2;
+  string search = 3;
+  bool overdue_only = 4;
+  int32 limit = 5;
+  int32 offset = 6;
+}
+message ListDebtsResponse {
+  repeated Debt debts = 1;
+  int32 total = 2;
+}
+
+message GetDebtRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message GetDebtResponse {
+  Debt debt = 1;
+}
+
+message CreateDebtRequest {
+  string customer_id = 1 [(buf.validate.field).string.min_len = 1];
+  string subscription_id = 2;
+  double amount = 3 [(buf.validate.field).double.gt = 0];
+  string description = 4;
+  int64 debt_date_unix = 5;
+  int64 due_date_unix = 6;
+}
+message CreateDebtResponse {
+  Debt debt = 1;
+}
+
+message UpdateDebtRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string description = 2;
+  int64 due_date_unix = 3;
+}
+message UpdateDebtResponse {
+  Debt debt = 1;
+}
+
+message CancelDebtRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message CancelDebtResponse {
+  Debt debt = 1;
+}
+
+message PayDebtRequest {
+  string debt_id = 1 [(buf.validate.field).string.min_len = 1];
+  double amount = 2 [(buf.validate.field).double.gt = 0];
+  string payment_method_id = 3;
+  string notes = 4;
+}
+message PayDebtResponse {
+  DebtPayment payment = 1;
+  Debt debt = 2;
+}
+
+message ListDebtPaymentsRequest {
+  string debt_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message ListDebtPaymentsResponse {
+  repeated DebtPayment payments = 1;
+}
+
+message GetDebtSummaryRequest {
+  string customer_id = 1;
+}
+message GetDebtSummaryResponse {
+  DebtSummary summary = 1;
+}
+
+message ExportDebtsRequest {
+  ListDebtsRequest filter = 1;
+  string format = 2; // csv | xlsx
+}
+message ExportDebtsResponse {
+  bytes payload = 1;
+  string content_type = 2;
+  string filename = 3;
+}
+
+service DebtService {
+  rpc ListDebts(ListDebtsRequest) returns (ListDebtsResponse);
+  rpc GetDebt(GetDebtRequest) returns (GetDebtResponse);
+  rpc CreateDebt(CreateDebtRequest) returns (CreateDebtResponse);
+  rpc UpdateDebt(UpdateDebtRequest) returns (UpdateDebtResponse);
+  rpc CancelDebt(CancelDebtRequest) returns (CancelDebtResponse);
+  rpc PayDebt(PayDebtRequest) returns (PayDebtResponse);
+  rpc ListDebtPayments(ListDebtPaymentsRequest) returns (ListDebtPaymentsResponse);
+  rpc GetDebtSummary(GetDebtSummaryRequest) returns (GetDebtSummaryResponse);
+  rpc ExportDebts(ExportDebtsRequest) returns (ExportDebtsResponse);
+}

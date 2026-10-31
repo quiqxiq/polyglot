@@ -2969,6 +2969,304 @@ func (x *ApplyRouterIntegrationScriptResponse) GetMessage() string {
 	return ""
 }
 
+// DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
+// Active device binding for AI Router Ops (server-side source of truth).
+type SetActiveDeviceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	SessionId     string                 `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetActiveDeviceRequest) Reset() {
+	*x = SetActiveDeviceRequest{}
+	mi := &file_v1_device_proto_msgTypes[42]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetActiveDeviceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetActiveDeviceRequest) ProtoMessage() {}
+
+func (x *SetActiveDeviceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[42]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetActiveDeviceRequest.ProtoReflect.Descriptor instead.
+func (*SetActiveDeviceRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *SetActiveDeviceRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *SetActiveDeviceRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+type SetActiveDeviceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	SessionId     string                 `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetActiveDeviceResponse) Reset() {
+	*x = SetActiveDeviceResponse{}
+	mi := &file_v1_device_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetActiveDeviceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetActiveDeviceResponse) ProtoMessage() {}
+
+func (x *SetActiveDeviceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetActiveDeviceResponse.ProtoReflect.Descriptor instead.
+func (*SetActiveDeviceResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *SetActiveDeviceResponse) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *SetActiveDeviceResponse) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+type GetActiveDeviceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetActiveDeviceRequest) Reset() {
+	*x = GetActiveDeviceRequest{}
+	mi := &file_v1_device_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetActiveDeviceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetActiveDeviceRequest) ProtoMessage() {}
+
+func (x *GetActiveDeviceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetActiveDeviceRequest.ProtoReflect.Descriptor instead.
+func (*GetActiveDeviceRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *GetActiveDeviceRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+type GetActiveDeviceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	SessionId     string                 `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	UpdatedAtUnix int64                  `protobuf:"varint,3,opt,name=updated_at_unix,json=updatedAtUnix,proto3" json:"updated_at_unix,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetActiveDeviceResponse) Reset() {
+	*x = GetActiveDeviceResponse{}
+	mi := &file_v1_device_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetActiveDeviceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetActiveDeviceResponse) ProtoMessage() {}
+
+func (x *GetActiveDeviceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetActiveDeviceResponse.ProtoReflect.Descriptor instead.
+func (*GetActiveDeviceResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *GetActiveDeviceResponse) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *GetActiveDeviceResponse) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *GetActiveDeviceResponse) GetUpdatedAtUnix() int64 {
+	if x != nil {
+		return x.UpdatedAtUnix
+	}
+	return 0
+}
+
+type ClearActiveDeviceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClearActiveDeviceRequest) Reset() {
+	*x = ClearActiveDeviceRequest{}
+	mi := &file_v1_device_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClearActiveDeviceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClearActiveDeviceRequest) ProtoMessage() {}
+
+func (x *ClearActiveDeviceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClearActiveDeviceRequest.ProtoReflect.Descriptor instead.
+func (*ClearActiveDeviceRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *ClearActiveDeviceRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+type ClearActiveDeviceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Cleared       bool                   `protobuf:"varint,1,opt,name=cleared,proto3" json:"cleared,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClearActiveDeviceResponse) Reset() {
+	*x = ClearActiveDeviceResponse{}
+	mi := &file_v1_device_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClearActiveDeviceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClearActiveDeviceResponse) ProtoMessage() {}
+
+func (x *ClearActiveDeviceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClearActiveDeviceResponse.ProtoReflect.Descriptor instead.
+func (*ClearActiveDeviceResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *ClearActiveDeviceResponse) GetCleared() bool {
+	if x != nil {
+		return x.Cleared
+	}
+	return false
+}
+
 var File_v1_device_proto protoreflect.FileDescriptor
 
 const file_v1_device_proto_rawDesc = "" +
@@ -3233,7 +3531,28 @@ const file_v1_device_proto_rawDesc = "" +
 	"\fprofile_name\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vprofileName\x12*\n" +
 	"\fservice_type\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vserviceType\"@\n" +
 	"$ApplyRouterIntegrationScriptResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\xcd\x0e\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"]\n" +
+	"\x16SetActiveDeviceRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\"U\n" +
+	"\x17SetActiveDeviceResponse\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\"7\n" +
+	"\x16GetActiveDeviceRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\"}\n" +
+	"\x17GetActiveDeviceResponse\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\x12&\n" +
+	"\x0fupdated_at_unix\x18\x03 \x01(\x03R\rupdatedAtUnix\"9\n" +
+	"\x18ClearActiveDeviceRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\"5\n" +
+	"\x19ClearActiveDeviceResponse\x12\x18\n" +
+	"\acleared\x18\x01 \x01(\bR\acleared2\xed\x10\n" +
 	"\rDeviceService\x12P\n" +
 	"\vListDevices\x12\x1f.polyglot.v1.ListDevicesRequest\x1a .polyglot.v1.ListDevicesResponse\x12J\n" +
 	"\tGetDevice\x12\x1d.polyglot.v1.GetDeviceRequest\x1a\x1e.polyglot.v1.GetDeviceResponse\x12S\n" +
@@ -3253,7 +3572,10 @@ const file_v1_device_proto_rawDesc = "" +
 	"\x16UpdateIsolationProfile\x12*.polyglot.v1.UpdateIsolationProfileRequest\x1a+.polyglot.v1.UpdateIsolationProfileResponse\x12q\n" +
 	"\x16DeleteIsolationProfile\x12*.polyglot.v1.DeleteIsolationProfileRequest\x1a+.polyglot.v1.DeleteIsolationProfileResponse\x12}\n" +
 	"\x1aGetRouterIntegrationScript\x12..polyglot.v1.GetRouterIntegrationScriptRequest\x1a/.polyglot.v1.GetRouterIntegrationScriptResponse\x12\x83\x01\n" +
-	"\x1cApplyRouterIntegrationScript\x120.polyglot.v1.ApplyRouterIntegrationScriptRequest\x1a1.polyglot.v1.ApplyRouterIntegrationScriptResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x1cApplyRouterIntegrationScript\x120.polyglot.v1.ApplyRouterIntegrationScriptRequest\x1a1.polyglot.v1.ApplyRouterIntegrationScriptResponse\x12\\\n" +
+	"\x0fSetActiveDevice\x12#.polyglot.v1.SetActiveDeviceRequest\x1a$.polyglot.v1.SetActiveDeviceResponse\x12\\\n" +
+	"\x0fGetActiveDevice\x12#.polyglot.v1.GetActiveDeviceRequest\x1a$.polyglot.v1.GetActiveDeviceResponse\x12b\n" +
+	"\x11ClearActiveDevice\x12%.polyglot.v1.ClearActiveDeviceRequest\x1a&.polyglot.v1.ClearActiveDeviceResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_device_proto_rawDescOnce sync.Once
@@ -3267,7 +3589,7 @@ func file_v1_device_proto_rawDescGZIP() []byte {
 	return file_v1_device_proto_rawDescData
 }
 
-var file_v1_device_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
+var file_v1_device_proto_msgTypes = make([]protoimpl.MessageInfo, 49)
 var file_v1_device_proto_goTypes = []any{
 	(*Device)(nil),                               // 0: polyglot.v1.Device
 	(*ListDevicesRequest)(nil),                   // 1: polyglot.v1.ListDevicesRequest
@@ -3311,10 +3633,16 @@ var file_v1_device_proto_goTypes = []any{
 	(*GetRouterIntegrationScriptResponse)(nil),   // 39: polyglot.v1.GetRouterIntegrationScriptResponse
 	(*ApplyRouterIntegrationScriptRequest)(nil),  // 40: polyglot.v1.ApplyRouterIntegrationScriptRequest
 	(*ApplyRouterIntegrationScriptResponse)(nil), // 41: polyglot.v1.ApplyRouterIntegrationScriptResponse
-	nil, // 42: polyglot.v1.Device.ExtraEntry
+	(*SetActiveDeviceRequest)(nil),               // 42: polyglot.v1.SetActiveDeviceRequest
+	(*SetActiveDeviceResponse)(nil),              // 43: polyglot.v1.SetActiveDeviceResponse
+	(*GetActiveDeviceRequest)(nil),               // 44: polyglot.v1.GetActiveDeviceRequest
+	(*GetActiveDeviceResponse)(nil),              // 45: polyglot.v1.GetActiveDeviceResponse
+	(*ClearActiveDeviceRequest)(nil),             // 46: polyglot.v1.ClearActiveDeviceRequest
+	(*ClearActiveDeviceResponse)(nil),            // 47: polyglot.v1.ClearActiveDeviceResponse
+	nil,                                          // 48: polyglot.v1.Device.ExtraEntry
 }
 var file_v1_device_proto_depIdxs = []int32{
-	42, // 0: polyglot.v1.Device.extra:type_name -> polyglot.v1.Device.ExtraEntry
+	48, // 0: polyglot.v1.Device.extra:type_name -> polyglot.v1.Device.ExtraEntry
 	0,  // 1: polyglot.v1.ListDevicesResponse.devices:type_name -> polyglot.v1.Device
 	0,  // 2: polyglot.v1.GetDeviceResponse.device:type_name -> polyglot.v1.Device
 	0,  // 3: polyglot.v1.UpdateDeviceRequest.device:type_name -> polyglot.v1.Device
@@ -3352,26 +3680,32 @@ var file_v1_device_proto_depIdxs = []int32{
 	36, // 35: polyglot.v1.DeviceService.DeleteIsolationProfile:input_type -> polyglot.v1.DeleteIsolationProfileRequest
 	38, // 36: polyglot.v1.DeviceService.GetRouterIntegrationScript:input_type -> polyglot.v1.GetRouterIntegrationScriptRequest
 	40, // 37: polyglot.v1.DeviceService.ApplyRouterIntegrationScript:input_type -> polyglot.v1.ApplyRouterIntegrationScriptRequest
-	2,  // 38: polyglot.v1.DeviceService.ListDevices:output_type -> polyglot.v1.ListDevicesResponse
-	4,  // 39: polyglot.v1.DeviceService.GetDevice:output_type -> polyglot.v1.GetDeviceResponse
-	6,  // 40: polyglot.v1.DeviceService.UpdateDevice:output_type -> polyglot.v1.UpdateDeviceResponse
-	13, // 41: polyglot.v1.DeviceService.DeleteDevice:output_type -> polyglot.v1.DeleteDeviceResponse
-	15, // 42: polyglot.v1.DeviceService.TestDeviceConnection:output_type -> polyglot.v1.TestDeviceConnectionResponse
-	10, // 43: polyglot.v1.DeviceService.StreamDeviceStatus:output_type -> polyglot.v1.DeviceStatusFrame
-	17, // 44: polyglot.v1.DeviceService.StreamPing:output_type -> polyglot.v1.StreamDevicePingFrame
-	19, // 45: polyglot.v1.DeviceService.StreamInterfaceTraffic:output_type -> polyglot.v1.StreamDeviceTrafficFrame
-	11, // 46: polyglot.v1.DeviceService.StreamTerminal:output_type -> polyglot.v1.TerminalFrame
-	22, // 47: polyglot.v1.DeviceService.GetDevicePingConfig:output_type -> polyglot.v1.GetDevicePingConfigResponse
-	24, // 48: polyglot.v1.DeviceService.UpdateDevicePingConfig:output_type -> polyglot.v1.UpdateDevicePingConfigResponse
-	27, // 49: polyglot.v1.DeviceService.QueryDevicePingMetrics:output_type -> polyglot.v1.QueryDevicePingMetricsResponse
-	31, // 50: polyglot.v1.DeviceService.GetIsolationStatus:output_type -> polyglot.v1.GetIsolationStatusResponse
-	33, // 51: polyglot.v1.DeviceService.CreateIsolationProfile:output_type -> polyglot.v1.CreateIsolationProfileResponse
-	35, // 52: polyglot.v1.DeviceService.UpdateIsolationProfile:output_type -> polyglot.v1.UpdateIsolationProfileResponse
-	37, // 53: polyglot.v1.DeviceService.DeleteIsolationProfile:output_type -> polyglot.v1.DeleteIsolationProfileResponse
-	39, // 54: polyglot.v1.DeviceService.GetRouterIntegrationScript:output_type -> polyglot.v1.GetRouterIntegrationScriptResponse
-	41, // 55: polyglot.v1.DeviceService.ApplyRouterIntegrationScript:output_type -> polyglot.v1.ApplyRouterIntegrationScriptResponse
-	38, // [38:56] is the sub-list for method output_type
-	20, // [20:38] is the sub-list for method input_type
+	42, // 38: polyglot.v1.DeviceService.SetActiveDevice:input_type -> polyglot.v1.SetActiveDeviceRequest
+	44, // 39: polyglot.v1.DeviceService.GetActiveDevice:input_type -> polyglot.v1.GetActiveDeviceRequest
+	46, // 40: polyglot.v1.DeviceService.ClearActiveDevice:input_type -> polyglot.v1.ClearActiveDeviceRequest
+	2,  // 41: polyglot.v1.DeviceService.ListDevices:output_type -> polyglot.v1.ListDevicesResponse
+	4,  // 42: polyglot.v1.DeviceService.GetDevice:output_type -> polyglot.v1.GetDeviceResponse
+	6,  // 43: polyglot.v1.DeviceService.UpdateDevice:output_type -> polyglot.v1.UpdateDeviceResponse
+	13, // 44: polyglot.v1.DeviceService.DeleteDevice:output_type -> polyglot.v1.DeleteDeviceResponse
+	15, // 45: polyglot.v1.DeviceService.TestDeviceConnection:output_type -> polyglot.v1.TestDeviceConnectionResponse
+	10, // 46: polyglot.v1.DeviceService.StreamDeviceStatus:output_type -> polyglot.v1.DeviceStatusFrame
+	17, // 47: polyglot.v1.DeviceService.StreamPing:output_type -> polyglot.v1.StreamDevicePingFrame
+	19, // 48: polyglot.v1.DeviceService.StreamInterfaceTraffic:output_type -> polyglot.v1.StreamDeviceTrafficFrame
+	11, // 49: polyglot.v1.DeviceService.StreamTerminal:output_type -> polyglot.v1.TerminalFrame
+	22, // 50: polyglot.v1.DeviceService.GetDevicePingConfig:output_type -> polyglot.v1.GetDevicePingConfigResponse
+	24, // 51: polyglot.v1.DeviceService.UpdateDevicePingConfig:output_type -> polyglot.v1.UpdateDevicePingConfigResponse
+	27, // 52: polyglot.v1.DeviceService.QueryDevicePingMetrics:output_type -> polyglot.v1.QueryDevicePingMetricsResponse
+	31, // 53: polyglot.v1.DeviceService.GetIsolationStatus:output_type -> polyglot.v1.GetIsolationStatusResponse
+	33, // 54: polyglot.v1.DeviceService.CreateIsolationProfile:output_type -> polyglot.v1.CreateIsolationProfileResponse
+	35, // 55: polyglot.v1.DeviceService.UpdateIsolationProfile:output_type -> polyglot.v1.UpdateIsolationProfileResponse
+	37, // 56: polyglot.v1.DeviceService.DeleteIsolationProfile:output_type -> polyglot.v1.DeleteIsolationProfileResponse
+	39, // 57: polyglot.v1.DeviceService.GetRouterIntegrationScript:output_type -> polyglot.v1.GetRouterIntegrationScriptResponse
+	41, // 58: polyglot.v1.DeviceService.ApplyRouterIntegrationScript:output_type -> polyglot.v1.ApplyRouterIntegrationScriptResponse
+	43, // 59: polyglot.v1.DeviceService.SetActiveDevice:output_type -> polyglot.v1.SetActiveDeviceResponse
+	45, // 60: polyglot.v1.DeviceService.GetActiveDevice:output_type -> polyglot.v1.GetActiveDeviceResponse
+	47, // 61: polyglot.v1.DeviceService.ClearActiveDevice:output_type -> polyglot.v1.ClearActiveDeviceResponse
+	41, // [41:62] is the sub-list for method output_type
+	20, // [20:41] is the sub-list for method input_type
 	20, // [20:20] is the sub-list for extension type_name
 	20, // [20:20] is the sub-list for extension extendee
 	0,  // [0:20] is the sub-list for field type_name
@@ -3388,7 +3722,7 @@ func file_v1_device_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_device_proto_rawDesc), len(file_v1_device_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   43,
+			NumMessages:   49,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

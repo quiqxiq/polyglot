@@ -1,6 +1,7 @@
 import { RegistrationCreateDialog } from './registration-create-dialog'
 import { RegistrationScheduleDialog } from './registration-schedule-dialog'
 import { RegistrationInstallDialog } from './registration-install-dialog'
+import { RegistrationSurveyDialog } from './registration-survey-dialog'
 import { RegistrationConvertDialog } from './registration-convert-dialog'
 import { RegistrationRejectDialog } from './registration-reject-dialog'
 import { RegistrationCancelDialog } from './registration-cancel-dialog'
@@ -22,6 +23,14 @@ export function RegistrationDialogs() {
           key={`registration-schedule-${currentRow.id}`}
           open={open === 'schedule'}
           onOpenChange={(isOpen) => setOpen(isOpen ? 'schedule' : null)}
+          registration={currentRow}
+        />
+      )}
+      {currentRow && (
+        <RegistrationSurveyDialog
+          key={`registration-survey-${currentRow.id}`}
+          open={open === 'survey'}
+          onOpenChange={(isOpen) => setOpen(isOpen ? 'survey' : null)}
           registration={currentRow}
         />
       )}

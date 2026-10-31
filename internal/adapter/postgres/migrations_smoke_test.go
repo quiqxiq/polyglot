@@ -102,14 +102,22 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 
 	// ── Seed data awal masuk. ────────────────────────────────────────────
 	assertSeedCount(t, db, "payment_methods", 4)
-	assertSeedCount(t, db, "cash_categories", 5)
+	assertSeedCount(t, db, "cash_categories", 7)
 	assertSeedCount(t, db, "cash_accounts", 1)
-	assertSeedCount(t, db, "notification_templates", 8)
+	assertSeedCount(t, db, "notification_templates", 16)
 
 	var ispKeys int
 	require.NoError(t, db.QueryRow(
 		`SELECT COUNT(*) FROM system_settings WHERE key LIKE 'isp.%'`).Scan(&ispKeys))
-	assert.Equal(t, 16, ispKeys, "seed key isp.+")
+	assert.Equal(t, 46, ispKeys, "seed key isp.+ (33 + 000038 8 + 000039 3 + 000040 2)")
+
+	var oltKeys, acsKeys int
+	require.NoError(t, db.QueryRow(
+		`SELECT COUNT(*) FROM system_settings WHERE key LIKE 'olt.%' OR key LIKE 'alert.ont%'`).Scan(&oltKeys))
+	assert.Equal(t, 13, oltKeys, "seed key olt.* + alert.ont* (000036)")
+	require.NoError(t, db.QueryRow(
+		`SELECT COUNT(*) FROM system_settings WHERE key LIKE 'acs.%'`).Scan(&acsKeys))
+	assert.Equal(t, 8, acsKeys, "seed key acs.* (000037)")
 
 	// Migrasi 000019: portal_otps + wa_notifications.attempts + seed gateway.
 	assertSeedCount(t, db, "portal_otps", 0)
@@ -168,9 +176,41 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 	// ── F6-2: sequence nomor dokumen tersedia. ─────────────────────────
 	var seqCount int
 	require.NoError(t, db.QueryRow(
-		`SELECT COUNT(*) FROM pg_class WHERE relkind='S' AND relname IN ('payments_no_seq','cash_transactions_no_seq')`).
+		`SELECT COUNT(*) FROM pg_class WHERE relkind='S' AND relname IN ('payments_no_seq','cash_transactions_no_seq','invoice_no_seq')`).
 		Scan(&seqCount))
-	assert.Equal(t, 2, seqCount, "sequence nomor dokumen harus ada")
+	assert.Equal(t, 3, seqCount, "sequence nomor dokumen harus ada (payments, cash_transactions, invoice)")
+
+	// ── Fase W0 billing ops v3: tabel & kolom baru ──────────────────────
+	var newTables int
+	require.NoError(t, db.QueryRow(`SELECT COUNT(*) FROM information_schema.tables WHERE table_name IN
+		('customer_debts','debt_payments','gateway_settlements','bulk_payment_batches','bulk_payment_items')`).Scan(&newTables))
+	assert.Equal(t, 5, newTables, "tabel baru billing ops v3 harus ada")
+	var newCols int
+	require.NoError(t, db.QueryRow(`SELECT COUNT(*) FROM information_schema.columns
+		WHERE (table_name='invoices' AND column_name='tax_percent')
+		   OR (table_name='payment_methods' AND column_name IN ('bank_name','account_number','account_holder','qris_image_url','instructions','sort_order'))`).Scan(&newCols))
+	assert.Equal(t, 7, newCols, "kolom baru invoices/payment_methods harus ada")
+
+	// ── M1 PLAN-AI-ROUTER-OPS v2: tabel & constraint baru ───────────────
+	var aiTables int
+	require.NoError(t, db.QueryRow(`SELECT COUNT(*) FROM information_schema.tables WHERE table_name IN
+		('restore_points','restore_point_artifacts','approval_requests','command_logs',
+		 'active_devices','ai_conversations','ai_chat_events')`).Scan(&aiTables))
+	assert.Equal(t, 7, aiTables, "tabel AI router ops harus ada")
+
+	_, err = db.Exec(`INSERT INTO approval_requests
+		(id, command, actor_type, status, expires_at) VALUES ('apr-weird','/x','AGENT','WEIRD', now())`)
+	require.ErrorContains(t, err, "chk_approval_status")
+
+	_, err = db.Exec(`INSERT INTO approval_requests
+		(id, command, actor_type, status, expires_at, idempotency_key)
+		VALUES ('apr-dupe-1','/x','AGENT','PENDING', now(), 'key-1'),
+		       ('apr-dupe-2','/y','AGENT','PENDING', now(), 'key-1')`)
+	require.Error(t, err, "unique idempotency key per tenant harus menolak duplikat")
+
+	require.NoError(t, db.QueryRow(`SELECT COUNT(*) FROM pg_constraint
+		WHERE conname='chk_restore_status'`).Scan(&newTables))
+	assert.Equal(t, 1, newTables, "chk_restore_status harus ada")
 
 	// Processor GORM menunjuk DB yang sama via driver postgres.
 	gormDB, err := gorm.Open(gormpostgres.Open(dsn), &gorm.Config{})

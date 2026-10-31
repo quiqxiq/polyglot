@@ -1,20 +1,20 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { Zap, Users } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
-import type { Plan } from '@/gen/v1/plan_pb'
+import { DataTableColumnHeader } from '@/components/data-table'
+import { createSelectColumn } from '@/components/data-table/select-column'
+import { Plan } from '@/gen/v1/plan_pb'
 import { PlansRowActions } from './plans-row-actions'
+import { Users, Zap } from 'lucide-react'
 
 const SERVICE_TYPE_BADGE: Record<string, string> = {
   PPPOE: 'bg-blue-500/15 text-blue-700 dark:text-blue-400 border-blue-500/30',
-  HOTSPOT:
-    'bg-purple-500/15 text-purple-700 dark:text-purple-400 border-purple-500/30',
-  DEDICATED:
-    'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30',
+  HOTSPOT: 'bg-orange-500/15 text-orange-700 dark:text-orange-400 border-orange-500/30',
+  STATIC: 'bg-purple-500/15 text-purple-700 dark:text-purple-400 border-purple-500/30',
 }
 
-function fmtRate(kbps: number) {
-  return kbps >= 1000 ? `${Math.round(kbps / 1000)}M` : `${kbps}k`
+function fmtRate(kbps: number): string {
+  if (kbps >= 1000) return `${(kbps / 1000).toFixed(0)} Mbps`
+  return `${kbps} Kbps`
 }
 
 const idrFormat = new Intl.NumberFormat('id-ID', {
@@ -23,13 +23,12 @@ const idrFormat = new Intl.NumberFormat('id-ID', {
   maximumFractionDigits: 0,
 })
 
-export const plansColumns: ColumnDef<Plan>[] = [
+export const getPlansColumns = (t: (key: string) => string): ColumnDef<Plan>[] => [
   createSelectColumn<Plan>(),
   {
-
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Nama Paket' />
+      <DataTableColumnHeader column={column} title={t('billing.plan_name')} />
     ),
     cell: ({ row }) => (
       <span className='font-semibold'>{row.original.name}</span>
@@ -38,7 +37,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     accessorKey: 'serviceType',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Tipe Layanan' />
+      <DataTableColumnHeader column={column} title={t('common.type')} />
     ),
     cell: ({ row }) => (
       <Badge
@@ -66,7 +65,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     accessorKey: 'price',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Biaya Langganan' />
+      <DataTableColumnHeader column={column} title={t('billing.price')} />
     ),
     cell: ({ row }) => (
       <span className='font-mono text-xs'>
@@ -78,7 +77,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     accessorKey: 'sharedUsers',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Perangkat (Hotspot)' />
+      <DataTableColumnHeader column={column} title={t('common.details')} />
     ),
     cell: ({ row }) => {
       if (row.original.serviceType !== 'HOTSPOT') {
@@ -96,7 +95,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     id: 'burst',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Burst' />
+      <DataTableColumnHeader column={column} title={t('billing.burst')} />
     ),
     cell: ({ row }) =>
       row.original.burstDownloadKbps > 0 ? (
@@ -112,7 +111,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     accessorKey: 'isActive',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Status' />
+      <DataTableColumnHeader column={column} title={t('common.status')} />
     ),
     cell: ({ row }) =>
       row.original.isActive ? (
@@ -120,14 +119,14 @@ export const plansColumns: ColumnDef<Plan>[] = [
           variant='outline'
           className='bg-emerald-500/15 text-xs text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
         >
-          Aktif
+          {t('common.active')}
         </Badge>
       ) : (
         <Badge
           variant='outline'
           className='bg-slate-500/15 text-xs text-slate-700 dark:text-slate-400 border-slate-500/30'
         >
-          Nonaktif
+          {t('common.inactive')}
         </Badge>
       ),
   },
@@ -137,3 +136,8 @@ export const plansColumns: ColumnDef<Plan>[] = [
     enableSorting: false,
   },
 ]
+
+export const plansColumns = getPlansColumns((k) => {
+  const parts = k.split('.')
+  return parts[parts.length - 1] || k
+})

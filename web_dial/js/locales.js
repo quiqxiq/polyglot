@@ -1,0 +1,248 @@
+/**
+ * Polyglot Web Dial Translations Dictionary
+ * Menyediakan kamus bahasa lengkap untuk Bahasa Indonesia (id) dan Bahasa Inggris (en).
+ */
+
+const DialLocales = {
+  id: {
+    // Navigasi
+    nav_dashboard: 'Dashboard',
+    nav_ppp_active: 'PPP Aktif',
+    nav_ppp_inactive: 'PPP Non-Aktif',
+    nav_logs: 'Log MikroTik',
+    nav_monitor: 'Monitor Interface',
+    nav_ppp_secrets: 'PPP Secrets',
+    nav_ppp_profiles: 'PPP Profiles',
+    nav_settings: 'Pengaturan',
+    group_operations: 'Operasional',
+    group_management: 'Manajemen PPP',
+    group_system: 'Sistem',
+
+    // Dashboard
+    dash_title: 'Dashboard Monitoring',
+    dash_desc: 'Pantau status resource router dan cari data sesi PPP secara instan',
+    stat_active: 'PPP Aktif',
+    stat_non_active: 'PPP Non-Aktif',
+    stat_secrets: 'Total Secrets',
+    stat_cpu: 'Beban CPU',
+    view_all: 'Lihat Semua →',
+    quick_search_title: 'Pencarian Sesi Cepat',
+    quick_search_desc: 'Cari sesi PPP aktif berdasarkan username atau alamat IP',
+    search_placeholder: 'Ketik username atau IP...',
+    system_resources: 'Status Sistem & Resource',
+    board_name: 'Model Board',
+    ros_version: 'Versi RouterOS',
+    uptime: 'Waktu Aktif',
+    cpu_frequency: 'Frekuensi CPU',
+    memory_ram: 'Memori RAM',
+    free_hdd: 'Ruang Harddisk',
+    voltage: 'Tegangan',
+    temperature: 'Suhu',
+
+    // PPP Aktif
+    ppp_active_title: 'PPP Aktif',
+    ppp_active_desc: 'Daftar pelanggan yang sedang terhubung dan online secara realtime',
+    kick_selected: 'Putus Sesi Terpilih',
+    search_ppp_active: 'Cari username, IP, atau service...',
+    col_user: 'Pelanggan / User',
+    col_service: 'Layanan',
+    col_caller_id: 'Caller ID (MAC)',
+    col_ip: 'Alamat IP',
+    col_uptime: 'Durasi Aktif',
+    col_actions: 'Aksi',
+    ping_test: 'Uji Latensi',
+    kick_session: 'Putus Sesi',
+    open_cpe: 'Buka CPE',
+
+    // PPP Non-Aktif
+    ppp_inactive_title: 'PPP Non-Aktif',
+    ppp_inactive_desc: 'Daftar akun pelanggan yang sedang offline beserta riwayat logout',
+    col_last_logout: 'Logout Terakhir',
+    col_comment: 'Catatan / Komentar',
+
+    // PPP Secrets
+    ppp_secrets_title: 'PPP Secrets',
+    ppp_secrets_desc: 'Daftar akun pelanggan PPPoE dan Hotspot terdaftar',
+    col_profile: 'Profil Bandwidth',
+    col_password: 'Kata Sandi',
+
+    // PPP Profiles
+    ppp_profiles_title: 'PPP Profiles',
+    ppp_profiles_desc: 'Daftar paket kecepatan dan profil bandwidth PPP',
+    col_rate_limit: 'Batas Kecepatan',
+    col_local_address: 'Alamat Lokal',
+    col_remote_address: 'Alamat Remote',
+
+    // Logs
+    logs_title: 'Log MikroTik Realtime',
+    logs_desc: 'Streaming log sistem router MikroTik secara realtime',
+    filter_topic: 'Saring Topik',
+    all_topics: 'Semua Topik',
+    auto_scroll: 'Gulir Otomatis',
+    clear_logs: 'Bersihkan Layar',
+
+    // Monitor Interface
+    monitor_title: 'Monitor Interface',
+    monitor_desc: 'Pemantauan traffic rate (RX/TX) dan status link interface fisik',
+    col_interface: 'Nama Interface',
+    col_type: 'Tipe',
+    col_link: 'Status Link',
+    col_rx: 'Trafik Masuk (RX)',
+    col_tx: 'Trafik Keluar (TX)',
+
+    // Settings
+    settings_title: 'Pengaturan Teknisi & Router',
+    settings_desc: 'Khusus Admin: Kelola akun teknisi dan hak akses router MikroTik',
+    create_technician: 'Tambah Teknisi Baru',
+    save_settings: 'Simpan Perubahan',
+
+    // Auth & Login
+    login_subtitle: 'Portal Operasional Khusus Admin & Teknisi',
+    login_btn: 'Masuk Portal',
+    login_verifying: 'Memverifikasi...',
+    login_success: 'Login berhasil! Mengalihkan...',
+    login_error_invalid: 'Username atau kata sandi salah. Silakan periksa kembali.',
+    username: 'Username',
+    password: 'Kata Sandi',
+    enter_username: 'Masukkan username Anda',
+
+    // Dialog & Alerts
+    confirm_kick_title: 'Konfirmasi Putus Sesi',
+    confirm_kick_desc: 'Apakah Anda yakin ingin memutuskan sesi koneksi untuk pelanggan:',
+    btn_kick: 'Putus Sesi',
+    btn_cancel: 'Batal',
+    btn_close: 'Tutup',
+    ping_modal_title: 'Uji Latensi Jaringan',
+    target_ip: 'Target IP:',
+    start_ping: 'Mulai Ping',
+    stop_ping: 'Hentikan Ping',
+    session_kicked_success: 'Sesi pelanggan berhasil diputus',
+    failed_load_devices: 'Gagal memuat daftar router yang diizinkan',
+    failed_connect: 'Gagal menghubungi router tujuan',
+    logout: 'Keluar Akun',
+    select_router: 'Pilih Router...',
+    no_active_sessions: 'Tidak ada sesi PPP aktif yang ditemukan',
+    no_secrets: 'Tidak ada data secret yang ditemukan',
+  },
+
+  en: {
+    // Navigation
+    nav_dashboard: 'Dashboard',
+    nav_ppp_active: 'Active PPP',
+    nav_ppp_inactive: 'Inactive PPP',
+    nav_logs: 'MikroTik Logs',
+    nav_monitor: 'Interface Monitor',
+    nav_ppp_secrets: 'PPP Secrets',
+    nav_ppp_profiles: 'PPP Profiles',
+    nav_settings: 'Settings',
+    group_operations: 'Operations',
+    group_management: 'PPP Management',
+    group_system: 'System',
+
+    // Dashboard
+    dash_title: 'Dashboard Monitoring',
+    dash_desc: 'Monitor router resources and search PPP subscriber sessions in real-time',
+    stat_active: 'Active PPP',
+    stat_non_active: 'Inactive PPP',
+    stat_secrets: 'Total Secrets',
+    stat_cpu: 'CPU Load',
+    view_all: 'View All →',
+    quick_search_title: 'Quick Session Search',
+    quick_search_desc: 'Search active PPP sessions by username or IP address',
+    search_placeholder: 'Type username or IP...',
+    system_resources: 'System Status & Resources',
+    board_name: 'Board Model',
+    ros_version: 'RouterOS Version',
+    uptime: 'Uptime',
+    cpu_frequency: 'CPU Frequency',
+    memory_ram: 'RAM Memory',
+    free_hdd: 'HDD Storage',
+    voltage: 'Voltage',
+    temperature: 'Temperature',
+
+    // Active PPP
+    ppp_active_title: 'Active PPP Sessions',
+    ppp_active_desc: 'List of online subscribers currently connected in real-time',
+    kick_selected: 'Kick Selected',
+    search_ppp_active: 'Search username, IP, or service...',
+    col_user: 'Subscriber / User',
+    col_service: 'Service',
+    col_caller_id: 'Caller ID (MAC)',
+    col_ip: 'IP Address',
+    col_uptime: 'Active Uptime',
+    col_actions: 'Actions',
+    ping_test: 'Ping Test',
+    kick_session: 'Kick Session',
+    open_cpe: 'Open CPE',
+
+    // Inactive PPP
+    ppp_inactive_title: 'Inactive PPP',
+    ppp_inactive_desc: 'List of offline subscriber accounts with last logout history',
+    col_last_logout: 'Last Logout',
+    col_comment: 'Note / Comment',
+
+    // PPP Secrets
+    ppp_secrets_title: 'PPP Secrets',
+    ppp_secrets_desc: 'List of registered PPPoE and Hotspot subscriber accounts',
+    col_profile: 'Bandwidth Profile',
+    col_password: 'Password',
+
+    // PPP Profiles
+    ppp_profiles_title: 'PPP Profiles',
+    ppp_profiles_desc: 'List of speed packages and bandwidth rate limit profiles',
+    col_rate_limit: 'Rate Limit',
+    col_local_address: 'Local Address',
+    col_remote_address: 'Remote Address',
+
+    // Logs
+    logs_title: 'Realtime MikroTik Logs',
+    logs_desc: 'Live streaming of MikroTik system log entries',
+    filter_topic: 'Filter Topic',
+    all_topics: 'All Topics',
+    auto_scroll: 'Auto Scroll',
+    clear_logs: 'Clear Display',
+
+    // Monitor Interface
+    monitor_title: 'Interface Monitor',
+    monitor_desc: 'Live traffic rate (RX/TX) and physical link status monitoring',
+    col_interface: 'Interface Name',
+    col_type: 'Type',
+    col_link: 'Link Status',
+    col_rx: 'Inbound Traffic (RX)',
+    col_tx: 'Outbound Traffic (TX)',
+
+    // Settings
+    settings_title: 'Technician & Router Settings',
+    settings_desc: 'Admin Only: Manage technician accounts and assign router permissions',
+    create_technician: 'Add New Technician',
+    save_settings: 'Save Changes',
+
+    // Auth & Login
+    login_subtitle: 'Operational Portal for Admins & Technicians',
+    login_btn: 'Sign In',
+    login_verifying: 'Verifying...',
+    login_success: 'Sign in successful! Redirecting...',
+    login_error_invalid: 'Invalid username or password. Please try again.',
+    username: 'Username',
+    password: 'Password',
+    enter_username: 'Enter your username',
+
+    // Dialog & Alerts
+    confirm_kick_title: 'Confirm Kick Session',
+    confirm_kick_desc: 'Are you sure you want to disconnect the active session for subscriber:',
+    btn_kick: 'Kick Session',
+    btn_cancel: 'Cancel',
+    btn_close: 'Close',
+    ping_modal_title: 'Network Latency Test',
+    target_ip: 'Target IP:',
+    start_ping: 'Start Ping',
+    stop_ping: 'Stop Ping',
+    session_kicked_success: 'Subscriber session successfully disconnected',
+    failed_load_devices: 'Failed to load authorized router list',
+    failed_connect: 'Failed to connect to destination router',
+    logout: 'Sign Out',
+    select_router: 'Select Router...',
+    no_active_sessions: 'No active PPP sessions found',
+    no_secrets: 'No secret records found',
+  }
+};

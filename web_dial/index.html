@@ -23,9 +23,9 @@
       <div>
         <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          Dashboard Monitoring
+          <span data-i18n="dash_title">Dashboard Monitoring</span>
         </h1>
-        <p class="text-sm text-slate-500 mt-0.5">Pantau status resource router dan cari data sesi PPP secara instan</p>
+        <p class="text-sm text-slate-500 mt-0.5" data-i18n="dash_desc">Pantau status resource router dan cari data sesi PPP secara instan</p>
       </div>
     </div>
 
@@ -33,29 +33,29 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
         <div class="flex items-center justify-between text-slate-500 mb-2">
-          <span class="text-xs font-semibold uppercase tracking-wider">PPP Aktif</span>
+          <span class="text-xs font-semibold uppercase tracking-wider" data-i18n="stat_active">PPP Aktif</span>
           <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
           </div>
         </div>
         <div class="text-2xl font-bold text-slate-900" id="stat-active">-</div>
-        <a href="ppp-active.html" class="text-[11px] font-semibold text-emerald-600 hover:underline mt-1 inline-block">Lihat Semua &rarr;</a>
+        <a href="ppp-active.html" class="text-[11px] font-semibold text-emerald-600 hover:underline mt-1 inline-block" data-i18n="view_all">Lihat Semua &rarr;</a>
       </div>
 
       <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
         <div class="flex items-center justify-between text-slate-500 mb-2">
-          <span class="text-xs font-semibold uppercase tracking-wider">PPP Non-Aktif</span>
+          <span class="text-xs font-semibold uppercase tracking-wider" data-i18n="stat_non_active">PPP Non-Aktif</span>
           <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="m2 2 20 20"/></svg>
           </div>
         </div>
         <div class="text-2xl font-bold text-slate-900" id="stat-inactive">-</div>
-        <a href="ppp-non-active.html" class="text-[11px] font-semibold text-slate-600 hover:underline mt-1 inline-block">Lihat Offline &rarr;</a>
+        <a href="ppp-non-active.html" class="text-[11px] font-semibold text-slate-600 hover:underline mt-1 inline-block" data-i18n="view_all">Lihat Offline &rarr;</a>
       </div>
 
       <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
         <div class="flex items-center justify-between text-slate-500 mb-2">
-          <span class="text-xs font-semibold uppercase tracking-wider">Total Secrets</span>
+          <span class="text-xs font-semibold uppercase tracking-wider" data-i18n="stat_secrets">Total Secrets</span>
           <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>
           </div>
@@ -88,6 +88,7 @@
             id="search-input"
             class="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-inner"
             placeholder="Cari nama pengguna, Caller ID / MAC, atau IP address..."
+            data-i18n-placeholder="search_placeholder"
             autocomplete="off"
           >
           <div id="search-loading" class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center">
@@ -130,11 +131,11 @@
       <!-- Quick Specs Meta Bar -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
         <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3">
-          <span class="text-slate-400 block text-[10px] uppercase font-semibold tracking-wider">Uptime</span>
+          <span class="text-slate-400 block text-[10px] uppercase font-semibold tracking-wider" data-i18n="uptime">Uptime</span>
           <span class="font-mono font-semibold text-slate-800 text-xs mt-1 block truncate" id="sys-uptime">-</span>
         </div>
         <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3">
-          <span class="text-slate-400 block text-[10px] uppercase font-semibold tracking-wider">RouterOS</span>
+          <span class="text-slate-400 block text-[10px] uppercase font-semibold tracking-wider" data-i18n="ros_version">RouterOS</span>
           <span class="font-mono font-semibold text-blue-600 text-xs mt-1 block truncate" id="sys-version">-</span>
         </div>
         <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3">
@@ -155,7 +156,7 @@
             <div class="flex items-center justify-between text-xs mb-2">
               <span class="font-semibold text-slate-700 flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
-                Beban CPU
+                <span data-i18n="stat_cpu">Beban CPU</span>
               </span>
               <span class="font-mono font-bold text-slate-900 text-sm" id="sys-cpu-text">0%</span>
             </div>
@@ -172,7 +173,7 @@
             <div class="flex items-center justify-between text-xs mb-2">
               <span class="font-semibold text-slate-700 flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" x2="6.01" y1="16" y2="16"/><line x1="10" x2="10.01" y1="16" y2="16"/></svg>
-                RAM Memory
+                <span data-i18n="memory_ram">Memori RAM</span>
               </span>
               <span class="font-mono font-bold text-slate-900 text-sm" id="sys-mem-text">0%</span>
             </div>
@@ -189,7 +190,7 @@
             <div class="flex items-center justify-between text-xs mb-2">
               <span class="font-semibold text-slate-700 flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600"><line x1="22" x2="2" y1="12" y2="12"/><path d="M2 12V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5"/><rect width="20" height="8" x="2" y="12" rx="2"/><circle cx="6" cy="16" r=".5" fill="currentColor"/><circle cx="10" cy="16" r=".5" fill="currentColor"/></svg>
-                HDD Storage
+                <span data-i18n="free_hdd">Ruang Harddisk</span>
               </span>
               <span class="font-mono font-bold text-slate-900 text-sm" id="sys-hdd-text">0%</span>
             </div>
@@ -241,6 +242,8 @@
 
   <script src="js/api.js?v=3"></script>
   <script src="js/auth.js?v=3"></script>
+  <script src="js/locales.js?v=3"></script>
+  <script src="js/i18n.js?v=3"></script>
   <script src="js/router-selector.js?v=3"></script>
   <script src="js/layout.js?v=3"></script>
   <script src="js/dashboard.js?v=3"></script>

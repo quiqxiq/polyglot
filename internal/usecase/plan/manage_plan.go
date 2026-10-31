@@ -38,6 +38,24 @@ func (u *ManagePlanUseCase) Create(ctx context.Context, p domainPlan.ServicePlan
 	if p.ParentQueue == "" {
 		p.ParentQueue = "none"
 	}
+	// router_profile_name immutable (planning v2 D10): diisi slug unik saat
+	// pembuatan agar rename nama tampilan paket tidak merusak profil router.
+	if p.RouterProfileName == "" {
+		base := idgen.Slug(p.Name)
+		if base == "" {
+			base = "PLAN"
+		}
+		p.RouterProfileName = fmt.Sprintf("%s-%s", base, idgen.Digits(4))
+	}
+	if p.ProrateMode == "" {
+		p.ProrateMode = "CALENDAR_DAY"
+	}
+	if p.TaxMode == "" {
+		p.TaxMode = "EXCLUSIVE"
+	}
+	if p.Version <= 0 {
+		p.Version = 1
+	}
 	if p.ServiceType == domainPlan.TypeHotspot {
 		if p.SharedUsers <= 0 {
 			if p.Hotspot != nil && p.Hotspot.SharedUsers > 0 {
@@ -79,6 +97,9 @@ func (u *ManagePlanUseCase) Update(ctx context.Context, p domainPlan.ServicePlan
 		return domainPlan.ServicePlan{}, err
 	}
 	p.CreatedAt = old.CreatedAt
+	// router_profile_name immutable setelah dibuat (planning v2 D10):
+	// apapun inputnya, nama profil router selalu mengikuti versi tersimpan.
+	p.RouterProfileName = old.RouterProfileName
 	if p.ServiceType == domainPlan.TypeHotspot && p.SharedUsers <= 0 {
 		if p.Hotspot != nil && p.Hotspot.SharedUsers > 0 {
 			p.SharedUsers = p.Hotspot.SharedUsers
@@ -120,7 +141,7 @@ func (u *ManagePlanUseCase) Delete(ctx context.Context, id string, deviceID stri
 
 	// Remove profile from MikroTik router if deviceID is provided
 	if deviceID != "" && u.router != nil {
-		_ = u.router.DeletePlanProfile(ctx, deviceID, old.ServiceType, old.Name)
+		_ = u.router.DeletePlanProfile(ctx, deviceID, old.ServiceType, old.RouterProfile())
 	}
 
 	return nil

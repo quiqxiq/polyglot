@@ -31,6 +31,7 @@ const (
 	SubscriptionService_ActivateSubscription_FullMethodName  = "/polyglot.v1.SubscriptionService/ActivateSubscription"
 	SubscriptionService_IsolateSubscription_FullMethodName   = "/polyglot.v1.SubscriptionService/IsolateSubscription"
 	SubscriptionService_RestoreSubscription_FullMethodName   = "/polyglot.v1.SubscriptionService/RestoreSubscription"
+	SubscriptionService_RetryProvision_FullMethodName        = "/polyglot.v1.SubscriptionService/RetryProvision"
 )
 
 // SubscriptionServiceClient is the client API for SubscriptionService service.
@@ -49,6 +50,9 @@ type SubscriptionServiceClient interface {
 	ActivateSubscription(ctx context.Context, in *ActivateSubscriptionRequest, opts ...grpc.CallOption) (*ActivateSubscriptionResponse, error)
 	IsolateSubscription(ctx context.Context, in *IsolateSubscriptionRequest, opts ...grpc.CallOption) (*IsolateSubscriptionResponse, error)
 	RestoreSubscription(ctx context.Context, in *RestoreSubscriptionRequest, opts ...grpc.CallOption) (*RestoreSubscriptionResponse, error)
+	// RetryProvision mengantrekan ulang job provisioning langganan ke router
+	// (planning v2 Fase 4 — retry manual dari dashboard).
+	RetryProvision(ctx context.Context, in *RetryProvisionRequest, opts ...grpc.CallOption) (*RetryProvisionResponse, error)
 }
 
 type subscriptionServiceClient struct {
@@ -179,6 +183,16 @@ func (c *subscriptionServiceClient) RestoreSubscription(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *subscriptionServiceClient) RetryProvision(ctx context.Context, in *RetryProvisionRequest, opts ...grpc.CallOption) (*RetryProvisionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryProvisionResponse)
+	err := c.cc.Invoke(ctx, SubscriptionService_RetryProvision_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SubscriptionServiceServer is the server API for SubscriptionService service.
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility.
@@ -195,6 +209,9 @@ type SubscriptionServiceServer interface {
 	ActivateSubscription(context.Context, *ActivateSubscriptionRequest) (*ActivateSubscriptionResponse, error)
 	IsolateSubscription(context.Context, *IsolateSubscriptionRequest) (*IsolateSubscriptionResponse, error)
 	RestoreSubscription(context.Context, *RestoreSubscriptionRequest) (*RestoreSubscriptionResponse, error)
+	// RetryProvision mengantrekan ulang job provisioning langganan ke router
+	// (planning v2 Fase 4 — retry manual dari dashboard).
+	RetryProvision(context.Context, *RetryProvisionRequest) (*RetryProvisionResponse, error)
 	mustEmbedUnimplementedSubscriptionServiceServer()
 }
 
@@ -240,6 +257,9 @@ func (UnimplementedSubscriptionServiceServer) IsolateSubscription(context.Contex
 }
 func (UnimplementedSubscriptionServiceServer) RestoreSubscription(context.Context, *RestoreSubscriptionRequest) (*RestoreSubscriptionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RestoreSubscription not implemented")
+}
+func (UnimplementedSubscriptionServiceServer) RetryProvision(context.Context, *RetryProvisionRequest) (*RetryProvisionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryProvision not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) mustEmbedUnimplementedSubscriptionServiceServer() {}
 func (UnimplementedSubscriptionServiceServer) testEmbeddedByValue()                             {}
@@ -478,6 +498,24 @@ func _SubscriptionService_RestoreSubscription_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SubscriptionService_RetryProvision_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryProvisionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).RetryProvision(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionService_RetryProvision_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).RetryProvision(ctx, req.(*RetryProvisionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SubscriptionService_ServiceDesc is the grpc.ServiceDesc for SubscriptionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -532,6 +570,10 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RestoreSubscription",
 			Handler:    _SubscriptionService_RestoreSubscription_Handler,
+		},
+		{
+			MethodName: "RetryProvision",
+			Handler:    _SubscriptionService_RetryProvision_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

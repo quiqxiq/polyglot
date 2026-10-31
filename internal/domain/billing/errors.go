@@ -20,8 +20,12 @@ var (
 
 	// Payment processing errors.
 	ErrInvoiceAlreadyPaid = fault.New(fault.KindConflict, "billing: invoice already paid")
-	ErrInvoiceCancelled   = fault.New(fault.KindConflict, "billing: invoice cancelled")
-	ErrOverpayment        = fault.New(fault.KindInvalidInput, "billing: payment amount exceeds outstanding balance")
+	// ErrPaymentAlreadyVoided indicates a payment reversal was requested twice.
+	ErrPaymentAlreadyVoided = fault.New(fault.KindFailedPrecondition, "billing: payment already voided")
+	// ErrPaymentSubmissionNotPending indicates review of a non-pending submission.
+	ErrPaymentSubmissionNotPending = fault.New(fault.KindFailedPrecondition, "billing: payment submission is not pending")
+	ErrInvoiceCancelled            = fault.New(fault.KindConflict, "billing: invoice cancelled")
+	ErrOverpayment                 = fault.New(fault.KindInvalidInput, "billing: payment amount exceeds outstanding balance")
 
 	// Payment gateway callback errors.
 	ErrGatewayDisabled   = fault.New(fault.KindFailedPrecondition, "billing: payment gateway disabled")

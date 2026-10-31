@@ -6,12 +6,12 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
-// Classify reports the risk class of cmd for generic SSH-CLI vendors.
-// TODO: populate once a custom platformdef is added for a specific vendor —
-// until then, default to requiring approval for anything, since risk is
-// genuinely unknown for an uncurated vendor (fail-safe, not fail-open).
-func Classify(cmd command.Command) command.Class {
-	return command.ClassDestructive
+// Classify reports the AI Router Ops classification of cmd for generic
+// SSH-CLI vendors. Uncurated vendors have no read allowlist, so every
+// command is MUTATION (fail-closed, always requires approval) — consistent
+// with Polyglot-Architecture.md §5.4.
+func Classify(cmd command.Command) command.Classification {
+	return command.Classification{Mode: command.ModeMutation}
 }
 
 // Translate always errors: generic SSH vendors have no curated operation

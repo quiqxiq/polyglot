@@ -14,6 +14,7 @@ import (
 type ManageIsolationUseCase struct {
 	accountMgr port.RouterAccountManager
 	deviceRepo port.DeviceRepository
+	settings   port.SettingReader
 }
 
 // NewManageIsolationUseCase creates a new ManageIsolationUseCase.
@@ -22,6 +23,13 @@ func NewManageIsolationUseCase(accountMgr port.RouterAccountManager, deviceRepo 
 		accountMgr: accountMgr,
 		deviceRepo: deviceRepo,
 	}
+}
+
+// WithSettings menautkan sumber konfigurasi dinamis (default webproxy isolir,
+// whitelist billing, error page) — planning v2 D12.
+func (u *ManageIsolationUseCase) WithSettings(r port.SettingReader) *ManageIsolationUseCase {
+	u.settings = r
+	return u
 }
 
 // GetIsolationStatus inspects the target device for isolation profile and firewall rule presence.
@@ -40,6 +48,21 @@ func (u *ManageIsolationUseCase) GetIsolationStatus(ctx context.Context, deviceI
 func (u *ManageIsolationUseCase) CreateIsolationProfile(ctx context.Context, deviceID string, cfg device.IsolationConfig) (device.IsolationStatus, error) {
 	if deviceID == "" {
 		return device.IsolationStatus{}, fmt.Errorf("%w: device id is required", device.ErrInvalidInput)
+	}
+	if u.settings != nil {
+		isp := port.LoadISPSettings(ctx, u.settings)
+		if cfg.WebProxyPort <= 0 {
+			cfg.WebProxyPort = isp.IsolirWebProxyPort
+		}
+		if len(cfg.BillingHosts) == 0 {
+			cfg.BillingHosts = isp.IsolirBillingHosts
+		}
+		if cfg.ErrorPageURL == "" {
+			cfg.ErrorPageURL = isp.IsolirErrorPageURL
+		}
+		if isp.IsolirWebProxyEnabled {
+			cfg.WebProxyEnabled = true
+		}
 	}
 	if err := u.accountMgr.EnsureIsolationInfrastructure(ctx, deviceID, cfg); err != nil {
 		return device.IsolationStatus{}, fmt.Errorf("ensure isolation infrastructure: %w", err)

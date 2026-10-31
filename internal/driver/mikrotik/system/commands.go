@@ -10,8 +10,10 @@ var setIfNonEmpty = rosutil.SetIfNonEmpty
 // NewPrintResourceCommand builds the command.Command for /system/resource/print.
 func NewPrintResourceCommand() command.Command {
 	return command.Command{
-		Raw:  "/system/resource/print",
-		Args: map[string]string{},
+		Raw: "/system/resource/print",
+		Args: map[string]string{
+			".proplist": "cpu-load,cpu-count,cpu-frequency,free-memory,total-memory,free-hdd-space,total-hdd-space,architecture-name,board-name,version,uptime,model,serial-number,current-firmware,voltage,board-voltage,temperature,bad-blocks",
+		},
 	}
 }
 
@@ -21,16 +23,21 @@ func NewStreamResourceCommand(interval string) command.Command {
 		interval = "1s"
 	}
 	return command.Command{
-		Raw:  "/system/resource/print",
-		Args: map[string]string{"interval": interval},
+		Raw: "/system/resource/print",
+		Args: map[string]string{
+			"interval":  interval,
+			".proplist": "cpu-load,cpu-count,cpu-frequency,free-memory,total-memory,free-hdd-space,total-hdd-space,architecture-name,board-name,version,uptime,model,serial-number,current-firmware,voltage,board-voltage,temperature,bad-blocks",
+		},
 	}
 }
 
 // NewPrintHealthCommand builds the command.Command for /system/health/print.
 func NewPrintHealthCommand() command.Command {
 	return command.Command{
-		Raw:  "/system/health/print",
-		Args: map[string]string{},
+		Raw: "/system/health/print",
+		Args: map[string]string{
+			".proplist": ".id,name,value,type,voltage,temperature,cpu-temperature,psu-voltage,psu-current,psu-temperature,fan1-speed,fan2-speed",
+		},
 	}
 }
 
@@ -40,16 +47,21 @@ func NewStreamHealthCommand(interval string) command.Command {
 		interval = "1s"
 	}
 	return command.Command{
-		Raw:  "/system/health/print",
-		Args: map[string]string{"interval": interval},
+		Raw: "/system/health/print",
+		Args: map[string]string{
+			"interval":  interval,
+			".proplist": ".id,name,value,type,voltage,temperature,cpu-temperature,psu-voltage,psu-current,psu-temperature,fan1-speed,fan2-speed",
+		},
 	}
 }
 
 // NewPrintClockCommand builds the command.Command for /system/clock/print.
 func NewPrintClockCommand() command.Command {
 	return command.Command{
-		Raw:  "/system/clock/print",
-		Args: map[string]string{},
+		Raw: "/system/clock/print",
+		Args: map[string]string{
+			".proplist": "time,date,time-zone-name,gmt-offset,dst-active",
+		},
 	}
 }
 
@@ -59,16 +71,21 @@ func NewStreamClockCommand(interval string) command.Command {
 		interval = "1s"
 	}
 	return command.Command{
-		Raw:  "/system/clock/print",
-		Args: map[string]string{"interval": interval},
+		Raw: "/system/clock/print",
+		Args: map[string]string{
+			"interval":  interval,
+			".proplist": "time,date,time-zone-name,gmt-offset,dst-active",
+		},
 	}
 }
 
 // NewPrintIdentityCommand builds the command.Command for /system/identity/print.
 func NewPrintIdentityCommand() command.Command {
 	return command.Command{
-		Raw:  "/system/identity/print",
-		Args: map[string]string{},
+		Raw: "/system/identity/print",
+		Args: map[string]string{
+			".proplist": "name",
+		},
 	}
 }
 
@@ -78,8 +95,11 @@ func NewStreamIdentityCommand(interval string) command.Command {
 		interval = "1s"
 	}
 	return command.Command{
-		Raw:  "/system/identity/print",
-		Args: map[string]string{"interval": interval},
+		Raw: "/system/identity/print",
+		Args: map[string]string{
+			"interval":  interval,
+			".proplist": "name",
+		},
 	}
 }
 
@@ -94,8 +114,10 @@ func NewSetIdentityCommand(name string) command.Command {
 // NewPrintRouterboardCommand builds the command.Command for /system/routerboard/print.
 func NewPrintRouterboardCommand() command.Command {
 	return command.Command{
-		Raw:  "/system/routerboard/print",
-		Args: map[string]string{},
+		Raw: "/system/routerboard/print",
+		Args: map[string]string{
+			".proplist": "routerboard,model,serial-number,current-firmware,upgrade-firmware",
+		},
 	}
 }
 
@@ -105,14 +127,19 @@ func NewStreamRouterboardCommand(interval string) command.Command {
 		interval = "1s"
 	}
 	return command.Command{
-		Raw:  "/system/routerboard/print",
-		Args: map[string]string{"interval": interval},
+		Raw: "/system/routerboard/print",
+		Args: map[string]string{
+			"interval":  interval,
+			".proplist": "routerboard,model,serial-number,current-firmware,upgrade-firmware",
+		},
 	}
 }
 
 // NewPrintLogsCommand builds the command.Command for /log/print.
 func NewPrintLogsCommand(topicsFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": "time,topics,message",
+	}
 	if topicsFilter != "" {
 		args["?topics~"] = topicsFilter
 	}
@@ -124,7 +151,10 @@ func NewPrintLogsCommand(topicsFilter string) command.Command {
 
 // NewStreamLogsCommand builds the command.Command for streaming /log/print follow.
 func NewStreamLogsCommand(topicsFilter string) command.Command {
-	args := map[string]string{"follow": ""}
+	args := map[string]string{
+		"follow":    "",
+		".proplist": "time,topics,message",
+	}
 	if topicsFilter != "" {
 		args["?topics~"] = topicsFilter
 	}
@@ -161,7 +191,9 @@ func NewPingStreamCommand(host string) command.Command {
 
 // NewPrintSchedulerCommand builds the command.Command for /system/scheduler/print.
 func NewPrintSchedulerCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,name,on-event,start-time,start-date,interval,comment,disabled,run-count,next-run",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
@@ -211,7 +243,9 @@ func NewRemoveSchedulerCommand(rosID string) command.Command {
 
 // NewPrintScriptCommand builds the command.Command for /system/script/print.
 func NewPrintScriptCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,name,source,comment,dont-require-permissions,run-count,last-started",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}

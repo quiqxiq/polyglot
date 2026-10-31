@@ -6,6 +6,8 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { LanguageSwitch } from '@/components/language-switch'
+import { useI18n } from '@/context/i18n-provider'
 import { useDeviceStore } from '@/stores/device-store'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { usePPPProfilesQuery } from '@/features/ppp/api/use-ppp-profiles'
@@ -56,12 +58,14 @@ export function Plans() {
     })
   }, [plans, routerProfileNames, routerSubPlanIds, selectedDeviceId])
 
+  const { t } = useI18n()
   const isLoading = isLoadingPlans || isLoadingPPP || isLoadingHotspot || isLoadingSubs
 
   return (
     <PlansProvider>
       <Header fixed>
         <Search className='me-auto' />
+        <LanguageSwitch />
         <ThemeSwitch />
         <ConfigDrawer />
         <ProfileDropdown />
@@ -72,7 +76,7 @@ export function Plans() {
           <div>
             <div className='flex items-center gap-2'>
               <Package className='size-6 text-primary' />
-              <h2 className='text-2xl font-bold tracking-tight'>Service Plans</h2>
+              <h2 className='text-2xl font-bold tracking-tight'>{t('billing.service_plans')}</h2>
             </div>
             <p className='text-sm text-muted-foreground mt-0.5'>
               {currentDevice ? (

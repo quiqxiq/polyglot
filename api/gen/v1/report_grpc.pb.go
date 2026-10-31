@@ -19,10 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ReportService_DailyReport_FullMethodName     = "/polyglot.v1.ReportService/DailyReport"
-	ReportService_MonthlyReport_FullMethodName   = "/polyglot.v1.ReportService/MonthlyReport"
-	ReportService_YearlyReport_FullMethodName    = "/polyglot.v1.ReportService/YearlyReport"
-	ReportService_RefreshSnapshot_FullMethodName = "/polyglot.v1.ReportService/RefreshSnapshot"
+	ReportService_DailyReport_FullMethodName           = "/polyglot.v1.ReportService/DailyReport"
+	ReportService_MonthlyReport_FullMethodName         = "/polyglot.v1.ReportService/MonthlyReport"
+	ReportService_YearlyReport_FullMethodName          = "/polyglot.v1.ReportService/YearlyReport"
+	ReportService_RefreshSnapshot_FullMethodName       = "/polyglot.v1.ReportService/RefreshSnapshot"
+	ReportService_ARAging_FullMethodName               = "/polyglot.v1.ReportService/ARAging"
+	ReportService_GatewayReconciliation_FullMethodName = "/polyglot.v1.ReportService/GatewayReconciliation"
+	ReportService_PSBStats_FullMethodName              = "/polyglot.v1.ReportService/PSBStats"
+	ReportService_TaxReport_FullMethodName             = "/polyglot.v1.ReportService/TaxReport"
+	ReportService_SalesReport_FullMethodName           = "/polyglot.v1.ReportService/SalesReport"
+	ReportService_CollectionReport_FullMethodName      = "/polyglot.v1.ReportService/CollectionReport"
+	ReportService_CashflowReport_FullMethodName        = "/polyglot.v1.ReportService/CashflowReport"
+	ReportService_AgingDetail_FullMethodName           = "/polyglot.v1.ReportService/AgingDetail"
+	ReportService_ClosingReport_FullMethodName         = "/polyglot.v1.ReportService/ClosingReport"
+	ReportService_ExportReport_FullMethodName          = "/polyglot.v1.ReportService/ExportReport"
 )
 
 // ReportServiceClient is the client API for ReportService service.
@@ -33,6 +43,18 @@ type ReportServiceClient interface {
 	MonthlyReport(ctx context.Context, in *MonthlyReportRequest, opts ...grpc.CallOption) (*MonthlyReportResponse, error)
 	YearlyReport(ctx context.Context, in *YearlyReportRequest, opts ...grpc.CallOption) (*YearlyReportResponse, error)
 	RefreshSnapshot(ctx context.Context, in *RefreshSnapshotRequest, opts ...grpc.CallOption) (*RefreshSnapshotResponse, error)
+	// Laporan operasional lanjutan (Fase 5).
+	ARAging(ctx context.Context, in *ARAgingRequest, opts ...grpc.CallOption) (*ARAgingResponse, error)
+	GatewayReconciliation(ctx context.Context, in *GatewayReconciliationRequest, opts ...grpc.CallOption) (*GatewayReconciliationResponse, error)
+	PSBStats(ctx context.Context, in *PSBStatsRequest, opts ...grpc.CallOption) (*PSBStatsResponse, error)
+	// Billing Ops v3 Laporan Keuangan
+	TaxReport(ctx context.Context, in *TaxReportRequest, opts ...grpc.CallOption) (*TaxReportResponse, error)
+	SalesReport(ctx context.Context, in *SalesReportRequest, opts ...grpc.CallOption) (*SalesReportResponse, error)
+	CollectionReport(ctx context.Context, in *CollectionReportRequest, opts ...grpc.CallOption) (*CollectionReportResponse, error)
+	CashflowReport(ctx context.Context, in *CashflowReportRequest, opts ...grpc.CallOption) (*CashflowReportResponse, error)
+	AgingDetail(ctx context.Context, in *AgingDetailRequest, opts ...grpc.CallOption) (*AgingDetailResponse, error)
+	ClosingReport(ctx context.Context, in *ClosingReportRequest, opts ...grpc.CallOption) (*ClosingReportResponse, error)
+	ExportReport(ctx context.Context, in *ExportReportRequest, opts ...grpc.CallOption) (*ExportReportResponse, error)
 }
 
 type reportServiceClient struct {
@@ -83,6 +105,106 @@ func (c *reportServiceClient) RefreshSnapshot(ctx context.Context, in *RefreshSn
 	return out, nil
 }
 
+func (c *reportServiceClient) ARAging(ctx context.Context, in *ARAgingRequest, opts ...grpc.CallOption) (*ARAgingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ARAgingResponse)
+	err := c.cc.Invoke(ctx, ReportService_ARAging_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) GatewayReconciliation(ctx context.Context, in *GatewayReconciliationRequest, opts ...grpc.CallOption) (*GatewayReconciliationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GatewayReconciliationResponse)
+	err := c.cc.Invoke(ctx, ReportService_GatewayReconciliation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) PSBStats(ctx context.Context, in *PSBStatsRequest, opts ...grpc.CallOption) (*PSBStatsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PSBStatsResponse)
+	err := c.cc.Invoke(ctx, ReportService_PSBStats_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) TaxReport(ctx context.Context, in *TaxReportRequest, opts ...grpc.CallOption) (*TaxReportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TaxReportResponse)
+	err := c.cc.Invoke(ctx, ReportService_TaxReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) SalesReport(ctx context.Context, in *SalesReportRequest, opts ...grpc.CallOption) (*SalesReportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SalesReportResponse)
+	err := c.cc.Invoke(ctx, ReportService_SalesReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) CollectionReport(ctx context.Context, in *CollectionReportRequest, opts ...grpc.CallOption) (*CollectionReportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CollectionReportResponse)
+	err := c.cc.Invoke(ctx, ReportService_CollectionReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) CashflowReport(ctx context.Context, in *CashflowReportRequest, opts ...grpc.CallOption) (*CashflowReportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CashflowReportResponse)
+	err := c.cc.Invoke(ctx, ReportService_CashflowReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) AgingDetail(ctx context.Context, in *AgingDetailRequest, opts ...grpc.CallOption) (*AgingDetailResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AgingDetailResponse)
+	err := c.cc.Invoke(ctx, ReportService_AgingDetail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) ClosingReport(ctx context.Context, in *ClosingReportRequest, opts ...grpc.CallOption) (*ClosingReportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClosingReportResponse)
+	err := c.cc.Invoke(ctx, ReportService_ClosingReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reportServiceClient) ExportReport(ctx context.Context, in *ExportReportRequest, opts ...grpc.CallOption) (*ExportReportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExportReportResponse)
+	err := c.cc.Invoke(ctx, ReportService_ExportReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ReportServiceServer is the server API for ReportService service.
 // All implementations must embed UnimplementedReportServiceServer
 // for forward compatibility.
@@ -91,6 +213,18 @@ type ReportServiceServer interface {
 	MonthlyReport(context.Context, *MonthlyReportRequest) (*MonthlyReportResponse, error)
 	YearlyReport(context.Context, *YearlyReportRequest) (*YearlyReportResponse, error)
 	RefreshSnapshot(context.Context, *RefreshSnapshotRequest) (*RefreshSnapshotResponse, error)
+	// Laporan operasional lanjutan (Fase 5).
+	ARAging(context.Context, *ARAgingRequest) (*ARAgingResponse, error)
+	GatewayReconciliation(context.Context, *GatewayReconciliationRequest) (*GatewayReconciliationResponse, error)
+	PSBStats(context.Context, *PSBStatsRequest) (*PSBStatsResponse, error)
+	// Billing Ops v3 Laporan Keuangan
+	TaxReport(context.Context, *TaxReportRequest) (*TaxReportResponse, error)
+	SalesReport(context.Context, *SalesReportRequest) (*SalesReportResponse, error)
+	CollectionReport(context.Context, *CollectionReportRequest) (*CollectionReportResponse, error)
+	CashflowReport(context.Context, *CashflowReportRequest) (*CashflowReportResponse, error)
+	AgingDetail(context.Context, *AgingDetailRequest) (*AgingDetailResponse, error)
+	ClosingReport(context.Context, *ClosingReportRequest) (*ClosingReportResponse, error)
+	ExportReport(context.Context, *ExportReportRequest) (*ExportReportResponse, error)
 	mustEmbedUnimplementedReportServiceServer()
 }
 
@@ -112,6 +246,36 @@ func (UnimplementedReportServiceServer) YearlyReport(context.Context, *YearlyRep
 }
 func (UnimplementedReportServiceServer) RefreshSnapshot(context.Context, *RefreshSnapshotRequest) (*RefreshSnapshotResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RefreshSnapshot not implemented")
+}
+func (UnimplementedReportServiceServer) ARAging(context.Context, *ARAgingRequest) (*ARAgingResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ARAging not implemented")
+}
+func (UnimplementedReportServiceServer) GatewayReconciliation(context.Context, *GatewayReconciliationRequest) (*GatewayReconciliationResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GatewayReconciliation not implemented")
+}
+func (UnimplementedReportServiceServer) PSBStats(context.Context, *PSBStatsRequest) (*PSBStatsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PSBStats not implemented")
+}
+func (UnimplementedReportServiceServer) TaxReport(context.Context, *TaxReportRequest) (*TaxReportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method TaxReport not implemented")
+}
+func (UnimplementedReportServiceServer) SalesReport(context.Context, *SalesReportRequest) (*SalesReportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SalesReport not implemented")
+}
+func (UnimplementedReportServiceServer) CollectionReport(context.Context, *CollectionReportRequest) (*CollectionReportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CollectionReport not implemented")
+}
+func (UnimplementedReportServiceServer) CashflowReport(context.Context, *CashflowReportRequest) (*CashflowReportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CashflowReport not implemented")
+}
+func (UnimplementedReportServiceServer) AgingDetail(context.Context, *AgingDetailRequest) (*AgingDetailResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AgingDetail not implemented")
+}
+func (UnimplementedReportServiceServer) ClosingReport(context.Context, *ClosingReportRequest) (*ClosingReportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ClosingReport not implemented")
+}
+func (UnimplementedReportServiceServer) ExportReport(context.Context, *ExportReportRequest) (*ExportReportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ExportReport not implemented")
 }
 func (UnimplementedReportServiceServer) mustEmbedUnimplementedReportServiceServer() {}
 func (UnimplementedReportServiceServer) testEmbeddedByValue()                       {}
@@ -206,6 +370,186 @@ func _ReportService_RefreshSnapshot_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReportService_ARAging_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ARAgingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).ARAging(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_ARAging_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).ARAging(ctx, req.(*ARAgingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_GatewayReconciliation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GatewayReconciliationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).GatewayReconciliation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_GatewayReconciliation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).GatewayReconciliation(ctx, req.(*GatewayReconciliationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_PSBStats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PSBStatsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).PSBStats(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_PSBStats_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).PSBStats(ctx, req.(*PSBStatsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_TaxReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaxReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).TaxReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_TaxReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).TaxReport(ctx, req.(*TaxReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_SalesReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SalesReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).SalesReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_SalesReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).SalesReport(ctx, req.(*SalesReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_CollectionReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CollectionReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).CollectionReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_CollectionReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).CollectionReport(ctx, req.(*CollectionReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_CashflowReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CashflowReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).CashflowReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_CashflowReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).CashflowReport(ctx, req.(*CashflowReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_AgingDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AgingDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).AgingDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_AgingDetail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).AgingDetail(ctx, req.(*AgingDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_ClosingReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClosingReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).ClosingReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_ClosingReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).ClosingReport(ctx, req.(*ClosingReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ReportService_ExportReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReportServiceServer).ExportReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReportService_ExportReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReportServiceServer).ExportReport(ctx, req.(*ExportReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ReportService_ServiceDesc is the grpc.ServiceDesc for ReportService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +572,46 @@ var ReportService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RefreshSnapshot",
 			Handler:    _ReportService_RefreshSnapshot_Handler,
+		},
+		{
+			MethodName: "ARAging",
+			Handler:    _ReportService_ARAging_Handler,
+		},
+		{
+			MethodName: "GatewayReconciliation",
+			Handler:    _ReportService_GatewayReconciliation_Handler,
+		},
+		{
+			MethodName: "PSBStats",
+			Handler:    _ReportService_PSBStats_Handler,
+		},
+		{
+			MethodName: "TaxReport",
+			Handler:    _ReportService_TaxReport_Handler,
+		},
+		{
+			MethodName: "SalesReport",
+			Handler:    _ReportService_SalesReport_Handler,
+		},
+		{
+			MethodName: "CollectionReport",
+			Handler:    _ReportService_CollectionReport_Handler,
+		},
+		{
+			MethodName: "CashflowReport",
+			Handler:    _ReportService_CashflowReport_Handler,
+		},
+		{
+			MethodName: "AgingDetail",
+			Handler:    _ReportService_AgingDetail_Handler,
+		},
+		{
+			MethodName: "ClosingReport",
+			Handler:    _ReportService_ClosingReport_Handler,
+		},
+		{
+			MethodName: "ExportReport",
+			Handler:    _ReportService_ExportReport_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

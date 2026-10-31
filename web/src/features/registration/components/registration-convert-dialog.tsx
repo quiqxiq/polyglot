@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { SelectDropdown } from '@/components/select-dropdown'
+import { DeviceHealthBadge } from './device-health-badge'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useConvertRegistrationMutation } from '../api/use-registration'
 import {
@@ -133,15 +134,18 @@ export function RegistrationConvertDialog({
                     <Router className='h-3.5 w-3.5' /> Router BRAS Target
                   </FormLabel>
                   <FormControl>
-                    <SelectDropdown
-                      isControlled
-                      defaultValue={field.value || undefined}
-                      onValueChange={field.onChange}
-                      placeholder={
-                        devicesLoading ? 'Memuat router...' : 'Pilih Router BRAS'
-                      }
-                      items={deviceOptions}
-                    />
+                    <div className='space-y-2'>
+                      <SelectDropdown
+                        isControlled
+                        defaultValue={field.value || undefined}
+                        onValueChange={field.onChange}
+                        placeholder={
+                          devicesLoading ? 'Memuat router...' : 'Pilih Router BRAS'
+                        }
+                        items={deviceOptions}
+                      />
+                      <DeviceHealthBadge deviceId={field.value || ''} />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

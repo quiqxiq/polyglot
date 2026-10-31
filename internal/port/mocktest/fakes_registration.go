@@ -55,6 +55,17 @@ func (f *FakeRegistrationRepo) FindByNo(_ context.Context, no string) (domainReg
 	return domainRegistration.Registration{}, ErrFakeNotFound
 }
 
+func (f *FakeRegistrationRepo) FindByPublicToken(_ context.Context, token string) (domainRegistration.Registration, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	for _, r := range f.byID {
+		if r.PublicToken != "" && r.PublicToken == token {
+			return r, nil
+		}
+	}
+	return domainRegistration.Registration{}, ErrFakeNotFound
+}
+
 func (f *FakeRegistrationRepo) List(_ context.Context, _ port.RegistrationFilter) ([]domainRegistration.Registration, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()

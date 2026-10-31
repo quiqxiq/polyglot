@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import {
   type SortingState,
   type VisibilityState,
@@ -24,8 +24,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
+import { useI18n } from '@/context/i18n-provider'
 import type { Plan } from '@/gen/v1/plan_pb'
-import { plansColumns as columns } from './plans-columns'
+import { getPlansColumns } from './plans-columns'
 
 interface PlansTableProps {
   data: Plan[]
@@ -33,6 +34,8 @@ interface PlansTableProps {
 }
 
 export function PlansTable({ data, isLoading }: PlansTableProps) {
+  const { t } = useI18n()
+  const columns = useMemo(() => getPlansColumns(t), [t])
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -126,7 +129,7 @@ export function PlansTable({ data, isLoading }: PlansTableProps) {
             {isLoading ? (
               <TableRow>
                 <TableCell colSpan={columns.length} className='h-24 text-center text-muted-foreground'>
-                  Memuat data paket...
+                  {t('common.loading')}
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows.length ? (
@@ -146,7 +149,7 @@ export function PlansTable({ data, isLoading }: PlansTableProps) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className='h-24 text-center text-muted-foreground'>
-                  Belum ada paket layanan
+                  {t('table.no_results')}
                 </TableCell>
               </TableRow>
             )}

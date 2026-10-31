@@ -23,10 +23,10 @@ import (
 
 	"github.com/joho/godotenv"
 
+	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
-	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 )
 
 func e2eTarget(t *testing.T) device.Target {
@@ -64,7 +64,9 @@ func TestProvisioner_E2E(t *testing.T) {
 	}
 	requireNoErr(t, err, "connect driver")
 
-	exec := networkUC.ExecuteCommandPreApproved
+	exec := func(ctx context.Context, drv port.DeviceDriver, cmd command.Command) (command.Result, error) {
+		return drv.Execute(ctx, cmd)
+	}
 
 	gw := mikrotik.NewGateway(exec)
 	mgr := NewWithResolver(

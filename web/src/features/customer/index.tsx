@@ -6,6 +6,8 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { LanguageSwitch } from '@/components/language-switch'
+import { useI18n } from '@/context/i18n-provider'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useDeviceStore } from '@/stores/device-store'
 import { useSubscriptionsQuery } from '@/features/billing/api/use-billing'
@@ -37,12 +39,14 @@ export function CustomersPage() {
     return customers.filter((c) => routerCustomerIds.has(c.id))
   }, [customers, routerCustomerIds, selectedDeviceId])
 
+  const { t } = useI18n()
   const isLoading = isLoadingCustomers || isLoadingSubs
 
   return (
     <CustomersProvider>
       <Header fixed>
         <Search className='me-auto' />
+        <LanguageSwitch />
         <ThemeSwitch />
         <ConfigDrawer />
         <ProfileDropdown />
@@ -53,7 +57,7 @@ export function CustomersPage() {
           <div>
             <div className='flex items-center gap-2'>
               <Contact className='size-6 text-primary' />
-              <h2 className='text-2xl font-bold tracking-tight'>Pelanggan</h2>
+              <h2 className='text-2xl font-bold tracking-tight'>{t('customer.title')}</h2>
             </div>
             <p className='mt-0.5 text-sm text-muted-foreground'>
               {currentDevice ? (

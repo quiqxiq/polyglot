@@ -22,16 +22,16 @@
         <div class="flex items-center gap-2">
           <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-            Pengaturan & Manajemen Teknisi
+            <span data-i18n="settings_title">Pengaturan & Manajemen Teknisi</span>
           </h1>
           <span class="text-xs uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">Khusus Admin</span>
         </div>
-        <p class="text-sm text-slate-500 mt-0.5">Kelola akun teknisi lapangan dan atur router MikroTik mana saja yang diizinkan untuk mereka</p>
+        <p class="text-sm text-slate-500 mt-0.5" data-i18n="settings_desc">Kelola akun teknisi lapangan dan atur router MikroTik mana saja yang diizinkan untuk mereka</p>
       </div>
 
       <button id="open-add-tech-btn" class="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold shadow-xs cursor-pointer transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12"/></svg>
-        Tambah Teknisi Baru
+        <span data-i18n="create_technician">Tambah Teknisi Baru</span>
       </button>
     </div>
 
@@ -154,6 +154,8 @@
 
   <script src="js/api.js?v=2"></script>
   <script src="js/auth.js?v=2"></script>
+  <script src="js/locales.js?v=2"></script>
+  <script src="js/i18n.js?v=2"></script>
   <script src="js/router-selector.js?v=2"></script>
   <script src="js/layout.js?v=2"></script>
   <script src="js/settings.js?v=2"></script>

@@ -15,15 +15,26 @@ import (
 
 // schedulerJobs menghimpun seluruh pekerjaan periodik ISP.
 type schedulerJobs struct {
-	billing  *billingUC.RunBillingUseCase
-	isolate  *billingUC.IsolateWorker
-	reminder *billingUC.ReminderWorker
-	waSend   *notificationUC.WASenderWorker
-	snapshot func(ctx context.Context) error
+	billing        *billingUC.RunBillingUseCase
+	isolate        *billingUC.IsolateWorker
+	reminder       *billingUC.ReminderWorker
+	waSend         *notificationUC.WASenderWorker
+	routerJobs     func(ctx context.Context) error
+	drift          func(ctx context.Context) error
+	snapshot       func(ctx context.Context) error
+	oltSync        func(ctx context.Context) error
+	acsMatch       func(ctx context.Context) error
+	acsTelemetry   func(ctx context.Context) error
+	approvalExpire func(ctx context.Context) error
+	restoreCleanup func(ctx context.Context) error
+	backupDaily    func(ctx context.Context) error
+	backupWeekly   func(ctx context.Context) error
+	retention      func(ctx context.Context) error
 }
 
 type schedulerSpecs struct {
-	billing, isolation, reminder, waSend, snapshot string
+	billing, isolation, reminder, waSend, snapshot, routerJobs, drift, oltSync, acsMatch, acsTelemetry string
+	approvalExpire, restoreCleanup, backupDaily, backupWeekly, retention                               string
 }
 
 // Scheduler menjalankan pekerjaan periodik ISP:
@@ -31,6 +42,8 @@ type schedulerSpecs struct {
 //   - lifecycle worker          (ISOLATION_CRON, default tiap 10 menit)
 //   - pengirim WA               (WA_SEND_CRON, default tiap 30 detik)
 //   - snapshot harian           (SNAPSHOT_CRON, default 00:05 harian)
+//   - worker antrean job router (ROUTER_JOB_CRON, default tiap 1 menit)
+//   - drift reconciliation      (DRIFT_CRON, default 03:00 harian)
 //
 // Tiap job dilindungi recover + logging; berhenti bersama graceful shutdown.
 type Scheduler struct {
@@ -100,13 +113,24 @@ func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string, loc
 
 	if s.jobs.billing != nil {
 		add(specs.billing, "run-billing", func(ctx context.Context) error {
-			res, err := s.jobs.billing.Run(ctx, s.tenantID, time.Now().UTC().Format("2006-01"))
-			if err == nil {
-				logger.WithComponent("Scheduler").WithFields(map[string]any{
-					"created": res.Created, "skipped": res.Skipped,
-				}).Info("billing run summary")
+			// Jalankan periode berjalan + periode depan: mode PRABAYAR
+			// menerbitkan invoice lebih awal (lead days), sedangkan
+			// PASCABAYAR otomatis melewati periode depan karena belum due.
+			now := time.Now().UTC()
+			periods := []string{now.Format("2006-01"), now.AddDate(0, 1, 0).Format("2006-01")}
+			totalCreated, totalSkipped := 0, 0
+			for _, period := range periods {
+				res, err := s.jobs.billing.Run(ctx, s.tenantID, period)
+				if err != nil {
+					return err
+				}
+				totalCreated += res.Created
+				totalSkipped += res.Skipped
 			}
-			return err
+			logger.WithComponent("Scheduler").WithFields(map[string]any{
+				"created": totalCreated, "skipped": totalSkipped,
+			}).Info("billing run summary")
+			return nil
 		})
 	}
 	if s.jobs.isolate != nil {
@@ -122,6 +146,16 @@ func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string, loc
 				}).Info("lifecycle pass summary")
 			}
 			return err
+		})
+	}
+	if s.jobs.routerJobs != nil {
+		add(specs.routerJobs, "router-job-worker", func(ctx context.Context) error {
+			return s.jobs.routerJobs(ctx)
+		})
+	}
+	if s.jobs.drift != nil {
+		add(specs.drift, "drift-reconciliation", func(ctx context.Context) error {
+			return s.jobs.drift(ctx)
 		})
 	}
 	if s.jobs.reminder != nil {
@@ -152,6 +186,46 @@ func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string, loc
 	if s.jobs.snapshot != nil {
 		add(specs.snapshot, "daily-snapshot", func(ctx context.Context) error {
 			return s.jobs.snapshot(ctx)
+		})
+	}
+	if s.jobs.approvalExpire != nil {
+		add(specs.approvalExpire, "approval-expire", func(ctx context.Context) error {
+			return s.jobs.approvalExpire(ctx)
+		})
+	}
+	if s.jobs.restoreCleanup != nil {
+		add(specs.restoreCleanup, "restore-cleanup", func(ctx context.Context) error {
+			return s.jobs.restoreCleanup(ctx)
+		})
+	}
+	if s.jobs.backupDaily != nil {
+		add(specs.backupDaily, "backup-daily", func(ctx context.Context) error {
+			return s.jobs.backupDaily(ctx)
+		})
+	}
+	if s.jobs.retention != nil {
+		add(specs.retention, "ai-retention", func(ctx context.Context) error {
+			return s.jobs.retention(ctx)
+		})
+	}
+	if s.jobs.backupWeekly != nil {
+		add(specs.backupWeekly, "backup-weekly", func(ctx context.Context) error {
+			return s.jobs.backupWeekly(ctx)
+		})
+	}
+	if s.jobs.oltSync != nil {
+		add(specs.oltSync, "olt-sync", func(ctx context.Context) error {
+			return s.jobs.oltSync(ctx)
+		})
+	}
+	if s.jobs.acsMatch != nil {
+		add(specs.acsMatch, "acs-match", func(ctx context.Context) error {
+			return s.jobs.acsMatch(ctx)
+		})
+	}
+	if s.jobs.acsTelemetry != nil {
+		add(specs.acsTelemetry, "acs-telemetry", func(ctx context.Context) error {
+			return s.jobs.acsTelemetry(ctx)
 		})
 	}
 	return s

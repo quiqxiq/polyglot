@@ -22,12 +22,28 @@ func TestNewPrintActiveCommand(t *testing.T) {
 	if cmd.Raw != "/ppp/active/print" || cmd.Args["?name"] != "user1" {
 		t.Fatalf("unexpected print active command: %+v", cmd)
 	}
+	if cmd.Args[".proplist"] == "" {
+		t.Fatal("expected .proplist to be populated")
+	}
 }
 
 func TestNewPrintProfilesCommand(t *testing.T) {
 	cmd := NewPrintProfilesCommand("10mbps")
 	if cmd.Raw != "/ppp/profile/print" || cmd.Args["?name"] != "10mbps" {
 		t.Fatalf("unexpected print profile command: %+v", cmd)
+	}
+	if cmd.Args[".proplist"] == "" {
+		t.Fatal("expected .proplist to be populated")
+	}
+}
+
+func TestNewPrintSecretsCommand(t *testing.T) {
+	cmd := NewPrintSecretsCommand("user1")
+	if cmd.Raw != "/ppp/secret/print" || cmd.Args["?name"] != "user1" {
+		t.Fatalf("unexpected print secret command: %+v", cmd)
+	}
+	if cmd.Args[".proplist"] == "" {
+		t.Fatal("expected .proplist to be populated")
 	}
 }
 

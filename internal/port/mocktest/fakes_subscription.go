@@ -126,12 +126,23 @@ func (f *FakeSubscriptionRepo) FindByDeviceAndUsername(_ context.Context, device
 
 // ListActive lists all non-deleted active subscriptions.
 func (f *FakeSubscriptionRepo) ListActive(_ context.Context) ([]domainSubscription.Subscription, error) {
+	return f.ListByStatuses(context.Background(), []string{domainSubscription.StatusActive})
+}
+
+// ListByStatuses lists non-deleted subscriptions whose status is in statuses.
+func (f *FakeSubscriptionRepo) ListByStatuses(_ context.Context, statuses []string) ([]domainSubscription.Subscription, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	var out []domainSubscription.Subscription
 	for _, s := range f.byID {
-		if s.Status == domainSubscription.StatusActive && s.DeletedAt == nil {
-			out = append(out, s)
+		if s.DeletedAt != nil {
+			continue
+		}
+		for _, st := range statuses {
+			if s.Status == st {
+				out = append(out, s)
+				break
+			}
 		}
 	}
 	return out, nil

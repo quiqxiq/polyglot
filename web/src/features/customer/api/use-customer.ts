@@ -194,3 +194,16 @@ export function useCommitCustomersMutation() {
     },
   })
 }
+
+// ─── Customer 360 (planning v2 Fase 5) ──────────────────────────────────
+
+export function useCustomer360Query(id: string) {
+  return useQuery({
+    queryKey: [...customerKeys.detail(id), '360'] as const,
+    queryFn: async () => {
+      const res = await customerClient.getCustomer360({ id })
+      return res
+    },
+    enabled: Boolean(id),
+  })
+}

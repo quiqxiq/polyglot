@@ -67,7 +67,9 @@ func NewRemoveSecretCommand(rosID string) command.Command {
 
 // NewPrintSecretsCommand builds the command.Command for /ppp/secret/print.
 func NewPrintSecretsCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,name,service,profile,caller-id,last-caller-id,last-logged-out,disabled,local-address,remote-address,comment",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
@@ -106,7 +108,9 @@ func NewSetSecretDisabledCommand(rosID string, disabled bool) command.Command {
 
 // NewPrintActiveCommand builds the command.Command for /ppp/active/print.
 func NewPrintActiveCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,name,service,caller-id,address,encoding,session-id,radius,uptime",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
@@ -141,7 +145,9 @@ func NewKickActiveCommand(rosID string) command.Command {
 
 // NewPrintProfilesCommand builds the command.Command for /ppp/profile/print.
 func NewPrintProfilesCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,name,rate-limit,local-address,remote-address,dns-server,parent-queue,address-list,comment,shared-users,only-one,use-mpls,use-compression,use-encryption,change-tcp-mss,bridge-learning,on-up,on-down",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}

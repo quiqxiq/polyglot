@@ -11,18 +11,48 @@ const (
 	StatusCancelled = "CANCELLED"
 )
 
+// Tipe faktur (planning v2 §3.3): faktur pasang baru, bulanan, penyesuaian
+// upgrade paket, dan pelunasan akhir saat berhenti.
+const (
+	InvoiceTypeFirstInstallation = "FIRST_INSTALLATION"
+	InvoiceTypeRecurring         = "RECURRING"
+	InvoiceTypeUpgradeAdjustment = "UPGRADE_ADJUSTMENT"
+	InvoiceTypeFinalSettlement   = "FINAL_SETTLEMENT"
+	// InvoiceTypeManual adalah faktur yang dibuat staf (bukan generator siklus),
+	// dipakai untuk tagihan ad-hoc/baru diinput.
+	InvoiceTypeManual = "MANUAL"
+)
+
 // Invoice represents a monthly billing invoice for a customer.
 // Nominal dipecah dari Amount tunggal menjadi subtotal/discount/tax/total
 // sesuai skema ISP; Total = Subtotal - Discount + TaxAmount.
 type Invoice struct {
-	ID                string     `json:"id"`
-	TenantID          string     `json:"tenant_id"`
-	InvoiceNumber     string     `json:"invoice_number"`
-	CustomerID        string     `json:"customer_id"`
-	SubscriptionID    *string    `json:"subscription_id,omitempty"`
-	Period            string     `json:"period"` // 'YYYY-MM'
+	ID             string  `json:"id"`
+	TenantID       string  `json:"tenant_id"`
+	InvoiceNumber  string  `json:"invoice_number"`
+	CustomerID     string  `json:"customer_id"`
+	SubscriptionID *string `json:"subscription_id,omitempty"`
+	Period         string  `json:"period"` // 'YYYY-MM'
+
+	// InvoiceType menandai jenis faktur (planning v2 §3.3); data lama
+	// dianggap RECURRING lewat default kolom.
+	InvoiceType string `json:"invoice_type"`
+	// PeriodStart/PeriodEnd adalah rentang masa aktif layanan yang ditagihkan.
+	PeriodStart *time.Time `json:"period_start,omitempty"`
+	PeriodEnd   *time.Time `json:"period_end,omitempty"`
+	// ProratedDays = hari yang benar-benar ditagihkan; PeriodDays = total
+	// hari siklus (dipakai untuk audit rincian prorata).
+	ProratedDays int `json:"prorated_days"`
+	PeriodDays   int `json:"period_days"`
+
 	Subtotal          float64    `json:"subtotal"`
 	Discount          float64    `json:"discount"`
+	DiscountType      string     `json:"discount_type"` // NONE / PERCENT / AMOUNT
+	DiscountValue     float64    `json:"discount_value"`
+	DiscountAmount    float64    `json:"discount_amount"`
+	PromoCode         string     `json:"promo_code,omitempty"`
+	CreditNoteOf      *string    `json:"credit_note_of,omitempty"`
+	TaxPercent        float64    `json:"tax_percent"`
 	TaxAmount         float64    `json:"tax_amount"`
 	Total             float64    `json:"total"`
 	PaidAmount        float64    `json:"paid_amount"`
@@ -31,10 +61,29 @@ type Invoice struct {
 	Status            string     `json:"status"`
 	QRPayload         string     `json:"qr_payload"`
 	ManualPaymentCode string     `json:"manual_payment_code"`
+	IssuedAt          time.Time  `json:"issued_at"`
 	Notes             string     `json:"notes,omitempty"`
 	CancelledAt       *time.Time `json:"cancelled_at,omitempty"`
 	CancelReason      string     `json:"cancel_reason,omitempty"`
 	DeletedAt         *time.Time `json:"deleted_at,omitempty"`
 	CreatedAt         time.Time  `json:"created_at"`
 	UpdatedAt         time.Time  `json:"updated_at"`
+}
+
+// Outstanding adalah sisa tagihan yang belum dibayar (tidak pernah negatif).
+func (i Invoice) Outstanding() float64 {
+	out := i.Total - i.PaidAmount
+	if out < 0 {
+		return 0
+	}
+	return out
+}
+
+// IsOutstanding melaporkan apakah invoice masih punya sisa tagihan dan belum
+// dibatalkan — dipakai filter pembayaran/penagihan.
+func (i Invoice) IsOutstanding() bool {
+	if i.Status == StatusCancelled {
+		return false
+	}
+	return i.Outstanding() > 0
 }

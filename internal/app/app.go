@@ -4,13 +4,16 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
+	acsmanager "github.com/quixiq/polyglot/internal/adapter/acsmanager"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/llm/genkit"
 	"github.com/quixiq/polyglot/internal/adapter/midtrans"
+	oltmanager "github.com/quixiq/polyglot/internal/adapter/oltmanager"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/provisioner"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
@@ -24,11 +27,13 @@ import (
 	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/driver/genericssh"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
+	"github.com/quixiq/polyglot/internal/driver/hioso"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
+	aichatUC "github.com/quixiq/polyglot/internal/usecase/aichat"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
@@ -36,6 +41,7 @@ import (
 	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
+	debtUC "github.com/quixiq/polyglot/internal/usecase/debt"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
@@ -43,11 +49,14 @@ import (
 	metricsUC "github.com/quixiq/polyglot/internal/usecase/metrics"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
+	oltUC "github.com/quixiq/polyglot/internal/usecase/olt"
+	ontUC "github.com/quixiq/polyglot/internal/usecase/ont"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 	registrationUC "github.com/quixiq/polyglot/internal/usecase/registration"
 	reportUC "github.com/quixiq/polyglot/internal/usecase/report"
+	jobUCRouter "github.com/quixiq/polyglot/internal/usecase/routerjob"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
@@ -164,6 +173,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		"genieacs": func(ctx context.Context, target device.Target) (port.DeviceDriver, error) {
 			return genieacs.NewDriver(ctx, target)
 		},
+		"hioso": func(ctx context.Context, target device.Target) (port.DeviceDriver, error) {
+			return hioso.NewDriver(ctx, target)
+		},
 	}
 	reg := registry.New(repo, vault, factories)
 
@@ -181,25 +193,67 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	cashRepo := postgres.NewCashbookRepository(pgStore.DB())
 	reportingRepo := postgres.NewReportingRepository(pgStore.DB())
 	auditLogRepo := postgres.NewAuditLogRepository(pgStore.DB())
+	commandAuditWriter := postgres.NewCommandAuditWriter(auditLogRepo)
 	regRepo := postgres.NewRegistrationRepository(pgStore.DB())
 	portalRepo := postgres.NewPortalRepository(pgStore.DB())
 	gwtxRepo := postgres.NewGatewayTransactionRepository(pgStore.DB())
 	paymentReader := postgres.NewPaymentReader(pgStore.DB())
+	paymentMethodRepo := postgres.NewPaymentMethodRepository(pgStore.DB())
+	debtRepo := postgres.NewDebtRepository(pgStore.DB())
+	bulkPaymentRepo := postgres.NewBulkPaymentRepository(pgStore.DB())
+	settlementRepo := postgres.NewGatewaySettlementRepository(pgStore.DB())
+	approvalRepo := postgres.NewApprovalRepository(pgStore.DB())
+	restorePointRepo := postgres.NewRestorePointRepository(pgStore.DB())
+	commandLogRepo := postgres.NewCommandLogRepository(pgStore.DB())
+	activeDeviceRepo := postgres.NewActiveDeviceRepository(pgStore.DB())
+	aiChatRepo := postgres.NewAIChatRepository(pgStore.DB())
 
 	accountMgr := provisioner.New(reg, sessionGateway, hotGateway, sessionGateway, queueGateway)
 	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
-	paymentProc.OnPaid = provisioner.BuildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
+	paymentSubmissionRepo := postgres.NewPaymentSubmissionRepository(pgStore.DB())
+	paymentReverser := postgres.NewPaymentReverser(pgStore.DB())
+	paymentProc.OnPaid = provisioner.BuildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo, customerRepo)
 	waSender := waAdapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)
 	tripayAdapter := tripay.NewAdapter(settingRepo)
 	midtransAdapter := midtrans.NewAdapter(settingRepo)
 	xenditAdapter := xendit.NewAdapter(settingRepo)
+
+	// OLT/ONT EPON (PLAN-ACS-OLT-HIOSO.md Fase B/C).
+	ontRepo := postgres.NewONTRepository(pgStore.DB())
+	oltManagerProvider := oltmanager.NewProvider(reg.Get)
+
+	// Antrean job router asynchronous (planning v2 Fase 4).
+	routerJobRepo := postgres.NewRouterJobRepository(pgStore.DB())
+	massPayUC := billingUC.NewMassPaymentUseCase(bulkPaymentRepo, invRepo, paymentProc, routerJobRepo, settingRepo)
+	ontAlerts := ontUC.NewAlertEvaluator(ontRepo, customerRepo, notifRepo, settingRepo)
+	oltService := oltUC.NewService(oltUC.Deps{
+		Devices: repo, Vault: vault, Managers: oltManagerProvider,
+		ONTs: ontRepo, Settings: settingRepo, Jobs: routerJobRepo, Evicter: reg,
+		Alerts: ontAlerts,
+	})
+	acsRepo := postgres.NewACSRepository(pgStore.DB())
+	acsManager := acsmanager.New(repo, vault, settingRepo)
+	ontService := ontUC.NewService(ontUC.Deps{
+		ONTs: ontRepo, ACS: acsManager, ACSRepo: acsRepo,
+		Settings: settingRepo, Jobs: routerJobRepo,
+		Customers: customerRepo, Subs: subRepo,
+	})
+	routerJobWorker := jobUCRouter.NewWorker(
+		routerJobRepo,
+		jobUCRouter.NewHandlers(jobUCRouter.HandlerDeps{
+			Subs: subRepo, Plans: planRepo, Manager: accountMgr, Settings: settingRepo,
+			OLT: oltService, ACS: ontService, MassPay: massPayUC,
+		}),
+		settingRepo,
+	)
+	routerJobExporter := jobUCRouter.NewExporter(routerJobRepo, subRepo, planRepo)
 
 	// ─── 2. Use Cases ───────────────────────────────────────────────────────
 	authUseCase := authUC.NewAuthUseCase(userRepo, jwtService, refreshSvc, redisStore, casbinEnforcer)
 	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
 	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
 	manageSettingUseCase := settingUC.NewManageSettingUseCase(settingRepo)
-	custUC := customerUC.NewManageCustomerUseCase(customerRepo, subRepo, invRepo, accountMgr).WithSettings(settingRepo)
+	custUC := customerUC.NewManageCustomerUseCase(customerRepo, subRepo, invRepo, accountMgr).WithSettings(settingRepo).With360(paymentReader, regRepo)
 	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg, sessionGateway)
 	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
 	hotUC := hotspotUC.New(hotGateway)
@@ -208,20 +262,102 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	invUC := billingUC.NewInvoiceUseCase(invRepo).
 		WithCanceller(postgres.NewInvoiceCanceller(pgStore.DB())).
-		WithSettings(settingRepo)
+		WithSettings(settingRepo).
+		WithNotifications(notifRepo, customerRepo)
 	planUCase := planUC.NewManagePlanUseCase(planRepo, subRepo, accountMgr)
 	subUCase := subUC.NewManageSubscriptionUseCase(subRepo, planRepo, customerRepo, repo, accountMgr, auditLogRepo, invRepo).WithSettings(settingRepo)
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, customerRepo, paymentProc)
-	lifecycleUC := subUC.NewLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo).WithSettings(settingRepo)
-	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo).WithSettings(settingRepo)
+	lifecycleUC := subUC.NewLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo).
+		WithSettings(settingRepo).
+		WithProvisionRetrier(routerJobWorker)
+	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo).WithSettings(settingRepo).WithNotifications(notifRepo, customerRepo)
+	paymentSubmissionUC := billingUC.NewPaymentSubmissionUseCase(paymentSubmissionRepo, invRepo, paymentProc, settingRepo).WithAudit(auditLogRepo)
+	paymentUC := billingUC.NewPaymentUseCase(paymentReverser)
 	gatewayRegistry := billingUC.NewGatewayRegistry(settingRepo, tripayAdapter, midtransAdapter, xenditAdapter)
-	chargeUC := billingUC.NewGatewayChargeUseCaseWithRegistry(invRepo, customerRepo, gwtxRepo, gatewayRegistry, paymentProc, settingRepo)
+	chargeUC := billingUC.NewGatewayChargeUseCaseWithRegistry(invRepo, customerRepo, gwtxRepo, gatewayRegistry, paymentProc, settingRepo).
+		WithCashbook(cashRepo)
+	payMethodUC := billingUC.NewPaymentMethodUseCase(paymentMethodRepo)
+	debtService := debtUC.NewService(debtRepo, customerRepo, notifRepo, settingRepo)
 
-	regManagerUC := registrationUC.NewManageRegistrationUseCase(regRepo, notifRepo, auditLogRepo)
+	// AI Router Ops (PLAN-AI-ROUTER-OPS v2 M1): restore point + approval +
+	// execution. Router operations are MikroTik-only in v1.
+	restoreKey := cfg.RestorePointEncryptionKey
+	if restoreKey == "" {
+		restoreKey = cfg.EncryptionKey
+	}
+	rpStorage, rpErr := storageAdapter.NewRestorePointStorage(cfg.RestorePointDir, restoreKey)
+	if rpErr != nil && cfg.AIRouterOpsEnabled {
+		return nil, fmt.Errorf("restore point storage: %w", rpErr)
+	}
+	var rpStoragePort port.RestorePointStorage
+	if rpStorage != nil {
+		rpStoragePort = rpStorage
+	}
+	aiOpsResolver := func(ctx context.Context, deviceID string) (port.RouterOps, error) {
+		drv, derr := reg.Get(ctx, deviceID)
+		if derr != nil {
+			return nil, derr
+		}
+		if _, ok := drv.(*mikrotik.Driver); !ok {
+			return nil, fmt.Errorf("AI Router Ops v1 supports MikroTik drivers only (device %s)", deviceID)
+		}
+		return mikrotik.NewAIOps(drv), nil
+	}
+	aiDriverResolver := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
+		return reg.Get(ctx, deviceID)
+	}
+	restoreUC := networkUC.NewRestorePointUseCase(networkUC.RestorePointDeps{
+		Repo: restorePointRepo, Storage: rpStoragePort, Devices: repo, Ops: aiOpsResolver, Approvals: approvalRepo,
+		Config: networkUC.RestorePointConfig{
+			TTL:      time.Duration(cfg.RestorePointRetentionDays) * 24 * time.Hour,
+			MaxBytes: cfg.RestorePointMaxBytes, RetentionDays: cfg.RestorePointRetentionDays,
+			KeepLast: cfg.RestorePointKeepLast,
+		},
+	})
+	proposalUC := networkUC.NewProposalUseCase(networkUC.ProposalDeps{
+		Approvals: approvalRepo, RestorePoints: restoreUC, Devices: repo,
+		Driver: aiDriverResolver, Ops: aiOpsResolver, CommandLogs: commandLogRepo,
+		Config: networkUC.ProposalConfig{
+			TTL:            time.Duration(cfg.ApprovalTTLMinutes) * time.Minute,
+			MaxScriptLines: cfg.AIMaxScriptLines, V6Mutations: cfg.AIV6Mutations,
+		},
+	})
+	executionUC := networkUC.NewExecutionUseCase(networkUC.ExecutionDeps{
+		Approvals: approvalRepo, RestorePoints: restorePointRepo, Devices: repo,
+		Driver: aiDriverResolver, Ops: aiOpsResolver, CommandLogs: commandLogRepo,
+		Restore: restoreUC, WatchdogEnabled: cfg.WatchdogEnabled, WatchdogSeconds: cfg.WatchdogRollbackSeconds,
+	})
+	decisionUC := networkUC.NewDecisionUseCase(networkUC.DecisionDeps{
+		Approvals: approvalRepo, RestorePoints: restoreUC, Devices: repo,
+		Driver: aiDriverResolver, Ops: aiOpsResolver, Execution: executionUC,
+		RequireRejectReason: cfg.ApprovalRequireReasonOnReject,
+	})
+	deviceAuthorizer := auth.NewDeviceAuthorizer(userRepo)
+	activeDeviceUC := deviceUC.NewActiveDeviceUseCase(activeDeviceRepo, repo, deviceAuthorizer, deviceUC.ActiveDeviceConfig{
+		TTL:                  time.Duration(cfg.ActiveDeviceTTLHours) * time.Hour,
+		SingleDeviceFallback: cfg.AISingleDeviceFallback,
+	})
+	aiChatUC := aichatUC.New(aichatUC.Deps{
+		Repo: aiChatRepo, Configs: pgStore, EncryptionKey: cfg.EncryptionKey,
+		Provider: func(_ context.Context, c *domainllm.Config, _ string) (port.LLMProvider, error) {
+			return llmFactory(c)
+		},
+		Devices: repo, ActiveDevice: activeDeviceUC, Ops: aiOpsResolver,
+		Proposals: proposalUC, Approvals: approvalRepo, RestorePoints: restoreUC,
+		Config: aichatUC.Config{
+			MaxContextMessages: cfg.AIChatMaxContextMessages,
+		},
+	})
+
+	regEventRepo := postgres.NewRegistrationEventRepository(pgStore.DB())
+	regManagerUC := registrationUC.NewManageRegistrationUseCase(regRepo, notifRepo, auditLogRepo).
+		WithEvents(regEventRepo).
+		WithPlans(planRepo)
 	regConvertUC := registrationUC.NewConvertUseCase(registrationUC.ConvertDeps{
-		Repo: regRepo, Plans: planRepo, Customers: customerRepo,
+		Repo: regRepo, Plans: planRepo, Customers: customerRepo, Events: regEventRepo,
 		Subs: subRepo, Audit: auditLogRepo, Manager: accountMgr, Settings: settingRepo,
-		Writer: postgres.NewConversionWriter(pgStore.DB(), vault),
+		Writer:    postgres.NewConversionWriter(pgStore.DB(), vault),
+		ONTBinder: ontService,
 	})
 
 	portalUCase := portalUC.NewUseCase(portalRepo, customerRepo, subRepo, invRepo, paymentReader, waSender, notifRepo, settingRepo)
@@ -244,10 +380,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	reconciler := importer.NewReconciler(subRepo, sessionGateway)
 	exportUC := importer.NewExportUseCase(subRepo, customerRepo, planRepo, repo)
 
-	deviceAuthorizer := auth.NewDeviceAuthorizer(userRepo)
 	metricsRepo := postgres.NewMetricsRepository(pgStore.DB())
 	metricsUseCase := deviceUC.NewManageMetricsUseCase(repo, metricsRepo, deviceAuthorizer)
-	manageIsolationUseCase := deviceUC.NewManageIsolationUseCase(accountMgr, repo)
+	manageIsolationUseCase := deviceUC.NewManageIsolationUseCase(accountMgr, repo).WithSettings(settingRepo)
 
 	pingStreamMgr := metricsUC.NewPingStreamWorker(repo, metricsRepo, func(c context.Context, id string) (port.DeviceDriver, error) {
 		return reg.Get(c, id)
@@ -292,7 +427,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		return drv, true
 	}
 
-	reportManagerUC := reportUC.NewManageReportUseCase(reportingRepo, reportingRepo)
+	reportManagerUC := reportUC.NewManageReportUseCase(reportingRepo, reportingRepo).WithAdvancedRepository(reportingRepo)
 	notifManagerUC := notificationUC.NewManageNotificationUseCase(notifRepo, waSender)
 	streamGW := mikrotik.NewMonitorStreamGateway()
 
@@ -336,7 +471,24 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		checkoutUC:             checkoutUC,
 		lifecycleUC:            lifecycleUC,
 		runBillingUC:           runBillingUC,
+		paymentSubmissionUC:    paymentSubmissionUC,
+		paymentUC:              paymentUC,
 		chargeUC:               chargeUC,
+		payMethodUC:            payMethodUC,
+		massPayUC:              massPayUC,
+		debtService:            debtService,
+		settlementRepo:         settlementRepo,
+		gwtxRepo:               gwtxRepo,
+		auditWriter:            commandAuditWriter,
+		approvalRepo:           approvalRepo,
+		restoreUC:              restoreUC,
+		proposalUC:             proposalUC,
+		decisionUC:             decisionUC,
+		activeDevices:          activeDeviceRepo,
+		activeDeviceUC:         activeDeviceUC,
+		deviceAuthorizer:       deviceAuthorizer,
+		aiOpsResolver:          aiOpsResolver,
+		aiChatUC:               aiChatUC,
 		regManagerUC:           regManagerUC,
 		regConvertUC:           regConvertUC,
 		portalUCase:            portalUCase,
@@ -345,7 +497,12 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		reconciler:             reconciler,
 		exportUC:               exportUC,
 		metricsUseCase:         metricsUseCase,
+		routerJobRepo:          routerJobRepo,
+		routerJobExporter:      routerJobExporter,
 		manageIsolationUseCase: manageIsolationUseCase,
+		oltService:             oltService,
+		ontService:             ontService,
+		settingReader:          settingRepo,
 		connectDriverProvider:  connectDriverProvider,
 		driverResolverConnect:  driverResolverConnect,
 	})
@@ -356,32 +513,150 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		isolateWorker := billingUC.NewIsolateWorker(
 			subRepo, invRepo, customerRepo, planRepo, accountMgr, notifRepo, settingRepo,
 		)
-		reminderWorker := billingUC.NewReminderWorker(subRepo, invRepo, customerRepo, notifRepo)
+		reminderWorker := billingUC.NewReminderWorker(subRepo, invRepo, customerRepo, notifRepo).WithSettings(settingRepo)
 		waWorker := notificationUC.NewWASenderWorker(notifRepo, waSender, settingRepo)
 		snapshotJob := func(ctx context.Context) error {
 			return reportingRepo.RecomputeDaily(ctx, "tenant-default", timeNowUTC())
 		}
+		routerJobsJob := func(ctx context.Context) error {
+			res, rerr := routerJobWorker.Run(ctx)
+			if res.Processed > 0 {
+				logger.WithComponent("App").WithFields(map[string]any{
+					"processed": res.Processed, "succeeded": res.Succeeded,
+					"retried": res.Retried, "dead": res.Dead,
+					"stopped_early": res.StoppedEarly,
+				}).Info("router job batch summary")
+			}
+			return rerr
+		}
+		driftJob := func(ctx context.Context) error {
+			return runDriftReconciliation(ctx, repo, driverResolverConnect, reconciler)
+		}
+		acsMatchJob := func(ctx context.Context) error {
+			stats, aerr := ontService.SyncDevices(ctx)
+			if aerr == nil {
+				logger.WithComponent("App").WithFields(map[string]any{
+					"devices": stats.Devices, "matched": stats.Matched,
+					"unmatched": stats.Unmatched, "conflicts": stats.Conflicts,
+				}).Info("acs match summary")
+			}
+			return aerr
+		}
+		acsTelemetryJob := func(ctx context.Context) error {
+			ok, terr := ontService.RefreshTelemetryAll(ctx)
+			if terr == nil {
+				logger.WithComponent("App").WithField("updated", ok).Info("acs telemetry summary")
+			}
+			return terr
+		}
+		oltSyncJob := func(ctx context.Context) error {
+			res, serr := oltService.SyncAll(ctx)
+			for deviceID, r := range res {
+				logger.WithComponent("App").WithFields(map[string]any{
+					"device_id": deviceID, "discovered": r.Discovered, "updated": r.Updated,
+					"removed": r.Removed, "online": r.Online, "offline": r.Offline,
+				}).Info("olt sync summary")
+			}
+			return serr
+		}
+		backupScheduler := deviceUC.NewBackupScheduler(deviceUC.BackupScheduler{
+			Devices: repo, Restore: restoreUC, Approvals: approvalRepo, TenantID: "tenant-default",
+		})
+		approvalExpireJob := func(ctx context.Context) error {
+			n, err := approvalRepo.ExpirePending(ctx, time.Now().UTC())
+			if err == nil && n > 0 {
+				logger.WithComponent("Scheduler").WithField("expired", n).Info("approval expiry summary")
+			}
+			return err
+		}
+		restoreCleanupJob := func(ctx context.Context) error {
+			protected := map[string]bool{}
+			for _, status := range []string{"PENDING", "APPROVED", "EXECUTING"} {
+				items, _, lerr := approvalRepo.List(ctx, port.ApprovalFilter{TenantID: "tenant-default", Status: status, Limit: 500})
+				if lerr != nil {
+					return lerr
+				}
+				for _, a := range items {
+					if a.RestorePointID != "" {
+						protected[a.RestorePointID] = true
+					}
+				}
+			}
+			n, err := restoreUC.Cleanup(ctx, time.Now().UTC(), cfg.RestorePointKeepLast, protected)
+			if err == nil && n > 0 {
+				logger.WithComponent("Scheduler").WithField("deleted", n).Info("restore point cleanup summary")
+			}
+			return err
+		}
+		retentionJob := func(ctx context.Context) error {
+			now := time.Now().UTC()
+			logCutoff := now.AddDate(0, 0, -cfg.CommandLogRetentionDays)
+			chatCutoff := now.AddDate(0, 0, -cfg.AIChatEventRetentionDays)
+			logsDeleted, lerr := commandLogRepo.DeleteBefore(ctx, logCutoff)
+			if lerr != nil {
+				return lerr
+			}
+			eventsDeleted, cerr := aiChatRepo.DeleteEventsBefore(ctx, chatCutoff)
+			if cerr != nil {
+				return cerr
+			}
+			if logsDeleted+eventsDeleted > 0 {
+				logger.WithComponent("Scheduler").WithFields(map[string]any{
+					"command_logs": logsDeleted, "chat_events": eventsDeleted,
+				}).Info("retention cleanup summary")
+			}
+			return nil
+		}
+		backupJob := func(ctx context.Context) error {
+			created, failed, err := backupScheduler.Run(ctx)
+			if err == nil && created+failed > 0 {
+				logger.WithComponent("Scheduler").WithFields(map[string]any{"created": created, "failed": failed}).Info("scheduled backup summary")
+			}
+			return err
+		}
 		sched = newScheduler(schedulerJobs{
-			billing:  runBillingUC,
-			isolate:  isolateWorker,
-			reminder: reminderWorker,
-			waSend:   waWorker,
-			snapshot: snapshotJob,
+			billing:        runBillingUC,
+			isolate:        isolateWorker,
+			reminder:       reminderWorker,
+			waSend:         waWorker,
+			routerJobs:     routerJobsJob,
+			drift:          driftJob,
+			snapshot:       snapshotJob,
+			oltSync:        oltSyncJob,
+			acsMatch:       acsMatchJob,
+			acsTelemetry:   acsTelemetryJob,
+			approvalExpire: approvalExpireJob,
+			restoreCleanup: restoreCleanupJob,
+			backupDaily:    backupJob,
+			backupWeekly:   backupJob,
+			retention:      retentionJob,
 		}, schedulerSpecs{
-			billing:   cfg.BillingCronSpec,
-			isolation: cfg.IsolationCronSpec,
-			reminder:  cfg.ReminderCronSpec,
-			waSend:    cfg.WaSendCronSpec,
-			snapshot:  cfg.SnapshotCronSpec,
+			billing:        cfg.BillingCronSpec,
+			isolation:      cfg.IsolationCronSpec,
+			reminder:       cfg.ReminderCronSpec,
+			waSend:         cfg.WaSendCronSpec,
+			routerJobs:     cfg.RouterJobCronSpec,
+			drift:          cfg.DriftCronSpec,
+			snapshot:       cfg.SnapshotCronSpec,
+			oltSync:        cfg.OltSyncCronSpec,
+			acsMatch:       cfg.ACSMatchCronSpec,
+			acsTelemetry:   cfg.ACSTelemetryCron,
+			approvalExpire: "@every 5m",
+			restoreCleanup: "0 4 * * *",
+			backupDaily:    cronFromClock(cfg.BackupDailyAt, ""),
+			backupWeekly:   cronFromClock(cfg.BackupWeeklyAt, cfg.BackupWeeklyDay),
+			retention:      "30 4 * * *",
 		}, "tenant-default", postgres.NewAdvisoryLocker(pgStore.DB()))
 		sched.Start()
 		logger.WithComponent("App").WithFields(map[string]any{
-			"billing_cron":   cfg.BillingCronSpec,
-			"isolation_cron": cfg.IsolationCronSpec,
-			"reminder_cron":  cfg.ReminderCronSpec,
-			"wa_send_cron":   cfg.WaSendCronSpec,
-			"snapshot_cron":  cfg.SnapshotCronSpec,
-		}).Info("ISP scheduler started (5 jobs)")
+			"billing_cron":    cfg.BillingCronSpec,
+			"isolation_cron":  cfg.IsolationCronSpec,
+			"reminder_cron":   cfg.ReminderCronSpec,
+			"wa_send_cron":    cfg.WaSendCronSpec,
+			"snapshot_cron":   cfg.SnapshotCronSpec,
+			"router_job_cron": cfg.RouterJobCronSpec,
+			"drift_cron":      cfg.DriftCronSpec,
+		}).Info("ISP scheduler started (7 jobs)")
 	}
 
 	server := &http.Server{
@@ -444,4 +719,27 @@ func loadInitialDevices(pgStore *postgres.Store, encKey string) (port.DeviceRepo
 func timeNowUTC() time.Time {
 	n := time.Now().UTC()
 	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, time.UTC)
+}
+
+// cronFromClock converts "HH:MM" (and optional weekday) into a 5-field cron
+// expression. Invalid input returns "" so the scheduler skips the job.
+func cronFromClock(hhmm, weekday string) string {
+	parts := strings.Split(strings.TrimSpace(hhmm), ":")
+	if len(parts) != 2 {
+		return ""
+	}
+	hour, errH := strconv.Atoi(parts[0])
+	minute, errM := strconv.Atoi(parts[1])
+	if errH != nil || errM != nil || hour < 0 || hour > 23 || minute < 0 || minute > 59 {
+		return ""
+	}
+	if strings.TrimSpace(weekday) == "" {
+		return fmt.Sprintf("%d %d * * *", minute, hour)
+	}
+	days := map[string]string{"sun": "0", "mon": "1", "tue": "2", "wed": "3", "thu": "4", "fri": "5", "sat": "6"}
+	dow, ok := days[strings.ToLower(strings.TrimSpace(weekday))]
+	if !ok {
+		return ""
+	}
+	return fmt.Sprintf("%d %d * * %s", minute, hour, dow)
 }

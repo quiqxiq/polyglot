@@ -8,6 +8,7 @@ import (
 	"time"
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
@@ -162,7 +163,7 @@ func (w *IsolateWorker) retryProvisioning(ctx context.Context, sub domainSubscri
 		res.Provisioned++
 		sub.ProvisionStatus = domainSubscription.ProvisionOK
 		if plErr == nil {
-			sub.RouterProfile = pl.Name
+			sub.RouterProfile = pl.RouterProfile()
 		}
 		// Langganan ISOLATED yang di-provision ulang = restore pasca-bayar
 		// yang gagal sebelumnya; akun sudah kembali ke profil normal, jadi
@@ -219,6 +220,7 @@ func (w *IsolateWorker) processIsolation(ctx context.Context, sub domainSubscrip
 	if err := w.subs.UpdateStatus(ctx, sub.ID, domainSubscription.StatusIsolated); err != nil {
 		return err
 	}
+	w.syncCustomerStatus(ctx, sub.CustomerID, domainCustomer.StatusIsolated)
 	w.queueNotice(ctx, sub, unpaid)
 	res.Isolated++
 	return nil
@@ -244,8 +246,34 @@ func (w *IsolateWorker) maybeAutoSuspend(ctx context.Context, sub domainSubscrip
 	if err := w.subs.UpdateStatus(ctx, sub.ID, domainSubscription.StatusSuspended); err != nil {
 		return err
 	}
+	w.syncCustomerStatus(ctx, sub.CustomerID, domainCustomer.StatusSuspended)
 	res.Suspended++
 	return nil
+}
+
+// syncCustomerStatus menyelaraskan status master customers dengan status
+// langganan aktifnya (planning v2 Fase 0): isolir/suspend langganan ikut
+// mengubah status pelanggan. Best-effort — kegagalan hanya dicatat.
+func (w *IsolateWorker) syncCustomerStatus(ctx context.Context, customerID, status string) {
+	if w.customers == nil || customerID == "" {
+		return
+	}
+	cust, err := w.customers.FindByID(ctx, customerID)
+	if err != nil {
+		logger.WithComponent("IsolateWorker").WithFields(map[string]any{
+			"customer_id": customerID,
+		}).WithError(err).Warn("customer not found for status sync")
+		return
+	}
+	if cust.Status == status {
+		return
+	}
+	cust.Status = status
+	if err := w.customers.Save(ctx, cust); err != nil {
+		logger.WithComponent("IsolateWorker").WithFields(map[string]any{
+			"customer_id": customerID, "status": status,
+		}).WithError(err).Warn("sync customer status failed")
+	}
 }
 
 // overdueInvoice returns the first outstanding (UNPAID/OVERDUE/PARTIAL)

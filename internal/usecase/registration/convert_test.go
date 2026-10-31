@@ -11,6 +11,7 @@ import (
 	"context"
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -59,6 +60,9 @@ func newConvertFixture(t *testing.T) *convertFixture {
 		func() string { return "12345678" },
 		func() string { return "secret99" },
 	)
+	// Clock tetap di tanggal anchor 1 agar faktur pertama = periode penuh
+	// (prorata 30/30) sehingga total deterministik.
+	f.conv.WithClock(func() time.Time { return time.Date(2026, 9, 1, 10, 0, 0, 0, time.UTC) })
 	return f
 }
 

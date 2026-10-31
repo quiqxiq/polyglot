@@ -57,3 +57,19 @@ make security
 - Before claiming completion, run relevant focused tests, then `make build`, `make vet`, `make test`, `make lint`, and both boundary checks.
 - Run `make test-integration` for integration changes and `make security` for dependency/security changes.
 - AI-authored commits must include a `Co-Authored-By` trailer identifying agent model and attribution.
+
+## AI Router Ops (PLAN-AI-ROUTER-OPS v2)
+
+- Command risk is binary: `READ` or `MUTATION`; unknown commands default to `MUTATION`.
+- `ExecuteCommandPreApproved` no longer exists. READ may auto-execute; every
+  MUTATION must go through `usecase/network` proposal → approval → execution.
+- Every mutation proposal requires a restore point (`AVAILABLE`) before a
+  PENDING approval exists; restore-point failure must fail closed.
+- AI/MCP can never approve a request; approval is only through
+  `ApprovalService` with a human JWT and `approval:decide`.
+- `/mcp` must stay behind JWT + RBAC + audit; mutating MCP tools may only
+  propose, never execute.
+- Router target for AI is the server-side active-device binding
+  (`Set/Get/ClearActiveDevice`); never fall back randomly to another device.
+- Restore requires typed device-name confirmation and `restore:apply`.
+- Do not log credentials, full config, or secret-bearing export content.

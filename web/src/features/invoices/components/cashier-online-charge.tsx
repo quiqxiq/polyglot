@@ -23,6 +23,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { type Invoice } from '@/gen/v1/billing_pb'
 import { useCashierChargeMutation, type CashierChargeResponse } from '../api/use-invoices'
+import { useGatewaysQuery } from '@/features/billing/api/use-billing'
 
 interface CashierOnlineChargeProps {
   invoice: Invoice
@@ -49,6 +50,12 @@ export function CashierOnlineCharge({ invoice }: CashierOnlineChargeProps) {
   const [copied, setCopied] = useState(false)
   const [chargeResult, setChargeResult] = useState<CashierChargeResponse | null>(null)
 
+  const { data: gateways = [] } = useGatewaysQuery()
+  const defaultGateway =
+    gateways.find((g) => g.is_default)?.name || gateways[0]?.name || ''
+  const [gateway, setGateway] = useState('')
+  const activeGateway = gateway || defaultGateway
+
   const chargeMutation = useCashierChargeMutation()
   const outstanding = Math.max(0, invoice.total - invoice.paidAmount)
 
@@ -56,6 +63,7 @@ export function CashierOnlineCharge({ invoice }: CashierOnlineChargeProps) {
     try {
       const res = await chargeMutation.mutateAsync({
         invoice_id: invoice.id,
+        gateway: activeGateway,
         channel,
         expire_minutes: 60,
       })
@@ -78,8 +86,26 @@ export function CashierOnlineCharge({ invoice }: CashierOnlineChargeProps) {
     <div className='space-y-4 py-2'>
       {!chargeResult ? (
         <div className='space-y-4'>
+          {gateways.length > 1 && (
+            <div className='space-y-2'>
+              <Label className='text-xs font-medium'>Payment Gateway</Label>
+              <Select value={activeGateway} onValueChange={setGateway}>
+                <SelectTrigger className='text-xs h-9'>
+                  <SelectValue placeholder='Pilih gateway' />
+                </SelectTrigger>
+                <SelectContent>
+                  {gateways.map((g) => (
+                    <SelectItem key={g.name} value={g.name} className='text-xs'>
+                      {g.name}
+                      {g.is_default ? ' (default)' : ''}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           <div className='space-y-2'>
-            <Label className='text-xs font-medium'>Metode Pembayaran Online (Tripay Payment Gateway)</Label>
+            <Label className='text-xs font-medium'>Metode Pembayaran Online</Label>
             <Select value={channel} onValueChange={setChannel}>
               <SelectTrigger className='text-xs h-9'>
                 <SelectValue placeholder='Pilih saluran pembayaran' />

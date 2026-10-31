@@ -9,7 +9,9 @@ var setIfNonEmpty = rosutil.SetIfNonEmpty
 
 // NewPrintFiltersCommand builds the command.Command for /ip/firewall/filter/print.
 func NewPrintFiltersCommand(p FirewallFilterPrintParams) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,chain,action,src-address,src-address-list,dst-address,protocol,bytes,packets,comment,disabled,dynamic",
+	}
 	setIfNonEmpty(args, "?chain", p.Chain)
 	setIfNonEmpty(args, "?src-address", p.SrcAddress)
 	setIfNonEmpty(args, "?src-address-list", p.SrcAddressList)
@@ -58,7 +60,9 @@ func NewRemoveFilterCommand(rosID string) command.Command {
 
 // NewPrintAddressListCommand builds the command.Command for /ip/firewall/address-list/print.
 func NewPrintAddressListCommand(p AddressListPrintParams) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,list,address,timeout,creation-time,comment,disabled,dynamic",
+	}
 	setIfNonEmpty(args, "?list", p.List)
 	setIfNonEmpty(args, "?address", p.Address)
 	return command.Command{Raw: "/ip/firewall/address-list/print", Args: args}
@@ -85,7 +89,9 @@ func NewRemoveAddressListCommand(rosID string) command.Command {
 
 // NewPrintNATCommand builds the command.Command for /ip/firewall/nat/print.
 func NewPrintNATCommand(chain, comment, srcAddressList string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,chain,action,to-addresses,to-ports,src-address,src-address-list,dst-address,protocol,dst-port,bytes,packets,comment,disabled,dynamic",
+	}
 	setIfNonEmpty(args, "?chain", chain)
 	setIfNonEmpty(args, "?comment", comment)
 	setIfNonEmpty(args, "?src-address-list", srcAddressList)
@@ -141,7 +147,9 @@ func NewRemoveNATCommand(rosID string) command.Command {
 
 // NewPrintPoolsCommand builds the command.Command for /ip/pool/print.
 func NewPrintPoolsCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,name,ranges,next-pool,total-addresses,used-addresses",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
@@ -150,7 +158,9 @@ func NewPrintPoolsCommand(nameFilter string) command.Command {
 
 // NewPrintIPAddressesCommand builds the command.Command for /ip/address/print.
 func NewPrintIPAddressesCommand(p IPAddressPrintParams) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,address,network,interface,actual-interface,invalid,dynamic,disabled,comment",
+	}
 	setIfNonEmpty(args, "?interface", p.Interface)
 	setIfNonEmpty(args, "?address", p.Address)
 	return command.Command{Raw: "/ip/address/print", Args: args}
@@ -158,7 +168,9 @@ func NewPrintIPAddressesCommand(p IPAddressPrintParams) command.Command {
 
 // NewPrintIPRoutesCommand builds the command.Command for /ip/route/print.
 func NewPrintIPRoutesCommand(dstFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,dst-address,gateway,immediate-gw,distance,scope,target-scope,routing-table,active,dynamic,connect,static,disabled,comment",
+	}
 	if dstFilter != "" {
 		args["?dst-address"] = dstFilter
 	}

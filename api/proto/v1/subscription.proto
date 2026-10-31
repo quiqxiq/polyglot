@@ -143,6 +143,15 @@ message IsolateSubscriptionResponse {
   string message = 2;
 }
 
+message RetryProvisionRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message RetryProvisionResponse {
+  // Job router yang diantrekan untuk percobaan provisi berikutnya.
+  string job_id = 1;
+  string status = 2;
+}
+
 message RestoreSubscriptionRequest {
   string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
 }
@@ -164,4 +173,7 @@ service SubscriptionService {
   rpc ActivateSubscription(ActivateSubscriptionRequest) returns (ActivateSubscriptionResponse);
   rpc IsolateSubscription(IsolateSubscriptionRequest) returns (IsolateSubscriptionResponse);
   rpc RestoreSubscription(RestoreSubscriptionRequest) returns (RestoreSubscriptionResponse);
+  // RetryProvision mengantrekan ulang job provisioning langganan ke router
+  // (planning v2 Fase 4 — retry manual dari dashboard).
+  rpc RetryProvision(RetryProvisionRequest) returns (RetryProvisionResponse);
 }

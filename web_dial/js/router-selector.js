@@ -32,7 +32,8 @@ const RouterSelector = {
       this.notifyChange();
     } catch (err) {
       console.error('Failed to load devices:', err);
-      showToast('Gagal memuat daftar router yang diizinkan', 'error');
+      const errMsg = typeof I18n !== 'undefined' ? I18n.t('failed_load_devices') : 'Gagal memuat daftar router yang diizinkan';
+      showToast(errMsg, 'error');
     }
   },
 
@@ -57,12 +58,18 @@ const RouterSelector = {
   },
 
   renderNoDevices() {
+    const noDevMsg = typeof I18n !== 'undefined'
+      ? (I18n.getLanguage() === 'en' ? 'No authorized routers' : 'Tidak ada router yang diizinkan')
+      : 'Tidak ada router yang diizinkan';
     const selects = document.querySelectorAll('.router-select-control');
     selects.forEach(select => {
-      select.innerHTML = '<option value="">Tidak ada router yang diizinkan</option>';
+      select.innerHTML = `<option value="">${noDevMsg}</option>`;
       select.disabled = true;
     });
-    showToast('Akun Anda belum memiliki akses ke router MikroTik manapun. Hubungi Admin.', 'warning');
+    const warningMsg = typeof I18n !== 'undefined'
+      ? (I18n.getLanguage() === 'en' ? 'Your account does not have access to any MikroTik router. Contact Admin.' : 'Akun Anda belum memiliki akses ke router MikroTik manapun. Hubungi Admin.')
+      : 'Akun Anda belum memiliki akses ke router MikroTik manapun. Hubungi Admin.';
+    showToast(warningMsg, 'warning');
   },
 
   setDevice(deviceId) {

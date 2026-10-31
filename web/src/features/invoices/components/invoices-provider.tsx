@@ -5,6 +5,7 @@ import { type Invoice } from '@/gen/v1/billing_pb'
 export type InvoicesDialogType =
   | 'cashier'
   | 'generate'
+  | 'create'
   | 'detail'
   | 'print'
 
@@ -12,6 +13,8 @@ export interface InvoicesFilterState {
   customerId: string
   status: string
   period: string
+  search: string
+  overdueOnly: boolean
 }
 
 type InvoicesContextType = {
@@ -28,6 +31,8 @@ const initialFilters: InvoicesFilterState = {
   customerId: '',
   status: '',
   period: '',
+  search: '',
+  overdueOnly: false,
 }
 
 const InvoicesContext = React.createContext<InvoicesContextType | null>(null)

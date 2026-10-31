@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import useDialogState from '@/hooks/use-dialog-state'
+import { useI18n } from '@/context/i18n-provider'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -18,6 +19,7 @@ import { getDisplayNameInitials } from '@/lib/utils'
 import { useGetMe } from '@/features/settings/api/use-profile'
 
 export function ProfileDropdown() {
+  const { t } = useI18n()
   const [open, setOpen] = useDialogState()
   useGetMe() // Background sync user profile
   const user = useAuthStore((s) => s.auth.user)
@@ -50,26 +52,26 @@ export function ProfileDropdown() {
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
               <Link to='/settings'>
-                Profile
+                {t('nav.profile')}
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link to='/settings/account'>
-                Account Security
+                {t('nav.account_security')}
                 <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link to='/settings/bot'>
-                Bot & Anti-Spam
+                {t('nav.bot_anti_spam')}
                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant='destructive' onClick={() => setOpen(true)}>
-            Sign out
+            {t('auth.sign_out')}
             <DropdownMenuShortcut className='text-current'>
               ⇧⌘Q
             </DropdownMenuShortcut>

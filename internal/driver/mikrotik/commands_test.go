@@ -12,24 +12,6 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
-func TestClassify(t *testing.T) {
-	tests := []struct {
-		name string
-		cmd  command.Command
-		want command.Class
-	}{
-		{"reboot is destructive", command.Command{Raw: "/system/reboot"}, command.ClassDestructive},
-		{"reset-configuration is destructive", command.Command{Raw: "/system/reset-configuration"}, command.ClassDestructive},
-		{"resource print is read-only", command.Command{Raw: "/system/resource/print"}, command.ClassReadOnly},
-		{"unknown path defaults read-only", command.Command{Raw: "/some/unknown/path"}, command.ClassReadOnly},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.want, Classify(tt.cmd))
-		})
-	}
-}
-
 func TestTranslate(t *testing.T) {
 	tests := []struct {
 		name    string

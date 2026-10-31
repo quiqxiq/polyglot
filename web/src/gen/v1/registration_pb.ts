@@ -164,6 +164,104 @@ export class Registration extends Message<Registration> {
    */
   targetDeviceName = "";
 
+  /**
+   * ── PSB v2 (migrasi 000032) ──────────────────────────────────────────
+   *
+   * @generated from field: string nik = 29;
+   */
+  nik = "";
+
+  /**
+   * @generated from field: string id_card_photo_url = 30;
+   */
+  idCardPhotoUrl = "";
+
+  /**
+   * @generated from field: string house_photo_url = 31;
+   */
+  housePhotoUrl = "";
+
+  /**
+   * @generated from field: int64 survey_date_unix = 32;
+   */
+  surveyDateUnix = protoInt64.zero;
+
+  /**
+   * "HH:MM"
+   *
+   * @generated from field: string survey_time = 33;
+   */
+  surveyTime = "";
+
+  /**
+   * @generated from field: string surveyor_id = 34;
+   */
+  surveyorId = "";
+
+  /**
+   * ELIGIBLE | NOT_ELIGIBLE
+   *
+   * @generated from field: string survey_status = 35;
+   */
+  surveyStatus = "";
+
+  /**
+   * @generated from field: string survey_notes = 36;
+   */
+  surveyNotes = "";
+
+  /**
+   * @generated from field: int32 estimated_cable_length_meter = 37;
+   */
+  estimatedCableLengthMeter = 0;
+
+  /**
+   * token lacak tanpa login
+   *
+   * @generated from field: string public_token = 38;
+   */
+  publicToken = "";
+
+  /**
+   * @generated from field: int64 installation_started_at_unix = 39;
+   */
+  installationStartedAtUnix = protoInt64.zero;
+
+  /**
+   * @generated from field: string installation_photo_url = 40;
+   */
+  installationPhotoUrl = "";
+
+  /**
+   * @generated from field: string ont_mac_address = 41;
+   */
+  ontMacAddress = "";
+
+  /**
+   * @generated from field: string ont_serial_number = 42;
+   */
+  ontSerialNumber = "";
+
+  /**
+   * @generated from field: string olt_device_id = 44;
+   */
+  oltDeviceId = "";
+
+  /**
+   * @generated from field: int32 pon_index = 45;
+   */
+  ponIndex = 0;
+
+  /**
+   * @generated from field: int32 onu_index = 46;
+   */
+  onuIndex = 0;
+
+  /**
+   * @generated from field: double discount_amount = 43;
+   */
+  discountAmount = 0;
+
   constructor(data?: PartialMessage<Registration>) {
     super();
     proto3.util.initPartial(data, this);
@@ -200,6 +298,24 @@ export class Registration extends Message<Registration> {
     { no: 26, name: "created_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
     { no: 27, name: "target_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 28, name: "target_device_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 29, name: "nik", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 30, name: "id_card_photo_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 31, name: "house_photo_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 32, name: "survey_date_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 33, name: "survey_time", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 34, name: "surveyor_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 35, name: "survey_status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 36, name: "survey_notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 37, name: "estimated_cable_length_meter", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 38, name: "public_token", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 39, name: "installation_started_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 40, name: "installation_photo_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 41, name: "ont_mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 42, name: "ont_serial_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 44, name: "olt_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 45, name: "pon_index", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 46, name: "onu_index", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 43, name: "discount_amount", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Registration {
@@ -216,6 +332,87 @@ export class Registration extends Message<Registration> {
 
   static equals(a: Registration | PlainMessage<Registration> | undefined, b: Registration | PlainMessage<Registration> | undefined): boolean {
     return proto3.util.equals(Registration, a, b);
+  }
+}
+
+/**
+ * RegistrationEvent adalah satu entri timeline PSB (registration_events).
+ *
+ * @generated from message polyglot.v1.RegistrationEvent
+ */
+export class RegistrationEvent extends Message<RegistrationEvent> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string registration_id = 2;
+   */
+  registrationId = "";
+
+  /**
+   * @generated from field: string event_type = 3;
+   */
+  eventType = "";
+
+  /**
+   * @generated from field: string actor_id = 4;
+   */
+  actorId = "";
+
+  /**
+   * @generated from field: string title = 5;
+   */
+  title = "";
+
+  /**
+   * @generated from field: string description = 6;
+   */
+  description = "";
+
+  /**
+   * @generated from field: string metadata_json = 7;
+   */
+  metadataJson = "";
+
+  /**
+   * @generated from field: int64 created_at_unix = 8;
+   */
+  createdAtUnix = protoInt64.zero;
+
+  constructor(data?: PartialMessage<RegistrationEvent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RegistrationEvent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "registration_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "event_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "actor_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "metadata_json", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "created_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RegistrationEvent {
+    return new RegistrationEvent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RegistrationEvent {
+    return new RegistrationEvent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RegistrationEvent {
+    return new RegistrationEvent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RegistrationEvent | PlainMessage<RegistrationEvent> | undefined, b: RegistrationEvent | PlainMessage<RegistrationEvent> | undefined): boolean {
+    return proto3.util.equals(RegistrationEvent, a, b);
   }
 }
 
@@ -270,6 +467,21 @@ export class SubmitRegistrationRequest extends Message<SubmitRegistrationRequest
    */
   planId = "";
 
+  /**
+   * @generated from field: string nik = 10;
+   */
+  nik = "";
+
+  /**
+   * @generated from field: string id_card_photo_url = 11;
+   */
+  idCardPhotoUrl = "";
+
+  /**
+   * @generated from field: string house_photo_url = 12;
+   */
+  housePhotoUrl = "";
+
   constructor(data?: PartialMessage<SubmitRegistrationRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -287,6 +499,9 @@ export class SubmitRegistrationRequest extends Message<SubmitRegistrationRequest
     { no: 7, name: "has_coordinates", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 8, name: "notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 9, name: "plan_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "nik", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 11, name: "id_card_photo_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 12, name: "house_photo_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SubmitRegistrationRequest {
@@ -696,6 +911,38 @@ export class MarkInstalledRequest extends Message<MarkInstalledRequest> {
    */
   deviceId = "";
 
+  /**
+   * Bukti instalasi (PSB v2).
+   *
+   * @generated from field: string installation_photo_url = 4;
+   */
+  installationPhotoUrl = "";
+
+  /**
+   * @generated from field: string ont_mac_address = 5;
+   */
+  ontMacAddress = "";
+
+  /**
+   * @generated from field: string ont_serial_number = 6;
+   */
+  ontSerialNumber = "";
+
+  /**
+   * @generated from field: string olt_device_id = 7;
+   */
+  oltDeviceId = "";
+
+  /**
+   * @generated from field: int32 pon_index = 8;
+   */
+  ponIndex = 0;
+
+  /**
+   * @generated from field: int32 onu_index = 9;
+   */
+  onuIndex = 0;
+
   constructor(data?: PartialMessage<MarkInstalledRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -707,6 +954,12 @@ export class MarkInstalledRequest extends Message<MarkInstalledRequest> {
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "technician_notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "installation_photo_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "ont_mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "ont_serial_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "olt_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "pon_index", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 9, name: "onu_index", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MarkInstalledRequest {
@@ -760,6 +1013,501 @@ export class MarkInstalledResponse extends Message<MarkInstalledResponse> {
 
   static equals(a: MarkInstalledResponse | PlainMessage<MarkInstalledResponse> | undefined, b: MarkInstalledResponse | PlainMessage<MarkInstalledResponse> | undefined): boolean {
     return proto3.util.equals(MarkInstalledResponse, a, b);
+  }
+}
+
+/**
+ * ── PSB v2: survey, mulai instalasi, lacak publik, timeline ──────────────
+ *
+ * @generated from message polyglot.v1.RecordSurveyRequest
+ */
+export class RecordSurveyRequest extends Message<RecordSurveyRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * 0 = hari ini
+   *
+   * @generated from field: int64 survey_date_unix = 2;
+   */
+  surveyDateUnix = protoInt64.zero;
+
+  /**
+   * "HH:MM"; kosong = tanpa jam
+   *
+   * @generated from field: string survey_time_hhmm = 3;
+   */
+  surveyTimeHhmm = "";
+
+  /**
+   * users.id; kosong = biarkan
+   *
+   * @generated from field: string surveyor_id = 4;
+   */
+  surveyorId = "";
+
+  /**
+   * ELIGIBLE | NOT_ELIGIBLE (kosong = ELIGIBLE)
+   *
+   * @generated from field: string survey_status = 5;
+   */
+  surveyStatus = "";
+
+  /**
+   * @generated from field: string survey_notes = 6;
+   */
+  surveyNotes = "";
+
+  /**
+   * @generated from field: int32 estimated_cable_length_meter = 7;
+   */
+  estimatedCableLengthMeter = 0;
+
+  constructor(data?: PartialMessage<RecordSurveyRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RecordSurveyRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "survey_date_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 3, name: "survey_time_hhmm", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "surveyor_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "survey_status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "survey_notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "estimated_cable_length_meter", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RecordSurveyRequest {
+    return new RecordSurveyRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RecordSurveyRequest {
+    return new RecordSurveyRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RecordSurveyRequest {
+    return new RecordSurveyRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RecordSurveyRequest | PlainMessage<RecordSurveyRequest> | undefined, b: RecordSurveyRequest | PlainMessage<RecordSurveyRequest> | undefined): boolean {
+    return proto3.util.equals(RecordSurveyRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.RecordSurveyResponse
+ */
+export class RecordSurveyResponse extends Message<RecordSurveyResponse> {
+  /**
+   * @generated from field: polyglot.v1.Registration registration = 1;
+   */
+  registration?: Registration;
+
+  constructor(data?: PartialMessage<RecordSurveyResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RecordSurveyResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "registration", kind: "message", T: Registration },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RecordSurveyResponse {
+    return new RecordSurveyResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RecordSurveyResponse {
+    return new RecordSurveyResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RecordSurveyResponse {
+    return new RecordSurveyResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RecordSurveyResponse | PlainMessage<RecordSurveyResponse> | undefined, b: RecordSurveyResponse | PlainMessage<RecordSurveyResponse> | undefined): boolean {
+    return proto3.util.equals(RecordSurveyResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.StartInstallationRequest
+ */
+export class StartInstallationRequest extends Message<StartInstallationRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<StartInstallationRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.StartInstallationRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StartInstallationRequest {
+    return new StartInstallationRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StartInstallationRequest {
+    return new StartInstallationRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StartInstallationRequest {
+    return new StartInstallationRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StartInstallationRequest | PlainMessage<StartInstallationRequest> | undefined, b: StartInstallationRequest | PlainMessage<StartInstallationRequest> | undefined): boolean {
+    return proto3.util.equals(StartInstallationRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.StartInstallationResponse
+ */
+export class StartInstallationResponse extends Message<StartInstallationResponse> {
+  /**
+   * @generated from field: polyglot.v1.Registration registration = 1;
+   */
+  registration?: Registration;
+
+  constructor(data?: PartialMessage<StartInstallationResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.StartInstallationResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "registration", kind: "message", T: Registration },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StartInstallationResponse {
+    return new StartInstallationResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StartInstallationResponse {
+    return new StartInstallationResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StartInstallationResponse {
+    return new StartInstallationResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StartInstallationResponse | PlainMessage<StartInstallationResponse> | undefined, b: StartInstallationResponse | PlainMessage<StartInstallationResponse> | undefined): boolean {
+    return proto3.util.equals(StartInstallationResponse, a, b);
+  }
+}
+
+/**
+ * PUBLIC — dipanggil calon pelanggan tanpa JWT untuk lacak status.
+ *
+ * @generated from message polyglot.v1.TrackRegistrationRequest
+ */
+export class TrackRegistrationRequest extends Message<TrackRegistrationRequest> {
+  /**
+   * @generated from field: string public_token = 1;
+   */
+  publicToken = "";
+
+  constructor(data?: PartialMessage<TrackRegistrationRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.TrackRegistrationRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "public_token", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TrackRegistrationRequest {
+    return new TrackRegistrationRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TrackRegistrationRequest {
+    return new TrackRegistrationRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TrackRegistrationRequest {
+    return new TrackRegistrationRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: TrackRegistrationRequest | PlainMessage<TrackRegistrationRequest> | undefined, b: TrackRegistrationRequest | PlainMessage<TrackRegistrationRequest> | undefined): boolean {
+    return proto3.util.equals(TrackRegistrationRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.TrackRegistrationResponse
+ */
+export class TrackRegistrationResponse extends Message<TrackRegistrationResponse> {
+  /**
+   * @generated from field: polyglot.v1.Registration registration = 1;
+   */
+  registration?: Registration;
+
+  /**
+   * @generated from field: repeated polyglot.v1.RegistrationEvent events = 2;
+   */
+  events: RegistrationEvent[] = [];
+
+  constructor(data?: PartialMessage<TrackRegistrationResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.TrackRegistrationResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "registration", kind: "message", T: Registration },
+    { no: 2, name: "events", kind: "message", T: RegistrationEvent, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TrackRegistrationResponse {
+    return new TrackRegistrationResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TrackRegistrationResponse {
+    return new TrackRegistrationResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TrackRegistrationResponse {
+    return new TrackRegistrationResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: TrackRegistrationResponse | PlainMessage<TrackRegistrationResponse> | undefined, b: TrackRegistrationResponse | PlainMessage<TrackRegistrationResponse> | undefined): boolean {
+    return proto3.util.equals(TrackRegistrationResponse, a, b);
+  }
+}
+
+/**
+ * PUBLIC — daftar paket aktif untuk formulir pendaftaran.
+ *
+ * @generated from message polyglot.v1.PublicPlan
+ */
+export class PublicPlan extends Message<PublicPlan> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name = "";
+
+  /**
+   * PPPOE | HOTSPOT | DEDICATED
+   *
+   * @generated from field: string service_type = 3;
+   */
+  serviceType = "";
+
+  /**
+   * @generated from field: double price = 4;
+   */
+  price = 0;
+
+  /**
+   * @generated from field: int32 bandwidth_download_kbps = 5;
+   */
+  bandwidthDownloadKbps = 0;
+
+  /**
+   * @generated from field: int32 bandwidth_upload_kbps = 6;
+   */
+  bandwidthUploadKbps = 0;
+
+  /**
+   * @generated from field: double installation_fee = 7;
+   */
+  installationFee = 0;
+
+  constructor(data?: PartialMessage<PublicPlan>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PublicPlan";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "bandwidth_download_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "bandwidth_upload_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 7, name: "installation_fee", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PublicPlan {
+    return new PublicPlan().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PublicPlan {
+    return new PublicPlan().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PublicPlan {
+    return new PublicPlan().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PublicPlan | PlainMessage<PublicPlan> | undefined, b: PublicPlan | PlainMessage<PublicPlan> | undefined): boolean {
+    return proto3.util.equals(PublicPlan, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListPublicPlansRequest
+ */
+export class ListPublicPlansRequest extends Message<ListPublicPlansRequest> {
+  constructor(data?: PartialMessage<ListPublicPlansRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListPublicPlansRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListPublicPlansRequest {
+    return new ListPublicPlansRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListPublicPlansRequest {
+    return new ListPublicPlansRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListPublicPlansRequest {
+    return new ListPublicPlansRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListPublicPlansRequest | PlainMessage<ListPublicPlansRequest> | undefined, b: ListPublicPlansRequest | PlainMessage<ListPublicPlansRequest> | undefined): boolean {
+    return proto3.util.equals(ListPublicPlansRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListPublicPlansResponse
+ */
+export class ListPublicPlansResponse extends Message<ListPublicPlansResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.PublicPlan plans = 1;
+   */
+  plans: PublicPlan[] = [];
+
+  constructor(data?: PartialMessage<ListPublicPlansResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListPublicPlansResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "plans", kind: "message", T: PublicPlan, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListPublicPlansResponse {
+    return new ListPublicPlansResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListPublicPlansResponse {
+    return new ListPublicPlansResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListPublicPlansResponse {
+    return new ListPublicPlansResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListPublicPlansResponse | PlainMessage<ListPublicPlansResponse> | undefined, b: ListPublicPlansResponse | PlainMessage<ListPublicPlansResponse> | undefined): boolean {
+    return proto3.util.equals(ListPublicPlansResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListRegistrationEventsRequest
+ */
+export class ListRegistrationEventsRequest extends Message<ListRegistrationEventsRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<ListRegistrationEventsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListRegistrationEventsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListRegistrationEventsRequest {
+    return new ListRegistrationEventsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListRegistrationEventsRequest {
+    return new ListRegistrationEventsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListRegistrationEventsRequest {
+    return new ListRegistrationEventsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListRegistrationEventsRequest | PlainMessage<ListRegistrationEventsRequest> | undefined, b: ListRegistrationEventsRequest | PlainMessage<ListRegistrationEventsRequest> | undefined): boolean {
+    return proto3.util.equals(ListRegistrationEventsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListRegistrationEventsResponse
+ */
+export class ListRegistrationEventsResponse extends Message<ListRegistrationEventsResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.RegistrationEvent events = 1;
+   */
+  events: RegistrationEvent[] = [];
+
+  constructor(data?: PartialMessage<ListRegistrationEventsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListRegistrationEventsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "events", kind: "message", T: RegistrationEvent, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListRegistrationEventsResponse {
+    return new ListRegistrationEventsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListRegistrationEventsResponse {
+    return new ListRegistrationEventsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListRegistrationEventsResponse {
+    return new ListRegistrationEventsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListRegistrationEventsResponse | PlainMessage<ListRegistrationEventsResponse> | undefined, b: ListRegistrationEventsResponse | PlainMessage<ListRegistrationEventsResponse> | undefined): boolean {
+    return proto3.util.equals(ListRegistrationEventsResponse, a, b);
   }
 }
 

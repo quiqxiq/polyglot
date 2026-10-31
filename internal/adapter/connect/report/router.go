@@ -20,6 +20,16 @@ func NewReportServiceHandler(uc *reportUC.ManageReportUseCase) (string, http.Han
 	mux.Handle("/"+serviceName+"/MonthlyReport", connect.NewUnaryHandler("/"+serviceName+"/MonthlyReport", handler.MonthlyReport, opts...))
 	mux.Handle("/"+serviceName+"/YearlyReport", connect.NewUnaryHandler("/"+serviceName+"/YearlyReport", handler.YearlyReport, opts...))
 	mux.Handle("/"+serviceName+"/RefreshSnapshot", connect.NewUnaryHandler("/"+serviceName+"/RefreshSnapshot", handler.RefreshSnapshot, opts...))
+	mux.Handle("/"+serviceName+"/ARAging", connect.NewUnaryHandler("/"+serviceName+"/ARAging", handler.ARAging, opts...))
+	mux.Handle("/"+serviceName+"/GatewayReconciliation", connect.NewUnaryHandler("/"+serviceName+"/GatewayReconciliation", handler.GatewayReconciliation, opts...))
+	mux.Handle("/"+serviceName+"/PSBStats", connect.NewUnaryHandler("/"+serviceName+"/PSBStats", handler.PSBStats, opts...))
+	mux.Handle("/"+serviceName+"/TaxReport", connect.NewUnaryHandler("/"+serviceName+"/TaxReport", handler.TaxReport, opts...))
+	mux.Handle("/"+serviceName+"/SalesReport", connect.NewUnaryHandler("/"+serviceName+"/SalesReport", handler.SalesReport, opts...))
+	mux.Handle("/"+serviceName+"/CollectionReport", connect.NewUnaryHandler("/"+serviceName+"/CollectionReport", handler.CollectionReport, opts...))
+	mux.Handle("/"+serviceName+"/CashflowReport", connect.NewUnaryHandler("/"+serviceName+"/CashflowReport", handler.CashflowReport, opts...))
+	mux.Handle("/"+serviceName+"/AgingDetail", connect.NewUnaryHandler("/"+serviceName+"/AgingDetail", handler.AgingDetail, opts...))
+	mux.Handle("/"+serviceName+"/ClosingReport", connect.NewUnaryHandler("/"+serviceName+"/ClosingReport", handler.ClosingReport, opts...))
+	mux.Handle("/"+serviceName+"/ExportReport", connect.NewUnaryHandler("/"+serviceName+"/ExportReport", handler.ExportReport, opts...))
 
 	return "/" + serviceName + "/", mux
 }

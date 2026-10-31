@@ -125,3 +125,84 @@ func (h *CustomerConnectHandler) FindByPortalCode(ctx context.Context, req *conn
 func (h *CustomerConnectHandler) ListSubscriptions(ctx context.Context, req *connect.Request[devicepb.ListSubscriptionsRequest]) (*connect.Response[devicepb.ListSubscriptionsResponse], error) {
 	return connect.NewResponse(&devicepb.ListSubscriptionsResponse{}), nil
 }
+
+// GetCustomer360 mengembalikan data pelanggan terpadu (profil, langganan,
+// tagihan, pembayaran, dan riwayat PSB) — planning v2 Fase 5.
+func (h *CustomerConnectHandler) GetCustomer360(ctx context.Context, req *connect.Request[devicepb.GetCustomer360Request]) (*connect.Response[devicepb.GetCustomer360Response], error) {
+	if h.customerUC == nil {
+		return nil, response.Unavailable("customer usecase unavailable")
+	}
+	data, err := h.customerUC.GetCustomer360(ctx, req.Msg.Id)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	resp := &devicepb.GetCustomer360Response{
+		Customer: toProtoCustomer(&data.Customer),
+	}
+	for i := range data.Subscriptions {
+		sub := data.Subscriptions[i]
+		deviceID := ""
+		if sub.DeviceID != nil {
+			deviceID = *sub.DeviceID
+		}
+		nextDue := ""
+		if sub.NextDueDate != nil {
+			nextDue = sub.NextDueDate.Format("2006-01-02")
+		}
+		resp.Subscriptions = append(resp.Subscriptions, &devicepb.Customer360Subscription{
+			Id:                 sub.ID,
+			PlanId:             sub.PlanID,
+			ServiceType:        sub.ServiceType,
+			Status:             sub.Status,
+			ProvisionStatus:    sub.ProvisionStatus,
+			LastProvisionError: sub.LastProvisionError,
+			ProvisionAttempts:  int32(sub.ProvisionAttempts),
+			RouterProfile:      sub.RouterProfile,
+			DeviceId:           deviceID,
+			StartDateUnix:      sub.StartDate.Unix(),
+			NextDueDate:        nextDue,
+		})
+	}
+	for i := range data.Invoices {
+		inv := data.Invoices[i]
+		resp.Invoices = append(resp.Invoices, &devicepb.Customer360Invoice{
+			Id:            inv.ID,
+			InvoiceNumber: inv.InvoiceNumber,
+			Period:        inv.Period,
+			Total:         inv.Total,
+			PaidAmount:    inv.PaidAmount,
+			Status:        inv.Status,
+			DueDateUnix:   inv.DueDate.Unix(),
+		})
+	}
+	for i := range data.Payments {
+		pay := data.Payments[i]
+		resp.Payments = append(resp.Payments, &devicepb.Customer360Payment{
+			Id:              pay.ID,
+			PaymentNo:       pay.PaymentNo,
+			InvoiceId:       pay.InvoiceID,
+			Amount:          pay.Amount,
+			PaymentDateUnix: pay.PaymentDate.Unix(),
+			ScanMethod:      pay.ScanMethod,
+			Voided:          pay.VoidedAt != nil,
+			VoidReason:      pay.VoidReason,
+		})
+	}
+	for i := range data.Registrations {
+		reg := data.Registrations[i]
+		var installedAt int64
+		if reg.InstalledAt != nil {
+			installedAt = reg.InstalledAt.Unix()
+		}
+		resp.Registrations = append(resp.Registrations, &devicepb.Customer360Registration{
+			Id:              reg.ID,
+			RegistrationNo:  reg.RegistrationNo,
+			Status:          reg.Status,
+			CreatedAtUnix:   reg.CreatedAt.Unix(),
+			InstalledAtUnix: installedAt,
+			SurveyStatus:    reg.SurveyStatus,
+			PublicToken:     reg.PublicToken,
+		})
+	}
+	return connect.NewResponse(resp), nil
+}

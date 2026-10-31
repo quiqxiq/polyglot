@@ -2,16 +2,26 @@ package huaweiolt
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
-// destructiveCommands lists Huawei VRP CLI commands considered destructive.
-// TODO: fill in the full list per Polyglot-Architecture.md §5.3.
-var destructiveCommands = map[string]bool{
-	"reboot":                    true,
-	"reset saved-configuration": true,
-}
+// Command classification for AI Router Ops (PLAN-AI-ROUTER-OPS v2).
+//
+// Only READ commands may be auto-executed by the AI pipeline; everything
+// else is MUTATION and needs approval. Unknown commands are MUTATION
+// (fail-closed). A small hard-deny list refuses full reset/restore commands
+// even with approval — human recovery flows use dedicated usecases with
+// typed confirmation instead.
+
+// readPrefixes are Huawei VRP CLI prefixes that only read/introspect state.
+var readPrefixes = []string{"display ", "show ", "ping ", "traceroute "}
+
+// hardDenyPrefixes are full reset/restore commands that AI must never
+// propose. Reboot is deliberately NOT hard-denied — it is an ordinary
+// mutation that needs approval.
+var hardDenyPrefixes = []string{"reset", "restore", "factory-reset", "factory reset"}
 
 // operationMap translates abstract Operations to Huawei VRP CLI commands.
 var operationMap = map[command.Operation]command.Command{
@@ -19,12 +29,27 @@ var operationMap = map[command.Operation]command.Command{
 	command.OpReboot:    {Raw: "reboot"},
 }
 
-// Classify reports the risk class of cmd according to Huawei VRP conventions.
-func Classify(cmd command.Command) command.Class {
-	if destructiveCommands[cmd.Raw] {
-		return command.ClassDestructive
+// Classify reports the AI Router Ops classification of cmd according to
+// Huawei VRP conventions.
+func Classify(cmd command.Command) command.Classification {
+	raw := strings.ToLower(strings.TrimSpace(cmd.Raw))
+	if raw == "" {
+		return command.Classification{Mode: command.ModeMutation}
 	}
-	return command.ClassReadOnly
+	for _, prefix := range hardDenyPrefixes {
+		if raw == prefix || strings.HasPrefix(raw, prefix+" ") {
+			return command.Classification{
+				Mode:       command.ModeMutation,
+				DenyReason: "hard deny for AI: " + prefix,
+			}
+		}
+	}
+	for _, prefix := range readPrefixes {
+		if strings.HasPrefix(raw, prefix) {
+			return command.Classification{Mode: command.ModeRead}
+		}
+	}
+	return command.Classification{Mode: command.ModeMutation}
 }
 
 // Translate maps an abstract Operation to a Huawei VRP Command.

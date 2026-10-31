@@ -1344,6 +1344,88 @@ export class IsolateSubscriptionResponse extends Message<IsolateSubscriptionResp
 }
 
 /**
+ * @generated from message polyglot.v1.RetryProvisionRequest
+ */
+export class RetryProvisionRequest extends Message<RetryProvisionRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<RetryProvisionRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RetryProvisionRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RetryProvisionRequest {
+    return new RetryProvisionRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RetryProvisionRequest {
+    return new RetryProvisionRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RetryProvisionRequest {
+    return new RetryProvisionRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RetryProvisionRequest | PlainMessage<RetryProvisionRequest> | undefined, b: RetryProvisionRequest | PlainMessage<RetryProvisionRequest> | undefined): boolean {
+    return proto3.util.equals(RetryProvisionRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.RetryProvisionResponse
+ */
+export class RetryProvisionResponse extends Message<RetryProvisionResponse> {
+  /**
+   * Job router yang diantrekan untuk percobaan provisi berikutnya.
+   *
+   * @generated from field: string job_id = 1;
+   */
+  jobId = "";
+
+  /**
+   * @generated from field: string status = 2;
+   */
+  status = "";
+
+  constructor(data?: PartialMessage<RetryProvisionResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RetryProvisionResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "job_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RetryProvisionResponse {
+    return new RetryProvisionResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RetryProvisionResponse {
+    return new RetryProvisionResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RetryProvisionResponse {
+    return new RetryProvisionResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RetryProvisionResponse | PlainMessage<RetryProvisionResponse> | undefined, b: RetryProvisionResponse | PlainMessage<RetryProvisionResponse> | undefined): boolean {
+    return proto3.util.equals(RetryProvisionResponse, a, b);
+  }
+}
+
+/**
  * @generated from message polyglot.v1.RestoreSubscriptionRequest
  */
 export class RestoreSubscriptionRequest extends Message<RestoreSubscriptionRequest> {

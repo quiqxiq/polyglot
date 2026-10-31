@@ -27,9 +27,11 @@ type ReminderWorker struct {
 	invoices  port.InvoiceRepository
 	customers port.CustomerRepository
 	notif     port.NotificationRepository
+	settings  port.SettingReader
 
-	now     func() time.Time
-	offsets []int
+	now         func() time.Time
+	preOffsets  []int
+	postOffsets []int
 }
 
 // NewReminderWorker wires dependencies.
@@ -41,8 +43,14 @@ func NewReminderWorker(
 ) *ReminderWorker {
 	return &ReminderWorker{
 		subs: subs, invoices: invoices, customers: customers, notif: notif,
-		now: time.Now, offsets: []int{7, 3, 1, 0},
+		now: time.Now, preOffsets: []int{7, 3, 1, 0}, postOffsets: []int{1, 3, 7},
 	}
+}
+
+// WithSettings menautkan setting reader untuk konfigurasi offset dinamis.
+func (w *ReminderWorker) WithSettings(s port.SettingReader) *ReminderWorker {
+	w.settings = s
+	return w
 }
 
 // WithClock mengganti sumber waktu (test deterministik).
@@ -64,6 +72,18 @@ func (w *ReminderWorker) Run(ctx context.Context) (ReminderResult, error) {
 	now := w.now().UTC()
 	dayStart := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.UTC)
 
+	preOffsets := w.preOffsets
+	postOffsets := w.postOffsets
+	if w.settings != nil {
+		cfg := port.LoadISPSettings(ctx, w.settings)
+		if len(cfg.ReminderPreOffsets) > 0 {
+			preOffsets = cfg.ReminderPreOffsets
+		}
+		if len(cfg.ReminderPostOffsets) > 0 {
+			postOffsets = cfg.ReminderPostOffsets
+		}
+	}
+
 	for _, sub := range active {
 		invoices, err := w.invoices.FindByCustomerID(ctx, sub.CustomerID)
 		if err != nil {
@@ -73,22 +93,47 @@ func (w *ReminderWorker) Run(ctx context.Context) (ReminderResult, error) {
 			if inv.SubscriptionID == nil || *inv.SubscriptionID != sub.ID {
 				continue
 			}
-			if !isOutstandingInvoice(inv.Status) || inv.DueDate.Before(dayStart) {
+			if !isOutstandingInvoice(inv.Status) {
 				continue
 			}
-			daysLeft := int(inv.DueDate.Sub(dayStart).Hours() / 24)
-			if !containsOffset(w.offsets, daysLeft) {
+			dueDay := time.Date(inv.DueDate.Year(), inv.DueDate.Month(), inv.DueDate.Day(), 0, 0, 0, 0, time.UTC)
+
+			// Pre-due reminders (H-7, H-3, H-1, H0)
+			if !dueDay.Before(dayStart) {
+				daysLeft := int(dueDay.Sub(dayStart).Hours() / 24)
+				if !containsOffset(preOffsets, daysLeft) {
+					continue
+				}
+				exists, err := w.notif.ExistsForInvoiceSince(ctx, inv.ID, "BILL_REMINDER", dayStart)
+				if err != nil {
+					return res, fmt.Errorf("check reminder %s: %w", inv.ID, err)
+				}
+				if exists {
+					res.Skipped++
+					continue
+				}
+				if w.queueReminder(ctx, sub, inv, "BILL_REMINDER") {
+					res.Queued++
+				} else {
+					res.Skipped++
+				}
 				continue
 			}
-			exists, err := w.notif.ExistsForInvoiceSince(ctx, inv.ID, "BILL_REMINDER", dayStart)
+
+			// Post-due reminders (H+1, H+3, H+7)
+			daysPastDue := int(dayStart.Sub(dueDay).Hours() / 24)
+			if !containsOffset(postOffsets, daysPastDue) {
+				continue
+			}
+			exists, err := w.notif.ExistsForInvoiceSince(ctx, inv.ID, "BILL_OVERDUE", dayStart)
 			if err != nil {
-				return res, fmt.Errorf("check reminder %s: %w", inv.ID, err)
+				return res, fmt.Errorf("check overdue reminder %s: %w", inv.ID, err)
 			}
 			if exists {
 				res.Skipped++
 				continue
 			}
-			if w.queueReminder(ctx, sub, inv) {
+			if w.queueReminder(ctx, sub, inv, "BILL_OVERDUE") {
 				res.Queued++
 			} else {
 				res.Skipped++
@@ -98,7 +143,7 @@ func (w *ReminderWorker) Run(ctx context.Context) (ReminderResult, error) {
 	return res, nil
 }
 
-func (w *ReminderWorker) queueReminder(ctx context.Context, sub domainSubscription.Subscription, inv domainBilling.Invoice) bool {
+func (w *ReminderWorker) queueReminder(ctx context.Context, sub domainSubscription.Subscription, inv domainBilling.Invoice, msgType string) bool {
 	cust, err := w.customers.FindByID(ctx, sub.CustomerID)
 	if err != nil {
 		logger.WithComponent("ReminderWorker").WithFields(map[string]any{
@@ -106,8 +151,12 @@ func (w *ReminderWorker) queueReminder(ctx context.Context, sub domainSubscripti
 		}).WithError(err).Warn("customer not found; reminder skipped")
 		return false
 	}
-	content := renderTemplateOrDefault(ctx, w.notif, cust.TenantID, "BILL_REMINDER",
-		"Yth {{customer_name}}, tagihan {{period}} sebesar Rp{{total}} jatuh tempo {{due_date}}. Kode bayar: {{payment_code}}.",
+	defaultMsg := "Yth {{customer_name}}, tagihan {{period}} sebesar Rp{{total}} jatuh tempo {{due_date}}. Kode bayar: {{payment_code}}."
+	if msgType == "BILL_OVERDUE" {
+		defaultMsg = "Yth {{customer_name}}, tagihan {{period}} sebesar Rp{{total}} telah melewati jatuh tempo {{due_date}}. Mohon segera lakukan pembayaran. Kode bayar: {{payment_code}}."
+	}
+	content := renderTemplateOrDefault(ctx, w.notif, cust.TenantID, msgType,
+		defaultMsg,
 		map[string]string{
 			"customer_name": cust.Name,
 			"period":        inv.Period,
@@ -121,10 +170,10 @@ func (w *ReminderWorker) queueReminder(ctx context.Context, sub domainSubscripti
 		CustomerID:     &cust.ID,
 		InvoiceID:      &inv.ID,
 		RecipientPhone: phone.Normalize(cust.Phone),
-		MessageType:    "BILL_REMINDER",
+		MessageType:    msgType,
 		MessageContent: content,
 		Status:         domainNotification.StatusQueued,
-		CreatedAt:      time.Now(),
+		CreatedAt:      w.now().UTC(),
 	}
 	if err := w.notif.Queue(ctx, n); err != nil {
 		logger.WithComponent("ReminderWorker").WithError(err).Warn("queue bill reminder failed")

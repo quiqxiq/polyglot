@@ -11,6 +11,7 @@ const (
 // Sumber transaksi kas.
 const (
 	SourcePayment  = "PAYMENT" // otomatis saat invoice lunas
+	SourceRefund   = "REFUND"  // koreksi reversal pembayaran (kas keluar)
 	SourceExpense  = "EXPENSE" // pencatatan manual operasional
 	SourceTransfer = "TRANSFER"
 )

@@ -37,7 +37,7 @@ type deviceStatusOutput struct {
 // connected driver from the registry, calls usecase/network.GetDeviceStatus
 // (which does Translate → ExecuteCommand), and formats the result into a
 // concise structured output. Read-only — auto-approved by policy.
-func (s *Server) getDeviceStatus(ctx context.Context, _ *mcp.CallToolRequest, args getDeviceStatusArgs) (*mcp.CallToolResult, deviceStatusOutput, error) {
+func (s *Server) getDeviceStatus(ctx context.Context, req *mcp.CallToolRequest, args getDeviceStatusArgs) (*mcp.CallToolResult, deviceStatusOutput, error) {
 	driver, err := s.registry.Get(ctx, args.DeviceID)
 	if err != nil {
 		return toolError(deviceStatusOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
@@ -48,7 +48,8 @@ func (s *Server) getDeviceStatus(ctx context.Context, _ *mcp.CallToolRequest, ar
 		return toolError(deviceStatusOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}
 
-	s.auditBestEffort(ctx, args.DeviceID, "get_device_status", result)
+	actorID, _, _ := s.actorFrom(ctx, req)
+	s.auditBestEffort(ctx, actorID, args.DeviceID, "get_device_status", result)
 
 	return toolOK(formatStatus(args.DeviceID, result))
 }
@@ -87,7 +88,7 @@ func formatStatus(deviceID string, result command.Result) deviceStatusOutput {
 // are silently discarded — a failed audit log must never block a tool
 // response (the command already executed; losing the log is better than
 // losing the result).
-func (s *Server) auditBestEffort(ctx context.Context, deviceID, cmd string, result command.Result) {
+func (s *Server) auditBestEffort(ctx context.Context, actorID uint, deviceID, cmd string, result command.Result) {
 	if s.audit == nil {
 		return
 	}
@@ -95,9 +96,13 @@ func (s *Server) auditBestEffort(ctx context.Context, deviceID, cmd string, resu
 	if len(result.Rows) > 0 {
 		out = fmt.Sprintf("%s (%d rows)", out, len(result.Rows))
 	}
+	user := fmt.Sprintf("%d", actorID)
+	if actorID == 0 {
+		user = "mcp"
+	}
 	_ = s.audit.Write(ctx, port.AuditEvent{
 		DeviceID:  deviceID,
-		UserID:    "mcp",
+		UserID:    user,
 		Command:   cmd,
 		Result:    out,
 		Timestamp: time.Now(),

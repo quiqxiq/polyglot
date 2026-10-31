@@ -74,9 +74,9 @@ func (d *Driver) Execute(ctx context.Context, cmd command.Command) (command.Resu
 	return d.session.Execute(ctx, cmd)
 }
 
-// Classify reports the risk class of cmd according to the Catalog this
-// Driver was constructed with.
-func (d *Driver) Classify(cmd command.Command) command.Class {
+// Classify reports the AI Router Ops classification of cmd according to
+// the Catalog this Driver was constructed with.
+func (d *Driver) Classify(cmd command.Command) command.Classification {
 	return d.session.Classify(cmd)
 }
 

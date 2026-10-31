@@ -491,6 +491,1866 @@ func (x *RefreshSnapshotResponse) GetDate() string {
 	return ""
 }
 
+type ARAgingBucket struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Bucket        string                 `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"` // CURRENT | D1_30 | D31_60 | D61_90 | D90_PLUS
+	InvoiceCount  int32                  `protobuf:"varint,2,opt,name=invoice_count,json=invoiceCount,proto3" json:"invoice_count,omitempty"`
+	Outstanding   float64                `protobuf:"fixed64,3,opt,name=outstanding,proto3" json:"outstanding,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ARAgingBucket) Reset() {
+	*x = ARAgingBucket{}
+	mi := &file_v1_report_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ARAgingBucket) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ARAgingBucket) ProtoMessage() {}
+
+func (x *ARAgingBucket) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ARAgingBucket.ProtoReflect.Descriptor instead.
+func (*ARAgingBucket) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ARAgingBucket) GetBucket() string {
+	if x != nil {
+		return x.Bucket
+	}
+	return ""
+}
+
+func (x *ARAgingBucket) GetInvoiceCount() int32 {
+	if x != nil {
+		return x.InvoiceCount
+	}
+	return 0
+}
+
+func (x *ARAgingBucket) GetOutstanding() float64 {
+	if x != nil {
+		return x.Outstanding
+	}
+	return 0
+}
+
+type ARAgingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AsOf          string                 `protobuf:"bytes,1,opt,name=as_of,json=asOf,proto3" json:"as_of,omitempty"` // 'YYYY-MM-DD'; kosong = hari ini
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ARAgingRequest) Reset() {
+	*x = ARAgingRequest{}
+	mi := &file_v1_report_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ARAgingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ARAgingRequest) ProtoMessage() {}
+
+func (x *ARAgingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ARAgingRequest.ProtoReflect.Descriptor instead.
+func (*ARAgingRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ARAgingRequest) GetAsOf() string {
+	if x != nil {
+		return x.AsOf
+	}
+	return ""
+}
+
+type ARAgingResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	AsOf             string                 `protobuf:"bytes,1,opt,name=as_of,json=asOf,proto3" json:"as_of,omitempty"`
+	Buckets          []*ARAgingBucket       `protobuf:"bytes,2,rep,name=buckets,proto3" json:"buckets,omitempty"`
+	TotalCount       int32                  `protobuf:"varint,3,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	TotalOutstanding float64                `protobuf:"fixed64,4,opt,name=total_outstanding,json=totalOutstanding,proto3" json:"total_outstanding,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ARAgingResponse) Reset() {
+	*x = ARAgingResponse{}
+	mi := &file_v1_report_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ARAgingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ARAgingResponse) ProtoMessage() {}
+
+func (x *ARAgingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ARAgingResponse.ProtoReflect.Descriptor instead.
+func (*ARAgingResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ARAgingResponse) GetAsOf() string {
+	if x != nil {
+		return x.AsOf
+	}
+	return ""
+}
+
+func (x *ARAgingResponse) GetBuckets() []*ARAgingBucket {
+	if x != nil {
+		return x.Buckets
+	}
+	return nil
+}
+
+func (x *ARAgingResponse) GetTotalCount() int32 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ARAgingResponse) GetTotalOutstanding() float64 {
+	if x != nil {
+		return x.TotalOutstanding
+	}
+	return 0
+}
+
+type GatewayReconciliationRow struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Gateway          string                 `protobuf:"bytes,1,opt,name=gateway,proto3" json:"gateway,omitempty"`
+	TransactionCount int32                  `protobuf:"varint,2,opt,name=transaction_count,json=transactionCount,proto3" json:"transaction_count,omitempty"`
+	GatewayAmount    float64                `protobuf:"fixed64,3,opt,name=gateway_amount,json=gatewayAmount,proto3" json:"gateway_amount,omitempty"`
+	FeeAmount        float64                `protobuf:"fixed64,4,opt,name=fee_amount,json=feeAmount,proto3" json:"fee_amount,omitempty"`
+	RecordedAmount   float64                `protobuf:"fixed64,5,opt,name=recorded_amount,json=recordedAmount,proto3" json:"recorded_amount,omitempty"`
+	Difference       float64                `protobuf:"fixed64,6,opt,name=difference,proto3" json:"difference,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *GatewayReconciliationRow) Reset() {
+	*x = GatewayReconciliationRow{}
+	mi := &file_v1_report_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GatewayReconciliationRow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GatewayReconciliationRow) ProtoMessage() {}
+
+func (x *GatewayReconciliationRow) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GatewayReconciliationRow.ProtoReflect.Descriptor instead.
+func (*GatewayReconciliationRow) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GatewayReconciliationRow) GetGateway() string {
+	if x != nil {
+		return x.Gateway
+	}
+	return ""
+}
+
+func (x *GatewayReconciliationRow) GetTransactionCount() int32 {
+	if x != nil {
+		return x.TransactionCount
+	}
+	return 0
+}
+
+func (x *GatewayReconciliationRow) GetGatewayAmount() float64 {
+	if x != nil {
+		return x.GatewayAmount
+	}
+	return 0
+}
+
+func (x *GatewayReconciliationRow) GetFeeAmount() float64 {
+	if x != nil {
+		return x.FeeAmount
+	}
+	return 0
+}
+
+func (x *GatewayReconciliationRow) GetRecordedAmount() float64 {
+	if x != nil {
+		return x.RecordedAmount
+	}
+	return 0
+}
+
+func (x *GatewayReconciliationRow) GetDifference() float64 {
+	if x != nil {
+		return x.Difference
+	}
+	return 0
+}
+
+type GatewayReconciliationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	From          string                 `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"` // 'YYYY-MM-DD'
+	To            string                 `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`     // 'YYYY-MM-DD'
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GatewayReconciliationRequest) Reset() {
+	*x = GatewayReconciliationRequest{}
+	mi := &file_v1_report_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GatewayReconciliationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GatewayReconciliationRequest) ProtoMessage() {}
+
+func (x *GatewayReconciliationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GatewayReconciliationRequest.ProtoReflect.Descriptor instead.
+func (*GatewayReconciliationRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GatewayReconciliationRequest) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *GatewayReconciliationRequest) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+type GatewayReconciliationResponse struct {
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	From          string                      `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	To            string                      `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	Rows          []*GatewayReconciliationRow `protobuf:"bytes,3,rep,name=rows,proto3" json:"rows,omitempty"`
+	TotalGateway  float64                     `protobuf:"fixed64,4,opt,name=total_gateway,json=totalGateway,proto3" json:"total_gateway,omitempty"`
+	TotalRecorded float64                     `protobuf:"fixed64,5,opt,name=total_recorded,json=totalRecorded,proto3" json:"total_recorded,omitempty"`
+	TotalFee      float64                     `protobuf:"fixed64,6,opt,name=total_fee,json=totalFee,proto3" json:"total_fee,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GatewayReconciliationResponse) Reset() {
+	*x = GatewayReconciliationResponse{}
+	mi := &file_v1_report_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GatewayReconciliationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GatewayReconciliationResponse) ProtoMessage() {}
+
+func (x *GatewayReconciliationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GatewayReconciliationResponse.ProtoReflect.Descriptor instead.
+func (*GatewayReconciliationResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GatewayReconciliationResponse) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *GatewayReconciliationResponse) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *GatewayReconciliationResponse) GetRows() []*GatewayReconciliationRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+func (x *GatewayReconciliationResponse) GetTotalGateway() float64 {
+	if x != nil {
+		return x.TotalGateway
+	}
+	return 0
+}
+
+func (x *GatewayReconciliationResponse) GetTotalRecorded() float64 {
+	if x != nil {
+		return x.TotalRecorded
+	}
+	return 0
+}
+
+func (x *GatewayReconciliationResponse) GetTotalFee() float64 {
+	if x != nil {
+		return x.TotalFee
+	}
+	return 0
+}
+
+type PSBStatusCount struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PSBStatusCount) Reset() {
+	*x = PSBStatusCount{}
+	mi := &file_v1_report_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PSBStatusCount) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PSBStatusCount) ProtoMessage() {}
+
+func (x *PSBStatusCount) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PSBStatusCount.ProtoReflect.Descriptor instead.
+func (*PSBStatusCount) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *PSBStatusCount) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *PSBStatusCount) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+type PSBStatsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	From          string                 `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	To            string                 `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PSBStatsRequest) Reset() {
+	*x = PSBStatsRequest{}
+	mi := &file_v1_report_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PSBStatsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PSBStatsRequest) ProtoMessage() {}
+
+func (x *PSBStatsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PSBStatsRequest.ProtoReflect.Descriptor instead.
+func (*PSBStatsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *PSBStatsRequest) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *PSBStatsRequest) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+type PSBStatsResponse struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	From            string                 `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	To              string                 `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	Total           int32                  `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Converted       int32                  `protobuf:"varint,4,opt,name=converted,proto3" json:"converted,omitempty"`
+	Closed          int32                  `protobuf:"varint,5,opt,name=closed,proto3" json:"closed,omitempty"`
+	ByStatus        []*PSBStatusCount      `protobuf:"bytes,6,rep,name=by_status,json=byStatus,proto3" json:"by_status,omitempty"`
+	AvgSurveyHours  float64                `protobuf:"fixed64,7,opt,name=avg_survey_hours,json=avgSurveyHours,proto3" json:"avg_survey_hours,omitempty"`
+	AvgInstallHours float64                `protobuf:"fixed64,8,opt,name=avg_install_hours,json=avgInstallHours,proto3" json:"avg_install_hours,omitempty"`
+	AvgLeadHours    float64                `protobuf:"fixed64,9,opt,name=avg_lead_hours,json=avgLeadHours,proto3" json:"avg_lead_hours,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *PSBStatsResponse) Reset() {
+	*x = PSBStatsResponse{}
+	mi := &file_v1_report_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PSBStatsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PSBStatsResponse) ProtoMessage() {}
+
+func (x *PSBStatsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PSBStatsResponse.ProtoReflect.Descriptor instead.
+func (*PSBStatsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *PSBStatsResponse) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *PSBStatsResponse) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *PSBStatsResponse) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *PSBStatsResponse) GetConverted() int32 {
+	if x != nil {
+		return x.Converted
+	}
+	return 0
+}
+
+func (x *PSBStatsResponse) GetClosed() int32 {
+	if x != nil {
+		return x.Closed
+	}
+	return 0
+}
+
+func (x *PSBStatsResponse) GetByStatus() []*PSBStatusCount {
+	if x != nil {
+		return x.ByStatus
+	}
+	return nil
+}
+
+func (x *PSBStatsResponse) GetAvgSurveyHours() float64 {
+	if x != nil {
+		return x.AvgSurveyHours
+	}
+	return 0
+}
+
+func (x *PSBStatsResponse) GetAvgInstallHours() float64 {
+	if x != nil {
+		return x.AvgInstallHours
+	}
+	return 0
+}
+
+func (x *PSBStatsResponse) GetAvgLeadHours() float64 {
+	if x != nil {
+		return x.AvgLeadHours
+	}
+	return 0
+}
+
+type TaxRow struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Period        string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	InvoiceCount  int32                  `protobuf:"varint,2,opt,name=invoice_count,json=invoiceCount,proto3" json:"invoice_count,omitempty"`
+	Subtotal      float64                `protobuf:"fixed64,3,opt,name=subtotal,proto3" json:"subtotal,omitempty"`
+	TaxPercent    float64                `protobuf:"fixed64,4,opt,name=tax_percent,json=taxPercent,proto3" json:"tax_percent,omitempty"`
+	TaxAmount     float64                `protobuf:"fixed64,5,opt,name=tax_amount,json=taxAmount,proto3" json:"tax_amount,omitempty"`
+	Total         float64                `protobuf:"fixed64,6,opt,name=total,proto3" json:"total,omitempty"`
+	PaidTax       float64                `protobuf:"fixed64,7,opt,name=paid_tax,json=paidTax,proto3" json:"paid_tax,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TaxRow) Reset() {
+	*x = TaxRow{}
+	mi := &file_v1_report_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaxRow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaxRow) ProtoMessage() {}
+
+func (x *TaxRow) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaxRow.ProtoReflect.Descriptor instead.
+func (*TaxRow) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *TaxRow) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+func (x *TaxRow) GetInvoiceCount() int32 {
+	if x != nil {
+		return x.InvoiceCount
+	}
+	return 0
+}
+
+func (x *TaxRow) GetSubtotal() float64 {
+	if x != nil {
+		return x.Subtotal
+	}
+	return 0
+}
+
+func (x *TaxRow) GetTaxPercent() float64 {
+	if x != nil {
+		return x.TaxPercent
+	}
+	return 0
+}
+
+func (x *TaxRow) GetTaxAmount() float64 {
+	if x != nil {
+		return x.TaxAmount
+	}
+	return 0
+}
+
+func (x *TaxRow) GetTotal() float64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *TaxRow) GetPaidTax() float64 {
+	if x != nil {
+		return x.PaidTax
+	}
+	return 0
+}
+
+type TaxReportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Period        string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TaxReportRequest) Reset() {
+	*x = TaxReportRequest{}
+	mi := &file_v1_report_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaxReportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaxReportRequest) ProtoMessage() {}
+
+func (x *TaxReportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaxReportRequest.ProtoReflect.Descriptor instead.
+func (*TaxReportRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *TaxReportRequest) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+type TaxReportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Period        string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	Rows          []*TaxRow              `protobuf:"bytes,2,rep,name=rows,proto3" json:"rows,omitempty"`
+	TotalSubtotal float64                `protobuf:"fixed64,3,opt,name=total_subtotal,json=totalSubtotal,proto3" json:"total_subtotal,omitempty"`
+	TotalTax      float64                `protobuf:"fixed64,4,opt,name=total_tax,json=totalTax,proto3" json:"total_tax,omitempty"`
+	TotalBilled   float64                `protobuf:"fixed64,5,opt,name=total_billed,json=totalBilled,proto3" json:"total_billed,omitempty"`
+	TotalPaidTax  float64                `protobuf:"fixed64,6,opt,name=total_paid_tax,json=totalPaidTax,proto3" json:"total_paid_tax,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TaxReportResponse) Reset() {
+	*x = TaxReportResponse{}
+	mi := &file_v1_report_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaxReportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaxReportResponse) ProtoMessage() {}
+
+func (x *TaxReportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaxReportResponse.ProtoReflect.Descriptor instead.
+func (*TaxReportResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *TaxReportResponse) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+func (x *TaxReportResponse) GetRows() []*TaxRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+func (x *TaxReportResponse) GetTotalSubtotal() float64 {
+	if x != nil {
+		return x.TotalSubtotal
+	}
+	return 0
+}
+
+func (x *TaxReportResponse) GetTotalTax() float64 {
+	if x != nil {
+		return x.TotalTax
+	}
+	return 0
+}
+
+func (x *TaxReportResponse) GetTotalBilled() float64 {
+	if x != nil {
+		return x.TotalBilled
+	}
+	return 0
+}
+
+func (x *TaxReportResponse) GetTotalPaidTax() float64 {
+	if x != nil {
+		return x.TotalPaidTax
+	}
+	return 0
+}
+
+type SalesRow struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PlanName      string                 `protobuf:"bytes,1,opt,name=plan_name,json=planName,proto3" json:"plan_name,omitempty"`
+	ServiceType   string                 `protobuf:"bytes,2,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"`
+	InvoiceCount  int32                  `protobuf:"varint,3,opt,name=invoice_count,json=invoiceCount,proto3" json:"invoice_count,omitempty"`
+	TotalBilled   float64                `protobuf:"fixed64,4,opt,name=total_billed,json=totalBilled,proto3" json:"total_billed,omitempty"`
+	TotalPaid     float64                `protobuf:"fixed64,5,opt,name=total_paid,json=totalPaid,proto3" json:"total_paid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SalesRow) Reset() {
+	*x = SalesRow{}
+	mi := &file_v1_report_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SalesRow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SalesRow) ProtoMessage() {}
+
+func (x *SalesRow) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SalesRow.ProtoReflect.Descriptor instead.
+func (*SalesRow) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *SalesRow) GetPlanName() string {
+	if x != nil {
+		return x.PlanName
+	}
+	return ""
+}
+
+func (x *SalesRow) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *SalesRow) GetInvoiceCount() int32 {
+	if x != nil {
+		return x.InvoiceCount
+	}
+	return 0
+}
+
+func (x *SalesRow) GetTotalBilled() float64 {
+	if x != nil {
+		return x.TotalBilled
+	}
+	return 0
+}
+
+func (x *SalesRow) GetTotalPaid() float64 {
+	if x != nil {
+		return x.TotalPaid
+	}
+	return 0
+}
+
+type SalesReportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Period        string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SalesReportRequest) Reset() {
+	*x = SalesReportRequest{}
+	mi := &file_v1_report_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SalesReportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SalesReportRequest) ProtoMessage() {}
+
+func (x *SalesReportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SalesReportRequest.ProtoReflect.Descriptor instead.
+func (*SalesReportRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *SalesReportRequest) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+type SalesReportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Period        string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	Rows          []*SalesRow            `protobuf:"bytes,2,rep,name=rows,proto3" json:"rows,omitempty"`
+	TotalBilled   float64                `protobuf:"fixed64,3,opt,name=total_billed,json=totalBilled,proto3" json:"total_billed,omitempty"`
+	TotalPaid     float64                `protobuf:"fixed64,4,opt,name=total_paid,json=totalPaid,proto3" json:"total_paid,omitempty"`
+	PaidCount     int32                  `protobuf:"varint,5,opt,name=paid_count,json=paidCount,proto3" json:"paid_count,omitempty"`
+	CustomerCount int32                  `protobuf:"varint,6,opt,name=customer_count,json=customerCount,proto3" json:"customer_count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SalesReportResponse) Reset() {
+	*x = SalesReportResponse{}
+	mi := &file_v1_report_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SalesReportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SalesReportResponse) ProtoMessage() {}
+
+func (x *SalesReportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SalesReportResponse.ProtoReflect.Descriptor instead.
+func (*SalesReportResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *SalesReportResponse) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+func (x *SalesReportResponse) GetRows() []*SalesRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+func (x *SalesReportResponse) GetTotalBilled() float64 {
+	if x != nil {
+		return x.TotalBilled
+	}
+	return 0
+}
+
+func (x *SalesReportResponse) GetTotalPaid() float64 {
+	if x != nil {
+		return x.TotalPaid
+	}
+	return 0
+}
+
+func (x *SalesReportResponse) GetPaidCount() int32 {
+	if x != nil {
+		return x.PaidCount
+	}
+	return 0
+}
+
+func (x *SalesReportResponse) GetCustomerCount() int32 {
+	if x != nil {
+		return x.CustomerCount
+	}
+	return 0
+}
+
+type CollectionReportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Period        string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CollectionReportRequest) Reset() {
+	*x = CollectionReportRequest{}
+	mi := &file_v1_report_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CollectionReportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CollectionReportRequest) ProtoMessage() {}
+
+func (x *CollectionReportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CollectionReportRequest.ProtoReflect.Descriptor instead.
+func (*CollectionReportRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *CollectionReportRequest) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+type CollectionReportResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Period           string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	TotalInvoices    int32                  `protobuf:"varint,2,opt,name=total_invoices,json=totalInvoices,proto3" json:"total_invoices,omitempty"`
+	PaidInvoices     int32                  `protobuf:"varint,3,opt,name=paid_invoices,json=paidInvoices,proto3" json:"paid_invoices,omitempty"`
+	OverdueInvoices  int32                  `protobuf:"varint,4,opt,name=overdue_invoices,json=overdueInvoices,proto3" json:"overdue_invoices,omitempty"`
+	TotalBilled      float64                `protobuf:"fixed64,5,opt,name=total_billed,json=totalBilled,proto3" json:"total_billed,omitempty"`
+	TotalCollected   float64                `protobuf:"fixed64,6,opt,name=total_collected,json=totalCollected,proto3" json:"total_collected,omitempty"`
+	TotalOutstanding float64                `protobuf:"fixed64,7,opt,name=total_outstanding,json=totalOutstanding,proto3" json:"total_outstanding,omitempty"`
+	CollectionRate   float64                `protobuf:"fixed64,8,opt,name=collection_rate,json=collectionRate,proto3" json:"collection_rate,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *CollectionReportResponse) Reset() {
+	*x = CollectionReportResponse{}
+	mi := &file_v1_report_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CollectionReportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CollectionReportResponse) ProtoMessage() {}
+
+func (x *CollectionReportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CollectionReportResponse.ProtoReflect.Descriptor instead.
+func (*CollectionReportResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *CollectionReportResponse) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+func (x *CollectionReportResponse) GetTotalInvoices() int32 {
+	if x != nil {
+		return x.TotalInvoices
+	}
+	return 0
+}
+
+func (x *CollectionReportResponse) GetPaidInvoices() int32 {
+	if x != nil {
+		return x.PaidInvoices
+	}
+	return 0
+}
+
+func (x *CollectionReportResponse) GetOverdueInvoices() int32 {
+	if x != nil {
+		return x.OverdueInvoices
+	}
+	return 0
+}
+
+func (x *CollectionReportResponse) GetTotalBilled() float64 {
+	if x != nil {
+		return x.TotalBilled
+	}
+	return 0
+}
+
+func (x *CollectionReportResponse) GetTotalCollected() float64 {
+	if x != nil {
+		return x.TotalCollected
+	}
+	return 0
+}
+
+func (x *CollectionReportResponse) GetTotalOutstanding() float64 {
+	if x != nil {
+		return x.TotalOutstanding
+	}
+	return 0
+}
+
+func (x *CollectionReportResponse) GetCollectionRate() float64 {
+	if x != nil {
+		return x.CollectionRate
+	}
+	return 0
+}
+
+type CashflowRow struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CategoryName  string                 `protobuf:"bytes,1,opt,name=category_name,json=categoryName,proto3" json:"category_name,omitempty"`
+	Direction     string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"` // IN | OUT
+	TrxCount      int32                  `protobuf:"varint,3,opt,name=trx_count,json=trxCount,proto3" json:"trx_count,omitempty"`
+	TotalAmount   float64                `protobuf:"fixed64,4,opt,name=total_amount,json=totalAmount,proto3" json:"total_amount,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CashflowRow) Reset() {
+	*x = CashflowRow{}
+	mi := &file_v1_report_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CashflowRow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CashflowRow) ProtoMessage() {}
+
+func (x *CashflowRow) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CashflowRow.ProtoReflect.Descriptor instead.
+func (*CashflowRow) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *CashflowRow) GetCategoryName() string {
+	if x != nil {
+		return x.CategoryName
+	}
+	return ""
+}
+
+func (x *CashflowRow) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *CashflowRow) GetTrxCount() int32 {
+	if x != nil {
+		return x.TrxCount
+	}
+	return 0
+}
+
+func (x *CashflowRow) GetTotalAmount() float64 {
+	if x != nil {
+		return x.TotalAmount
+	}
+	return 0
+}
+
+type CashflowReportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	From          string                 `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	To            string                 `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CashflowReportRequest) Reset() {
+	*x = CashflowReportRequest{}
+	mi := &file_v1_report_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CashflowReportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CashflowReportRequest) ProtoMessage() {}
+
+func (x *CashflowReportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CashflowReportRequest.ProtoReflect.Descriptor instead.
+func (*CashflowReportRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *CashflowReportRequest) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *CashflowReportRequest) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+type CashflowReportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	From          string                 `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
+	To            string                 `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	Rows          []*CashflowRow         `protobuf:"bytes,3,rep,name=rows,proto3" json:"rows,omitempty"`
+	TotalIn       float64                `protobuf:"fixed64,4,opt,name=total_in,json=totalIn,proto3" json:"total_in,omitempty"`
+	TotalOut      float64                `protobuf:"fixed64,5,opt,name=total_out,json=totalOut,proto3" json:"total_out,omitempty"`
+	NetCashflow   float64                `protobuf:"fixed64,6,opt,name=net_cashflow,json=netCashflow,proto3" json:"net_cashflow,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CashflowReportResponse) Reset() {
+	*x = CashflowReportResponse{}
+	mi := &file_v1_report_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CashflowReportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CashflowReportResponse) ProtoMessage() {}
+
+func (x *CashflowReportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CashflowReportResponse.ProtoReflect.Descriptor instead.
+func (*CashflowReportResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *CashflowReportResponse) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *CashflowReportResponse) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *CashflowReportResponse) GetRows() []*CashflowRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+func (x *CashflowReportResponse) GetTotalIn() float64 {
+	if x != nil {
+		return x.TotalIn
+	}
+	return 0
+}
+
+func (x *CashflowReportResponse) GetTotalOut() float64 {
+	if x != nil {
+		return x.TotalOut
+	}
+	return 0
+}
+
+func (x *CashflowReportResponse) GetNetCashflow() float64 {
+	if x != nil {
+		return x.NetCashflow
+	}
+	return 0
+}
+
+type AgingDetailRow struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerName  string                 `protobuf:"bytes,2,opt,name=customer_name,json=customerName,proto3" json:"customer_name,omitempty"`
+	Phone         string                 `protobuf:"bytes,3,opt,name=phone,proto3" json:"phone,omitempty"`
+	InvoiceCount  int32                  `protobuf:"varint,4,opt,name=invoice_count,json=invoiceCount,proto3" json:"invoice_count,omitempty"`
+	Outstanding   float64                `protobuf:"fixed64,5,opt,name=outstanding,proto3" json:"outstanding,omitempty"`
+	OldestDueUnix int64                  `protobuf:"varint,6,opt,name=oldest_due_unix,json=oldestDueUnix,proto3" json:"oldest_due_unix,omitempty"`
+	DaysOverdue   int32                  `protobuf:"varint,7,opt,name=days_overdue,json=daysOverdue,proto3" json:"days_overdue,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AgingDetailRow) Reset() {
+	*x = AgingDetailRow{}
+	mi := &file_v1_report_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgingDetailRow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgingDetailRow) ProtoMessage() {}
+
+func (x *AgingDetailRow) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgingDetailRow.ProtoReflect.Descriptor instead.
+func (*AgingDetailRow) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *AgingDetailRow) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *AgingDetailRow) GetCustomerName() string {
+	if x != nil {
+		return x.CustomerName
+	}
+	return ""
+}
+
+func (x *AgingDetailRow) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *AgingDetailRow) GetInvoiceCount() int32 {
+	if x != nil {
+		return x.InvoiceCount
+	}
+	return 0
+}
+
+func (x *AgingDetailRow) GetOutstanding() float64 {
+	if x != nil {
+		return x.Outstanding
+	}
+	return 0
+}
+
+func (x *AgingDetailRow) GetOldestDueUnix() int64 {
+	if x != nil {
+		return x.OldestDueUnix
+	}
+	return 0
+}
+
+func (x *AgingDetailRow) GetDaysOverdue() int32 {
+	if x != nil {
+		return x.DaysOverdue
+	}
+	return 0
+}
+
+type AgingDetailRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AsOf          string                 `protobuf:"bytes,1,opt,name=as_of,json=asOf,proto3" json:"as_of,omitempty"`
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AgingDetailRequest) Reset() {
+	*x = AgingDetailRequest{}
+	mi := &file_v1_report_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgingDetailRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgingDetailRequest) ProtoMessage() {}
+
+func (x *AgingDetailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgingDetailRequest.ProtoReflect.Descriptor instead.
+func (*AgingDetailRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *AgingDetailRequest) GetAsOf() string {
+	if x != nil {
+		return x.AsOf
+	}
+	return ""
+}
+
+func (x *AgingDetailRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type AgingDetailResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	AsOf             string                 `protobuf:"bytes,1,opt,name=as_of,json=asOf,proto3" json:"as_of,omitempty"`
+	Rows             []*AgingDetailRow      `protobuf:"bytes,2,rep,name=rows,proto3" json:"rows,omitempty"`
+	TotalCustomers   int32                  `protobuf:"varint,3,opt,name=total_customers,json=totalCustomers,proto3" json:"total_customers,omitempty"`
+	TotalOutstanding float64                `protobuf:"fixed64,4,opt,name=total_outstanding,json=totalOutstanding,proto3" json:"total_outstanding,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *AgingDetailResponse) Reset() {
+	*x = AgingDetailResponse{}
+	mi := &file_v1_report_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgingDetailResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgingDetailResponse) ProtoMessage() {}
+
+func (x *AgingDetailResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgingDetailResponse.ProtoReflect.Descriptor instead.
+func (*AgingDetailResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *AgingDetailResponse) GetAsOf() string {
+	if x != nil {
+		return x.AsOf
+	}
+	return ""
+}
+
+func (x *AgingDetailResponse) GetRows() []*AgingDetailRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+func (x *AgingDetailResponse) GetTotalCustomers() int32 {
+	if x != nil {
+		return x.TotalCustomers
+	}
+	return 0
+}
+
+func (x *AgingDetailResponse) GetTotalOutstanding() float64 {
+	if x != nil {
+		return x.TotalOutstanding
+	}
+	return 0
+}
+
+type ClosingReportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Period        string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClosingReportRequest) Reset() {
+	*x = ClosingReportRequest{}
+	mi := &file_v1_report_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClosingReportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClosingReportRequest) ProtoMessage() {}
+
+func (x *ClosingReportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClosingReportRequest.ProtoReflect.Descriptor instead.
+func (*ClosingReportRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *ClosingReportRequest) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+type ClosingReportResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Period           string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
+	ClosingDateUnix  int64                  `protobuf:"varint,2,opt,name=closing_date_unix,json=closingDateUnix,proto3" json:"closing_date_unix,omitempty"`
+	TotalInvoices    int32                  `protobuf:"varint,3,opt,name=total_invoices,json=totalInvoices,proto3" json:"total_invoices,omitempty"`
+	TotalBilled      float64                `protobuf:"fixed64,4,opt,name=total_billed,json=totalBilled,proto3" json:"total_billed,omitempty"`
+	TotalCollected   float64                `protobuf:"fixed64,5,opt,name=total_collected,json=totalCollected,proto3" json:"total_collected,omitempty"`
+	TotalOutstanding float64                `protobuf:"fixed64,6,opt,name=total_outstanding,json=totalOutstanding,proto3" json:"total_outstanding,omitempty"`
+	ActiveCustomers  int32                  `protobuf:"varint,7,opt,name=active_customers,json=activeCustomers,proto3" json:"active_customers,omitempty"`
+	NewSubscriptions int32                  `protobuf:"varint,8,opt,name=new_subscriptions,json=newSubscriptions,proto3" json:"new_subscriptions,omitempty"`
+	DebtsOutstanding float64                `protobuf:"fixed64,9,opt,name=debts_outstanding,json=debtsOutstanding,proto3" json:"debts_outstanding,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ClosingReportResponse) Reset() {
+	*x = ClosingReportResponse{}
+	mi := &file_v1_report_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClosingReportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClosingReportResponse) ProtoMessage() {}
+
+func (x *ClosingReportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClosingReportResponse.ProtoReflect.Descriptor instead.
+func (*ClosingReportResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *ClosingReportResponse) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+func (x *ClosingReportResponse) GetClosingDateUnix() int64 {
+	if x != nil {
+		return x.ClosingDateUnix
+	}
+	return 0
+}
+
+func (x *ClosingReportResponse) GetTotalInvoices() int32 {
+	if x != nil {
+		return x.TotalInvoices
+	}
+	return 0
+}
+
+func (x *ClosingReportResponse) GetTotalBilled() float64 {
+	if x != nil {
+		return x.TotalBilled
+	}
+	return 0
+}
+
+func (x *ClosingReportResponse) GetTotalCollected() float64 {
+	if x != nil {
+		return x.TotalCollected
+	}
+	return 0
+}
+
+func (x *ClosingReportResponse) GetTotalOutstanding() float64 {
+	if x != nil {
+		return x.TotalOutstanding
+	}
+	return 0
+}
+
+func (x *ClosingReportResponse) GetActiveCustomers() int32 {
+	if x != nil {
+		return x.ActiveCustomers
+	}
+	return 0
+}
+
+func (x *ClosingReportResponse) GetNewSubscriptions() int32 {
+	if x != nil {
+		return x.NewSubscriptions
+	}
+	return 0
+}
+
+func (x *ClosingReportResponse) GetDebtsOutstanding() float64 {
+	if x != nil {
+		return x.DebtsOutstanding
+	}
+	return 0
+}
+
+type ExportReportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ReportType    string                 `protobuf:"bytes,1,opt,name=report_type,json=reportType,proto3" json:"report_type,omitempty"` // TAX | SALES | CASHFLOW | AGING_DETAIL
+	Format        string                 `protobuf:"bytes,2,opt,name=format,proto3" json:"format,omitempty"`                           // csv | xlsx
+	Params        map[string]string      `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExportReportRequest) Reset() {
+	*x = ExportReportRequest{}
+	mi := &file_v1_report_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportReportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportReportRequest) ProtoMessage() {}
+
+func (x *ExportReportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportReportRequest.ProtoReflect.Descriptor instead.
+func (*ExportReportRequest) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *ExportReportRequest) GetReportType() string {
+	if x != nil {
+		return x.ReportType
+	}
+	return ""
+}
+
+func (x *ExportReportRequest) GetFormat() string {
+	if x != nil {
+		return x.Format
+	}
+	return ""
+}
+
+func (x *ExportReportRequest) GetParams() map[string]string {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+type ExportReportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Payload       []byte                 `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	ContentType   string                 `protobuf:"bytes,2,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
+	Filename      string                 `protobuf:"bytes,3,opt,name=filename,proto3" json:"filename,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExportReportResponse) Reset() {
+	*x = ExportReportResponse{}
+	mi := &file_v1_report_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportReportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportReportResponse) ProtoMessage() {}
+
+func (x *ExportReportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_report_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportReportResponse.ProtoReflect.Descriptor instead.
+func (*ExportReportResponse) Descriptor() ([]byte, []int) {
+	return file_v1_report_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *ExportReportResponse) GetPayload() []byte {
+	if x != nil {
+		return x.Payload
+	}
+	return nil
+}
+
+func (x *ExportReportResponse) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
+func (x *ExportReportResponse) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
 var File_v1_report_proto protoreflect.FileDescriptor
 
 const file_v1_report_proto_rawDesc = "" +
@@ -525,12 +2385,174 @@ const file_v1_report_proto_rawDesc = "" +
 	"\x04date\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04date\"G\n" +
 	"\x17RefreshSnapshotResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x12\n" +
-	"\x04date\x18\x02 \x01(\tR\x04date2\xec\x02\n" +
+	"\x04date\x18\x02 \x01(\tR\x04date\"n\n" +
+	"\rARAgingBucket\x12\x16\n" +
+	"\x06bucket\x18\x01 \x01(\tR\x06bucket\x12#\n" +
+	"\rinvoice_count\x18\x02 \x01(\x05R\finvoiceCount\x12 \n" +
+	"\voutstanding\x18\x03 \x01(\x01R\voutstanding\"%\n" +
+	"\x0eARAgingRequest\x12\x13\n" +
+	"\x05as_of\x18\x01 \x01(\tR\x04asOf\"\xaa\x01\n" +
+	"\x0fARAgingResponse\x12\x13\n" +
+	"\x05as_of\x18\x01 \x01(\tR\x04asOf\x124\n" +
+	"\abuckets\x18\x02 \x03(\v2\x1a.polyglot.v1.ARAgingBucketR\abuckets\x12\x1f\n" +
+	"\vtotal_count\x18\x03 \x01(\x05R\n" +
+	"totalCount\x12+\n" +
+	"\x11total_outstanding\x18\x04 \x01(\x01R\x10totalOutstanding\"\xf0\x01\n" +
+	"\x18GatewayReconciliationRow\x12\x18\n" +
+	"\agateway\x18\x01 \x01(\tR\agateway\x12+\n" +
+	"\x11transaction_count\x18\x02 \x01(\x05R\x10transactionCount\x12%\n" +
+	"\x0egateway_amount\x18\x03 \x01(\x01R\rgatewayAmount\x12\x1d\n" +
+	"\n" +
+	"fee_amount\x18\x04 \x01(\x01R\tfeeAmount\x12'\n" +
+	"\x0frecorded_amount\x18\x05 \x01(\x01R\x0erecordedAmount\x12\x1e\n" +
+	"\n" +
+	"difference\x18\x06 \x01(\x01R\n" +
+	"difference\"B\n" +
+	"\x1cGatewayReconciliationRequest\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\"\xe7\x01\n" +
+	"\x1dGatewayReconciliationResponse\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\x129\n" +
+	"\x04rows\x18\x03 \x03(\v2%.polyglot.v1.GatewayReconciliationRowR\x04rows\x12#\n" +
+	"\rtotal_gateway\x18\x04 \x01(\x01R\ftotalGateway\x12%\n" +
+	"\x0etotal_recorded\x18\x05 \x01(\x01R\rtotalRecorded\x12\x1b\n" +
+	"\ttotal_fee\x18\x06 \x01(\x01R\btotalFee\">\n" +
+	"\x0ePSBStatusCount\x12\x16\n" +
+	"\x06status\x18\x01 \x01(\tR\x06status\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"5\n" +
+	"\x0fPSBStatsRequest\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\"\xb8\x02\n" +
+	"\x10PSBStatsResponse\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\x12\x14\n" +
+	"\x05total\x18\x03 \x01(\x05R\x05total\x12\x1c\n" +
+	"\tconverted\x18\x04 \x01(\x05R\tconverted\x12\x16\n" +
+	"\x06closed\x18\x05 \x01(\x05R\x06closed\x128\n" +
+	"\tby_status\x18\x06 \x03(\v2\x1b.polyglot.v1.PSBStatusCountR\bbyStatus\x12(\n" +
+	"\x10avg_survey_hours\x18\a \x01(\x01R\x0eavgSurveyHours\x12*\n" +
+	"\x11avg_install_hours\x18\b \x01(\x01R\x0favgInstallHours\x12$\n" +
+	"\x0eavg_lead_hours\x18\t \x01(\x01R\favgLeadHours\"\xd2\x01\n" +
+	"\x06TaxRow\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\x12#\n" +
+	"\rinvoice_count\x18\x02 \x01(\x05R\finvoiceCount\x12\x1a\n" +
+	"\bsubtotal\x18\x03 \x01(\x01R\bsubtotal\x12\x1f\n" +
+	"\vtax_percent\x18\x04 \x01(\x01R\n" +
+	"taxPercent\x12\x1d\n" +
+	"\n" +
+	"tax_amount\x18\x05 \x01(\x01R\ttaxAmount\x12\x14\n" +
+	"\x05total\x18\x06 \x01(\x01R\x05total\x12\x19\n" +
+	"\bpaid_tax\x18\a \x01(\x01R\apaidTax\"*\n" +
+	"\x10TaxReportRequest\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\"\xe1\x01\n" +
+	"\x11TaxReportResponse\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\x12'\n" +
+	"\x04rows\x18\x02 \x03(\v2\x13.polyglot.v1.TaxRowR\x04rows\x12%\n" +
+	"\x0etotal_subtotal\x18\x03 \x01(\x01R\rtotalSubtotal\x12\x1b\n" +
+	"\ttotal_tax\x18\x04 \x01(\x01R\btotalTax\x12!\n" +
+	"\ftotal_billed\x18\x05 \x01(\x01R\vtotalBilled\x12$\n" +
+	"\x0etotal_paid_tax\x18\x06 \x01(\x01R\ftotalPaidTax\"\xb1\x01\n" +
+	"\bSalesRow\x12\x1b\n" +
+	"\tplan_name\x18\x01 \x01(\tR\bplanName\x12!\n" +
+	"\fservice_type\x18\x02 \x01(\tR\vserviceType\x12#\n" +
+	"\rinvoice_count\x18\x03 \x01(\x05R\finvoiceCount\x12!\n" +
+	"\ftotal_billed\x18\x04 \x01(\x01R\vtotalBilled\x12\x1d\n" +
+	"\n" +
+	"total_paid\x18\x05 \x01(\x01R\ttotalPaid\",\n" +
+	"\x12SalesReportRequest\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\"\xe0\x01\n" +
+	"\x13SalesReportResponse\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\x12)\n" +
+	"\x04rows\x18\x02 \x03(\v2\x15.polyglot.v1.SalesRowR\x04rows\x12!\n" +
+	"\ftotal_billed\x18\x03 \x01(\x01R\vtotalBilled\x12\x1d\n" +
+	"\n" +
+	"total_paid\x18\x04 \x01(\x01R\ttotalPaid\x12\x1d\n" +
+	"\n" +
+	"paid_count\x18\x05 \x01(\x05R\tpaidCount\x12%\n" +
+	"\x0ecustomer_count\x18\x06 \x01(\x05R\rcustomerCount\"1\n" +
+	"\x17CollectionReportRequest\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\"\xcb\x02\n" +
+	"\x18CollectionReportResponse\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\x12%\n" +
+	"\x0etotal_invoices\x18\x02 \x01(\x05R\rtotalInvoices\x12#\n" +
+	"\rpaid_invoices\x18\x03 \x01(\x05R\fpaidInvoices\x12)\n" +
+	"\x10overdue_invoices\x18\x04 \x01(\x05R\x0foverdueInvoices\x12!\n" +
+	"\ftotal_billed\x18\x05 \x01(\x01R\vtotalBilled\x12'\n" +
+	"\x0ftotal_collected\x18\x06 \x01(\x01R\x0etotalCollected\x12+\n" +
+	"\x11total_outstanding\x18\a \x01(\x01R\x10totalOutstanding\x12'\n" +
+	"\x0fcollection_rate\x18\b \x01(\x01R\x0ecollectionRate\"\x90\x01\n" +
+	"\vCashflowRow\x12#\n" +
+	"\rcategory_name\x18\x01 \x01(\tR\fcategoryName\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x1b\n" +
+	"\ttrx_count\x18\x03 \x01(\x05R\btrxCount\x12!\n" +
+	"\ftotal_amount\x18\x04 \x01(\x01R\vtotalAmount\";\n" +
+	"\x15CashflowReportRequest\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\"\xc5\x01\n" +
+	"\x16CashflowReportResponse\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\x12,\n" +
+	"\x04rows\x18\x03 \x03(\v2\x18.polyglot.v1.CashflowRowR\x04rows\x12\x19\n" +
+	"\btotal_in\x18\x04 \x01(\x01R\atotalIn\x12\x1b\n" +
+	"\ttotal_out\x18\x05 \x01(\x01R\btotalOut\x12!\n" +
+	"\fnet_cashflow\x18\x06 \x01(\x01R\vnetCashflow\"\xfe\x01\n" +
+	"\x0eAgingDetailRow\x12\x1f\n" +
+	"\vcustomer_id\x18\x01 \x01(\tR\n" +
+	"customerId\x12#\n" +
+	"\rcustomer_name\x18\x02 \x01(\tR\fcustomerName\x12\x14\n" +
+	"\x05phone\x18\x03 \x01(\tR\x05phone\x12#\n" +
+	"\rinvoice_count\x18\x04 \x01(\x05R\finvoiceCount\x12 \n" +
+	"\voutstanding\x18\x05 \x01(\x01R\voutstanding\x12&\n" +
+	"\x0foldest_due_unix\x18\x06 \x01(\x03R\roldestDueUnix\x12!\n" +
+	"\fdays_overdue\x18\a \x01(\x05R\vdaysOverdue\"?\n" +
+	"\x12AgingDetailRequest\x12\x13\n" +
+	"\x05as_of\x18\x01 \x01(\tR\x04asOf\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"\xb1\x01\n" +
+	"\x13AgingDetailResponse\x12\x13\n" +
+	"\x05as_of\x18\x01 \x01(\tR\x04asOf\x12/\n" +
+	"\x04rows\x18\x02 \x03(\v2\x1b.polyglot.v1.AgingDetailRowR\x04rows\x12'\n" +
+	"\x0ftotal_customers\x18\x03 \x01(\x05R\x0etotalCustomers\x12+\n" +
+	"\x11total_outstanding\x18\x04 \x01(\x01R\x10totalOutstanding\".\n" +
+	"\x14ClosingReportRequest\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\"\x80\x03\n" +
+	"\x15ClosingReportResponse\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\x12*\n" +
+	"\x11closing_date_unix\x18\x02 \x01(\x03R\x0fclosingDateUnix\x12%\n" +
+	"\x0etotal_invoices\x18\x03 \x01(\x05R\rtotalInvoices\x12!\n" +
+	"\ftotal_billed\x18\x04 \x01(\x01R\vtotalBilled\x12'\n" +
+	"\x0ftotal_collected\x18\x05 \x01(\x01R\x0etotalCollected\x12+\n" +
+	"\x11total_outstanding\x18\x06 \x01(\x01R\x10totalOutstanding\x12)\n" +
+	"\x10active_customers\x18\a \x01(\x05R\x0factiveCustomers\x12+\n" +
+	"\x11new_subscriptions\x18\b \x01(\x05R\x10newSubscriptions\x12+\n" +
+	"\x11debts_outstanding\x18\t \x01(\x01R\x10debtsOutstanding\"\xcf\x01\n" +
+	"\x13ExportReportRequest\x12\x1f\n" +
+	"\vreport_type\x18\x01 \x01(\tR\n" +
+	"reportType\x12\x16\n" +
+	"\x06format\x18\x02 \x01(\tR\x06format\x12D\n" +
+	"\x06params\x18\x03 \x03(\v2,.polyglot.v1.ExportReportRequest.ParamsEntryR\x06params\x1a9\n" +
+	"\vParamsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"o\n" +
+	"\x14ExportReportResponse\x12\x18\n" +
+	"\apayload\x18\x01 \x01(\fR\apayload\x12!\n" +
+	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\x12\x1a\n" +
+	"\bfilename\x18\x03 \x01(\tR\bfilename2\xc4\t\n" +
 	"\rReportService\x12P\n" +
 	"\vDailyReport\x12\x1f.polyglot.v1.DailyReportRequest\x1a .polyglot.v1.DailyReportResponse\x12V\n" +
 	"\rMonthlyReport\x12!.polyglot.v1.MonthlyReportRequest\x1a\".polyglot.v1.MonthlyReportResponse\x12S\n" +
 	"\fYearlyReport\x12 .polyglot.v1.YearlyReportRequest\x1a!.polyglot.v1.YearlyReportResponse\x12\\\n" +
-	"\x0fRefreshSnapshot\x12#.polyglot.v1.RefreshSnapshotRequest\x1a$.polyglot.v1.RefreshSnapshotResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0fRefreshSnapshot\x12#.polyglot.v1.RefreshSnapshotRequest\x1a$.polyglot.v1.RefreshSnapshotResponse\x12D\n" +
+	"\aARAging\x12\x1b.polyglot.v1.ARAgingRequest\x1a\x1c.polyglot.v1.ARAgingResponse\x12n\n" +
+	"\x15GatewayReconciliation\x12).polyglot.v1.GatewayReconciliationRequest\x1a*.polyglot.v1.GatewayReconciliationResponse\x12G\n" +
+	"\bPSBStats\x12\x1c.polyglot.v1.PSBStatsRequest\x1a\x1d.polyglot.v1.PSBStatsResponse\x12J\n" +
+	"\tTaxReport\x12\x1d.polyglot.v1.TaxReportRequest\x1a\x1e.polyglot.v1.TaxReportResponse\x12P\n" +
+	"\vSalesReport\x12\x1f.polyglot.v1.SalesReportRequest\x1a .polyglot.v1.SalesReportResponse\x12_\n" +
+	"\x10CollectionReport\x12$.polyglot.v1.CollectionReportRequest\x1a%.polyglot.v1.CollectionReportResponse\x12Y\n" +
+	"\x0eCashflowReport\x12\".polyglot.v1.CashflowReportRequest\x1a#.polyglot.v1.CashflowReportResponse\x12P\n" +
+	"\vAgingDetail\x12\x1f.polyglot.v1.AgingDetailRequest\x1a .polyglot.v1.AgingDetailResponse\x12V\n" +
+	"\rClosingReport\x12!.polyglot.v1.ClosingReportRequest\x1a\".polyglot.v1.ClosingReportResponse\x12S\n" +
+	"\fExportReport\x12 .polyglot.v1.ExportReportRequest\x1a!.polyglot.v1.ExportReportResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_report_proto_rawDescOnce sync.Once
@@ -544,37 +2566,93 @@ func file_v1_report_proto_rawDescGZIP() []byte {
 	return file_v1_report_proto_rawDescData
 }
 
-var file_v1_report_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_v1_report_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_v1_report_proto_goTypes = []any{
-	(*ReportSummary)(nil),           // 0: polyglot.v1.ReportSummary
-	(*DailyReportRequest)(nil),      // 1: polyglot.v1.DailyReportRequest
-	(*DailyReportResponse)(nil),     // 2: polyglot.v1.DailyReportResponse
-	(*MonthlyReportRequest)(nil),    // 3: polyglot.v1.MonthlyReportRequest
-	(*MonthlyReportResponse)(nil),   // 4: polyglot.v1.MonthlyReportResponse
-	(*YearlyReportRequest)(nil),     // 5: polyglot.v1.YearlyReportRequest
-	(*YearlyReportResponse)(nil),    // 6: polyglot.v1.YearlyReportResponse
-	(*RefreshSnapshotRequest)(nil),  // 7: polyglot.v1.RefreshSnapshotRequest
-	(*RefreshSnapshotResponse)(nil), // 8: polyglot.v1.RefreshSnapshotResponse
-	nil,                             // 9: polyglot.v1.ReportSummary.CashBalancesEntry
+	(*ReportSummary)(nil),                 // 0: polyglot.v1.ReportSummary
+	(*DailyReportRequest)(nil),            // 1: polyglot.v1.DailyReportRequest
+	(*DailyReportResponse)(nil),           // 2: polyglot.v1.DailyReportResponse
+	(*MonthlyReportRequest)(nil),          // 3: polyglot.v1.MonthlyReportRequest
+	(*MonthlyReportResponse)(nil),         // 4: polyglot.v1.MonthlyReportResponse
+	(*YearlyReportRequest)(nil),           // 5: polyglot.v1.YearlyReportRequest
+	(*YearlyReportResponse)(nil),          // 6: polyglot.v1.YearlyReportResponse
+	(*RefreshSnapshotRequest)(nil),        // 7: polyglot.v1.RefreshSnapshotRequest
+	(*RefreshSnapshotResponse)(nil),       // 8: polyglot.v1.RefreshSnapshotResponse
+	(*ARAgingBucket)(nil),                 // 9: polyglot.v1.ARAgingBucket
+	(*ARAgingRequest)(nil),                // 10: polyglot.v1.ARAgingRequest
+	(*ARAgingResponse)(nil),               // 11: polyglot.v1.ARAgingResponse
+	(*GatewayReconciliationRow)(nil),      // 12: polyglot.v1.GatewayReconciliationRow
+	(*GatewayReconciliationRequest)(nil),  // 13: polyglot.v1.GatewayReconciliationRequest
+	(*GatewayReconciliationResponse)(nil), // 14: polyglot.v1.GatewayReconciliationResponse
+	(*PSBStatusCount)(nil),                // 15: polyglot.v1.PSBStatusCount
+	(*PSBStatsRequest)(nil),               // 16: polyglot.v1.PSBStatsRequest
+	(*PSBStatsResponse)(nil),              // 17: polyglot.v1.PSBStatsResponse
+	(*TaxRow)(nil),                        // 18: polyglot.v1.TaxRow
+	(*TaxReportRequest)(nil),              // 19: polyglot.v1.TaxReportRequest
+	(*TaxReportResponse)(nil),             // 20: polyglot.v1.TaxReportResponse
+	(*SalesRow)(nil),                      // 21: polyglot.v1.SalesRow
+	(*SalesReportRequest)(nil),            // 22: polyglot.v1.SalesReportRequest
+	(*SalesReportResponse)(nil),           // 23: polyglot.v1.SalesReportResponse
+	(*CollectionReportRequest)(nil),       // 24: polyglot.v1.CollectionReportRequest
+	(*CollectionReportResponse)(nil),      // 25: polyglot.v1.CollectionReportResponse
+	(*CashflowRow)(nil),                   // 26: polyglot.v1.CashflowRow
+	(*CashflowReportRequest)(nil),         // 27: polyglot.v1.CashflowReportRequest
+	(*CashflowReportResponse)(nil),        // 28: polyglot.v1.CashflowReportResponse
+	(*AgingDetailRow)(nil),                // 29: polyglot.v1.AgingDetailRow
+	(*AgingDetailRequest)(nil),            // 30: polyglot.v1.AgingDetailRequest
+	(*AgingDetailResponse)(nil),           // 31: polyglot.v1.AgingDetailResponse
+	(*ClosingReportRequest)(nil),          // 32: polyglot.v1.ClosingReportRequest
+	(*ClosingReportResponse)(nil),         // 33: polyglot.v1.ClosingReportResponse
+	(*ExportReportRequest)(nil),           // 34: polyglot.v1.ExportReportRequest
+	(*ExportReportResponse)(nil),          // 35: polyglot.v1.ExportReportResponse
+	nil,                                   // 36: polyglot.v1.ReportSummary.CashBalancesEntry
+	nil,                                   // 37: polyglot.v1.ExportReportRequest.ParamsEntry
 }
 var file_v1_report_proto_depIdxs = []int32{
-	9, // 0: polyglot.v1.ReportSummary.cash_balances:type_name -> polyglot.v1.ReportSummary.CashBalancesEntry
-	0, // 1: polyglot.v1.DailyReportResponse.summary:type_name -> polyglot.v1.ReportSummary
-	0, // 2: polyglot.v1.MonthlyReportResponse.summary:type_name -> polyglot.v1.ReportSummary
-	0, // 3: polyglot.v1.YearlyReportResponse.summary:type_name -> polyglot.v1.ReportSummary
-	1, // 4: polyglot.v1.ReportService.DailyReport:input_type -> polyglot.v1.DailyReportRequest
-	3, // 5: polyglot.v1.ReportService.MonthlyReport:input_type -> polyglot.v1.MonthlyReportRequest
-	5, // 6: polyglot.v1.ReportService.YearlyReport:input_type -> polyglot.v1.YearlyReportRequest
-	7, // 7: polyglot.v1.ReportService.RefreshSnapshot:input_type -> polyglot.v1.RefreshSnapshotRequest
-	2, // 8: polyglot.v1.ReportService.DailyReport:output_type -> polyglot.v1.DailyReportResponse
-	4, // 9: polyglot.v1.ReportService.MonthlyReport:output_type -> polyglot.v1.MonthlyReportResponse
-	6, // 10: polyglot.v1.ReportService.YearlyReport:output_type -> polyglot.v1.YearlyReportResponse
-	8, // 11: polyglot.v1.ReportService.RefreshSnapshot:output_type -> polyglot.v1.RefreshSnapshotResponse
-	8, // [8:12] is the sub-list for method output_type
-	4, // [4:8] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	36, // 0: polyglot.v1.ReportSummary.cash_balances:type_name -> polyglot.v1.ReportSummary.CashBalancesEntry
+	0,  // 1: polyglot.v1.DailyReportResponse.summary:type_name -> polyglot.v1.ReportSummary
+	0,  // 2: polyglot.v1.MonthlyReportResponse.summary:type_name -> polyglot.v1.ReportSummary
+	0,  // 3: polyglot.v1.YearlyReportResponse.summary:type_name -> polyglot.v1.ReportSummary
+	9,  // 4: polyglot.v1.ARAgingResponse.buckets:type_name -> polyglot.v1.ARAgingBucket
+	12, // 5: polyglot.v1.GatewayReconciliationResponse.rows:type_name -> polyglot.v1.GatewayReconciliationRow
+	15, // 6: polyglot.v1.PSBStatsResponse.by_status:type_name -> polyglot.v1.PSBStatusCount
+	18, // 7: polyglot.v1.TaxReportResponse.rows:type_name -> polyglot.v1.TaxRow
+	21, // 8: polyglot.v1.SalesReportResponse.rows:type_name -> polyglot.v1.SalesRow
+	26, // 9: polyglot.v1.CashflowReportResponse.rows:type_name -> polyglot.v1.CashflowRow
+	29, // 10: polyglot.v1.AgingDetailResponse.rows:type_name -> polyglot.v1.AgingDetailRow
+	37, // 11: polyglot.v1.ExportReportRequest.params:type_name -> polyglot.v1.ExportReportRequest.ParamsEntry
+	1,  // 12: polyglot.v1.ReportService.DailyReport:input_type -> polyglot.v1.DailyReportRequest
+	3,  // 13: polyglot.v1.ReportService.MonthlyReport:input_type -> polyglot.v1.MonthlyReportRequest
+	5,  // 14: polyglot.v1.ReportService.YearlyReport:input_type -> polyglot.v1.YearlyReportRequest
+	7,  // 15: polyglot.v1.ReportService.RefreshSnapshot:input_type -> polyglot.v1.RefreshSnapshotRequest
+	10, // 16: polyglot.v1.ReportService.ARAging:input_type -> polyglot.v1.ARAgingRequest
+	13, // 17: polyglot.v1.ReportService.GatewayReconciliation:input_type -> polyglot.v1.GatewayReconciliationRequest
+	16, // 18: polyglot.v1.ReportService.PSBStats:input_type -> polyglot.v1.PSBStatsRequest
+	19, // 19: polyglot.v1.ReportService.TaxReport:input_type -> polyglot.v1.TaxReportRequest
+	22, // 20: polyglot.v1.ReportService.SalesReport:input_type -> polyglot.v1.SalesReportRequest
+	24, // 21: polyglot.v1.ReportService.CollectionReport:input_type -> polyglot.v1.CollectionReportRequest
+	27, // 22: polyglot.v1.ReportService.CashflowReport:input_type -> polyglot.v1.CashflowReportRequest
+	30, // 23: polyglot.v1.ReportService.AgingDetail:input_type -> polyglot.v1.AgingDetailRequest
+	32, // 24: polyglot.v1.ReportService.ClosingReport:input_type -> polyglot.v1.ClosingReportRequest
+	34, // 25: polyglot.v1.ReportService.ExportReport:input_type -> polyglot.v1.ExportReportRequest
+	2,  // 26: polyglot.v1.ReportService.DailyReport:output_type -> polyglot.v1.DailyReportResponse
+	4,  // 27: polyglot.v1.ReportService.MonthlyReport:output_type -> polyglot.v1.MonthlyReportResponse
+	6,  // 28: polyglot.v1.ReportService.YearlyReport:output_type -> polyglot.v1.YearlyReportResponse
+	8,  // 29: polyglot.v1.ReportService.RefreshSnapshot:output_type -> polyglot.v1.RefreshSnapshotResponse
+	11, // 30: polyglot.v1.ReportService.ARAging:output_type -> polyglot.v1.ARAgingResponse
+	14, // 31: polyglot.v1.ReportService.GatewayReconciliation:output_type -> polyglot.v1.GatewayReconciliationResponse
+	17, // 32: polyglot.v1.ReportService.PSBStats:output_type -> polyglot.v1.PSBStatsResponse
+	20, // 33: polyglot.v1.ReportService.TaxReport:output_type -> polyglot.v1.TaxReportResponse
+	23, // 34: polyglot.v1.ReportService.SalesReport:output_type -> polyglot.v1.SalesReportResponse
+	25, // 35: polyglot.v1.ReportService.CollectionReport:output_type -> polyglot.v1.CollectionReportResponse
+	28, // 36: polyglot.v1.ReportService.CashflowReport:output_type -> polyglot.v1.CashflowReportResponse
+	31, // 37: polyglot.v1.ReportService.AgingDetail:output_type -> polyglot.v1.AgingDetailResponse
+	33, // 38: polyglot.v1.ReportService.ClosingReport:output_type -> polyglot.v1.ClosingReportResponse
+	35, // 39: polyglot.v1.ReportService.ExportReport:output_type -> polyglot.v1.ExportReportResponse
+	26, // [26:40] is the sub-list for method output_type
+	12, // [12:26] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_v1_report_proto_init() }
@@ -588,7 +2666,7 @@ func file_v1_report_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_report_proto_rawDesc), len(file_v1_report_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

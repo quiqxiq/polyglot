@@ -1,12 +1,13 @@
+import { useI18n } from '@/context/i18n-provider'
 import { ContentSection } from '../components/content-section'
 import { AppearanceForm } from './appearance-form'
 
 export function SettingsAppearance() {
+  const { t } = useI18n()
   return (
     <ContentSection
-      title='Appearance'
-      desc='Customize the appearance of the app. Automatically switch between day
-          and night themes.'
+      title={t('settings.appearance_title')}
+      desc={t('settings.appearance_desc')}
     >
       <AppearanceForm />
     </ContentSection>

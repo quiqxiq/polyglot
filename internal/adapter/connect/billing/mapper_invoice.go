@@ -1,6 +1,8 @@
 package billing
 
 import (
+	"time"
+
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 )
@@ -17,6 +19,24 @@ func toProtoInvoice(inv *domainBilling.Invoice) *devicepb.Invoice {
 	if inv.PaidAt != nil {
 		paidAtUnix = inv.PaidAt.Unix()
 	}
+	var periodStartUnix, periodEndUnix int64
+	if inv.PeriodStart != nil {
+		periodStartUnix = inv.PeriodStart.Unix()
+	}
+	if inv.PeriodEnd != nil {
+		periodEndUnix = inv.PeriodEnd.Unix()
+	}
+	var issuedAtUnix int64
+	if !inv.IssuedAt.IsZero() {
+		issuedAtUnix = inv.IssuedAt.Unix()
+	}
+	var daysOverdue int32
+	if inv.DueDate.Before(inv.IssuedAt) || (inv.Status != domainBilling.StatusPaid && inv.Status != domainBilling.StatusCancelled) {
+		diff := time.Since(inv.DueDate)
+		if diff > 0 {
+			daysOverdue = int32(diff.Hours() / 24)
+		}
+	}
 	return &devicepb.Invoice{
 		Id:                inv.ID,
 		TenantId:          inv.TenantID,
@@ -26,9 +46,12 @@ func toProtoInvoice(inv *domainBilling.Invoice) *devicepb.Invoice {
 		Period:            inv.Period,
 		Subtotal:          inv.Subtotal,
 		Discount:          inv.Discount,
+		TaxPercent:        inv.TaxPercent,
 		TaxAmount:         inv.TaxAmount,
 		Total:             inv.Total,
 		PaidAmount:        inv.PaidAmount,
+		Outstanding:       inv.Outstanding(),
+		DaysOverdue:       daysOverdue,
 		DueDateUnix:       inv.DueDate.Unix(),
 		PaidAtUnix:        paidAtUnix,
 		Status:            inv.Status,
@@ -36,6 +59,16 @@ func toProtoInvoice(inv *domainBilling.Invoice) *devicepb.Invoice {
 		ManualPaymentCode: inv.ManualPaymentCode,
 		Notes:             inv.Notes,
 		CreatedAtUnix:     inv.CreatedAt.Unix(),
+		InvoiceType:       inv.InvoiceType,
+		PeriodStartUnix:   periodStartUnix,
+		PeriodEndUnix:     periodEndUnix,
+		ProratedDays:      int32(inv.ProratedDays),
+		PeriodDays:        int32(inv.PeriodDays),
+		DiscountType:      inv.DiscountType,
+		DiscountValue:     inv.DiscountValue,
+		DiscountAmount:    inv.DiscountAmount,
+		PromoCode:         inv.PromoCode,
+		IssuedAtUnix:      issuedAtUnix,
 	}
 }
 

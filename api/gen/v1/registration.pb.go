@@ -52,8 +52,27 @@ type Registration struct {
 	CreatedAtUnix            int64                  `protobuf:"varint,26,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
 	TargetDeviceId           string                 `protobuf:"bytes,27,opt,name=target_device_id,json=targetDeviceId,proto3" json:"target_device_id,omitempty"`       // Router yang dipilih teknisi saat pasang
 	TargetDeviceName         string                 `protobuf:"bytes,28,opt,name=target_device_name,json=targetDeviceName,proto3" json:"target_device_name,omitempty"` // Nama router BRAS
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
+	// ── PSB v2 (migrasi 000032) ──────────────────────────────────────────
+	Nik                       string  `protobuf:"bytes,29,opt,name=nik,proto3" json:"nik,omitempty"`
+	IdCardPhotoUrl            string  `protobuf:"bytes,30,opt,name=id_card_photo_url,json=idCardPhotoUrl,proto3" json:"id_card_photo_url,omitempty"`
+	HousePhotoUrl             string  `protobuf:"bytes,31,opt,name=house_photo_url,json=housePhotoUrl,proto3" json:"house_photo_url,omitempty"`
+	SurveyDateUnix            int64   `protobuf:"varint,32,opt,name=survey_date_unix,json=surveyDateUnix,proto3" json:"survey_date_unix,omitempty"`
+	SurveyTime                string  `protobuf:"bytes,33,opt,name=survey_time,json=surveyTime,proto3" json:"survey_time,omitempty"` // "HH:MM"
+	SurveyorId                string  `protobuf:"bytes,34,opt,name=surveyor_id,json=surveyorId,proto3" json:"surveyor_id,omitempty"`
+	SurveyStatus              string  `protobuf:"bytes,35,opt,name=survey_status,json=surveyStatus,proto3" json:"survey_status,omitempty"` // ELIGIBLE | NOT_ELIGIBLE
+	SurveyNotes               string  `protobuf:"bytes,36,opt,name=survey_notes,json=surveyNotes,proto3" json:"survey_notes,omitempty"`
+	EstimatedCableLengthMeter int32   `protobuf:"varint,37,opt,name=estimated_cable_length_meter,json=estimatedCableLengthMeter,proto3" json:"estimated_cable_length_meter,omitempty"`
+	PublicToken               string  `protobuf:"bytes,38,opt,name=public_token,json=publicToken,proto3" json:"public_token,omitempty"` // token lacak tanpa login
+	InstallationStartedAtUnix int64   `protobuf:"varint,39,opt,name=installation_started_at_unix,json=installationStartedAtUnix,proto3" json:"installation_started_at_unix,omitempty"`
+	InstallationPhotoUrl      string  `protobuf:"bytes,40,opt,name=installation_photo_url,json=installationPhotoUrl,proto3" json:"installation_photo_url,omitempty"`
+	OntMacAddress             string  `protobuf:"bytes,41,opt,name=ont_mac_address,json=ontMacAddress,proto3" json:"ont_mac_address,omitempty"`
+	OntSerialNumber           string  `protobuf:"bytes,42,opt,name=ont_serial_number,json=ontSerialNumber,proto3" json:"ont_serial_number,omitempty"`
+	OltDeviceId               string  `protobuf:"bytes,44,opt,name=olt_device_id,json=oltDeviceId,proto3" json:"olt_device_id,omitempty"`
+	PonIndex                  int32   `protobuf:"varint,45,opt,name=pon_index,json=ponIndex,proto3" json:"pon_index,omitempty"`
+	OnuIndex                  int32   `protobuf:"varint,46,opt,name=onu_index,json=onuIndex,proto3" json:"onu_index,omitempty"`
+	DiscountAmount            float64 `protobuf:"fixed64,43,opt,name=discount_amount,json=discountAmount,proto3" json:"discount_amount,omitempty"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *Registration) Reset() {
@@ -282,6 +301,233 @@ func (x *Registration) GetTargetDeviceName() string {
 	return ""
 }
 
+func (x *Registration) GetNik() string {
+	if x != nil {
+		return x.Nik
+	}
+	return ""
+}
+
+func (x *Registration) GetIdCardPhotoUrl() string {
+	if x != nil {
+		return x.IdCardPhotoUrl
+	}
+	return ""
+}
+
+func (x *Registration) GetHousePhotoUrl() string {
+	if x != nil {
+		return x.HousePhotoUrl
+	}
+	return ""
+}
+
+func (x *Registration) GetSurveyDateUnix() int64 {
+	if x != nil {
+		return x.SurveyDateUnix
+	}
+	return 0
+}
+
+func (x *Registration) GetSurveyTime() string {
+	if x != nil {
+		return x.SurveyTime
+	}
+	return ""
+}
+
+func (x *Registration) GetSurveyorId() string {
+	if x != nil {
+		return x.SurveyorId
+	}
+	return ""
+}
+
+func (x *Registration) GetSurveyStatus() string {
+	if x != nil {
+		return x.SurveyStatus
+	}
+	return ""
+}
+
+func (x *Registration) GetSurveyNotes() string {
+	if x != nil {
+		return x.SurveyNotes
+	}
+	return ""
+}
+
+func (x *Registration) GetEstimatedCableLengthMeter() int32 {
+	if x != nil {
+		return x.EstimatedCableLengthMeter
+	}
+	return 0
+}
+
+func (x *Registration) GetPublicToken() string {
+	if x != nil {
+		return x.PublicToken
+	}
+	return ""
+}
+
+func (x *Registration) GetInstallationStartedAtUnix() int64 {
+	if x != nil {
+		return x.InstallationStartedAtUnix
+	}
+	return 0
+}
+
+func (x *Registration) GetInstallationPhotoUrl() string {
+	if x != nil {
+		return x.InstallationPhotoUrl
+	}
+	return ""
+}
+
+func (x *Registration) GetOntMacAddress() string {
+	if x != nil {
+		return x.OntMacAddress
+	}
+	return ""
+}
+
+func (x *Registration) GetOntSerialNumber() string {
+	if x != nil {
+		return x.OntSerialNumber
+	}
+	return ""
+}
+
+func (x *Registration) GetOltDeviceId() string {
+	if x != nil {
+		return x.OltDeviceId
+	}
+	return ""
+}
+
+func (x *Registration) GetPonIndex() int32 {
+	if x != nil {
+		return x.PonIndex
+	}
+	return 0
+}
+
+func (x *Registration) GetOnuIndex() int32 {
+	if x != nil {
+		return x.OnuIndex
+	}
+	return 0
+}
+
+func (x *Registration) GetDiscountAmount() float64 {
+	if x != nil {
+		return x.DiscountAmount
+	}
+	return 0
+}
+
+// RegistrationEvent adalah satu entri timeline PSB (registration_events).
+type RegistrationEvent struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	RegistrationId string                 `protobuf:"bytes,2,opt,name=registration_id,json=registrationId,proto3" json:"registration_id,omitempty"`
+	EventType      string                 `protobuf:"bytes,3,opt,name=event_type,json=eventType,proto3" json:"event_type,omitempty"`
+	ActorId        string                 `protobuf:"bytes,4,opt,name=actor_id,json=actorId,proto3" json:"actor_id,omitempty"`
+	Title          string                 `protobuf:"bytes,5,opt,name=title,proto3" json:"title,omitempty"`
+	Description    string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
+	MetadataJson   string                 `protobuf:"bytes,7,opt,name=metadata_json,json=metadataJson,proto3" json:"metadata_json,omitempty"`
+	CreatedAtUnix  int64                  `protobuf:"varint,8,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RegistrationEvent) Reset() {
+	*x = RegistrationEvent{}
+	mi := &file_v1_registration_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegistrationEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegistrationEvent) ProtoMessage() {}
+
+func (x *RegistrationEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegistrationEvent.ProtoReflect.Descriptor instead.
+func (*RegistrationEvent) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *RegistrationEvent) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *RegistrationEvent) GetRegistrationId() string {
+	if x != nil {
+		return x.RegistrationId
+	}
+	return ""
+}
+
+func (x *RegistrationEvent) GetEventType() string {
+	if x != nil {
+		return x.EventType
+	}
+	return ""
+}
+
+func (x *RegistrationEvent) GetActorId() string {
+	if x != nil {
+		return x.ActorId
+	}
+	return ""
+}
+
+func (x *RegistrationEvent) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *RegistrationEvent) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *RegistrationEvent) GetMetadataJson() string {
+	if x != nil {
+		return x.MetadataJson
+	}
+	return ""
+}
+
+func (x *RegistrationEvent) GetCreatedAtUnix() int64 {
+	if x != nil {
+		return x.CreatedAtUnix
+	}
+	return 0
+}
+
 // PUBLIC — dipanggil calon pelanggan tanpa JWT.
 type SubmitRegistrationRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
@@ -294,13 +540,16 @@ type SubmitRegistrationRequest struct {
 	HasCoordinates bool                   `protobuf:"varint,7,opt,name=has_coordinates,json=hasCoordinates,proto3" json:"has_coordinates,omitempty"`
 	Notes          string                 `protobuf:"bytes,8,opt,name=notes,proto3" json:"notes,omitempty"`
 	PlanId         string                 `protobuf:"bytes,9,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
+	Nik            string                 `protobuf:"bytes,10,opt,name=nik,proto3" json:"nik,omitempty"`
+	IdCardPhotoUrl string                 `protobuf:"bytes,11,opt,name=id_card_photo_url,json=idCardPhotoUrl,proto3" json:"id_card_photo_url,omitempty"`
+	HousePhotoUrl  string                 `protobuf:"bytes,12,opt,name=house_photo_url,json=housePhotoUrl,proto3" json:"house_photo_url,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *SubmitRegistrationRequest) Reset() {
 	*x = SubmitRegistrationRequest{}
-	mi := &file_v1_registration_proto_msgTypes[1]
+	mi := &file_v1_registration_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -312,7 +561,7 @@ func (x *SubmitRegistrationRequest) String() string {
 func (*SubmitRegistrationRequest) ProtoMessage() {}
 
 func (x *SubmitRegistrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[1]
+	mi := &file_v1_registration_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -325,7 +574,7 @@ func (x *SubmitRegistrationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitRegistrationRequest.ProtoReflect.Descriptor instead.
 func (*SubmitRegistrationRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{1}
+	return file_v1_registration_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SubmitRegistrationRequest) GetFullName() string {
@@ -391,6 +640,27 @@ func (x *SubmitRegistrationRequest) GetPlanId() string {
 	return ""
 }
 
+func (x *SubmitRegistrationRequest) GetNik() string {
+	if x != nil {
+		return x.Nik
+	}
+	return ""
+}
+
+func (x *SubmitRegistrationRequest) GetIdCardPhotoUrl() string {
+	if x != nil {
+		return x.IdCardPhotoUrl
+	}
+	return ""
+}
+
+func (x *SubmitRegistrationRequest) GetHousePhotoUrl() string {
+	if x != nil {
+		return x.HousePhotoUrl
+	}
+	return ""
+}
+
 type SubmitRegistrationResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Registration  *Registration          `protobuf:"bytes,1,opt,name=registration,proto3" json:"registration,omitempty"`
@@ -400,7 +670,7 @@ type SubmitRegistrationResponse struct {
 
 func (x *SubmitRegistrationResponse) Reset() {
 	*x = SubmitRegistrationResponse{}
-	mi := &file_v1_registration_proto_msgTypes[2]
+	mi := &file_v1_registration_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -412,7 +682,7 @@ func (x *SubmitRegistrationResponse) String() string {
 func (*SubmitRegistrationResponse) ProtoMessage() {}
 
 func (x *SubmitRegistrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[2]
+	mi := &file_v1_registration_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -425,7 +695,7 @@ func (x *SubmitRegistrationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitRegistrationResponse.ProtoReflect.Descriptor instead.
 func (*SubmitRegistrationResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{2}
+	return file_v1_registration_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *SubmitRegistrationResponse) GetRegistration() *Registration {
@@ -445,7 +715,7 @@ type ListRegistrationsRequest struct {
 
 func (x *ListRegistrationsRequest) Reset() {
 	*x = ListRegistrationsRequest{}
-	mi := &file_v1_registration_proto_msgTypes[3]
+	mi := &file_v1_registration_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -457,7 +727,7 @@ func (x *ListRegistrationsRequest) String() string {
 func (*ListRegistrationsRequest) ProtoMessage() {}
 
 func (x *ListRegistrationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[3]
+	mi := &file_v1_registration_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -470,7 +740,7 @@ func (x *ListRegistrationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRegistrationsRequest.ProtoReflect.Descriptor instead.
 func (*ListRegistrationsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{3}
+	return file_v1_registration_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListRegistrationsRequest) GetStatus() string {
@@ -496,7 +766,7 @@ type ListRegistrationsResponse struct {
 
 func (x *ListRegistrationsResponse) Reset() {
 	*x = ListRegistrationsResponse{}
-	mi := &file_v1_registration_proto_msgTypes[4]
+	mi := &file_v1_registration_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -508,7 +778,7 @@ func (x *ListRegistrationsResponse) String() string {
 func (*ListRegistrationsResponse) ProtoMessage() {}
 
 func (x *ListRegistrationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[4]
+	mi := &file_v1_registration_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -521,7 +791,7 @@ func (x *ListRegistrationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRegistrationsResponse.ProtoReflect.Descriptor instead.
 func (*ListRegistrationsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{4}
+	return file_v1_registration_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ListRegistrationsResponse) GetRegistrations() []*Registration {
@@ -540,7 +810,7 @@ type GetRegistrationRequest struct {
 
 func (x *GetRegistrationRequest) Reset() {
 	*x = GetRegistrationRequest{}
-	mi := &file_v1_registration_proto_msgTypes[5]
+	mi := &file_v1_registration_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -552,7 +822,7 @@ func (x *GetRegistrationRequest) String() string {
 func (*GetRegistrationRequest) ProtoMessage() {}
 
 func (x *GetRegistrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[5]
+	mi := &file_v1_registration_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -565,7 +835,7 @@ func (x *GetRegistrationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRegistrationRequest.ProtoReflect.Descriptor instead.
 func (*GetRegistrationRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{5}
+	return file_v1_registration_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetRegistrationRequest) GetId() string {
@@ -584,7 +854,7 @@ type GetRegistrationResponse struct {
 
 func (x *GetRegistrationResponse) Reset() {
 	*x = GetRegistrationResponse{}
-	mi := &file_v1_registration_proto_msgTypes[6]
+	mi := &file_v1_registration_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -596,7 +866,7 @@ func (x *GetRegistrationResponse) String() string {
 func (*GetRegistrationResponse) ProtoMessage() {}
 
 func (x *GetRegistrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[6]
+	mi := &file_v1_registration_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -609,7 +879,7 @@ func (x *GetRegistrationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRegistrationResponse.ProtoReflect.Descriptor instead.
 func (*GetRegistrationResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{6}
+	return file_v1_registration_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetRegistrationResponse) GetRegistration() *Registration {
@@ -629,7 +899,7 @@ type ApproveRegistrationRequest struct {
 
 func (x *ApproveRegistrationRequest) Reset() {
 	*x = ApproveRegistrationRequest{}
-	mi := &file_v1_registration_proto_msgTypes[7]
+	mi := &file_v1_registration_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -641,7 +911,7 @@ func (x *ApproveRegistrationRequest) String() string {
 func (*ApproveRegistrationRequest) ProtoMessage() {}
 
 func (x *ApproveRegistrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[7]
+	mi := &file_v1_registration_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -654,7 +924,7 @@ func (x *ApproveRegistrationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApproveRegistrationRequest.ProtoReflect.Descriptor instead.
 func (*ApproveRegistrationRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{7}
+	return file_v1_registration_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ApproveRegistrationRequest) GetId() string {
@@ -680,7 +950,7 @@ type ApproveRegistrationResponse struct {
 
 func (x *ApproveRegistrationResponse) Reset() {
 	*x = ApproveRegistrationResponse{}
-	mi := &file_v1_registration_proto_msgTypes[8]
+	mi := &file_v1_registration_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -692,7 +962,7 @@ func (x *ApproveRegistrationResponse) String() string {
 func (*ApproveRegistrationResponse) ProtoMessage() {}
 
 func (x *ApproveRegistrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[8]
+	mi := &file_v1_registration_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -705,7 +975,7 @@ func (x *ApproveRegistrationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApproveRegistrationResponse.ProtoReflect.Descriptor instead.
 func (*ApproveRegistrationResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{8}
+	return file_v1_registration_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ApproveRegistrationResponse) GetRegistration() *Registration {
@@ -727,7 +997,7 @@ type ScheduleInstallRequest struct {
 
 func (x *ScheduleInstallRequest) Reset() {
 	*x = ScheduleInstallRequest{}
-	mi := &file_v1_registration_proto_msgTypes[9]
+	mi := &file_v1_registration_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -739,7 +1009,7 @@ func (x *ScheduleInstallRequest) String() string {
 func (*ScheduleInstallRequest) ProtoMessage() {}
 
 func (x *ScheduleInstallRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[9]
+	mi := &file_v1_registration_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -752,7 +1022,7 @@ func (x *ScheduleInstallRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScheduleInstallRequest.ProtoReflect.Descriptor instead.
 func (*ScheduleInstallRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{9}
+	return file_v1_registration_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ScheduleInstallRequest) GetId() string {
@@ -792,7 +1062,7 @@ type ScheduleInstallResponse struct {
 
 func (x *ScheduleInstallResponse) Reset() {
 	*x = ScheduleInstallResponse{}
-	mi := &file_v1_registration_proto_msgTypes[10]
+	mi := &file_v1_registration_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -804,7 +1074,7 @@ func (x *ScheduleInstallResponse) String() string {
 func (*ScheduleInstallResponse) ProtoMessage() {}
 
 func (x *ScheduleInstallResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[10]
+	mi := &file_v1_registration_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -817,7 +1087,7 @@ func (x *ScheduleInstallResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScheduleInstallResponse.ProtoReflect.Descriptor instead.
 func (*ScheduleInstallResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{10}
+	return file_v1_registration_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ScheduleInstallResponse) GetRegistration() *Registration {
@@ -832,13 +1102,20 @@ type MarkInstalledRequest struct {
 	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	TechnicianNotes string                 `protobuf:"bytes,2,opt,name=technician_notes,json=technicianNotes,proto3" json:"technician_notes,omitempty"`
 	DeviceId        string                 `protobuf:"bytes,3,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"` // Router BRAS yang dipilih teknisi saat selesai pasang fisik
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Bukti instalasi (PSB v2).
+	InstallationPhotoUrl string `protobuf:"bytes,4,opt,name=installation_photo_url,json=installationPhotoUrl,proto3" json:"installation_photo_url,omitempty"`
+	OntMacAddress        string `protobuf:"bytes,5,opt,name=ont_mac_address,json=ontMacAddress,proto3" json:"ont_mac_address,omitempty"`
+	OntSerialNumber      string `protobuf:"bytes,6,opt,name=ont_serial_number,json=ontSerialNumber,proto3" json:"ont_serial_number,omitempty"`
+	OltDeviceId          string `protobuf:"bytes,7,opt,name=olt_device_id,json=oltDeviceId,proto3" json:"olt_device_id,omitempty"`
+	PonIndex             int32  `protobuf:"varint,8,opt,name=pon_index,json=ponIndex,proto3" json:"pon_index,omitempty"`
+	OnuIndex             int32  `protobuf:"varint,9,opt,name=onu_index,json=onuIndex,proto3" json:"onu_index,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *MarkInstalledRequest) Reset() {
 	*x = MarkInstalledRequest{}
-	mi := &file_v1_registration_proto_msgTypes[11]
+	mi := &file_v1_registration_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -850,7 +1127,7 @@ func (x *MarkInstalledRequest) String() string {
 func (*MarkInstalledRequest) ProtoMessage() {}
 
 func (x *MarkInstalledRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[11]
+	mi := &file_v1_registration_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -863,7 +1140,7 @@ func (x *MarkInstalledRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MarkInstalledRequest.ProtoReflect.Descriptor instead.
 func (*MarkInstalledRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{11}
+	return file_v1_registration_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *MarkInstalledRequest) GetId() string {
@@ -887,6 +1164,48 @@ func (x *MarkInstalledRequest) GetDeviceId() string {
 	return ""
 }
 
+func (x *MarkInstalledRequest) GetInstallationPhotoUrl() string {
+	if x != nil {
+		return x.InstallationPhotoUrl
+	}
+	return ""
+}
+
+func (x *MarkInstalledRequest) GetOntMacAddress() string {
+	if x != nil {
+		return x.OntMacAddress
+	}
+	return ""
+}
+
+func (x *MarkInstalledRequest) GetOntSerialNumber() string {
+	if x != nil {
+		return x.OntSerialNumber
+	}
+	return ""
+}
+
+func (x *MarkInstalledRequest) GetOltDeviceId() string {
+	if x != nil {
+		return x.OltDeviceId
+	}
+	return ""
+}
+
+func (x *MarkInstalledRequest) GetPonIndex() int32 {
+	if x != nil {
+		return x.PonIndex
+	}
+	return 0
+}
+
+func (x *MarkInstalledRequest) GetOnuIndex() int32 {
+	if x != nil {
+		return x.OnuIndex
+	}
+	return 0
+}
+
 type MarkInstalledResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Registration  *Registration          `protobuf:"bytes,1,opt,name=registration,proto3" json:"registration,omitempty"`
@@ -896,7 +1215,7 @@ type MarkInstalledResponse struct {
 
 func (x *MarkInstalledResponse) Reset() {
 	*x = MarkInstalledResponse{}
-	mi := &file_v1_registration_proto_msgTypes[12]
+	mi := &file_v1_registration_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -908,7 +1227,7 @@ func (x *MarkInstalledResponse) String() string {
 func (*MarkInstalledResponse) ProtoMessage() {}
 
 func (x *MarkInstalledResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[12]
+	mi := &file_v1_registration_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -921,12 +1240,595 @@ func (x *MarkInstalledResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MarkInstalledResponse.ProtoReflect.Descriptor instead.
 func (*MarkInstalledResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{12}
+	return file_v1_registration_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *MarkInstalledResponse) GetRegistration() *Registration {
 	if x != nil {
 		return x.Registration
+	}
+	return nil
+}
+
+// ── PSB v2: survey, mulai instalasi, lacak publik, timeline ──────────────
+type RecordSurveyRequest struct {
+	state                     protoimpl.MessageState `protogen:"open.v1"`
+	Id                        string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	SurveyDateUnix            int64                  `protobuf:"varint,2,opt,name=survey_date_unix,json=surveyDateUnix,proto3" json:"survey_date_unix,omitempty"` // 0 = hari ini
+	SurveyTimeHhmm            string                 `protobuf:"bytes,3,opt,name=survey_time_hhmm,json=surveyTimeHhmm,proto3" json:"survey_time_hhmm,omitempty"`  // "HH:MM"; kosong = tanpa jam
+	SurveyorId                string                 `protobuf:"bytes,4,opt,name=surveyor_id,json=surveyorId,proto3" json:"surveyor_id,omitempty"`                // users.id; kosong = biarkan
+	SurveyStatus              string                 `protobuf:"bytes,5,opt,name=survey_status,json=surveyStatus,proto3" json:"survey_status,omitempty"`          // ELIGIBLE | NOT_ELIGIBLE (kosong = ELIGIBLE)
+	SurveyNotes               string                 `protobuf:"bytes,6,opt,name=survey_notes,json=surveyNotes,proto3" json:"survey_notes,omitempty"`
+	EstimatedCableLengthMeter int32                  `protobuf:"varint,7,opt,name=estimated_cable_length_meter,json=estimatedCableLengthMeter,proto3" json:"estimated_cable_length_meter,omitempty"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
+}
+
+func (x *RecordSurveyRequest) Reset() {
+	*x = RecordSurveyRequest{}
+	mi := &file_v1_registration_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RecordSurveyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RecordSurveyRequest) ProtoMessage() {}
+
+func (x *RecordSurveyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RecordSurveyRequest.ProtoReflect.Descriptor instead.
+func (*RecordSurveyRequest) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *RecordSurveyRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *RecordSurveyRequest) GetSurveyDateUnix() int64 {
+	if x != nil {
+		return x.SurveyDateUnix
+	}
+	return 0
+}
+
+func (x *RecordSurveyRequest) GetSurveyTimeHhmm() string {
+	if x != nil {
+		return x.SurveyTimeHhmm
+	}
+	return ""
+}
+
+func (x *RecordSurveyRequest) GetSurveyorId() string {
+	if x != nil {
+		return x.SurveyorId
+	}
+	return ""
+}
+
+func (x *RecordSurveyRequest) GetSurveyStatus() string {
+	if x != nil {
+		return x.SurveyStatus
+	}
+	return ""
+}
+
+func (x *RecordSurveyRequest) GetSurveyNotes() string {
+	if x != nil {
+		return x.SurveyNotes
+	}
+	return ""
+}
+
+func (x *RecordSurveyRequest) GetEstimatedCableLengthMeter() int32 {
+	if x != nil {
+		return x.EstimatedCableLengthMeter
+	}
+	return 0
+}
+
+type RecordSurveyResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Registration  *Registration          `protobuf:"bytes,1,opt,name=registration,proto3" json:"registration,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RecordSurveyResponse) Reset() {
+	*x = RecordSurveyResponse{}
+	mi := &file_v1_registration_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RecordSurveyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RecordSurveyResponse) ProtoMessage() {}
+
+func (x *RecordSurveyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RecordSurveyResponse.ProtoReflect.Descriptor instead.
+func (*RecordSurveyResponse) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *RecordSurveyResponse) GetRegistration() *Registration {
+	if x != nil {
+		return x.Registration
+	}
+	return nil
+}
+
+type StartInstallationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StartInstallationRequest) Reset() {
+	*x = StartInstallationRequest{}
+	mi := &file_v1_registration_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartInstallationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartInstallationRequest) ProtoMessage() {}
+
+func (x *StartInstallationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartInstallationRequest.ProtoReflect.Descriptor instead.
+func (*StartInstallationRequest) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *StartInstallationRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type StartInstallationResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Registration  *Registration          `protobuf:"bytes,1,opt,name=registration,proto3" json:"registration,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StartInstallationResponse) Reset() {
+	*x = StartInstallationResponse{}
+	mi := &file_v1_registration_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartInstallationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartInstallationResponse) ProtoMessage() {}
+
+func (x *StartInstallationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartInstallationResponse.ProtoReflect.Descriptor instead.
+func (*StartInstallationResponse) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *StartInstallationResponse) GetRegistration() *Registration {
+	if x != nil {
+		return x.Registration
+	}
+	return nil
+}
+
+// PUBLIC — dipanggil calon pelanggan tanpa JWT untuk lacak status.
+type TrackRegistrationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PublicToken   string                 `protobuf:"bytes,1,opt,name=public_token,json=publicToken,proto3" json:"public_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrackRegistrationRequest) Reset() {
+	*x = TrackRegistrationRequest{}
+	mi := &file_v1_registration_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrackRegistrationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrackRegistrationRequest) ProtoMessage() {}
+
+func (x *TrackRegistrationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrackRegistrationRequest.ProtoReflect.Descriptor instead.
+func (*TrackRegistrationRequest) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *TrackRegistrationRequest) GetPublicToken() string {
+	if x != nil {
+		return x.PublicToken
+	}
+	return ""
+}
+
+type TrackRegistrationResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Registration  *Registration          `protobuf:"bytes,1,opt,name=registration,proto3" json:"registration,omitempty"`
+	Events        []*RegistrationEvent   `protobuf:"bytes,2,rep,name=events,proto3" json:"events,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrackRegistrationResponse) Reset() {
+	*x = TrackRegistrationResponse{}
+	mi := &file_v1_registration_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrackRegistrationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrackRegistrationResponse) ProtoMessage() {}
+
+func (x *TrackRegistrationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrackRegistrationResponse.ProtoReflect.Descriptor instead.
+func (*TrackRegistrationResponse) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *TrackRegistrationResponse) GetRegistration() *Registration {
+	if x != nil {
+		return x.Registration
+	}
+	return nil
+}
+
+func (x *TrackRegistrationResponse) GetEvents() []*RegistrationEvent {
+	if x != nil {
+		return x.Events
+	}
+	return nil
+}
+
+// PUBLIC — daftar paket aktif untuk formulir pendaftaran.
+type PublicPlan struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Id                    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name                  string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ServiceType           string                 `protobuf:"bytes,3,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // PPPOE | HOTSPOT | DEDICATED
+	Price                 float64                `protobuf:"fixed64,4,opt,name=price,proto3" json:"price,omitempty"`
+	BandwidthDownloadKbps int32                  `protobuf:"varint,5,opt,name=bandwidth_download_kbps,json=bandwidthDownloadKbps,proto3" json:"bandwidth_download_kbps,omitempty"`
+	BandwidthUploadKbps   int32                  `protobuf:"varint,6,opt,name=bandwidth_upload_kbps,json=bandwidthUploadKbps,proto3" json:"bandwidth_upload_kbps,omitempty"`
+	InstallationFee       float64                `protobuf:"fixed64,7,opt,name=installation_fee,json=installationFee,proto3" json:"installation_fee,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *PublicPlan) Reset() {
+	*x = PublicPlan{}
+	mi := &file_v1_registration_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublicPlan) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublicPlan) ProtoMessage() {}
+
+func (x *PublicPlan) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublicPlan.ProtoReflect.Descriptor instead.
+func (*PublicPlan) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *PublicPlan) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PublicPlan) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PublicPlan) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *PublicPlan) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *PublicPlan) GetBandwidthDownloadKbps() int32 {
+	if x != nil {
+		return x.BandwidthDownloadKbps
+	}
+	return 0
+}
+
+func (x *PublicPlan) GetBandwidthUploadKbps() int32 {
+	if x != nil {
+		return x.BandwidthUploadKbps
+	}
+	return 0
+}
+
+func (x *PublicPlan) GetInstallationFee() float64 {
+	if x != nil {
+		return x.InstallationFee
+	}
+	return 0
+}
+
+type ListPublicPlansRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPublicPlansRequest) Reset() {
+	*x = ListPublicPlansRequest{}
+	mi := &file_v1_registration_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPublicPlansRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPublicPlansRequest) ProtoMessage() {}
+
+func (x *ListPublicPlansRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPublicPlansRequest.ProtoReflect.Descriptor instead.
+func (*ListPublicPlansRequest) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{21}
+}
+
+type ListPublicPlansResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plans         []*PublicPlan          `protobuf:"bytes,1,rep,name=plans,proto3" json:"plans,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPublicPlansResponse) Reset() {
+	*x = ListPublicPlansResponse{}
+	mi := &file_v1_registration_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPublicPlansResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPublicPlansResponse) ProtoMessage() {}
+
+func (x *ListPublicPlansResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPublicPlansResponse.ProtoReflect.Descriptor instead.
+func (*ListPublicPlansResponse) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *ListPublicPlansResponse) GetPlans() []*PublicPlan {
+	if x != nil {
+		return x.Plans
+	}
+	return nil
+}
+
+type ListRegistrationEventsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListRegistrationEventsRequest) Reset() {
+	*x = ListRegistrationEventsRequest{}
+	mi := &file_v1_registration_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListRegistrationEventsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListRegistrationEventsRequest) ProtoMessage() {}
+
+func (x *ListRegistrationEventsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListRegistrationEventsRequest.ProtoReflect.Descriptor instead.
+func (*ListRegistrationEventsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ListRegistrationEventsRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type ListRegistrationEventsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Events        []*RegistrationEvent   `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListRegistrationEventsResponse) Reset() {
+	*x = ListRegistrationEventsResponse{}
+	mi := &file_v1_registration_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListRegistrationEventsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListRegistrationEventsResponse) ProtoMessage() {}
+
+func (x *ListRegistrationEventsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_registration_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListRegistrationEventsResponse.ProtoReflect.Descriptor instead.
+func (*ListRegistrationEventsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_registration_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ListRegistrationEventsResponse) GetEvents() []*RegistrationEvent {
+	if x != nil {
+		return x.Events
 	}
 	return nil
 }
@@ -941,7 +1843,7 @@ type RejectRegistrationRequest struct {
 
 func (x *RejectRegistrationRequest) Reset() {
 	*x = RejectRegistrationRequest{}
-	mi := &file_v1_registration_proto_msgTypes[13]
+	mi := &file_v1_registration_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -953,7 +1855,7 @@ func (x *RejectRegistrationRequest) String() string {
 func (*RejectRegistrationRequest) ProtoMessage() {}
 
 func (x *RejectRegistrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[13]
+	mi := &file_v1_registration_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -966,7 +1868,7 @@ func (x *RejectRegistrationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RejectRegistrationRequest.ProtoReflect.Descriptor instead.
 func (*RejectRegistrationRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{13}
+	return file_v1_registration_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *RejectRegistrationRequest) GetId() string {
@@ -992,7 +1894,7 @@ type RejectRegistrationResponse struct {
 
 func (x *RejectRegistrationResponse) Reset() {
 	*x = RejectRegistrationResponse{}
-	mi := &file_v1_registration_proto_msgTypes[14]
+	mi := &file_v1_registration_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1004,7 +1906,7 @@ func (x *RejectRegistrationResponse) String() string {
 func (*RejectRegistrationResponse) ProtoMessage() {}
 
 func (x *RejectRegistrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[14]
+	mi := &file_v1_registration_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1017,7 +1919,7 @@ func (x *RejectRegistrationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RejectRegistrationResponse.ProtoReflect.Descriptor instead.
 func (*RejectRegistrationResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{14}
+	return file_v1_registration_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *RejectRegistrationResponse) GetRegistration() *Registration {
@@ -1037,7 +1939,7 @@ type CancelRegistrationRequest struct {
 
 func (x *CancelRegistrationRequest) Reset() {
 	*x = CancelRegistrationRequest{}
-	mi := &file_v1_registration_proto_msgTypes[15]
+	mi := &file_v1_registration_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1049,7 +1951,7 @@ func (x *CancelRegistrationRequest) String() string {
 func (*CancelRegistrationRequest) ProtoMessage() {}
 
 func (x *CancelRegistrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[15]
+	mi := &file_v1_registration_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1062,7 +1964,7 @@ func (x *CancelRegistrationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CancelRegistrationRequest.ProtoReflect.Descriptor instead.
 func (*CancelRegistrationRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{15}
+	return file_v1_registration_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *CancelRegistrationRequest) GetId() string {
@@ -1088,7 +1990,7 @@ type CancelRegistrationResponse struct {
 
 func (x *CancelRegistrationResponse) Reset() {
 	*x = CancelRegistrationResponse{}
-	mi := &file_v1_registration_proto_msgTypes[16]
+	mi := &file_v1_registration_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1100,7 +2002,7 @@ func (x *CancelRegistrationResponse) String() string {
 func (*CancelRegistrationResponse) ProtoMessage() {}
 
 func (x *CancelRegistrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[16]
+	mi := &file_v1_registration_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1113,7 +2015,7 @@ func (x *CancelRegistrationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CancelRegistrationResponse.ProtoReflect.Descriptor instead.
 func (*CancelRegistrationResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{16}
+	return file_v1_registration_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *CancelRegistrationResponse) GetRegistration() *Registration {
@@ -1136,7 +2038,7 @@ type ConvertRegistrationRequest struct {
 
 func (x *ConvertRegistrationRequest) Reset() {
 	*x = ConvertRegistrationRequest{}
-	mi := &file_v1_registration_proto_msgTypes[17]
+	mi := &file_v1_registration_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1148,7 +2050,7 @@ func (x *ConvertRegistrationRequest) String() string {
 func (*ConvertRegistrationRequest) ProtoMessage() {}
 
 func (x *ConvertRegistrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[17]
+	mi := &file_v1_registration_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1161,7 +2063,7 @@ func (x *ConvertRegistrationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConvertRegistrationRequest.ProtoReflect.Descriptor instead.
 func (*ConvertRegistrationRequest) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{17}
+	return file_v1_registration_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ConvertRegistrationRequest) GetId() string {
@@ -1197,7 +2099,7 @@ type ConvertRegistrationResponse struct {
 
 func (x *ConvertRegistrationResponse) Reset() {
 	*x = ConvertRegistrationResponse{}
-	mi := &file_v1_registration_proto_msgTypes[18]
+	mi := &file_v1_registration_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1209,7 +2111,7 @@ func (x *ConvertRegistrationResponse) String() string {
 func (*ConvertRegistrationResponse) ProtoMessage() {}
 
 func (x *ConvertRegistrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_registration_proto_msgTypes[18]
+	mi := &file_v1_registration_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1222,7 +2124,7 @@ func (x *ConvertRegistrationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConvertRegistrationResponse.ProtoReflect.Descriptor instead.
 func (*ConvertRegistrationResponse) Descriptor() ([]byte, []int) {
-	return file_v1_registration_proto_rawDescGZIP(), []int{18}
+	return file_v1_registration_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ConvertRegistrationResponse) GetRegistration() *Registration {
@@ -1257,7 +2159,7 @@ var File_v1_registration_proto protoreflect.FileDescriptor
 
 const file_v1_registration_proto_rawDesc = "" +
 	"\n" +
-	"\x15v1/registration.proto\x12\vpolyglot.v1\x1a\x1bbuf/validate/validate.proto\"\xf0\a\n" +
+	"\x15v1/registration.proto\x12\vpolyglot.v1\x1a\x1bbuf/validate/validate.proto\"\xbf\r\n" +
 	"\fRegistration\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12'\n" +
@@ -1289,7 +2191,37 @@ const file_v1_registration_proto_rawDesc = "" +
 	"\rcancel_reason\x18\x19 \x01(\tR\fcancelReason\x12&\n" +
 	"\x0fcreated_at_unix\x18\x1a \x01(\x03R\rcreatedAtUnix\x12(\n" +
 	"\x10target_device_id\x18\x1b \x01(\tR\x0etargetDeviceId\x12,\n" +
-	"\x12target_device_name\x18\x1c \x01(\tR\x10targetDeviceName\"\xb4\x02\n" +
+	"\x12target_device_name\x18\x1c \x01(\tR\x10targetDeviceName\x12\x10\n" +
+	"\x03nik\x18\x1d \x01(\tR\x03nik\x12)\n" +
+	"\x11id_card_photo_url\x18\x1e \x01(\tR\x0eidCardPhotoUrl\x12&\n" +
+	"\x0fhouse_photo_url\x18\x1f \x01(\tR\rhousePhotoUrl\x12(\n" +
+	"\x10survey_date_unix\x18  \x01(\x03R\x0esurveyDateUnix\x12\x1f\n" +
+	"\vsurvey_time\x18! \x01(\tR\n" +
+	"surveyTime\x12\x1f\n" +
+	"\vsurveyor_id\x18\" \x01(\tR\n" +
+	"surveyorId\x12#\n" +
+	"\rsurvey_status\x18# \x01(\tR\fsurveyStatus\x12!\n" +
+	"\fsurvey_notes\x18$ \x01(\tR\vsurveyNotes\x12?\n" +
+	"\x1cestimated_cable_length_meter\x18% \x01(\x05R\x19estimatedCableLengthMeter\x12!\n" +
+	"\fpublic_token\x18& \x01(\tR\vpublicToken\x12?\n" +
+	"\x1cinstallation_started_at_unix\x18' \x01(\x03R\x19installationStartedAtUnix\x124\n" +
+	"\x16installation_photo_url\x18( \x01(\tR\x14installationPhotoUrl\x12&\n" +
+	"\x0font_mac_address\x18) \x01(\tR\rontMacAddress\x12*\n" +
+	"\x11ont_serial_number\x18* \x01(\tR\x0fontSerialNumber\x12\"\n" +
+	"\rolt_device_id\x18, \x01(\tR\voltDeviceId\x12\x1b\n" +
+	"\tpon_index\x18- \x01(\x05R\bponIndex\x12\x1b\n" +
+	"\tonu_index\x18. \x01(\x05R\bonuIndex\x12'\n" +
+	"\x0fdiscount_amount\x18+ \x01(\x01R\x0ediscountAmount\"\x8b\x02\n" +
+	"\x11RegistrationEvent\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
+	"\x0fregistration_id\x18\x02 \x01(\tR\x0eregistrationId\x12\x1d\n" +
+	"\n" +
+	"event_type\x18\x03 \x01(\tR\teventType\x12\x19\n" +
+	"\bactor_id\x18\x04 \x01(\tR\aactorId\x12\x14\n" +
+	"\x05title\x18\x05 \x01(\tR\x05title\x12 \n" +
+	"\vdescription\x18\x06 \x01(\tR\vdescription\x12#\n" +
+	"\rmetadata_json\x18\a \x01(\tR\fmetadataJson\x12&\n" +
+	"\x0fcreated_at_unix\x18\b \x01(\x03R\rcreatedAtUnix\"\x99\x03\n" +
 	"\x19SubmitRegistrationRequest\x12$\n" +
 	"\tfull_name\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bfullName\x12\x1d\n" +
 	"\x05phone\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05phone\x12\x14\n" +
@@ -1299,7 +2231,11 @@ const file_v1_registration_proto_rawDesc = "" +
 	"\tlongitude\x18\x06 \x01(\x01R\tlongitude\x12'\n" +
 	"\x0fhas_coordinates\x18\a \x01(\bR\x0ehasCoordinates\x12\x14\n" +
 	"\x05notes\x18\b \x01(\tR\x05notes\x12 \n" +
-	"\aplan_id\x18\t \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06planId\"[\n" +
+	"\aplan_id\x18\t \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06planId\x12\x10\n" +
+	"\x03nik\x18\n" +
+	" \x01(\tR\x03nik\x12)\n" +
+	"\x11id_card_photo_url\x18\v \x01(\tR\x0eidCardPhotoUrl\x12&\n" +
+	"\x0fhouse_photo_url\x18\f \x01(\tR\rhousePhotoUrl\"[\n" +
 	"\x1aSubmitRegistrationResponse\x12=\n" +
 	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"H\n" +
 	"\x18ListRegistrationsRequest\x12\x16\n" +
@@ -1323,13 +2259,55 @@ const file_v1_registration_proto_rawDesc = "" +
 	"\x11install_time_hhmm\x18\x03 \x01(\tR\x0finstallTimeHhmm\x12#\n" +
 	"\rtechnician_id\x18\x04 \x01(\tR\ftechnicianId\"X\n" +
 	"\x17ScheduleInstallResponse\x12=\n" +
-	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"w\n" +
+	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"\xdf\x02\n" +
 	"\x14MarkInstalledRequest\x12\x17\n" +
 	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12)\n" +
 	"\x10technician_notes\x18\x02 \x01(\tR\x0ftechnicianNotes\x12\x1b\n" +
-	"\tdevice_id\x18\x03 \x01(\tR\bdeviceId\"V\n" +
+	"\tdevice_id\x18\x03 \x01(\tR\bdeviceId\x124\n" +
+	"\x16installation_photo_url\x18\x04 \x01(\tR\x14installationPhotoUrl\x12&\n" +
+	"\x0font_mac_address\x18\x05 \x01(\tR\rontMacAddress\x12*\n" +
+	"\x11ont_serial_number\x18\x06 \x01(\tR\x0fontSerialNumber\x12\"\n" +
+	"\rolt_device_id\x18\a \x01(\tR\voltDeviceId\x12\x1b\n" +
+	"\tpon_index\x18\b \x01(\x05R\bponIndex\x12\x1b\n" +
+	"\tonu_index\x18\t \x01(\x05R\bonuIndex\"V\n" +
 	"\x15MarkInstalledResponse\x12=\n" +
-	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"U\n" +
+	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"\xac\x02\n" +
+	"\x13RecordSurveyRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12(\n" +
+	"\x10survey_date_unix\x18\x02 \x01(\x03R\x0esurveyDateUnix\x12(\n" +
+	"\x10survey_time_hhmm\x18\x03 \x01(\tR\x0esurveyTimeHhmm\x12\x1f\n" +
+	"\vsurveyor_id\x18\x04 \x01(\tR\n" +
+	"surveyorId\x12#\n" +
+	"\rsurvey_status\x18\x05 \x01(\tR\fsurveyStatus\x12!\n" +
+	"\fsurvey_notes\x18\x06 \x01(\tR\vsurveyNotes\x12?\n" +
+	"\x1cestimated_cable_length_meter\x18\a \x01(\x05R\x19estimatedCableLengthMeter\"U\n" +
+	"\x14RecordSurveyResponse\x12=\n" +
+	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"3\n" +
+	"\x18StartInstallationRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"Z\n" +
+	"\x19StartInstallationResponse\x12=\n" +
+	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"F\n" +
+	"\x18TrackRegistrationRequest\x12*\n" +
+	"\fpublic_token\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vpublicToken\"\x92\x01\n" +
+	"\x19TrackRegistrationResponse\x12=\n" +
+	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\x126\n" +
+	"\x06events\x18\x02 \x03(\v2\x1e.polyglot.v1.RegistrationEventR\x06events\"\x80\x02\n" +
+	"\n" +
+	"PublicPlan\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12!\n" +
+	"\fservice_type\x18\x03 \x01(\tR\vserviceType\x12\x14\n" +
+	"\x05price\x18\x04 \x01(\x01R\x05price\x126\n" +
+	"\x17bandwidth_download_kbps\x18\x05 \x01(\x05R\x15bandwidthDownloadKbps\x122\n" +
+	"\x15bandwidth_upload_kbps\x18\x06 \x01(\x05R\x13bandwidthUploadKbps\x12)\n" +
+	"\x10installation_fee\x18\a \x01(\x01R\x0finstallationFee\"\x18\n" +
+	"\x16ListPublicPlansRequest\"H\n" +
+	"\x17ListPublicPlansResponse\x12-\n" +
+	"\x05plans\x18\x01 \x03(\v2\x17.polyglot.v1.PublicPlanR\x05plans\"8\n" +
+	"\x1dListRegistrationEventsRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"X\n" +
+	"\x1eListRegistrationEventsResponse\x126\n" +
+	"\x06events\x18\x01 \x03(\v2\x1e.polyglot.v1.RegistrationEventR\x06events\"U\n" +
 	"\x19RejectRegistrationRequest\x12\x17\n" +
 	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12\x1f\n" +
 	"\x06reason\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06reason\"[\n" +
@@ -1350,14 +2328,19 @@ const file_v1_registration_proto_rawDesc = "" +
 	"customerId\x12'\n" +
 	"\x0fsubscription_id\x18\x03 \x01(\tR\x0esubscriptionId\x12\x1d\n" +
 	"\n" +
-	"invoice_id\x18\x04 \x01(\tR\tinvoiceId2\x96\a\n" +
+	"invoice_id\x18\x04 \x01(\tR\tinvoiceId2\x84\v\n" +
 	"\x13RegistrationService\x12e\n" +
 	"\x12SubmitRegistration\x12&.polyglot.v1.SubmitRegistrationRequest\x1a'.polyglot.v1.SubmitRegistrationResponse\x12b\n" +
 	"\x11ListRegistrations\x12%.polyglot.v1.ListRegistrationsRequest\x1a&.polyglot.v1.ListRegistrationsResponse\x12\\\n" +
 	"\x0fGetRegistration\x12#.polyglot.v1.GetRegistrationRequest\x1a$.polyglot.v1.GetRegistrationResponse\x12h\n" +
 	"\x13ApproveRegistration\x12'.polyglot.v1.ApproveRegistrationRequest\x1a(.polyglot.v1.ApproveRegistrationResponse\x12\\\n" +
-	"\x0fScheduleInstall\x12#.polyglot.v1.ScheduleInstallRequest\x1a$.polyglot.v1.ScheduleInstallResponse\x12V\n" +
-	"\rMarkInstalled\x12!.polyglot.v1.MarkInstalledRequest\x1a\".polyglot.v1.MarkInstalledResponse\x12e\n" +
+	"\x0fScheduleInstall\x12#.polyglot.v1.ScheduleInstallRequest\x1a$.polyglot.v1.ScheduleInstallResponse\x12S\n" +
+	"\fRecordSurvey\x12 .polyglot.v1.RecordSurveyRequest\x1a!.polyglot.v1.RecordSurveyResponse\x12b\n" +
+	"\x11StartInstallation\x12%.polyglot.v1.StartInstallationRequest\x1a&.polyglot.v1.StartInstallationResponse\x12V\n" +
+	"\rMarkInstalled\x12!.polyglot.v1.MarkInstalledRequest\x1a\".polyglot.v1.MarkInstalledResponse\x12b\n" +
+	"\x11TrackRegistration\x12%.polyglot.v1.TrackRegistrationRequest\x1a&.polyglot.v1.TrackRegistrationResponse\x12\\\n" +
+	"\x0fListPublicPlans\x12#.polyglot.v1.ListPublicPlansRequest\x1a$.polyglot.v1.ListPublicPlansResponse\x12q\n" +
+	"\x16ListRegistrationEvents\x12*.polyglot.v1.ListRegistrationEventsRequest\x1a+.polyglot.v1.ListRegistrationEventsResponse\x12e\n" +
 	"\x12RejectRegistration\x12&.polyglot.v1.RejectRegistrationRequest\x1a'.polyglot.v1.RejectRegistrationResponse\x12e\n" +
 	"\x12CancelRegistration\x12&.polyglot.v1.CancelRegistrationRequest\x1a'.polyglot.v1.CancelRegistrationResponse\x12h\n" +
 	"\x13ConvertRegistration\x12'.polyglot.v1.ConvertRegistrationRequest\x1a(.polyglot.v1.ConvertRegistrationResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
@@ -1374,27 +2357,39 @@ func file_v1_registration_proto_rawDescGZIP() []byte {
 	return file_v1_registration_proto_rawDescData
 }
 
-var file_v1_registration_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_v1_registration_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_v1_registration_proto_goTypes = []any{
-	(*Registration)(nil),                // 0: polyglot.v1.Registration
-	(*SubmitRegistrationRequest)(nil),   // 1: polyglot.v1.SubmitRegistrationRequest
-	(*SubmitRegistrationResponse)(nil),  // 2: polyglot.v1.SubmitRegistrationResponse
-	(*ListRegistrationsRequest)(nil),    // 3: polyglot.v1.ListRegistrationsRequest
-	(*ListRegistrationsResponse)(nil),   // 4: polyglot.v1.ListRegistrationsResponse
-	(*GetRegistrationRequest)(nil),      // 5: polyglot.v1.GetRegistrationRequest
-	(*GetRegistrationResponse)(nil),     // 6: polyglot.v1.GetRegistrationResponse
-	(*ApproveRegistrationRequest)(nil),  // 7: polyglot.v1.ApproveRegistrationRequest
-	(*ApproveRegistrationResponse)(nil), // 8: polyglot.v1.ApproveRegistrationResponse
-	(*ScheduleInstallRequest)(nil),      // 9: polyglot.v1.ScheduleInstallRequest
-	(*ScheduleInstallResponse)(nil),     // 10: polyglot.v1.ScheduleInstallResponse
-	(*MarkInstalledRequest)(nil),        // 11: polyglot.v1.MarkInstalledRequest
-	(*MarkInstalledResponse)(nil),       // 12: polyglot.v1.MarkInstalledResponse
-	(*RejectRegistrationRequest)(nil),   // 13: polyglot.v1.RejectRegistrationRequest
-	(*RejectRegistrationResponse)(nil),  // 14: polyglot.v1.RejectRegistrationResponse
-	(*CancelRegistrationRequest)(nil),   // 15: polyglot.v1.CancelRegistrationRequest
-	(*CancelRegistrationResponse)(nil),  // 16: polyglot.v1.CancelRegistrationResponse
-	(*ConvertRegistrationRequest)(nil),  // 17: polyglot.v1.ConvertRegistrationRequest
-	(*ConvertRegistrationResponse)(nil), // 18: polyglot.v1.ConvertRegistrationResponse
+	(*Registration)(nil),                   // 0: polyglot.v1.Registration
+	(*RegistrationEvent)(nil),              // 1: polyglot.v1.RegistrationEvent
+	(*SubmitRegistrationRequest)(nil),      // 2: polyglot.v1.SubmitRegistrationRequest
+	(*SubmitRegistrationResponse)(nil),     // 3: polyglot.v1.SubmitRegistrationResponse
+	(*ListRegistrationsRequest)(nil),       // 4: polyglot.v1.ListRegistrationsRequest
+	(*ListRegistrationsResponse)(nil),      // 5: polyglot.v1.ListRegistrationsResponse
+	(*GetRegistrationRequest)(nil),         // 6: polyglot.v1.GetRegistrationRequest
+	(*GetRegistrationResponse)(nil),        // 7: polyglot.v1.GetRegistrationResponse
+	(*ApproveRegistrationRequest)(nil),     // 8: polyglot.v1.ApproveRegistrationRequest
+	(*ApproveRegistrationResponse)(nil),    // 9: polyglot.v1.ApproveRegistrationResponse
+	(*ScheduleInstallRequest)(nil),         // 10: polyglot.v1.ScheduleInstallRequest
+	(*ScheduleInstallResponse)(nil),        // 11: polyglot.v1.ScheduleInstallResponse
+	(*MarkInstalledRequest)(nil),           // 12: polyglot.v1.MarkInstalledRequest
+	(*MarkInstalledResponse)(nil),          // 13: polyglot.v1.MarkInstalledResponse
+	(*RecordSurveyRequest)(nil),            // 14: polyglot.v1.RecordSurveyRequest
+	(*RecordSurveyResponse)(nil),           // 15: polyglot.v1.RecordSurveyResponse
+	(*StartInstallationRequest)(nil),       // 16: polyglot.v1.StartInstallationRequest
+	(*StartInstallationResponse)(nil),      // 17: polyglot.v1.StartInstallationResponse
+	(*TrackRegistrationRequest)(nil),       // 18: polyglot.v1.TrackRegistrationRequest
+	(*TrackRegistrationResponse)(nil),      // 19: polyglot.v1.TrackRegistrationResponse
+	(*PublicPlan)(nil),                     // 20: polyglot.v1.PublicPlan
+	(*ListPublicPlansRequest)(nil),         // 21: polyglot.v1.ListPublicPlansRequest
+	(*ListPublicPlansResponse)(nil),        // 22: polyglot.v1.ListPublicPlansResponse
+	(*ListRegistrationEventsRequest)(nil),  // 23: polyglot.v1.ListRegistrationEventsRequest
+	(*ListRegistrationEventsResponse)(nil), // 24: polyglot.v1.ListRegistrationEventsResponse
+	(*RejectRegistrationRequest)(nil),      // 25: polyglot.v1.RejectRegistrationRequest
+	(*RejectRegistrationResponse)(nil),     // 26: polyglot.v1.RejectRegistrationResponse
+	(*CancelRegistrationRequest)(nil),      // 27: polyglot.v1.CancelRegistrationRequest
+	(*CancelRegistrationResponse)(nil),     // 28: polyglot.v1.CancelRegistrationResponse
+	(*ConvertRegistrationRequest)(nil),     // 29: polyglot.v1.ConvertRegistrationRequest
+	(*ConvertRegistrationResponse)(nil),    // 30: polyglot.v1.ConvertRegistrationResponse
 }
 var file_v1_registration_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.SubmitRegistrationResponse.registration:type_name -> polyglot.v1.Registration
@@ -1403,32 +2398,48 @@ var file_v1_registration_proto_depIdxs = []int32{
 	0,  // 3: polyglot.v1.ApproveRegistrationResponse.registration:type_name -> polyglot.v1.Registration
 	0,  // 4: polyglot.v1.ScheduleInstallResponse.registration:type_name -> polyglot.v1.Registration
 	0,  // 5: polyglot.v1.MarkInstalledResponse.registration:type_name -> polyglot.v1.Registration
-	0,  // 6: polyglot.v1.RejectRegistrationResponse.registration:type_name -> polyglot.v1.Registration
-	0,  // 7: polyglot.v1.CancelRegistrationResponse.registration:type_name -> polyglot.v1.Registration
-	0,  // 8: polyglot.v1.ConvertRegistrationResponse.registration:type_name -> polyglot.v1.Registration
-	1,  // 9: polyglot.v1.RegistrationService.SubmitRegistration:input_type -> polyglot.v1.SubmitRegistrationRequest
-	3,  // 10: polyglot.v1.RegistrationService.ListRegistrations:input_type -> polyglot.v1.ListRegistrationsRequest
-	5,  // 11: polyglot.v1.RegistrationService.GetRegistration:input_type -> polyglot.v1.GetRegistrationRequest
-	7,  // 12: polyglot.v1.RegistrationService.ApproveRegistration:input_type -> polyglot.v1.ApproveRegistrationRequest
-	9,  // 13: polyglot.v1.RegistrationService.ScheduleInstall:input_type -> polyglot.v1.ScheduleInstallRequest
-	11, // 14: polyglot.v1.RegistrationService.MarkInstalled:input_type -> polyglot.v1.MarkInstalledRequest
-	13, // 15: polyglot.v1.RegistrationService.RejectRegistration:input_type -> polyglot.v1.RejectRegistrationRequest
-	15, // 16: polyglot.v1.RegistrationService.CancelRegistration:input_type -> polyglot.v1.CancelRegistrationRequest
-	17, // 17: polyglot.v1.RegistrationService.ConvertRegistration:input_type -> polyglot.v1.ConvertRegistrationRequest
-	2,  // 18: polyglot.v1.RegistrationService.SubmitRegistration:output_type -> polyglot.v1.SubmitRegistrationResponse
-	4,  // 19: polyglot.v1.RegistrationService.ListRegistrations:output_type -> polyglot.v1.ListRegistrationsResponse
-	6,  // 20: polyglot.v1.RegistrationService.GetRegistration:output_type -> polyglot.v1.GetRegistrationResponse
-	8,  // 21: polyglot.v1.RegistrationService.ApproveRegistration:output_type -> polyglot.v1.ApproveRegistrationResponse
-	10, // 22: polyglot.v1.RegistrationService.ScheduleInstall:output_type -> polyglot.v1.ScheduleInstallResponse
-	12, // 23: polyglot.v1.RegistrationService.MarkInstalled:output_type -> polyglot.v1.MarkInstalledResponse
-	14, // 24: polyglot.v1.RegistrationService.RejectRegistration:output_type -> polyglot.v1.RejectRegistrationResponse
-	16, // 25: polyglot.v1.RegistrationService.CancelRegistration:output_type -> polyglot.v1.CancelRegistrationResponse
-	18, // 26: polyglot.v1.RegistrationService.ConvertRegistration:output_type -> polyglot.v1.ConvertRegistrationResponse
-	18, // [18:27] is the sub-list for method output_type
-	9,  // [9:18] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	0,  // 6: polyglot.v1.RecordSurveyResponse.registration:type_name -> polyglot.v1.Registration
+	0,  // 7: polyglot.v1.StartInstallationResponse.registration:type_name -> polyglot.v1.Registration
+	0,  // 8: polyglot.v1.TrackRegistrationResponse.registration:type_name -> polyglot.v1.Registration
+	1,  // 9: polyglot.v1.TrackRegistrationResponse.events:type_name -> polyglot.v1.RegistrationEvent
+	20, // 10: polyglot.v1.ListPublicPlansResponse.plans:type_name -> polyglot.v1.PublicPlan
+	1,  // 11: polyglot.v1.ListRegistrationEventsResponse.events:type_name -> polyglot.v1.RegistrationEvent
+	0,  // 12: polyglot.v1.RejectRegistrationResponse.registration:type_name -> polyglot.v1.Registration
+	0,  // 13: polyglot.v1.CancelRegistrationResponse.registration:type_name -> polyglot.v1.Registration
+	0,  // 14: polyglot.v1.ConvertRegistrationResponse.registration:type_name -> polyglot.v1.Registration
+	2,  // 15: polyglot.v1.RegistrationService.SubmitRegistration:input_type -> polyglot.v1.SubmitRegistrationRequest
+	4,  // 16: polyglot.v1.RegistrationService.ListRegistrations:input_type -> polyglot.v1.ListRegistrationsRequest
+	6,  // 17: polyglot.v1.RegistrationService.GetRegistration:input_type -> polyglot.v1.GetRegistrationRequest
+	8,  // 18: polyglot.v1.RegistrationService.ApproveRegistration:input_type -> polyglot.v1.ApproveRegistrationRequest
+	10, // 19: polyglot.v1.RegistrationService.ScheduleInstall:input_type -> polyglot.v1.ScheduleInstallRequest
+	14, // 20: polyglot.v1.RegistrationService.RecordSurvey:input_type -> polyglot.v1.RecordSurveyRequest
+	16, // 21: polyglot.v1.RegistrationService.StartInstallation:input_type -> polyglot.v1.StartInstallationRequest
+	12, // 22: polyglot.v1.RegistrationService.MarkInstalled:input_type -> polyglot.v1.MarkInstalledRequest
+	18, // 23: polyglot.v1.RegistrationService.TrackRegistration:input_type -> polyglot.v1.TrackRegistrationRequest
+	21, // 24: polyglot.v1.RegistrationService.ListPublicPlans:input_type -> polyglot.v1.ListPublicPlansRequest
+	23, // 25: polyglot.v1.RegistrationService.ListRegistrationEvents:input_type -> polyglot.v1.ListRegistrationEventsRequest
+	25, // 26: polyglot.v1.RegistrationService.RejectRegistration:input_type -> polyglot.v1.RejectRegistrationRequest
+	27, // 27: polyglot.v1.RegistrationService.CancelRegistration:input_type -> polyglot.v1.CancelRegistrationRequest
+	29, // 28: polyglot.v1.RegistrationService.ConvertRegistration:input_type -> polyglot.v1.ConvertRegistrationRequest
+	3,  // 29: polyglot.v1.RegistrationService.SubmitRegistration:output_type -> polyglot.v1.SubmitRegistrationResponse
+	5,  // 30: polyglot.v1.RegistrationService.ListRegistrations:output_type -> polyglot.v1.ListRegistrationsResponse
+	7,  // 31: polyglot.v1.RegistrationService.GetRegistration:output_type -> polyglot.v1.GetRegistrationResponse
+	9,  // 32: polyglot.v1.RegistrationService.ApproveRegistration:output_type -> polyglot.v1.ApproveRegistrationResponse
+	11, // 33: polyglot.v1.RegistrationService.ScheduleInstall:output_type -> polyglot.v1.ScheduleInstallResponse
+	15, // 34: polyglot.v1.RegistrationService.RecordSurvey:output_type -> polyglot.v1.RecordSurveyResponse
+	17, // 35: polyglot.v1.RegistrationService.StartInstallation:output_type -> polyglot.v1.StartInstallationResponse
+	13, // 36: polyglot.v1.RegistrationService.MarkInstalled:output_type -> polyglot.v1.MarkInstalledResponse
+	19, // 37: polyglot.v1.RegistrationService.TrackRegistration:output_type -> polyglot.v1.TrackRegistrationResponse
+	22, // 38: polyglot.v1.RegistrationService.ListPublicPlans:output_type -> polyglot.v1.ListPublicPlansResponse
+	24, // 39: polyglot.v1.RegistrationService.ListRegistrationEvents:output_type -> polyglot.v1.ListRegistrationEventsResponse
+	26, // 40: polyglot.v1.RegistrationService.RejectRegistration:output_type -> polyglot.v1.RejectRegistrationResponse
+	28, // 41: polyglot.v1.RegistrationService.CancelRegistration:output_type -> polyglot.v1.CancelRegistrationResponse
+	30, // 42: polyglot.v1.RegistrationService.ConvertRegistration:output_type -> polyglot.v1.ConvertRegistrationResponse
+	29, // [29:43] is the sub-list for method output_type
+	15, // [15:29] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_v1_registration_proto_init() }
@@ -1442,7 +2453,7 @@ func file_v1_registration_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_registration_proto_rawDesc), len(file_v1_registration_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   19,
+			NumMessages:   31,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -51,6 +51,15 @@ func (r *RegistrationRepository) FindByNo(ctx context.Context, regNo string) (re
 	return m.ToDomain(), err
 }
 
+func (r *RegistrationRepository) FindByPublicToken(ctx context.Context, token string) (registration.Registration, error) {
+	var m model.RegistrationModel
+	err := r.db.WithContext(ctx).First(&m, "public_token = ?", token).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return registration.Registration{}, ErrNotFound
+	}
+	return m.ToDomain(), err
+}
+
 func (r *RegistrationRepository) List(ctx context.Context, f port.RegistrationFilter) ([]registration.Registration, error) {
 	q := r.db.WithContext(ctx).Model(&model.RegistrationModel{})
 	if f.Status != "" {

@@ -16,8 +16,8 @@ func (m *mockDriver) Execute(ctx context.Context, cmd command.Command) (command.
 	return command.Result{}, nil
 }
 
-func (m *mockDriver) Classify(cmd command.Command) command.Class {
-	return command.ClassReadOnly
+func (m *mockDriver) Classify(cmd command.Command) command.Classification {
+	return command.Classification{Mode: command.ModeRead}
 }
 
 func (m *mockDriver) Translate(op command.Operation) (command.Command, error) {

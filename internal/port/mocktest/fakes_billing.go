@@ -150,6 +150,35 @@ func (f *FakeInvoiceRepo) FindBySubscriptionPeriod(_ context.Context, subID, per
 	return domainBilling.Invoice{}, ErrFakeNotFound
 }
 
+// AddGatewayFeeItem adds an AD_HOC gateway fee line once (idempotent).
+func (f *FakeInvoiceRepo) AddGatewayFeeItem(_ context.Context, invoiceID string, amount float64) (domainBilling.Invoice, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	inv, ok := f.byID[invoiceID]
+	if !ok {
+		return domainBilling.Invoice{}, ErrFakeNotFound
+	}
+	for _, it := range f.items[invoiceID] {
+		if it.ItemType == domainBilling.ItemTypeAdHoc {
+			return inv, nil
+		}
+	}
+	item := domainBilling.InvoiceItem{
+		ID:          "itm-fee-" + invoiceID,
+		InvoiceID:   invoiceID,
+		Description: "Biaya layanan gateway",
+		Quantity:    1,
+		UnitPrice:   amount,
+		Amount:      amount,
+		ItemType:    domainBilling.ItemTypeAdHoc,
+	}
+	f.items[invoiceID] = append(f.items[invoiceID], item)
+	inv.Subtotal += amount
+	inv.Total += amount
+	f.byID[invoiceID] = inv
+	return inv, nil
+}
+
 // ItemsOf exposes stored line items for assertions.
 func (f *FakeInvoiceRepo) ItemsOf(invoiceID string) []domainBilling.InvoiceItem {
 	f.mu.Lock()
@@ -251,6 +280,73 @@ func (f *FakePaymentProcessor) ProcessCashPayment(_ context.Context, cmd port.Ca
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.Cmds = append(f.Cmds, cmd)
+	if f.Err != nil {
+		return domainBilling.Payment{}, f.Err
+	}
+	return f.Pay, nil
+}
+
+// ─── PaymentSubmissionRepository ────────────────────────────────────────
+
+// FakePaymentSubmissionRepo adalah fake in-memory bukti transfer manual.
+type FakePaymentSubmissionRepo struct {
+	mu   sync.Mutex
+	byID map[string]domainBilling.PaymentSubmission
+}
+
+// NewFakePaymentSubmissionRepo constructs an empty fake submission repo.
+func NewFakePaymentSubmissionRepo() *FakePaymentSubmissionRepo {
+	return &FakePaymentSubmissionRepo{byID: map[string]domainBilling.PaymentSubmission{}}
+}
+
+// Save stores a payment submission in memory.
+func (f *FakePaymentSubmissionRepo) Save(_ context.Context, s domainBilling.PaymentSubmission) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.byID[s.ID] = s
+	return nil
+}
+
+// FindByID finds a submission by ID.
+func (f *FakePaymentSubmissionRepo) FindByID(_ context.Context, id string) (domainBilling.PaymentSubmission, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	s, ok := f.byID[id]
+	if !ok {
+		return domainBilling.PaymentSubmission{}, ErrFakeNotFound
+	}
+	return s, nil
+}
+
+// List returns submissions, optionally filtered by status.
+func (f *FakePaymentSubmissionRepo) List(_ context.Context, filter port.PaymentSubmissionFilter) ([]domainBilling.PaymentSubmission, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	out := make([]domainBilling.PaymentSubmission, 0, len(f.byID))
+	for _, s := range f.byID {
+		if filter.Status != "" && s.Status != filter.Status {
+			continue
+		}
+		out = append(out, s)
+	}
+	return out, nil
+}
+
+// ─── PaymentReverser ────────────────────────────────────────────────────
+
+// FakePaymentReverser adalah fake port.PaymentReverser.
+type FakePaymentReverser struct {
+	mu  sync.Mutex
+	In  []port.PaymentReversal
+	Err error
+	Pay domainBilling.Payment
+}
+
+// ReversePayment mencatat input reversal dan mengembalikan payment mock.
+func (f *FakePaymentReverser) ReversePayment(_ context.Context, in port.PaymentReversal) (domainBilling.Payment, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.In = append(f.In, in)
 	if f.Err != nil {
 		return domainBilling.Payment{}, f.Err
 	}

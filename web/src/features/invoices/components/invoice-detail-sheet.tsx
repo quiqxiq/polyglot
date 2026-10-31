@@ -1,5 +1,6 @@
 import {
   CreditCard,
+  Percent,
   Printer,
   QrCode,
   Receipt,
@@ -20,8 +21,10 @@ import { Card, CardContent } from '@/components/ui/card'
 import type { Invoice } from '@/gen/v1/billing_pb'
 import { useCustomerQuery } from '@/features/customer/api/use-customer'
 import { useSubscriptionQuery } from '@/features/billing/api/use-billing'
+import { useState } from 'react'
 import { invoiceStatusBadge, ITEM_TYPE_META } from '../data/constants'
 import { useInvoices } from './invoices-provider'
+import { InvoiceDiscountDialog } from './invoice-discount-dialog'
 
 interface InvoiceDetailSheetProps {
   open: boolean
@@ -53,6 +56,7 @@ export function InvoiceDetailSheet({
   invoice,
 }: InvoiceDetailSheetProps) {
   const { setOpen } = useInvoices()
+  const [discountOpen, setDiscountOpen] = useState(false)
   const customerId = invoice?.customerId || ''
   const subscriptionId = invoice?.subscriptionId || ''
 
@@ -95,6 +99,17 @@ export function InvoiceDetailSheet({
                 <Printer className='h-3.5 w-3.5' />
                 Cetak
               </Button>
+              {!isPaid && invoice.status !== 'CANCELLED' && (
+                <Button
+                  variant='outline'
+                  size='sm'
+                  onClick={() => setDiscountOpen(true)}
+                  className='h-8 text-xs gap-1'
+                >
+                  <Percent className='h-3.5 w-3.5' />
+                  Diskon
+                </Button>
+              )}
               {!isPaid && (
                 <Button
                   size='sm'
@@ -204,6 +219,32 @@ export function InvoiceDetailSheet({
 
               {/* Total Summary Breakdown */}
               <div className='border-t bg-muted/20 p-4 space-y-2 text-xs'>
+                {invoice.invoiceType && (
+                  <div className='flex justify-between text-muted-foreground'>
+                    <span>Jenis Faktur:</span>
+                    <span className='font-mono font-medium'>
+                      {invoice.invoiceType === 'FIRST_INSTALLATION'
+                        ? 'Pasang Baru (Prorata)'
+                        : invoice.invoiceType === 'RECURRING'
+                          ? 'Bulanan'
+                          : invoice.invoiceType}
+                    </span>
+                  </div>
+                )}
+                {invoice.proratedDays > 0 && (
+                  <div className='flex justify-between text-muted-foreground'>
+                    <span>Hari Prorata:</span>
+                    <span className='font-mono font-medium'>
+                      {invoice.proratedDays}/{invoice.periodDays || '-'} hari
+                    </span>
+                  </div>
+                )}
+                {invoice.promoCode && (
+                  <div className='flex justify-between text-muted-foreground'>
+                    <span>Kode Promo:</span>
+                    <span className='font-mono font-semibold'>{invoice.promoCode}</span>
+                  </div>
+                )}
                 <div className='flex justify-between text-muted-foreground'>
                   <span>Subtotal:</span>
                   <span className='font-mono font-medium'>{formatCurrency(invoice.subtotal || invoice.total)}</span>
@@ -280,6 +321,11 @@ export function InvoiceDetailSheet({
           </div>
         </ScrollArea>
       </SheetContent>
+      <InvoiceDiscountDialog
+        open={discountOpen}
+        onOpenChange={setDiscountOpen}
+        invoice={invoice}
+      />
     </Sheet>
   )
 }

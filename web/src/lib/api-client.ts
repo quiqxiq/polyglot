@@ -1,8 +1,12 @@
 import { AuthService } from '@/gen/v1/auth_connect'
+import { AIChatService } from '@/gen/v1/ai_chat_connect'
+import { ApprovalService } from '@/gen/v1/approval_connect'
+import { RestorePointService } from '@/gen/v1/restore_point_connect'
 import { BillingService } from '@/gen/v1/billing_connect'
 import { BotService } from '@/gen/v1/bot_connect'
 import { CashbookService } from '@/gen/v1/cashbook_connect'
 import { CustomerService } from '@/gen/v1/customer_connect'
+import { DebtService } from '@/gen/v1/debt_connect'
 import { DeviceService } from '@/gen/v1/device_connect'
 import { HotspotService } from '@/gen/v1/hotspot_connect'
 import { IspAdminService } from '@/gen/v1/ispadmin_connect'
@@ -10,6 +14,8 @@ import { LLMConfigService } from '@/gen/v1/llm_connect'
 import { NetworkService } from '@/gen/v1/network_connect'
 import { NetworkMonitorService } from '@/gen/v1/network_monitor_connect'
 import { NotificationService } from '@/gen/v1/notification_connect'
+import { OltService } from '@/gen/v1/olt_connect'
+import { OntService } from '@/gen/v1/ont_connect'
 import { PlanService } from '@/gen/v1/plan_connect'
 import { PortalService } from '@/gen/v1/portal_connect'
 import { PPPService } from '@/gen/v1/ppp_connect'
@@ -99,10 +105,14 @@ const transport = createConnectTransport({
 })
 
 export const authClient = createPromiseClient(AuthService, transport)
+export const aiChatClient = createPromiseClient(AIChatService, transport)
+export const approvalClient = createPromiseClient(ApprovalService, transport)
+export const restorePointClient = createPromiseClient(RestorePointService, transport)
 export const billingClient = createPromiseClient(BillingService, transport)
 export const botClient = createPromiseClient(BotService, transport)
 export const cashbookClient = createPromiseClient(CashbookService, transport)
 export const customerClient = createPromiseClient(CustomerService, transport)
+export const debtClient = createPromiseClient(DebtService, transport)
 export const deviceClient = createPromiseClient(DeviceService, transport)
 export const hotspotClient = createPromiseClient(HotspotService, transport)
 export const ispAdminClient = createPromiseClient(IspAdminService, transport)
@@ -116,6 +126,8 @@ export const notificationClient = createPromiseClient(
   NotificationService,
   transport
 )
+export const oltClient = createPromiseClient(OltService, transport)
+export const ontClient = createPromiseClient(OntService, transport)
 export const planClient = createPromiseClient(PlanService, transport)
 export const portalClient = createPromiseClient(PortalService, transport)
 export const pppClient = createPromiseClient(PPPService, transport)

@@ -24,6 +24,7 @@ const (
 	CustomerService_CreateCustomer_FullMethodName     = "/polyglot.v1.CustomerService/CreateCustomer"
 	CustomerService_UpdateCustomer_FullMethodName     = "/polyglot.v1.CustomerService/UpdateCustomer"
 	CustomerService_DeleteCustomer_FullMethodName     = "/polyglot.v1.CustomerService/DeleteCustomer"
+	CustomerService_GetCustomer360_FullMethodName     = "/polyglot.v1.CustomerService/GetCustomer360"
 	CustomerService_FindByPhone_FullMethodName        = "/polyglot.v1.CustomerService/FindByPhone"
 	CustomerService_FindByCustomerCode_FullMethodName = "/polyglot.v1.CustomerService/FindByCustomerCode"
 	CustomerService_FindByPortalCode_FullMethodName   = "/polyglot.v1.CustomerService/FindByPortalCode"
@@ -39,6 +40,8 @@ type CustomerServiceClient interface {
 	CreateCustomer(ctx context.Context, in *CreateCustomerRequest, opts ...grpc.CallOption) (*CreateCustomerResponse, error)
 	UpdateCustomer(ctx context.Context, in *UpdateCustomerRequest, opts ...grpc.CallOption) (*UpdateCustomerResponse, error)
 	DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*DeleteCustomerResponse, error)
+	// Customer 360 (Fase 5): profil + langganan + tagihan + pembayaran + PSB.
+	GetCustomer360(ctx context.Context, in *GetCustomer360Request, opts ...grpc.CallOption) (*GetCustomer360Response, error)
 	// Lookups cepat
 	FindByPhone(ctx context.Context, in *FindCustomerByPhoneRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error)
 	FindByCustomerCode(ctx context.Context, in *FindCustomerByCodeRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error)
@@ -105,6 +108,16 @@ func (c *customerServiceClient) DeleteCustomer(ctx context.Context, in *DeleteCu
 	return out, nil
 }
 
+func (c *customerServiceClient) GetCustomer360(ctx context.Context, in *GetCustomer360Request, opts ...grpc.CallOption) (*GetCustomer360Response, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCustomer360Response)
+	err := c.cc.Invoke(ctx, CustomerService_GetCustomer360_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *customerServiceClient) FindByPhone(ctx context.Context, in *FindCustomerByPhoneRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(FindCustomerResponse)
@@ -154,6 +167,8 @@ type CustomerServiceServer interface {
 	CreateCustomer(context.Context, *CreateCustomerRequest) (*CreateCustomerResponse, error)
 	UpdateCustomer(context.Context, *UpdateCustomerRequest) (*UpdateCustomerResponse, error)
 	DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error)
+	// Customer 360 (Fase 5): profil + langganan + tagihan + pembayaran + PSB.
+	GetCustomer360(context.Context, *GetCustomer360Request) (*GetCustomer360Response, error)
 	// Lookups cepat
 	FindByPhone(context.Context, *FindCustomerByPhoneRequest) (*FindCustomerResponse, error)
 	FindByCustomerCode(context.Context, *FindCustomerByCodeRequest) (*FindCustomerResponse, error)
@@ -184,6 +199,9 @@ func (UnimplementedCustomerServiceServer) UpdateCustomer(context.Context, *Updat
 }
 func (UnimplementedCustomerServiceServer) DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteCustomer not implemented")
+}
+func (UnimplementedCustomerServiceServer) GetCustomer360(context.Context, *GetCustomer360Request) (*GetCustomer360Response, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetCustomer360 not implemented")
 }
 func (UnimplementedCustomerServiceServer) FindByPhone(context.Context, *FindCustomerByPhoneRequest) (*FindCustomerResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method FindByPhone not implemented")
@@ -308,6 +326,24 @@ func _CustomerService_DeleteCustomer_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CustomerService_GetCustomer360_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCustomer360Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).GetCustomer360(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_GetCustomer360_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).GetCustomer360(ctx, req.(*GetCustomer360Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CustomerService_FindByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FindCustomerByPhoneRequest)
 	if err := dec(in); err != nil {
@@ -406,6 +442,10 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCustomer",
 			Handler:    _CustomerService_DeleteCustomer_Handler,
+		},
+		{
+			MethodName: "GetCustomer360",
+			Handler:    _CustomerService_GetCustomer360_Handler,
 		},
 		{
 			MethodName: "FindByPhone",

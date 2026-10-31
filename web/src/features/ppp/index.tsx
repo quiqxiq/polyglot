@@ -14,6 +14,8 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { LanguageSwitch } from '@/components/language-switch'
+import { useI18n } from '@/context/i18n-provider'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useDeviceStore } from '@/stores/device-store'
 import { PPPProvider } from './context/ppp-context'
@@ -45,10 +47,13 @@ function PPPContent() {
     })
   }
 
+  const { t } = useI18n()
+
   return (
     <>
       <Header fixed>
         <Search className="me-auto" />
+        <LanguageSwitch />
         <ThemeSwitch />
         <ConfigDrawer />
         <ProfileDropdown />
@@ -60,7 +65,7 @@ function PPPContent() {
           <div>
             <div className="flex items-center gap-2">
               <Network className="size-6 text-primary" />
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">PPPoE & PPP Management</h1>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">{t('ppp.title')}</h1>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
               {currentDevice ? (

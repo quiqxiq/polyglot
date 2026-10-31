@@ -11,17 +11,17 @@ type DevicePingMetricModel struct {
 	RecordedAt time.Time `gorm:"column:recorded_at;not null"`
 	DeviceID   string    `gorm:"column:device_id;type:uuid;not null;index:idx_device_ping_metrics_device_time,priority:1"`
 	Target     string    `gorm:"column:target;type:varchar(255);not null"`
-	Seq        int       `gorm:"column:seq;not null;default:0"`
-	Size       int       `gorm:"column:size;not null;default:56"`
-	TTL        int       `gorm:"column:ttl;not null;default:0"`
-	RTTMS      float32   `gorm:"column:rtt_ms;not null;default:0"`
+	Seq        int       `gorm:"column:seq;type:integer;not null;default:0"`
+	Size       int       `gorm:"column:size;type:integer;not null;default:56"`
+	TTL        int       `gorm:"column:ttl;type:integer;not null;default:0"`
+	RTTMS      float32   `gorm:"column:rtt_ms;type:real;not null;default:0"`
 	Status     string    `gorm:"column:status;type:varchar(32);not null;default:'connected'"`
-	Sent       int       `gorm:"column:sent;not null;default:1"`
-	Received   int       `gorm:"column:received;not null;default:1"`
+	Sent       int       `gorm:"column:sent;type:integer;not null;default:1"`
+	Received   int       `gorm:"column:received;type:integer;not null;default:1"`
 	PacketLoss int       `gorm:"column:packet_loss;type:smallint;not null;default:0"`
-	MinRTTMS   *float32  `gorm:"column:min_rtt_ms"`
-	AvgRTTMS   *float32  `gorm:"column:avg_rtt_ms"`
-	MaxRTTMS   *float32  `gorm:"column:max_rtt_ms"`
+	MinRTTMS   *float32  `gorm:"column:min_rtt_ms;type:real"`
+	AvgRTTMS   *float32  `gorm:"column:avg_rtt_ms;type:real"`
+	MaxRTTMS   *float32  `gorm:"column:max_rtt_ms;type:real"`
 }
 
 // TableName explicitly maps to `device_ping_metrics`.

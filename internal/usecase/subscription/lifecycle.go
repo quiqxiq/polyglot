@@ -6,6 +6,7 @@ import (
 	"time"
 
 	domainAudit "github.com/quixiq/polyglot/internal/domain/audit"
+	domainRouterJob "github.com/quixiq/polyglot/internal/domain/routerjob"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
@@ -19,8 +20,45 @@ type LifecycleUseCase struct {
 	manager  port.RouterAccountManager
 	audit    port.AuditLogWriter
 	settings port.SettingReader
+	retrier  ProvisionRetrier
 
 	now func() time.Time
+}
+
+// ProvisionRetrier mengantrekan job provisioning ke antrean router_jobs
+// (diimplementasikan usecase/routerjob.Worker).
+type ProvisionRetrier interface {
+	EnqueueProvision(ctx context.Context, tenantID, deviceID, subscriptionID, serviceType string) (domainRouterJob.Job, error)
+}
+
+// WithProvisionRetrier menautkan antrean job router untuk retry manual.
+func (u *LifecycleUseCase) WithProvisionRetrier(r ProvisionRetrier) *LifecycleUseCase {
+	u.retrier = r
+	return u
+}
+
+// RetryProvision mengantrekan ulang provisioning langganan ke router.
+func (u *LifecycleUseCase) RetryProvision(ctx context.Context, subscriptionID string) (domainRouterJob.Job, error) {
+	sub, err := u.subs.FindByID(ctx, subscriptionID)
+	if err != nil {
+		return domainRouterJob.Job{}, domainSub.ErrNotFound
+	}
+	if sub.DeviceID == nil || *sub.DeviceID == "" {
+		return domainRouterJob.Job{}, fmt.Errorf("%w: router device belum dipilih", domainSub.ErrInvalidInput)
+	}
+	if u.retrier == nil {
+		return domainRouterJob.Job{}, fmt.Errorf("retry provision: antrean job tidak tersedia")
+	}
+	job, err := u.retrier.EnqueueProvision(ctx, sub.TenantID, *sub.DeviceID, sub.ID, sub.ServiceType)
+	if err != nil {
+		return domainRouterJob.Job{}, fmt.Errorf("enqueue provision: %w", err)
+	}
+	sub.ProvisionStatus = domainSub.ProvisionPending
+	sub.LastProvisionError = ""
+	if err := u.subs.Save(ctx, sub); err != nil {
+		return job, fmt.Errorf("update provision status: %w", err)
+	}
+	return job, nil
 }
 
 // NewLifecycleUseCase wires dependencies.

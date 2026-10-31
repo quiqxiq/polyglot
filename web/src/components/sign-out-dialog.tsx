@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from '@tanstack/react-router'
+import { useI18n } from '@/context/i18n-provider'
 import { useAuthStore } from '@/stores/auth-store'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { useLogoutMutation } from '@/features/auth/api/use-auth'
@@ -9,6 +10,7 @@ interface SignOutDialogProps {
 }
 
 export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
+  const { t } = useI18n()
   const navigate = useNavigate()
   const location = useLocation()
   const logoutMutation = useLogoutMutation()
@@ -38,9 +40,10 @@ export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
     <ConfirmDialog
       open={open}
       onOpenChange={onOpenChange}
-      title='Sign out'
-      desc='Are you sure you want to sign out? You will need to sign in again to access your account.'
-      confirmText='Sign out'
+      title={t('auth.sign_out_confirm_title')}
+      desc={t('auth.sign_out_confirm_desc')}
+      confirmText={t('auth.sign_out')}
+      cancelBtnText={t('common.cancel')}
       destructive
       handleConfirm={handleSignOut}
       className='sm:max-w-sm'

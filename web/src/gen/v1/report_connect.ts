@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DailyReportRequest, DailyReportResponse, MonthlyReportRequest, MonthlyReportResponse, RefreshSnapshotRequest, RefreshSnapshotResponse, YearlyReportRequest, YearlyReportResponse } from "./report_pb.js";
+import { AgingDetailRequest, AgingDetailResponse, ARAgingRequest, ARAgingResponse, CashflowReportRequest, CashflowReportResponse, ClosingReportRequest, ClosingReportResponse, CollectionReportRequest, CollectionReportResponse, DailyReportRequest, DailyReportResponse, ExportReportRequest, ExportReportResponse, GatewayReconciliationRequest, GatewayReconciliationResponse, MonthlyReportRequest, MonthlyReportResponse, PSBStatsRequest, PSBStatsResponse, RefreshSnapshotRequest, RefreshSnapshotResponse, SalesReportRequest, SalesReportResponse, TaxReportRequest, TaxReportResponse, YearlyReportRequest, YearlyReportResponse } from "./report_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -46,6 +46,100 @@ export const ReportService = {
       name: "RefreshSnapshot",
       I: RefreshSnapshotRequest,
       O: RefreshSnapshotResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Laporan operasional lanjutan (Fase 5).
+     *
+     * @generated from rpc polyglot.v1.ReportService.ARAging
+     */
+    aRAging: {
+      name: "ARAging",
+      I: ARAgingRequest,
+      O: ARAgingResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.ReportService.GatewayReconciliation
+     */
+    gatewayReconciliation: {
+      name: "GatewayReconciliation",
+      I: GatewayReconciliationRequest,
+      O: GatewayReconciliationResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.ReportService.PSBStats
+     */
+    pSBStats: {
+      name: "PSBStats",
+      I: PSBStatsRequest,
+      O: PSBStatsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Billing Ops v3 Laporan Keuangan
+     *
+     * @generated from rpc polyglot.v1.ReportService.TaxReport
+     */
+    taxReport: {
+      name: "TaxReport",
+      I: TaxReportRequest,
+      O: TaxReportResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.ReportService.SalesReport
+     */
+    salesReport: {
+      name: "SalesReport",
+      I: SalesReportRequest,
+      O: SalesReportResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.ReportService.CollectionReport
+     */
+    collectionReport: {
+      name: "CollectionReport",
+      I: CollectionReportRequest,
+      O: CollectionReportResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.ReportService.CashflowReport
+     */
+    cashflowReport: {
+      name: "CashflowReport",
+      I: CashflowReportRequest,
+      O: CashflowReportResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.ReportService.AgingDetail
+     */
+    agingDetail: {
+      name: "AgingDetail",
+      I: AgingDetailRequest,
+      O: AgingDetailResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.ReportService.ClosingReport
+     */
+    closingReport: {
+      name: "ClosingReport",
+      I: ClosingReportRequest,
+      O: ClosingReportResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.ReportService.ExportReport
+     */
+    exportReport: {
+      name: "ExportReport",
+      I: ExportReportRequest,
+      O: ExportReportResponse,
       kind: MethodKind.Unary,
     },
   }

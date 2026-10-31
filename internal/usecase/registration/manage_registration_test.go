@@ -172,6 +172,9 @@ func TestConvert_FullFlow_CreatesArtifactsAndLinksBack(t *testing.T) {
 	auditW := &mocktest.FakeAuditWriter{}
 
 	mgr := uc.NewManageRegistrationUseCase(repo, notif, auditW)
+	// Clock tetap di tanggal anchor 1 → faktur pertama periode penuh (deterministik).
+	fixedClock := func() time.Time { return time.Date(2026, 9, 1, 10, 0, 0, 0, time.UTC) }
+	mgr.WithClock(fixedClock)
 	plans.Seed(domainPlan.ServicePlan{
 		ID: "plan-1", Name: "100-RB-100", ServiceType: "PPPOE",
 		BandwidthDownloadKbps: 5120, BandwidthUploadKbps: 5120,
@@ -182,6 +185,7 @@ func TestConvert_FullFlow_CreatesArtifactsAndLinksBack(t *testing.T) {
 		Subs: subs, Audit: auditW,
 		Writer: mocktest.NewFakeConversionWriter(customers, subs, invoices, repo),
 	})
+	conv.WithClock(fixedClock)
 	var codeSeq int
 	conv.WithGenerators(
 		func() string { codeSeq++; return "CUST-0000" + string(rune('0'+codeSeq)) },

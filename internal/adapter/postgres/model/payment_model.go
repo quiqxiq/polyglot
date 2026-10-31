@@ -9,12 +9,19 @@ import (
 // PaymentMethodModel is the GORM model for payment channel master
 // (DATABASE-SCHEMA-ISP.md §2.7 — payment_methods).
 type PaymentMethodModel struct {
-	ID        string `gorm:"primaryKey"`
-	TenantID  string `gorm:"type:text;not null;default:tenant-default"`
-	Name      string `gorm:"type:varchar(50);not null"` // 'TUNAI', 'TRANSFER_BCA', 'QRIS', 'TRIPAY_VA'
-	Type      string `gorm:"type:varchar(30);not null"` // CASH | BANK | QRIS | GATEWAY
-	IsActive  bool   `gorm:"not null;default:true"`
-	CreatedAt time.Time
+	ID            string `gorm:"primaryKey"`
+	TenantID      string `gorm:"type:text;not null;default:tenant-default"`
+	Name          string `gorm:"type:varchar(50);not null"` // 'TUNAI', 'TRANSFER_BCA', 'QRIS', 'TRIPAY_VA'
+	Type          string `gorm:"type:varchar(30);not null"` // CASH | BANK | QRIS | GATEWAY
+	IsActive      bool   `gorm:"not null;default:true"`
+	BankName      string `gorm:"type:varchar(80)"`
+	AccountNumber string `gorm:"type:varchar(50)"`
+	AccountHolder string `gorm:"type:varchar(100)"`
+	QRISImageURL  string `gorm:"type:text"`
+	Instructions  string `gorm:"type:text"`
+	SortOrder     int    `gorm:"not null;default:0"`
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
 }
 
 // TableName returns the database table name for payment methods.
@@ -28,24 +35,38 @@ func (m *PaymentMethodModel) ToDomain() billing.PaymentMethod {
 		return billing.PaymentMethod{}
 	}
 	return billing.PaymentMethod{
-		ID:        m.ID,
-		TenantID:  m.TenantID,
-		Name:      m.Name,
-		Type:      m.Type,
-		IsActive:  m.IsActive,
-		CreatedAt: m.CreatedAt,
+		ID:            m.ID,
+		TenantID:      m.TenantID,
+		Name:          m.Name,
+		Type:          m.Type,
+		IsActive:      m.IsActive,
+		BankName:      m.BankName,
+		AccountNumber: m.AccountNumber,
+		AccountHolder: m.AccountHolder,
+		QRISImageURL:  m.QRISImageURL,
+		Instructions:  m.Instructions,
+		SortOrder:     m.SortOrder,
+		CreatedAt:     m.CreatedAt,
+		UpdatedAt:     m.UpdatedAt,
 	}
 }
 
 // PaymentMethodModelFromDomain converts a payment method domain entity to a database model.
 func PaymentMethodModelFromDomain(p billing.PaymentMethod) *PaymentMethodModel {
 	return &PaymentMethodModel{
-		ID:        p.ID,
-		TenantID:  p.TenantID,
-		Name:      p.Name,
-		Type:      p.Type,
-		IsActive:  p.IsActive,
-		CreatedAt: p.CreatedAt,
+		ID:            p.ID,
+		TenantID:      p.TenantID,
+		Name:          p.Name,
+		Type:          p.Type,
+		IsActive:      p.IsActive,
+		BankName:      p.BankName,
+		AccountNumber: p.AccountNumber,
+		AccountHolder: p.AccountHolder,
+		QRISImageURL:  p.QRISImageURL,
+		Instructions:  p.Instructions,
+		SortOrder:     p.SortOrder,
+		CreatedAt:     p.CreatedAt,
+		UpdatedAt:     p.UpdatedAt,
 	}
 }
 
@@ -65,7 +86,13 @@ type PaymentModel struct {
 	ScanMethod  string    `gorm:"type:varchar(30);not null;default:MANUAL"`
 	Reference   string    `gorm:"type:varchar(100)"`
 	Notes       string    `gorm:"type:text"`
-	CreatedAt   time.Time
+
+	// Kolom void (migrasi 000033) — reversal pembayaran.
+	VoidedAt   *time.Time `gorm:"column:voided_at"`
+	VoidReason string     `gorm:"column:void_reason;type:text"`
+	VoidedBy   *uint      `gorm:"column:voided_by"`
+
+	CreatedAt time.Time
 }
 
 // TableName returns the database table name for payments.
@@ -90,6 +117,9 @@ func (m *PaymentModel) ToDomain() billing.Payment {
 		ScanMethod:      m.ScanMethod,
 		Reference:       m.Reference,
 		Notes:           m.Notes,
+		VoidedAt:        m.VoidedAt,
+		VoidReason:      m.VoidReason,
+		VoidedBy:        m.VoidedBy,
 		CreatedAt:       m.CreatedAt,
 	}
 }
@@ -108,6 +138,9 @@ func PaymentModelFromDomain(p billing.Payment) *PaymentModel {
 		ScanMethod:      p.ScanMethod,
 		Reference:       p.Reference,
 		Notes:           p.Notes,
+		VoidedAt:        p.VoidedAt,
+		VoidReason:      p.VoidReason,
+		VoidedBy:        p.VoidedBy,
 		CreatedAt:       p.CreatedAt,
 	}
 }

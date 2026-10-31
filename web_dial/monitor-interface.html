@@ -23,11 +23,11 @@
         <div class="flex items-center gap-2">
           <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Monitor Traffic & Antrean
+            <span data-i18n="monitor_title">Monitor Traffic & Antrean</span>
           </h1>
           <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">On-Demand Stream</span>
         </div>
-        <p class="text-sm text-slate-500 mt-0.5">Daftar seluruh interface dan simple queue router &bull; Klik untuk memantau traffic RX/TX realtime</p>
+        <p class="text-sm text-slate-500 mt-0.5" data-i18n="monitor_desc">Daftar seluruh interface dan simple queue router &bull; Klik untuk memantau traffic RX/TX realtime</p>
       </div>
 
       <div class="flex items-center gap-3">
@@ -85,11 +85,11 @@
           <thead>
             <tr class="bg-slate-50/80 border-b border-slate-200 text-slate-600 text-xs font-semibold uppercase tracking-wider">
               <th class="py-3 px-4 w-12">#</th>
-              <th class="py-3 px-4">Nama Interface</th>
-              <th class="py-3 px-4">Tipe</th>
-              <th class="py-3 px-4">Status Link</th>
+              <th class="py-3 px-4" data-i18n="col_interface">Nama Interface</th>
+              <th class="py-3 px-4" data-i18n="col_type">Tipe</th>
+              <th class="py-3 px-4" data-i18n="col_link">Status Link</th>
               <th class="py-3 px-4">MAC Address</th>
-              <th class="py-3 px-4 text-right">Aksi</th>
+              <th class="py-3 px-4 text-right" data-i18n="col_actions">Aksi</th>
             </tr>
           </thead>
           <tbody id="interface-tbody"></tbody>
@@ -201,6 +201,8 @@
 
   <script src="js/api.js?v=2"></script>
   <script src="js/auth.js?v=2"></script>
+  <script src="js/locales.js?v=2"></script>
+  <script src="js/i18n.js?v=2"></script>
   <script src="js/router-selector.js?v=2"></script>
   <script src="js/layout.js?v=2"></script>
   <script src="js/monitor-interface.js?v=3"></script>

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	billing "github.com/quixiq/polyglot/internal/domain/billing"
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
@@ -229,6 +230,7 @@ func BuildOnPaidRestore(
 	subs port.SubscriptionRepository,
 	plans port.ServicePlanRepository,
 	settings port.SettingReader,
+	customers port.CustomerRepository,
 ) func(ctx context.Context, inv billing.Invoice, pay billing.Payment) {
 	return func(ctx context.Context, inv billing.Invoice, pay billing.Payment) {
 		if inv.SubscriptionID == nil || *inv.SubscriptionID == "" {
@@ -275,6 +277,18 @@ func BuildOnPaidRestore(
 		if err := subs.UpdateStatus(ctx, sub.ID, "ACTIVE"); err != nil {
 			logger.WithComponent("OnPaidRestore").WithError(err).Warn("update status ACTIVE failed")
 			return
+		}
+		// Selaraskan status master pelanggan dengan status langganan aktif
+		// (planning v2 Fase 0) — best-effort.
+		if customers != nil && sub.CustomerID != "" {
+			if cust, cerr := customers.FindByID(ctx, sub.CustomerID); cerr == nil {
+				if cust.Status != domainCustomer.StatusActive {
+					cust.Status = domainCustomer.StatusActive
+					if serr := customers.Save(ctx, cust); serr != nil {
+						logger.WithComponent("OnPaidRestore").WithError(serr).Warn("sync customer status ACTIVE failed")
+					}
+				}
+			}
 		}
 		logger.WithComponent("OnPaidRestore").WithFields(map[string]any{
 			"subscription_id": sub.ID,

@@ -118,7 +118,20 @@ func (p *Provisioner) EnsureIsolationInfrastructure(ctx context.Context, deviceI
 		}
 	}
 
-	// 6. Ensure Hotspot Walled Garden for domains and portal
+	// 6. Webproxy internal + access rules isolir (blueprint §5.4, D12).
+	if err := p.ensureIsolirWebProxy(ctx, driver, cfg); err != nil {
+		return fmt.Errorf("ensure isolir web proxy: %w", err)
+	}
+	// 7. Whitelist server billing (address-list IPBILL-GLOBAL).
+	if len(cfg.BillingHosts) > 0 {
+		if err := p.ensureBillingWhitelist(ctx, driver, cfg.BillingHosts); err != nil {
+			return fmt.Errorf("ensure billing whitelist: %w", err)
+		}
+	}
+	// 8. error.html mode self (best-effort, mode cloud tetap tersedia).
+	p.fetchIsolirErrorPage(ctx, driver, cfg.ErrorPageURL)
+
+	// 9. Ensure Hotspot Walled Garden for domains and portal
 	if len(cfg.WalledGardenDomains) > 0 || cfg.RedirectIP != "" {
 		portStr := ""
 		if cfg.RedirectPort > 0 {
@@ -173,6 +186,14 @@ func (p *Provisioner) GetIsolationInfrastructureStatus(ctx context.Context, devi
 	count, err := p.fw.CountAddressListEntries(ctx, driver, status.Config.AddressListName)
 	if err == nil {
 		status.IsolatedUsersCount = count
+	}
+
+	// Blueprint §5.4: status webproxy isolir + whitelist billing.
+	if res, perr := driver.Execute(ctx, domainCommand.Command{Raw: "/ip/proxy/print"}); perr == nil && len(res.Rows) > 0 {
+		status.WebProxyEnabled = res.Rows[0]["enabled"] == "true"
+	}
+	if n, werr := p.fw.CountAddressListEntries(ctx, driver, "IPBILL-GLOBAL"); werr == nil {
+		status.BillingWhitelistSize = n
 	}
 
 	return status, nil

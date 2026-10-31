@@ -3,6 +3,7 @@ import {
   type CashierPayRequest,
   type GenerateInvoicesRequest,
   type ResolveMethod,
+  ApplyInvoiceDiscountRequest,
 } from '@/gen/v1/billing_pb'
 import {
   type CreateSubscriptionRequest,
@@ -15,6 +16,7 @@ import {
   type ActivateSubscriptionRequest,
   type IsolateSubscriptionRequest,
   type RestoreSubscriptionRequest,
+  RetryProvisionRequest,
 } from '@/gen/v1/subscription_pb'
 import { useAuthStore } from '@/stores/auth-store'
 import { API_BASE_URL } from '@/lib/api-base'
@@ -124,8 +126,36 @@ export function useCashierPayMutation() {
 
 export interface CashierChargeRequest {
   invoice_id: string
+  gateway?: string
   channel?: string
   expire_minutes?: number
+}
+
+export interface PaymentGatewayOption {
+  name: string
+  enabled: boolean
+  is_default: boolean
+}
+
+// useGatewaysQuery mengambil daftar payment gateway terdaftar + status aktif
+// untuk pemilih gateway dinamis pada kasir (planning v2 Fase 3).
+export function useGatewaysQuery() {
+  return useQuery({
+    queryKey: ['payment-gateways'],
+    queryFn: async (): Promise<PaymentGatewayOption[]> => {
+      const baseUrl = API_BASE_URL
+      const token = useAuthStore.getState().auth.accessToken
+      const res = await fetch(`${baseUrl}/api/cashier/gateways`, {
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      })
+      if (!res.ok) return []
+      const data = (await res.json()) as { gateways?: PaymentGatewayOption[] }
+      return (data.gateways || []).filter((g) => g.enabled)
+    },
+    staleTime: 60_000,
+  })
 }
 
 export interface CashierChargeResponse {
@@ -269,6 +299,26 @@ export function useIsolateSubscriptionMutation() {
   })
 }
 
+export function useRetryProvisionMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: { id: string }) => {
+      return await subscriptionClient.retryProvision(
+        new RetryProvisionRequest({ id: req.id })
+      )
+    },
+    onSuccess: (_, vars) => {
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.all(),
+      })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.id),
+      })
+    },
+  })
+}
+
 export function useRestoreSubscriptionMutation() {
   const queryClient = useQueryClient()
 
@@ -344,6 +394,30 @@ export function useGenerateInvoicesMutation() {
     mutationFn: async (req: GenerateInvoicesRequest) => {
       return await billingClient.generateInvoices(req)
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: billingKeys.invoices.all() })
+    },
+  })
+}
+
+export function useApplyInvoiceDiscountMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: {
+      invoiceId: string
+      discountType: string
+      discountValue: number
+      promoCode?: string
+    }) =>
+      await billingClient.applyInvoiceDiscount(
+        new ApplyInvoiceDiscountRequest({
+          invoiceId: req.invoiceId,
+          discountType: req.discountType,
+          discountValue: req.discountValue,
+          promoCode: req.promoCode || '',
+        })
+      ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.invoices.all() })
     },

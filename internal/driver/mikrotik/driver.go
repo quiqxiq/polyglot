@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/quiqxiq/goros/v4"
 
@@ -36,6 +37,7 @@ import (
 // classification — and nothing else.
 type Driver struct {
 	target device.Target
+	cfg    DriverConfig
 
 	exec   *managedConn
 	stream *managedConn
@@ -87,8 +89,11 @@ func NewDriver(ctx context.Context, target device.Target) (*Driver, error) {
 		return nil, fmt.Errorf("mikrotik: connect stream: %w", err)
 	}
 
+	cfg := ConfigFromTarget(target)
+
 	d := &Driver{
 		target:    target,
+		cfg:       cfg,
 		exec:      newManagedConn(execClient, execErrC),
 		stream:    newManagedConn(streamClient, streamErrC),
 		execSem:   make(chan struct{}, 1),
@@ -211,8 +216,9 @@ func (d *Driver) Validate(ctx context.Context, cmd command.Command) error {
 	}
 }
 
-// Classify reports the risk class of cmd according to RouterOS API conventions.
-func (d *Driver) Classify(cmd command.Command) command.Class {
+// Classify reports the risk classification of cmd according to RouterOS API
+// conventions (see classify.go).
+func (d *Driver) Classify(cmd command.Command) command.Classification {
 	return Classify(cmd)
 }
 
@@ -268,4 +274,14 @@ func (d *Driver) unregisterStream(h *streamHandle) {
 	d.streamsMu.Lock()
 	delete(d.streams, h)
 	d.streamsMu.Unlock()
+}
+
+// Config returns the active driver configuration.
+func (d *Driver) Config() DriverConfig {
+	return d.cfg
+}
+
+// SetPollInterval dynamically adjusts the polling interval.
+func (d *Driver) SetPollInterval(interval time.Duration) {
+	d.cfg.PollInterval = interval
 }

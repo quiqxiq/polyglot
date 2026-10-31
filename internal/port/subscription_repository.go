@@ -24,6 +24,11 @@ type SubscriptionRepository interface {
 	// input generator tagihan bulanan.
 	ListActive(ctx context.Context) ([]subscription.Subscription, error)
 
+	// ListByStatuses returns all non-deleted subscriptions whose status is
+	// in statuses — dipakai generator tagihan agar status yang ditagih dapat
+	// dikonfigurasi (isp.bill_isolated / isp.bill_suspended).
+	ListByStatuses(ctx context.Context, statuses []string) ([]subscription.Subscription, error)
+
 	// ListLifecycle returns ACTIVE + ISOLATED non-deleted subscriptions —
 	// domain kerja worker isolir/auto-suspend/provision-retry.
 	ListLifecycle(ctx context.Context) ([]subscription.Subscription, error)

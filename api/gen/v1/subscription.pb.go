@@ -1636,6 +1636,103 @@ func (x *IsolateSubscriptionResponse) GetMessage() string {
 	return ""
 }
 
+type RetryProvisionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryProvisionRequest) Reset() {
+	*x = RetryProvisionRequest{}
+	mi := &file_v1_subscription_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryProvisionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryProvisionRequest) ProtoMessage() {}
+
+func (x *RetryProvisionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_subscription_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryProvisionRequest.ProtoReflect.Descriptor instead.
+func (*RetryProvisionRequest) Descriptor() ([]byte, []int) {
+	return file_v1_subscription_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *RetryProvisionRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type RetryProvisionResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Job router yang diantrekan untuk percobaan provisi berikutnya.
+	JobId         string `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	Status        string `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryProvisionResponse) Reset() {
+	*x = RetryProvisionResponse{}
+	mi := &file_v1_subscription_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryProvisionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryProvisionResponse) ProtoMessage() {}
+
+func (x *RetryProvisionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_subscription_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryProvisionResponse.ProtoReflect.Descriptor instead.
+func (*RetryProvisionResponse) Descriptor() ([]byte, []int) {
+	return file_v1_subscription_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *RetryProvisionResponse) GetJobId() string {
+	if x != nil {
+		return x.JobId
+	}
+	return ""
+}
+
+func (x *RetryProvisionResponse) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
 type RestoreSubscriptionRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
@@ -1645,7 +1742,7 @@ type RestoreSubscriptionRequest struct {
 
 func (x *RestoreSubscriptionRequest) Reset() {
 	*x = RestoreSubscriptionRequest{}
-	mi := &file_v1_subscription_proto_msgTypes[25]
+	mi := &file_v1_subscription_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1657,7 +1754,7 @@ func (x *RestoreSubscriptionRequest) String() string {
 func (*RestoreSubscriptionRequest) ProtoMessage() {}
 
 func (x *RestoreSubscriptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_subscription_proto_msgTypes[25]
+	mi := &file_v1_subscription_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1670,7 +1767,7 @@ func (x *RestoreSubscriptionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RestoreSubscriptionRequest.ProtoReflect.Descriptor instead.
 func (*RestoreSubscriptionRequest) Descriptor() ([]byte, []int) {
-	return file_v1_subscription_proto_rawDescGZIP(), []int{25}
+	return file_v1_subscription_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *RestoreSubscriptionRequest) GetSubscriptionId() string {
@@ -1690,7 +1787,7 @@ type RestoreSubscriptionResponse struct {
 
 func (x *RestoreSubscriptionResponse) Reset() {
 	*x = RestoreSubscriptionResponse{}
-	mi := &file_v1_subscription_proto_msgTypes[26]
+	mi := &file_v1_subscription_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1702,7 +1799,7 @@ func (x *RestoreSubscriptionResponse) String() string {
 func (*RestoreSubscriptionResponse) ProtoMessage() {}
 
 func (x *RestoreSubscriptionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_subscription_proto_msgTypes[26]
+	mi := &file_v1_subscription_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1715,7 +1812,7 @@ func (x *RestoreSubscriptionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RestoreSubscriptionResponse.ProtoReflect.Descriptor instead.
 func (*RestoreSubscriptionResponse) Descriptor() ([]byte, []int) {
-	return file_v1_subscription_proto_rawDescGZIP(), []int{26}
+	return file_v1_subscription_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *RestoreSubscriptionResponse) GetSubscription() *Subscription {
@@ -1868,12 +1965,18 @@ const file_v1_subscription_proto_rawDesc = "" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\"v\n" +
 	"\x1bIsolateSubscriptionResponse\x12=\n" +
 	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"N\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"0\n" +
+	"\x15RetryProvisionRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"G\n" +
+	"\x16RetryProvisionResponse\x12\x15\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\"N\n" +
 	"\x1aRestoreSubscriptionRequest\x120\n" +
 	"\x0fsubscription_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0esubscriptionId\"v\n" +
 	"\x1bRestoreSubscriptionResponse\x12=\n" +
 	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xdd\t\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xb8\n" +
+	"\n" +
 	"\x13SubscriptionService\x12b\n" +
 	"\x11ListSubscriptions\x12%.polyglot.v1.ListSubscriptionsRequest\x1a&.polyglot.v1.ListSubscriptionsResponse\x12\\\n" +
 	"\x0fGetSubscription\x12#.polyglot.v1.GetSubscriptionRequest\x1a$.polyglot.v1.GetSubscriptionResponse\x12e\n" +
@@ -1887,7 +1990,8 @@ const file_v1_subscription_proto_rawDesc = "" +
 	"\x15TerminateSubscription\x12).polyglot.v1.TerminateSubscriptionRequest\x1a*.polyglot.v1.TerminateSubscriptionResponse\x12k\n" +
 	"\x14ActivateSubscription\x12(.polyglot.v1.ActivateSubscriptionRequest\x1a).polyglot.v1.ActivateSubscriptionResponse\x12h\n" +
 	"\x13IsolateSubscription\x12'.polyglot.v1.IsolateSubscriptionRequest\x1a(.polyglot.v1.IsolateSubscriptionResponse\x12h\n" +
-	"\x13RestoreSubscription\x12'.polyglot.v1.RestoreSubscriptionRequest\x1a(.polyglot.v1.RestoreSubscriptionResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x13RestoreSubscription\x12'.polyglot.v1.RestoreSubscriptionRequest\x1a(.polyglot.v1.RestoreSubscriptionResponse\x12Y\n" +
+	"\x0eRetryProvision\x12\".polyglot.v1.RetryProvisionRequest\x1a#.polyglot.v1.RetryProvisionResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_subscription_proto_rawDescOnce sync.Once
@@ -1901,7 +2005,7 @@ func file_v1_subscription_proto_rawDescGZIP() []byte {
 	return file_v1_subscription_proto_rawDescData
 }
 
-var file_v1_subscription_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_v1_subscription_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_v1_subscription_proto_goTypes = []any{
 	(*PPPoESubscriptionConfig)(nil),       // 0: polyglot.v1.PPPoESubscriptionConfig
 	(*HotspotSubscriptionConfig)(nil),     // 1: polyglot.v1.HotspotSubscriptionConfig
@@ -1928,8 +2032,10 @@ var file_v1_subscription_proto_goTypes = []any{
 	(*ActivateSubscriptionResponse)(nil),  // 22: polyglot.v1.ActivateSubscriptionResponse
 	(*IsolateSubscriptionRequest)(nil),    // 23: polyglot.v1.IsolateSubscriptionRequest
 	(*IsolateSubscriptionResponse)(nil),   // 24: polyglot.v1.IsolateSubscriptionResponse
-	(*RestoreSubscriptionRequest)(nil),    // 25: polyglot.v1.RestoreSubscriptionRequest
-	(*RestoreSubscriptionResponse)(nil),   // 26: polyglot.v1.RestoreSubscriptionResponse
+	(*RetryProvisionRequest)(nil),         // 25: polyglot.v1.RetryProvisionRequest
+	(*RetryProvisionResponse)(nil),        // 26: polyglot.v1.RetryProvisionResponse
+	(*RestoreSubscriptionRequest)(nil),    // 27: polyglot.v1.RestoreSubscriptionRequest
+	(*RestoreSubscriptionResponse)(nil),   // 28: polyglot.v1.RestoreSubscriptionResponse
 }
 var file_v1_subscription_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.Subscription.pppoe_config:type_name -> polyglot.v1.PPPoESubscriptionConfig
@@ -1960,21 +2066,23 @@ var file_v1_subscription_proto_depIdxs = []int32{
 	19, // 25: polyglot.v1.SubscriptionService.TerminateSubscription:input_type -> polyglot.v1.TerminateSubscriptionRequest
 	21, // 26: polyglot.v1.SubscriptionService.ActivateSubscription:input_type -> polyglot.v1.ActivateSubscriptionRequest
 	23, // 27: polyglot.v1.SubscriptionService.IsolateSubscription:input_type -> polyglot.v1.IsolateSubscriptionRequest
-	25, // 28: polyglot.v1.SubscriptionService.RestoreSubscription:input_type -> polyglot.v1.RestoreSubscriptionRequest
-	10, // 29: polyglot.v1.SubscriptionService.ListSubscriptions:output_type -> polyglot.v1.ListSubscriptionsResponse
-	12, // 30: polyglot.v1.SubscriptionService.GetSubscription:output_type -> polyglot.v1.GetSubscriptionResponse
-	4,  // 31: polyglot.v1.SubscriptionService.CreateSubscription:output_type -> polyglot.v1.CreateSubscriptionResponse
-	6,  // 32: polyglot.v1.SubscriptionService.UpdateSubscription:output_type -> polyglot.v1.UpdateSubscriptionResponse
-	8,  // 33: polyglot.v1.SubscriptionService.DeleteSubscription:output_type -> polyglot.v1.DeleteSubscriptionResponse
-	14, // 34: polyglot.v1.SubscriptionService.ChangePlan:output_type -> polyglot.v1.ChangePlanResponse
-	16, // 35: polyglot.v1.SubscriptionService.SuspendSubscription:output_type -> polyglot.v1.SuspendSubscriptionResponse
-	18, // 36: polyglot.v1.SubscriptionService.ResumeSubscription:output_type -> polyglot.v1.ResumeSubscriptionResponse
-	20, // 37: polyglot.v1.SubscriptionService.TerminateSubscription:output_type -> polyglot.v1.TerminateSubscriptionResponse
-	22, // 38: polyglot.v1.SubscriptionService.ActivateSubscription:output_type -> polyglot.v1.ActivateSubscriptionResponse
-	24, // 39: polyglot.v1.SubscriptionService.IsolateSubscription:output_type -> polyglot.v1.IsolateSubscriptionResponse
-	26, // 40: polyglot.v1.SubscriptionService.RestoreSubscription:output_type -> polyglot.v1.RestoreSubscriptionResponse
-	29, // [29:41] is the sub-list for method output_type
-	17, // [17:29] is the sub-list for method input_type
+	27, // 28: polyglot.v1.SubscriptionService.RestoreSubscription:input_type -> polyglot.v1.RestoreSubscriptionRequest
+	25, // 29: polyglot.v1.SubscriptionService.RetryProvision:input_type -> polyglot.v1.RetryProvisionRequest
+	10, // 30: polyglot.v1.SubscriptionService.ListSubscriptions:output_type -> polyglot.v1.ListSubscriptionsResponse
+	12, // 31: polyglot.v1.SubscriptionService.GetSubscription:output_type -> polyglot.v1.GetSubscriptionResponse
+	4,  // 32: polyglot.v1.SubscriptionService.CreateSubscription:output_type -> polyglot.v1.CreateSubscriptionResponse
+	6,  // 33: polyglot.v1.SubscriptionService.UpdateSubscription:output_type -> polyglot.v1.UpdateSubscriptionResponse
+	8,  // 34: polyglot.v1.SubscriptionService.DeleteSubscription:output_type -> polyglot.v1.DeleteSubscriptionResponse
+	14, // 35: polyglot.v1.SubscriptionService.ChangePlan:output_type -> polyglot.v1.ChangePlanResponse
+	16, // 36: polyglot.v1.SubscriptionService.SuspendSubscription:output_type -> polyglot.v1.SuspendSubscriptionResponse
+	18, // 37: polyglot.v1.SubscriptionService.ResumeSubscription:output_type -> polyglot.v1.ResumeSubscriptionResponse
+	20, // 38: polyglot.v1.SubscriptionService.TerminateSubscription:output_type -> polyglot.v1.TerminateSubscriptionResponse
+	22, // 39: polyglot.v1.SubscriptionService.ActivateSubscription:output_type -> polyglot.v1.ActivateSubscriptionResponse
+	24, // 40: polyglot.v1.SubscriptionService.IsolateSubscription:output_type -> polyglot.v1.IsolateSubscriptionResponse
+	28, // 41: polyglot.v1.SubscriptionService.RestoreSubscription:output_type -> polyglot.v1.RestoreSubscriptionResponse
+	26, // 42: polyglot.v1.SubscriptionService.RetryProvision:output_type -> polyglot.v1.RetryProvisionResponse
+	30, // [30:43] is the sub-list for method output_type
+	17, // [17:30] is the sub-list for method input_type
 	17, // [17:17] is the sub-list for extension type_name
 	17, // [17:17] is the sub-list for extension extendee
 	0,  // [0:17] is the sub-list for field type_name
@@ -1991,7 +2099,7 @@ func file_v1_subscription_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_subscription_proto_rawDesc), len(file_v1_subscription_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   27,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

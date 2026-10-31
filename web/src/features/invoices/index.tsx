@@ -1,5 +1,16 @@
 import { useMemo } from 'react'
-import { AlertCircle, Receipt } from 'lucide-react'
+import { AlertCircle, Receipt, Search as SearchIcon, X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
+import { useInvoiceListQuery } from '@/features/billing/api/use-billing-ops'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -10,17 +21,28 @@ import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useDeviceStore } from '@/stores/device-store'
 import { useCustomersQuery } from '@/features/customer/api/use-customer'
 import { useSubscriptionsQuery } from '@/features/billing/api/use-billing'
-import { useInvoicesQuery } from './api/use-invoices'
 import { InvoicesDialogs } from './components/invoices-dialogs'
 import { InvoicesPrimaryButtons } from './components/invoices-primary-buttons'
-import { InvoicesProvider } from './components/invoices-provider'
+import { InvoicesProvider, useInvoices } from './components/invoices-provider'
 import { InvoicesSummaryCards } from './components/invoices-summary-cards'
 import { InvoicesTable } from './components/invoices-table'
 
 function InvoicesContent() {
   const { selectedDeviceId } = useDeviceStore()
   const { data: devices = [] } = useDevicesQuery()
-  const { data: invoices = [], isLoading: isLoadingInvoices } = useInvoicesQuery('', '')
+  const { filters, setFilters, resetFilters } = useInvoices()
+  const {
+    data: invoiceData,
+    isLoading: isLoadingInvoices,
+  } = useInvoiceListQuery({
+    customerId: filters.customerId,
+    status: filters.status,
+    period: filters.period,
+    search: filters.search,
+    overdueOnly: filters.overdueOnly,
+    limit: 500,
+  })
+  const invoices = useMemo(() => invoiceData?.invoices ?? [], [invoiceData])
   const { data: customers = [], isLoading: isLoadingCustomers } = useCustomersQuery()
   const { data: subscriptions = [], isLoading: isLoadingSubs } = useSubscriptionsQuery('')
 
@@ -97,6 +119,56 @@ function InvoicesContent() {
             </p>
           </div>
           <InvoicesPrimaryButtons />
+        </div>
+
+        {/* Filter Tagihan */}
+        <div className='flex flex-wrap items-center gap-2 rounded-lg border bg-muted/20 p-2.5'>
+          <div className='relative'>
+            <SearchIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+            <Input
+              className='h-9 w-60 pl-8'
+              placeholder='Cari no. invoice / pelanggan'
+              value={filters.search}
+              onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
+            />
+          </div>
+          <Select
+            value={filters.status || 'ALL'}
+            onValueChange={(v) => setFilters((f) => ({ ...f, status: v === 'ALL' ? '' : v }))}
+          >
+            <SelectTrigger className='h-9 w-40'>
+              <SelectValue placeholder='Semua status' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='ALL'>Semua status</SelectItem>
+              <SelectItem value='UNPAID'>Belum Bayar</SelectItem>
+              <SelectItem value='PARTIAL'>Dibayar Sebagian</SelectItem>
+              <SelectItem value='PAID'>Lunas</SelectItem>
+              <SelectItem value='OVERDUE'>Lewat Jatuh Tempo</SelectItem>
+              <SelectItem value='CANCELLED'>Dibatalkan</SelectItem>
+            </SelectContent>
+          </Select>
+          <Input
+            className='h-9 w-36'
+            placeholder='Periode YYYY-MM'
+            value={filters.period}
+            onChange={(e) => setFilters((f) => ({ ...f, period: e.target.value }))}
+          />
+          <label className='flex items-center gap-2 text-sm text-muted-foreground'>
+            <Switch
+              checked={filters.overdueOnly}
+              onCheckedChange={(checked) =>
+                setFilters((f) => ({ ...f, overdueOnly: checked }))
+              }
+            />
+            Hanya lewat jatuh tempo
+          </label>
+          <Button variant='ghost' size='sm' className='gap-1' onClick={resetFilters}>
+            <X className='h-4 w-4' /> Reset
+          </Button>
+          <span className='ms-auto text-xs text-muted-foreground'>
+            {invoiceData?.total ?? 0} tagihan
+          </span>
         </div>
 
         {!selectedDeviceId ? (

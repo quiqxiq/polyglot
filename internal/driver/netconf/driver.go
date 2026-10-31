@@ -29,8 +29,9 @@ func (d *Driver) Execute(ctx context.Context, cmd command.Command) (command.Resu
 	return command.Result{}, nil
 }
 
-// Classify reports the risk class of cmd according to NETCONF conventions.
-func (d *Driver) Classify(cmd command.Command) command.Class {
+// Classify reports the AI Router Ops classification of cmd according to
+// NETCONF conventions.
+func (d *Driver) Classify(cmd command.Command) command.Classification {
 	return Classify(cmd)
 }
 

@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { showSubmittedData } from '@/lib/show-submitted-data'
+import { useI18n } from '@/context/i18n-provider'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -55,6 +56,7 @@ const defaultValues: Partial<DisplayFormValues> = {
 }
 
 export function DisplayForm() {
+  const { t, language, setLanguage } = useI18n()
   const form = useForm<DisplayFormValues>({
     resolver: zodResolver(displayFormSchema),
     defaultValues,
@@ -66,6 +68,35 @@ export function DisplayForm() {
         onSubmit={form.handleSubmit((data) => showSubmittedData(data))}
         className='space-y-8'
       >
+        <div className='space-y-3 rounded-lg border p-4 bg-muted/20'>
+          <div>
+            <FormLabel className='text-base font-semibold'>{t('settings.language_label')}</FormLabel>
+            <FormDescription>
+              {t('settings.language_desc')}
+            </FormDescription>
+          </div>
+          <div className='flex flex-wrap gap-3 pt-1'>
+            <Button
+              type='button'
+              variant={language === 'id' ? 'default' : 'outline'}
+              onClick={() => setLanguage('id')}
+              className='flex items-center gap-2'
+            >
+              <span>🇮🇩</span>
+              <span>Bahasa Indonesia (ID)</span>
+            </Button>
+            <Button
+              type='button'
+              variant={language === 'en' ? 'default' : 'outline'}
+              onClick={() => setLanguage('en')}
+              className='flex items-center gap-2'
+            >
+              <span>🇺🇸</span>
+              <span>English (EN)</span>
+            </Button>
+          </div>
+        </div>
+
         <FormField
           control={form.control}
           name='items'
@@ -114,7 +145,7 @@ export function DisplayForm() {
             </FormItem>
           )}
         />
-        <Button type='submit'>Update display</Button>
+        <Button type='submit'>{t('settings.update_display')}</Button>
       </form>
     </Form>
   )

@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateCustomerRequest, CreateCustomerResponse, DeleteCustomerRequest, DeleteCustomerResponse, FindCustomerByCodeRequest, FindCustomerByPhoneRequest, FindCustomerByPortalCodeRequest, FindCustomerResponse, GetCustomerRequest, GetCustomerResponse, ListCustomersRequest, ListCustomersResponse, UpdateCustomerRequest, UpdateCustomerResponse } from "./customer_pb.js";
+import { CreateCustomerRequest, CreateCustomerResponse, DeleteCustomerRequest, DeleteCustomerResponse, FindCustomerByCodeRequest, FindCustomerByPhoneRequest, FindCustomerByPortalCodeRequest, FindCustomerResponse, GetCustomer360Request, GetCustomer360Response, GetCustomerRequest, GetCustomerResponse, ListCustomersRequest, ListCustomersResponse, UpdateCustomerRequest, UpdateCustomerResponse } from "./customer_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { ListSubscriptionsRequest, ListSubscriptionsResponse } from "./subscription_pb.js";
 
@@ -56,6 +56,17 @@ export const CustomerService = {
       name: "DeleteCustomer",
       I: DeleteCustomerRequest,
       O: DeleteCustomerResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Customer 360 (Fase 5): profil + langganan + tagihan + pembayaran + PSB.
+     *
+     * @generated from rpc polyglot.v1.CustomerService.GetCustomer360
+     */
+    getCustomer360: {
+      name: "GetCustomer360",
+      I: GetCustomer360Request,
+      O: GetCustomer360Response,
       kind: MethodKind.Unary,
     },
     /**

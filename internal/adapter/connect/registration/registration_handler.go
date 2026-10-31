@@ -37,14 +37,17 @@ func (h *RegistrationConnectHandler) SubmitRegistration(ctx context.Context, req
 		lat, lon = &vLat, &vLon
 	}
 	reg := domainRegistration.Registration{
-		FullName:  req.Msg.FullName,
-		Phone:     req.Msg.Phone,
-		Email:     req.Msg.Email,
-		Address:   req.Msg.Address,
-		Latitude:  lat,
-		Longitude: lon,
-		Notes:     req.Msg.Notes,
-		PlanID:    req.Msg.PlanId,
+		FullName:       req.Msg.FullName,
+		Phone:          req.Msg.Phone,
+		Email:          req.Msg.Email,
+		Address:        req.Msg.Address,
+		Latitude:       lat,
+		Longitude:      lon,
+		Notes:          req.Msg.Notes,
+		PlanID:         req.Msg.PlanId,
+		NIK:            req.Msg.Nik,
+		IDCardPhotoURL: req.Msg.IdCardPhotoUrl,
+		HousePhotoURL:  req.Msg.HousePhotoUrl,
 	}
 	submitted, err := h.managerUC.Submit(ctx, reg)
 	if err != nil {
@@ -128,12 +131,127 @@ func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *con
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
-	installed, err := h.managerUC.MarkInstalled(ctx, req.Msg.Id, nil, req.Msg.DeviceId, req.Msg.TechnicianNotes)
+	installed, err := h.managerUC.MarkInstalledWithEvidence(ctx, req.Msg.Id, uc.MarkInstalledInput{
+		DeviceID:             req.Msg.DeviceId,
+		TechnicianNotes:      req.Msg.TechnicianNotes,
+		InstallationPhotoURL: req.Msg.InstallationPhotoUrl,
+		ONTMACAddress:        req.Msg.OntMacAddress,
+		ONTSerialNumber:      req.Msg.OntSerialNumber,
+		OLTDeviceID:          req.Msg.GetOltDeviceId(),
+		PONIndex:             intPtrOrNil(req.Msg.GetPonIndex()),
+		ONUIndex:             intPtrOrNil(req.Msg.GetOnuIndex()),
+	})
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.MarkInstalledResponse{
 		Registration: toProtoRegistration(&installed),
+	}), nil
+}
+
+// RecordSurvey mencatat hasil survey lokasi (PSB v2): PENDING/APPROVED → SURVEY.
+func (h *RegistrationConnectHandler) RecordSurvey(ctx context.Context, req *connect.Request[devicepb.RecordSurveyRequest]) (*connect.Response[devicepb.RecordSurveyResponse], error) {
+	if h.managerUC == nil {
+		return nil, response.Unavailable("registration usecase unavailable")
+	}
+	in := uc.SurveyInput{
+		SurveyStatus:              req.Msg.SurveyStatus,
+		SurveyNotes:               req.Msg.SurveyNotes,
+		EstimatedCableLengthMeter: int(req.Msg.EstimatedCableLengthMeter),
+	}
+	if req.Msg.SurveyorId != "" {
+		if id, err := strconv.ParseUint(req.Msg.SurveyorId, 10, 64); err == nil {
+			v := uint(id)
+			in.SurveyorID = &v
+		}
+	}
+	if req.Msg.SurveyDateUnix > 0 {
+		d := time.Unix(req.Msg.SurveyDateUnix, 0).UTC()
+		in.SurveyDate = &d
+	}
+	if req.Msg.SurveyTimeHhmm != "" {
+		if t, err := time.Parse("15:04", req.Msg.SurveyTimeHhmm); err == nil {
+			in.SurveyTime = &t
+		}
+	}
+	surveyed, err := h.managerUC.RecordSurvey(ctx, req.Msg.Id, in)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.RecordSurveyResponse{
+		Registration: toProtoRegistration(&surveyed),
+	}), nil
+}
+
+// StartInstallation memulai pekerjaan lapangan (APPROVED → ON_PROGRESS).
+func (h *RegistrationConnectHandler) StartInstallation(ctx context.Context, req *connect.Request[devicepb.StartInstallationRequest]) (*connect.Response[devicepb.StartInstallationResponse], error) {
+	if h.managerUC == nil {
+		return nil, response.Unavailable("registration usecase unavailable")
+	}
+	started, err := h.managerUC.StartInstallation(ctx, req.Msg.Id, "1")
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.StartInstallationResponse{
+		Registration: toProtoRegistration(&started),
+	}), nil
+}
+
+// TrackRegistration — PUBLIC: lacak status pendaftaran via token tanpa login.
+func (h *RegistrationConnectHandler) TrackRegistration(ctx context.Context, req *connect.Request[devicepb.TrackRegistrationRequest]) (*connect.Response[devicepb.TrackRegistrationResponse], error) {
+	if h.managerUC == nil {
+		return nil, response.Unavailable("registration usecase unavailable")
+	}
+	reg, err := h.managerUC.TrackByPublicToken(ctx, req.Msg.PublicToken)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	events, err := h.managerUC.ListEvents(ctx, reg.ID)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.TrackRegistrationResponse{
+		Registration: toProtoRegistration(&reg),
+		Events:       toProtoRegistrationEvents(events),
+	}), nil
+}
+
+// ListPublicPlans — PUBLIC: pilihan paket aktif untuk formulir pendaftaran.
+func (h *RegistrationConnectHandler) ListPublicPlans(ctx context.Context, req *connect.Request[devicepb.ListPublicPlansRequest]) (*connect.Response[devicepb.ListPublicPlansResponse], error) {
+	if h.managerUC == nil {
+		return nil, response.Unavailable("registration usecase unavailable")
+	}
+	plans, err := h.managerUC.PublicPlans(ctx)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	out := make([]*devicepb.PublicPlan, len(plans))
+	for i := range plans {
+		p := plans[i]
+		out[i] = &devicepb.PublicPlan{
+			Id:                    p.ID,
+			Name:                  p.Name,
+			ServiceType:           p.ServiceType,
+			Price:                 p.Price,
+			BandwidthDownloadKbps: int32(p.BandwidthDownloadKbps),
+			BandwidthUploadKbps:   int32(p.BandwidthUploadKbps),
+			InstallationFee:       p.InstallationFee,
+		}
+	}
+	return connect.NewResponse(&devicepb.ListPublicPlansResponse{Plans: out}), nil
+}
+
+// ListRegistrationEvents mengembalikan timeline PSB satu pendaftaran.
+func (h *RegistrationConnectHandler) ListRegistrationEvents(ctx context.Context, req *connect.Request[devicepb.ListRegistrationEventsRequest]) (*connect.Response[devicepb.ListRegistrationEventsResponse], error) {
+	if h.managerUC == nil {
+		return nil, response.Unavailable("registration usecase unavailable")
+	}
+	events, err := h.managerUC.ListEvents(ctx, req.Msg.Id)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.ListRegistrationEventsResponse{
+		Events: toProtoRegistrationEvents(events),
 	}), nil
 }
 
@@ -177,4 +295,13 @@ func (h *RegistrationConnectHandler) ConvertRegistration(ctx context.Context, re
 		SubscriptionId: converted.SubscriptionID,
 		InvoiceId:      converted.InvoiceID,
 	}), nil
+}
+
+// intPtrOrNil mengubah nilai 0 (tidak diisi) menjadi nil untuk field opsional.
+func intPtrOrNil(v int32) *int {
+	if v <= 0 {
+		return nil
+	}
+	n := int(v)
+	return &n
 }

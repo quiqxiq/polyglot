@@ -5,11 +5,13 @@ import {
   PauseCircle,
   Pencil,
   PlayCircle,
+  RefreshCw,
   Repeat,
   ShieldAlert,
   ShieldCheck,
   Trash2,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +23,7 @@ import { Button } from '@/components/ui/button'
 import type { Subscription } from '@/gen/v1/subscription_pb'
 import { useAuthStore } from '@/stores/auth-store'
 import { canPermission } from '@/hooks/use-can'
+import { useRetryProvisionMutation } from '@/features/billing/api/use-billing'
 import { useSubscriptions } from './subscriptions-provider'
 
 interface SubscriptionsRowActionsProps {
@@ -31,6 +34,23 @@ export function SubscriptionsRowActions({ subscription }: SubscriptionsRowAction
   const { setOpen, setCurrentRow } = useSubscriptions()
   const permissions = useAuthStore((s) => s.auth.user?.permissions)
   const canManage = canPermission(permissions, 'billing:manage')
+  const retryProvision = useRetryProvisionMutation()
+  const provisionFailed =
+    subscription.provisionStatus === 'FAILED' ||
+    subscription.provisionStatus === 'PENDING'
+
+  const handleRetryProvision = async () => {
+    try {
+      const res = await retryProvision.mutateAsync({ id: subscription.id })
+      toast.success(
+        `Job provisioning diantrekan (${res.jobId}) — status ${res.status}`
+      )
+    } catch (err) {
+      toast.error(
+        err instanceof Error ? err.message : 'Gagal mengantrekan ulang provisi'
+      )
+    }
+  }
 
   if (!canManage) return null
 
@@ -64,6 +84,19 @@ export function SubscriptionsRowActions({ subscription }: SubscriptionsRowAction
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-52'>
+        {provisionFailed && (
+          <>
+            <DropdownMenuItem
+              onClick={handleRetryProvision}
+              disabled={retryProvision.isPending}
+              className='text-blue-600 focus:text-blue-600 dark:text-blue-400'
+            >
+              <RefreshCw className='mr-2 h-4 w-4' />
+              Retry Provision
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </>
+        )}
         {status === 'ACTIVE' && (
           <>
             <DropdownMenuItem onClick={() => act('change-plan')}>

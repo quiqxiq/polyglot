@@ -54,12 +54,73 @@ message FindCustomerByCodeRequest { string customer_code = 1 [(buf.validate.fiel
 message FindCustomerByPortalCodeRequest { string portal_access_code = 1 [(buf.validate.field).string.min_len = 1]; }
 message FindCustomerResponse { Customer customer = 1; }
 
+// ─── Customer 360 (planning v2 Fase 5) ──────────────────────────────────
+
+message Customer360Subscription {
+  string id = 1;
+  string plan_id = 2;
+  string service_type = 3;
+  string status = 4;
+  string provision_status = 5; // OK | PENDING | FAILED
+  string last_provision_error = 6;
+  int32 provision_attempts = 7;
+  string router_profile = 8;
+  string device_id = 9;
+  int64 start_date_unix = 10;
+  string next_due_date = 11; // YYYY-MM-DD
+}
+
+message Customer360Invoice {
+  string id = 1;
+  string invoice_number = 2;
+  string period = 3;
+  double total = 4;
+  double paid_amount = 5;
+  string status = 6;
+  int64 due_date_unix = 7;
+}
+
+message Customer360Payment {
+  string id = 1;
+  string payment_no = 2;
+  string invoice_id = 3;
+  double amount = 4;
+  int64 payment_date_unix = 5;
+  string scan_method = 6;
+  bool voided = 7;
+  string void_reason = 8;
+}
+
+message Customer360Registration {
+  string id = 1;
+  string registration_no = 2;
+  string status = 3;
+  int64 created_at_unix = 4;
+  int64 installed_at_unix = 5;
+  string survey_status = 6;
+  string public_token = 7;
+}
+
+message GetCustomer360Request {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message GetCustomer360Response {
+  Customer customer = 1;
+  repeated Customer360Subscription subscriptions = 2;
+  repeated Customer360Invoice invoices = 3;
+  repeated Customer360Payment payments = 4;
+  repeated Customer360Registration registrations = 5;
+}
+
 service CustomerService {
   rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse);
   rpc GetCustomer(GetCustomerRequest) returns (GetCustomerResponse);
   rpc CreateCustomer(CreateCustomerRequest) returns (CreateCustomerResponse);
   rpc UpdateCustomer(UpdateCustomerRequest) returns (UpdateCustomerResponse);
   rpc DeleteCustomer(DeleteCustomerRequest) returns (DeleteCustomerResponse);
+
+  // Customer 360 (Fase 5): profil + langganan + tagihan + pembayaran + PSB.
+  rpc GetCustomer360(GetCustomer360Request) returns (GetCustomer360Response);
 
   // Lookups cepat
   rpc FindByPhone(FindCustomerByPhoneRequest) returns (FindCustomerResponse);

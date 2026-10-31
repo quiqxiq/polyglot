@@ -23,6 +23,9 @@ type RegistrationRepository interface {
 	Save(ctx context.Context, r registration.Registration) error
 	FindByID(ctx context.Context, id string) (registration.Registration, error)
 	FindByNo(ctx context.Context, regNo string) (registration.Registration, error)
+	// FindByPublicToken mencari pendaftaran lewat token publik (lacak status
+	// tanpa login, planning v2 Fase 2).
+	FindByPublicToken(ctx context.Context, token string) (registration.Registration, error)
 	List(ctx context.Context, f RegistrationFilter) ([]registration.Registration, error)
 	UpdateStatus(ctx context.Context, id string, status string) error
 	// CountPendingSince counts registrations created after since — untuk dashboard.

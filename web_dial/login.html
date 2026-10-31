@@ -15,14 +15,22 @@
 
   <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
 
-  <div class="w-full max-w-md bg-slate-800/90 border border-slate-700/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 z-10">
+  <div class="w-full max-w-md bg-slate-800/90 border border-slate-700/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 z-10 relative">
+    <!-- Language Toggle at Top Right -->
+    <div class="absolute top-4 right-4">
+      <button type="button" onclick="I18n.toggleLanguage(); updateLoginText();" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-700/60 hover:bg-slate-700 border border-slate-600/60 text-xs font-bold text-slate-300 transition-colors cursor-pointer" title="Switch Language (ID / EN)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <span id="login-lang-label" class="uppercase font-bold">ID</span>
+      </button>
+    </div>
+
     <!-- Header -->
     <div class="text-center mb-8">
       <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6.01 18h.01"/><path d="M10.01 18h.01"/><path d="M15 10v4"/><path d="M17.84 7.17a4 4 0 0 0-5.66 0"/><path d="M20.66 4.34a8 8 0 0 0-11.31 0"/></svg>
       </div>
       <h1 class="text-2xl font-bold text-white tracking-tight">GNet Dial Portal</h1>
-      <p class="text-sm text-slate-400 mt-1">Portal Operasional Khusus Admin & Teknisi</p>
+      <p class="text-sm text-slate-400 mt-1" data-i18n="login_subtitle">Portal Operasional Khusus Admin & Teknisi</p>
     </div>
 
     <!-- Error Notice Box -->
@@ -36,7 +44,7 @@
     <!-- Form -->
     <form id="login-form" class="space-y-4">
       <div>
-        <label for="username" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Username</label>
+        <label for="username" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" data-i18n="username">Username</label>
         <input 
           type="text" 
           id="username" 
@@ -44,11 +52,12 @@
           autocomplete="username"
           class="w-full px-4 py-3 bg-slate-900/60 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           placeholder="Masukkan username Anda"
+          data-i18n-placeholder="enter_username"
         >
       </div>
 
       <div>
-        <label for="password" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Password</label>
+        <label for="password" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" data-i18n="password">Password</label>
         <input 
           type="password" 
           id="password" 
@@ -64,7 +73,7 @@
         id="submit-btn"
         class="w-full mt-2 py-3.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
       >
-        <span id="btn-text">Masuk Portal</span>
+        <span id="btn-text" data-i18n="login_btn">Masuk Portal</span>
         <svg id="btn-spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -81,7 +90,20 @@
 
   <script src="js/api.js?v=2"></script>
   <script src="js/auth.js?v=2"></script>
+  <script src="js/locales.js?v=2"></script>
+  <script src="js/i18n.js?v=2"></script>
   <script>
+    function updateLoginText() {
+      const currentLang = typeof I18n !== 'undefined' ? I18n.getLanguage() : 'id';
+      const langLabel = document.getElementById('login-lang-label');
+      if (langLabel) langLabel.textContent = currentLang.toUpperCase();
+      if (typeof I18n !== 'undefined' && I18n.applyDOM) {
+        I18n.applyDOM();
+      }
+    }
+
+    updateLoginText();
+
     // Tampilkan notice jika ada
     const notice = sessionStorage.getItem('login_notice');
     if (notice) {
@@ -102,12 +124,12 @@
       e.preventDefault();
       errorBox.classList.add('hidden');
       submitBtn.disabled = true;
-      btnText.textContent = 'Memverifikasi...';
+      btnText.textContent = typeof I18n !== 'undefined' ? I18n.t('login_verifying') : 'Memverifikasi...';
       btnSpinner.classList.remove('hidden');
 
       try {
         await Auth.login(usernameInput.value, passwordInput.value);
-        showToast('Login berhasil! Mengalihkan...', 'success');
+        showToast(typeof I18n !== 'undefined' ? I18n.t('login_success') : 'Login berhasil! Mengalihkan...', 'success');
         setTimeout(() => {
           window.location.href = 'index.html';
         }, 500);
@@ -115,11 +137,11 @@
         errorBox.classList.remove('hidden');
         let msg = err.message || 'Gagal login. Periksa username dan password.';
         if (msg.toLowerCase().includes('invalid username or password') || err.status === 401) {
-          msg = 'Username atau kata sandi salah. Silakan periksa kembali.';
+          msg = typeof I18n !== 'undefined' ? I18n.t('login_error_invalid') : 'Username atau kata sandi salah. Silakan periksa kembali.';
         }
         errorMessage.textContent = msg;
         submitBtn.disabled = false;
-        btnText.textContent = 'Masuk Portal';
+        btnText.textContent = typeof I18n !== 'undefined' ? I18n.t('login_btn') : 'Masuk Portal';
         btnSpinner.classList.add('hidden');
       }
     };

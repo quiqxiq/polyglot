@@ -27,6 +27,8 @@ type ManageCustomerUseCase struct {
 	invRepo  port.InvoiceRepository
 	router   port.RouterAccountManager
 	settings port.SettingReader
+	payments port.PaymentReader
+	regs     port.RegistrationRepository
 }
 
 // NewManageCustomerUseCase constructs a new ManageCustomerUseCase.

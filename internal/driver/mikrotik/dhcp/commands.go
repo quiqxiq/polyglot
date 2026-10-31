@@ -8,7 +8,9 @@ import (
 // /ip/dhcp-server/lease/print. Pass a non-empty macFilter to find the lease
 // for a specific MAC address — the primary lookup key for DHCP suspension.
 func NewPrintLeasesCommand(macFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,address,mac-address,host-name,server,status,expires-after,last-seen,active-address,active-mac-address,active-server,comment,disabled,dynamic,blocked",
+	}
 	if macFilter != "" {
 		args["?mac-address"] = macFilter
 	}
@@ -27,7 +29,10 @@ func NewPrintLeasesCommand(macFilter string) command.Command {
 //
 // macFilter: limit to one MAC address (empty = all leases).
 func NewStreamLeasesCommand(macFilter string) command.Command {
-	args := map[string]string{"follow": ""}
+	args := map[string]string{
+		"follow":    "",
+		".proplist": ".id,address,mac-address,host-name,server,status,expires-after,last-seen,active-address,active-mac-address,active-server,comment,disabled,dynamic,blocked",
+	}
 	if macFilter != "" {
 		args["?mac-address"] = macFilter
 	}
@@ -61,7 +66,19 @@ func NewSetLeaseBlockCommand(rosID string, p DHCPLeaseBlockParams) command.Comma
 // /ip/dhcp-server/print (list all DHCP server configurations).
 func NewPrintServersCommand() command.Command {
 	return command.Command{
-		Raw:  "/ip/dhcp-server/print",
-		Args: map[string]string{},
+		Raw: "/ip/dhcp-server/print",
+		Args: map[string]string{
+			".proplist": ".id,name,interface,lease-time,address-pool,disabled",
+		},
+	}
+}
+
+// NewPrintNetworksCommand builds the command.Command for /ip/dhcp-server/network/print.
+func NewPrintNetworksCommand() command.Command {
+	return command.Command{
+		Raw: "/ip/dhcp-server/network/print",
+		Args: map[string]string{
+			".proplist": ".id,address,gateway,dns-server,domain,comment",
+		},
 	}
 }

@@ -32,10 +32,10 @@ const transportType = "standard"
 // docs/adr/0004-generic-cli-driver-scrapligo.md.
 //
 // DEVIASI: unlike every other vendor driver package (mikrotik, cisco, ...),
-// this package has no commands.go — there is no fixed catalog to hold,
-// since the whole point of "generic" is that Catalog is supplied by the
-// caller per device, not hardcoded per vendor. Classify/Translate simply
-// delegate to whatever Catalog NewDriver was given.
+// this package has no fixed vendor catalog to classify against: uncurated
+// SSH vendors are always MUTATION (fail-closed, see commands.go). Translate
+// still delegates to whatever Catalog NewDriver was given, since that part
+// is supplied by the caller per device, not hardcoded per vendor.
 type Driver struct {
 	session *genericcli.Session
 	// target is kept so OpenTerminalSession can dial a fresh direct SSH
@@ -86,10 +86,10 @@ func (d *Driver) Execute(ctx context.Context, cmd command.Command) (command.Resu
 	return d.session.Execute(ctx, cmd)
 }
 
-// Classify reports the risk class of cmd according to the Catalog this
-// Driver was constructed with.
-func (d *Driver) Classify(cmd command.Command) command.Class {
-	return d.session.Classify(cmd)
+// Classify reports the AI Router Ops classification of cmd: always
+// MUTATION for uncurated SSH vendors (fail-closed).
+func (d *Driver) Classify(cmd command.Command) command.Classification {
+	return Classify(cmd)
 }
 
 // Translate maps an abstract Operation to this vendor's native Command,

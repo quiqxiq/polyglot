@@ -28,6 +28,21 @@ message Invoice {
   string notes = 17;
   repeated InvoiceItem items = 18;
   int64 created_at_unix = 19;
+
+  // ── Billing v2 (planning v2 Fase 1) ──────────────────────────────────
+  string invoice_type = 20; // FIRST_INSTALLATION | RECURRING | UPGRADE_ADJUSTMENT | FINAL_SETTLEMENT
+  int64 period_start_unix = 21;
+  int64 period_end_unix = 22;
+  int32 prorated_days = 23;
+  int32 period_days = 24;
+  string discount_type = 25; // NONE | PERCENT | AMOUNT
+  double discount_value = 26;
+  double discount_amount = 27;
+  string promo_code = 28;
+  int64 issued_at_unix = 29;
+  double tax_percent = 30;
+  double outstanding = 31;
+  int32 days_overdue = 32;
 }
 
 message InvoiceItem {
@@ -42,11 +57,65 @@ message InvoiceItem {
 
 // ─── Faktur ─────────────────────────────────────────────────────────────
 
+message InvoiceSummary {
+  int32 count = 1;
+  double total_billed = 2;
+  double total_paid = 3;
+  double total_outstanding = 4;
+  double total_overdue = 5;
+}
+
 message ListInvoicesRequest {
   string customer_id = 1;
   string status = 2; // kosong = semua
+  string period = 3;
+  string subscription_id = 4;
+  bool overdue_only = 5;
+  bool unpaid_only = 6;
+  int32 unpaid_days_display = 7;
+  int64 due_from_unix = 8;
+  int64 due_to_unix = 9;
+  string search = 10;
+  int32 limit = 11;
+  int32 offset = 12;
 }
-message ListInvoicesResponse { repeated Invoice invoices = 1; }
+message ListInvoicesResponse {
+  repeated Invoice invoices = 1;
+  InvoiceSummary summary = 2;
+  int32 total = 3;
+}
+
+message CreateInvoiceItem {
+  string description = 1 [(buf.validate.field).string.min_len = 1];
+  double quantity = 2;
+  double unit_price = 3;
+  string item_type = 4;
+}
+
+message CreateInvoiceRequest {
+  string customer_id = 1 [(buf.validate.field).string.min_len = 1];
+  string subscription_id = 2;
+  string period = 3;
+  int64 due_date_unix = 4;
+  double tax_percent = 5;
+  repeated CreateInvoiceItem items = 6;
+  string notes = 7;
+}
+
+message CreateInvoiceResponse {
+  Invoice invoice = 1;
+}
+
+message ExportInvoicesRequest {
+  ListInvoicesRequest filter = 1;
+  string format = 2; // csv | xlsx
+}
+
+message ExportInvoicesResponse {
+  bytes payload = 1;
+  string content_type = 2;
+  string filename = 3;
+}
 
 message GetInvoiceRequest {
   string id = 1 [(buf.validate.field).string.min_len = 1];
@@ -103,14 +172,264 @@ message CashierPayResponse {
   Invoice invoice = 3;
 }
 
+// Terapkan diskon / promo code manual pada faktur yang belum lunas.
+message ApplyInvoiceDiscountRequest {
+  string invoice_id = 1 [(buf.validate.field).string.min_len = 1];
+  string discount_type = 2; // NONE | PERCENT | AMOUNT
+  double discount_value = 3;
+  string promo_code = 4;
+}
+message ApplyInvoiceDiscountResponse { Invoice invoice = 1; }
+
+// ─── Pembayaran manual (bukti transfer) — planning v2 Fase 3 ───────────
+
+message ManualPaymentSubmission {
+  string id = 1;
+  string invoice_id = 2;
+  double amount = 3;
+  string sender_name = 4;
+  string sender_bank = 5;
+  string proof_image_url = 6;
+  string notes = 7;
+  string status = 8; // PENDING | APPROVED | REJECTED
+  string rejection_reason = 9;
+  string payment_id = 10;
+  int64 created_at_unix = 11;
+  int64 reviewed_at_unix = 12;
+}
+
+// PUBLIC — ringkasan tagihan untuk kode bayar manual (data minimal).
+message ResolveManualPaymentRequest {
+  string manual_payment_code = 1 [(buf.validate.field).string.min_len = 1];
+}
+message ResolveManualPaymentResponse {
+  string invoice_id = 1;
+  string invoice_number = 2;
+  string period = 3;
+  double total = 4;
+  double paid_amount = 5;
+  double outstanding = 6;
+  string status = 7;
+  int64 due_date_unix = 8;
+}
+
+// PUBLIC — pelanggan mengunggah bukti transfer via kode bayar manual.
+message SubmitManualPaymentRequest {
+  string manual_payment_code = 1 [(buf.validate.field).string.min_len = 1];
+  double amount = 2 [(buf.validate.field).double.gt = 0];
+  string sender_name = 3 [(buf.validate.field).string.min_len = 1];
+  string sender_bank = 4;
+  string proof_image_url = 5 [(buf.validate.field).string.min_len = 1];
+  string notes = 6;
+}
+message SubmitManualPaymentResponse { ManualPaymentSubmission submission = 1; }
+
+message ListPaymentSubmissionsRequest { string status = 1; }
+message ListPaymentSubmissionsResponse { repeated ManualPaymentSubmission submissions = 1; }
+
+message ApprovePaymentSubmissionRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message ApprovePaymentSubmissionResponse { ManualPaymentSubmission submission = 1; }
+
+message RejectPaymentSubmissionRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2 [(buf.validate.field).string.min_len = 1];
+}
+message RejectPaymentSubmissionResponse { ManualPaymentSubmission submission = 1; }
+
+// Reversal (void) pembayaran dengan jurnal koreksi kas.
+message ReversePaymentRequest {
+  string payment_id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2 [(buf.validate.field).string.min_len = 1];
+}
+message ReversePaymentResponse {
+  string payment_id = 1;
+  string invoice_id = 2;
+  double amount = 3;
+}
+
+// ─── Payment Methods ───────────────────────────────────────────────────
+
+message PaymentMethod {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  bool is_active = 4;
+  string bank_name = 5;
+  string account_number = 6;
+  string account_holder = 7;
+  string qris_image_url = 8;
+  string instructions = 9;
+  int32 sort_order = 10;
+}
+
+message ListPaymentMethodsRequest {
+  bool active_only = 1;
+}
+message ListPaymentMethodsResponse {
+  repeated PaymentMethod payment_methods = 1;
+}
+
+message SavePaymentMethodRequest {
+  PaymentMethod payment_method = 1;
+}
+message SavePaymentMethodResponse {
+  PaymentMethod payment_method = 1;
+}
+
+message DeletePaymentMethodRequest {
+  string id = 1;
+}
+message DeletePaymentMethodResponse {
+  string message = 1;
+}
+
+// ─── Mass Payment ──────────────────────────────────────────────────────
+
+message CreateMassPaymentRequest {
+  repeated string invoice_ids = 1;
+  string payment_method_id = 2;
+  string notes = 3;
+}
+message CreateMassPaymentResponse {
+  string batch_id = 1;
+  string job_id = 2;
+  int32 invoice_count = 3;
+}
+
+message BulkPaymentBatch {
+  string id = 1;
+  int32 invoice_count = 2;
+  string status = 3;
+  string job_id = 4;
+  string notes = 5;
+  int64 created_at_unix = 6;
+}
+
+message ListMassPaymentsRequest {
+  int32 limit = 1;
+}
+message ListMassPaymentsResponse {
+  repeated BulkPaymentBatch batches = 1;
+}
+
+message BulkPaymentItem {
+  string id = 1;
+  string invoice_id = 2;
+  double amount = 3;
+  string status = 4;
+  string error = 5;
+  string payment_id = 6;
+  int64 processed_at_unix = 7;
+}
+
+message GetMassPaymentRequest {
+  string batch_id = 1;
+}
+message GetMassPaymentResponse {
+  BulkPaymentBatch batch = 1;
+  repeated BulkPaymentItem items = 2;
+}
+
+// ─── Gateway Operations ────────────────────────────────────────────────
+
+message GatewayTransaction {
+  string id = 1;
+  string gateway = 2;
+  string external_id = 3;
+  string invoice_id = 4;
+  string payment_id = 5;
+  double amount = 6;
+  double fee_amount = 7;
+  string status = 8;
+  string payment_channel = 9;
+  string payment_url = 10;
+  int64 created_at_unix = 11;
+  int64 paid_at_unix = 12;
+}
+
+message ListGatewayTransactionsRequest {
+  string gateway = 1;
+  string status = 2;
+  string invoice_id = 3;
+  int32 limit = 4;
+  int32 offset = 5;
+}
+message ListGatewayTransactionsResponse {
+  repeated GatewayTransaction transactions = 1;
+  int32 total = 2;
+}
+
+message SyncGatewayTransactionsRequest {}
+message SyncGatewayTransactionsResponse {
+  int32 synced = 1;
+  int32 expired = 2;
+}
+
+message GatewaySettlement {
+  string id = 1;
+  string gateway = 2;
+  string settlement_ref = 3;
+  int64 period_from_unix = 4;
+  int64 period_to_unix = 5;
+  double gross_amount = 6;
+  double fee_amount = 7;
+  double net_amount = 8;
+  string status = 9;
+  string notes = 10;
+}
+
+message ListGatewaySettlementsRequest {
+  string gateway = 1;
+  string status = 2;
+}
+message ListGatewaySettlementsResponse {
+  repeated GatewaySettlement settlements = 1;
+}
+
+message SaveGatewaySettlementRequest {
+  GatewaySettlement settlement = 1;
+}
+message SaveGatewaySettlementResponse {
+  GatewaySettlement settlement = 1;
+}
+
 service BillingService {
   // Faktur
   rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse);
   rpc GetInvoice(GetInvoiceRequest) returns (GetInvoiceResponse);
+  rpc CreateInvoice(CreateInvoiceRequest) returns (CreateInvoiceResponse);
   rpc CancelInvoice(CancelInvoiceRequest) returns (CancelInvoiceResponse);
+  rpc ApplyInvoiceDiscount(ApplyInvoiceDiscountRequest) returns (ApplyInvoiceDiscountResponse);
   rpc GenerateInvoices(GenerateInvoicesRequest) returns (GenerateInvoicesResponse);
+  rpc ExportInvoices(ExportInvoicesRequest) returns (ExportInvoicesResponse);
 
   // Kasir
   rpc CashierResolve(CashierResolveRequest) returns (CashierResolveResponse);
   rpc CashierPay(CashierPayRequest) returns (CashierPayResponse);
+
+  // Pembayaran manual & reversal (Fase 3)
+  rpc ResolveManualPayment(ResolveManualPaymentRequest) returns (ResolveManualPaymentResponse);
+  rpc SubmitManualPayment(SubmitManualPaymentRequest) returns (SubmitManualPaymentResponse);
+  rpc ListPaymentSubmissions(ListPaymentSubmissionsRequest) returns (ListPaymentSubmissionsResponse);
+  rpc ApprovePaymentSubmission(ApprovePaymentSubmissionRequest) returns (ApprovePaymentSubmissionResponse);
+  rpc RejectPaymentSubmission(RejectPaymentSubmissionRequest) returns (RejectPaymentSubmissionResponse);
+  rpc ReversePayment(ReversePaymentRequest) returns (ReversePaymentResponse);
+
+  // Master Metode Pembayaran (W3)
+  rpc ListPaymentMethods(ListPaymentMethodsRequest) returns (ListPaymentMethodsResponse);
+  rpc SavePaymentMethod(SavePaymentMethodRequest) returns (SavePaymentMethodResponse);
+  rpc DeletePaymentMethod(DeletePaymentMethodRequest) returns (DeletePaymentMethodResponse);
+
+  // Mass Payment (W3)
+  rpc CreateMassPayment(CreateMassPaymentRequest) returns (CreateMassPaymentResponse);
+  rpc ListMassPayments(ListMassPaymentsRequest) returns (ListMassPaymentsResponse);
+  rpc GetMassPayment(GetMassPaymentRequest) returns (GetMassPaymentResponse);
+
+  // Gateway Transaksi & Settlement (W4)
+  rpc ListGatewayTransactions(ListGatewayTransactionsRequest) returns (ListGatewayTransactionsResponse);
+  rpc SyncGatewayTransactions(SyncGatewayTransactionsRequest) returns (SyncGatewayTransactionsResponse);
+  rpc ListGatewaySettlements(ListGatewaySettlementsRequest) returns (ListGatewaySettlementsResponse);
+  rpc SaveGatewaySettlement(SaveGatewaySettlementRequest) returns (SaveGatewaySettlementResponse);
 }

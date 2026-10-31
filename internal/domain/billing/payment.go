@@ -21,12 +21,19 @@ const (
 // PaymentMethod represents a payment channel master
 // (DATABASE-SCHEMA-ISP.md §2.7 — payment_methods).
 type PaymentMethod struct {
-	ID        string    `json:"id"`
-	TenantID  string    `json:"tenant_id"`
-	Name      string    `json:"name"` // 'TUNAI', 'TRANSFER_BCA', 'QRIS', 'TRIPAY_VA'
-	Type      string    `json:"type"`
-	IsActive  bool      `json:"is_active"`
-	CreatedAt time.Time `json:"created_at"`
+	ID            string    `json:"id"`
+	TenantID      string    `json:"tenant_id"`
+	Name          string    `json:"name"` // 'TUNAI', 'TRANSFER_BCA', 'QRIS', 'TRIPAY_VA'
+	Type          string    `json:"type"` // CASH | BANK | QRIS | GATEWAY
+	IsActive      bool      `json:"is_active"`
+	BankName      string    `json:"bank_name,omitempty"`
+	AccountNumber string    `json:"account_number,omitempty"`
+	AccountHolder string    `json:"account_holder,omitempty"`
+	QRISImageURL  string    `json:"qris_image_url,omitempty"`
+	Instructions  string    `json:"instructions,omitempty"`
+	SortOrder     int       `json:"sort_order"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at,omitempty"`
 }
 
 // Payment represents a payment receipt settling an invoice
@@ -43,5 +50,10 @@ type Payment struct {
 	ScanMethod      string    `json:"scan_method"`
 	Reference       string    `json:"reference,omitempty"`
 	Notes           string    `json:"notes,omitempty"`
-	CreatedAt       time.Time `json:"created_at"`
+	// Void marks a reversed payment (Fase 3): baris tetap ada untuk audit,
+	// koreksi dicatat sebagai transaksi kas keluar.
+	VoidedAt   *time.Time `json:"voided_at,omitempty"`
+	VoidReason string     `json:"void_reason,omitempty"`
+	VoidedBy   *uint      `json:"voided_by,omitempty"`
+	CreatedAt  time.Time  `json:"created_at"`
 }

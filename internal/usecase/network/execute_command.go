@@ -2,6 +2,7 @@ package network
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
@@ -12,12 +13,31 @@ import (
 
 // ExecuteCommand runs cmd against a device via driver, after checking policy.
 // usecase/ never inspects vendor command syntax — it only asks driver to
-// Classify, then applies the generic domain/command policy decision. This
-// is the single execution pipeline every other usecase in this package
-// (GetDeviceStatus, PushConfig) reuses, so the gate is applied exactly once.
-// TODO: wire actual HITL approval flow (pause/resume) per
-// Polyglot-Architecture.md §6.1 (sequence: Policy -> pending_approval ->
-// LibreChat HITL prompt -> approve/reject -> resume Execute).
+// Classify, then applies the generic domain/command policy decision. This is
+// the single READ execution pipeline; every MUTATION must instead go through
+// the AI Router Ops proposal/approval pipeline (PLAN-AI-ROUTER-OPS v2).
+func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
+	if driver == nil {
+		return command.Result{}, command.ErrDriverUnavailable
+	}
+	if err := validateIfSupported(ctx, driver, cmd); err != nil {
+		return command.Result{}, err
+	}
+	class := driver.Classify(cmd)
+	switch command.Decide(class) {
+	case command.DecisionAutoApprove:
+		// Continue with execution for explicitly safe (READ) commands.
+	case command.DecisionDeny:
+		if class.DenyReason != "" {
+			return command.Result{}, fmt.Errorf("%w: %s", command.ErrDenied, class.DenyReason)
+		}
+		return command.Result{}, command.ErrDenied
+	case command.DecisionRequireApproval:
+		return command.Result{}, command.ErrApprovalRequired
+	}
+	return driver.Execute(ctx, cmd)
+}
+
 // validateIfSupported pre-flights cmd via the driver's optional validation
 // capability when it has one (see port.ValidatingDeviceDriver). Drivers
 // without it are skipped — validation is strictly additive, never a
@@ -29,41 +49,4 @@ func validateIfSupported(ctx context.Context, driver port.DeviceDriver, cmd comm
 		return v.Validate(ctx, cmd)
 	}
 	return nil
-}
-
-func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
-	if driver == nil {
-		return command.Result{}, command.ErrDriverUnavailable
-	}
-	if err := validateIfSupported(ctx, driver, cmd); err != nil {
-		return command.Result{}, err
-	}
-	switch command.Decide(driver.Classify(cmd)) {
-	case command.DecisionAutoApprove:
-		// Continue with execution for explicitly safe commands.
-	case command.DecisionDeny:
-		return command.Result{}, command.ErrDenied
-	case command.DecisionRequireApproval:
-		return command.Result{}, command.ErrApprovalRequired
-	}
-	return driver.Execute(ctx, cmd)
-}
-
-// ExecuteCommandPreApproved runs cmd against a device via driver, skipping
-// the DecisionRequireApproval gate — the caller (e.g. the MCP adapter)
-// asserts that the client (LibreChat) already obtained human approval via
-// ToolAnnotations.DestructiveHint before calling the tool. This is the
-// idiomatic MCP flow: HITL is client-side, the server executes when called.
-//
-// DecisionDeny still blocks — no amount of client-side approval overrides a
-// hard policy deny. This preserves defense-in-depth: even if a buggy or
-// malicious client calls a denied tool, the server refuses.
-func ExecuteCommandPreApproved(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
-	if driver == nil {
-		return command.Result{}, command.ErrDriverUnavailable
-	}
-	if command.Decide(driver.Classify(cmd)) == command.DecisionDeny {
-		return command.Result{}, command.ErrDenied
-	}
-	return driver.Execute(ctx, cmd)
 }

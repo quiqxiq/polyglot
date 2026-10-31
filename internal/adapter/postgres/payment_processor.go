@@ -86,6 +86,14 @@ func (p *PaymentProcessor) ProcessCashPayment(ctx context.Context, cmd port.Cash
 			return err
 		}
 
+		// 2b. Faktur lunas → perpanjang masa aktif langganan (planning v2 §3.2):
+		// paid_through & end_date = akhir periode faktur, next_due_date = H+1.
+		if status == billing.StatusPaid && inv.SubscriptionID != nil {
+			if err := extendSubscriptionOnPaid(tx, inv); err != nil {
+				return err
+			}
+		}
+
 		// 3. Kwitansi pembayaran (nomor urut sequence agar anti-tabrakan, F6-2).
 		payModel := &model.PaymentModel{
 			ID:              newID("pay"),
@@ -205,6 +213,34 @@ func (p *PaymentProcessor) receiptContent(tx *gorm.DB, invoiceNo, period, custom
 func receiptContent(invoiceNo string, amount float64, paidAt time.Time) string {
 	return fmt.Sprintf("Terima kasih, pembayaran Rp%.2f untuk tagihan %s telah kami terima pada %s.",
 		amount, invoiceNo, paidAt.Format("02 Jan 2006 15:04"))
+}
+
+// extendSubscriptionOnPaid memajukan masa aktif langganan saat faktur lunas
+// (planning v2 §3.2): paid_through & end_date = akhir periode faktur,
+// next_due_date = sehari setelahnya (awal siklus berikutnya).
+func extendSubscriptionOnPaid(tx *gorm.DB, inv model.InvoiceModel) error {
+	if inv.SubscriptionID == nil || *inv.SubscriptionID == "" {
+		return nil
+	}
+	end := inv.PeriodEnd
+	if end == nil {
+		// Fallback data lama: akhir bulan dari period 'YYYY-MM'.
+		if parsed, err := time.Parse("2006-01", inv.Period); err == nil {
+			e := time.Date(parsed.Year(), parsed.Month()+1, 0, 0, 0, 0, 0, time.UTC)
+			end = &e
+		}
+	}
+	if end == nil {
+		return nil
+	}
+	next := end.AddDate(0, 0, 1)
+	return tx.Model(&model.SubscriptionModel{}).
+		Where("id = ?", *inv.SubscriptionID).
+		Updates(map[string]any{
+			"paid_through":  end,
+			"end_date":      end,
+			"next_due_date": next,
+		}).Error
 }
 
 // nextDocumentSeq mengambil nomor urut dokumen dari sequence PostgreSQL;

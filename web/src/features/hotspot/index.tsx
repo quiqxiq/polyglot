@@ -7,6 +7,8 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { LanguageSwitch } from '@/components/language-switch'
+import { useI18n } from '@/context/i18n-provider'
 import { HotspotProvider } from './context/hotspot-context'
 import { HotspotPrimaryButtons } from './components/hotspot-primary-buttons'
 import { HotspotDialogs } from './components/hotspot-dialogs'
@@ -41,10 +43,13 @@ function HotspotContent() {
     })
   }
 
+  const { t } = useI18n()
+
   return (
     <>
       <Header fixed>
         <Search className='me-auto' />
+        <LanguageSwitch />
         <ThemeSwitch />
         <ConfigDrawer />
         <ProfileDropdown />
@@ -56,7 +61,7 @@ function HotspotContent() {
           <div>
             <div className='flex items-center gap-2'>
               <Wifi className='size-6 text-primary' />
-              <h1 className='text-2xl font-bold tracking-tight'>Hotspot Management</h1>
+              <h1 className='text-2xl font-bold tracking-tight'>{t('hotspot.title')}</h1>
             </div>
             <p className='text-sm text-muted-foreground mt-0.5'>
               {currentDevice ? (

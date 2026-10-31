@@ -14,18 +14,32 @@ func TestClassify(t *testing.T) {
 	tests := []struct {
 		name string
 		cmd  command.Command
-		want command.Class
+		want command.Classification
 	}{
-		{"reboot is destructive", command.Command{Raw: "reboot"}, command.ClassDestructive},
-		{"factoryReset is destructive", command.Command{Raw: "factoryReset"}, command.ClassDestructive},
-		{"setParameterValues is destructive", command.Command{Raw: "setParameterValues"}, command.ClassDestructive},
-		{"addObject is destructive", command.Command{Raw: "addObject"}, command.ClassDestructive},
-		{"deleteObject is destructive", command.Command{Raw: "deleteObject"}, command.ClassDestructive},
-		{"download is destructive", command.Command{Raw: "download"}, command.ClassDestructive},
-		{"getParameterValues is read-only", command.Command{Raw: "getParameterValues"}, command.ClassReadOnly},
-		{"refreshObject is read-only", command.Command{Raw: "refreshObject"}, command.ClassReadOnly},
-		{"getDevice is read-only", command.Command{Raw: "getDevice"}, command.ClassReadOnly},
-		{"unknown name defaults read-only", command.Command{Raw: "no_such_task"}, command.ClassReadOnly},
+		{"factoryReset is hard-denied", command.Command{Raw: "factoryReset"},
+			command.Classification{Mode: command.ModeMutation, DenyReason: "hard deny for AI: factoryReset"}},
+		{"reboot is mutation", command.Command{Raw: "reboot"},
+			command.Classification{Mode: command.ModeMutation}},
+		{"setParameterValues is mutation", command.Command{Raw: "setParameterValues"},
+			command.Classification{Mode: command.ModeMutation}},
+		{"addObject is mutation", command.Command{Raw: "addObject"},
+			command.Classification{Mode: command.ModeMutation}},
+		{"deleteObject is mutation", command.Command{Raw: "deleteObject"},
+			command.Classification{Mode: command.ModeMutation}},
+		{"download is mutation", command.Command{Raw: "download"},
+			command.Classification{Mode: command.ModeMutation}},
+		{"getParameterValues is read", command.Command{Raw: "getParameterValues"},
+			command.Classification{Mode: command.ModeRead}},
+		{"getParameterNames is read", command.Command{Raw: "getParameterNames"},
+			command.Classification{Mode: command.ModeRead}},
+		{"getRPCMethods is read", command.Command{Raw: "getRPCMethods"},
+			command.Classification{Mode: command.ModeRead}},
+		{"refreshObject is read", command.Command{Raw: "refreshObject"},
+			command.Classification{Mode: command.ModeRead}},
+		{"getDevice is read", command.Command{Raw: "getDevice"},
+			command.Classification{Mode: command.ModeRead}},
+		{"unknown name defaults mutation", command.Command{Raw: "no_such_task"},
+			command.Classification{Mode: command.ModeMutation}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

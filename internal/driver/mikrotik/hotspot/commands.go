@@ -9,7 +9,9 @@ var setIfNonEmpty = rosutil.SetIfNonEmpty
 
 // NewPrintActiveCommand builds the command.Command for /ip/hotspot/active/print.
 func NewPrintActiveCommand(userFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,server,user,address,mac-address,login-by,uptime,bytes-in,bytes-out,packets-in,packets-out,session-time-left",
+	}
 	if userFilter != "" {
 		args["?user"] = userFilter
 	}
@@ -60,14 +62,18 @@ func NewKickActiveCommand(rosID string) command.Command {
 // NewPrintServersCommand builds the command.Command for /ip/hotspot/print.
 func NewPrintServersCommand() command.Command {
 	return command.Command{
-		Raw:  "/ip/hotspot/print",
-		Args: map[string]string{},
+		Raw: "/ip/hotspot/print",
+		Args: map[string]string{
+			".proplist": ".id,name,interface,profile,idle-timeout,keepalive-timeout,disabled",
+		},
 	}
 }
 
 // NewPrintUsersCommand builds the command.Command for /ip/hotspot/user/print.
 func NewPrintUsersCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,server,name,profile,comment,disabled,uptime,bytes-in,bytes-out,limit-uptime,limit-bytes-total",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
@@ -141,7 +147,9 @@ func NewRemoveUserCommand(rosID string) command.Command {
 
 // NewPrintUserProfilesCommand builds the command.Command for /ip/hotspot/user/profile/print.
 func NewPrintUserProfilesCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,name,rate-limit,session-timeout,idle-timeout,shared-users,parent-queue,address-pool,address-list,on-login",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
@@ -187,5 +195,25 @@ func NewRemoveUserProfileCommand(rosID string) command.Command {
 	return command.Command{
 		Raw:  "/ip/hotspot/user/profile/remove",
 		Args: map[string]string{".id": rosID},
+	}
+}
+
+// NewPrintIPBindingsCommand builds the command.Command for /ip/hotspot/ip-binding/print.
+func NewPrintIPBindingsCommand() command.Command {
+	return command.Command{
+		Raw: "/ip/hotspot/ip-binding/print",
+		Args: map[string]string{
+			".proplist": ".id,mac-address,address,to-address,server,type,comment,disabled",
+		},
+	}
+}
+
+// NewPrintWalledGardenCommand builds the command.Command for /ip/hotspot/walled-garden/print.
+func NewPrintWalledGardenCommand() command.Command {
+	return command.Command{
+		Raw: "/ip/hotspot/walled-garden/print",
+		Args: map[string]string{
+			".proplist": ".id,action,server,dst-host,dst-port,path,comment,disabled",
+		},
 	}
 }

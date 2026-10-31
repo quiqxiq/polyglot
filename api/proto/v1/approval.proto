@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message Approval {
+  string id = 1;
+  string device_id = 2;
+  string actor_type = 3; // AGENT | USER | SYSTEM
+  string actor_id = 4;
+  string session_id = 5;
+  string command = 6;
+  map<string, string> args = 7;
+  int32 revision = 8;
+  string edited_command = 9;
+  map<string, string> edited_args = 10;
+  int32 edit_count = 11;
+  string status = 12; // PENDING | APPROVED | EXECUTING | EXECUTED | FAILED | REJECTED | EXPIRED | CANCELLED
+  string reason = 13;
+  string restore_point_id = 14;
+  string diff_json = 15;
+  string validation_json = 16;
+  string execution_result_json = 17;
+  int64 created_at_unix = 18;
+  int64 expires_at_unix = 19;
+  int64 decided_at_unix = 20;
+  int64 executed_at_unix = 21;
+  int32 approved_by = 22;
+}
+
+message ListApprovalsRequest {
+  string device_id = 1;
+  string status = 2;
+  int32 limit = 3;
+  int32 offset = 4;
+}
+message ListApprovalsResponse {
+  repeated Approval approvals = 1;
+  int32 total = 2;
+}
+
+message GetApprovalRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message GetApprovalResponse { Approval approval = 1; }
+
+enum ApprovalDecision {
+  APPROVAL_DECISION_UNSPECIFIED = 0;
+  APPROVAL_DECISION_APPROVE = 1;
+  APPROVAL_DECISION_REJECT = 2;
+  APPROVAL_DECISION_EDIT = 3;
+  APPROVAL_DECISION_EDIT_AND_APPROVE = 4;
+}
+
+message DecideApprovalRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  ApprovalDecision decision = 2;
+  string edited_command = 3;
+  map<string, string> edited_args = 4;
+  string reason = 5;
+  int32 revision = 6;
+}
+message DecideApprovalResponse { Approval approval = 1; }
+
+message CancelApprovalRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message CancelApprovalResponse { Approval approval = 1; }
+
+service ApprovalService {
+  rpc ListApprovals(ListApprovalsRequest) returns (ListApprovalsResponse);
+  rpc GetApproval(GetApprovalRequest) returns (GetApprovalResponse);
+  rpc DecideApproval(DecideApprovalRequest) returns (DecideApprovalResponse);
+  rpc CancelApproval(CancelApprovalRequest) returns (CancelApprovalResponse);
+}

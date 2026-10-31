@@ -20,8 +20,17 @@ import (
 type Catalog struct {
 	// DestructivePrefixes lists literal command prefixes considered
 	// destructive for this vendor — checked with strings.HasPrefix against
-	// command.Command.Raw.
+	// command.Command.Raw. A match classifies the command as MUTATION.
 	DestructivePrefixes []string
+
+	// ReadPrefixes lists literal command prefixes considered read-only for
+	// this vendor — checked AFTER DestructivePrefixes. A prefix with a
+	// trailing space matches that literal prefix ("show "); without a
+	// trailing space it is treated as a whole command word ("dir" matches
+	// "dir" and "dir flash:", not "directory"). Commands matching neither
+	// list are MUTATION (fail-closed), so a zero-value Catalog classifies
+	// everything as MUTATION.
+	ReadPrefixes []string
 
 	// Operations maps abstract command.Operation values to this vendor's
 	// native CLI command string.
@@ -65,16 +74,69 @@ type Catalog struct {
 	ReturnChar string
 }
 
-// Classify reports the risk class of cmd according to c's destructive
-// prefix list. Unlisted commands default to read-only — same fail-safe
-// posture as every other vendor's Classify in this project.
-func (c Catalog) Classify(cmd command.Command) command.Class {
-	for _, prefix := range c.DestructivePrefixes {
-		if strings.HasPrefix(cmd.Raw, prefix) {
-			return command.ClassDestructive
+// hardDenyTokens are vendor-agnostic CLI command tokens that are
+// catastrophic and must never be executed by the AI pipeline, even with
+// approval: reloads, configuration wipes, and flash/factory resets. They
+// are checked as standalone tokens (start, end, or space-delimited) so
+// vendor-phrased commands such as "system reset-configuration" are caught
+// too. The result still carries ModeMutation so policy sees deny before
+// mode (domain/command/policy.go precedence: hard deny > mutation > read).
+var hardDenyTokens = []string{
+	"reload",
+	"write erase",
+	"erase startup-config",
+	"erase flash",
+	"format flash",
+	"factoryreset",
+	"factory-reset",
+	"reset-configuration",
+	"delete startup-config",
+}
+
+// Classify reports the AI Router Ops classification of cmd for this
+// vendor. Order: hard-deny tokens, then DestructivePrefixes (MUTATION),
+// then ReadPrefixes (READ); anything unlisted is MUTATION (fail-closed).
+func (c Catalog) Classify(cmd command.Command) command.Classification {
+	lower := strings.ToLower(strings.TrimSpace(cmd.Raw))
+	for _, token := range hardDenyTokens {
+		if containsToken(lower, token) {
+			return command.Classification{Mode: command.ModeMutation, DenyReason: "hard deny for AI: " + token}
 		}
 	}
-	return command.ClassReadOnly
+	for _, prefix := range c.DestructivePrefixes {
+		if hasCmdPrefix(lower, prefix) {
+			return command.Classification{Mode: command.ModeMutation}
+		}
+	}
+	for _, prefix := range c.ReadPrefixes {
+		if hasCmdPrefix(lower, prefix) {
+			return command.Classification{Mode: command.ModeRead}
+		}
+	}
+	return command.Classification{Mode: command.ModeMutation}
+}
+
+// hasCmdPrefix reports whether raw (already lowercased) begins with prefix.
+// A trailing space means a literal prefix ("show "); otherwise the prefix is
+// treated as a whole command word ("dir" matches "dir" and "dir flash:",
+// but not "directory"). The prefix itself is lowercased so mixed-case
+// catalog entries still match.
+func hasCmdPrefix(raw, prefix string) bool {
+	prefix = strings.ToLower(prefix)
+	if strings.HasSuffix(prefix, " ") {
+		return strings.HasPrefix(raw, prefix)
+	}
+	return raw == prefix || strings.HasPrefix(raw, prefix+" ")
+}
+
+// containsToken reports whether raw contains token as a standalone command
+// token: at the start, at the end, or delimited by spaces anywhere inside.
+func containsToken(raw, token string) bool {
+	token = strings.ToLower(token)
+	if raw == token || strings.HasPrefix(raw, token+" ") || strings.HasSuffix(raw, " "+token) {
+		return true
+	}
+	return strings.Contains(raw, " "+token+" ")
 }
 
 // Translate maps an abstract Operation to this vendor's native Command.

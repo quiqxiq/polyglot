@@ -5,11 +5,14 @@ import (
 	"net/http"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
+	aichatConnect "github.com/quixiq/polyglot/internal/adapter/connect/aichat"
+	approvalConnect "github.com/quixiq/polyglot/internal/adapter/connect/approval"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
 	billingConnect "github.com/quixiq/polyglot/internal/adapter/connect/billing"
 	botConnect "github.com/quixiq/polyglot/internal/adapter/connect/bot"
 	cashbookConnect "github.com/quixiq/polyglot/internal/adapter/connect/cashbook"
 	customerConnect "github.com/quixiq/polyglot/internal/adapter/connect/customer"
+	debtConnect "github.com/quixiq/polyglot/internal/adapter/connect/debt"
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
 	ispadminConnect "github.com/quixiq/polyglot/internal/adapter/connect/ispadmin"
@@ -17,11 +20,15 @@ import (
 	monitorConnect "github.com/quixiq/polyglot/internal/adapter/connect/monitor"
 	networkConnect "github.com/quixiq/polyglot/internal/adapter/connect/network"
 	notificationConnect "github.com/quixiq/polyglot/internal/adapter/connect/notification"
+	oltConnect "github.com/quixiq/polyglot/internal/adapter/connect/olt"
+	ontConnect "github.com/quixiq/polyglot/internal/adapter/connect/ont"
 	planConnect "github.com/quixiq/polyglot/internal/adapter/connect/plan"
 	portalConnect "github.com/quixiq/polyglot/internal/adapter/connect/portal"
 	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
 	registrationConnect "github.com/quixiq/polyglot/internal/adapter/connect/registration"
 	reportConnect "github.com/quixiq/polyglot/internal/adapter/connect/report"
+	restorepointConnect "github.com/quixiq/polyglot/internal/adapter/connect/restorepoint"
+	routerjobConnect "github.com/quixiq/polyglot/internal/adapter/connect/routerjob"
 	settingConnect "github.com/quixiq/polyglot/internal/adapter/connect/setting"
 	skillConnect "github.com/quixiq/polyglot/internal/adapter/connect/skill"
 	subConnect "github.com/quixiq/polyglot/internal/adapter/connect/subscription"
@@ -30,6 +37,7 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	portalHTTP "github.com/quixiq/polyglot/internal/adapter/http/portal"
 	reportHTTP "github.com/quixiq/polyglot/internal/adapter/http/report"
+	uploadHTTP "github.com/quixiq/polyglot/internal/adapter/http/upload"
 	webhookHTTP "github.com/quixiq/polyglot/internal/adapter/http/webhook"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
@@ -38,6 +46,7 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
+	aichatUC "github.com/quixiq/polyglot/internal/usecase/aichat"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
@@ -45,17 +54,21 @@ import (
 	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
+	debtUC "github.com/quixiq/polyglot/internal/usecase/debt"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 	llmUC "github.com/quixiq/polyglot/internal/usecase/llm"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
+	oltUC "github.com/quixiq/polyglot/internal/usecase/olt"
+	ontUC "github.com/quixiq/polyglot/internal/usecase/ont"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 	registrationUC "github.com/quixiq/polyglot/internal/usecase/registration"
 	reportUC "github.com/quixiq/polyglot/internal/usecase/report"
+	jobUCRouter "github.com/quixiq/polyglot/internal/usecase/routerjob"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
@@ -99,7 +112,24 @@ type routerDeps struct {
 	checkoutUC             *billingUC.CheckoutUseCase
 	lifecycleUC            *subUC.LifecycleUseCase
 	runBillingUC           *billingUC.RunBillingUseCase
+	paymentSubmissionUC    *billingUC.PaymentSubmissionUseCase
+	paymentUC              *billingUC.PaymentUseCase
 	chargeUC               *billingUC.GatewayChargeUseCase
+	payMethodUC            *billingUC.PaymentMethodUseCase
+	massPayUC              *billingUC.MassPaymentUseCase
+	debtService            *debtUC.Service
+	settlementRepo         port.GatewaySettlementRepository
+	gwtxRepo               port.GatewayTransactionRepository
+	auditWriter            port.AuditWriter
+	approvalRepo           port.ApprovalRepository
+	restoreUC              *networkUC.RestorePointUseCase
+	proposalUC             *networkUC.ProposalUseCase
+	decisionUC             *networkUC.DecisionUseCase
+	activeDevices          port.ActiveDeviceStore
+	activeDeviceUC         *deviceUC.ActiveDeviceUseCase
+	deviceAuthorizer       port.DeviceAuthorizer
+	aiOpsResolver          func(ctx context.Context, deviceID string) (port.RouterOps, error)
+	aiChatUC               *aichatUC.UseCase
 	regManagerUC           *registrationUC.ManageRegistrationUseCase
 	regConvertUC           *registrationUC.ConvertUseCase
 	portalUCase            *portalUC.UseCase
@@ -108,7 +138,12 @@ type routerDeps struct {
 	reconciler             *importer.Reconciler
 	exportUC               *importer.ExportUseCase
 	metricsUseCase         *deviceUC.ManageMetricsUseCase
+	routerJobRepo          port.RouterJobRepository
+	routerJobExporter      *jobUCRouter.Exporter
 	manageIsolationUseCase *deviceUC.ManageIsolationUseCase
+	oltService             *oltUC.Service
+	ontService             *ontUC.Service
+	settingReader          port.SettingReader
 	notifManagerUC         *notificationUC.ManageNotificationUseCase
 	reportManagerUC        *reportUC.ManageReportUseCase
 	streamGW               port.MonitorStreamGateway
@@ -122,13 +157,16 @@ func buildRouter(d routerDeps) http.Handler {
 	webhookHTTPHandler := webhookHTTP.NewHandler(d.deviceRepo)
 	webhookHTTPHandler.RegisterPublic(rootMux)
 
+	uploadHTTPHandler := uploadHTTP.NewHandler(d.cfg.UploadDir)
+	uploadHTTPHandler.RegisterPublic(rootMux)
+
 	authPath, authHandler := authConnect.NewAuthServiceHandler(
 		d.authUseCase, d.refreshUseCase, d.manageUserUseCase, d.cfg.AppEnv == "production",
 	)
 	rootMux.Handle(authPath, authHandler)
 
-	pubRegPath, pubRegHandler := registrationConnect.NewPublicSubmitHandler(d.regManagerUC)
-	rootMux.Handle(pubRegPath, pubRegHandler)
+	registrationConnect.RegisterPublic(rootMux, d.regManagerUC)
+	billingConnect.RegisterPublic(rootMux, d.paymentSubmissionUC)
 
 	portalConnectPath, portalConnectHandler := portalConnect.NewPortalServiceHandler(d.portalUCase)
 	rootMux.Handle(portalConnectPath, portalConnectHandler)
@@ -140,10 +178,24 @@ func buildRouter(d routerDeps) http.Handler {
 	gatewayHTTPHandler := gatewayHTTP.NewHandler(d.chargeUC)
 	gatewayHTTPHandler.RegisterPublic(rootMux)
 
-	mcpServer := mcp.New(d.reg, nil).
+	// /mcp must never be anonymous: every tool call mutates or inspects a
+	// router. Protect it with the same JWT + RBAC chain as ConnectRPC and
+	// pass the audit writer so every command attempt is recorded.
+	mcpServer := mcp.New(d.reg, d.auditWriter).
 		WithMikhmonUseCase(d.hotUC).
-		WithCustomerRepository(d.customerRepo)
-	rootMux.Handle("/mcp", mcpServer.HTTPHandler())
+		WithCustomerRepository(d.customerRepo).
+		WithJWTService(d.jwtService).
+		WithProposalService(d.proposalUC).
+		WithApprovalRepository(d.approvalRepo).
+		WithApprovalCanceler(d.decisionUC).
+		WithActiveDeviceResolver(d.activeDeviceUC).
+		WithRouterOps(d.aiOpsResolver)
+	mcpHandler := middleware.Chain(
+		mcpServer.HTTPHandler(),
+		middleware.AuthenticateJWT(d.jwtService),
+		middleware.AuthorizeProcedure(d.casbinEnforcer),
+	)
+	rootMux.Handle("/mcp", mcpHandler)
 
 	wsAdapter.RegisterEventRoutes(rootMux, d.sseHub, d.openTermUC)
 
@@ -155,7 +207,7 @@ func buildRouter(d routerDeps) http.Handler {
 		protectedPaths = append(protectedPaths, servicePath)
 	}
 
-	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(d.devUC, d.openTermUC, d.connectDriverProvider, d.metricsUseCase, d.manageIsolationUseCase, d.streamGW)
+	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(d.devUC, d.openTermUC, d.connectDriverProvider, d.metricsUseCase, d.manageIsolationUseCase, d.streamGW, d.activeDeviceUC)
 	registerProtected(devPath, devHandler)
 
 	custPath, custHandler := customerConnect.NewCustomerServiceHandler(d.custUC)
@@ -176,11 +228,40 @@ func buildRouter(d routerDeps) http.Handler {
 	subPath, subHandler := subConnect.NewSubscriptionServiceHandler(d.subUCase, d.lifecycleUC)
 	registerProtected(subPath, subHandler)
 
-	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(d.invUC, d.checkoutUC, d.runBillingUC)
-	registerProtected(billingPath, billingHandler)
+	billingHandler := billingConnect.NewBillingConnectHandler(d.invUC, d.checkoutUC, d.runBillingUC).
+		WithPaymentMethods(d.payMethodUC).
+		WithMassPayment(d.massPayUC).
+		WithGateway(d.chargeUC, d.settlementRepo, d.gwtxRepo)
+	paymentHandler := billingConnect.NewPaymentConnectHandler(d.paymentSubmissionUC, d.paymentUC)
+	billingPath, billingHTTPHandler := billingConnect.NewBillingServiceHandler(billingHandler, paymentHandler)
+	registerProtected(billingPath, billingHTTPHandler)
+
+	debtPath, debtHandler := debtConnect.NewDebtServiceHandler(d.debtService)
+	registerProtected(debtPath, debtHandler)
+
+	approvalH := approvalConnect.NewConnectHandler(d.approvalRepo, d.decisionUC, d.deviceAuthorizer)
+	approvalPath, approvalHTTP := approvalConnect.NewServiceHandler(approvalH)
+	registerProtected(approvalPath, approvalHTTP)
+
+	restoreH := restorepointConnect.NewConnectHandler(d.restoreUC, d.deviceAuthorizer)
+	restorePath, restoreHTTP := restorepointConnect.NewServiceHandler(restoreH)
+	registerProtected(restorePath, restoreHTTP)
+
+	chatH := aichatConnect.NewHandler(d.aiChatUC)
+	chatPath, chatHTTP := aichatConnect.NewServiceHandler(chatH)
+	registerProtected(chatPath, chatHTTP)
 
 	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(d.regManagerUC, d.regConvertUC)
 	registerProtected(regPath, regHandler)
+
+	rjPath, rjHandler := routerjobConnect.NewRouterJobServiceHandler(d.routerJobRepo, d.routerJobExporter)
+	registerProtected(rjPath, rjHandler)
+
+	oltPath, oltHandler := oltConnect.NewOltServiceHandler(d.oltService, d.settingReader)
+	registerProtected(oltPath, oltHandler)
+
+	ontPath, ontHandler := ontConnect.NewOntServiceHandler(d.ontService)
+	registerProtected(ontPath, ontHandler)
 
 	cashbookPath, cashbookHandler := cashbookConnect.NewCashbookServiceHandler(d.cashbookUseCase)
 	registerProtected(cashbookPath, cashbookHandler)

@@ -41,6 +41,21 @@ func (h *SubscriptionConnectHandler) toEnrichedProto(ctx context.Context, sub *d
 	return ToProtoSubscription(sub)
 }
 
+// RetryProvision mengantrekan ulang provisioning langganan ke router.
+func (h *SubscriptionConnectHandler) RetryProvision(ctx context.Context, req *connect.Request[devicepb.RetryProvisionRequest]) (*connect.Response[devicepb.RetryProvisionResponse], error) {
+	if h.lifecycleUC == nil {
+		return nil, response.Unavailable("subscription lifecycle usecase unavailable")
+	}
+	job, err := h.lifecycleUC.RetryProvision(ctx, req.Msg.Id)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.RetryProvisionResponse{
+		JobId:  job.ID,
+		Status: string(job.Status),
+	}), nil
+}
+
 // ListSubscriptions returns subscriptions for a given customer.
 func (h *SubscriptionConnectHandler) ListSubscriptions(ctx context.Context, req *connect.Request[devicepb.ListSubscriptionsRequest]) (*connect.Response[devicepb.ListSubscriptionsResponse], error) {
 	if h.subUC == nil {

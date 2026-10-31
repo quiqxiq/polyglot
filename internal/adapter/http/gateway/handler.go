@@ -36,6 +36,7 @@ func (h *Handler) RegisterPublic(mux *http.ServeMux) {
 func (h *Handler) RegisterProtected(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/cashier/charge", h.charge)
 	mux.HandleFunc("POST /api/cashier/check-charge", h.checkCharge)
+	mux.HandleFunc("GET /api/cashier/gateways", h.listGateways)
 }
 
 // webhookAuthHeader mengambil kredensial callback sesuai gateway:
@@ -106,6 +107,33 @@ func (h *Handler) charge(w http.ResponseWriter, r *http.Request) {
 		"status":      tx.Status,
 		"amount":      tx.Amount,
 	})
+}
+
+// listGateways mengembalikan gateway terdaftar + status aktif untuk pemilih
+// gateway dinamis pada kasir & portal (planning v2 Fase 3).
+func (h *Handler) listGateways(w http.ResponseWriter, r *http.Request) {
+	reg := h.usecase.Registry()
+	if reg == nil {
+		writeJSON(w, http.StatusOK, map[string]any{"gateways": []any{}})
+		return
+	}
+	defName := ""
+	if defGW, err := reg.Default(r.Context()); err == nil && defGW != nil {
+		defName = defGW.Name()
+	}
+	items := make([]map[string]any, 0, len(reg.Names()))
+	for _, name := range reg.Names() {
+		gw, err := reg.Get(r.Context(), name)
+		if err != nil {
+			continue
+		}
+		items = append(items, map[string]any{
+			"name":       gw.Name(),
+			"enabled":    gw.Enabled(r.Context()),
+			"is_default": gw.Name() == defName,
+		})
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"gateways": items})
 }
 
 func (h *Handler) checkCharge(w http.ResponseWriter, r *http.Request) {

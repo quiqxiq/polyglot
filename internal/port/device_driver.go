@@ -23,10 +23,10 @@ import (
 type DeviceDriver interface {
 	// Execute runs cmd against the already-connected device.
 	Execute(ctx context.Context, cmd command.Command) (command.Result, error)
-	// Classify reports the risk class of cmd according to this vendor's own
-	// conventions — domain/command/policy.go uses this result and never
-	// inspects vendor command syntax itself.
-	Classify(cmd command.Command) command.Class
+	// Classify reports the risk classification of cmd according to this
+	// vendor's own conventions — domain/command/policy.go uses this result
+	// and never inspects vendor command syntax itself.
+	Classify(cmd command.Command) command.Classification
 	// Translate maps an abstract Operation to this vendor's native Command.
 	// Returns an error if this vendor has no definition for op.
 	Translate(op command.Operation) (command.Command, error)

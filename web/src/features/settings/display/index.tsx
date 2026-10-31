@@ -1,11 +1,13 @@
+import { useI18n } from '@/context/i18n-provider'
 import { ContentSection } from '../components/content-section'
 import { DisplayForm } from './display-form'
 
 export function SettingsDisplay() {
+  const { t } = useI18n()
   return (
     <ContentSection
-      title='Display'
-      desc="Turn items on or off to control what's displayed in the app."
+      title={t('settings.display_title')}
+      desc={t('settings.display_desc')}
     >
       <DisplayForm />
     </ContentSection>

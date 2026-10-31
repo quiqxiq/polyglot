@@ -98,14 +98,18 @@ export function RegistrationTable({ data, isLoading }: RegistrationTableProps) {
     const counts: Record<string, number> = {
       ALL: data.length,
       PENDING: 0,
+      SURVEY: 0,
       APPROVED: 0,
+      ON_PROGRESS: 0,
       INSTALLED: 0,
       ACTIVE: 0,
       CLOSED: 0,
     }
     for (const item of data) {
       if (item.status === REGISTRATION_STATUS.PENDING) counts.PENDING++
+      else if (item.status === REGISTRATION_STATUS.SURVEY) counts.SURVEY++
       else if (item.status === REGISTRATION_STATUS.APPROVED) counts.APPROVED++
+      else if (item.status === REGISTRATION_STATUS.ON_PROGRESS) counts.ON_PROGRESS++
       else if (item.status === REGISTRATION_STATUS.INSTALLED) counts.INSTALLED++
       else if (item.status === REGISTRATION_STATUS.ACTIVE) counts.ACTIVE++
       else if (
@@ -136,8 +140,14 @@ export function RegistrationTable({ data, isLoading }: RegistrationTableProps) {
             <TabsTrigger value='PENDING' className='text-xs'>
               Pending ({countByStatus.PENDING})
             </TabsTrigger>
+            <TabsTrigger value='SURVEY' className='text-xs'>
+              Survey ({countByStatus.SURVEY})
+            </TabsTrigger>
             <TabsTrigger value='APPROVED' className='text-xs'>
               Jadwal Pasang ({countByStatus.APPROVED})
+            </TabsTrigger>
+            <TabsTrigger value='ON_PROGRESS' className='text-xs'>
+              Dikerjakan ({countByStatus.ON_PROGRESS})
             </TabsTrigger>
             <TabsTrigger value='INSTALLED' className='text-xs'>
               Terpasang ({countByStatus.INSTALLED})

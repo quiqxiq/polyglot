@@ -104,6 +104,14 @@ type IPPool struct {
 	Comment  string
 }
 
+// IPPoolParams holds parameters for adding or modifying an IP pool.
+type IPPoolParams struct {
+	Name     string
+	Ranges   string
+	NextPool string
+	Comment  string
+}
+
 // IPAddress represents one row from /ip/address/print.
 type IPAddress struct {
 	RosID           string
@@ -114,6 +122,15 @@ type IPAddress struct {
 	Disabled        bool
 	Dynamic         bool
 	Comment         string
+}
+
+// IPAddressParams holds parameters for adding or modifying an IP address.
+type IPAddressParams struct {
+	Address   string
+	Network   string
+	Interface string
+	Comment   string
+	Disabled  bool
 }
 
 // IPAddressPrintParams holds filter criteria for /ip/address/print.

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
@@ -33,6 +34,18 @@ type ConvertDeps struct {
 	// Manager opsional: bila diisi dan deviceID diberikan, akun pelanggan
 	// diprovisikan ke router segera setelah artefak DB ter-commit.
 	Manager port.RouterAccountManager
+
+	// Events opsional: timeline PSB (registration_events) — event CONVERTED.
+	Events port.RegistrationEventRepository
+
+	// ONTBinder opsional: menautkan ONT hasil instalasi (rename/link) setelah
+	// konversi sukses — diisi usecase/ont.
+	ONTBinder ONTBinder
+}
+
+// ONTBinder menautkan ONT hasil PSB ke pelanggan/langganan (best-effort).
+type ONTBinder interface {
+	BindFromPSB(ctx context.Context, in domainRegistration.PSBBindInput) error
 }
 
 // ConvertUseCase turns an INSTALLED registration into a live customer with
@@ -61,6 +74,12 @@ func NewConvertUseCase(deps ConvertDeps) *ConvertUseCase {
 // WithGenerators overrides generators (untuk test deterministik).
 func (u *ConvertUseCase) WithGenerators(code, portal, secret func() string) {
 	u.genCode, u.genPortal, u.genSecret = code, portal, secret
+}
+
+// WithClock mengganti sumber waktu (untuk test deterministik prorata).
+func (u *ConvertUseCase) WithClock(now func() time.Time) *ConvertUseCase {
+	u.now = now
+	return u
 }
 
 // Convert executes INSTALLED → ACTIVE tanpa penugasan device (akun belum
@@ -109,7 +128,7 @@ func (u *ConvertUseCase) ConvertWithDevice(ctx context.Context, regID, deviceID,
 	if err != nil {
 		return domainRegistration.Registration{}, err
 	}
-	inv, items := buildInvoice(reg, pl, sub.ID, now)
+	inv, items := u.buildInvoice(ctx, reg, pl, sub.ID, now)
 	inv.CustomerID = cust.ID
 
 	reg.CustomerID = cust.ID
@@ -127,12 +146,62 @@ func (u *ConvertUseCase) ConvertWithDevice(ctx context.Context, regID, deviceID,
 		return domainRegistration.Registration{}, fmt.Errorf("save conversion: %w", err)
 	}
 
+	u.appendConvertedEvent(ctx, reg.ID)
 	writeAudit(ctx, u.deps.Audit, "", "CREATE_CUSTOMER", "customer", cust.ID)
 	writeAudit(ctx, u.deps.Audit, "", "CREATE_SUBSCRIPTION", "subscription", sub.ID)
 	writeAudit(ctx, u.deps.Audit, actorID, "CONVERT_REGISTRATION", "registration", reg.ID)
 
+	u.bindONTAfterConvert(ctx, reg, cust, sub)
 	u.provisionAfterConvert(ctx, &sub, pl, deviceID)
 	return reg, nil
+}
+
+// bindONTAfterConvert menautkan ONT hasil instalasi PSB (best-effort):
+// kegagalan tidak menggagalkan konversi, tetapi dicatat pada log.
+func (u *ConvertUseCase) bindONTAfterConvert(ctx context.Context, reg domainRegistration.Registration, cust domainCustomer.Customer, sub domainSubscription.Subscription) {
+	if u.deps.ONTBinder == nil {
+		return
+	}
+	if reg.OLTDeviceID == "" && reg.ONTMACAddress == "" && reg.ONTSerialNumber == "" {
+		return
+	}
+	in := domainRegistration.PSBBindInput{
+		RegistrationID: reg.ID,
+		OLTDeviceID:    reg.OLTDeviceID,
+		MACAddress:     reg.ONTMACAddress,
+		SerialNumber:   reg.ONTSerialNumber,
+		CustomerID:     cust.ID,
+		SubscriptionID: sub.ID,
+		PPPoEUsername:  sub.RemoteUsername,
+		Label:          cust.CustomerCode,
+	}
+	if reg.PONIndex != nil {
+		in.PONIndex = *reg.PONIndex
+	}
+	if reg.ONUIndex != nil {
+		in.ONUIndex = *reg.ONUIndex
+	}
+	if err := u.deps.ONTBinder.BindFromPSB(ctx, in); err != nil {
+		logger.WithComponent("ConvertUC").WithError(err).Warn("ont bind after convert gagal")
+	}
+}
+
+// appendConvertedEvent menulis event CONVERTED ke timeline PSB (best-effort).
+func (u *ConvertUseCase) appendConvertedEvent(ctx context.Context, regID string) {
+	if u.deps.Events == nil {
+		return
+	}
+	e := domainRegistration.RegistrationEvent{
+		ID:             idgen.New("regevt"),
+		RegistrationID: regID,
+		EventType:      domainRegistration.EventConverted,
+		Title:          "Aktivasi pelanggan",
+		Description:    "Pendaftaran dikonversi menjadi pelanggan aktif.",
+		CreatedAt:      u.now().UTC(),
+	}
+	if err := u.deps.Events.Append(ctx, e); err != nil {
+		logger.WithComponent("ConvertUC").WithError(err).Warn("append CONVERTED event failed")
+	}
 }
 
 // provisionAfterConvert menjalankan provisi router pasca-commit (best-effort):
@@ -147,7 +216,7 @@ func (u *ConvertUseCase) provisionAfterConvert(ctx context.Context, sub *domainS
 		return
 	}
 	sub.ProvisionStatus = domainSubscription.ProvisionOK
-	sub.RouterProfile = pl.Name
+	sub.RouterProfile = pl.RouterProfile()
 	if err := u.deps.Subs.Save(ctx, *sub); err != nil {
 		logger.WithComponent("ConvertUC").WithError(err).Warn("gagal simpan provision_status; worker akan mencoba ulang")
 	}

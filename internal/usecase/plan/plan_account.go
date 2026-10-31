@@ -48,7 +48,7 @@ func BuildPPPoEProvisionSpec(sub domainSubscription.Subscription, pl domainPlan.
 		Secret: domainSubscription.PPPoESecretSpec{
 			Username:      sub.RemoteUsername,
 			Password:      sub.RemotePassword,
-			Profile:       pl.Name,
+			Profile:       pl.RouterProfile(),
 			Service:       "pppoe",
 			LocalAddress:  localAddr,
 			RemoteAddress: remoteAddr,
@@ -118,7 +118,7 @@ func BuildHotspotProvisionSpec(sub domainSubscription.Subscription, pl domainPla
 		User: domainSubscription.HotspotUserSpec{
 			Username:    sub.RemoteUsername,
 			Password:    sub.RemotePassword,
-			Profile:     pl.Name,
+			Profile:     pl.RouterProfile(),
 			Server:      server,
 			MacAddress:  macAddr,
 			IPAddress:   ipAddr,
@@ -194,7 +194,7 @@ func SubscriberAccountFromPlan(
 	return port.SubscriberAccount{
 		Username:          sub.RemoteUsername,
 		Password:          sub.RemotePassword,
-		Profile:           pl.Name,
+		Profile:           pl.RouterProfile(),
 		RateLimit:         rate,
 		AddressPool:       ipPool,
 		ParentQueue:       pl.ParentQueue,

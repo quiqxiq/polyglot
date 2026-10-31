@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from '@tanstack/react-router'
+import { useI18n } from '@/context/i18n-provider'
 import {
   Card,
   CardContent,
@@ -54,6 +55,7 @@ interface UnifiedPPPSubscriber {
 }
 
 export function PPPSubscriberSearchCard({ deviceId }: PPPSubscriberSearchCardProps) {
+  const { t } = useI18n()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedSubscriber, setSelectedSubscriber] = useState<UnifiedPPPSubscriber | null>(null)
   const [copiedField, setCopiedField] = useState<string | null>(null)
@@ -139,15 +141,15 @@ export function PPPSubscriberSearchCard({ deviceId }: PPPSubscriberSearchCardPro
             <div>
               <CardTitle className='text-base font-semibold flex items-center gap-2'>
                 <Network className='size-4 text-primary' />
-                Pencarian PPPoE
+                {t('dashboard.ppp_search_title')}
               </CardTitle>
               <CardDescription>
-                Cari pelanggan berdasarkan Nama (Username), MAC Address, atau IP
+                {t('dashboard.ppp_search_desc')}
               </CardDescription>
             </div>
             <Button asChild size='sm' variant='ghost' className='h-8 gap-1 text-xs'>
               <Link to='/ppp' search={{ tab: 'secrets' }}>
-                Kelola PPP <ArrowUpRight className='size-3.5' />
+                {t('nav.ppp')} <ArrowUpRight className='size-3.5' />
               </Link>
             </Button>
           </CardHeader>
@@ -158,7 +160,7 @@ export function PPPSubscriberSearchCard({ deviceId }: PPPSubscriberSearchCardPro
               <Search className='absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground' />
               <Input
                 type='text'
-                placeholder='Cari username, MAC address, IP, atau profile...'
+                placeholder={t('dashboard.search_placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className='h-9 pl-8 pr-8 text-xs sm:text-sm font-mono'
@@ -168,7 +170,7 @@ export function PPPSubscriberSearchCard({ deviceId }: PPPSubscriberSearchCardPro
                   type='button'
                   onClick={() => setSearchQuery('')}
                   className='absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground'
-                  title='Hapus pencarian'
+                  title={t('common.cancel')}
                 >
                   <X className='size-4' />
                 </button>
@@ -458,7 +460,7 @@ export function PPPSubscriberSearchCard({ deviceId }: PPPSubscriberSearchCardPro
                   size='sm'
                   onClick={() => setSelectedSubscriber(null)}
                 >
-                  Tutup
+                  {t('common.close')}
                 </Button>
 
                 <Button asChild size='sm' className='gap-1.5 font-mono text-xs'>

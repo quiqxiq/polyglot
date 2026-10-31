@@ -14,6 +14,13 @@ type IsolationConfig struct {
 	PPPoERedirectURL    string   `json:"pppoe_redirect_url"`
 	HotspotRedirectURL  string   `json:"hotspot_redirect_url"`
 	WalledGardenDomains []string `json:"walled_garden_domains"`
+
+	// Blueprint isolir §5.4 (planning v2 D12): webproxy internal, whitelist
+	// server billing, dan error.html mode self.
+	WebProxyEnabled bool     `json:"web_proxy_enabled"`
+	WebProxyPort    int      `json:"web_proxy_port"`
+	BillingHosts    []string `json:"billing_hosts"`
+	ErrorPageURL    string   `json:"error_page_url"`
 }
 
 // DefaultIsolationConfig returns production default isolation settings.
@@ -30,6 +37,9 @@ func DefaultIsolationConfig() IsolationConfig {
 		NATRedirectEnabled: true,
 		PPPoERedirectURL:   "http://isolir.isp.net:5176/portal/isolate/pppoe",
 		HotspotRedirectURL: "http://isolir.isp.net:5176/portal/isolate/hotspot",
+		WebProxyEnabled:    true,
+		WebProxyPort:       3125,
+		BillingHosts:       nil,
 		WalledGardenDomains: []string{
 			"tripay.co.id",
 			"api.tripay.co.id",
@@ -49,6 +59,8 @@ type IsolationStatus struct {
 	HotspotProfileExists bool            `json:"hotspot_profile_exists"`
 	AddressListExists    bool            `json:"address_list_exists"`
 	NATRedirectExists    bool            `json:"nat_redirect_exists"`
+	WebProxyEnabled      bool            `json:"web_proxy_enabled"`
+	BillingWhitelistSize int             `json:"billing_whitelist_size"`
 	IsolatedUsersCount   int             `json:"isolated_users_count"`
 	Config               IsolationConfig `json:"config"`
 }

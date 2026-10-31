@@ -381,7 +381,7 @@ func TestBuildOnPaidRestore_RestoresIsolatedWhenInvoicePaid(t *testing.T) {
 	seedIsolatedSub(t, subs)
 
 	subID := "sub-1"
-	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings)
+	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings, mocktest.NewFakeCustomerRepo())
 	hook(ctx, domainBilling.Invoice{
 		ID: "inv-1", SubscriptionID: &subID, Status: domainBilling.StatusPaid,
 	}, domainBilling.Payment{ID: "pay-1"})
@@ -409,7 +409,7 @@ func TestBuildOnPaidRestore_FailureMarksProvisionFailed(t *testing.T) {
 	seedIsolatedSub(t, subs)
 
 	subID := "sub-1"
-	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings)
+	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings, mocktest.NewFakeCustomerRepo())
 	hook(ctx, domainBilling.Invoice{
 		ID: "inv-1", SubscriptionID: &subID, Status: domainBilling.StatusPaid,
 	}, domainBilling.Payment{ID: "pay-1"})
@@ -435,7 +435,7 @@ func TestBuildOnPaidRestore_SkipsPartialInvoice(t *testing.T) {
 	seedIsolatedSub(t, subs)
 
 	subID := "sub-1"
-	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings)
+	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings, mocktest.NewFakeCustomerRepo())
 	hook(ctx, domainBilling.Invoice{
 		ID: "inv-1", SubscriptionID: &subID, Status: domainBilling.StatusPartial,
 	}, domainBilling.Payment{ID: "pay-1"})

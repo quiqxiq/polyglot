@@ -7,6 +7,8 @@ import {
   type RejectRegistrationRequest,
   type CancelRegistrationRequest,
   type ConvertRegistrationRequest,
+  type RecordSurveyRequest,
+  type StartInstallationRequest,
 } from '@/gen/v1/registration_pb'
 import { registrationClient } from '@/lib/api-client'
 import { registrationKeys } from './keys'
@@ -131,5 +133,65 @@ export function useConvertRegistrationMutation() {
       queryClient.invalidateQueries({ queryKey: ['customers'] })
       queryClient.invalidateQueries({ queryKey: ['billing'] })
     },
+  })
+}
+
+export function useRecordSurveyMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: RecordSurveyRequest) => {
+      return await registrationClient.recordSurvey(req)
+    },
+    onSuccess: (_, vars) => {
+      queryClient.invalidateQueries({ queryKey: registrationKeys.all })
+      queryClient.invalidateQueries({ queryKey: registrationKeys.detail(vars.id) })
+    },
+  })
+}
+
+export function useStartInstallationMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: StartInstallationRequest) => {
+      return await registrationClient.startInstallation(req)
+    },
+    onSuccess: (_, vars) => {
+      queryClient.invalidateQueries({ queryKey: registrationKeys.all })
+      queryClient.invalidateQueries({ queryKey: registrationKeys.detail(vars.id) })
+    },
+  })
+}
+
+export function useRegistrationEventsQuery(id: string, enabled = true) {
+  return useQuery({
+    queryKey: [...registrationKeys.detail(id), 'events'],
+    queryFn: async () => {
+      const res = await registrationClient.listRegistrationEvents({ id })
+      return res.events
+    },
+    enabled: Boolean(id) && enabled,
+  })
+}
+
+export function usePublicPlansQuery() {
+  return useQuery({
+    queryKey: ['public-plans'],
+    queryFn: async () => {
+      const res = await registrationClient.listPublicPlans({})
+      return res.plans
+    },
+  })
+}
+
+export function useTrackRegistrationQuery(token: string) {
+  return useQuery({
+    queryKey: ['registration-track', token],
+    queryFn: async () => {
+      const res = await registrationClient.trackRegistration({ publicToken: token })
+      return res
+    },
+    enabled: Boolean(token),
   })
 }

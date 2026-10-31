@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	"errors"
+	"time"
 
 	"gorm.io/gorm"
 
@@ -17,6 +18,7 @@ type GatewayTransactionRepository struct {
 }
 
 var _ port.GatewayTransactionRepository = (*GatewayTransactionRepository)(nil)
+var _ port.GatewayTransactionFilteredRepository = (*GatewayTransactionRepository)(nil)
 
 // NewGatewayTransactionRepository constructs a gateway transaction repository.
 func NewGatewayTransactionRepository(db *gorm.DB) *GatewayTransactionRepository {
@@ -73,4 +75,73 @@ func (r *GatewayTransactionRepository) LinkPayment(ctx context.Context, id, paym
 	return r.db.WithContext(ctx).Model(&model.GatewayTransactionModel{}).
 		Where("id = ?", id).
 		Updates(map[string]any{"payment_id": paymentID, "fee_amount": feeAmount}).Error
+}
+
+// ListFiltered returns gateway transactions matching filter criteria.
+func (r *GatewayTransactionRepository) ListFiltered(ctx context.Context, f port.GatewayTransactionFilter) ([]domainBilling.GatewayTransaction, int, error) {
+	tenantID := f.TenantID
+	if tenantID == "" {
+		tenantID = "tenant-default"
+	}
+	q := r.db.WithContext(ctx).Model(&model.GatewayTransactionModel{}).
+		Where("tenant_id = ?", tenantID)
+
+	if f.Gateway != "" {
+		q = q.Where("gateway = ?", f.Gateway)
+	}
+	if f.Status != "" {
+		q = q.Where("status = ?", f.Status)
+	}
+	if f.InvoiceID != "" {
+		q = q.Where("invoice_id = ?", f.InvoiceID)
+	}
+	if f.From != nil {
+		q = q.Where("created_at >= ?", *f.From)
+	}
+	if f.To != nil {
+		q = q.Where("created_at <= ?", *f.To)
+	}
+
+	var total int64
+	if err := q.Count(&total).Error; err != nil {
+		return nil, 0, err
+	}
+
+	if f.Limit > 0 {
+		q = q.Limit(f.Limit).Offset(f.Offset)
+	}
+	var list []model.GatewayTransactionModel
+	if err := q.Order("created_at DESC").Find(&list).Error; err != nil {
+		return nil, 0, err
+	}
+
+	out := make([]domainBilling.GatewayTransaction, len(list))
+	for i, m := range list {
+		out[i] = m.ToDomain()
+	}
+	return out, int(total), nil
+}
+
+// ListPendingBefore returns transactions stuck in PENDING status before a given timestamp.
+func (r *GatewayTransactionRepository) ListPendingBefore(ctx context.Context, tenantID string, before time.Time, limit int) ([]domainBilling.GatewayTransaction, error) {
+	if tenantID == "" {
+		tenantID = "tenant-default"
+	}
+	if limit <= 0 {
+		limit = 100
+	}
+	var list []model.GatewayTransactionModel
+	err := r.db.WithContext(ctx).
+		Where("tenant_id = ? AND status = ? AND updated_at < ?", tenantID, domainBilling.GatewayStatusPending, before).
+		Order("updated_at ASC").
+		Limit(limit).
+		Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	out := make([]domainBilling.GatewayTransaction, len(list))
+	for i, m := range list {
+		out[i] = m.ToDomain()
+	}
+	return out, nil
 }

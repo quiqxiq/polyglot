@@ -196,7 +196,7 @@ func (p *Provisioner) ensurePlanProfile(ctx context.Context, driver port.DeviceD
 
 // SyncPlanProfile creates or updates the corresponding profile on the target router.
 func (p *Provisioner) SyncPlanProfile(ctx context.Context, deviceID string, pl domainPlan.ServicePlan) error {
-	if deviceID == "" || pl.Name == "" {
+	if deviceID == "" || pl.RouterProfile() == "" {
 		return nil
 	}
 	driver, err := p.resolve(ctx, deviceID)
@@ -229,14 +229,14 @@ func (p *Provisioner) SyncPlanProfile(ctx context.Context, deviceID string, pl d
 		}
 		var existing *port.PPPProfile
 		for i := range profs {
-			if strings.EqualFold(profs[i].Name, pl.Name) {
+			if strings.EqualFold(profs[i].Name, pl.RouterProfile()) {
 				existing = &profs[i]
 				break
 			}
 		}
 
 		params := port.PPPProfileParams{
-			Name:           pl.Name,
+			Name:           pl.RouterProfile(),
 			RateLimit:      rate,
 			RemoteAddress:  remotePool,
 			AddressList:    addrList,
@@ -251,12 +251,12 @@ func (p *Provisioner) SyncPlanProfile(ctx context.Context, deviceID string, pl d
 			params.OnDown = existing.OnDown
 			_, err = p.ppp.UpdateProfile(ctx, driver, existing.RosID, params)
 			if err != nil {
-				return fmt.Errorf("update ppp profile %s: %w", pl.Name, err)
+				return fmt.Errorf("update ppp profile %s: %w", pl.RouterProfile(), err)
 			}
 		} else {
 			_, err = p.ppp.AddProfile(ctx, driver, params)
 			if err != nil {
-				return fmt.Errorf("create ppp profile %s: %w", pl.Name, err)
+				return fmt.Errorf("create ppp profile %s: %w", pl.RouterProfile(), err)
 			}
 		}
 		return nil
@@ -292,14 +292,14 @@ func (p *Provisioner) SyncPlanProfile(ctx context.Context, deviceID string, pl d
 	}
 	var existing *port.HotspotUserProfile
 	for i := range profs {
-		if strings.EqualFold(profs[i].Name, pl.Name) {
+		if strings.EqualFold(profs[i].Name, pl.RouterProfile()) {
 			existing = &profs[i]
 			break
 		}
 	}
 
 	params := port.MikhmonProfileParams{
-		Name:           pl.Name,
+		Name:           pl.RouterProfile(),
 		RateLimit:      rate,
 		AddressPool:    ipPool,
 		AddressList:    addrList,
@@ -313,12 +313,12 @@ func (p *Provisioner) SyncPlanProfile(ctx context.Context, deviceID string, pl d
 		params.OnLogin = existing.OnLogin
 		_, err = p.hot.UpdateUserProfile(ctx, driver, existing.RosID, params)
 		if err != nil {
-			return fmt.Errorf("update hotspot profile %s: %w", pl.Name, err)
+			return fmt.Errorf("update hotspot profile %s: %w", pl.RouterProfile(), err)
 		}
 	} else {
 		_, err = p.hot.CreateUserProfile(ctx, driver, params)
 		if err != nil {
-			return fmt.Errorf("create hotspot profile %s: %w", pl.Name, err)
+			return fmt.Errorf("create hotspot profile %s: %w", pl.RouterProfile(), err)
 		}
 	}
 	return nil

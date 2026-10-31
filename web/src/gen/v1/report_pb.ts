@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Message, proto3 } from "@bufbuild/protobuf";
+import { Message, proto3, protoInt64 } from "@bufbuild/protobuf";
 
 /**
  * @generated from message polyglot.v1.ReportSummary
@@ -402,6 +402,1523 @@ export class RefreshSnapshotResponse extends Message<RefreshSnapshotResponse> {
 
   static equals(a: RefreshSnapshotResponse | PlainMessage<RefreshSnapshotResponse> | undefined, b: RefreshSnapshotResponse | PlainMessage<RefreshSnapshotResponse> | undefined): boolean {
     return proto3.util.equals(RefreshSnapshotResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ARAgingBucket
+ */
+export class ARAgingBucket extends Message<ARAgingBucket> {
+  /**
+   * CURRENT | D1_30 | D31_60 | D61_90 | D90_PLUS
+   *
+   * @generated from field: string bucket = 1;
+   */
+  bucket = "";
+
+  /**
+   * @generated from field: int32 invoice_count = 2;
+   */
+  invoiceCount = 0;
+
+  /**
+   * @generated from field: double outstanding = 3;
+   */
+  outstanding = 0;
+
+  constructor(data?: PartialMessage<ARAgingBucket>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ARAgingBucket";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "bucket", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "invoice_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "outstanding", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ARAgingBucket {
+    return new ARAgingBucket().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ARAgingBucket {
+    return new ARAgingBucket().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ARAgingBucket {
+    return new ARAgingBucket().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ARAgingBucket | PlainMessage<ARAgingBucket> | undefined, b: ARAgingBucket | PlainMessage<ARAgingBucket> | undefined): boolean {
+    return proto3.util.equals(ARAgingBucket, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ARAgingRequest
+ */
+export class ARAgingRequest extends Message<ARAgingRequest> {
+  /**
+   * 'YYYY-MM-DD'; kosong = hari ini
+   *
+   * @generated from field: string as_of = 1;
+   */
+  asOf = "";
+
+  constructor(data?: PartialMessage<ARAgingRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ARAgingRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "as_of", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ARAgingRequest {
+    return new ARAgingRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ARAgingRequest {
+    return new ARAgingRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ARAgingRequest {
+    return new ARAgingRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ARAgingRequest | PlainMessage<ARAgingRequest> | undefined, b: ARAgingRequest | PlainMessage<ARAgingRequest> | undefined): boolean {
+    return proto3.util.equals(ARAgingRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ARAgingResponse
+ */
+export class ARAgingResponse extends Message<ARAgingResponse> {
+  /**
+   * @generated from field: string as_of = 1;
+   */
+  asOf = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.ARAgingBucket buckets = 2;
+   */
+  buckets: ARAgingBucket[] = [];
+
+  /**
+   * @generated from field: int32 total_count = 3;
+   */
+  totalCount = 0;
+
+  /**
+   * @generated from field: double total_outstanding = 4;
+   */
+  totalOutstanding = 0;
+
+  constructor(data?: PartialMessage<ARAgingResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ARAgingResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "as_of", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "buckets", kind: "message", T: ARAgingBucket, repeated: true },
+    { no: 3, name: "total_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "total_outstanding", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ARAgingResponse {
+    return new ARAgingResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ARAgingResponse {
+    return new ARAgingResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ARAgingResponse {
+    return new ARAgingResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ARAgingResponse | PlainMessage<ARAgingResponse> | undefined, b: ARAgingResponse | PlainMessage<ARAgingResponse> | undefined): boolean {
+    return proto3.util.equals(ARAgingResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GatewayReconciliationRow
+ */
+export class GatewayReconciliationRow extends Message<GatewayReconciliationRow> {
+  /**
+   * @generated from field: string gateway = 1;
+   */
+  gateway = "";
+
+  /**
+   * @generated from field: int32 transaction_count = 2;
+   */
+  transactionCount = 0;
+
+  /**
+   * @generated from field: double gateway_amount = 3;
+   */
+  gatewayAmount = 0;
+
+  /**
+   * @generated from field: double fee_amount = 4;
+   */
+  feeAmount = 0;
+
+  /**
+   * @generated from field: double recorded_amount = 5;
+   */
+  recordedAmount = 0;
+
+  /**
+   * @generated from field: double difference = 6;
+   */
+  difference = 0;
+
+  constructor(data?: PartialMessage<GatewayReconciliationRow>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GatewayReconciliationRow";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "gateway", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "transaction_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "gateway_amount", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 4, name: "fee_amount", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "recorded_amount", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 6, name: "difference", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GatewayReconciliationRow {
+    return new GatewayReconciliationRow().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GatewayReconciliationRow {
+    return new GatewayReconciliationRow().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GatewayReconciliationRow {
+    return new GatewayReconciliationRow().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GatewayReconciliationRow | PlainMessage<GatewayReconciliationRow> | undefined, b: GatewayReconciliationRow | PlainMessage<GatewayReconciliationRow> | undefined): boolean {
+    return proto3.util.equals(GatewayReconciliationRow, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GatewayReconciliationRequest
+ */
+export class GatewayReconciliationRequest extends Message<GatewayReconciliationRequest> {
+  /**
+   * 'YYYY-MM-DD'
+   *
+   * @generated from field: string from = 1;
+   */
+  from = "";
+
+  /**
+   * 'YYYY-MM-DD'
+   *
+   * @generated from field: string to = 2;
+   */
+  to = "";
+
+  constructor(data?: PartialMessage<GatewayReconciliationRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GatewayReconciliationRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "from", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "to", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GatewayReconciliationRequest {
+    return new GatewayReconciliationRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GatewayReconciliationRequest {
+    return new GatewayReconciliationRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GatewayReconciliationRequest {
+    return new GatewayReconciliationRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GatewayReconciliationRequest | PlainMessage<GatewayReconciliationRequest> | undefined, b: GatewayReconciliationRequest | PlainMessage<GatewayReconciliationRequest> | undefined): boolean {
+    return proto3.util.equals(GatewayReconciliationRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GatewayReconciliationResponse
+ */
+export class GatewayReconciliationResponse extends Message<GatewayReconciliationResponse> {
+  /**
+   * @generated from field: string from = 1;
+   */
+  from = "";
+
+  /**
+   * @generated from field: string to = 2;
+   */
+  to = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.GatewayReconciliationRow rows = 3;
+   */
+  rows: GatewayReconciliationRow[] = [];
+
+  /**
+   * @generated from field: double total_gateway = 4;
+   */
+  totalGateway = 0;
+
+  /**
+   * @generated from field: double total_recorded = 5;
+   */
+  totalRecorded = 0;
+
+  /**
+   * @generated from field: double total_fee = 6;
+   */
+  totalFee = 0;
+
+  constructor(data?: PartialMessage<GatewayReconciliationResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GatewayReconciliationResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "from", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "to", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "rows", kind: "message", T: GatewayReconciliationRow, repeated: true },
+    { no: 4, name: "total_gateway", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "total_recorded", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 6, name: "total_fee", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GatewayReconciliationResponse {
+    return new GatewayReconciliationResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GatewayReconciliationResponse {
+    return new GatewayReconciliationResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GatewayReconciliationResponse {
+    return new GatewayReconciliationResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GatewayReconciliationResponse | PlainMessage<GatewayReconciliationResponse> | undefined, b: GatewayReconciliationResponse | PlainMessage<GatewayReconciliationResponse> | undefined): boolean {
+    return proto3.util.equals(GatewayReconciliationResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PSBStatusCount
+ */
+export class PSBStatusCount extends Message<PSBStatusCount> {
+  /**
+   * @generated from field: string status = 1;
+   */
+  status = "";
+
+  /**
+   * @generated from field: int32 count = 2;
+   */
+  count = 0;
+
+  constructor(data?: PartialMessage<PSBStatusCount>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PSBStatusCount";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PSBStatusCount {
+    return new PSBStatusCount().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PSBStatusCount {
+    return new PSBStatusCount().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PSBStatusCount {
+    return new PSBStatusCount().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PSBStatusCount | PlainMessage<PSBStatusCount> | undefined, b: PSBStatusCount | PlainMessage<PSBStatusCount> | undefined): boolean {
+    return proto3.util.equals(PSBStatusCount, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PSBStatsRequest
+ */
+export class PSBStatsRequest extends Message<PSBStatsRequest> {
+  /**
+   * @generated from field: string from = 1;
+   */
+  from = "";
+
+  /**
+   * @generated from field: string to = 2;
+   */
+  to = "";
+
+  constructor(data?: PartialMessage<PSBStatsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PSBStatsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "from", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "to", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PSBStatsRequest {
+    return new PSBStatsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PSBStatsRequest {
+    return new PSBStatsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PSBStatsRequest {
+    return new PSBStatsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PSBStatsRequest | PlainMessage<PSBStatsRequest> | undefined, b: PSBStatsRequest | PlainMessage<PSBStatsRequest> | undefined): boolean {
+    return proto3.util.equals(PSBStatsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PSBStatsResponse
+ */
+export class PSBStatsResponse extends Message<PSBStatsResponse> {
+  /**
+   * @generated from field: string from = 1;
+   */
+  from = "";
+
+  /**
+   * @generated from field: string to = 2;
+   */
+  to = "";
+
+  /**
+   * @generated from field: int32 total = 3;
+   */
+  total = 0;
+
+  /**
+   * @generated from field: int32 converted = 4;
+   */
+  converted = 0;
+
+  /**
+   * @generated from field: int32 closed = 5;
+   */
+  closed = 0;
+
+  /**
+   * @generated from field: repeated polyglot.v1.PSBStatusCount by_status = 6;
+   */
+  byStatus: PSBStatusCount[] = [];
+
+  /**
+   * @generated from field: double avg_survey_hours = 7;
+   */
+  avgSurveyHours = 0;
+
+  /**
+   * @generated from field: double avg_install_hours = 8;
+   */
+  avgInstallHours = 0;
+
+  /**
+   * @generated from field: double avg_lead_hours = 9;
+   */
+  avgLeadHours = 0;
+
+  constructor(data?: PartialMessage<PSBStatsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PSBStatsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "from", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "to", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "total", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "converted", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "closed", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "by_status", kind: "message", T: PSBStatusCount, repeated: true },
+    { no: 7, name: "avg_survey_hours", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 8, name: "avg_install_hours", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 9, name: "avg_lead_hours", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PSBStatsResponse {
+    return new PSBStatsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PSBStatsResponse {
+    return new PSBStatsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PSBStatsResponse {
+    return new PSBStatsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PSBStatsResponse | PlainMessage<PSBStatsResponse> | undefined, b: PSBStatsResponse | PlainMessage<PSBStatsResponse> | undefined): boolean {
+    return proto3.util.equals(PSBStatsResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.TaxRow
+ */
+export class TaxRow extends Message<TaxRow> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  /**
+   * @generated from field: int32 invoice_count = 2;
+   */
+  invoiceCount = 0;
+
+  /**
+   * @generated from field: double subtotal = 3;
+   */
+  subtotal = 0;
+
+  /**
+   * @generated from field: double tax_percent = 4;
+   */
+  taxPercent = 0;
+
+  /**
+   * @generated from field: double tax_amount = 5;
+   */
+  taxAmount = 0;
+
+  /**
+   * @generated from field: double total = 6;
+   */
+  total = 0;
+
+  /**
+   * @generated from field: double paid_tax = 7;
+   */
+  paidTax = 0;
+
+  constructor(data?: PartialMessage<TaxRow>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.TaxRow";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "invoice_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "subtotal", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 4, name: "tax_percent", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "tax_amount", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 6, name: "total", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 7, name: "paid_tax", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TaxRow {
+    return new TaxRow().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TaxRow {
+    return new TaxRow().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TaxRow {
+    return new TaxRow().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: TaxRow | PlainMessage<TaxRow> | undefined, b: TaxRow | PlainMessage<TaxRow> | undefined): boolean {
+    return proto3.util.equals(TaxRow, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.TaxReportRequest
+ */
+export class TaxReportRequest extends Message<TaxReportRequest> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  constructor(data?: PartialMessage<TaxReportRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.TaxReportRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TaxReportRequest {
+    return new TaxReportRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TaxReportRequest {
+    return new TaxReportRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TaxReportRequest {
+    return new TaxReportRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: TaxReportRequest | PlainMessage<TaxReportRequest> | undefined, b: TaxReportRequest | PlainMessage<TaxReportRequest> | undefined): boolean {
+    return proto3.util.equals(TaxReportRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.TaxReportResponse
+ */
+export class TaxReportResponse extends Message<TaxReportResponse> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.TaxRow rows = 2;
+   */
+  rows: TaxRow[] = [];
+
+  /**
+   * @generated from field: double total_subtotal = 3;
+   */
+  totalSubtotal = 0;
+
+  /**
+   * @generated from field: double total_tax = 4;
+   */
+  totalTax = 0;
+
+  /**
+   * @generated from field: double total_billed = 5;
+   */
+  totalBilled = 0;
+
+  /**
+   * @generated from field: double total_paid_tax = 6;
+   */
+  totalPaidTax = 0;
+
+  constructor(data?: PartialMessage<TaxReportResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.TaxReportResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "rows", kind: "message", T: TaxRow, repeated: true },
+    { no: 3, name: "total_subtotal", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 4, name: "total_tax", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "total_billed", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 6, name: "total_paid_tax", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TaxReportResponse {
+    return new TaxReportResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TaxReportResponse {
+    return new TaxReportResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TaxReportResponse {
+    return new TaxReportResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: TaxReportResponse | PlainMessage<TaxReportResponse> | undefined, b: TaxReportResponse | PlainMessage<TaxReportResponse> | undefined): boolean {
+    return proto3.util.equals(TaxReportResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.SalesRow
+ */
+export class SalesRow extends Message<SalesRow> {
+  /**
+   * @generated from field: string plan_name = 1;
+   */
+  planName = "";
+
+  /**
+   * @generated from field: string service_type = 2;
+   */
+  serviceType = "";
+
+  /**
+   * @generated from field: int32 invoice_count = 3;
+   */
+  invoiceCount = 0;
+
+  /**
+   * @generated from field: double total_billed = 4;
+   */
+  totalBilled = 0;
+
+  /**
+   * @generated from field: double total_paid = 5;
+   */
+  totalPaid = 0;
+
+  constructor(data?: PartialMessage<SalesRow>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.SalesRow";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "plan_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "invoice_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "total_billed", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "total_paid", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SalesRow {
+    return new SalesRow().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SalesRow {
+    return new SalesRow().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SalesRow {
+    return new SalesRow().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SalesRow | PlainMessage<SalesRow> | undefined, b: SalesRow | PlainMessage<SalesRow> | undefined): boolean {
+    return proto3.util.equals(SalesRow, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.SalesReportRequest
+ */
+export class SalesReportRequest extends Message<SalesReportRequest> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  constructor(data?: PartialMessage<SalesReportRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.SalesReportRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SalesReportRequest {
+    return new SalesReportRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SalesReportRequest {
+    return new SalesReportRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SalesReportRequest {
+    return new SalesReportRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SalesReportRequest | PlainMessage<SalesReportRequest> | undefined, b: SalesReportRequest | PlainMessage<SalesReportRequest> | undefined): boolean {
+    return proto3.util.equals(SalesReportRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.SalesReportResponse
+ */
+export class SalesReportResponse extends Message<SalesReportResponse> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.SalesRow rows = 2;
+   */
+  rows: SalesRow[] = [];
+
+  /**
+   * @generated from field: double total_billed = 3;
+   */
+  totalBilled = 0;
+
+  /**
+   * @generated from field: double total_paid = 4;
+   */
+  totalPaid = 0;
+
+  /**
+   * @generated from field: int32 paid_count = 5;
+   */
+  paidCount = 0;
+
+  /**
+   * @generated from field: int32 customer_count = 6;
+   */
+  customerCount = 0;
+
+  constructor(data?: PartialMessage<SalesReportResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.SalesReportResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "rows", kind: "message", T: SalesRow, repeated: true },
+    { no: 3, name: "total_billed", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 4, name: "total_paid", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "paid_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "customer_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SalesReportResponse {
+    return new SalesReportResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SalesReportResponse {
+    return new SalesReportResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SalesReportResponse {
+    return new SalesReportResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SalesReportResponse | PlainMessage<SalesReportResponse> | undefined, b: SalesReportResponse | PlainMessage<SalesReportResponse> | undefined): boolean {
+    return proto3.util.equals(SalesReportResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CollectionReportRequest
+ */
+export class CollectionReportRequest extends Message<CollectionReportRequest> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  constructor(data?: PartialMessage<CollectionReportRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CollectionReportRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CollectionReportRequest {
+    return new CollectionReportRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CollectionReportRequest {
+    return new CollectionReportRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CollectionReportRequest {
+    return new CollectionReportRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CollectionReportRequest | PlainMessage<CollectionReportRequest> | undefined, b: CollectionReportRequest | PlainMessage<CollectionReportRequest> | undefined): boolean {
+    return proto3.util.equals(CollectionReportRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CollectionReportResponse
+ */
+export class CollectionReportResponse extends Message<CollectionReportResponse> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  /**
+   * @generated from field: int32 total_invoices = 2;
+   */
+  totalInvoices = 0;
+
+  /**
+   * @generated from field: int32 paid_invoices = 3;
+   */
+  paidInvoices = 0;
+
+  /**
+   * @generated from field: int32 overdue_invoices = 4;
+   */
+  overdueInvoices = 0;
+
+  /**
+   * @generated from field: double total_billed = 5;
+   */
+  totalBilled = 0;
+
+  /**
+   * @generated from field: double total_collected = 6;
+   */
+  totalCollected = 0;
+
+  /**
+   * @generated from field: double total_outstanding = 7;
+   */
+  totalOutstanding = 0;
+
+  /**
+   * @generated from field: double collection_rate = 8;
+   */
+  collectionRate = 0;
+
+  constructor(data?: PartialMessage<CollectionReportResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CollectionReportResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "total_invoices", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "paid_invoices", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "overdue_invoices", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "total_billed", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 6, name: "total_collected", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 7, name: "total_outstanding", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 8, name: "collection_rate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CollectionReportResponse {
+    return new CollectionReportResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CollectionReportResponse {
+    return new CollectionReportResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CollectionReportResponse {
+    return new CollectionReportResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CollectionReportResponse | PlainMessage<CollectionReportResponse> | undefined, b: CollectionReportResponse | PlainMessage<CollectionReportResponse> | undefined): boolean {
+    return proto3.util.equals(CollectionReportResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CashflowRow
+ */
+export class CashflowRow extends Message<CashflowRow> {
+  /**
+   * @generated from field: string category_name = 1;
+   */
+  categoryName = "";
+
+  /**
+   * IN | OUT
+   *
+   * @generated from field: string direction = 2;
+   */
+  direction = "";
+
+  /**
+   * @generated from field: int32 trx_count = 3;
+   */
+  trxCount = 0;
+
+  /**
+   * @generated from field: double total_amount = 4;
+   */
+  totalAmount = 0;
+
+  constructor(data?: PartialMessage<CashflowRow>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CashflowRow";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "category_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "direction", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "trx_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "total_amount", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CashflowRow {
+    return new CashflowRow().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CashflowRow {
+    return new CashflowRow().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CashflowRow {
+    return new CashflowRow().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CashflowRow | PlainMessage<CashflowRow> | undefined, b: CashflowRow | PlainMessage<CashflowRow> | undefined): boolean {
+    return proto3.util.equals(CashflowRow, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CashflowReportRequest
+ */
+export class CashflowReportRequest extends Message<CashflowReportRequest> {
+  /**
+   * @generated from field: string from = 1;
+   */
+  from = "";
+
+  /**
+   * @generated from field: string to = 2;
+   */
+  to = "";
+
+  constructor(data?: PartialMessage<CashflowReportRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CashflowReportRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "from", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "to", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CashflowReportRequest {
+    return new CashflowReportRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CashflowReportRequest {
+    return new CashflowReportRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CashflowReportRequest {
+    return new CashflowReportRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CashflowReportRequest | PlainMessage<CashflowReportRequest> | undefined, b: CashflowReportRequest | PlainMessage<CashflowReportRequest> | undefined): boolean {
+    return proto3.util.equals(CashflowReportRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CashflowReportResponse
+ */
+export class CashflowReportResponse extends Message<CashflowReportResponse> {
+  /**
+   * @generated from field: string from = 1;
+   */
+  from = "";
+
+  /**
+   * @generated from field: string to = 2;
+   */
+  to = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.CashflowRow rows = 3;
+   */
+  rows: CashflowRow[] = [];
+
+  /**
+   * @generated from field: double total_in = 4;
+   */
+  totalIn = 0;
+
+  /**
+   * @generated from field: double total_out = 5;
+   */
+  totalOut = 0;
+
+  /**
+   * @generated from field: double net_cashflow = 6;
+   */
+  netCashflow = 0;
+
+  constructor(data?: PartialMessage<CashflowReportResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CashflowReportResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "from", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "to", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "rows", kind: "message", T: CashflowRow, repeated: true },
+    { no: 4, name: "total_in", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "total_out", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 6, name: "net_cashflow", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CashflowReportResponse {
+    return new CashflowReportResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CashflowReportResponse {
+    return new CashflowReportResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CashflowReportResponse {
+    return new CashflowReportResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CashflowReportResponse | PlainMessage<CashflowReportResponse> | undefined, b: CashflowReportResponse | PlainMessage<CashflowReportResponse> | undefined): boolean {
+    return proto3.util.equals(CashflowReportResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.AgingDetailRow
+ */
+export class AgingDetailRow extends Message<AgingDetailRow> {
+  /**
+   * @generated from field: string customer_id = 1;
+   */
+  customerId = "";
+
+  /**
+   * @generated from field: string customer_name = 2;
+   */
+  customerName = "";
+
+  /**
+   * @generated from field: string phone = 3;
+   */
+  phone = "";
+
+  /**
+   * @generated from field: int32 invoice_count = 4;
+   */
+  invoiceCount = 0;
+
+  /**
+   * @generated from field: double outstanding = 5;
+   */
+  outstanding = 0;
+
+  /**
+   * @generated from field: int64 oldest_due_unix = 6;
+   */
+  oldestDueUnix = protoInt64.zero;
+
+  /**
+   * @generated from field: int32 days_overdue = 7;
+   */
+  daysOverdue = 0;
+
+  constructor(data?: PartialMessage<AgingDetailRow>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.AgingDetailRow";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "customer_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "customer_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "phone", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "invoice_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "outstanding", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 6, name: "oldest_due_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 7, name: "days_overdue", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AgingDetailRow {
+    return new AgingDetailRow().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AgingDetailRow {
+    return new AgingDetailRow().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AgingDetailRow {
+    return new AgingDetailRow().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AgingDetailRow | PlainMessage<AgingDetailRow> | undefined, b: AgingDetailRow | PlainMessage<AgingDetailRow> | undefined): boolean {
+    return proto3.util.equals(AgingDetailRow, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.AgingDetailRequest
+ */
+export class AgingDetailRequest extends Message<AgingDetailRequest> {
+  /**
+   * @generated from field: string as_of = 1;
+   */
+  asOf = "";
+
+  /**
+   * @generated from field: int32 limit = 2;
+   */
+  limit = 0;
+
+  constructor(data?: PartialMessage<AgingDetailRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.AgingDetailRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "as_of", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "limit", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AgingDetailRequest {
+    return new AgingDetailRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AgingDetailRequest {
+    return new AgingDetailRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AgingDetailRequest {
+    return new AgingDetailRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AgingDetailRequest | PlainMessage<AgingDetailRequest> | undefined, b: AgingDetailRequest | PlainMessage<AgingDetailRequest> | undefined): boolean {
+    return proto3.util.equals(AgingDetailRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.AgingDetailResponse
+ */
+export class AgingDetailResponse extends Message<AgingDetailResponse> {
+  /**
+   * @generated from field: string as_of = 1;
+   */
+  asOf = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.AgingDetailRow rows = 2;
+   */
+  rows: AgingDetailRow[] = [];
+
+  /**
+   * @generated from field: int32 total_customers = 3;
+   */
+  totalCustomers = 0;
+
+  /**
+   * @generated from field: double total_outstanding = 4;
+   */
+  totalOutstanding = 0;
+
+  constructor(data?: PartialMessage<AgingDetailResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.AgingDetailResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "as_of", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "rows", kind: "message", T: AgingDetailRow, repeated: true },
+    { no: 3, name: "total_customers", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "total_outstanding", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AgingDetailResponse {
+    return new AgingDetailResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AgingDetailResponse {
+    return new AgingDetailResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AgingDetailResponse {
+    return new AgingDetailResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AgingDetailResponse | PlainMessage<AgingDetailResponse> | undefined, b: AgingDetailResponse | PlainMessage<AgingDetailResponse> | undefined): boolean {
+    return proto3.util.equals(AgingDetailResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ClosingReportRequest
+ */
+export class ClosingReportRequest extends Message<ClosingReportRequest> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  constructor(data?: PartialMessage<ClosingReportRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ClosingReportRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClosingReportRequest {
+    return new ClosingReportRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClosingReportRequest {
+    return new ClosingReportRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClosingReportRequest {
+    return new ClosingReportRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ClosingReportRequest | PlainMessage<ClosingReportRequest> | undefined, b: ClosingReportRequest | PlainMessage<ClosingReportRequest> | undefined): boolean {
+    return proto3.util.equals(ClosingReportRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ClosingReportResponse
+ */
+export class ClosingReportResponse extends Message<ClosingReportResponse> {
+  /**
+   * @generated from field: string period = 1;
+   */
+  period = "";
+
+  /**
+   * @generated from field: int64 closing_date_unix = 2;
+   */
+  closingDateUnix = protoInt64.zero;
+
+  /**
+   * @generated from field: int32 total_invoices = 3;
+   */
+  totalInvoices = 0;
+
+  /**
+   * @generated from field: double total_billed = 4;
+   */
+  totalBilled = 0;
+
+  /**
+   * @generated from field: double total_collected = 5;
+   */
+  totalCollected = 0;
+
+  /**
+   * @generated from field: double total_outstanding = 6;
+   */
+  totalOutstanding = 0;
+
+  /**
+   * @generated from field: int32 active_customers = 7;
+   */
+  activeCustomers = 0;
+
+  /**
+   * @generated from field: int32 new_subscriptions = 8;
+   */
+  newSubscriptions = 0;
+
+  /**
+   * @generated from field: double debts_outstanding = 9;
+   */
+  debtsOutstanding = 0;
+
+  constructor(data?: PartialMessage<ClosingReportResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ClosingReportResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "period", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "closing_date_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 3, name: "total_invoices", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "total_billed", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 5, name: "total_collected", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 6, name: "total_outstanding", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 7, name: "active_customers", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 8, name: "new_subscriptions", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 9, name: "debts_outstanding", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClosingReportResponse {
+    return new ClosingReportResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClosingReportResponse {
+    return new ClosingReportResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClosingReportResponse {
+    return new ClosingReportResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ClosingReportResponse | PlainMessage<ClosingReportResponse> | undefined, b: ClosingReportResponse | PlainMessage<ClosingReportResponse> | undefined): boolean {
+    return proto3.util.equals(ClosingReportResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ExportReportRequest
+ */
+export class ExportReportRequest extends Message<ExportReportRequest> {
+  /**
+   * TAX | SALES | CASHFLOW | AGING_DETAIL
+   *
+   * @generated from field: string report_type = 1;
+   */
+  reportType = "";
+
+  /**
+   * csv | xlsx
+   *
+   * @generated from field: string format = 2;
+   */
+  format = "";
+
+  /**
+   * @generated from field: map<string, string> params = 3;
+   */
+  params: { [key: string]: string } = {};
+
+  constructor(data?: PartialMessage<ExportReportRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ExportReportRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "report_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "format", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "params", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ExportReportRequest {
+    return new ExportReportRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ExportReportRequest {
+    return new ExportReportRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ExportReportRequest {
+    return new ExportReportRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ExportReportRequest | PlainMessage<ExportReportRequest> | undefined, b: ExportReportRequest | PlainMessage<ExportReportRequest> | undefined): boolean {
+    return proto3.util.equals(ExportReportRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ExportReportResponse
+ */
+export class ExportReportResponse extends Message<ExportReportResponse> {
+  /**
+   * @generated from field: bytes payload = 1;
+   */
+  payload = new Uint8Array(0);
+
+  /**
+   * @generated from field: string content_type = 2;
+   */
+  contentType = "";
+
+  /**
+   * @generated from field: string filename = 3;
+   */
+  filename = "";
+
+  constructor(data?: PartialMessage<ExportReportResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ExportReportResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "payload", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "content_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "filename", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ExportReportResponse {
+    return new ExportReportResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ExportReportResponse {
+    return new ExportReportResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ExportReportResponse {
+    return new ExportReportResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ExportReportResponse | PlainMessage<ExportReportResponse> | undefined, b: ExportReportResponse | PlainMessage<ExportReportResponse> | undefined): boolean {
+    return proto3.util.equals(ExportReportResponse, a, b);
   }
 }
 

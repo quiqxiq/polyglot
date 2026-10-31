@@ -8,7 +8,9 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { LanguageSwitch } from '@/components/language-switch'
 import { TopNav, type TopNavLink } from '@/components/layout/top-nav'
+import { useI18n } from '@/context/i18n-provider'
 import { useDeviceStore } from '@/stores/device-store'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useWARealtimeStream } from '@/features/whatsapp/api/use-whatsapp-sse'
@@ -30,6 +32,7 @@ type DashboardTab = 'utama' | 'laporan' | 'trend' | 'kpi' | 'lainnya'
 
 
 export function Dashboard() {
+  const { t } = useI18n()
   const queryClient = useQueryClient()
   const search = useSearch({ strict: false }) as { tab?: DashboardTab }
   const navigate = useNavigate()
@@ -65,7 +68,7 @@ export function Dashboard() {
 
   const topNavLinks: TopNavLink[] = [
     {
-      title: 'Utama',
+      title: t('dashboard.overview'),
       href: '/',
       search: { tab: 'utama' },
       isActive: isUtama,
@@ -73,7 +76,7 @@ export function Dashboard() {
       icon: <Network className='size-4' />,
     },
     {
-      title: 'Laporan, Trend & KPI',
+      title: t('nav.reports'),
       href: '/',
       search: { tab: 'laporan' },
       isActive: !isUtama,
@@ -89,6 +92,7 @@ export function Dashboard() {
         <TopNav links={topNavLinks} />
         <div className='ms-auto flex items-center space-x-2 sm:space-x-4'>
           <Search />
+          <LanguageSwitch />
           <ThemeSwitch />
           <ConfigDrawer />
           <ProfileDropdown />
@@ -102,7 +106,7 @@ export function Dashboard() {
           <>
             <div className='flex flex-wrap items-center justify-between gap-3'>
               <div>
-                <h1 className='text-2xl font-bold tracking-tight'>Pencarian PPP</h1>
+                <h1 className='text-2xl font-bold tracking-tight'>{t('dashboard.ppp_search_title')}</h1>
               </div>
               <div className='flex items-center gap-2'>
                 <Button
@@ -110,9 +114,9 @@ export function Dashboard() {
                   variant='outline'
                   className='h-8 gap-1.5 text-xs'
                   onClick={handleRefreshAll}
-                  title='Segarkan data pelanggan'
+                  title={t('dashboard.refresh_data')}
                 >
-                  <RefreshCw className='size-3.5' /> Segarkan
+                  <RefreshCw className='size-3.5' /> {t('common.refresh')}
                 </Button>
               </div>
             </div>
@@ -124,9 +128,9 @@ export function Dashboard() {
           <>
             <div className='flex flex-wrap items-center justify-between gap-3'>
               <div>
-                <h1 className='text-2xl font-bold tracking-tight'>Laporan, Trend & KPI</h1>
+                <h1 className='text-2xl font-bold tracking-tight'>{t('nav.reports')}</h1>
                 <p className='text-xs text-muted-foreground mt-0.5'>
-                  Ringkasan indikator kinerja jaringan, penjualan voucher, tren omset, dan armada router.
+                  {t('dashboard.ppp_search_desc')}
                 </p>
               </div>
               <div className='flex items-center gap-2'>
@@ -135,9 +139,9 @@ export function Dashboard() {
                   variant='outline'
                   className='h-8 gap-1.5 text-xs'
                   onClick={handleRefreshAll}
-                  title='Segarkan seluruh metrik dan laporan'
+                  title={t('dashboard.refresh_data')}
                 >
-                  <RefreshCw className='size-3.5' /> Segarkan
+                  <RefreshCw className='size-3.5' /> {t('common.refresh')}
                 </Button>
                 <Button
                   size='sm'
@@ -145,7 +149,7 @@ export function Dashboard() {
                   asChild
                 >
                   <Link to='/reports'>
-                    <FileText className='size-3.5' /> Buka Laporan Lengkap <ArrowUpRight className='size-3.5' />
+                    <FileText className='size-3.5' /> {t('common.view_all')} <ArrowUpRight className='size-3.5' />
                   </Link>
                 </Button>
               </div>

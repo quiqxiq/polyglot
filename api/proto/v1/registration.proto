@@ -35,6 +35,38 @@ message Registration {
   int64 created_at_unix = 26;
   string target_device_id = 27;   // Router yang dipilih teknisi saat pasang
   string target_device_name = 28; // Nama router BRAS
+
+  // ── PSB v2 (migrasi 000032) ──────────────────────────────────────────
+  string nik = 29;
+  string id_card_photo_url = 30;
+  string house_photo_url = 31;
+  int64 survey_date_unix = 32;
+  string survey_time = 33;          // "HH:MM"
+  string surveyor_id = 34;
+  string survey_status = 35;        // ELIGIBLE | NOT_ELIGIBLE
+  string survey_notes = 36;
+  int32 estimated_cable_length_meter = 37;
+  string public_token = 38;         // token lacak tanpa login
+  int64 installation_started_at_unix = 39;
+  string installation_photo_url = 40;
+  string ont_mac_address = 41;
+  string ont_serial_number = 42;
+  string olt_device_id = 44;
+  int32 pon_index = 45;
+  int32 onu_index = 46;
+  double discount_amount = 43;
+}
+
+// RegistrationEvent adalah satu entri timeline PSB (registration_events).
+message RegistrationEvent {
+  string id = 1;
+  string registration_id = 2;
+  string event_type = 3;
+  string actor_id = 4;
+  string title = 5;
+  string description = 6;
+  string metadata_json = 7;
+  int64 created_at_unix = 8;
 }
 
 // PUBLIC — dipanggil calon pelanggan tanpa JWT.
@@ -48,6 +80,9 @@ message SubmitRegistrationRequest {
   bool has_coordinates = 7;
   string notes = 8;
   string plan_id = 9 [(buf.validate.field).string.min_len = 1];
+  string nik = 10;
+  string id_card_photo_url = 11;
+  string house_photo_url = 12;
 }
 message SubmitRegistrationResponse { Registration registration = 1; }
 
@@ -80,8 +115,59 @@ message MarkInstalledRequest {
   string id = 1 [(buf.validate.field).string.min_len = 1];
   string technician_notes = 2;
   string device_id = 3; // Router BRAS yang dipilih teknisi saat selesai pasang fisik
+  // Bukti instalasi (PSB v2).
+  string installation_photo_url = 4;
+  string ont_mac_address = 5;
+  string ont_serial_number = 6;
+  string olt_device_id = 7;
+  int32 pon_index = 8;
+  int32 onu_index = 9;
 }
 message MarkInstalledResponse { Registration registration = 1; }
+
+// ── PSB v2: survey, mulai instalasi, lacak publik, timeline ──────────────
+message RecordSurveyRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  int64 survey_date_unix = 2;   // 0 = hari ini
+  string survey_time_hhmm = 3;  // "HH:MM"; kosong = tanpa jam
+  string surveyor_id = 4;       // users.id; kosong = biarkan
+  string survey_status = 5;     // ELIGIBLE | NOT_ELIGIBLE (kosong = ELIGIBLE)
+  string survey_notes = 6;
+  int32 estimated_cable_length_meter = 7;
+}
+message RecordSurveyResponse { Registration registration = 1; }
+
+message StartInstallationRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message StartInstallationResponse { Registration registration = 1; }
+
+// PUBLIC — dipanggil calon pelanggan tanpa JWT untuk lacak status.
+message TrackRegistrationRequest {
+  string public_token = 1 [(buf.validate.field).string.min_len = 1];
+}
+message TrackRegistrationResponse {
+  Registration registration = 1;
+  repeated RegistrationEvent events = 2;
+}
+
+// PUBLIC — daftar paket aktif untuk formulir pendaftaran.
+message PublicPlan {
+  string id = 1;
+  string name = 2;
+  string service_type = 3; // PPPOE | HOTSPOT | DEDICATED
+  double price = 4;
+  int32 bandwidth_download_kbps = 5;
+  int32 bandwidth_upload_kbps = 6;
+  double installation_fee = 7;
+}
+message ListPublicPlansRequest {}
+message ListPublicPlansResponse { repeated PublicPlan plans = 1; }
+
+message ListRegistrationEventsRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message ListRegistrationEventsResponse { repeated RegistrationEvent events = 1; }
 
 message RejectRegistrationRequest {
   string id = 1 [(buf.validate.field).string.min_len = 1];
@@ -115,7 +201,12 @@ service RegistrationService {
   rpc GetRegistration(GetRegistrationRequest) returns (GetRegistrationResponse);
   rpc ApproveRegistration(ApproveRegistrationRequest) returns (ApproveRegistrationResponse);
   rpc ScheduleInstall(ScheduleInstallRequest) returns (ScheduleInstallResponse);
+  rpc RecordSurvey(RecordSurveyRequest) returns (RecordSurveyResponse);
+  rpc StartInstallation(StartInstallationRequest) returns (StartInstallationResponse);
   rpc MarkInstalled(MarkInstalledRequest) returns (MarkInstalledResponse);
+  rpc TrackRegistration(TrackRegistrationRequest) returns (TrackRegistrationResponse);
+  rpc ListPublicPlans(ListPublicPlansRequest) returns (ListPublicPlansResponse);
+  rpc ListRegistrationEvents(ListRegistrationEventsRequest) returns (ListRegistrationEventsResponse);
   rpc RejectRegistration(RejectRegistrationRequest) returns (RejectRegistrationResponse);
   rpc CancelRegistration(CancelRegistrationRequest) returns (CancelRegistrationResponse);
   rpc ConvertRegistration(ConvertRegistrationRequest) returns (ConvertRegistrationResponse);

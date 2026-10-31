@@ -94,4 +94,11 @@ type Subscription struct {
 	ParentQueue   string `json:"parent_queue,omitempty"`
 	RateLimit     string `json:"rate_limit,omitempty"`
 	RouterProfile string `json:"router_profile,omitempty"`
+
+	// Kolom billing v2 (migrasi 000032).
+	BillingAnchorDay   int        `json:"billing_anchor_day"`
+	PaidThrough        *time.Time `json:"paid_through,omitempty"`
+	NextDueDate        *time.Time `json:"next_due_date,omitempty"`
+	LastProvisionError string     `json:"last_provision_error,omitempty"`
+	ProvisionAttempts  int        `json:"provision_attempts"`
 }

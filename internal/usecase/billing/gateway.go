@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
+	domainCashbook "github.com/quixiq/polyglot/internal/domain/cashbook"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -25,6 +27,13 @@ type GatewayChargeUseCase struct {
 	registry  *GatewayRegistry
 	processor port.PaymentProcessor
 	reader    port.SettingReader
+	cashbook  port.CashbookRepository
+}
+
+// WithCashbook sets the cashbook repository for gateway fee expenses.
+func (u *GatewayChargeUseCase) WithCashbook(cb port.CashbookRepository) *GatewayChargeUseCase {
+	u.cashbook = cb
+	return u
 }
 
 // NewGatewayChargeUseCase membungkus satu gateway (jalur kompatibel lama).
@@ -92,6 +101,13 @@ func (u *GatewayChargeUseCase) CreateForInvoiceVia(ctx context.Context, invoiceI
 	if tx, ok := u.reusePendingCharge(ctx, inv.ID, gw.Name()); ok {
 		return chargeResultFromTx(tx), tx, nil
 	}
+	// Beban biaya gateway (planning v2 D11): MERCHANT ditanggung mitra
+	// (tagihan tidak berubah), CUSTOMER/SPLIT ditambahkan ke invoice sekali
+	// (idempoten) + markup admin mitra.
+	if applied, ferr := u.applyGatewayFee(ctx, inv, outstanding); ferr == nil {
+		inv = applied
+		outstanding = inv.Total - inv.PaidAmount
+	}
 	cust, err := u.customs.FindByID(ctx, inv.CustomerID)
 	if err != nil {
 		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, fmt.Errorf("customer: %w", err)
@@ -125,6 +141,31 @@ func (u *GatewayChargeUseCase) CreateForInvoiceVia(ctx context.Context, invoiceI
 		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, err
 	}
 	return res, tx, nil
+}
+
+// applyGatewayFee menambahkan porsi biaya gateway yang dibebankan pelanggan
+// (MERCHANT = 0, CUSTOMER = penuh, SPLIT = separuh) + markup ke invoice.
+// Idempoten: item fee hanya ditambahkan sekali per invoice.
+func (u *GatewayChargeUseCase) applyGatewayFee(ctx context.Context, inv domainBilling.Invoice, outstanding float64) (domainBilling.Invoice, error) {
+	if u.reader == nil || outstanding <= 0 {
+		return inv, nil
+	}
+	bearer := strings.TrimSpace(u.reader.GetValue(ctx, "isp.gateway_fee_bearer", domainBilling.GatewayFeeBearerMerchant))
+	percent := atoiSafe(u.reader.GetValue(ctx, "isp.gateway_fee_percent", "0"))
+	markup := atoiSafe(u.reader.GetValue(ctx, "isp.gateway_markup_amount", "0"))
+	feeEstimate := outstanding * float64(percent) / 100
+	customerFee := domainBilling.GatewayCustomerFee(feeEstimate, bearer) + float64(markup)
+	if customerFee <= 0 {
+		return inv, nil
+	}
+	updated, err := u.invoices.AddGatewayFeeItem(ctx, inv.ID, customerFee)
+	if err != nil {
+		logger.WithComponent("GatewayCharge").WithFields(map[string]any{
+			"invoice_id": inv.ID, "fee": customerFee,
+		}).WithError(err).Warn("gagal menambahkan biaya gateway ke invoice")
+		return inv, err
+	}
+	return updated, nil
 }
 
 // reusePendingCharge mengembalikan transaksi PENDING invoice untuk gateway
@@ -184,6 +225,14 @@ func (u *GatewayChargeUseCase) HandleWebhookFor(ctx context.Context, gatewayName
 	tx.CallbackCount++
 	tx.UpdatedAt = time.Now()
 
+	// Terminal status: jangan turunkan transaksi yang sudah SETTLED.
+	if tx.Status == domainBilling.GatewayStatusSettled {
+		if tx.InvoiceID != nil {
+			return *tx.InvoiceID, true, nil
+		}
+		return "", true, nil
+	}
+
 	var paymentID string
 	switch ev.Status {
 	case domainBilling.GatewayStatusSettled:
@@ -208,6 +257,7 @@ func (u *GatewayChargeUseCase) HandleWebhookFor(ctx context.Context, gatewayName
 		}
 		tx.Status = domainBilling.GatewayStatusSettled
 		tx.PaidAt = ptrTime(time.Now())
+		u.postFeeJournal(ctx, tx, gw.Name())
 	default:
 		tx.Status = ev.Status
 	}
@@ -246,8 +296,16 @@ func (u *GatewayChargeUseCase) CheckPaymentStatusVia(ctx context.Context, gatewa
 		return "", false, ev.Status, fmt.Errorf("%w: %s/%s", domainBilling.ErrGatewayUnknownRef, gw.Name(), externalID)
 	}
 
+	// Terminal status: transaksi yang sudah SETTLED tidak boleh diturunkan statusnya.
+	if tx.Status == domainBilling.GatewayStatusSettled {
+		if tx.InvoiceID != nil {
+			return *tx.InvoiceID, true, tx.Status, nil
+		}
+		return "", true, tx.Status, nil
+	}
+
 	var paymentID string
-	if ev.Status == domainBilling.GatewayStatusSettled && tx.Status != domainBilling.GatewayStatusSettled {
+	if ev.Status == domainBilling.GatewayStatusSettled {
 		if tx.InvoiceID == nil {
 			return "", false, ev.Status, fmt.Errorf("%w: %s", domainBilling.ErrGatewayTxMissingInvoice, tx.ID)
 		}
@@ -269,7 +327,8 @@ func (u *GatewayChargeUseCase) CheckPaymentStatusVia(ctx context.Context, gatewa
 		}
 		tx.Status = domainBilling.GatewayStatusSettled
 		tx.PaidAt = ptrTime(time.Now())
-	} else if ev.Status != "" && ev.Status != tx.Status {
+		u.postFeeJournal(ctx, tx, gw.Name())
+	} else if ev.Status != "" {
 		tx.Status = ev.Status
 	}
 	tx.UpdatedAt = time.Now()
@@ -286,6 +345,65 @@ func (u *GatewayChargeUseCase) CheckPaymentStatusVia(ctx context.Context, gatewa
 		return *tx.InvoiceID, tx.Status == domainBilling.GatewayStatusSettled, tx.Status, nil
 	}
 	return "", tx.Status == domainBilling.GatewayStatusSettled, tx.Status, nil
+}
+
+func (u *GatewayChargeUseCase) postFeeJournal(ctx context.Context, tx domainBilling.GatewayTransaction, gwName string) {
+	if u.cashbook == nil || tx.FeeAmount <= 0 {
+		return
+	}
+	expCat := "cc-gateway-fee"
+	if u.reader != nil {
+		if v := u.reader.GetValue(ctx, "isp.gateway_fee_expense_category_id", "cc-gateway-fee"); v != "" {
+			expCat = v
+		}
+	}
+	cashAccountID, _ := u.cashSettings(ctx, gwName)
+	_ = u.cashbook.SaveTransaction(ctx, domainCashbook.CashTransaction{
+		ID:            idgen.New("trx"),
+		TenantID:      tx.TenantID,
+		TransactionNo: fmt.Sprintf("TRX-%s-%s", time.Now().Format("200601"), idgen.Digits(6)),
+		AccountID:     cashAccountID,
+		CategoryID:    expCat,
+		Direction:     domainCashbook.DirectionOut,
+		Amount:        tx.FeeAmount,
+		TrxDate:       time.Now().UTC(),
+		SourceType:    domainCashbook.SourceExpense,
+		SourceID:      tx.ID,
+		Description:   fmt.Sprintf("Biaya payment gateway %s %s", tx.Gateway, tx.ExternalID),
+		CreatedAt:     time.Now().UTC(),
+	})
+}
+
+// SyncPendingTransactions memeriksa transaksi PENDING yang lebih tua dari batas stale.
+func (u *GatewayChargeUseCase) SyncPendingTransactions(ctx context.Context) (synced int, expired int, err error) {
+	fRepo, ok := u.gwt.(port.GatewayTransactionFilteredRepository)
+	if !ok {
+		return 0, 0, nil
+	}
+	staleMin := 15
+	if u.reader != nil {
+		if v, err := strconv.Atoi(u.reader.GetValue(ctx, "isp.gateway_sync_stale_minutes", "15")); err == nil && v > 0 {
+			staleMin = v
+		}
+	}
+	before := time.Now().UTC().Add(-time.Duration(staleMin) * time.Minute)
+	pendingList, err := fRepo.ListPendingBefore(ctx, "tenant-default", before, 50)
+	if err != nil {
+		return 0, 0, err
+	}
+	now := time.Now().UTC()
+	for _, tx := range pendingList {
+		if tx.ExpiresAt != nil && tx.ExpiresAt.Before(now) {
+			tx.Status = domainBilling.GatewayStatusExpired
+			tx.UpdatedAt = now
+			_ = u.gwt.Save(ctx, tx)
+			expired++
+			continue
+		}
+		_, _, _, _ = u.CheckPaymentStatusVia(ctx, tx.Gateway, tx.ExternalID)
+		synced++
+	}
+	return synced, expired, nil
 }
 
 // cashSettings membaca akun/kategori kas per gateway, dengan fallback key

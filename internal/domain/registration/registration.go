@@ -11,6 +11,16 @@ const (
 	StatusActive    = "ACTIVE"
 	StatusRejected  = "REJECTED"
 	StatusCancelled = "CANCELLED"
+
+	// Status PSB v2 (migrasi 000032).
+	StatusSurvey     = "SURVEY"
+	StatusOnProgress = "ON_PROGRESS"
+)
+
+// Status kelayakan hasil survey lokasi (kolom survey_status).
+const (
+	SurveyEligible    = "ELIGIBLE"
+	SurveyNotEligible = "NOT_ELIGIBLE"
 )
 
 // Registration represents a new-customer signup flow (ringkas tanpa NIK/KTP)
@@ -46,6 +56,28 @@ type Registration struct {
 	RejectedReason       string     `json:"rejected_reason,omitempty"`
 	CancelledAt          *time.Time `json:"cancelled_at,omitempty"`
 	CancelReason         string     `json:"cancel_reason,omitempty"`
-	CreatedAt            time.Time  `json:"created_at"`
-	UpdatedAt            time.Time  `json:"updated_at"`
+
+	// Kolom PSB v2 (migrasi 000032).
+	NIK                       string     `json:"nik,omitempty"`
+	IDCardPhotoURL            string     `json:"id_card_photo_url,omitempty"`
+	HousePhotoURL             string     `json:"house_photo_url,omitempty"`
+	SurveyDate                *time.Time `json:"survey_date,omitempty"`
+	SurveyTime                *time.Time `json:"survey_time,omitempty"`
+	SurveyorID                *uint      `json:"surveyor_id,omitempty"`
+	SurveyStatus              string     `json:"survey_status,omitempty"`
+	SurveyNotes               string     `json:"survey_notes,omitempty"`
+	EstimatedCableLengthMeter int        `json:"estimated_cable_length_meter,omitempty"`
+	PublicToken               string     `json:"public_token,omitempty"`
+	InstallationStartedAt     *time.Time `json:"installation_started_at,omitempty"`
+	InstallationPhotoURL      string     `json:"installation_photo_url,omitempty"`
+	ONTMACAddress             string     `json:"ont_mac_address,omitempty"`
+	ONTSerialNumber           string     `json:"ont_serial_number,omitempty"`
+	OLTDeviceID               string     `json:"olt_device_id,omitempty"`
+	PONIndex                  *int       `json:"pon_index,omitempty"`
+	ONUIndex                  *int       `json:"onu_index,omitempty"`
+	DiscountAmount            float64    `json:"discount_amount"`
+	SalesAgentID              *uint      `json:"sales_agent_id,omitempty"`
+
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

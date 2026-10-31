@@ -71,4 +71,18 @@ type ServicePlan struct {
 	LockServer      bool    `json:"lock_server,omitempty"`
 	LimitUptime     string  `json:"limit_uptime,omitempty"`
 	LimitBytes      string  `json:"limit_bytes,omitempty"`
+
+	// Kolom billing v2 (migrasi 000032).
+	RouterProfileName string `json:"router_profile_name,omitempty"`
+	ProrateMode       string `json:"prorate_mode"` // NONE / CALENDAR_DAY / FLAT_30
+	TaxMode           string `json:"tax_mode"`     // EXCLUSIVE / INCLUSIVE
+	Version           int    `json:"version"`
+}
+
+// RouterProfile returns the immutable router profile name (fallback ke Name).
+func (p ServicePlan) RouterProfile() string {
+	if p.RouterProfileName != "" {
+		return p.RouterProfileName
+	}
+	return p.Name
 }

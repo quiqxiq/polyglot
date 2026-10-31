@@ -1,4 +1,6 @@
+import { useMemo } from 'react'
 import { useLayout } from '@/context/layout-provider'
+import { useI18n } from '@/context/i18n-provider'
 import {
   Sidebar,
   SidebarContent,
@@ -6,7 +8,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar'
-import { sidebarData } from './data/sidebar-data'
+import { getSidebarData } from './data/sidebar-data'
 import { NavGroup } from './nav-group'
 import { NavUser } from './nav-user'
 import { DeviceSwitcher } from './device-switcher'
@@ -15,8 +17,10 @@ import { useAuthStore } from '@/stores/auth-store'
 import { type NavItem } from './types'
 
 export function AppSidebar() {
+  const { t } = useI18n()
   const { collapsible, variant } = useLayout()
   const permissions = useAuthStore((s) => s.auth.user?.permissions)
+  const sidebarData = useMemo(() => getSidebarData(t), [t])
 
   // Filter item sidebar berdasarkan permission Casbin user — item tanpa
   // permission tampil untuk semua user yang sudah login.

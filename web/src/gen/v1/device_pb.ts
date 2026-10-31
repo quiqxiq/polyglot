@@ -2418,3 +2418,252 @@ export class ApplyRouterIntegrationScriptResponse extends Message<ApplyRouterInt
   }
 }
 
+/**
+ * DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
+ * Active device binding for AI Router Ops (server-side source of truth).
+ *
+ * @generated from message polyglot.v1.SetActiveDeviceRequest
+ */
+export class SetActiveDeviceRequest extends Message<SetActiveDeviceRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string session_id = 2;
+   */
+  sessionId = "";
+
+  constructor(data?: PartialMessage<SetActiveDeviceRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.SetActiveDeviceRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SetActiveDeviceRequest {
+    return new SetActiveDeviceRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SetActiveDeviceRequest {
+    return new SetActiveDeviceRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SetActiveDeviceRequest {
+    return new SetActiveDeviceRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SetActiveDeviceRequest | PlainMessage<SetActiveDeviceRequest> | undefined, b: SetActiveDeviceRequest | PlainMessage<SetActiveDeviceRequest> | undefined): boolean {
+    return proto3.util.equals(SetActiveDeviceRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.SetActiveDeviceResponse
+ */
+export class SetActiveDeviceResponse extends Message<SetActiveDeviceResponse> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string session_id = 2;
+   */
+  sessionId = "";
+
+  constructor(data?: PartialMessage<SetActiveDeviceResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.SetActiveDeviceResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SetActiveDeviceResponse {
+    return new SetActiveDeviceResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SetActiveDeviceResponse {
+    return new SetActiveDeviceResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SetActiveDeviceResponse {
+    return new SetActiveDeviceResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SetActiveDeviceResponse | PlainMessage<SetActiveDeviceResponse> | undefined, b: SetActiveDeviceResponse | PlainMessage<SetActiveDeviceResponse> | undefined): boolean {
+    return proto3.util.equals(SetActiveDeviceResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetActiveDeviceRequest
+ */
+export class GetActiveDeviceRequest extends Message<GetActiveDeviceRequest> {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId = "";
+
+  constructor(data?: PartialMessage<GetActiveDeviceRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetActiveDeviceRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetActiveDeviceRequest {
+    return new GetActiveDeviceRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetActiveDeviceRequest {
+    return new GetActiveDeviceRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetActiveDeviceRequest {
+    return new GetActiveDeviceRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetActiveDeviceRequest | PlainMessage<GetActiveDeviceRequest> | undefined, b: GetActiveDeviceRequest | PlainMessage<GetActiveDeviceRequest> | undefined): boolean {
+    return proto3.util.equals(GetActiveDeviceRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetActiveDeviceResponse
+ */
+export class GetActiveDeviceResponse extends Message<GetActiveDeviceResponse> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string session_id = 2;
+   */
+  sessionId = "";
+
+  /**
+   * @generated from field: int64 updated_at_unix = 3;
+   */
+  updatedAtUnix = protoInt64.zero;
+
+  constructor(data?: PartialMessage<GetActiveDeviceResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetActiveDeviceResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "updated_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetActiveDeviceResponse {
+    return new GetActiveDeviceResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetActiveDeviceResponse {
+    return new GetActiveDeviceResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetActiveDeviceResponse {
+    return new GetActiveDeviceResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetActiveDeviceResponse | PlainMessage<GetActiveDeviceResponse> | undefined, b: GetActiveDeviceResponse | PlainMessage<GetActiveDeviceResponse> | undefined): boolean {
+    return proto3.util.equals(GetActiveDeviceResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ClearActiveDeviceRequest
+ */
+export class ClearActiveDeviceRequest extends Message<ClearActiveDeviceRequest> {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId = "";
+
+  constructor(data?: PartialMessage<ClearActiveDeviceRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ClearActiveDeviceRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClearActiveDeviceRequest {
+    return new ClearActiveDeviceRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClearActiveDeviceRequest {
+    return new ClearActiveDeviceRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClearActiveDeviceRequest {
+    return new ClearActiveDeviceRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ClearActiveDeviceRequest | PlainMessage<ClearActiveDeviceRequest> | undefined, b: ClearActiveDeviceRequest | PlainMessage<ClearActiveDeviceRequest> | undefined): boolean {
+    return proto3.util.equals(ClearActiveDeviceRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ClearActiveDeviceResponse
+ */
+export class ClearActiveDeviceResponse extends Message<ClearActiveDeviceResponse> {
+  /**
+   * @generated from field: bool cleared = 1;
+   */
+  cleared = false;
+
+  constructor(data?: PartialMessage<ClearActiveDeviceResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ClearActiveDeviceResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "cleared", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClearActiveDeviceResponse {
+    return new ClearActiveDeviceResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClearActiveDeviceResponse {
+    return new ClearActiveDeviceResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClearActiveDeviceResponse {
+    return new ClearActiveDeviceResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ClearActiveDeviceResponse | PlainMessage<ClearActiveDeviceResponse> | undefined, b: ClearActiveDeviceResponse | PlainMessage<ClearActiveDeviceResponse> | undefined): boolean {
+    return proto3.util.equals(ClearActiveDeviceResponse, a, b);
+  }
+}
+

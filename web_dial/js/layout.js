@@ -1,3 +1,4 @@
+// DEVIASI: layout template strings, icons, and navigation markup exceed 500 lines
 /**
  * Polyglot Web Dial Layout Engine
  * Merender navigasi Sidebar, Centered Header, Mobile Top Bar, dan Bottom Navigation Bar secara dinamis.
@@ -8,6 +9,7 @@ const Layout = {
   menus: [
     {
       title: 'Dashboard',
+      titleKey: 'nav_dashboard',
       href: 'index.html',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`,
       group: 'operasional',
@@ -16,6 +18,7 @@ const Layout = {
     },
     {
       title: 'PPP Aktif',
+      titleKey: 'nav_ppp_active',
       href: 'ppp-active.html',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>`,
       group: 'operasional',
@@ -24,6 +27,7 @@ const Layout = {
     },
     {
       title: 'PPP Non-Aktif',
+      titleKey: 'nav_ppp_inactive',
       href: 'ppp-non-active.html',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi-off"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></svg>`,
       group: 'operasional',
@@ -32,6 +36,7 @@ const Layout = {
     },
     {
       title: 'Log MikroTik',
+      titleKey: 'nav_logs',
       href: 'mikrotik-logs.html',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scroll-text"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1z"/></svg>`,
       group: 'operasional',
@@ -40,6 +45,7 @@ const Layout = {
     },
     {
       title: 'Monitor Interface',
+      titleKey: 'nav_monitor',
       href: 'monitor-interface.html',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>`,
       group: 'operasional',
@@ -48,6 +54,7 @@ const Layout = {
     },
     {
       title: 'PPP Secrets',
+      titleKey: 'nav_ppp_secrets',
       href: 'ppp-secrets.html',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-round"><path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>`,
       group: 'manajemen',
@@ -56,6 +63,7 @@ const Layout = {
     },
     {
       title: 'PPP Profiles',
+      titleKey: 'nav_ppp_profiles',
       href: 'ppp-profiles.html',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>`,
       group: 'manajemen',
@@ -64,6 +72,7 @@ const Layout = {
     },
     {
       title: 'Pengaturan',
+      titleKey: 'nav_settings',
       href: 'settings.html',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`,
       group: 'sistem',
@@ -79,10 +88,18 @@ const Layout = {
     const user = Auth.getUser() || { username: 'Pengguna', role: 'teknisi' };
     const isAdmin = Auth.isAdmin();
 
+    if (typeof I18n !== 'undefined' && I18n.applyDOM) {
+      I18n.applyDOM();
+    }
+
     this.renderSidebar(activePageHref, isAdmin, user);
     this.renderHeader(user);
     this.renderMobileNav(activePageHref, user, isAdmin);
     this.bindEvents();
+
+    if (typeof I18n !== 'undefined' && I18n.applyDOM) {
+      I18n.applyDOM();
+    }
 
     // Inisialisasi daftar router dan streaming ping global di header
     RouterSelector.init();
@@ -192,6 +209,7 @@ const Layout = {
 
     const renderLink = (m) => {
       const isActive = activePage === m.href || (activePage === '' && m.href === 'index.html');
+      const title = (typeof I18n !== 'undefined' && m.titleKey) ? I18n.t(m.titleKey) : m.title;
       return `
         <a href="${m.href}" class="flex items-center px-3.5 py-2.5 mx-3 rounded-xl gap-3 text-sm font-medium transition-all duration-200 group ${
           isActive
@@ -201,7 +219,7 @@ const Layout = {
           <span class="${isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'} transition-colors">
             ${m.icon}
           </span>
-          <span>${m.title}</span>
+          <span>${title}</span>
           ${m.adminOnly ? '<span class="ml-auto text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200/60">Admin</span>' : ''}
         </a>
       `;
@@ -220,6 +238,10 @@ const Layout = {
       .map(renderLink).join('');
 
     const roleName = (user.roles && user.roles.length > 0) ? user.roles[0] : (user.role || 'Teknisi');
+    const groupOperasionalTitle = typeof I18n !== 'undefined' ? I18n.t('group_operations') : 'Operasional';
+    const groupManajemenTitle = typeof I18n !== 'undefined' ? I18n.t('group_management') : 'Manajemen PPP';
+    const groupSistemTitle = typeof I18n !== 'undefined' ? I18n.t('group_system') : 'Sistem';
+    const logoutText = typeof I18n !== 'undefined' ? I18n.t('logout') : 'Keluar Portal';
 
     container.innerHTML = `
       <aside class="hidden lg:flex fixed top-0 left-0 h-screen w-64 bg-white border-r border-slate-200/80 z-40 flex-col shadow-xs select-none">
@@ -231,7 +253,7 @@ const Layout = {
             </div>
             <div>
               <span class="font-bold text-base text-slate-900 tracking-tight leading-none block">GNet Dial</span>
-              <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mt-0.5">Operasional</span>
+              <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mt-0.5">${groupOperasionalTitle}</span>
             </div>
           </div>
           <span class="text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200/60 px-2 py-0.5 rounded-full">v2.0</span>
@@ -240,14 +262,14 @@ const Layout = {
         <!-- Grouped Navigation -->
         <nav class="flex-1 overflow-y-auto py-4 space-y-6">
           <div>
-            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Operasional</div>
+            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">${groupOperasionalTitle}</div>
             <div class="space-y-0.5">
               ${operasionalLinks}
             </div>
           </div>
 
           <div>
-            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Manajemen PPP</div>
+            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">${groupManajemenTitle}</div>
             <div class="space-y-0.5">
               ${manajemenLinks}
             </div>
@@ -255,7 +277,7 @@ const Layout = {
 
           ${sistemLinks ? `
           <div>
-            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Sistem</div>
+            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">${groupSistemTitle}</div>
             <div class="space-y-0.5">
               ${sistemLinks}
             </div>
@@ -279,7 +301,7 @@ const Layout = {
 
           <button id="sidebar-logout-btn" class="flex items-center justify-center w-full px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition-colors gap-2 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-            <span>Keluar Portal</span>
+            <span>${logoutText}</span>
           </button>
         </div>
       </aside>
@@ -292,6 +314,7 @@ const Layout = {
 
     const roleName = (user.roles && user.roles.length > 0) ? user.roles[0] : (user.role || 'Teknisi');
     const isAdmin = Auth.isAdmin();
+    const currentLang = typeof I18n !== 'undefined' ? I18n.getLanguage() : 'id';
 
     container.innerHTML = `
       <header class="hidden lg:flex fixed top-0 right-0 left-64 h-16 glass-header z-30 items-center shadow-2xs">
@@ -303,7 +326,7 @@ const Layout = {
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6.01 18h.01"/><path d="M10.01 18h.01"/><path d="M15 10v4"/></svg>
               <span class="text-slate-500">Router:</span>
               <select class="router-select-control bg-transparent border-none text-slate-800 font-semibold outline-none cursor-pointer pr-2 min-w-[180px] max-w-[280px]">
-                <option value="">Memuat router...</option>
+                <option value="">${typeof I18n !== 'undefined' ? I18n.t('select_router') : 'Memuat router...'}</option>
               </select>
             </div>
 
@@ -317,8 +340,13 @@ const Layout = {
             </div>
           </div>
 
-          <!-- Right: User Identity & Role -->
+          <!-- Right: Language Switcher & User Identity -->
           <div class="flex items-center gap-3">
+            <button onclick="I18n.toggleLanguage()" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/80 text-xs font-semibold text-slate-700 transition-colors cursor-pointer" title="Switch Language (ID / EN)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <span class="uppercase font-bold">${currentLang}</span>
+            </button>
+
             <div class="flex items-center gap-2.5 pl-3 py-1 border-l border-slate-200/70">
               <div class="text-right">
                 <span class="text-xs font-bold text-slate-800 leading-tight block">${user.full_name || user.username}</span>
@@ -343,27 +371,27 @@ const Layout = {
     // 5 Bottom Nav Items (Dashboard, PPP Aktif, PPP Non-Aktif, Log, Monitor)
     const bottomNavItems = [
       {
-        title: 'Dashboard',
+        title: typeof I18n !== 'undefined' ? I18n.t('nav_dashboard') : 'Dashboard',
         href: 'index.html',
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`
       },
       {
-        title: 'PPP Aktif',
+        title: typeof I18n !== 'undefined' ? I18n.t('nav_ppp_active') : 'PPP Aktif',
         href: 'ppp-active.html',
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>`
       },
       {
-        title: 'Non-Aktif',
+        title: typeof I18n !== 'undefined' ? I18n.t('nav_ppp_inactive') : 'Non-Aktif',
         href: 'ppp-non-active.html',
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="m2 2 20 20"/></svg>`
       },
       {
-        title: 'Log',
+        title: typeof I18n !== 'undefined' ? I18n.t('nav_logs') : 'Log',
         href: 'mikrotik-logs.html',
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1z"/></svg>`
       },
       {
-        title: 'Monitor',
+        title: typeof I18n !== 'undefined' ? I18n.t('nav_monitor') : 'Monitor',
         href: 'monitor-interface.html',
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>`
       }
@@ -390,16 +418,20 @@ const Layout = {
       .filter(m => !m.adminOnly || isAdmin)
       .map(m => {
         const isActive = activePage === m.href || (activePage === '' && m.href === 'index.html');
+        const title = (typeof I18n !== 'undefined' && m.titleKey) ? I18n.t(m.titleKey) : m.title;
         return `
           <a href="${m.href}" class="flex items-center px-4 py-3 gap-3 rounded-xl font-medium text-sm transition-colors ${
             isActive ? 'text-blue-600 bg-blue-50 font-semibold' : 'text-slate-700 hover:bg-slate-100'
           }">
             <span class="${isActive ? 'text-blue-600' : 'text-slate-400'}">${m.icon}</span>
-            <span>${m.title}</span>
+            <span>${title}</span>
             ${m.adminOnly ? '<span class="ml-auto text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-purple-100 text-purple-700">Admin</span>' : ''}
           </a>
         `;
       }).join('');
+
+    const currentLang = typeof I18n !== 'undefined' ? I18n.getLanguage() : 'id';
+    const logoutText = typeof I18n !== 'undefined' ? I18n.t('logout') : 'Keluar Portal';
 
     container.innerHTML = `
       <!-- Mobile Top Bar -->
@@ -411,7 +443,7 @@ const Layout = {
           <span class="font-bold text-base text-slate-900 tracking-tight">GNet Dial</span>
         </div>
 
-        <!-- Mobile Center/Right: Router Select & Ping -->
+        <!-- Mobile Center/Right: Router Select & Ping & Language Toggle -->
         <div class="flex items-center gap-2">
           <!-- Mobile Ping Badge -->
           <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-mono shadow-2xs" title="Latensi Ping">
@@ -420,6 +452,11 @@ const Layout = {
             </span>
             <span id="mobile-header-ping-val" class="font-bold text-emerald-700">-- ms</span>
           </div>
+
+          <!-- Mobile Language Toggle -->
+          <button onclick="I18n.toggleLanguage()" class="px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 uppercase" title="Ganti Bahasa">
+            ${currentLang}
+          </button>
 
           <!-- Drawer Trigger Button -->
           <button id="mobile-menu-open-btn" class="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer" aria-label="Menu">
@@ -457,15 +494,15 @@ const Layout = {
 
           <!-- Router Selector in Drawer -->
           <div class="p-4 border-b border-slate-100 bg-slate-50/80">
-            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Router Aktif</label>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">${typeof I18n !== 'undefined' ? I18n.t('select_router') : 'Router Aktif'}</label>
             <select class="router-select-control w-full bg-white border border-slate-300 text-slate-800 text-xs rounded-xl px-3 py-2.5 font-semibold outline-none shadow-2xs">
-              <option value="">Memuat router...</option>
+              <option value="">${typeof I18n !== 'undefined' ? I18n.t('select_router') : 'Memuat router...'}</option>
             </select>
           </div>
 
           <!-- Menu Links -->
           <div class="px-3 py-2 flex-1 overflow-y-auto space-y-1">
-            <div class="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Seluruh Menu</div>
+            <div class="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">${currentLang === 'en' ? 'All Menus' : 'Seluruh Menu'}</div>
             ${drawerLinks}
           </div>
 
@@ -473,7 +510,7 @@ const Layout = {
           <div class="p-4 border-t border-slate-100 bg-slate-50">
             <button id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-bold transition-colors cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-              <span>Keluar Portal</span>
+              <span>${logoutText}</span>
             </button>
           </div>
         </div>

@@ -25,7 +25,9 @@ func SuspendQueueParams(targetIP, reason, throttleSpeed string) SimpleQueueParam
 
 // NewPrintSimpleQueuesCommand builds the command.Command for /queue/simple/print.
 func NewPrintSimpleQueuesCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+	args := map[string]string{
+		".proplist": ".id,name,target,parent,max-limit,limit-at,burst-limit,burst-threshold,burst-time,priority,queue,bytes,packets,dropped,rate,packet-rate,comment,disabled,dynamic",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
@@ -39,8 +41,11 @@ func NewPrintSimpleQueuesCommand(nameFilter string) command.Command {
 // with filter ?dynamic=false.
 func NewPrintParentQueuesCommand() command.Command {
 	return command.Command{
-		Raw:  "/queue/simple/print",
-		Args: map[string]string{"?dynamic": "false"},
+		Raw: "/queue/simple/print",
+		Args: map[string]string{
+			"?dynamic":  "false",
+			".proplist": ".id,name,target,parent,max-limit,limit-at,burst-limit,burst-threshold,burst-time,priority,queue,bytes,packets,dropped,rate,packet-rate,comment,disabled,dynamic",
+		},
 	}
 }
 
@@ -51,8 +56,9 @@ func NewStreamQueueStatsCommand(p StreamParams) command.Command {
 		interval = "1s"
 	}
 	args := map[string]string{
-		"stats":    "",
-		"interval": interval,
+		"stats":     "",
+		"interval":  interval,
+		".proplist": ".id,name,target,rate,packet-rate,bytes,packets,dropped",
 	}
 	if p.NameFilter != "" {
 		args["?name"] = p.NameFilter
@@ -66,6 +72,35 @@ func NewStreamQueueStatsCommand(p StreamParams) command.Command {
 	return command.Command{
 		Raw:  "/queue/simple/print",
 		Args: args,
+	}
+}
+
+// NewPrintQueueTreeCommand builds the command.Command for /queue/tree/print.
+func NewPrintQueueTreeCommand(nameFilter string) command.Command {
+	args := map[string]string{
+		".proplist": ".id,name,parent,packet-mark,limit-at,max-limit,priority,bytes,packets,dropped,rate,packet-rate,disabled",
+	}
+	if nameFilter != "" {
+		args["?name"] = nameFilter
+	}
+	return command.Command{
+		Raw:  "/queue/tree/print",
+		Args: args,
+	}
+}
+
+// NewStreamQueueTreeStatsCommand builds the command.Command for streaming /queue/tree/print stats.
+func NewStreamQueueTreeStatsCommand(interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	return command.Command{
+		Raw: "/queue/tree/print",
+		Args: map[string]string{
+			"stats":     "",
+			"interval":  interval,
+			".proplist": ".id,name,parent,rate,packet-rate,bytes,packets,dropped",
+		},
 	}
 }
 

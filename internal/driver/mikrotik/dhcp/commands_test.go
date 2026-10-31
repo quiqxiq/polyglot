@@ -9,8 +9,8 @@ func TestNewPrintLeasesCommand(t *testing.T) {
 	if cmd.Raw != "/ip/dhcp-server/lease/print" {
 		t.Fatalf("expected raw /ip/dhcp-server/lease/print, got %s", cmd.Raw)
 	}
-	if len(cmd.Args) != 0 {
-		t.Fatalf("expected 0 args, got %v", cmd.Args)
+	if cmd.Args[".proplist"] == "" {
+		t.Fatal("expected .proplist to be populated")
 	}
 
 	cmdMac := NewPrintLeasesCommand("00:11:22:33:44:55")

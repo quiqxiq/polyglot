@@ -18,6 +18,7 @@ func NewDeviceServiceHandler(
 	metricsUC *deviceUC.ManageMetricsUseCase,
 	isolationUC *deviceUC.ManageIsolationUseCase,
 	streamGW port.MonitorStreamGateway,
+	activeDevice *deviceUC.ActiveDeviceUseCase,
 ) (string, http.Handler) {
 	handler := &DeviceConnectHandler{
 		useCase:      uc,
@@ -26,6 +27,7 @@ func NewDeviceServiceHandler(
 		metricsUC:    metricsUC,
 		isolationUC:  isolationUC,
 		streamGW:     streamGW,
+		activeDevice: activeDevice,
 	}
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
@@ -123,6 +125,13 @@ func NewDeviceServiceHandler(
 		handler.ApplyRouterIntegrationScript,
 		opts...,
 	))
+
+	mux.Handle("/"+serviceName+"/SetActiveDevice", connect.NewUnaryHandler(
+		"/"+serviceName+"/SetActiveDevice", handler.SetActiveDevice, opts...))
+	mux.Handle("/"+serviceName+"/GetActiveDevice", connect.NewUnaryHandler(
+		"/"+serviceName+"/GetActiveDevice", handler.GetActiveDevice, opts...))
+	mux.Handle("/"+serviceName+"/ClearActiveDevice", connect.NewUnaryHandler(
+		"/"+serviceName+"/ClearActiveDevice", handler.ClearActiveDevice, opts...))
 
 	return "/" + serviceName + "/", mux
 }

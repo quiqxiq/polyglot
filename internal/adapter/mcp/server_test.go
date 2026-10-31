@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
@@ -20,7 +21,7 @@ import (
 // tests can set only what they need.
 type testDriver struct {
 	executeFn  func(ctx context.Context, cmd command.Command) (command.Result, error)
-	classifyFn func(cmd command.Command) command.Class
+	classifyFn func(cmd command.Command) command.Classification
 	closed     bool
 }
 
@@ -31,11 +32,11 @@ func (d *testDriver) Execute(ctx context.Context, cmd command.Command) (command.
 	return command.Result{Output: "ok"}, nil
 }
 
-func (d *testDriver) Classify(cmd command.Command) command.Class {
+func (d *testDriver) Classify(cmd command.Command) command.Classification {
 	if d.classifyFn != nil {
 		return d.classifyFn(cmd)
 	}
-	return command.ClassReadOnly
+	return command.Classification{Mode: command.ModeRead}
 }
 
 func (d *testDriver) Translate(op command.Operation) (command.Command, error) {
@@ -154,7 +155,10 @@ func (v *memCredVault) DecryptString(_ context.Context, ciphertext string) (stri
 func callToolViaInMemoryTransport(t *testing.T, s *Server, toolName string, args map[string]any) *mcp.CallToolResult {
 	t.Helper()
 
-	ctx, cancel := context.WithCancel(context.Background())
+	// The MCP server is JWT-protected in production. In-memory transport has
+	// no HTTP headers, so inject the same identity middleware would set.
+	baseCtx := iauth.WithIdentity(context.Background(), 1, []string{"admin"})
+	ctx, cancel := context.WithCancel(baseCtx)
 	t.Cleanup(cancel)
 
 	trServer, trClient := mcp.NewInMemoryTransports()
@@ -174,7 +178,10 @@ func TestMCP_ListTools(t *testing.T) {
 	drv := &testDriver{}
 	s := newTestServer(t, drv)
 
-	ctx, cancel := context.WithCancel(context.Background())
+	// The MCP server is JWT-protected in production. In-memory transport has
+	// no HTTP headers, so inject the same identity middleware would set.
+	baseCtx := iauth.WithIdentity(context.Background(), 1, []string{"admin"})
+	ctx, cancel := context.WithCancel(baseCtx)
 	t.Cleanup(cancel)
 
 	trServer, trClient := mcp.NewInMemoryTransports()
@@ -193,7 +200,10 @@ func TestMCP_ListTools(t *testing.T) {
 	}
 	assert.ElementsMatch(t, []string{
 		"get_device_status", "run_command", "push_config",
-		"mikhmon_get_dashboard", "mikhmon_generate_voucher", "mikhmon_kick_session",
+		"propose_command", "propose_config", "get_approval", "list_approvals", "cancel_approval",
+		"get_active_device", "router_capabilities", "router_read",
+		"inspect_children", "inspect_syntax", "inspect_completion", "inspect_validate",
+		"mikhmon_get_dashboard",
 		"customer_lookup", "list_skills",
 	}, names)
 }
@@ -278,12 +288,13 @@ func TestMCP_PushConfig_E2E(t *testing.T) {
 		"args":      map[string]any{"parameterValues": `[["Device.X.Y","hello","xsd:string"]]`},
 	})
 
-	assert.False(t, res.IsError)
+	// M1: configuration changes are proposed, never applied by the tool.
+	assert.True(t, res.IsError)
 	sc, ok := res.StructuredContent.(map[string]any)
 	require.True(t, ok)
 	assert.Equal(t, "dev1", sc["device_id"])
-	assert.Equal(t, true, sc["applied"])
-	assert.Equal(t, "config saved", sc["message"])
+	assert.Equal(t, false, sc["applied"])
+	assert.Equal(t, true, sc["approval_required"])
 }
 
 func TestMCP_RunCommand_Error_E2E(t *testing.T) {
@@ -296,11 +307,65 @@ func TestMCP_RunCommand_Error_E2E(t *testing.T) {
 
 	res := callToolViaInMemoryTransport(t, s, "run_command", map[string]any{
 		"device_id": "dev1",
-		"command":   "/system/reboot",
+		"command":   "/system/resource/print",
 	})
 
 	assert.True(t, res.IsError)
 	sc, ok := res.StructuredContent.(map[string]any)
 	require.True(t, ok)
 	assert.Contains(t, sc["error"].(string), "unreachable")
+}
+
+func TestMCP_RunCommand_MutationIsNeverExecuted(t *testing.T) {
+	executed := false
+	drv := &testDriver{
+		classifyFn: func(cmd command.Command) command.Classification {
+			if cmd.Raw == "/system/reboot" {
+				return command.Classification{Mode: command.ModeMutation}
+			}
+			return command.Classification{Mode: command.ModeRead}
+		},
+		executeFn: func(_ context.Context, _ command.Command) (command.Result, error) {
+			executed = true
+			return command.Result{Output: "rebooted"}, nil
+		},
+	}
+	s := newTestServer(t, drv)
+
+	res := callToolViaInMemoryTransport(t, s, "run_command", map[string]any{
+		"device_id": "dev1",
+		"command":   "/system/reboot",
+	})
+
+	assert.True(t, res.IsError)
+	assert.False(t, executed, "a MUTATION must never reach driver.Execute from a tool call")
+	sc, ok := res.StructuredContent.(map[string]any)
+	require.True(t, ok)
+	assert.Equal(t, "MUTATION", sc["mode"])
+	assert.Equal(t, false, sc["executed"])
+	assert.Equal(t, true, sc["approval_required"])
+}
+
+func TestMCP_RunCommand_DeniedNeverExecuted(t *testing.T) {
+	executed := false
+	drv := &testDriver{
+		classifyFn: func(cmd command.Command) command.Classification {
+			return command.Classification{Mode: command.ModeMutation, DenyReason: "hard deny for AI: /system/reset-configuration"}
+		},
+		executeFn: func(_ context.Context, _ command.Command) (command.Result, error) {
+			executed = true
+			return command.Result{}, nil
+		},
+	}
+	s := newTestServer(t, drv)
+
+	res := callToolViaInMemoryTransport(t, s, "run_command", map[string]any{
+		"device_id": "dev1",
+		"command":   "/system/reset-configuration",
+	})
+
+	assert.True(t, res.IsError)
+	assert.False(t, executed)
+	sc, _ := res.StructuredContent.(map[string]any)
+	assert.Contains(t, sc["error"].(string), "denied")
 }

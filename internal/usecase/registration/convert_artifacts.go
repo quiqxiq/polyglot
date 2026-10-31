@@ -88,10 +88,14 @@ func (u *ConvertUseCase) buildSubscription(
 		password = u.genSecret()
 	}
 	endDate := now.AddDate(0, 0, 30)
-	billingDay := now.Day()
-	if billingDay > 28 {
-		billingDay = 28
+	// Anchor billing global (planning v2 D1): hari anchor dari setting
+	// isp.billing_cycle_start_day (default 1) sebagai acuan siklus tagihan.
+	anchor := 1
+	if u.deps.Settings != nil {
+		anchor = atoiClamped(u.deps.Settings.GetValue(ctx, "isp.billing_cycle_start_day", "1"), 1, 28)
 	}
+	start := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.UTC)
+	nextDue := nextAnchorDate(start, anchor)
 	provStatus := domainSubscription.ProvisionNone
 	var devRef *string
 	if deviceID != "" {
@@ -108,11 +112,13 @@ func (u *ConvertUseCase) buildSubscription(
 		RemoteUsername:     username,
 		RemotePassword:     password,
 		BillingCycle:       domainSubscription.CycleMonthly,
-		BillingDay:         billingDay,
+		BillingDay:         anchor,
+		BillingAnchorDay:   anchor,
+		NextDueDate:        &nextDue,
 		AutoIsolate:        true,
 		IsolationGraceDays: 3,
 		Status:             domainSubscription.StatusActive,
-		StartDate:          time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.UTC),
+		StartDate:          start,
 		EndDate:            &endDate,
 		ProvisionStatus:    provStatus,
 		CreatedAt:          now,
@@ -146,65 +152,79 @@ func provisionSubscription(ctx context.Context, mgr port.RouterAccountManager, d
 	return nil
 }
 
-// buildInvoice menyusun faktur bulan pertama: fee langganan + biaya pasang
-// (bila ada), lalu pajak dari tax_percent paket dihitung dari subtotal.
-func buildInvoice(reg domainRegistration.Registration, pl domainPlan.ServicePlan, subscriptionID string, now time.Time) (domainBilling.Invoice, []domainBilling.InvoiceItem) {
-	base := pl.Price
-	fee := pl.InstallationFee
-	subtotal := base + fee
-	tax := subtotal * pl.TaxPercent / 100
-	total := subtotal + tax
-
-	period := now.Format("2006-01")
-	due := endOfMonth(now)
-
-	invID := idgen.New("inv")
-	inv := domainBilling.Invoice{
-		ID:                invID,
-		TenantID:          orTenant(reg.TenantID),
+// buildInvoice menyusun faktur pasang baru (planning v2 D3): biaya prorata
+// paket (hari aktif s/d H-1 anchor berikutnya) + biaya pasang − diskon,
+// lalu PPN dari subtotal setelah diskon. Due date = tgl terbit + isp.first_invoice_due_days.
+func (u *ConvertUseCase) buildInvoice(ctx context.Context, reg domainRegistration.Registration, pl domainPlan.ServicePlan, subscriptionID string, now time.Time) (domainBilling.Invoice, []domainBilling.InvoiceItem) {
+	anchor := 1
+	firstDueDays := 7
+	if u.deps.Settings != nil {
+		anchor = atoiClamped(u.deps.Settings.GetValue(ctx, "isp.billing_cycle_start_day", "1"), 1, 28)
+		firstDueDays = atoiClamped(u.deps.Settings.GetValue(ctx, "isp.first_invoice_due_days", "7"), 0, 60)
+	}
+	installDate := now
+	if reg.InstalledAt != nil {
+		installDate = *reg.InstalledAt
+	}
+	mode := domainBilling.ProrateMode(pl.ProrateMode)
+	if mode == "" {
+		mode = domainBilling.ProrateModeCalendarDay
+	}
+	discountType, discountValue := domainBilling.DiscountTypeNone, 0.0
+	if reg.DiscountAmount > 0 {
+		discountType, discountValue = domainBilling.DiscountTypeAmount, reg.DiscountAmount
+	}
+	inv, items := domainBilling.BuildFirstInvoice(domainBilling.FirstInvoiceInput{
+		InvoiceID:         idgen.New("inv"),
 		InvoiceNumber:     fmt.Sprintf("INV-%s-%s", now.Format("200601"), idgen.Digits(6)),
-		CustomerID:        "", // diisi pemanggil setelah customer dibuat
-		SubscriptionID:    &subscriptionID,
-		Period:            period,
-		Subtotal:          subtotal,
-		TaxAmount:         tax,
-		Total:             total,
-		DueDate:           due,
-		Status:            domainBilling.StatusUnpaid,
-		QRPayload:         "polyglot://invoice/" + invID,
 		ManualPaymentCode: "PAY-" + idgen.Digits(6),
-		CreatedAt:         now,
-		UpdatedAt:         now,
-	}
-
-	items := []domainBilling.InvoiceItem{{
-		ID:          idgen.New("itm"),
-		InvoiceID:   invID,
-		Description: fmt.Sprintf("Paket %s (%s)", pl.Name, period),
-		Quantity:    1,
-		UnitPrice:   base,
-		Amount:      base,
-		ItemType:    domainBilling.ItemTypeSubscriptionFee,
-		CreatedAt:   now,
-	}}
-	if fee > 0 {
-		items = append(items, domainBilling.InvoiceItem{
-			ID:          idgen.New("itm"),
-			InvoiceID:   invID,
-			Description: "Biaya pemasangan awal",
-			Quantity:    1,
-			UnitPrice:   fee,
-			Amount:      fee,
-			ItemType:    domainBilling.ItemTypeInstallationFee,
-			CreatedAt:   now,
-		})
-	}
+		ItemIDFee:         idgen.New("itm"),
+		ItemIDInstall:     idgen.New("itm"),
+		TenantID:          orTenant(reg.TenantID),
+		SubscriptionID:    subscriptionID,
+		PlanName:          pl.Name,
+		PlanPrice:         pl.Price,
+		InstallationFee:   pl.InstallationFee,
+		TaxPercent:        pl.TaxPercent,
+		ProrateMode:       mode,
+		DiscountType:      discountType,
+		DiscountValue:     discountValue,
+		InstallDate:       installDate,
+		AnchorDay:         anchor,
+		FirstDueDays:      firstDueDays,
+		Now:               now,
+	})
 	return inv, items
 }
 
-func endOfMonth(t time.Time) time.Time {
-	firstNext := time.Date(t.Year(), t.Month()+1, 1, 23, 59, 59, 0, t.Location())
-	return firstNext.AddDate(0, 0, -1)
+// nextAnchorDate returns the first date strictly after start whose day equals
+// anchorDay (dijepit ke hari terakhir bulan pendek, mis. anchor 28 di Februari).
+func nextAnchorDate(start time.Time, anchorDay int) time.Time {
+	anchorDay = atoiClamped(fmt.Sprint(anchorDay), 1, 28)
+	d := time.Date(start.Year(), start.Month(), anchorDay, 0, 0, 0, 0, time.UTC)
+	if !d.After(start) {
+		d = time.Date(start.Year(), start.Month()+1, 1, 0, 0, 0, 0, time.UTC)
+	}
+	last := time.Date(d.Year(), d.Month()+1, 0, 0, 0, 0, 0, time.UTC).Day()
+	if anchorDay > last {
+		d = time.Date(d.Year(), d.Month(), last, 0, 0, 0, 0, time.UTC)
+	}
+	return d
+}
+
+// atoiClamped parses s as an integer clamped to [min, max]; fallback min on error.
+func atoiClamped(s string, min, max int) int {
+	var n int
+	if _, err := fmt.Sscanf(strings.TrimSpace(s), "%d", &n); err != nil {
+		return min
+	}
+	if n < min {
+		return min
+	}
+	if n > max {
+		return max
+	}
+	return n
 }
 
 func writeAudit(ctx context.Context, w port.AuditLogWriter, actorID, action, entityType, entityID string) {

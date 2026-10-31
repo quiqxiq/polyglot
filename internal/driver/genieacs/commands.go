@@ -7,18 +7,21 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
-// destructiveTaskTypes lists GenieACS task types that mutate the CPE/ONT and
-// therefore always require HITL approval. Read-only task types
-// (getParameterValues, refreshObject) and the direct-GET pseudo-command
-// "getDevice" are absent from this set. Mirrors the official task catalog in
-// analisis-api-genieacs.md §3.
-var destructiveTaskTypes = map[string]bool{
-	"reboot":             true,
-	"factoryReset":       true,
-	"setParameterValues": true,
-	"addObject":          true,
-	"deleteObject":       true,
-	"download":           true,
+// readCommands is the allowlist of GenieACS commands that only read state:
+// the direct-GET pseudo-command "getDevice" plus the read-only task types.
+// Everything else is MUTATION.
+var readCommands = map[string]bool{
+	"getDevice":          true,
+	"getParameterValues": true,
+	"getParameterNames":  true,
+	"getRPCMethods":      true,
+	"refreshObject":      true,
+}
+
+// denyCommands lists GenieACS commands the AI pipeline must never execute,
+// even with approval.
+var denyCommands = map[string]bool{
+	"factoryReset": true,
 }
 
 // directGetCommands lists cmd.Raw values that bypass the task queue entirely
@@ -39,17 +42,18 @@ var operationMap = map[command.Operation]command.Command{
 	command.OpReboot:    {Raw: "reboot"},
 }
 
-// Classify reports the risk class of cmd according to GenieACS task
-// conventions. Direct-GET commands and read-only task types are
-// ClassReadOnly; everything else in destructiveTaskTypes is
-// ClassDestructive. Unknown Raw values default to read-only — the driver's
-// Execute refuses unknown names separately via ErrUnsupportedTaskType, so a
-// misclassified unknown can never actually reach the device.
-func Classify(cmd command.Command) command.Class {
-	if destructiveTaskTypes[cmd.Raw] {
-		return command.ClassDestructive
+// Classify reports the AI Router Ops classification of cmd according to
+// GenieACS task conventions. Hard-deny commands are checked first, then the
+// read allowlist; everything else — including unknown names — is MUTATION
+// (fail-closed).
+func Classify(cmd command.Command) command.Classification {
+	if denyCommands[cmd.Raw] {
+		return command.Classification{Mode: command.ModeMutation, DenyReason: "hard deny for AI: factoryReset"}
 	}
-	return command.ClassReadOnly
+	if readCommands[cmd.Raw] {
+		return command.Classification{Mode: command.ModeRead}
+	}
+	return command.Classification{Mode: command.ModeMutation}
 }
 
 // Translate maps an abstract Operation to a GenieACS-native Command.

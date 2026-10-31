@@ -19,15 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RegistrationService_SubmitRegistration_FullMethodName  = "/polyglot.v1.RegistrationService/SubmitRegistration"
-	RegistrationService_ListRegistrations_FullMethodName   = "/polyglot.v1.RegistrationService/ListRegistrations"
-	RegistrationService_GetRegistration_FullMethodName     = "/polyglot.v1.RegistrationService/GetRegistration"
-	RegistrationService_ApproveRegistration_FullMethodName = "/polyglot.v1.RegistrationService/ApproveRegistration"
-	RegistrationService_ScheduleInstall_FullMethodName     = "/polyglot.v1.RegistrationService/ScheduleInstall"
-	RegistrationService_MarkInstalled_FullMethodName       = "/polyglot.v1.RegistrationService/MarkInstalled"
-	RegistrationService_RejectRegistration_FullMethodName  = "/polyglot.v1.RegistrationService/RejectRegistration"
-	RegistrationService_CancelRegistration_FullMethodName  = "/polyglot.v1.RegistrationService/CancelRegistration"
-	RegistrationService_ConvertRegistration_FullMethodName = "/polyglot.v1.RegistrationService/ConvertRegistration"
+	RegistrationService_SubmitRegistration_FullMethodName     = "/polyglot.v1.RegistrationService/SubmitRegistration"
+	RegistrationService_ListRegistrations_FullMethodName      = "/polyglot.v1.RegistrationService/ListRegistrations"
+	RegistrationService_GetRegistration_FullMethodName        = "/polyglot.v1.RegistrationService/GetRegistration"
+	RegistrationService_ApproveRegistration_FullMethodName    = "/polyglot.v1.RegistrationService/ApproveRegistration"
+	RegistrationService_ScheduleInstall_FullMethodName        = "/polyglot.v1.RegistrationService/ScheduleInstall"
+	RegistrationService_RecordSurvey_FullMethodName           = "/polyglot.v1.RegistrationService/RecordSurvey"
+	RegistrationService_StartInstallation_FullMethodName      = "/polyglot.v1.RegistrationService/StartInstallation"
+	RegistrationService_MarkInstalled_FullMethodName          = "/polyglot.v1.RegistrationService/MarkInstalled"
+	RegistrationService_TrackRegistration_FullMethodName      = "/polyglot.v1.RegistrationService/TrackRegistration"
+	RegistrationService_ListPublicPlans_FullMethodName        = "/polyglot.v1.RegistrationService/ListPublicPlans"
+	RegistrationService_ListRegistrationEvents_FullMethodName = "/polyglot.v1.RegistrationService/ListRegistrationEvents"
+	RegistrationService_RejectRegistration_FullMethodName     = "/polyglot.v1.RegistrationService/RejectRegistration"
+	RegistrationService_CancelRegistration_FullMethodName     = "/polyglot.v1.RegistrationService/CancelRegistration"
+	RegistrationService_ConvertRegistration_FullMethodName    = "/polyglot.v1.RegistrationService/ConvertRegistration"
 )
 
 // RegistrationServiceClient is the client API for RegistrationService service.
@@ -39,7 +44,12 @@ type RegistrationServiceClient interface {
 	GetRegistration(ctx context.Context, in *GetRegistrationRequest, opts ...grpc.CallOption) (*GetRegistrationResponse, error)
 	ApproveRegistration(ctx context.Context, in *ApproveRegistrationRequest, opts ...grpc.CallOption) (*ApproveRegistrationResponse, error)
 	ScheduleInstall(ctx context.Context, in *ScheduleInstallRequest, opts ...grpc.CallOption) (*ScheduleInstallResponse, error)
+	RecordSurvey(ctx context.Context, in *RecordSurveyRequest, opts ...grpc.CallOption) (*RecordSurveyResponse, error)
+	StartInstallation(ctx context.Context, in *StartInstallationRequest, opts ...grpc.CallOption) (*StartInstallationResponse, error)
 	MarkInstalled(ctx context.Context, in *MarkInstalledRequest, opts ...grpc.CallOption) (*MarkInstalledResponse, error)
+	TrackRegistration(ctx context.Context, in *TrackRegistrationRequest, opts ...grpc.CallOption) (*TrackRegistrationResponse, error)
+	ListPublicPlans(ctx context.Context, in *ListPublicPlansRequest, opts ...grpc.CallOption) (*ListPublicPlansResponse, error)
+	ListRegistrationEvents(ctx context.Context, in *ListRegistrationEventsRequest, opts ...grpc.CallOption) (*ListRegistrationEventsResponse, error)
 	RejectRegistration(ctx context.Context, in *RejectRegistrationRequest, opts ...grpc.CallOption) (*RejectRegistrationResponse, error)
 	CancelRegistration(ctx context.Context, in *CancelRegistrationRequest, opts ...grpc.CallOption) (*CancelRegistrationResponse, error)
 	ConvertRegistration(ctx context.Context, in *ConvertRegistrationRequest, opts ...grpc.CallOption) (*ConvertRegistrationResponse, error)
@@ -103,10 +113,60 @@ func (c *registrationServiceClient) ScheduleInstall(ctx context.Context, in *Sch
 	return out, nil
 }
 
+func (c *registrationServiceClient) RecordSurvey(ctx context.Context, in *RecordSurveyRequest, opts ...grpc.CallOption) (*RecordSurveyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RecordSurveyResponse)
+	err := c.cc.Invoke(ctx, RegistrationService_RecordSurvey_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *registrationServiceClient) StartInstallation(ctx context.Context, in *StartInstallationRequest, opts ...grpc.CallOption) (*StartInstallationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StartInstallationResponse)
+	err := c.cc.Invoke(ctx, RegistrationService_StartInstallation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *registrationServiceClient) MarkInstalled(ctx context.Context, in *MarkInstalledRequest, opts ...grpc.CallOption) (*MarkInstalledResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MarkInstalledResponse)
 	err := c.cc.Invoke(ctx, RegistrationService_MarkInstalled_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *registrationServiceClient) TrackRegistration(ctx context.Context, in *TrackRegistrationRequest, opts ...grpc.CallOption) (*TrackRegistrationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TrackRegistrationResponse)
+	err := c.cc.Invoke(ctx, RegistrationService_TrackRegistration_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *registrationServiceClient) ListPublicPlans(ctx context.Context, in *ListPublicPlansRequest, opts ...grpc.CallOption) (*ListPublicPlansResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPublicPlansResponse)
+	err := c.cc.Invoke(ctx, RegistrationService_ListPublicPlans_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *registrationServiceClient) ListRegistrationEvents(ctx context.Context, in *ListRegistrationEventsRequest, opts ...grpc.CallOption) (*ListRegistrationEventsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListRegistrationEventsResponse)
+	err := c.cc.Invoke(ctx, RegistrationService_ListRegistrationEvents_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +212,12 @@ type RegistrationServiceServer interface {
 	GetRegistration(context.Context, *GetRegistrationRequest) (*GetRegistrationResponse, error)
 	ApproveRegistration(context.Context, *ApproveRegistrationRequest) (*ApproveRegistrationResponse, error)
 	ScheduleInstall(context.Context, *ScheduleInstallRequest) (*ScheduleInstallResponse, error)
+	RecordSurvey(context.Context, *RecordSurveyRequest) (*RecordSurveyResponse, error)
+	StartInstallation(context.Context, *StartInstallationRequest) (*StartInstallationResponse, error)
 	MarkInstalled(context.Context, *MarkInstalledRequest) (*MarkInstalledResponse, error)
+	TrackRegistration(context.Context, *TrackRegistrationRequest) (*TrackRegistrationResponse, error)
+	ListPublicPlans(context.Context, *ListPublicPlansRequest) (*ListPublicPlansResponse, error)
+	ListRegistrationEvents(context.Context, *ListRegistrationEventsRequest) (*ListRegistrationEventsResponse, error)
 	RejectRegistration(context.Context, *RejectRegistrationRequest) (*RejectRegistrationResponse, error)
 	CancelRegistration(context.Context, *CancelRegistrationRequest) (*CancelRegistrationResponse, error)
 	ConvertRegistration(context.Context, *ConvertRegistrationRequest) (*ConvertRegistrationResponse, error)
@@ -181,8 +246,23 @@ func (UnimplementedRegistrationServiceServer) ApproveRegistration(context.Contex
 func (UnimplementedRegistrationServiceServer) ScheduleInstall(context.Context, *ScheduleInstallRequest) (*ScheduleInstallResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ScheduleInstall not implemented")
 }
+func (UnimplementedRegistrationServiceServer) RecordSurvey(context.Context, *RecordSurveyRequest) (*RecordSurveyResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RecordSurvey not implemented")
+}
+func (UnimplementedRegistrationServiceServer) StartInstallation(context.Context, *StartInstallationRequest) (*StartInstallationResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method StartInstallation not implemented")
+}
 func (UnimplementedRegistrationServiceServer) MarkInstalled(context.Context, *MarkInstalledRequest) (*MarkInstalledResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method MarkInstalled not implemented")
+}
+func (UnimplementedRegistrationServiceServer) TrackRegistration(context.Context, *TrackRegistrationRequest) (*TrackRegistrationResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method TrackRegistration not implemented")
+}
+func (UnimplementedRegistrationServiceServer) ListPublicPlans(context.Context, *ListPublicPlansRequest) (*ListPublicPlansResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListPublicPlans not implemented")
+}
+func (UnimplementedRegistrationServiceServer) ListRegistrationEvents(context.Context, *ListRegistrationEventsRequest) (*ListRegistrationEventsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListRegistrationEvents not implemented")
 }
 func (UnimplementedRegistrationServiceServer) RejectRegistration(context.Context, *RejectRegistrationRequest) (*RejectRegistrationResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RejectRegistration not implemented")
@@ -304,6 +384,42 @@ func _RegistrationService_ScheduleInstall_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RegistrationService_RecordSurvey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RecordSurveyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegistrationServiceServer).RecordSurvey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RegistrationService_RecordSurvey_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegistrationServiceServer).RecordSurvey(ctx, req.(*RecordSurveyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegistrationService_StartInstallation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartInstallationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegistrationServiceServer).StartInstallation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RegistrationService_StartInstallation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegistrationServiceServer).StartInstallation(ctx, req.(*StartInstallationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RegistrationService_MarkInstalled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MarkInstalledRequest)
 	if err := dec(in); err != nil {
@@ -318,6 +434,60 @@ func _RegistrationService_MarkInstalled_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RegistrationServiceServer).MarkInstalled(ctx, req.(*MarkInstalledRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegistrationService_TrackRegistration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TrackRegistrationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegistrationServiceServer).TrackRegistration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RegistrationService_TrackRegistration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegistrationServiceServer).TrackRegistration(ctx, req.(*TrackRegistrationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegistrationService_ListPublicPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPublicPlansRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegistrationServiceServer).ListPublicPlans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RegistrationService_ListPublicPlans_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegistrationServiceServer).ListPublicPlans(ctx, req.(*ListPublicPlansRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegistrationService_ListRegistrationEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRegistrationEventsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegistrationServiceServer).ListRegistrationEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RegistrationService_ListRegistrationEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegistrationServiceServer).ListRegistrationEvents(ctx, req.(*ListRegistrationEventsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -404,8 +574,28 @@ var RegistrationService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RegistrationService_ScheduleInstall_Handler,
 		},
 		{
+			MethodName: "RecordSurvey",
+			Handler:    _RegistrationService_RecordSurvey_Handler,
+		},
+		{
+			MethodName: "StartInstallation",
+			Handler:    _RegistrationService_StartInstallation_Handler,
+		},
+		{
 			MethodName: "MarkInstalled",
 			Handler:    _RegistrationService_MarkInstalled_Handler,
+		},
+		{
+			MethodName: "TrackRegistration",
+			Handler:    _RegistrationService_TrackRegistration_Handler,
+		},
+		{
+			MethodName: "ListPublicPlans",
+			Handler:    _RegistrationService_ListPublicPlans_Handler,
+		},
+		{
+			MethodName: "ListRegistrationEvents",
+			Handler:    _RegistrationService_ListRegistrationEvents_Handler,
 		},
 		{
 			MethodName: "RejectRegistration",

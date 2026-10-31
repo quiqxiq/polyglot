@@ -44,10 +44,226 @@ message RefreshSnapshotResponse {
   string date = 2;
 }
 
+// ─── Laporan operasional lanjutan (planning v2 Fase 5) ──────────────────
+
+message ARAgingBucket {
+  string bucket = 1; // CURRENT | D1_30 | D31_60 | D61_90 | D90_PLUS
+  int32 invoice_count = 2;
+  double outstanding = 3;
+}
+message ARAgingRequest {
+  string as_of = 1; // 'YYYY-MM-DD'; kosong = hari ini
+}
+message ARAgingResponse {
+  string as_of = 1;
+  repeated ARAgingBucket buckets = 2;
+  int32 total_count = 3;
+  double total_outstanding = 4;
+}
+
+message GatewayReconciliationRow {
+  string gateway = 1;
+  int32 transaction_count = 2;
+  double gateway_amount = 3;
+  double fee_amount = 4;
+  double recorded_amount = 5;
+  double difference = 6;
+}
+message GatewayReconciliationRequest {
+  string from = 1; // 'YYYY-MM-DD'
+  string to = 2;   // 'YYYY-MM-DD'
+}
+message GatewayReconciliationResponse {
+  string from = 1;
+  string to = 2;
+  repeated GatewayReconciliationRow rows = 3;
+  double total_gateway = 4;
+  double total_recorded = 5;
+  double total_fee = 6;
+}
+
+message PSBStatusCount {
+  string status = 1;
+  int32 count = 2;
+}
+message PSBStatsRequest {
+  string from = 1;
+  string to = 2;
+}
+message PSBStatsResponse {
+  string from = 1;
+  string to = 2;
+  int32 total = 3;
+  int32 converted = 4;
+  int32 closed = 5;
+  repeated PSBStatusCount by_status = 6;
+  double avg_survey_hours = 7;
+  double avg_install_hours = 8;
+  double avg_lead_hours = 9;
+}
+
 service ReportService {
   rpc DailyReport(DailyReportRequest) returns (DailyReportResponse);
   rpc MonthlyReport(MonthlyReportRequest) returns (MonthlyReportResponse);
   rpc YearlyReport(YearlyReportRequest) returns (YearlyReportResponse);
 
   rpc RefreshSnapshot(RefreshSnapshotRequest) returns (RefreshSnapshotResponse);
+
+  // Laporan operasional lanjutan (Fase 5).
+  rpc ARAging(ARAgingRequest) returns (ARAgingResponse);
+  rpc GatewayReconciliation(GatewayReconciliationRequest) returns (GatewayReconciliationResponse);
+  rpc PSBStats(PSBStatsRequest) returns (PSBStatsResponse);
+
+  // Billing Ops v3 Laporan Keuangan
+  rpc TaxReport(TaxReportRequest) returns (TaxReportResponse);
+  rpc SalesReport(SalesReportRequest) returns (SalesReportResponse);
+  rpc CollectionReport(CollectionReportRequest) returns (CollectionReportResponse);
+  rpc CashflowReport(CashflowReportRequest) returns (CashflowReportResponse);
+  rpc AgingDetail(AgingDetailRequest) returns (AgingDetailResponse);
+  rpc ClosingReport(ClosingReportRequest) returns (ClosingReportResponse);
+  rpc ExportReport(ExportReportRequest) returns (ExportReportResponse);
+}
+
+// ─── Laporan Pajak PPN ──────────────────────────────────────────────────
+
+message TaxRow {
+  string period = 1;
+  int32 invoice_count = 2;
+  double subtotal = 3;
+  double tax_percent = 4;
+  double tax_amount = 5;
+  double total = 6;
+  double paid_tax = 7;
+}
+
+message TaxReportRequest {
+  string period = 1;
+}
+
+message TaxReportResponse {
+  string period = 1;
+  repeated TaxRow rows = 2;
+  double total_subtotal = 3;
+  double total_tax = 4;
+  double total_billed = 5;
+  double total_paid_tax = 6;
+}
+
+// ─── Laporan Penjualan per Paket ────────────────────────────────────────
+
+message SalesRow {
+  string plan_name = 1;
+  string service_type = 2;
+  int32 invoice_count = 3;
+  double total_billed = 4;
+  double total_paid = 5;
+}
+
+message SalesReportRequest {
+  string period = 1;
+}
+
+message SalesReportResponse {
+  string period = 1;
+  repeated SalesRow rows = 2;
+  double total_billed = 3;
+  double total_paid = 4;
+  int32 paid_count = 5;
+  int32 customer_count = 6;
+}
+
+// ─── Laporan Penagihan & Kolektibilitas ──────────────────────────────────
+
+message CollectionReportRequest {
+  string period = 1;
+}
+
+message CollectionReportResponse {
+  string period = 1;
+  int32 total_invoices = 2;
+  int32 paid_invoices = 3;
+  int32 overdue_invoices = 4;
+  double total_billed = 5;
+  double total_collected = 6;
+  double total_outstanding = 7;
+  double collection_rate = 8;
+}
+
+// ─── Laporan Arus Kas ───────────────────────────────────────────────────
+
+message CashflowRow {
+  string category_name = 1;
+  string direction = 2; // IN | OUT
+  int32 trx_count = 3;
+  double total_amount = 4;
+}
+
+message CashflowReportRequest {
+  string from = 1;
+  string to = 2;
+}
+
+message CashflowReportResponse {
+  string from = 1;
+  string to = 2;
+  repeated CashflowRow rows = 3;
+  double total_in = 4;
+  double total_out = 5;
+  double net_cashflow = 6;
+}
+
+// ─── Rincian Umur Piutang per Pelanggan ──────────────────────────────────
+
+message AgingDetailRow {
+  string customer_id = 1;
+  string customer_name = 2;
+  string phone = 3;
+  int32 invoice_count = 4;
+  double outstanding = 5;
+  int64 oldest_due_unix = 6;
+  int32 days_overdue = 7;
+}
+
+message AgingDetailRequest {
+  string as_of = 1;
+  int32 limit = 2;
+}
+
+message AgingDetailResponse {
+  string as_of = 1;
+  repeated AgingDetailRow rows = 2;
+  int32 total_customers = 3;
+  double total_outstanding = 4;
+}
+
+// ─── Laporan Tutup Buku ─────────────────────────────────────────────────
+
+message ClosingReportRequest {
+  string period = 1;
+}
+
+message ClosingReportResponse {
+  string period = 1;
+  int64 closing_date_unix = 2;
+  int32 total_invoices = 3;
+  double total_billed = 4;
+  double total_collected = 5;
+  double total_outstanding = 6;
+  int32 active_customers = 7;
+  int32 new_subscriptions = 8;
+  double debts_outstanding = 9;
+}
+
+// ─── Ekspor Laporan ─────────────────────────────────────────────────────
+
+message ExportReportRequest {
+  string report_type = 1; // TAX | SALES | CASHFLOW | AGING_DETAIL
+  string format = 2; // csv | xlsx
+  map<string, string> params = 3;
+}
+
+message ExportReportResponse {
+  bytes payload = 1;
+  string content_type = 2;
+  string filename = 3;
 }

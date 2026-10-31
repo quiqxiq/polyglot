@@ -240,8 +240,9 @@ func (s *Session) sendWithReconnect(ctx context.Context, raw string) (*response.
 	return s.driver.SendCommand(raw, opoptions.WithTimeoutOps(s.opsTimeout))
 }
 
-// Classify reports the risk class of cmd according to this Session's Catalog.
-func (s *Session) Classify(cmd command.Command) command.Class {
+// Classify reports the AI Router Ops classification of cmd according to
+// this Session's Catalog.
+func (s *Session) Classify(cmd command.Command) command.Classification {
 	return s.catalog.Classify(cmd)
 }
 

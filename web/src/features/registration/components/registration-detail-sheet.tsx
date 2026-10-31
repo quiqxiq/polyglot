@@ -1,7 +1,9 @@
 import {
   Building,
   CheckCircle2,
+  ClipboardCheck,
   ExternalLink,
+  History,
   MapPin,
   MessageCircle,
   Package,
@@ -23,7 +25,12 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import type { Registration } from '@/gen/v1/registration_pb'
 import { usePlansQuery } from '@/features/billing/api/use-plans'
-import { registrationStatusBadge, REGISTRATION_STATUS } from '../data/constants'
+import {
+  registrationStatusBadge,
+  surveyStatusBadge,
+  REGISTRATION_STATUS,
+} from '../data/constants'
+import { useRegistrationEventsQuery } from '../api/use-registration'
 import { useRegistration } from './registration-provider'
 
 interface RegistrationDetailSheetProps {
@@ -49,6 +56,10 @@ export function RegistrationDetailSheet({
 }: RegistrationDetailSheetProps) {
   const { setOpen, setCurrentRow } = useRegistration()
   const { data: plans = [] } = usePlansQuery(false)
+  const { data: events = [] } = useRegistrationEventsQuery(
+    registration?.id || '',
+    open,
+  )
 
   if (!registration) return null
 
@@ -65,7 +76,9 @@ export function RegistrationDetailSheet({
   }
 
   const isPending = registration.status === REGISTRATION_STATUS.PENDING
+  const isSurvey = registration.status === REGISTRATION_STATUS.SURVEY
   const isApproved = registration.status === REGISTRATION_STATUS.APPROVED
+  const isOnProgress = registration.status === REGISTRATION_STATUS.ON_PROGRESS
   const isInstalled = registration.status === REGISTRATION_STATUS.INSTALLED
   const isActive = registration.status === REGISTRATION_STATUS.ACTIVE
 
@@ -86,13 +99,28 @@ export function RegistrationDetailSheet({
               </SheetDescription>
             </div>
             {isPending && (
+              <div className='flex gap-2'>
+                <Button size='sm' variant='outline' onClick={() => setOpen('survey')}>
+                  Survey Lokasi
+                </Button>
+                <Button size='sm' onClick={() => handleAction('schedule')} className='bg-blue-600 hover:bg-blue-700 text-white'>
+                  Setujui &amp; Jadwalkan
+                </Button>
+              </div>
+            )}
+            {isSurvey && (
               <Button size='sm' onClick={() => handleAction('schedule')} className='bg-blue-600 hover:bg-blue-700 text-white'>
-                Setujui & Jadwalkan
+                Setujui &amp; Jadwalkan
               </Button>
             )}
             {isApproved && (
               <Button size='sm' onClick={() => handleAction('install')} className='bg-purple-600 hover:bg-purple-700 text-white'>
                 Input Hasil Pasang
+              </Button>
+            )}
+            {isOnProgress && (
+              <Button size='sm' onClick={() => handleAction('install')} className='bg-purple-600 hover:bg-purple-700 text-white'>
+                Selesai Pasang + Bukti
               </Button>
             )}
             {isInstalled && (
@@ -173,6 +201,51 @@ export function RegistrationDetailSheet({
           <div className='space-y-4'>
             <h4 className='text-sm font-bold tracking-tight'>Riwayat & Pipeline Pemasangan</h4>
 
+            {/* Step: Survey Lokasi (PSB v2) */}
+            <Card className={isSurvey || isApproved || isOnProgress || isInstalled || isActive ? 'border-cyan-500/40 bg-cyan-500/5' : ''}>
+              <CardHeader className='p-4 pb-2'>
+                <CardTitle className='text-sm font-semibold flex items-center justify-between'>
+                  <span className='flex items-center gap-2'>
+                    <ClipboardCheck className='h-4 w-4 text-cyan-600 dark:text-cyan-400' />
+                    Survey Lokasi
+                  </span>
+                  {registration.surveyStatus ? (
+                    <Badge variant='outline' className={`text-[10px] ${surveyStatusBadge(registration.surveyStatus).className}`}>
+                      {surveyStatusBadge(registration.surveyStatus).label}
+                    </Badge>
+                  ) : (
+                    <Badge variant='outline' className='text-[10px] text-muted-foreground'>Belum Survey</Badge>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className='grid grid-cols-2 gap-3 p-4 pt-2 text-xs'>
+                <div>
+                  <span className='text-muted-foreground'>Tanggal Survey:</span>{' '}
+                  <span className='font-semibold'>{formatUnixDate(registration.surveyDateUnix)}</span>
+                  {registration.surveyTime && <span> ({registration.surveyTime})</span>}
+                </div>
+                <div>
+                  <span className='text-muted-foreground'>Estimasi Kabel:</span>{' '}
+                  <span className='font-semibold'>
+                    {registration.estimatedCableLengthMeter
+                      ? `${registration.estimatedCableLengthMeter} meter`
+                      : '-'}
+                  </span>
+                </div>
+                {registration.surveyorId && (
+                  <div>
+                    <span className='text-muted-foreground'>Surveyor ID:</span>{' '}
+                    <span className='font-semibold'>{registration.surveyorId}</span>
+                  </div>
+                )}
+                {registration.surveyNotes && (
+                  <div className='col-span-2 rounded bg-muted p-2 mt-1 text-muted-foreground'>
+                    <b>Catatan Survey:</b> {registration.surveyNotes}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
             {/* Step: Schedule & Technician */}
             <Card className={isApproved || isInstalled || isActive ? 'border-primary/40 bg-primary/5' : ''}>
               <CardHeader className='p-4 pb-2'>
@@ -234,6 +307,37 @@ export function RegistrationDetailSheet({
                   <span className='text-muted-foreground'>Waktu Selesai:</span>{' '}
                   <span>{formatUnixDate(registration.installedAtUnix)}</span>
                 </div>
+                {registration.installationStartedAtUnix ? (
+                  <div>
+                    <span className='text-muted-foreground'>Mulai Dikerjakan:</span>{' '}
+                    <span>{formatUnixDate(registration.installationStartedAtUnix)}</span>
+                  </div>
+                ) : null}
+                {registration.ontMacAddress && (
+                  <div>
+                    <span className='text-muted-foreground'>MAC ONT:</span>{' '}
+                    <span className='font-mono font-semibold'>{registration.ontMacAddress}</span>
+                  </div>
+                )}
+                {registration.ontSerialNumber && (
+                  <div>
+                    <span className='text-muted-foreground'>SN ONT:</span>{' '}
+                    <span className='font-mono font-semibold'>{registration.ontSerialNumber}</span>
+                  </div>
+                )}
+                {registration.installationPhotoUrl && (
+                  <div className='col-span-2'>
+                    <span className='text-muted-foreground'>Foto Bukti Instalasi:</span>{' '}
+                    <a
+                      href={registration.installationPhotoUrl}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-primary underline break-all'
+                    >
+                      {registration.installationPhotoUrl}
+                    </a>
+                  </div>
+                )}
                 {registration.technicianNotes && (
                   <div className='col-span-2 rounded bg-muted p-2 mt-1 text-muted-foreground'>
                     <b>Catatan Lapangan Teknisi:</b> {registration.technicianNotes}
@@ -267,6 +371,38 @@ export function RegistrationDetailSheet({
                 </CardContent>
               </Card>
             )}
+
+            {/* Timeline PSB (registration_events) */}
+            <Card>
+              <CardHeader className='p-4 pb-2'>
+                <CardTitle className='text-sm font-semibold flex items-center gap-2'>
+                  <History className='h-4 w-4 text-muted-foreground' />
+                  Timeline Perjalanan PSB
+                </CardTitle>
+              </CardHeader>
+              <CardContent className='p-4 pt-2'>
+                {events.length === 0 ? (
+                  <p className='text-xs text-muted-foreground'>Belum ada event tercatat.</p>
+                ) : (
+                  <ol className='relative space-y-3 border-l pl-4'>
+                    {events.map((ev) => (
+                      <li key={ev.id} className='text-xs'>
+                        <div className='flex items-center justify-between gap-2'>
+                          <span className='font-semibold'>{ev.title || ev.eventType}</span>
+                          <span className='text-[10px] text-muted-foreground'>
+                            {formatUnixDate(ev.createdAtUnix)}
+                          </span>
+                        </div>
+                        <p className='text-muted-foreground'>{ev.description || ev.eventType}</p>
+                        {ev.actorId && (
+                          <p className='text-[10px] text-muted-foreground'>oleh user #{ev.actorId}</p>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </CardContent>
+            </Card>
 
             {/* Rejection / Cancellation Info */}
             {registration.rejectedReason && (

@@ -74,7 +74,7 @@ func TestReminderWorker_ScheduleAndDedupe(t *testing.T) {
 	assert.Len(t, notif.Queued(), 2)
 }
 
-func TestReminderWorker_SkipsPaidAndPastDue(t *testing.T) {
+func TestReminderWorker_PostDueReminderNotLateFee(t *testing.T) {
 	subs := mocktest.NewFakeSubscriptionRepo()
 	invoices := mocktest.NewFakeInvoiceRepo()
 	customers := mocktest.NewFakeCustomerRepo()
@@ -94,13 +94,44 @@ func TestReminderWorker_SkipsPaidAndPastDue(t *testing.T) {
 	}
 	late := domainBilling.Invoice{
 		ID: "inv-late", CustomerID: sub.CustomerID, SubscriptionID: &subRef,
-		Total: 110000, Status: domainBilling.StatusOverdue, DueDate: base.AddDate(0, 0, -2),
+		Total: 110000, Status: domainBilling.StatusOverdue, DueDate: base.AddDate(0, 0, -1),
 	}
 	require.NoError(t, invoices.Save(context.Background(), paid))
 	require.NoError(t, invoices.Save(context.Background(), late))
 
+	// H+1: pengingat keterlambatan dikirim (bukan denda/biaya tambahan).
 	res, err := worker.Run(context.Background())
 	require.NoError(t, err)
-	assert.Equal(t, 0, res.Queued)
-	assert.Empty(t, notif.Queued())
+	assert.Equal(t, 1, res.Queued)
+	queued := notif.Queued()
+	require.Len(t, queued, 1)
+	assert.Equal(t, "BILL_OVERDUE", queued[0].MessageType)
+	assert.Contains(t, queued[0].MessageContent, "jatuh tempo")
+}
+
+func TestReminderWorker_PostOffsetsFromSettings(t *testing.T) {
+	subs := mocktest.NewFakeSubscriptionRepo()
+	invoices := mocktest.NewFakeInvoiceRepo()
+	customers := mocktest.NewFakeCustomerRepo()
+	notif := mocktest.NewFakeNotificationRepo()
+
+	base := time.Date(2026, 9, 10, 8, 0, 0, 0, time.UTC)
+	worker := uc.NewReminderWorker(subs, invoices, customers, notif).
+		WithSettings(mocktest.NewFakeSettingReader(map[string]string{
+			"isp.reminder_post_offsets": "2",
+		})).
+		WithClock(func() time.Time { return base })
+
+	sub := seedActiveSub(t, subs, "sub-cfg", nil)
+	require.NoError(t, customers.Save(context.Background(), customerWithPortal(sub.CustomerID, "87654321")))
+	subRef := sub.ID
+	require.NoError(t, invoices.Save(context.Background(), domainBilling.Invoice{
+		ID: "inv-cfg", CustomerID: sub.CustomerID, SubscriptionID: &subRef,
+		Total: 110000, Status: domainBilling.StatusUnpaid, DueDate: base.AddDate(0, 0, -2),
+	}))
+
+	res, err := worker.Run(context.Background())
+	require.NoError(t, err)
+	assert.Equal(t, 1, res.Queued)
+	assert.Equal(t, "BILL_OVERDUE", notif.Queued()[0].MessageType)
 }

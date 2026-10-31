@@ -819,6 +819,534 @@ func (x *FindCustomerResponse) GetCustomer() *Customer {
 	return nil
 }
 
+type Customer360Subscription struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	PlanId             string                 `protobuf:"bytes,2,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
+	ServiceType        string                 `protobuf:"bytes,3,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"`
+	Status             string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	ProvisionStatus    string                 `protobuf:"bytes,5,opt,name=provision_status,json=provisionStatus,proto3" json:"provision_status,omitempty"` // OK | PENDING | FAILED
+	LastProvisionError string                 `protobuf:"bytes,6,opt,name=last_provision_error,json=lastProvisionError,proto3" json:"last_provision_error,omitempty"`
+	ProvisionAttempts  int32                  `protobuf:"varint,7,opt,name=provision_attempts,json=provisionAttempts,proto3" json:"provision_attempts,omitempty"`
+	RouterProfile      string                 `protobuf:"bytes,8,opt,name=router_profile,json=routerProfile,proto3" json:"router_profile,omitempty"`
+	DeviceId           string                 `protobuf:"bytes,9,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	StartDateUnix      int64                  `protobuf:"varint,10,opt,name=start_date_unix,json=startDateUnix,proto3" json:"start_date_unix,omitempty"`
+	NextDueDate        string                 `protobuf:"bytes,11,opt,name=next_due_date,json=nextDueDate,proto3" json:"next_due_date,omitempty"` // YYYY-MM-DD
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *Customer360Subscription) Reset() {
+	*x = Customer360Subscription{}
+	mi := &file_v1_customer_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Customer360Subscription) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Customer360Subscription) ProtoMessage() {}
+
+func (x *Customer360Subscription) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Customer360Subscription.ProtoReflect.Descriptor instead.
+func (*Customer360Subscription) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *Customer360Subscription) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Customer360Subscription) GetPlanId() string {
+	if x != nil {
+		return x.PlanId
+	}
+	return ""
+}
+
+func (x *Customer360Subscription) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *Customer360Subscription) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *Customer360Subscription) GetProvisionStatus() string {
+	if x != nil {
+		return x.ProvisionStatus
+	}
+	return ""
+}
+
+func (x *Customer360Subscription) GetLastProvisionError() string {
+	if x != nil {
+		return x.LastProvisionError
+	}
+	return ""
+}
+
+func (x *Customer360Subscription) GetProvisionAttempts() int32 {
+	if x != nil {
+		return x.ProvisionAttempts
+	}
+	return 0
+}
+
+func (x *Customer360Subscription) GetRouterProfile() string {
+	if x != nil {
+		return x.RouterProfile
+	}
+	return ""
+}
+
+func (x *Customer360Subscription) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *Customer360Subscription) GetStartDateUnix() int64 {
+	if x != nil {
+		return x.StartDateUnix
+	}
+	return 0
+}
+
+func (x *Customer360Subscription) GetNextDueDate() string {
+	if x != nil {
+		return x.NextDueDate
+	}
+	return ""
+}
+
+type Customer360Invoice struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	InvoiceNumber string                 `protobuf:"bytes,2,opt,name=invoice_number,json=invoiceNumber,proto3" json:"invoice_number,omitempty"`
+	Period        string                 `protobuf:"bytes,3,opt,name=period,proto3" json:"period,omitempty"`
+	Total         float64                `protobuf:"fixed64,4,opt,name=total,proto3" json:"total,omitempty"`
+	PaidAmount    float64                `protobuf:"fixed64,5,opt,name=paid_amount,json=paidAmount,proto3" json:"paid_amount,omitempty"`
+	Status        string                 `protobuf:"bytes,6,opt,name=status,proto3" json:"status,omitempty"`
+	DueDateUnix   int64                  `protobuf:"varint,7,opt,name=due_date_unix,json=dueDateUnix,proto3" json:"due_date_unix,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Customer360Invoice) Reset() {
+	*x = Customer360Invoice{}
+	mi := &file_v1_customer_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Customer360Invoice) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Customer360Invoice) ProtoMessage() {}
+
+func (x *Customer360Invoice) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Customer360Invoice.ProtoReflect.Descriptor instead.
+func (*Customer360Invoice) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *Customer360Invoice) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Customer360Invoice) GetInvoiceNumber() string {
+	if x != nil {
+		return x.InvoiceNumber
+	}
+	return ""
+}
+
+func (x *Customer360Invoice) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+func (x *Customer360Invoice) GetTotal() float64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *Customer360Invoice) GetPaidAmount() float64 {
+	if x != nil {
+		return x.PaidAmount
+	}
+	return 0
+}
+
+func (x *Customer360Invoice) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *Customer360Invoice) GetDueDateUnix() int64 {
+	if x != nil {
+		return x.DueDateUnix
+	}
+	return 0
+}
+
+type Customer360Payment struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	PaymentNo       string                 `protobuf:"bytes,2,opt,name=payment_no,json=paymentNo,proto3" json:"payment_no,omitempty"`
+	InvoiceId       string                 `protobuf:"bytes,3,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	Amount          float64                `protobuf:"fixed64,4,opt,name=amount,proto3" json:"amount,omitempty"`
+	PaymentDateUnix int64                  `protobuf:"varint,5,opt,name=payment_date_unix,json=paymentDateUnix,proto3" json:"payment_date_unix,omitempty"`
+	ScanMethod      string                 `protobuf:"bytes,6,opt,name=scan_method,json=scanMethod,proto3" json:"scan_method,omitempty"`
+	Voided          bool                   `protobuf:"varint,7,opt,name=voided,proto3" json:"voided,omitempty"`
+	VoidReason      string                 `protobuf:"bytes,8,opt,name=void_reason,json=voidReason,proto3" json:"void_reason,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *Customer360Payment) Reset() {
+	*x = Customer360Payment{}
+	mi := &file_v1_customer_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Customer360Payment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Customer360Payment) ProtoMessage() {}
+
+func (x *Customer360Payment) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Customer360Payment.ProtoReflect.Descriptor instead.
+func (*Customer360Payment) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *Customer360Payment) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Customer360Payment) GetPaymentNo() string {
+	if x != nil {
+		return x.PaymentNo
+	}
+	return ""
+}
+
+func (x *Customer360Payment) GetInvoiceId() string {
+	if x != nil {
+		return x.InvoiceId
+	}
+	return ""
+}
+
+func (x *Customer360Payment) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *Customer360Payment) GetPaymentDateUnix() int64 {
+	if x != nil {
+		return x.PaymentDateUnix
+	}
+	return 0
+}
+
+func (x *Customer360Payment) GetScanMethod() string {
+	if x != nil {
+		return x.ScanMethod
+	}
+	return ""
+}
+
+func (x *Customer360Payment) GetVoided() bool {
+	if x != nil {
+		return x.Voided
+	}
+	return false
+}
+
+func (x *Customer360Payment) GetVoidReason() string {
+	if x != nil {
+		return x.VoidReason
+	}
+	return ""
+}
+
+type Customer360Registration struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	RegistrationNo  string                 `protobuf:"bytes,2,opt,name=registration_no,json=registrationNo,proto3" json:"registration_no,omitempty"`
+	Status          string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	CreatedAtUnix   int64                  `protobuf:"varint,4,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	InstalledAtUnix int64                  `protobuf:"varint,5,opt,name=installed_at_unix,json=installedAtUnix,proto3" json:"installed_at_unix,omitempty"`
+	SurveyStatus    string                 `protobuf:"bytes,6,opt,name=survey_status,json=surveyStatus,proto3" json:"survey_status,omitempty"`
+	PublicToken     string                 `protobuf:"bytes,7,opt,name=public_token,json=publicToken,proto3" json:"public_token,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *Customer360Registration) Reset() {
+	*x = Customer360Registration{}
+	mi := &file_v1_customer_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Customer360Registration) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Customer360Registration) ProtoMessage() {}
+
+func (x *Customer360Registration) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Customer360Registration.ProtoReflect.Descriptor instead.
+func (*Customer360Registration) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *Customer360Registration) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Customer360Registration) GetRegistrationNo() string {
+	if x != nil {
+		return x.RegistrationNo
+	}
+	return ""
+}
+
+func (x *Customer360Registration) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *Customer360Registration) GetCreatedAtUnix() int64 {
+	if x != nil {
+		return x.CreatedAtUnix
+	}
+	return 0
+}
+
+func (x *Customer360Registration) GetInstalledAtUnix() int64 {
+	if x != nil {
+		return x.InstalledAtUnix
+	}
+	return 0
+}
+
+func (x *Customer360Registration) GetSurveyStatus() string {
+	if x != nil {
+		return x.SurveyStatus
+	}
+	return ""
+}
+
+func (x *Customer360Registration) GetPublicToken() string {
+	if x != nil {
+		return x.PublicToken
+	}
+	return ""
+}
+
+type GetCustomer360Request struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCustomer360Request) Reset() {
+	*x = GetCustomer360Request{}
+	mi := &file_v1_customer_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCustomer360Request) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCustomer360Request) ProtoMessage() {}
+
+func (x *GetCustomer360Request) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCustomer360Request.ProtoReflect.Descriptor instead.
+func (*GetCustomer360Request) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GetCustomer360Request) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetCustomer360Response struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Customer      *Customer                  `protobuf:"bytes,1,opt,name=customer,proto3" json:"customer,omitempty"`
+	Subscriptions []*Customer360Subscription `protobuf:"bytes,2,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
+	Invoices      []*Customer360Invoice      `protobuf:"bytes,3,rep,name=invoices,proto3" json:"invoices,omitempty"`
+	Payments      []*Customer360Payment      `protobuf:"bytes,4,rep,name=payments,proto3" json:"payments,omitempty"`
+	Registrations []*Customer360Registration `protobuf:"bytes,5,rep,name=registrations,proto3" json:"registrations,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCustomer360Response) Reset() {
+	*x = GetCustomer360Response{}
+	mi := &file_v1_customer_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCustomer360Response) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCustomer360Response) ProtoMessage() {}
+
+func (x *GetCustomer360Response) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCustomer360Response.ProtoReflect.Descriptor instead.
+func (*GetCustomer360Response) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *GetCustomer360Response) GetCustomer() *Customer {
+	if x != nil {
+		return x.Customer
+	}
+	return nil
+}
+
+func (x *GetCustomer360Response) GetSubscriptions() []*Customer360Subscription {
+	if x != nil {
+		return x.Subscriptions
+	}
+	return nil
+}
+
+func (x *GetCustomer360Response) GetInvoices() []*Customer360Invoice {
+	if x != nil {
+		return x.Invoices
+	}
+	return nil
+}
+
+func (x *GetCustomer360Response) GetPayments() []*Customer360Payment {
+	if x != nil {
+		return x.Payments
+	}
+	return nil
+}
+
+func (x *GetCustomer360Response) GetRegistrations() []*Customer360Registration {
+	if x != nil {
+		return x.Registrations
+	}
+	return nil
+}
+
 var File_v1_customer_proto protoreflect.FileDescriptor
 
 const file_v1_customer_proto_rawDesc = "" +
@@ -871,13 +1399,65 @@ const file_v1_customer_proto_rawDesc = "" +
 	"\x1fFindCustomerByPortalCodeRequest\x125\n" +
 	"\x12portal_access_code\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x10portalAccessCode\"I\n" +
 	"\x14FindCustomerResponse\x121\n" +
-	"\bcustomer\x18\x01 \x01(\v2\x15.polyglot.v1.CustomerR\bcustomer2\xd1\x06\n" +
+	"\bcustomer\x18\x01 \x01(\v2\x15.polyglot.v1.CustomerR\bcustomer\"\x99\x03\n" +
+	"\x17Customer360Subscription\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\aplan_id\x18\x02 \x01(\tR\x06planId\x12!\n" +
+	"\fservice_type\x18\x03 \x01(\tR\vserviceType\x12\x16\n" +
+	"\x06status\x18\x04 \x01(\tR\x06status\x12)\n" +
+	"\x10provision_status\x18\x05 \x01(\tR\x0fprovisionStatus\x120\n" +
+	"\x14last_provision_error\x18\x06 \x01(\tR\x12lastProvisionError\x12-\n" +
+	"\x12provision_attempts\x18\a \x01(\x05R\x11provisionAttempts\x12%\n" +
+	"\x0erouter_profile\x18\b \x01(\tR\rrouterProfile\x12\x1b\n" +
+	"\tdevice_id\x18\t \x01(\tR\bdeviceId\x12&\n" +
+	"\x0fstart_date_unix\x18\n" +
+	" \x01(\x03R\rstartDateUnix\x12\"\n" +
+	"\rnext_due_date\x18\v \x01(\tR\vnextDueDate\"\xd6\x01\n" +
+	"\x12Customer360Invoice\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
+	"\x0einvoice_number\x18\x02 \x01(\tR\rinvoiceNumber\x12\x16\n" +
+	"\x06period\x18\x03 \x01(\tR\x06period\x12\x14\n" +
+	"\x05total\x18\x04 \x01(\x01R\x05total\x12\x1f\n" +
+	"\vpaid_amount\x18\x05 \x01(\x01R\n" +
+	"paidAmount\x12\x16\n" +
+	"\x06status\x18\x06 \x01(\tR\x06status\x12\"\n" +
+	"\rdue_date_unix\x18\a \x01(\x03R\vdueDateUnix\"\x80\x02\n" +
+	"\x12Customer360Payment\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"payment_no\x18\x02 \x01(\tR\tpaymentNo\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x03 \x01(\tR\tinvoiceId\x12\x16\n" +
+	"\x06amount\x18\x04 \x01(\x01R\x06amount\x12*\n" +
+	"\x11payment_date_unix\x18\x05 \x01(\x03R\x0fpaymentDateUnix\x12\x1f\n" +
+	"\vscan_method\x18\x06 \x01(\tR\n" +
+	"scanMethod\x12\x16\n" +
+	"\x06voided\x18\a \x01(\bR\x06voided\x12\x1f\n" +
+	"\vvoid_reason\x18\b \x01(\tR\n" +
+	"voidReason\"\x86\x02\n" +
+	"\x17Customer360Registration\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
+	"\x0fregistration_no\x18\x02 \x01(\tR\x0eregistrationNo\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\x12&\n" +
+	"\x0fcreated_at_unix\x18\x04 \x01(\x03R\rcreatedAtUnix\x12*\n" +
+	"\x11installed_at_unix\x18\x05 \x01(\x03R\x0finstalledAtUnix\x12#\n" +
+	"\rsurvey_status\x18\x06 \x01(\tR\fsurveyStatus\x12!\n" +
+	"\fpublic_token\x18\a \x01(\tR\vpublicToken\"0\n" +
+	"\x15GetCustomer360Request\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"\xdd\x02\n" +
+	"\x16GetCustomer360Response\x121\n" +
+	"\bcustomer\x18\x01 \x01(\v2\x15.polyglot.v1.CustomerR\bcustomer\x12J\n" +
+	"\rsubscriptions\x18\x02 \x03(\v2$.polyglot.v1.Customer360SubscriptionR\rsubscriptions\x12;\n" +
+	"\binvoices\x18\x03 \x03(\v2\x1f.polyglot.v1.Customer360InvoiceR\binvoices\x12;\n" +
+	"\bpayments\x18\x04 \x03(\v2\x1f.polyglot.v1.Customer360PaymentR\bpayments\x12J\n" +
+	"\rregistrations\x18\x05 \x03(\v2$.polyglot.v1.Customer360RegistrationR\rregistrations2\xac\a\n" +
 	"\x0fCustomerService\x12V\n" +
 	"\rListCustomers\x12!.polyglot.v1.ListCustomersRequest\x1a\".polyglot.v1.ListCustomersResponse\x12P\n" +
 	"\vGetCustomer\x12\x1f.polyglot.v1.GetCustomerRequest\x1a .polyglot.v1.GetCustomerResponse\x12Y\n" +
 	"\x0eCreateCustomer\x12\".polyglot.v1.CreateCustomerRequest\x1a#.polyglot.v1.CreateCustomerResponse\x12Y\n" +
 	"\x0eUpdateCustomer\x12\".polyglot.v1.UpdateCustomerRequest\x1a#.polyglot.v1.UpdateCustomerResponse\x12Y\n" +
 	"\x0eDeleteCustomer\x12\".polyglot.v1.DeleteCustomerRequest\x1a#.polyglot.v1.DeleteCustomerResponse\x12Y\n" +
+	"\x0eGetCustomer360\x12\".polyglot.v1.GetCustomer360Request\x1a#.polyglot.v1.GetCustomer360Response\x12Y\n" +
 	"\vFindByPhone\x12'.polyglot.v1.FindCustomerByPhoneRequest\x1a!.polyglot.v1.FindCustomerResponse\x12_\n" +
 	"\x12FindByCustomerCode\x12&.polyglot.v1.FindCustomerByCodeRequest\x1a!.polyglot.v1.FindCustomerResponse\x12c\n" +
 	"\x10FindByPortalCode\x12,.polyglot.v1.FindCustomerByPortalCodeRequest\x1a!.polyglot.v1.FindCustomerResponse\x12b\n" +
@@ -895,7 +1475,7 @@ func file_v1_customer_proto_rawDescGZIP() []byte {
 	return file_v1_customer_proto_rawDescData
 }
 
-var file_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_v1_customer_proto_goTypes = []any{
 	(*Customer)(nil),                        // 0: polyglot.v1.Customer
 	(*ListCustomersRequest)(nil),            // 1: polyglot.v1.ListCustomersRequest
@@ -912,8 +1492,14 @@ var file_v1_customer_proto_goTypes = []any{
 	(*FindCustomerByCodeRequest)(nil),       // 12: polyglot.v1.FindCustomerByCodeRequest
 	(*FindCustomerByPortalCodeRequest)(nil), // 13: polyglot.v1.FindCustomerByPortalCodeRequest
 	(*FindCustomerResponse)(nil),            // 14: polyglot.v1.FindCustomerResponse
-	(*ListSubscriptionsRequest)(nil),        // 15: polyglot.v1.ListSubscriptionsRequest
-	(*ListSubscriptionsResponse)(nil),       // 16: polyglot.v1.ListSubscriptionsResponse
+	(*Customer360Subscription)(nil),         // 15: polyglot.v1.Customer360Subscription
+	(*Customer360Invoice)(nil),              // 16: polyglot.v1.Customer360Invoice
+	(*Customer360Payment)(nil),              // 17: polyglot.v1.Customer360Payment
+	(*Customer360Registration)(nil),         // 18: polyglot.v1.Customer360Registration
+	(*GetCustomer360Request)(nil),           // 19: polyglot.v1.GetCustomer360Request
+	(*GetCustomer360Response)(nil),          // 20: polyglot.v1.GetCustomer360Response
+	(*ListSubscriptionsRequest)(nil),        // 21: polyglot.v1.ListSubscriptionsRequest
+	(*ListSubscriptionsResponse)(nil),       // 22: polyglot.v1.ListSubscriptionsResponse
 }
 var file_v1_customer_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.ListCustomersResponse.customers:type_name -> polyglot.v1.Customer
@@ -923,29 +1509,36 @@ var file_v1_customer_proto_depIdxs = []int32{
 	0,  // 4: polyglot.v1.UpdateCustomerRequest.customer:type_name -> polyglot.v1.Customer
 	0,  // 5: polyglot.v1.UpdateCustomerResponse.customer:type_name -> polyglot.v1.Customer
 	0,  // 6: polyglot.v1.FindCustomerResponse.customer:type_name -> polyglot.v1.Customer
-	1,  // 7: polyglot.v1.CustomerService.ListCustomers:input_type -> polyglot.v1.ListCustomersRequest
-	3,  // 8: polyglot.v1.CustomerService.GetCustomer:input_type -> polyglot.v1.GetCustomerRequest
-	5,  // 9: polyglot.v1.CustomerService.CreateCustomer:input_type -> polyglot.v1.CreateCustomerRequest
-	7,  // 10: polyglot.v1.CustomerService.UpdateCustomer:input_type -> polyglot.v1.UpdateCustomerRequest
-	9,  // 11: polyglot.v1.CustomerService.DeleteCustomer:input_type -> polyglot.v1.DeleteCustomerRequest
-	11, // 12: polyglot.v1.CustomerService.FindByPhone:input_type -> polyglot.v1.FindCustomerByPhoneRequest
-	12, // 13: polyglot.v1.CustomerService.FindByCustomerCode:input_type -> polyglot.v1.FindCustomerByCodeRequest
-	13, // 14: polyglot.v1.CustomerService.FindByPortalCode:input_type -> polyglot.v1.FindCustomerByPortalCodeRequest
-	15, // 15: polyglot.v1.CustomerService.ListSubscriptions:input_type -> polyglot.v1.ListSubscriptionsRequest
-	2,  // 16: polyglot.v1.CustomerService.ListCustomers:output_type -> polyglot.v1.ListCustomersResponse
-	4,  // 17: polyglot.v1.CustomerService.GetCustomer:output_type -> polyglot.v1.GetCustomerResponse
-	6,  // 18: polyglot.v1.CustomerService.CreateCustomer:output_type -> polyglot.v1.CreateCustomerResponse
-	8,  // 19: polyglot.v1.CustomerService.UpdateCustomer:output_type -> polyglot.v1.UpdateCustomerResponse
-	10, // 20: polyglot.v1.CustomerService.DeleteCustomer:output_type -> polyglot.v1.DeleteCustomerResponse
-	14, // 21: polyglot.v1.CustomerService.FindByPhone:output_type -> polyglot.v1.FindCustomerResponse
-	14, // 22: polyglot.v1.CustomerService.FindByCustomerCode:output_type -> polyglot.v1.FindCustomerResponse
-	14, // 23: polyglot.v1.CustomerService.FindByPortalCode:output_type -> polyglot.v1.FindCustomerResponse
-	16, // 24: polyglot.v1.CustomerService.ListSubscriptions:output_type -> polyglot.v1.ListSubscriptionsResponse
-	16, // [16:25] is the sub-list for method output_type
-	7,  // [7:16] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	0,  // 7: polyglot.v1.GetCustomer360Response.customer:type_name -> polyglot.v1.Customer
+	15, // 8: polyglot.v1.GetCustomer360Response.subscriptions:type_name -> polyglot.v1.Customer360Subscription
+	16, // 9: polyglot.v1.GetCustomer360Response.invoices:type_name -> polyglot.v1.Customer360Invoice
+	17, // 10: polyglot.v1.GetCustomer360Response.payments:type_name -> polyglot.v1.Customer360Payment
+	18, // 11: polyglot.v1.GetCustomer360Response.registrations:type_name -> polyglot.v1.Customer360Registration
+	1,  // 12: polyglot.v1.CustomerService.ListCustomers:input_type -> polyglot.v1.ListCustomersRequest
+	3,  // 13: polyglot.v1.CustomerService.GetCustomer:input_type -> polyglot.v1.GetCustomerRequest
+	5,  // 14: polyglot.v1.CustomerService.CreateCustomer:input_type -> polyglot.v1.CreateCustomerRequest
+	7,  // 15: polyglot.v1.CustomerService.UpdateCustomer:input_type -> polyglot.v1.UpdateCustomerRequest
+	9,  // 16: polyglot.v1.CustomerService.DeleteCustomer:input_type -> polyglot.v1.DeleteCustomerRequest
+	19, // 17: polyglot.v1.CustomerService.GetCustomer360:input_type -> polyglot.v1.GetCustomer360Request
+	11, // 18: polyglot.v1.CustomerService.FindByPhone:input_type -> polyglot.v1.FindCustomerByPhoneRequest
+	12, // 19: polyglot.v1.CustomerService.FindByCustomerCode:input_type -> polyglot.v1.FindCustomerByCodeRequest
+	13, // 20: polyglot.v1.CustomerService.FindByPortalCode:input_type -> polyglot.v1.FindCustomerByPortalCodeRequest
+	21, // 21: polyglot.v1.CustomerService.ListSubscriptions:input_type -> polyglot.v1.ListSubscriptionsRequest
+	2,  // 22: polyglot.v1.CustomerService.ListCustomers:output_type -> polyglot.v1.ListCustomersResponse
+	4,  // 23: polyglot.v1.CustomerService.GetCustomer:output_type -> polyglot.v1.GetCustomerResponse
+	6,  // 24: polyglot.v1.CustomerService.CreateCustomer:output_type -> polyglot.v1.CreateCustomerResponse
+	8,  // 25: polyglot.v1.CustomerService.UpdateCustomer:output_type -> polyglot.v1.UpdateCustomerResponse
+	10, // 26: polyglot.v1.CustomerService.DeleteCustomer:output_type -> polyglot.v1.DeleteCustomerResponse
+	20, // 27: polyglot.v1.CustomerService.GetCustomer360:output_type -> polyglot.v1.GetCustomer360Response
+	14, // 28: polyglot.v1.CustomerService.FindByPhone:output_type -> polyglot.v1.FindCustomerResponse
+	14, // 29: polyglot.v1.CustomerService.FindByCustomerCode:output_type -> polyglot.v1.FindCustomerResponse
+	14, // 30: polyglot.v1.CustomerService.FindByPortalCode:output_type -> polyglot.v1.FindCustomerResponse
+	22, // 31: polyglot.v1.CustomerService.ListSubscriptions:output_type -> polyglot.v1.ListSubscriptionsResponse
+	22, // [22:32] is the sub-list for method output_type
+	12, // [12:22] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_v1_customer_proto_init() }
@@ -960,7 +1553,7 @@ func file_v1_customer_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_customer_proto_rawDesc), len(file_v1_customer_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

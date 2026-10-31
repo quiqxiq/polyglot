@@ -22,7 +22,9 @@ type mockDriver struct {
 func (m *mockDriver) Execute(_ context.Context, _ command.Command) (command.Result, error) {
 	return command.Result{Output: "ok"}, nil
 }
-func (m *mockDriver) Classify(_ command.Command) command.Class { return command.ClassReadOnly }
+func (m *mockDriver) Classify(_ command.Command) command.Classification {
+	return command.Classification{Mode: command.ModeRead}
+}
 func (m *mockDriver) Translate(op command.Operation) (command.Command, error) {
 	if op == command.OpGetStatus {
 		return command.Command{Raw: "mock-status"}, nil

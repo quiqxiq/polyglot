@@ -36,6 +36,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "probe:.*", "*"},
 		{"admin", "customer:.*", "*"},
 		{"admin", "billing:.*", "*"},
+		{"admin", "debt:.*", "*"},
 		{"admin", "whatsapp:.*", "*"},
 		{"admin", "conversation:.*", "*"},
 		{"admin", "skill:.*", "*"},
@@ -54,12 +55,19 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "notification:.*", "*"},
 		{"admin", "monitor:.*", "*"},
 		{"admin", "network:.*", "*"},
+		{"admin", "olt:.*", "*"},
+		{"admin", "ont:.*", "*"},
+		// AI Router Ops (M0/M1): chat/inspect, approval, restore point.
+		{"admin", "ai:.*", "*"},
+		{"admin", "approval:.*", "*"},
+		{"admin", "restore:.*", "*"},
 
 		// Agent / CS — customer service, voucher generator, & knowledge lookup.
 		{"agent", "conversation:.*", "*"},
 		{"agent", "customer:read", "*"},
 		{"agent", "skill:read", "*"},
 		{"agent", "billing:read", "*"},
+		{"agent", "debt:read", "*"},
 		{"agent", "whatsapp:read", "*"},
 		{"agent", "profile:.*", "*"},
 		{"agent", "report:read", "*"},
@@ -69,6 +77,15 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"agent", "hotspot:user:read", "*"},
 		{"agent", "hotspot:profile:read", "*"},
 		{"agent", "ppp:secret:read", "*"},
+
+		// Finance — kasir/keuangan: tagihan, pembayaran, hutang, kas, laporan.
+		{"finance", "billing:.*", "*"},
+		{"finance", "debt:.*", "*"},
+		{"finance", "cashbook:.*", "*"},
+		{"finance", "report:.*", "*"},
+		{"finance", "customer:read", "*"},
+		{"finance", "subscription:read", "*"},
+		{"finance", "notification:read", "*"},
 
 		// Teknisi — monitoring, field installation & diagnostic.
 		{"teknisi", "device:read", "*"},
@@ -97,6 +114,11 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "registration:install", "*"},
 		{"teknisi", "monitor:read", "*"},
 		{"teknisi", "network:read", "*"},
+		{"teknisi", "olt:read", "*"},
+		{"teknisi", "ont:read", "*"},
+		{"teknisi", "ai:ops", "*"},
+		{"teknisi", "approval:read", "*"},
+		{"teknisi", "restore:read", "*"},
 	}
 
 	added := 0

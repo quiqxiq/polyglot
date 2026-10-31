@@ -22,9 +22,9 @@
       <div>
         <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1z"/></svg>
-          Log Sistem MikroTik
+          <span data-i18n="logs_title">Log Sistem MikroTik</span>
         </h1>
-        <p class="text-sm text-slate-500 mt-0.5">Catatan riwayat sistem dan peringatan RouterOS &bull; Selaras dengan Portal Utama</p>
+        <p class="text-sm text-slate-500 mt-0.5" data-i18n="logs_desc">Catatan riwayat sistem dan peringatan RouterOS &bull; Selaras dengan Portal Utama</p>
       </div>
 
       <!-- Action Buttons: Refresh (Icon Only), Clear, Export -->
@@ -35,7 +35,7 @@
 
         <button id="clear-btn" onclick="MikroTikLogs.clearLogs()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 shadow-xs cursor-pointer transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-          <span>Bersihkan</span>
+          <span data-i18n="clear_logs">Bersihkan</span>
         </button>
 
         <!-- Export Dropdown -->
@@ -82,7 +82,7 @@
 
         <!-- Topic Selector -->
         <select id="topic-select" onchange="MikroTikLogs.setTopic(this.value)" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs rounded-xl px-2.5 py-1.5 outline-none cursor-pointer">
-          <option value="">Semua Topik</option>
+          <option value="" data-i18n="all_topics">Semua Topik</option>
           <option value="pppoe">pppoe</option>
           <option value="warning">warning</option>
           <option value="system">system</option>
@@ -97,7 +97,7 @@
       <div class="flex items-center gap-4 text-xs">
         <label class="flex items-center gap-2 text-slate-600 font-medium cursor-pointer select-none">
           <input type="checkbox" id="auto-scroll-toggle" checked onchange="MikroTikLogs.toggleAutoScroll(this.checked)" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
-          <span>Auto-scroll</span>
+          <span data-i18n="auto_scroll">Auto-scroll</span>
         </label>
         <span id="log-counter" class="text-slate-400 font-mono text-[11px]">0 log</span>
       </div>
@@ -171,6 +171,8 @@
 
   <script src="js/api.js?v=3"></script>
   <script src="js/auth.js?v=3"></script>
+  <script src="js/locales.js?v=3"></script>
+  <script src="js/i18n.js?v=3"></script>
   <script src="js/router-selector.js?v=3"></script>
   <script src="js/layout.js?v=3"></script>
   <script src="js/mikrotik-logs.js?v=3"></script>

@@ -28,7 +28,6 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
-	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
 type integrationVault struct{}
@@ -50,8 +49,11 @@ func (integrationVault) Get(context.Context, string) (device.Credentials, error)
 
 func (integrationVault) Save(context.Context, string, device.Credentials) error { return nil }
 
+// networkExecutePreApproved is a test-only helper: this E2E only READS from a
+// real router and exercises the importer, so it bypasses the AI approval gate
+// (production has no ExecuteCommandPreApproved).
 var networkExecutePreApproved = func(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
-	return network.ExecuteCommandPreApproved(ctx, driver, cmd)
+	return driver.Execute(ctx, cmd)
 }
 
 func TestImportFromRouter_E2E(t *testing.T) {

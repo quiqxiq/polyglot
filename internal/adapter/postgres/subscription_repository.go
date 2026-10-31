@@ -136,9 +136,16 @@ func (r *SubscriptionRepository) FindByDeviceAndUsername(ctx context.Context, de
 
 // ListActive returns all non-deleted ACTIVE subscriptions.
 func (r *SubscriptionRepository) ListActive(ctx context.Context) ([]subscription.Subscription, error) {
+	return r.ListByStatuses(ctx, []string{subscription.StatusActive})
+}
+
+// ListByStatuses returns all non-deleted subscriptions whose status is in
+// statuses — dipakai generator tagihan agar status yang ditagih dapat
+// dikonfigurasi (isp.bill_isolated / isp.bill_suspended).
+func (r *SubscriptionRepository) ListByStatuses(ctx context.Context, statuses []string) ([]subscription.Subscription, error) {
 	var mList []model.SubscriptionModel
 	err := r.db.WithContext(ctx).
-		Where("status = ? AND deleted_at IS NULL", subscription.StatusActive).
+		Where("status IN ? AND deleted_at IS NULL", statuses).
 		Order("created_at asc").
 		Find(&mList).Error
 	if err != nil {

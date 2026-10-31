@@ -21,9 +21,15 @@ type Command struct {
 // that returns many rows (e.g. /interface/print with no filter) populates
 // Rows with one map per row — Result deliberately does NOT flatten this
 // into a single map, since that would silently drop rows beyond the first.
+//
+// Meta carries vendor reply metadata that is not tabular data — for RouterOS
+// this is the "!done" sentence map (e.g. ret/.id returned by an add
+// command). It is used by the AI Router Ops approval pipeline to derive the
+// inverse of an "add" without relying on a synthetic comment marker.
 type Result struct {
 	Output string
 	Rows   []map[string]string
+	Meta   map[string]string
 }
 
 // Operation is an abstract, vendor-agnostic operation name that usecase/
@@ -39,14 +45,30 @@ const (
 	OpReboot Operation = "reboot"
 )
 
-// Class represents the risk classification of a Command, as determined by
-// the target device's specific DeviceDriver implementation (not by domain
-// itself — domain never knows vendor command syntax).
-type Class int
+// Mode is the only risk classification the AI Router Ops policy
+// distinguishes: a command either reads/introspects state or it can mutate
+// state. Unknown commands MUST be treated as ModeMutation (fail-closed) —
+// see Polyglot-Architecture.md §6.1 and PLAN-AI-ROUTER-OPS v2.
+type Mode int
 
 const (
-	// ClassReadOnly marks a command as non-destructive.
-	ClassReadOnly Class = iota
-	// ClassDestructive marks a command as potentially destructive.
-	ClassDestructive
+	// ModeRead covers commands that only read state or introspect syntax.
+	// Safe to auto-execute for AI and humans.
+	ModeRead Mode = iota
+	// ModeMutation covers any command that can create, change, delete,
+	// enable/disable, reset, reboot, upload, or otherwise alter device state.
+	ModeMutation
 )
+
+// Classification is the vendor driver's result for one Command: the mode plus
+// an optional hard-deny reason. A non-empty DenyReason means the command must
+// never be executed by the AI/proposal pipeline (e.g. reset-configuration,
+// backup/load, AI-created scripts). Human restore flows use dedicated
+// usecases with typed confirmation instead of this pipeline.
+type Classification struct {
+	Mode       Mode
+	DenyReason string
+}
+
+// IsDenied reports whether the command is hard-denied.
+func (c Classification) IsDenied() bool { return c.DenyReason != "" }

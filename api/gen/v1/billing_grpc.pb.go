@@ -19,12 +19,31 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BillingService_ListInvoices_FullMethodName     = "/polyglot.v1.BillingService/ListInvoices"
-	BillingService_GetInvoice_FullMethodName       = "/polyglot.v1.BillingService/GetInvoice"
-	BillingService_CancelInvoice_FullMethodName    = "/polyglot.v1.BillingService/CancelInvoice"
-	BillingService_GenerateInvoices_FullMethodName = "/polyglot.v1.BillingService/GenerateInvoices"
-	BillingService_CashierResolve_FullMethodName   = "/polyglot.v1.BillingService/CashierResolve"
-	BillingService_CashierPay_FullMethodName       = "/polyglot.v1.BillingService/CashierPay"
+	BillingService_ListInvoices_FullMethodName             = "/polyglot.v1.BillingService/ListInvoices"
+	BillingService_GetInvoice_FullMethodName               = "/polyglot.v1.BillingService/GetInvoice"
+	BillingService_CreateInvoice_FullMethodName            = "/polyglot.v1.BillingService/CreateInvoice"
+	BillingService_CancelInvoice_FullMethodName            = "/polyglot.v1.BillingService/CancelInvoice"
+	BillingService_ApplyInvoiceDiscount_FullMethodName     = "/polyglot.v1.BillingService/ApplyInvoiceDiscount"
+	BillingService_GenerateInvoices_FullMethodName         = "/polyglot.v1.BillingService/GenerateInvoices"
+	BillingService_ExportInvoices_FullMethodName           = "/polyglot.v1.BillingService/ExportInvoices"
+	BillingService_CashierResolve_FullMethodName           = "/polyglot.v1.BillingService/CashierResolve"
+	BillingService_CashierPay_FullMethodName               = "/polyglot.v1.BillingService/CashierPay"
+	BillingService_ResolveManualPayment_FullMethodName     = "/polyglot.v1.BillingService/ResolveManualPayment"
+	BillingService_SubmitManualPayment_FullMethodName      = "/polyglot.v1.BillingService/SubmitManualPayment"
+	BillingService_ListPaymentSubmissions_FullMethodName   = "/polyglot.v1.BillingService/ListPaymentSubmissions"
+	BillingService_ApprovePaymentSubmission_FullMethodName = "/polyglot.v1.BillingService/ApprovePaymentSubmission"
+	BillingService_RejectPaymentSubmission_FullMethodName  = "/polyglot.v1.BillingService/RejectPaymentSubmission"
+	BillingService_ReversePayment_FullMethodName           = "/polyglot.v1.BillingService/ReversePayment"
+	BillingService_ListPaymentMethods_FullMethodName       = "/polyglot.v1.BillingService/ListPaymentMethods"
+	BillingService_SavePaymentMethod_FullMethodName        = "/polyglot.v1.BillingService/SavePaymentMethod"
+	BillingService_DeletePaymentMethod_FullMethodName      = "/polyglot.v1.BillingService/DeletePaymentMethod"
+	BillingService_CreateMassPayment_FullMethodName        = "/polyglot.v1.BillingService/CreateMassPayment"
+	BillingService_ListMassPayments_FullMethodName         = "/polyglot.v1.BillingService/ListMassPayments"
+	BillingService_GetMassPayment_FullMethodName           = "/polyglot.v1.BillingService/GetMassPayment"
+	BillingService_ListGatewayTransactions_FullMethodName  = "/polyglot.v1.BillingService/ListGatewayTransactions"
+	BillingService_SyncGatewayTransactions_FullMethodName  = "/polyglot.v1.BillingService/SyncGatewayTransactions"
+	BillingService_ListGatewaySettlements_FullMethodName   = "/polyglot.v1.BillingService/ListGatewaySettlements"
+	BillingService_SaveGatewaySettlement_FullMethodName    = "/polyglot.v1.BillingService/SaveGatewaySettlement"
 )
 
 // BillingServiceClient is the client API for BillingService service.
@@ -34,11 +53,34 @@ type BillingServiceClient interface {
 	// Faktur
 	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error)
 	GetInvoice(ctx context.Context, in *GetInvoiceRequest, opts ...grpc.CallOption) (*GetInvoiceResponse, error)
+	CreateInvoice(ctx context.Context, in *CreateInvoiceRequest, opts ...grpc.CallOption) (*CreateInvoiceResponse, error)
 	CancelInvoice(ctx context.Context, in *CancelInvoiceRequest, opts ...grpc.CallOption) (*CancelInvoiceResponse, error)
+	ApplyInvoiceDiscount(ctx context.Context, in *ApplyInvoiceDiscountRequest, opts ...grpc.CallOption) (*ApplyInvoiceDiscountResponse, error)
 	GenerateInvoices(ctx context.Context, in *GenerateInvoicesRequest, opts ...grpc.CallOption) (*GenerateInvoicesResponse, error)
+	ExportInvoices(ctx context.Context, in *ExportInvoicesRequest, opts ...grpc.CallOption) (*ExportInvoicesResponse, error)
 	// Kasir
 	CashierResolve(ctx context.Context, in *CashierResolveRequest, opts ...grpc.CallOption) (*CashierResolveResponse, error)
 	CashierPay(ctx context.Context, in *CashierPayRequest, opts ...grpc.CallOption) (*CashierPayResponse, error)
+	// Pembayaran manual & reversal (Fase 3)
+	ResolveManualPayment(ctx context.Context, in *ResolveManualPaymentRequest, opts ...grpc.CallOption) (*ResolveManualPaymentResponse, error)
+	SubmitManualPayment(ctx context.Context, in *SubmitManualPaymentRequest, opts ...grpc.CallOption) (*SubmitManualPaymentResponse, error)
+	ListPaymentSubmissions(ctx context.Context, in *ListPaymentSubmissionsRequest, opts ...grpc.CallOption) (*ListPaymentSubmissionsResponse, error)
+	ApprovePaymentSubmission(ctx context.Context, in *ApprovePaymentSubmissionRequest, opts ...grpc.CallOption) (*ApprovePaymentSubmissionResponse, error)
+	RejectPaymentSubmission(ctx context.Context, in *RejectPaymentSubmissionRequest, opts ...grpc.CallOption) (*RejectPaymentSubmissionResponse, error)
+	ReversePayment(ctx context.Context, in *ReversePaymentRequest, opts ...grpc.CallOption) (*ReversePaymentResponse, error)
+	// Master Metode Pembayaran (W3)
+	ListPaymentMethods(ctx context.Context, in *ListPaymentMethodsRequest, opts ...grpc.CallOption) (*ListPaymentMethodsResponse, error)
+	SavePaymentMethod(ctx context.Context, in *SavePaymentMethodRequest, opts ...grpc.CallOption) (*SavePaymentMethodResponse, error)
+	DeletePaymentMethod(ctx context.Context, in *DeletePaymentMethodRequest, opts ...grpc.CallOption) (*DeletePaymentMethodResponse, error)
+	// Mass Payment (W3)
+	CreateMassPayment(ctx context.Context, in *CreateMassPaymentRequest, opts ...grpc.CallOption) (*CreateMassPaymentResponse, error)
+	ListMassPayments(ctx context.Context, in *ListMassPaymentsRequest, opts ...grpc.CallOption) (*ListMassPaymentsResponse, error)
+	GetMassPayment(ctx context.Context, in *GetMassPaymentRequest, opts ...grpc.CallOption) (*GetMassPaymentResponse, error)
+	// Gateway Transaksi & Settlement (W4)
+	ListGatewayTransactions(ctx context.Context, in *ListGatewayTransactionsRequest, opts ...grpc.CallOption) (*ListGatewayTransactionsResponse, error)
+	SyncGatewayTransactions(ctx context.Context, in *SyncGatewayTransactionsRequest, opts ...grpc.CallOption) (*SyncGatewayTransactionsResponse, error)
+	ListGatewaySettlements(ctx context.Context, in *ListGatewaySettlementsRequest, opts ...grpc.CallOption) (*ListGatewaySettlementsResponse, error)
+	SaveGatewaySettlement(ctx context.Context, in *SaveGatewaySettlementRequest, opts ...grpc.CallOption) (*SaveGatewaySettlementResponse, error)
 }
 
 type billingServiceClient struct {
@@ -69,6 +111,16 @@ func (c *billingServiceClient) GetInvoice(ctx context.Context, in *GetInvoiceReq
 	return out, nil
 }
 
+func (c *billingServiceClient) CreateInvoice(ctx context.Context, in *CreateInvoiceRequest, opts ...grpc.CallOption) (*CreateInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateInvoiceResponse)
+	err := c.cc.Invoke(ctx, BillingService_CreateInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *billingServiceClient) CancelInvoice(ctx context.Context, in *CancelInvoiceRequest, opts ...grpc.CallOption) (*CancelInvoiceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CancelInvoiceResponse)
@@ -79,10 +131,30 @@ func (c *billingServiceClient) CancelInvoice(ctx context.Context, in *CancelInvo
 	return out, nil
 }
 
+func (c *billingServiceClient) ApplyInvoiceDiscount(ctx context.Context, in *ApplyInvoiceDiscountRequest, opts ...grpc.CallOption) (*ApplyInvoiceDiscountResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApplyInvoiceDiscountResponse)
+	err := c.cc.Invoke(ctx, BillingService_ApplyInvoiceDiscount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *billingServiceClient) GenerateInvoices(ctx context.Context, in *GenerateInvoicesRequest, opts ...grpc.CallOption) (*GenerateInvoicesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GenerateInvoicesResponse)
 	err := c.cc.Invoke(ctx, BillingService_GenerateInvoices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ExportInvoices(ctx context.Context, in *ExportInvoicesRequest, opts ...grpc.CallOption) (*ExportInvoicesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExportInvoicesResponse)
+	err := c.cc.Invoke(ctx, BillingService_ExportInvoices_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,6 +181,166 @@ func (c *billingServiceClient) CashierPay(ctx context.Context, in *CashierPayReq
 	return out, nil
 }
 
+func (c *billingServiceClient) ResolveManualPayment(ctx context.Context, in *ResolveManualPaymentRequest, opts ...grpc.CallOption) (*ResolveManualPaymentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResolveManualPaymentResponse)
+	err := c.cc.Invoke(ctx, BillingService_ResolveManualPayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) SubmitManualPayment(ctx context.Context, in *SubmitManualPaymentRequest, opts ...grpc.CallOption) (*SubmitManualPaymentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SubmitManualPaymentResponse)
+	err := c.cc.Invoke(ctx, BillingService_SubmitManualPayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ListPaymentSubmissions(ctx context.Context, in *ListPaymentSubmissionsRequest, opts ...grpc.CallOption) (*ListPaymentSubmissionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPaymentSubmissionsResponse)
+	err := c.cc.Invoke(ctx, BillingService_ListPaymentSubmissions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ApprovePaymentSubmission(ctx context.Context, in *ApprovePaymentSubmissionRequest, opts ...grpc.CallOption) (*ApprovePaymentSubmissionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApprovePaymentSubmissionResponse)
+	err := c.cc.Invoke(ctx, BillingService_ApprovePaymentSubmission_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) RejectPaymentSubmission(ctx context.Context, in *RejectPaymentSubmissionRequest, opts ...grpc.CallOption) (*RejectPaymentSubmissionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RejectPaymentSubmissionResponse)
+	err := c.cc.Invoke(ctx, BillingService_RejectPaymentSubmission_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ReversePayment(ctx context.Context, in *ReversePaymentRequest, opts ...grpc.CallOption) (*ReversePaymentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ReversePaymentResponse)
+	err := c.cc.Invoke(ctx, BillingService_ReversePayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ListPaymentMethods(ctx context.Context, in *ListPaymentMethodsRequest, opts ...grpc.CallOption) (*ListPaymentMethodsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPaymentMethodsResponse)
+	err := c.cc.Invoke(ctx, BillingService_ListPaymentMethods_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) SavePaymentMethod(ctx context.Context, in *SavePaymentMethodRequest, opts ...grpc.CallOption) (*SavePaymentMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SavePaymentMethodResponse)
+	err := c.cc.Invoke(ctx, BillingService_SavePaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) DeletePaymentMethod(ctx context.Context, in *DeletePaymentMethodRequest, opts ...grpc.CallOption) (*DeletePaymentMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeletePaymentMethodResponse)
+	err := c.cc.Invoke(ctx, BillingService_DeletePaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) CreateMassPayment(ctx context.Context, in *CreateMassPaymentRequest, opts ...grpc.CallOption) (*CreateMassPaymentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateMassPaymentResponse)
+	err := c.cc.Invoke(ctx, BillingService_CreateMassPayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ListMassPayments(ctx context.Context, in *ListMassPaymentsRequest, opts ...grpc.CallOption) (*ListMassPaymentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListMassPaymentsResponse)
+	err := c.cc.Invoke(ctx, BillingService_ListMassPayments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) GetMassPayment(ctx context.Context, in *GetMassPaymentRequest, opts ...grpc.CallOption) (*GetMassPaymentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetMassPaymentResponse)
+	err := c.cc.Invoke(ctx, BillingService_GetMassPayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ListGatewayTransactions(ctx context.Context, in *ListGatewayTransactionsRequest, opts ...grpc.CallOption) (*ListGatewayTransactionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListGatewayTransactionsResponse)
+	err := c.cc.Invoke(ctx, BillingService_ListGatewayTransactions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) SyncGatewayTransactions(ctx context.Context, in *SyncGatewayTransactionsRequest, opts ...grpc.CallOption) (*SyncGatewayTransactionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncGatewayTransactionsResponse)
+	err := c.cc.Invoke(ctx, BillingService_SyncGatewayTransactions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) ListGatewaySettlements(ctx context.Context, in *ListGatewaySettlementsRequest, opts ...grpc.CallOption) (*ListGatewaySettlementsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListGatewaySettlementsResponse)
+	err := c.cc.Invoke(ctx, BillingService_ListGatewaySettlements_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) SaveGatewaySettlement(ctx context.Context, in *SaveGatewaySettlementRequest, opts ...grpc.CallOption) (*SaveGatewaySettlementResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SaveGatewaySettlementResponse)
+	err := c.cc.Invoke(ctx, BillingService_SaveGatewaySettlement_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BillingServiceServer is the server API for BillingService service.
 // All implementations must embed UnimplementedBillingServiceServer
 // for forward compatibility.
@@ -116,11 +348,34 @@ type BillingServiceServer interface {
 	// Faktur
 	ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error)
 	GetInvoice(context.Context, *GetInvoiceRequest) (*GetInvoiceResponse, error)
+	CreateInvoice(context.Context, *CreateInvoiceRequest) (*CreateInvoiceResponse, error)
 	CancelInvoice(context.Context, *CancelInvoiceRequest) (*CancelInvoiceResponse, error)
+	ApplyInvoiceDiscount(context.Context, *ApplyInvoiceDiscountRequest) (*ApplyInvoiceDiscountResponse, error)
 	GenerateInvoices(context.Context, *GenerateInvoicesRequest) (*GenerateInvoicesResponse, error)
+	ExportInvoices(context.Context, *ExportInvoicesRequest) (*ExportInvoicesResponse, error)
 	// Kasir
 	CashierResolve(context.Context, *CashierResolveRequest) (*CashierResolveResponse, error)
 	CashierPay(context.Context, *CashierPayRequest) (*CashierPayResponse, error)
+	// Pembayaran manual & reversal (Fase 3)
+	ResolveManualPayment(context.Context, *ResolveManualPaymentRequest) (*ResolveManualPaymentResponse, error)
+	SubmitManualPayment(context.Context, *SubmitManualPaymentRequest) (*SubmitManualPaymentResponse, error)
+	ListPaymentSubmissions(context.Context, *ListPaymentSubmissionsRequest) (*ListPaymentSubmissionsResponse, error)
+	ApprovePaymentSubmission(context.Context, *ApprovePaymentSubmissionRequest) (*ApprovePaymentSubmissionResponse, error)
+	RejectPaymentSubmission(context.Context, *RejectPaymentSubmissionRequest) (*RejectPaymentSubmissionResponse, error)
+	ReversePayment(context.Context, *ReversePaymentRequest) (*ReversePaymentResponse, error)
+	// Master Metode Pembayaran (W3)
+	ListPaymentMethods(context.Context, *ListPaymentMethodsRequest) (*ListPaymentMethodsResponse, error)
+	SavePaymentMethod(context.Context, *SavePaymentMethodRequest) (*SavePaymentMethodResponse, error)
+	DeletePaymentMethod(context.Context, *DeletePaymentMethodRequest) (*DeletePaymentMethodResponse, error)
+	// Mass Payment (W3)
+	CreateMassPayment(context.Context, *CreateMassPaymentRequest) (*CreateMassPaymentResponse, error)
+	ListMassPayments(context.Context, *ListMassPaymentsRequest) (*ListMassPaymentsResponse, error)
+	GetMassPayment(context.Context, *GetMassPaymentRequest) (*GetMassPaymentResponse, error)
+	// Gateway Transaksi & Settlement (W4)
+	ListGatewayTransactions(context.Context, *ListGatewayTransactionsRequest) (*ListGatewayTransactionsResponse, error)
+	SyncGatewayTransactions(context.Context, *SyncGatewayTransactionsRequest) (*SyncGatewayTransactionsResponse, error)
+	ListGatewaySettlements(context.Context, *ListGatewaySettlementsRequest) (*ListGatewaySettlementsResponse, error)
+	SaveGatewaySettlement(context.Context, *SaveGatewaySettlementRequest) (*SaveGatewaySettlementResponse, error)
 	mustEmbedUnimplementedBillingServiceServer()
 }
 
@@ -137,17 +392,74 @@ func (UnimplementedBillingServiceServer) ListInvoices(context.Context, *ListInvo
 func (UnimplementedBillingServiceServer) GetInvoice(context.Context, *GetInvoiceRequest) (*GetInvoiceResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetInvoice not implemented")
 }
+func (UnimplementedBillingServiceServer) CreateInvoice(context.Context, *CreateInvoiceRequest) (*CreateInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateInvoice not implemented")
+}
 func (UnimplementedBillingServiceServer) CancelInvoice(context.Context, *CancelInvoiceRequest) (*CancelInvoiceResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CancelInvoice not implemented")
 }
+func (UnimplementedBillingServiceServer) ApplyInvoiceDiscount(context.Context, *ApplyInvoiceDiscountRequest) (*ApplyInvoiceDiscountResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ApplyInvoiceDiscount not implemented")
+}
 func (UnimplementedBillingServiceServer) GenerateInvoices(context.Context, *GenerateInvoicesRequest) (*GenerateInvoicesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GenerateInvoices not implemented")
+}
+func (UnimplementedBillingServiceServer) ExportInvoices(context.Context, *ExportInvoicesRequest) (*ExportInvoicesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ExportInvoices not implemented")
 }
 func (UnimplementedBillingServiceServer) CashierResolve(context.Context, *CashierResolveRequest) (*CashierResolveResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CashierResolve not implemented")
 }
 func (UnimplementedBillingServiceServer) CashierPay(context.Context, *CashierPayRequest) (*CashierPayResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CashierPay not implemented")
+}
+func (UnimplementedBillingServiceServer) ResolveManualPayment(context.Context, *ResolveManualPaymentRequest) (*ResolveManualPaymentResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResolveManualPayment not implemented")
+}
+func (UnimplementedBillingServiceServer) SubmitManualPayment(context.Context, *SubmitManualPaymentRequest) (*SubmitManualPaymentResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SubmitManualPayment not implemented")
+}
+func (UnimplementedBillingServiceServer) ListPaymentSubmissions(context.Context, *ListPaymentSubmissionsRequest) (*ListPaymentSubmissionsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListPaymentSubmissions not implemented")
+}
+func (UnimplementedBillingServiceServer) ApprovePaymentSubmission(context.Context, *ApprovePaymentSubmissionRequest) (*ApprovePaymentSubmissionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ApprovePaymentSubmission not implemented")
+}
+func (UnimplementedBillingServiceServer) RejectPaymentSubmission(context.Context, *RejectPaymentSubmissionRequest) (*RejectPaymentSubmissionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RejectPaymentSubmission not implemented")
+}
+func (UnimplementedBillingServiceServer) ReversePayment(context.Context, *ReversePaymentRequest) (*ReversePaymentResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ReversePayment not implemented")
+}
+func (UnimplementedBillingServiceServer) ListPaymentMethods(context.Context, *ListPaymentMethodsRequest) (*ListPaymentMethodsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListPaymentMethods not implemented")
+}
+func (UnimplementedBillingServiceServer) SavePaymentMethod(context.Context, *SavePaymentMethodRequest) (*SavePaymentMethodResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SavePaymentMethod not implemented")
+}
+func (UnimplementedBillingServiceServer) DeletePaymentMethod(context.Context, *DeletePaymentMethodRequest) (*DeletePaymentMethodResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeletePaymentMethod not implemented")
+}
+func (UnimplementedBillingServiceServer) CreateMassPayment(context.Context, *CreateMassPaymentRequest) (*CreateMassPaymentResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateMassPayment not implemented")
+}
+func (UnimplementedBillingServiceServer) ListMassPayments(context.Context, *ListMassPaymentsRequest) (*ListMassPaymentsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListMassPayments not implemented")
+}
+func (UnimplementedBillingServiceServer) GetMassPayment(context.Context, *GetMassPaymentRequest) (*GetMassPaymentResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetMassPayment not implemented")
+}
+func (UnimplementedBillingServiceServer) ListGatewayTransactions(context.Context, *ListGatewayTransactionsRequest) (*ListGatewayTransactionsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListGatewayTransactions not implemented")
+}
+func (UnimplementedBillingServiceServer) SyncGatewayTransactions(context.Context, *SyncGatewayTransactionsRequest) (*SyncGatewayTransactionsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SyncGatewayTransactions not implemented")
+}
+func (UnimplementedBillingServiceServer) ListGatewaySettlements(context.Context, *ListGatewaySettlementsRequest) (*ListGatewaySettlementsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListGatewaySettlements not implemented")
+}
+func (UnimplementedBillingServiceServer) SaveGatewaySettlement(context.Context, *SaveGatewaySettlementRequest) (*SaveGatewaySettlementResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SaveGatewaySettlement not implemented")
 }
 func (UnimplementedBillingServiceServer) mustEmbedUnimplementedBillingServiceServer() {}
 func (UnimplementedBillingServiceServer) testEmbeddedByValue()                        {}
@@ -206,6 +518,24 @@ func _BillingService_GetInvoice_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_CreateInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CreateInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CreateInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CreateInvoice(ctx, req.(*CreateInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BillingService_CancelInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CancelInvoiceRequest)
 	if err := dec(in); err != nil {
@@ -224,6 +554,24 @@ func _BillingService_CancelInvoice_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_ApplyInvoiceDiscount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyInvoiceDiscountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ApplyInvoiceDiscount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ApplyInvoiceDiscount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ApplyInvoiceDiscount(ctx, req.(*ApplyInvoiceDiscountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BillingService_GenerateInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GenerateInvoicesRequest)
 	if err := dec(in); err != nil {
@@ -238,6 +586,24 @@ func _BillingService_GenerateInvoices_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).GenerateInvoices(ctx, req.(*GenerateInvoicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ExportInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportInvoicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ExportInvoices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ExportInvoices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ExportInvoices(ctx, req.(*ExportInvoicesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -278,6 +644,294 @@ func _BillingService_CashierPay_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_ResolveManualPayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResolveManualPaymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ResolveManualPayment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ResolveManualPayment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ResolveManualPayment(ctx, req.(*ResolveManualPaymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_SubmitManualPayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitManualPaymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).SubmitManualPayment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_SubmitManualPayment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).SubmitManualPayment(ctx, req.(*SubmitManualPaymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ListPaymentSubmissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPaymentSubmissionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListPaymentSubmissions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ListPaymentSubmissions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListPaymentSubmissions(ctx, req.(*ListPaymentSubmissionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ApprovePaymentSubmission_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApprovePaymentSubmissionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ApprovePaymentSubmission(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ApprovePaymentSubmission_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ApprovePaymentSubmission(ctx, req.(*ApprovePaymentSubmissionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_RejectPaymentSubmission_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RejectPaymentSubmissionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).RejectPaymentSubmission(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_RejectPaymentSubmission_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).RejectPaymentSubmission(ctx, req.(*RejectPaymentSubmissionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ReversePayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReversePaymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ReversePayment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ReversePayment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ReversePayment(ctx, req.(*ReversePaymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ListPaymentMethods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPaymentMethodsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListPaymentMethods(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ListPaymentMethods_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListPaymentMethods(ctx, req.(*ListPaymentMethodsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_SavePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SavePaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).SavePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_SavePaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).SavePaymentMethod(ctx, req.(*SavePaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_DeletePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).DeletePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_DeletePaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).DeletePaymentMethod(ctx, req.(*DeletePaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_CreateMassPayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateMassPaymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CreateMassPayment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CreateMassPayment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CreateMassPayment(ctx, req.(*CreateMassPaymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ListMassPayments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMassPaymentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListMassPayments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ListMassPayments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListMassPayments(ctx, req.(*ListMassPaymentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_GetMassPayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMassPaymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).GetMassPayment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_GetMassPayment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).GetMassPayment(ctx, req.(*GetMassPaymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ListGatewayTransactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListGatewayTransactionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListGatewayTransactions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ListGatewayTransactions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListGatewayTransactions(ctx, req.(*ListGatewayTransactionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_SyncGatewayTransactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncGatewayTransactionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).SyncGatewayTransactions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_SyncGatewayTransactions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).SyncGatewayTransactions(ctx, req.(*SyncGatewayTransactionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ListGatewaySettlements_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListGatewaySettlementsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListGatewaySettlements(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ListGatewaySettlements_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListGatewaySettlements(ctx, req.(*ListGatewaySettlementsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_SaveGatewaySettlement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveGatewaySettlementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).SaveGatewaySettlement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_SaveGatewaySettlement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).SaveGatewaySettlement(ctx, req.(*SaveGatewaySettlementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BillingService_ServiceDesc is the grpc.ServiceDesc for BillingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -294,12 +948,24 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_GetInvoice_Handler,
 		},
 		{
+			MethodName: "CreateInvoice",
+			Handler:    _BillingService_CreateInvoice_Handler,
+		},
+		{
 			MethodName: "CancelInvoice",
 			Handler:    _BillingService_CancelInvoice_Handler,
 		},
 		{
+			MethodName: "ApplyInvoiceDiscount",
+			Handler:    _BillingService_ApplyInvoiceDiscount_Handler,
+		},
+		{
 			MethodName: "GenerateInvoices",
 			Handler:    _BillingService_GenerateInvoices_Handler,
+		},
+		{
+			MethodName: "ExportInvoices",
+			Handler:    _BillingService_ExportInvoices_Handler,
 		},
 		{
 			MethodName: "CashierResolve",
@@ -308,6 +974,70 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CashierPay",
 			Handler:    _BillingService_CashierPay_Handler,
+		},
+		{
+			MethodName: "ResolveManualPayment",
+			Handler:    _BillingService_ResolveManualPayment_Handler,
+		},
+		{
+			MethodName: "SubmitManualPayment",
+			Handler:    _BillingService_SubmitManualPayment_Handler,
+		},
+		{
+			MethodName: "ListPaymentSubmissions",
+			Handler:    _BillingService_ListPaymentSubmissions_Handler,
+		},
+		{
+			MethodName: "ApprovePaymentSubmission",
+			Handler:    _BillingService_ApprovePaymentSubmission_Handler,
+		},
+		{
+			MethodName: "RejectPaymentSubmission",
+			Handler:    _BillingService_RejectPaymentSubmission_Handler,
+		},
+		{
+			MethodName: "ReversePayment",
+			Handler:    _BillingService_ReversePayment_Handler,
+		},
+		{
+			MethodName: "ListPaymentMethods",
+			Handler:    _BillingService_ListPaymentMethods_Handler,
+		},
+		{
+			MethodName: "SavePaymentMethod",
+			Handler:    _BillingService_SavePaymentMethod_Handler,
+		},
+		{
+			MethodName: "DeletePaymentMethod",
+			Handler:    _BillingService_DeletePaymentMethod_Handler,
+		},
+		{
+			MethodName: "CreateMassPayment",
+			Handler:    _BillingService_CreateMassPayment_Handler,
+		},
+		{
+			MethodName: "ListMassPayments",
+			Handler:    _BillingService_ListMassPayments_Handler,
+		},
+		{
+			MethodName: "GetMassPayment",
+			Handler:    _BillingService_GetMassPayment_Handler,
+		},
+		{
+			MethodName: "ListGatewayTransactions",
+			Handler:    _BillingService_ListGatewayTransactions_Handler,
+		},
+		{
+			MethodName: "SyncGatewayTransactions",
+			Handler:    _BillingService_SyncGatewayTransactions_Handler,
+		},
+		{
+			MethodName: "ListGatewaySettlements",
+			Handler:    _BillingService_ListGatewaySettlements_Handler,
+		},
+		{
+			MethodName: "SaveGatewaySettlement",
+			Handler:    _BillingService_SaveGatewaySettlement_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
