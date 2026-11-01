@@ -57,9 +57,6 @@ type Config struct {
 	AIV6Mutations                 bool
 	AIMaxProposalsPerMinute       int
 	AIMaxScriptLines              int
-	AIChatStreamEnabled           bool
-	AIChatMaxContextMessages      int
-	AIChatEventRetentionDays      int
 	CommandLogRetentionDays       int
 	ApprovalTTLMinutes            int
 	ApprovalRequireReasonOnReject bool
@@ -133,9 +130,6 @@ func Load() Config {
 		AIV6Mutations:                 getEnvAsBool("AI_V6_MUTATIONS", true),
 		AIMaxProposalsPerMinute:       getEnvAsInt("AI_MAX_PROPOSALS_PER_MINUTE", 10),
 		AIMaxScriptLines:              getEnvAsInt("AI_MAX_SCRIPT_LINES", 50),
-		AIChatStreamEnabled:           getEnvAsBool("AI_CHAT_STREAM_ENABLED", true),
-		AIChatMaxContextMessages:      getEnvAsInt("AI_CHAT_MAX_CONTEXT_MESSAGES", 50),
-		AIChatEventRetentionDays:      getEnvAsInt("AI_CHAT_EVENT_RETENTION_DAYS", 30),
 		CommandLogRetentionDays:       getEnvAsInt("COMMAND_LOG_RETENTION_DAYS", 180),
 		ApprovalTTLMinutes:            getEnvAsInt("APPROVAL_TTL_MINUTES", 15),
 		ApprovalRequireReasonOnReject: getEnvAsBool("APPROVAL_REQUIRE_REASON_ON_REJECT", true),

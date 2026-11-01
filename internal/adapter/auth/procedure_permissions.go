@@ -376,7 +376,6 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.RestorePointService/RestoreFromPoint":             "restore:apply",
 	"/polyglot.v1.RestorePointService/DownloadRestorePointArtifact": "restore:read",
 	"/polyglot.v1.RestorePointService/DeleteRestorePoint":           "restore:delete",
-	"/polyglot.v1.AIChatService/Chat":                               "ai:ops",
 
 	// ─── Plain-HTTP Staff Endpoints (JWT Guarded) ───────────────────────────
 	"/api/cashier/charge":         "billing:manage",

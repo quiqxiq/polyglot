@@ -1,7 +1,6 @@
 import {
   BarChart3,
   BellRing,
-  Bot,
   ClipboardList,
   Contact,
   FileText,
@@ -181,12 +180,6 @@ export const getSidebarData = (t: (key: string) => string): SidebarData => ({
           url: '/skills',
           icon: Sparkles,
           permission: 'skill:read',
-        },
-        {
-          title: t('nav.ai_ops'),
-          url: '/ai-ops',
-          icon: Bot,
-          permission: 'ai:ops',
         },
         {
           title: t('nav.broadcast'),

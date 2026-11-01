@@ -50,7 +50,6 @@ import { Route as AuthenticatedCustomersIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedCashbookIndexRouteImport } from './routes/_authenticated/cashbook/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
-import { Route as AuthenticatedAiOpsIndexRouteImport } from './routes/_authenticated/ai-ops/index'
 import { Route as PortalIsolatePppoeRouteImport } from './routes/portal/isolate/pppoe'
 import { Route as PortalIsolateHotspotRouteImport } from './routes/portal/isolate/hotspot'
 import { Route as AuthenticatedSettingsPaymentMethodsRouteImport } from './routes/_authenticated/settings/payment-methods'
@@ -68,8 +67,6 @@ import { Route as AuthenticatedOltOltIdRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as AuthenticatedCustomersImportRouteImport } from './routes/_authenticated/customers/import'
 import { Route as AuthenticatedCustomersCustomerIdRouteImport } from './routes/_authenticated/customers/$customerId'
-import { Route as AuthenticatedAiOpsRestorePointsRouteImport } from './routes/_authenticated/ai-ops/restore-points'
-import { Route as AuthenticatedAiOpsApprovalsRouteImport } from './routes/_authenticated/ai-ops/approvals'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -289,11 +286,6 @@ const AuthenticatedAppsIndexRoute = AuthenticatedAppsIndexRouteImport.update({
   path: '/apps/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedAiOpsIndexRoute = AuthenticatedAiOpsIndexRouteImport.update({
-  id: '/ai-ops/',
-  path: '/ai-ops/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const PortalIsolatePppoeRoute = PortalIsolatePppoeRouteImport.update({
   id: '/portal/isolate/pppoe',
   path: '/portal/isolate/pppoe',
@@ -393,18 +385,6 @@ const AuthenticatedCustomersCustomerIdRoute =
     path: '/customers/$customerId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAiOpsRestorePointsRoute =
-  AuthenticatedAiOpsRestorePointsRouteImport.update({
-    id: '/ai-ops/restore-points',
-    path: '/ai-ops/restore-points',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAiOpsApprovalsRoute =
-  AuthenticatedAiOpsApprovalsRouteImport.update({
-    id: '/ai-ops/approvals',
-    path: '/ai-ops/approvals',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -424,8 +404,6 @@ export interface FileRoutesByFullPath {
   '/portal/login': typeof PortalLoginRoute
   '/register/status': typeof RegisterStatusRoute
   '/portal/': typeof PortalIndexRoute
-  '/ai-ops/approvals': typeof AuthenticatedAiOpsApprovalsRoute
-  '/ai-ops/restore-points': typeof AuthenticatedAiOpsRestorePointsRoute
   '/customers/$customerId': typeof AuthenticatedCustomersCustomerIdRoute
   '/customers/import': typeof AuthenticatedCustomersImportRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -443,7 +421,6 @@ export interface FileRoutesByFullPath {
   '/settings/payment-methods': typeof AuthenticatedSettingsPaymentMethodsRoute
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
-  '/ai-ops/': typeof AuthenticatedAiOpsIndexRoute
   '/apps/': typeof AuthenticatedAppsIndexRoute
   '/cashbook/': typeof AuthenticatedCashbookIndexRoute
   '/chats/': typeof AuthenticatedChatsIndexRoute
@@ -485,8 +462,6 @@ export interface FileRoutesByTo {
   '/register/status': typeof RegisterStatusRoute
   '/': typeof AuthenticatedIndexRoute
   '/portal': typeof PortalIndexRoute
-  '/ai-ops/approvals': typeof AuthenticatedAiOpsApprovalsRoute
-  '/ai-ops/restore-points': typeof AuthenticatedAiOpsRestorePointsRoute
   '/customers/$customerId': typeof AuthenticatedCustomersCustomerIdRoute
   '/customers/import': typeof AuthenticatedCustomersImportRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -504,7 +479,6 @@ export interface FileRoutesByTo {
   '/settings/payment-methods': typeof AuthenticatedSettingsPaymentMethodsRoute
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
-  '/ai-ops': typeof AuthenticatedAiOpsIndexRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/cashbook': typeof AuthenticatedCashbookIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
@@ -549,8 +523,6 @@ export interface FileRoutesById {
   '/register/status': typeof RegisterStatusRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/portal/': typeof PortalIndexRoute
-  '/_authenticated/ai-ops/approvals': typeof AuthenticatedAiOpsApprovalsRoute
-  '/_authenticated/ai-ops/restore-points': typeof AuthenticatedAiOpsRestorePointsRoute
   '/_authenticated/customers/$customerId': typeof AuthenticatedCustomersCustomerIdRoute
   '/_authenticated/customers/import': typeof AuthenticatedCustomersImportRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
@@ -568,7 +540,6 @@ export interface FileRoutesById {
   '/_authenticated/settings/payment-methods': typeof AuthenticatedSettingsPaymentMethodsRoute
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
-  '/_authenticated/ai-ops/': typeof AuthenticatedAiOpsIndexRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/cashbook/': typeof AuthenticatedCashbookIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
@@ -613,8 +584,6 @@ export interface FileRouteTypes {
     | '/portal/login'
     | '/register/status'
     | '/portal/'
-    | '/ai-ops/approvals'
-    | '/ai-ops/restore-points'
     | '/customers/$customerId'
     | '/customers/import'
     | '/errors/$error'
@@ -632,7 +601,6 @@ export interface FileRouteTypes {
     | '/settings/payment-methods'
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
-    | '/ai-ops/'
     | '/apps/'
     | '/cashbook/'
     | '/chats/'
@@ -674,8 +642,6 @@ export interface FileRouteTypes {
     | '/register/status'
     | '/'
     | '/portal'
-    | '/ai-ops/approvals'
-    | '/ai-ops/restore-points'
     | '/customers/$customerId'
     | '/customers/import'
     | '/errors/$error'
@@ -693,7 +659,6 @@ export interface FileRouteTypes {
     | '/settings/payment-methods'
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
-    | '/ai-ops'
     | '/apps'
     | '/cashbook'
     | '/chats'
@@ -737,8 +702,6 @@ export interface FileRouteTypes {
     | '/register/status'
     | '/_authenticated/'
     | '/portal/'
-    | '/_authenticated/ai-ops/approvals'
-    | '/_authenticated/ai-ops/restore-points'
     | '/_authenticated/customers/$customerId'
     | '/_authenticated/customers/import'
     | '/_authenticated/errors/$error'
@@ -756,7 +719,6 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/payment-methods'
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
-    | '/_authenticated/ai-ops/'
     | '/_authenticated/apps/'
     | '/_authenticated/cashbook/'
     | '/_authenticated/chats/'
@@ -1092,13 +1054,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/ai-ops/': {
-      id: '/_authenticated/ai-ops/'
-      path: '/ai-ops'
-      fullPath: '/ai-ops/'
-      preLoaderRoute: typeof AuthenticatedAiOpsIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/portal/isolate/pppoe': {
       id: '/portal/isolate/pppoe'
       path: '/portal/isolate/pppoe'
@@ -1218,20 +1173,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCustomersCustomerIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/ai-ops/restore-points': {
-      id: '/_authenticated/ai-ops/restore-points'
-      path: '/ai-ops/restore-points'
-      fullPath: '/ai-ops/restore-points'
-      preLoaderRoute: typeof AuthenticatedAiOpsRestorePointsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/ai-ops/approvals': {
-      id: '/_authenticated/ai-ops/approvals'
-      path: '/ai-ops/approvals'
-      fullPath: '/ai-ops/approvals'
-      preLoaderRoute: typeof AuthenticatedAiOpsApprovalsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
   }
 }
 
@@ -1272,15 +1213,12 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedAiOpsApprovalsRoute: typeof AuthenticatedAiOpsApprovalsRoute
-  AuthenticatedAiOpsRestorePointsRoute: typeof AuthenticatedAiOpsRestorePointsRoute
   AuthenticatedCustomersCustomerIdRoute: typeof AuthenticatedCustomersCustomerIdRoute
   AuthenticatedCustomersImportRoute: typeof AuthenticatedCustomersImportRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedOltOltIdRoute: typeof AuthenticatedOltOltIdRoute
   AuthenticatedPlansImportRoute: typeof AuthenticatedPlansImportRoute
   AuthenticatedReportsFinanceRoute: typeof AuthenticatedReportsFinanceRoute
-  AuthenticatedAiOpsIndexRoute: typeof AuthenticatedAiOpsIndexRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
   AuthenticatedCashbookIndexRoute: typeof AuthenticatedCashbookIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
@@ -1307,15 +1245,12 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedAiOpsApprovalsRoute: AuthenticatedAiOpsApprovalsRoute,
-  AuthenticatedAiOpsRestorePointsRoute: AuthenticatedAiOpsRestorePointsRoute,
   AuthenticatedCustomersCustomerIdRoute: AuthenticatedCustomersCustomerIdRoute,
   AuthenticatedCustomersImportRoute: AuthenticatedCustomersImportRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedOltOltIdRoute: AuthenticatedOltOltIdRoute,
   AuthenticatedPlansImportRoute: AuthenticatedPlansImportRoute,
   AuthenticatedReportsFinanceRoute: AuthenticatedReportsFinanceRoute,
-  AuthenticatedAiOpsIndexRoute: AuthenticatedAiOpsIndexRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
   AuthenticatedCashbookIndexRoute: AuthenticatedCashbookIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,

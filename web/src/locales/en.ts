@@ -53,7 +53,6 @@ export const en: TranslationSchema = {
     general: 'General',
     isp_billing: 'ISP & Billing',
     ai_omnichannel: 'AI & Omnichannel',
-    ai_ops: 'AI Router Ops',
     system: 'System',
     dashboard: 'Dashboard',
     devices: 'Devices',

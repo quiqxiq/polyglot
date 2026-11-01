@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
-	aichatConnect "github.com/quixiq/polyglot/internal/adapter/connect/aichat"
 	approvalConnect "github.com/quixiq/polyglot/internal/adapter/connect/approval"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
 	billingConnect "github.com/quixiq/polyglot/internal/adapter/connect/billing"
@@ -46,7 +45,6 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
-	aichatUC "github.com/quixiq/polyglot/internal/usecase/aichat"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
@@ -129,7 +127,6 @@ type routerDeps struct {
 	activeDeviceUC         *deviceUC.ActiveDeviceUseCase
 	deviceAuthorizer       port.DeviceAuthorizer
 	aiOpsResolver          func(ctx context.Context, deviceID string) (port.RouterOps, error)
-	aiChatUC               *aichatUC.UseCase
 	regManagerUC           *registrationUC.ManageRegistrationUseCase
 	regConvertUC           *registrationUC.ConvertUseCase
 	portalUCase            *portalUC.UseCase
@@ -246,10 +243,6 @@ func buildRouter(d routerDeps) http.Handler {
 	restoreH := restorepointConnect.NewConnectHandler(d.restoreUC, d.deviceAuthorizer)
 	restorePath, restoreHTTP := restorepointConnect.NewServiceHandler(restoreH)
 	registerProtected(restorePath, restoreHTTP)
-
-	chatH := aichatConnect.NewHandler(d.aiChatUC)
-	chatPath, chatHTTP := aichatConnect.NewServiceHandler(chatH)
-	registerProtected(chatPath, chatHTTP)
 
 	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(d.regManagerUC, d.regConvertUC)
 	registerProtected(regPath, regHandler)

@@ -53,7 +53,6 @@ export interface TranslationSchema {
     general: string
     isp_billing: string
     ai_omnichannel: string
-    ai_ops: string
     system: string
     dashboard: string
     devices: string

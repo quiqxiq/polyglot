@@ -1,7 +1,4 @@
 import { AuthService } from '@/gen/v1/auth_connect'
-import { AIChatService } from '@/gen/v1/ai_chat_connect'
-import { ApprovalService } from '@/gen/v1/approval_connect'
-import { RestorePointService } from '@/gen/v1/restore_point_connect'
 import { BillingService } from '@/gen/v1/billing_connect'
 import { BotService } from '@/gen/v1/bot_connect'
 import { CashbookService } from '@/gen/v1/cashbook_connect'
@@ -105,9 +102,6 @@ const transport = createConnectTransport({
 })
 
 export const authClient = createPromiseClient(AuthService, transport)
-export const aiChatClient = createPromiseClient(AIChatService, transport)
-export const approvalClient = createPromiseClient(ApprovalService, transport)
-export const restorePointClient = createPromiseClient(RestorePointService, transport)
 export const billingClient = createPromiseClient(BillingService, transport)
 export const botClient = createPromiseClient(BotService, transport)
 export const cashbookClient = createPromiseClient(CashbookService, transport)

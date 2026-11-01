@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Bot, ChevronsUpDown, Network, Plus, Server } from 'lucide-react'
+import { ChevronsUpDown, Network, Plus, Server } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
 import { useI18n } from '@/context/i18n-provider'
 import {
@@ -16,11 +16,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import {
-  useActiveDeviceQuery,
-  useDevicesQuery,
-  useSetActiveDeviceMutation,
-} from '@/features/devices/api/use-devices'
+import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useDeviceStore } from '@/stores/device-store'
 import { useAuthStore } from '@/stores/auth-store'
 
@@ -30,8 +26,6 @@ export function DeviceSwitcher() {
   const navigate = useNavigate()
   const { data: devices = [], isLoading, isSuccess } = useDevicesQuery()
   const { selectedDeviceId, setSelectedDeviceId, hasHydrated } = useDeviceStore()
-  const { data: activeDevice } = useActiveDeviceQuery()
-  const setActiveDevice = useSetActiveDeviceMutation()
 
   const isOwner = Boolean(useAuthStore((s) => s.auth.user?.role?.includes('owner')))
 
@@ -109,12 +103,7 @@ export function DeviceSwitcher() {
               devices.map((device) => (
                 <DropdownMenuItem
                   key={device.id}
-                  onClick={() => {
-                    setSelectedDeviceId(device.id)
-                    // Explicit user choice is the ONLY action that binds the
-                    // server-side AI target. Auto-selection never does.
-                    setActiveDevice.mutate(device.id)
-                  }}
+                  onClick={() => setSelectedDeviceId(device.id)}
                   className={`gap-2 p-2 cursor-pointer ${
                     device.id === selectedDeviceId ? 'bg-accent font-medium' : ''
                   }`}
@@ -123,14 +112,7 @@ export function DeviceSwitcher() {
                     <Network className='size-3.5 shrink-0' />
                   </div>
                   <div className='flex flex-col flex-1'>
-                    <span className='flex items-center gap-1.5 text-sm leading-none'>
-                      {device.name}
-                      {activeDevice?.deviceId === device.id && (
-                        <span className='inline-flex items-center gap-0.5 rounded-sm bg-primary/10 px-1 py-0.5 text-[10px] font-medium text-primary'>
-                          <Bot className='size-2.5' /> AI target
-                        </span>
-                      )}
-                    </span>
+                    <span className='text-sm leading-none'>{device.name}</span>
                     <span className='text-xs text-muted-foreground mt-0.5'>
                       {device.host} • {device.vendor}
                     </span>

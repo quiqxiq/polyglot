@@ -33,7 +33,6 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
-	aichatUC "github.com/quixiq/polyglot/internal/usecase/aichat"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
@@ -206,7 +205,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	restorePointRepo := postgres.NewRestorePointRepository(pgStore.DB())
 	commandLogRepo := postgres.NewCommandLogRepository(pgStore.DB())
 	activeDeviceRepo := postgres.NewActiveDeviceRepository(pgStore.DB())
-	aiChatRepo := postgres.NewAIChatRepository(pgStore.DB())
 
 	accountMgr := provisioner.New(reg, sessionGateway, hotGateway, sessionGateway, queueGateway)
 	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
@@ -336,17 +334,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	activeDeviceUC := deviceUC.NewActiveDeviceUseCase(activeDeviceRepo, repo, deviceAuthorizer, deviceUC.ActiveDeviceConfig{
 		TTL:                  time.Duration(cfg.ActiveDeviceTTLHours) * time.Hour,
 		SingleDeviceFallback: cfg.AISingleDeviceFallback,
-	})
-	aiChatUC := aichatUC.New(aichatUC.Deps{
-		Repo: aiChatRepo, Configs: pgStore, EncryptionKey: cfg.EncryptionKey,
-		Provider: func(_ context.Context, c *domainllm.Config, _ string) (port.LLMProvider, error) {
-			return llmFactory(c)
-		},
-		Devices: repo, ActiveDevice: activeDeviceUC, Ops: aiOpsResolver,
-		Proposals: proposalUC, Approvals: approvalRepo, RestorePoints: restoreUC,
-		Config: aichatUC.Config{
-			MaxContextMessages: cfg.AIChatMaxContextMessages,
-		},
 	})
 
 	regEventRepo := postgres.NewRegistrationEventRepository(pgStore.DB())
@@ -488,7 +475,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		activeDeviceUC:         activeDeviceUC,
 		deviceAuthorizer:       deviceAuthorizer,
 		aiOpsResolver:          aiOpsResolver,
-		aiChatUC:               aiChatUC,
 		regManagerUC:           regManagerUC,
 		regConvertUC:           regConvertUC,
 		portalUCase:            portalUCase,
@@ -591,19 +577,12 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		retentionJob := func(ctx context.Context) error {
 			now := time.Now().UTC()
 			logCutoff := now.AddDate(0, 0, -cfg.CommandLogRetentionDays)
-			chatCutoff := now.AddDate(0, 0, -cfg.AIChatEventRetentionDays)
 			logsDeleted, lerr := commandLogRepo.DeleteBefore(ctx, logCutoff)
 			if lerr != nil {
-				return lerr
+				return fmt.Errorf("cleanup command logs: %w", lerr)
 			}
-			eventsDeleted, cerr := aiChatRepo.DeleteEventsBefore(ctx, chatCutoff)
-			if cerr != nil {
-				return cerr
-			}
-			if logsDeleted+eventsDeleted > 0 {
-				logger.WithComponent("Scheduler").WithFields(map[string]any{
-					"command_logs": logsDeleted, "chat_events": eventsDeleted,
-				}).Info("retention cleanup summary")
+			if logsDeleted > 0 {
+				logger.WithComponent("Scheduler").WithField("command_logs", logsDeleted).Info("retention cleanup summary")
 			}
 			return nil
 		}

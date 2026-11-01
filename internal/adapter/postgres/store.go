@@ -93,8 +93,6 @@ func NewStore(dsn string) (*Store, error) {
 			&model.ApprovalModel{},
 			&model.CommandLogModel{},
 			&model.ActiveDeviceModel{},
-			&model.AIConversationModel{},
-			&model.AIChatEventModel{},
 		); err != nil {
 			return nil, fmt.Errorf("failed to auto-migrate: %w", err)
 		}

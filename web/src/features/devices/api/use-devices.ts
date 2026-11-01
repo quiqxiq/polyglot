@@ -228,34 +228,3 @@ export function useApplyRouterIntegrationScriptMutation() {
   })
 }
 
-export function useActiveDeviceQuery(sessionId = '') {
-  return useQuery({
-    queryKey: ['devices', 'active', sessionId],
-    queryFn: async () => {
-      const res = await deviceClient.getActiveDevice({ sessionId })
-      return { deviceId: res.deviceId, sessionId: res.sessionId }
-    },
-    refetchInterval: 30_000,
-  })
-}
-
-export function useSetActiveDeviceMutation() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: async (deviceId: string) =>
-      await deviceClient.setActiveDevice({ deviceId, sessionId: '' }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['devices', 'active'] })
-    },
-  })
-}
-
-export function useClearActiveDeviceMutation() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: async (sessionId?: string) => await deviceClient.clearActiveDevice({ sessionId: sessionId || '' }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['devices', 'active'] })
-    },
-  })
-}
