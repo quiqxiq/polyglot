@@ -57,10 +57,6 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "network:.*", "*"},
 		{"admin", "olt:.*", "*"},
 		{"admin", "ont:.*", "*"},
-		// AI Router Ops (M0/M1): chat/inspect, approval, restore point.
-		{"admin", "ai:.*", "*"},
-		{"admin", "approval:.*", "*"},
-		{"admin", "restore:.*", "*"},
 
 		// Agent / CS — customer service, voucher generator, & knowledge lookup.
 		{"agent", "conversation:.*", "*"},
@@ -116,9 +112,6 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "network:read", "*"},
 		{"teknisi", "olt:read", "*"},
 		{"teknisi", "ont:read", "*"},
-		{"teknisi", "ai:ops", "*"},
-		{"teknisi", "approval:read", "*"},
-		{"teknisi", "restore:read", "*"},
 	}
 
 	added := 0

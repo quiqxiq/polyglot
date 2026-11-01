@@ -3,10 +3,12 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ApplyRouterIntegrationScriptRequest, ApplyRouterIntegrationScriptResponse, ClearActiveDeviceRequest, ClearActiveDeviceResponse, CreateIsolationProfileRequest, CreateIsolationProfileResponse, DeleteDeviceRequest, DeleteDeviceResponse, DeleteIsolationProfileRequest, DeleteIsolationProfileResponse, DeviceStatusFrame, GetActiveDeviceRequest, GetActiveDeviceResponse, GetDevicePingConfigRequest, GetDevicePingConfigResponse, GetDeviceRequest, GetDeviceResponse, GetIsolationStatusRequest, GetIsolationStatusResponse, GetRouterIntegrationScriptRequest, GetRouterIntegrationScriptResponse, ListDevicesRequest, ListDevicesResponse, QueryDevicePingMetricsRequest, QueryDevicePingMetricsResponse, SetActiveDeviceRequest, SetActiveDeviceResponse, StreamDevicePingFrame, StreamDevicePingRequest, StreamDeviceStatusRequest, StreamDeviceTrafficFrame, StreamDeviceTrafficRequest, TerminalFrame, TestDeviceConnectionRequest, TestDeviceConnectionResponse, UpdateDevicePingConfigRequest, UpdateDevicePingConfigResponse, UpdateDeviceRequest, UpdateDeviceResponse, UpdateIsolationProfileRequest, UpdateIsolationProfileResponse } from "./device_pb.js";
+import { ApplyRouterIntegrationScriptRequest, ApplyRouterIntegrationScriptResponse, CreateIsolationProfileRequest, CreateIsolationProfileResponse, DeleteDeviceRequest, DeleteDeviceResponse, DeleteIsolationProfileRequest, DeleteIsolationProfileResponse, DeviceStatusFrame, GetDevicePingConfigRequest, GetDevicePingConfigResponse, GetDeviceRequest, GetDeviceResponse, GetIsolationStatusRequest, GetIsolationStatusResponse, GetRouterIntegrationScriptRequest, GetRouterIntegrationScriptResponse, ListDevicesRequest, ListDevicesResponse, QueryDevicePingMetricsRequest, QueryDevicePingMetricsResponse, StreamDevicePingFrame, StreamDevicePingRequest, StreamDeviceStatusRequest, StreamDeviceTrafficFrame, StreamDeviceTrafficRequest, TerminalFrame, TestDeviceConnectionRequest, TestDeviceConnectionResponse, UpdateDevicePingConfigRequest, UpdateDevicePingConfigResponse, UpdateDeviceRequest, UpdateDeviceResponse, UpdateIsolationProfileRequest, UpdateIsolationProfileResponse } from "./device_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
+ * DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
+ *
  * @generated from service polyglot.v1.DeviceService
  */
 export const DeviceService = {
@@ -174,35 +176,6 @@ export const DeviceService = {
       name: "ApplyRouterIntegrationScript",
       I: ApplyRouterIntegrationScriptRequest,
       O: ApplyRouterIntegrationScriptResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * AI Router Ops — router aktif untuk tool/chat AI.
-     *
-     * @generated from rpc polyglot.v1.DeviceService.SetActiveDevice
-     */
-    setActiveDevice: {
-      name: "SetActiveDevice",
-      I: SetActiveDeviceRequest,
-      O: SetActiveDeviceResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.DeviceService.GetActiveDevice
-     */
-    getActiveDevice: {
-      name: "GetActiveDevice",
-      I: GetActiveDeviceRequest,
-      O: GetActiveDeviceResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.DeviceService.ClearActiveDevice
-     */
-    clearActiveDevice: {
-      name: "ClearActiveDevice",
-      I: ClearActiveDeviceRequest,
-      O: ClearActiveDeviceResponse,
       kind: MethodKind.Unary,
     },
   }

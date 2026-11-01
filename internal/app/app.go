@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 
@@ -192,7 +191,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	cashRepo := postgres.NewCashbookRepository(pgStore.DB())
 	reportingRepo := postgres.NewReportingRepository(pgStore.DB())
 	auditLogRepo := postgres.NewAuditLogRepository(pgStore.DB())
-	commandAuditWriter := postgres.NewCommandAuditWriter(auditLogRepo)
 	regRepo := postgres.NewRegistrationRepository(pgStore.DB())
 	portalRepo := postgres.NewPortalRepository(pgStore.DB())
 	gwtxRepo := postgres.NewGatewayTransactionRepository(pgStore.DB())
@@ -201,10 +199,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	debtRepo := postgres.NewDebtRepository(pgStore.DB())
 	bulkPaymentRepo := postgres.NewBulkPaymentRepository(pgStore.DB())
 	settlementRepo := postgres.NewGatewaySettlementRepository(pgStore.DB())
-	approvalRepo := postgres.NewApprovalRepository(pgStore.DB())
-	restorePointRepo := postgres.NewRestorePointRepository(pgStore.DB())
-	commandLogRepo := postgres.NewCommandLogRepository(pgStore.DB())
-	activeDeviceRepo := postgres.NewActiveDeviceRepository(pgStore.DB())
 
 	accountMgr := provisioner.New(reg, sessionGateway, hotGateway, sessionGateway, queueGateway)
 	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
@@ -277,64 +271,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	payMethodUC := billingUC.NewPaymentMethodUseCase(paymentMethodRepo)
 	debtService := debtUC.NewService(debtRepo, customerRepo, notifRepo, settingRepo)
 
-	// AI Router Ops (PLAN-AI-ROUTER-OPS v2 M1): restore point + approval +
-	// execution. Router operations are MikroTik-only in v1.
-	restoreKey := cfg.RestorePointEncryptionKey
-	if restoreKey == "" {
-		restoreKey = cfg.EncryptionKey
-	}
-	rpStorage, rpErr := storageAdapter.NewRestorePointStorage(cfg.RestorePointDir, restoreKey)
-	if rpErr != nil && cfg.AIRouterOpsEnabled {
-		return nil, fmt.Errorf("restore point storage: %w", rpErr)
-	}
-	var rpStoragePort port.RestorePointStorage
-	if rpStorage != nil {
-		rpStoragePort = rpStorage
-	}
-	aiOpsResolver := func(ctx context.Context, deviceID string) (port.RouterOps, error) {
-		drv, derr := reg.Get(ctx, deviceID)
-		if derr != nil {
-			return nil, derr
-		}
-		if _, ok := drv.(*mikrotik.Driver); !ok {
-			return nil, fmt.Errorf("AI Router Ops v1 supports MikroTik drivers only (device %s)", deviceID)
-		}
-		return mikrotik.NewAIOps(drv), nil
-	}
-	aiDriverResolver := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
-		return reg.Get(ctx, deviceID)
-	}
-	restoreUC := networkUC.NewRestorePointUseCase(networkUC.RestorePointDeps{
-		Repo: restorePointRepo, Storage: rpStoragePort, Devices: repo, Ops: aiOpsResolver, Approvals: approvalRepo,
-		Config: networkUC.RestorePointConfig{
-			TTL:      time.Duration(cfg.RestorePointRetentionDays) * 24 * time.Hour,
-			MaxBytes: cfg.RestorePointMaxBytes, RetentionDays: cfg.RestorePointRetentionDays,
-			KeepLast: cfg.RestorePointKeepLast,
-		},
-	})
-	proposalUC := networkUC.NewProposalUseCase(networkUC.ProposalDeps{
-		Approvals: approvalRepo, RestorePoints: restoreUC, Devices: repo,
-		Driver: aiDriverResolver, Ops: aiOpsResolver, CommandLogs: commandLogRepo,
-		Config: networkUC.ProposalConfig{
-			TTL:            time.Duration(cfg.ApprovalTTLMinutes) * time.Minute,
-			MaxScriptLines: cfg.AIMaxScriptLines, V6Mutations: cfg.AIV6Mutations,
-		},
-	})
-	executionUC := networkUC.NewExecutionUseCase(networkUC.ExecutionDeps{
-		Approvals: approvalRepo, RestorePoints: restorePointRepo, Devices: repo,
-		Driver: aiDriverResolver, Ops: aiOpsResolver, CommandLogs: commandLogRepo,
-		Restore: restoreUC, WatchdogEnabled: cfg.WatchdogEnabled, WatchdogSeconds: cfg.WatchdogRollbackSeconds,
-	})
-	decisionUC := networkUC.NewDecisionUseCase(networkUC.DecisionDeps{
-		Approvals: approvalRepo, RestorePoints: restoreUC, Devices: repo,
-		Driver: aiDriverResolver, Ops: aiOpsResolver, Execution: executionUC,
-		RequireRejectReason: cfg.ApprovalRequireReasonOnReject,
-	})
 	deviceAuthorizer := auth.NewDeviceAuthorizer(userRepo)
-	activeDeviceUC := deviceUC.NewActiveDeviceUseCase(activeDeviceRepo, repo, deviceAuthorizer, deviceUC.ActiveDeviceConfig{
-		TTL:                  time.Duration(cfg.ActiveDeviceTTLHours) * time.Hour,
-		SingleDeviceFallback: cfg.AISingleDeviceFallback,
-	})
 
 	regEventRepo := postgres.NewRegistrationEventRepository(pgStore.DB())
 	regManagerUC := registrationUC.NewManageRegistrationUseCase(regRepo, notifRepo, auditLogRepo).
@@ -466,15 +403,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		debtService:            debtService,
 		settlementRepo:         settlementRepo,
 		gwtxRepo:               gwtxRepo,
-		auditWriter:            commandAuditWriter,
-		approvalRepo:           approvalRepo,
-		restoreUC:              restoreUC,
-		proposalUC:             proposalUC,
-		decisionUC:             decisionUC,
-		activeDevices:          activeDeviceRepo,
-		activeDeviceUC:         activeDeviceUC,
-		deviceAuthorizer:       deviceAuthorizer,
-		aiOpsResolver:          aiOpsResolver,
 		regManagerUC:           regManagerUC,
 		regConvertUC:           regConvertUC,
 		portalUCase:            portalUCase,
@@ -513,10 +441,16 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 					"stopped_early": res.StoppedEarly,
 				}).Info("router job batch summary")
 			}
-			return rerr
+			if rerr != nil {
+				return fmt.Errorf("router job batch: %w", rerr)
+			}
+			return nil
 		}
 		driftJob := func(ctx context.Context) error {
-			return runDriftReconciliation(ctx, repo, driverResolverConnect, reconciler)
+			if err := runDriftReconciliation(ctx, repo, driverResolverConnect, reconciler); err != nil {
+				return fmt.Errorf("drift reconciliation: %w", err)
+			}
+			return nil
 		}
 		acsMatchJob := func(ctx context.Context) error {
 			stats, aerr := ontService.SyncDevices(ctx)
@@ -525,15 +459,19 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 					"devices": stats.Devices, "matched": stats.Matched,
 					"unmatched": stats.Unmatched, "conflicts": stats.Conflicts,
 				}).Info("acs match summary")
+			} else {
+				return fmt.Errorf("acs sync devices: %w", aerr)
 			}
-			return aerr
+			return nil
 		}
 		acsTelemetryJob := func(ctx context.Context) error {
 			ok, terr := ontService.RefreshTelemetryAll(ctx)
 			if terr == nil {
 				logger.WithComponent("App").WithField("updated", ok).Info("acs telemetry summary")
+			} else {
+				return fmt.Errorf("acs telemetry refresh: %w", terr)
 			}
-			return terr
+			return nil
 		}
 		oltSyncJob := func(ctx context.Context) error {
 			res, serr := oltService.SyncAll(ctx)
@@ -543,88 +481,33 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 					"removed": r.Removed, "online": r.Online, "offline": r.Offline,
 				}).Info("olt sync summary")
 			}
-			return serr
-		}
-		backupScheduler := deviceUC.NewBackupScheduler(deviceUC.BackupScheduler{
-			Devices: repo, Restore: restoreUC, Approvals: approvalRepo, TenantID: "tenant-default",
-		})
-		approvalExpireJob := func(ctx context.Context) error {
-			n, err := approvalRepo.ExpirePending(ctx, time.Now().UTC())
-			if err == nil && n > 0 {
-				logger.WithComponent("Scheduler").WithField("expired", n).Info("approval expiry summary")
-			}
-			return err
-		}
-		restoreCleanupJob := func(ctx context.Context) error {
-			protected := map[string]bool{}
-			for _, status := range []string{"PENDING", "APPROVED", "EXECUTING"} {
-				items, _, lerr := approvalRepo.List(ctx, port.ApprovalFilter{TenantID: "tenant-default", Status: status, Limit: 500})
-				if lerr != nil {
-					return lerr
-				}
-				for _, a := range items {
-					if a.RestorePointID != "" {
-						protected[a.RestorePointID] = true
-					}
-				}
-			}
-			n, err := restoreUC.Cleanup(ctx, time.Now().UTC(), cfg.RestorePointKeepLast, protected)
-			if err == nil && n > 0 {
-				logger.WithComponent("Scheduler").WithField("deleted", n).Info("restore point cleanup summary")
-			}
-			return err
-		}
-		retentionJob := func(ctx context.Context) error {
-			now := time.Now().UTC()
-			logCutoff := now.AddDate(0, 0, -cfg.CommandLogRetentionDays)
-			logsDeleted, lerr := commandLogRepo.DeleteBefore(ctx, logCutoff)
-			if lerr != nil {
-				return fmt.Errorf("cleanup command logs: %w", lerr)
-			}
-			if logsDeleted > 0 {
-				logger.WithComponent("Scheduler").WithField("command_logs", logsDeleted).Info("retention cleanup summary")
+			if serr != nil {
+				return fmt.Errorf("olt sync all: %w", serr)
 			}
 			return nil
 		}
-		backupJob := func(ctx context.Context) error {
-			created, failed, err := backupScheduler.Run(ctx)
-			if err == nil && created+failed > 0 {
-				logger.WithComponent("Scheduler").WithFields(map[string]any{"created": created, "failed": failed}).Info("scheduled backup summary")
-			}
-			return err
-		}
 		sched = newScheduler(schedulerJobs{
-			billing:        runBillingUC,
-			isolate:        isolateWorker,
-			reminder:       reminderWorker,
-			waSend:         waWorker,
-			routerJobs:     routerJobsJob,
-			drift:          driftJob,
-			snapshot:       snapshotJob,
-			oltSync:        oltSyncJob,
-			acsMatch:       acsMatchJob,
-			acsTelemetry:   acsTelemetryJob,
-			approvalExpire: approvalExpireJob,
-			restoreCleanup: restoreCleanupJob,
-			backupDaily:    backupJob,
-			backupWeekly:   backupJob,
-			retention:      retentionJob,
+			billing:      runBillingUC,
+			isolate:      isolateWorker,
+			reminder:     reminderWorker,
+			waSend:       waWorker,
+			routerJobs:   routerJobsJob,
+			drift:        driftJob,
+			snapshot:     snapshotJob,
+			oltSync:      oltSyncJob,
+			acsMatch:     acsMatchJob,
+			acsTelemetry: acsTelemetryJob,
 		}, schedulerSpecs{
-			billing:        cfg.BillingCronSpec,
-			isolation:      cfg.IsolationCronSpec,
-			reminder:       cfg.ReminderCronSpec,
-			waSend:         cfg.WaSendCronSpec,
-			routerJobs:     cfg.RouterJobCronSpec,
-			drift:          cfg.DriftCronSpec,
-			snapshot:       cfg.SnapshotCronSpec,
-			oltSync:        cfg.OltSyncCronSpec,
-			acsMatch:       cfg.ACSMatchCronSpec,
-			acsTelemetry:   cfg.ACSTelemetryCron,
-			approvalExpire: "@every 5m",
-			restoreCleanup: "0 4 * * *",
-			backupDaily:    cronFromClock(cfg.BackupDailyAt, ""),
-			backupWeekly:   cronFromClock(cfg.BackupWeeklyAt, cfg.BackupWeeklyDay),
-			retention:      "30 4 * * *",
+			billing:      cfg.BillingCronSpec,
+			isolation:    cfg.IsolationCronSpec,
+			reminder:     cfg.ReminderCronSpec,
+			waSend:       cfg.WaSendCronSpec,
+			routerJobs:   cfg.RouterJobCronSpec,
+			drift:        cfg.DriftCronSpec,
+			snapshot:     cfg.SnapshotCronSpec,
+			oltSync:      cfg.OltSyncCronSpec,
+			acsMatch:     cfg.ACSMatchCronSpec,
+			acsTelemetry: cfg.ACSTelemetryCron,
 		}, "tenant-default", postgres.NewAdvisoryLocker(pgStore.DB()))
 		sched.Start()
 		logger.WithComponent("App").WithFields(map[string]any{
@@ -698,27 +581,4 @@ func loadInitialDevices(pgStore *postgres.Store, encKey string) (port.DeviceRepo
 func timeNowUTC() time.Time {
 	n := time.Now().UTC()
 	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, time.UTC)
-}
-
-// cronFromClock converts "HH:MM" (and optional weekday) into a 5-field cron
-// expression. Invalid input returns "" so the scheduler skips the job.
-func cronFromClock(hhmm, weekday string) string {
-	parts := strings.Split(strings.TrimSpace(hhmm), ":")
-	if len(parts) != 2 {
-		return ""
-	}
-	hour, errH := strconv.Atoi(parts[0])
-	minute, errM := strconv.Atoi(parts[1])
-	if errH != nil || errM != nil || hour < 0 || hour > 23 || minute < 0 || minute > 59 {
-		return ""
-	}
-	if strings.TrimSpace(weekday) == "" {
-		return fmt.Sprintf("%d %d * * *", minute, hour)
-	}
-	days := map[string]string{"sun": "0", "mon": "1", "tue": "2", "wed": "3", "thu": "4", "fri": "5", "sat": "6"}
-	dow, ok := days[strings.ToLower(strings.TrimSpace(weekday))]
-	if !ok {
-		return ""
-	}
-	return fmt.Sprintf("%d %d * * %s", minute, hour, dow)
 }

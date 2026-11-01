@@ -24,9 +24,6 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.DeviceService/DeleteIsolationProfile":       "device:manage",
 	"/polyglot.v1.DeviceService/GetRouterIntegrationScript":   "device:read",
 	"/polyglot.v1.DeviceService/ApplyRouterIntegrationScript": "device:manage",
-	"/polyglot.v1.DeviceService/SetActiveDevice":              "device:read",
-	"/polyglot.v1.DeviceService/GetActiveDevice":              "device:read",
-	"/polyglot.v1.DeviceService/ClearActiveDevice":            "device:read",
 
 	// ProbeService
 	"/polyglot.v1.ProbeService/ReportStatus":    "probe:read",
@@ -363,19 +360,6 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.IspAdminService/CommitPlans":         "ispadmin:manage",
 	"/polyglot.v1.IspAdminService/PullRouterCustomers": "ispadmin:manage",
 	"/polyglot.v1.IspAdminService/CommitCustomers":     "ispadmin:manage",
-
-	// ─── AI Router Ops (PLAN-AI-ROUTER-OPS v2) ─────────────────────────────
-	"/mcp": "ai:ops",
-	"/polyglot.v1.ApprovalService/ListApprovals":                    "approval:read",
-	"/polyglot.v1.ApprovalService/GetApproval":                      "approval:read",
-	"/polyglot.v1.ApprovalService/DecideApproval":                   "approval:decide",
-	"/polyglot.v1.ApprovalService/CancelApproval":                   "approval:cancel",
-	"/polyglot.v1.RestorePointService/ListRestorePoints":            "restore:read",
-	"/polyglot.v1.RestorePointService/GetRestorePoint":              "restore:read",
-	"/polyglot.v1.RestorePointService/CreateRestorePoint":           "restore:create",
-	"/polyglot.v1.RestorePointService/RestoreFromPoint":             "restore:apply",
-	"/polyglot.v1.RestorePointService/DownloadRestorePointArtifact": "restore:read",
-	"/polyglot.v1.RestorePointService/DeleteRestorePoint":           "restore:delete",
 
 	// ─── Plain-HTTP Staff Endpoints (JWT Guarded) ───────────────────────────
 	"/api/cashier/charge":         "billing:manage",

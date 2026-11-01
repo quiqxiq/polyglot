@@ -191,27 +191,6 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 		   OR (table_name='payment_methods' AND column_name IN ('bank_name','account_number','account_holder','qris_image_url','instructions','sort_order'))`).Scan(&newCols))
 	assert.Equal(t, 7, newCols, "kolom baru invoices/payment_methods harus ada")
 
-	// ── M1 PLAN-AI-ROUTER-OPS v2: tabel & constraint baru ───────────────
-	var aiTables int
-	require.NoError(t, db.QueryRow(`SELECT COUNT(*) FROM information_schema.tables WHERE table_name IN
-		('restore_points','restore_point_artifacts','approval_requests','command_logs',
-		 'active_devices','ai_conversations','ai_chat_events')`).Scan(&aiTables))
-	assert.Equal(t, 7, aiTables, "tabel AI router ops harus ada")
-
-	_, err = db.Exec(`INSERT INTO approval_requests
-		(id, command, actor_type, status, expires_at) VALUES ('apr-weird','/x','AGENT','WEIRD', now())`)
-	require.ErrorContains(t, err, "chk_approval_status")
-
-	_, err = db.Exec(`INSERT INTO approval_requests
-		(id, command, actor_type, status, expires_at, idempotency_key)
-		VALUES ('apr-dupe-1','/x','AGENT','PENDING', now(), 'key-1'),
-		       ('apr-dupe-2','/y','AGENT','PENDING', now(), 'key-1')`)
-	require.Error(t, err, "unique idempotency key per tenant harus menolak duplikat")
-
-	require.NoError(t, db.QueryRow(`SELECT COUNT(*) FROM pg_constraint
-		WHERE conname='chk_restore_status'`).Scan(&newTables))
-	assert.Equal(t, 1, newTables, "chk_restore_status harus ada")
-
 	// Processor GORM menunjuk DB yang sama via driver postgres.
 	gormDB, err := gorm.Open(gormpostgres.Open(dsn), &gorm.Config{})
 	require.NoError(t, err)

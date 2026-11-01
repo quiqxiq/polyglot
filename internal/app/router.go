@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
-	approvalConnect "github.com/quixiq/polyglot/internal/adapter/connect/approval"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
 	billingConnect "github.com/quixiq/polyglot/internal/adapter/connect/billing"
 	botConnect "github.com/quixiq/polyglot/internal/adapter/connect/bot"
@@ -26,7 +25,6 @@ import (
 	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
 	registrationConnect "github.com/quixiq/polyglot/internal/adapter/connect/registration"
 	reportConnect "github.com/quixiq/polyglot/internal/adapter/connect/report"
-	restorepointConnect "github.com/quixiq/polyglot/internal/adapter/connect/restorepoint"
 	routerjobConnect "github.com/quixiq/polyglot/internal/adapter/connect/routerjob"
 	settingConnect "github.com/quixiq/polyglot/internal/adapter/connect/setting"
 	skillConnect "github.com/quixiq/polyglot/internal/adapter/connect/skill"
@@ -118,15 +116,6 @@ type routerDeps struct {
 	debtService            *debtUC.Service
 	settlementRepo         port.GatewaySettlementRepository
 	gwtxRepo               port.GatewayTransactionRepository
-	auditWriter            port.AuditWriter
-	approvalRepo           port.ApprovalRepository
-	restoreUC              *networkUC.RestorePointUseCase
-	proposalUC             *networkUC.ProposalUseCase
-	decisionUC             *networkUC.DecisionUseCase
-	activeDevices          port.ActiveDeviceStore
-	activeDeviceUC         *deviceUC.ActiveDeviceUseCase
-	deviceAuthorizer       port.DeviceAuthorizer
-	aiOpsResolver          func(ctx context.Context, deviceID string) (port.RouterOps, error)
 	regManagerUC           *registrationUC.ManageRegistrationUseCase
 	regConvertUC           *registrationUC.ConvertUseCase
 	portalUCase            *portalUC.UseCase
@@ -175,24 +164,10 @@ func buildRouter(d routerDeps) http.Handler {
 	gatewayHTTPHandler := gatewayHTTP.NewHandler(d.chargeUC)
 	gatewayHTTPHandler.RegisterPublic(rootMux)
 
-	// /mcp must never be anonymous: every tool call mutates or inspects a
-	// router. Protect it with the same JWT + RBAC chain as ConnectRPC and
-	// pass the audit writer so every command attempt is recorded.
-	mcpServer := mcp.New(d.reg, d.auditWriter).
+	mcpServer := mcp.New(d.reg, nil).
 		WithMikhmonUseCase(d.hotUC).
-		WithCustomerRepository(d.customerRepo).
-		WithJWTService(d.jwtService).
-		WithProposalService(d.proposalUC).
-		WithApprovalRepository(d.approvalRepo).
-		WithApprovalCanceler(d.decisionUC).
-		WithActiveDeviceResolver(d.activeDeviceUC).
-		WithRouterOps(d.aiOpsResolver)
-	mcpHandler := middleware.Chain(
-		mcpServer.HTTPHandler(),
-		middleware.AuthenticateJWT(d.jwtService),
-		middleware.AuthorizeProcedure(d.casbinEnforcer),
-	)
-	rootMux.Handle("/mcp", mcpHandler)
+		WithCustomerRepository(d.customerRepo)
+	rootMux.Handle("/mcp", mcpServer.HTTPHandler())
 
 	wsAdapter.RegisterEventRoutes(rootMux, d.sseHub, d.openTermUC)
 
@@ -204,7 +179,7 @@ func buildRouter(d routerDeps) http.Handler {
 		protectedPaths = append(protectedPaths, servicePath)
 	}
 
-	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(d.devUC, d.openTermUC, d.connectDriverProvider, d.metricsUseCase, d.manageIsolationUseCase, d.streamGW, d.activeDeviceUC)
+	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(d.devUC, d.openTermUC, d.connectDriverProvider, d.metricsUseCase, d.manageIsolationUseCase, d.streamGW)
 	registerProtected(devPath, devHandler)
 
 	custPath, custHandler := customerConnect.NewCustomerServiceHandler(d.custUC)
@@ -235,14 +210,6 @@ func buildRouter(d routerDeps) http.Handler {
 
 	debtPath, debtHandler := debtConnect.NewDebtServiceHandler(d.debtService)
 	registerProtected(debtPath, debtHandler)
-
-	approvalH := approvalConnect.NewConnectHandler(d.approvalRepo, d.decisionUC, d.deviceAuthorizer)
-	approvalPath, approvalHTTP := approvalConnect.NewServiceHandler(approvalH)
-	registerProtected(approvalPath, approvalHTTP)
-
-	restoreH := restorepointConnect.NewConnectHandler(d.restoreUC, d.deviceAuthorizer)
-	restorePath, restoreHTTP := restorepointConnect.NewServiceHandler(restoreH)
-	registerProtected(restorePath, restoreHTTP)
 
 	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(d.regManagerUC, d.regConvertUC)
 	registerProtected(regPath, regHandler)

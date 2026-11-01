@@ -87,12 +87,6 @@ func NewStore(dsn string) (*Store, error) {
 			&model.BulkPaymentBatchModel{},
 			&model.BulkPaymentItemModel{},
 			&model.GatewaySettlementModel{},
-			// M1 PLAN-AI-ROUTER-OPS v2: restore point, approval, audit, active device.
-			&model.RestorePointModel{},
-			&model.ArtifactModel{},
-			&model.ApprovalModel{},
-			&model.CommandLogModel{},
-			&model.ActiveDeviceModel{},
 		); err != nil {
 			return nil, fmt.Errorf("failed to auto-migrate: %w", err)
 		}

@@ -1171,25 +1171,3 @@ CREATE INDEX idx_approval_requests_pending ON approval_requests (status, created
   mendukung; cukup tambah baris akun baru — tidak perlu perubahan skema.
 - **Payment gateway tambahan** (selain Xendit/Tripay): cukup isi kolom `gateway`
   dengan nama provider baru — tidak perlu perubahan skema.
-
----
-
-## Lampiran B — AI Router Ops (migrasi 000041)
-
-Migrasi `000041_ai_router_ops` mempromosikan Lampiran A.3/A.4 dan menambah
-tabel untuk operasional AI Router Ops:
-
-| Tabel | Fungsi |
-|---|---|
-| `restore_points` | Bundle restore point per device (trigger MUTATION/SCHEDULED/MANUAL, status CREATING→AVAILABLE/PARTIAL→USED/EXPIRED/DELETED, `config_hash` untuk dedupe). |
-| `restore_point_artifacts` | Artifact terenkripsi per bundle (`SCOPED_EXPORT`/`BINARY_BACKUP`/`INVERSE_SCRIPT`) + SHA256 + ukuran. |
-| `approval_requests` | HITL approval mutation: revision/CAS, diff/validation JSONB, restore_point_id, expiry, status PENDING→APPROVED/REJECTED/EXPIRED/CANCELLED→EXECUTING→EXECUTED/FAILED, idempotency key unik per tenant. |
-| `command_logs` | Audit append-only semua command (READ/MUTATION, actor, approval/restore point, status SUCCESS/FAILED/DENIED/PENDING_APPROVAL/REJECTED/EXPIRED). |
-| `active_devices` | Binding router aktif per (tenant,user,session) untuk AI/MCP; Redis adalah cache utama, Postgres fallback/audit. |
-| `ai_conversations` | Percakapan AI Ops per user, terikat satu `device_id` immutable. |
-| `ai_chat_events` | Event stream persisten (`seq` unik per conversation) untuk reconnect `since_event_id`. |
-
-Catatan keamanan: `restore_point_artifacts.storage_path` selalu relatif terhadap
-`RESTORE_POINT_DIR`; artifact disimpan terenkripsi AES-256-GCM dan `manifest.json`
-tidak berisi kredensial. `approval_requests` tidak memiliki kolom untuk AI
-approver — approval hanya lewat sesi user JWT.

@@ -311,23 +311,6 @@ message ApplyRouterIntegrationScriptResponse {
 }
 
 // DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
-// Active device binding for AI Router Ops (server-side source of truth).
-message SetActiveDeviceRequest {
-  string device_id = 1 [(buf.validate.field).string.min_len = 1];
-  string session_id = 2;
-}
-message SetActiveDeviceResponse { string device_id = 1; string session_id = 2; }
-
-message GetActiveDeviceRequest { string session_id = 1; }
-message GetActiveDeviceResponse {
-  string device_id = 1;
-  string session_id = 2;
-  int64 updated_at_unix = 3;
-}
-
-message ClearActiveDeviceRequest { string session_id = 1; }
-message ClearActiveDeviceResponse { bool cleared = 1; }
-
 service DeviceService {
   rpc ListDevices(ListDevicesRequest) returns (ListDevicesResponse);
   rpc GetDevice(GetDeviceRequest) returns (GetDeviceResponse);
@@ -349,10 +332,5 @@ service DeviceService {
   rpc DeleteIsolationProfile(DeleteIsolationProfileRequest) returns (DeleteIsolationProfileResponse);
   rpc GetRouterIntegrationScript(GetRouterIntegrationScriptRequest) returns (GetRouterIntegrationScriptResponse);
   rpc ApplyRouterIntegrationScript(ApplyRouterIntegrationScriptRequest) returns (ApplyRouterIntegrationScriptResponse);
-
-  // AI Router Ops — router aktif untuk tool/chat AI.
-  rpc SetActiveDevice(SetActiveDeviceRequest) returns (SetActiveDeviceResponse);
-  rpc GetActiveDevice(GetActiveDeviceRequest) returns (GetActiveDeviceResponse);
-  rpc ClearActiveDevice(ClearActiveDeviceRequest) returns (ClearActiveDeviceResponse);
 }
 

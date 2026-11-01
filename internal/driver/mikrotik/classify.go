@@ -6,14 +6,13 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
-// RouterOS command classification for AI Router Ops (PLAN-AI-ROUTER-OPS v2).
+// RouterOS command classification.
 //
-// The AI pipeline only distinguishes READ from MUTATION. Unknown verbs and
-// malformed paths are MUTATION (fail-closed). A small hard-deny list refuses
-// commands that are never safe for an AI proposal, even with approval:
-// reset-configuration, full backup restore, AI-created scripts/schedulers,
-// arbitrary file removal, and arbitrary /tool/fetch (SSRF). Human recovery
-// flows use dedicated usecases with typed confirmation instead.
+// Commands are categorized into READ or MUTATION (fail-closed for unknown verbs).
+// A hard-deny list refuses commands that are never safe to execute directly:
+// reset-configuration, full backup restore, arbitrary file removal, and
+// arbitrary /tool/fetch (SSRF). Human recovery flows use dedicated usecases
+// with typed confirmation instead.
 
 // readVerbs is the allowlist of RouterOS verbs that only read state or
 // introspect syntax. Everything else is MUTATION.
@@ -35,20 +34,7 @@ var readVerbs = map[string]bool{
 	"whois":           true,
 }
 
-// mutationVerbs documents verbs that always mutate. It is intentionally not
-// used as an allowlist (default is already MUTATION); it exists for tests and
-// for readability of the classification contract.
-var mutationVerbs = map[string]bool{
-	"add": true, "set": true, "remove": true, "unset": true,
-	"enable": true, "disable": true, "move": true, "reset": true,
-	"reboot": true, "shutdown": true, "upgrade": true, "downgrade": true,
-	"load": true, "save": true, "import": true, "fetch": true,
-	"add-file": true, "set-file": true, "remove-file": true,
-	"format": true, "restore": true, "backup": true, "run": true,
-	"start": true, "stop": true, "clear": true,
-}
-
-// hardDenyPrefixes are API paths AI must never propose. Checked against the
+// hardDenyPrefixes are API paths that must never be executed directly. Checked against the
 // normalized raw path (queries/args excluded).
 var hardDenyPrefixes = []string{
 	"/system/reset-configuration",
@@ -61,7 +47,7 @@ var hardDenyPrefixes = []string{
 	"/tool/fetch",
 }
 
-// Classify reports the AI Router Ops classification of cmd.
+// Classify reports the risk classification of cmd.
 func Classify(cmd command.Command) command.Classification {
 	raw := strings.TrimSpace(cmd.Raw)
 	if raw == "" {
@@ -72,7 +58,7 @@ func Classify(cmd command.Command) command.Classification {
 	lower := strings.ToLower(raw)
 	for _, prefix := range hardDenyPrefixes {
 		if lower == prefix || strings.HasPrefix(lower, prefix+" ") || strings.HasPrefix(lower, prefix+"/") {
-			return command.Classification{Mode: command.ModeMutation, DenyReason: "hard deny for AI: " + prefix}
+			return command.Classification{Mode: command.ModeMutation, DenyReason: "hard deny: " + prefix}
 		}
 	}
 

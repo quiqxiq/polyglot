@@ -37,14 +37,13 @@ const (
 	DeviceService_DeleteIsolationProfile_FullMethodName       = "/polyglot.v1.DeviceService/DeleteIsolationProfile"
 	DeviceService_GetRouterIntegrationScript_FullMethodName   = "/polyglot.v1.DeviceService/GetRouterIntegrationScript"
 	DeviceService_ApplyRouterIntegrationScript_FullMethodName = "/polyglot.v1.DeviceService/ApplyRouterIntegrationScript"
-	DeviceService_SetActiveDevice_FullMethodName              = "/polyglot.v1.DeviceService/SetActiveDevice"
-	DeviceService_GetActiveDevice_FullMethodName              = "/polyglot.v1.DeviceService/GetActiveDevice"
-	DeviceService_ClearActiveDevice_FullMethodName            = "/polyglot.v1.DeviceService/ClearActiveDevice"
 )
 
 // DeviceServiceClient is the client API for DeviceService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
 type DeviceServiceClient interface {
 	ListDevices(ctx context.Context, in *ListDevicesRequest, opts ...grpc.CallOption) (*ListDevicesResponse, error)
 	GetDevice(ctx context.Context, in *GetDeviceRequest, opts ...grpc.CallOption) (*GetDeviceResponse, error)
@@ -65,10 +64,6 @@ type DeviceServiceClient interface {
 	DeleteIsolationProfile(ctx context.Context, in *DeleteIsolationProfileRequest, opts ...grpc.CallOption) (*DeleteIsolationProfileResponse, error)
 	GetRouterIntegrationScript(ctx context.Context, in *GetRouterIntegrationScriptRequest, opts ...grpc.CallOption) (*GetRouterIntegrationScriptResponse, error)
 	ApplyRouterIntegrationScript(ctx context.Context, in *ApplyRouterIntegrationScriptRequest, opts ...grpc.CallOption) (*ApplyRouterIntegrationScriptResponse, error)
-	// AI Router Ops — router aktif untuk tool/chat AI.
-	SetActiveDevice(ctx context.Context, in *SetActiveDeviceRequest, opts ...grpc.CallOption) (*SetActiveDeviceResponse, error)
-	GetActiveDevice(ctx context.Context, in *GetActiveDeviceRequest, opts ...grpc.CallOption) (*GetActiveDeviceResponse, error)
-	ClearActiveDevice(ctx context.Context, in *ClearActiveDeviceRequest, opts ...grpc.CallOption) (*ClearActiveDeviceResponse, error)
 }
 
 type deviceServiceClient struct {
@@ -289,39 +284,11 @@ func (c *deviceServiceClient) ApplyRouterIntegrationScript(ctx context.Context, 
 	return out, nil
 }
 
-func (c *deviceServiceClient) SetActiveDevice(ctx context.Context, in *SetActiveDeviceRequest, opts ...grpc.CallOption) (*SetActiveDeviceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SetActiveDeviceResponse)
-	err := c.cc.Invoke(ctx, DeviceService_SetActiveDevice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *deviceServiceClient) GetActiveDevice(ctx context.Context, in *GetActiveDeviceRequest, opts ...grpc.CallOption) (*GetActiveDeviceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetActiveDeviceResponse)
-	err := c.cc.Invoke(ctx, DeviceService_GetActiveDevice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *deviceServiceClient) ClearActiveDevice(ctx context.Context, in *ClearActiveDeviceRequest, opts ...grpc.CallOption) (*ClearActiveDeviceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ClearActiveDeviceResponse)
-	err := c.cc.Invoke(ctx, DeviceService_ClearActiveDevice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // DeviceServiceServer is the server API for DeviceService service.
 // All implementations must embed UnimplementedDeviceServiceServer
 // for forward compatibility.
+//
+// DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
 type DeviceServiceServer interface {
 	ListDevices(context.Context, *ListDevicesRequest) (*ListDevicesResponse, error)
 	GetDevice(context.Context, *GetDeviceRequest) (*GetDeviceResponse, error)
@@ -342,10 +309,6 @@ type DeviceServiceServer interface {
 	DeleteIsolationProfile(context.Context, *DeleteIsolationProfileRequest) (*DeleteIsolationProfileResponse, error)
 	GetRouterIntegrationScript(context.Context, *GetRouterIntegrationScriptRequest) (*GetRouterIntegrationScriptResponse, error)
 	ApplyRouterIntegrationScript(context.Context, *ApplyRouterIntegrationScriptRequest) (*ApplyRouterIntegrationScriptResponse, error)
-	// AI Router Ops — router aktif untuk tool/chat AI.
-	SetActiveDevice(context.Context, *SetActiveDeviceRequest) (*SetActiveDeviceResponse, error)
-	GetActiveDevice(context.Context, *GetActiveDeviceRequest) (*GetActiveDeviceResponse, error)
-	ClearActiveDevice(context.Context, *ClearActiveDeviceRequest) (*ClearActiveDeviceResponse, error)
 	mustEmbedUnimplementedDeviceServiceServer()
 }
 
@@ -409,15 +372,6 @@ func (UnimplementedDeviceServiceServer) GetRouterIntegrationScript(context.Conte
 }
 func (UnimplementedDeviceServiceServer) ApplyRouterIntegrationScript(context.Context, *ApplyRouterIntegrationScriptRequest) (*ApplyRouterIntegrationScriptResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ApplyRouterIntegrationScript not implemented")
-}
-func (UnimplementedDeviceServiceServer) SetActiveDevice(context.Context, *SetActiveDeviceRequest) (*SetActiveDeviceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SetActiveDevice not implemented")
-}
-func (UnimplementedDeviceServiceServer) GetActiveDevice(context.Context, *GetActiveDeviceRequest) (*GetActiveDeviceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetActiveDevice not implemented")
-}
-func (UnimplementedDeviceServiceServer) ClearActiveDevice(context.Context, *ClearActiveDeviceRequest) (*ClearActiveDeviceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ClearActiveDevice not implemented")
 }
 func (UnimplementedDeviceServiceServer) mustEmbedUnimplementedDeviceServiceServer() {}
 func (UnimplementedDeviceServiceServer) testEmbeddedByValue()                       {}
@@ -732,60 +686,6 @@ func _DeviceService_ApplyRouterIntegrationScript_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DeviceService_SetActiveDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetActiveDeviceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DeviceServiceServer).SetActiveDevice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DeviceService_SetActiveDevice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeviceServiceServer).SetActiveDevice(ctx, req.(*SetActiveDeviceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DeviceService_GetActiveDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetActiveDeviceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DeviceServiceServer).GetActiveDevice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DeviceService_GetActiveDevice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeviceServiceServer).GetActiveDevice(ctx, req.(*GetActiveDeviceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DeviceService_ClearActiveDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ClearActiveDeviceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DeviceServiceServer).ClearActiveDevice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DeviceService_ClearActiveDevice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeviceServiceServer).ClearActiveDevice(ctx, req.(*ClearActiveDeviceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // DeviceService_ServiceDesc is the grpc.ServiceDesc for DeviceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -848,18 +748,6 @@ var DeviceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ApplyRouterIntegrationScript",
 			Handler:    _DeviceService_ApplyRouterIntegrationScript_Handler,
-		},
-		{
-			MethodName: "SetActiveDevice",
-			Handler:    _DeviceService_SetActiveDevice_Handler,
-		},
-		{
-			MethodName: "GetActiveDevice",
-			Handler:    _DeviceService_GetActiveDevice_Handler,
-		},
-		{
-			MethodName: "ClearActiveDevice",
-			Handler:    _DeviceService_ClearActiveDevice_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
