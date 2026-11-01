@@ -294,7 +294,7 @@ func (p *Provider) ChatWithTools(ctx context.Context, systemPrompt string, messa
 			)
 			genkitTools = append(genkitTools, gt)
 		}
-		opts = append(opts, ai.WithTools(genkitTools...), ai.WithMaxTurns(5))
+		opts = append(opts, ai.WithTools(genkitTools...), ai.WithMaxTurns(15))
 	}
 
 	resp, err := genkit.Generate(ctx, p.g, opts...)

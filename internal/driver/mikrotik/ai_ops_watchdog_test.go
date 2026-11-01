@@ -110,4 +110,29 @@ func TestAIOpsReadMenuQueryFormatting(t *testing.T) {
 	cmd, ok = drv.find("/interface/print")
 	require.True(t, ok)
 	assert.Equal(t, "ether1", cmd.Args["?name"])
+
+	// 4. Menu alias normalization ("resource" -> "/system/resource/print", "system" -> "/system/resource/print")
+	drv.mu.Lock()
+	drv.cmds = nil
+	drv.mu.Unlock()
+	_, err = ops.ReadMenu(ctx, "resource", nil)
+	require.NoError(t, err)
+	cmd, ok = drv.find("/system/resource/print")
+	require.True(t, ok, "resource must normalize to /system/resource/print")
+
+	drv.mu.Lock()
+	drv.cmds = nil
+	drv.mu.Unlock()
+	_, err = ops.ReadMenu(ctx, "system", nil)
+	require.NoError(t, err)
+	cmd, ok = drv.find("/system/resource/print")
+	require.True(t, ok, "system must normalize to /system/resource/print")
+
+	drv.mu.Lock()
+	drv.cmds = nil
+	drv.mu.Unlock()
+	_, err = ops.ReadMenu(ctx, "routes", nil)
+	require.NoError(t, err)
+	cmd, ok = drv.find("/ip/route/print")
+	require.True(t, ok, "routes must normalize to /ip/route/print")
 }

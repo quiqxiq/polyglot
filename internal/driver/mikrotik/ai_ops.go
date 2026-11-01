@@ -64,6 +64,7 @@ func (a *AIOps) ValidateScript(ctx context.Context, script string) (port.ScriptV
 
 // ReadMenu reads rows from a menu (print detail) with a unique selector.
 func (a *AIOps) ReadMenu(ctx context.Context, menu string, selector map[string]string) ([]map[string]string, error) {
+	normMenu := NormalizeMenuPath(menu)
 	args := map[string]string{"detail": ""}
 	for k, v := range selector {
 		val := strings.TrimSpace(v)
@@ -76,8 +77,11 @@ func (a *AIOps) ReadMenu(ctx context.Context, menu string, selector map[string]s
 		}
 		args[key] = val
 	}
-	res, err := a.exec.Execute(ctx, command.Command{Raw: commandRaw(menu, "print"), Args: args})
+	res, err := a.exec.Execute(ctx, command.Command{Raw: commandRaw(normMenu, "print"), Args: args})
 	if err != nil {
+		if strings.Contains(strings.ToLower(err.Error()), "no such command or directory") {
+			return nil, fmt.Errorf("%w (petunjuk menu RouterOS: 'system/resource', 'system/health', 'system/identity', 'interface', 'ip/address', 'ip/route', 'ip/firewall/filter', 'ip/dhcp-server/lease')", err)
+		}
 		return nil, err
 	}
 	return res.Rows, nil
@@ -297,27 +301,6 @@ func (a *AIOps) readFile(ctx context.Context, name string, maxBytes int64) ([]by
 		}
 	}
 	return buf.Bytes(), total, nil
-}
-
-func commandRaw(menu, verb string) string {
-	menu = strings.Trim(menu, "/")
-	if menu == "" {
-		return "/" + verb
-	}
-	return "/" + menu + "/" + verb
-}
-
-func sanitizeSlug(in string) string {
-	var b strings.Builder
-	for _, r := range strings.ToLower(in) {
-		switch {
-		case r >= 'a' && r <= 'z', r >= '0' && r <= '9', r == '-', r == '_':
-			b.WriteRune(r)
-		case r == '/', r == '.':
-			b.WriteByte('-')
-		}
-	}
-	return strings.Trim(b.String(), "-")
 }
 
 func parseRouterSize(raw string) int64 {

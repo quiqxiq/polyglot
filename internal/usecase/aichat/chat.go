@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/aichat"
@@ -130,7 +131,16 @@ Aturan wajib:
 2. Setiap MUTATION hanya boleh lewat propose_command/propose_config. JANGAN pernah mengklaim perubahan sudah diterapkan sebelum approval berstatus EXECUTED.
 3. Jangan meminta/menampilkan kredensial.
 4. Perangkat aktif: %s. Selalu sebut perangkat dalam jawaban.
-5. Jika approval dibuat, jelaskan bahwa operator harus menyetujuinya di AI Ops Approval Inbox.`, conv.DeviceID)
+5. Jika approval dibuat, jelaskan bahwa operator harus menyetujuinya di AI Ops Approval Inbox.
+6. Toleransi error & investigasi: Jika suatu pembacaan/perintah mengembalikan pesan error dari router, jangan langsung menyerah atau mengulang perintah yang sama. Analisis pesan error tersebut, gunakan path menu yang benar, atau jelaskan kendala router secara informatif dan solutif kepada operator.
+
+PANDUAN PATH MENU ROUTEROS UNTUK router_read (WAJIB GUNAKAN PATH LENGKAP):
+- Resource & Performa: 'system/resource' (CPU, RAM, HDD, Uptime, Versi), 'system/health' (Suhu, Voltase), 'system/identity' (Nama router), 'system/routerboard' (Model, Serial, Firmware). PENTING: JANGAN gunakan 'resource' atau 'system' sendiri!
+- Interface: 'interface' (semua interface), 'interface/ethernet', 'interface/bridge', 'interface/vlan', 'interface/wireless'.
+- IP & Routing: 'ip/address' (IP router), 'ip/route' (tabel routing), 'ip/neighbor' (CDP/LLDP neighbor), 'ip/arp', 'ip/dns', 'ip/pool'.
+- DHCP & Hotspot & PPP: 'ip/dhcp-server/lease', 'ip/dhcp-client', 'ip/hotspot/active', 'ppp/active'.
+- Firewall: 'ip/firewall/filter', 'ip/firewall/nat', 'ip/firewall/mangle', 'ip/firewall/address-list'.
+- Log: 'log'.`, conv.DeviceID)
 
 		resp, err := provider.ChatWithTools(ctx, systemPrompt, history, tools, uc.deps.Config.MaxOutputTokens)
 		if err != nil {
@@ -235,6 +245,9 @@ func (uc *UseCase) history(ctx context.Context, conversationID string) []domainL
 }
 
 func (uc *UseCase) tools(ctx context.Context, conv aichat.Conversation, ops port.RouterOps, emit func(string, map[string]any)) []domainLLM.Tool {
+	var mu sync.Mutex
+	toolCallCounts := make(map[string]int)
+
 	tool := func(name, desc string, fn func(argsJSON string) (string, error)) domainLLM.Tool {
 		return domainLLM.Tool{
 			Name: name, Description: desc,
@@ -242,6 +255,24 @@ func (uc *UseCase) tools(ctx context.Context, conv aichat.Conversation, ops port
 				start := time.Now()
 				callID := idgen.New("tc")
 				emit(aichat.EventToolCall, map[string]any{"id": callID, "name": name, "args_json": argsJSON})
+
+				mu.Lock()
+				callKey := fmt.Sprintf("%s:%s", name, strings.TrimSpace(argsJSON))
+				toolCallCounts[callKey]++
+				count := toolCallCounts[callKey]
+				mu.Unlock()
+
+				if count > 2 {
+					msg := fmt.Sprintf("Perintah %s dengan parameter ini sudah dicoba %d kali dan menghasilkan error yang sama. Hentikan pemanggilan berulang untuk tool ini, dan berikan penjelasan langsung kepada operator mengenai kendala atau saran solusinya.", name, count-1)
+					emit(aichat.EventToolResult, map[string]any{
+						"tool_call_id": callID,
+						"duration_ms":  0,
+						"result":       msg,
+						"is_error":     true,
+					})
+					return toJSON(map[string]any{"error": msg, "stop_retrying": true}), nil
+				}
+
 				res, err := fn(argsJSON)
 				dur := time.Since(start).Milliseconds()
 				payload := map[string]any{"tool_call_id": callID, "duration_ms": dur, "result": res}
@@ -265,7 +296,7 @@ func (uc *UseCase) tools(ctx context.Context, conv aichat.Conversation, ops port
 			}
 			return toJSON(caps), nil
 		}),
-		tool("router_read", "Read rows from a router menu (print detail). To read all rows, omit selector or pass empty selector. Example: {\"menu\":\"interface\"} or with filter {\"menu\":\"ip/address\",\"selector\":{\"interface\":\"ether1\"},\"limit\":100}", func(argsJSON string) (string, error) {
+		tool("router_read", "Read rows from a RouterOS menu (executes /<menu>/print detail). Always use full menu path, e.g. 'system/resource' (CPU, RAM, HDD, uptime, OS version), 'system/health' (temperature, voltage), 'system/identity', 'interface' (all interfaces), 'ip/address', 'ip/route', 'ip/firewall/filter', 'ip/firewall/nat', 'ip/dhcp-server/lease', 'log'. Do NOT use '/resource' or '/system'. Example: {\"menu\":\"system/resource\"}", func(argsJSON string) (string, error) {
 			var args struct {
 				Menu     string            `json:"menu"`
 				Selector map[string]string `json:"selector"`

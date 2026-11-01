@@ -291,3 +291,41 @@ func TestChatToolErrorReturnsJSONPayloadWithoutFailingTurn(t *testing.T) {
 	assert.Contains(t, toolRes, "unknown parameter .id")
 	assert.True(t, hasToolResultError, "tool result event must flag is_error=true for UI display")
 }
+
+func TestChatToolRepetitionCircuitBreaker(t *testing.T) {
+	enc, err := crypto.Encrypt("sk-test", testKey)
+	require.NoError(t, err)
+	repo := newFakeChatRepo()
+	cfgRepo := &fakeConfigRepo{cfg: &domainLLM.Config{ID: 1, Provider: "openai", Model: "gpt-4o-mini", APIKeyEncrypted: enc, IsActive: true}}
+
+	var thirdCallRes string
+	provider := &fakeProviderToolCustom{
+		onTools: func(tools []domainLLM.Tool) {
+			for _, tool := range tools {
+				if tool.Name == "router_read" {
+					// 1st call
+					_, _ = tool.Handler(context.Background(), `{"menu":"resource"}`)
+					// 2nd call
+					_, _ = tool.Handler(context.Background(), `{"menu":"resource"}`)
+					// 3rd call - must trigger circuit breaker
+					thirdCallRes, _ = tool.Handler(context.Background(), `{"menu":"resource"}`)
+				}
+			}
+		},
+	}
+	uc := aichatUC.New(aichatUC.Deps{
+		Repo: repo, Configs: cfgRepo, EncryptionKey: testKey,
+		Provider:     func(context.Context, *domainLLM.Config, string) (port.LLMProvider, error) { return provider, nil },
+		Devices:      &fakeDevices{d: device.Device{ID: "dev1", TenantID: "tenant-default", Name: "Router-A", Enabled: true}},
+		ActiveDevice: &fakeActive{id: "dev1"},
+		Ops:          func(context.Context, string) (port.RouterOps, error) { return errorOps{}, nil },
+		Config:       aichatUC.Config{MaxContextMessages: 10},
+	})
+	ch, err := uc.Chat(context.Background(), aichatUC.ChatInput{TenantID: "tenant-default", UserID: 1, Message: "cek cpu"})
+	require.NoError(t, err)
+	for range ch {
+	}
+
+	assert.Contains(t, thirdCallRes, "stop_retrying")
+	assert.Contains(t, thirdCallRes, "Hentikan pemanggilan berulang")
+}
