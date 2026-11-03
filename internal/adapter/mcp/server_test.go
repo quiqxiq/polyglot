@@ -170,6 +170,11 @@ func callToolViaInMemoryTransport(t *testing.T, s *Server, toolName string, args
 	return res
 }
 
+func TestServer_RegisterTools(t *testing.T) {
+	s := New(nil, nil)
+	assert.NotNil(t, s.mcpServer)
+}
+
 func TestMCP_ListTools(t *testing.T) {
 	drv := &testDriver{}
 	s := newTestServer(t, drv)
@@ -194,7 +199,8 @@ func TestMCP_ListTools(t *testing.T) {
 	assert.ElementsMatch(t, []string{
 		"get_device_status", "run_command", "push_config",
 		"mikhmon_get_dashboard", "mikhmon_generate_voucher", "mikhmon_kick_session",
-		"customer_lookup", "list_skills",
+		"routeros_list_menu", "routeros_describe_command", "routeros_suggest", "routeros_validate", "routeros_run",
+		"customer_lookup", "list_skills", "list_devices",
 	}, names)
 }
 

@@ -1,10 +1,11 @@
-package mcp
+package mikrotik
 
 import (
 	"context"
 	"fmt"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/mcputil"
 )
 
 type mikhmonGetDashboardArgs struct {
@@ -25,23 +26,29 @@ type mikhmonDashboardOutput struct {
 	TodayIncome int64  `json:"today_income"`
 }
 
-func (s *Server) mikhmonGetDashboard(ctx context.Context, _ *mcp.CallToolRequest, args mikhmonGetDashboardArgs) (*mcp.CallToolResult, mikhmonDashboardOutput, error) {
+// MikhmonGetDashboard handles the "mikhmon_get_dashboard" tool.
+func (h *Handler) MikhmonGetDashboard(ctx context.Context, _ *mcp.CallToolRequest, args mikhmonGetDashboardArgs) (*mcp.CallToolResult, mikhmonDashboardOutput, error) {
 	if args.DeviceID == "" {
-		return toolError(mikhmonDashboardOutput{Status: "error", Summary: "device_id is required"})
+		return mcputil.ToolError(mikhmonDashboardOutput{Status: "error", Summary: "device_id is required"})
 	}
 
-	driver, err := s.registry.Get(ctx, args.DeviceID)
+	if h.Registry == nil {
+		return mcputil.ToolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: "device registry not configured"})
+	}
+
+	driver, err := h.Registry.Get(ctx, args.DeviceID)
 	if err != nil {
-		return toolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
+		return mcputil.ToolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}
 
-	if s.mikhmonUC == nil {
-		return toolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: "mikhmon use case not configured"})
+	uc := h.uc()
+	if uc == nil {
+		return mcputil.ToolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: "mikhmon use case not configured"})
 	}
 
-	summary, err := s.mikhmonUC.GetDashboardSummary(ctx, driver)
+	summary, err := uc.GetDashboardSummary(ctx, driver)
 	if err != nil {
-		return toolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
+		return mcputil.ToolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}
 
 	humanSummary := fmt.Sprintf("Identity: %s, Board: %s, CPU Load: %d%%, Active Users: %d/%d, Today Income: Rp %d",
@@ -61,5 +68,5 @@ func (s *Server) mikhmonGetDashboard(ctx context.Context, _ *mcp.CallToolRequest
 		TodayIncome: summary.TodayIncome,
 	}
 
-	return toolOK(out)
+	return mcputil.ToolOK(out)
 }

@@ -1,10 +1,11 @@
-package mcp
+package mikrotik
 
 import (
 	"context"
 	"fmt"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/mcputil"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 )
 
@@ -23,20 +24,25 @@ type mikhmonGenerateVoucherOutput struct {
 	Vouchers []string `json:"vouchers,omitempty"`
 }
 
-func (s *Server) mikhmonGenerateVoucher(ctx context.Context, _ *mcp.CallToolRequest, args mikhmonGenerateVoucherArgs) (*mcp.CallToolResult, mikhmonGenerateVoucherOutput, error) {
+// MikhmonGenerateVoucher handles the "mikhmon_generate_voucher" tool.
+func (h *Handler) MikhmonGenerateVoucher(ctx context.Context, _ *mcp.CallToolRequest, args mikhmonGenerateVoucherArgs) (*mcp.CallToolResult, mikhmonGenerateVoucherOutput, error) {
 	if args.DeviceID == "" || args.Profile == "" || args.Count <= 0 {
-		return toolError(mikhmonGenerateVoucherOutput{Status: "error", Summary: "device_id, profile, and positive count are required"})
+		return mcputil.ToolError(mikhmonGenerateVoucherOutput{Status: "error", Summary: "device_id, profile, and positive count are required"})
 	}
 
-	driver, err := s.registry.Get(ctx, args.DeviceID)
+	if h.Registry == nil {
+		return mcputil.ToolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: "device registry not configured"})
+	}
+
+	driver, err := h.Registry.Get(ctx, args.DeviceID)
 	if err != nil {
-		return toolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
+		return mcputil.ToolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}
 
-	if s.mikhmonUC == nil {
-		return toolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: "mikhmon use case not configured"})
+	uc := h.uc()
+	if uc == nil {
+		return mcputil.ToolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: "mikhmon use case not configured"})
 	}
-	uc := s.mikhmonUC
 
 	params := hotspot.VoucherGenerateParams{
 		Profile:     args.Profile,
@@ -45,7 +51,7 @@ func (s *Server) mikhmonGenerateVoucher(ctx context.Context, _ *mcp.CallToolRequ
 
 	batch, err := uc.GenerateVouchers(ctx, driver, params, args.Count)
 	if err != nil {
-		return toolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
+		return mcputil.ToolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}
 
 	codes := make([]string, len(batch.Vouchers))
@@ -55,7 +61,7 @@ func (s *Server) mikhmonGenerateVoucher(ctx context.Context, _ *mcp.CallToolRequ
 
 	summary := fmt.Sprintf("Successfully generated %d vouchers for profile %q on device %s", len(batch.Vouchers), args.Profile, args.DeviceID)
 
-	return toolOK(mikhmonGenerateVoucherOutput{
+	return mcputil.ToolOK(mikhmonGenerateVoucherOutput{
 		DeviceID: args.DeviceID,
 		Status:   "success",
 		Summary:  summary,

@@ -1,10 +1,10 @@
-package mcp
+package device
 
 import (
 	"context"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-
+	"github.com/quixiq/polyglot/internal/adapter/mcp/mcputil"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/usecase/network"
 )
@@ -29,24 +29,28 @@ type commandOutput struct {
 	Error    string              `json:"error,omitempty"`
 }
 
-// runCommand handles the "run_command" tool. It executes a raw vendor-native
+// RunCommand handles the "run_command" tool. It executes a raw vendor-native
 // command via ExecuteCommandPreApproved — the client (LibreChat) gates
 // destructive commands via ToolAnnotations before calling, so the server
 // executes directly when invoked. DecisionDeny still blocks (hard policy
 // deny cannot be overridden by client approval).
-func (s *Server) runCommand(ctx context.Context, _ *mcp.CallToolRequest, args runCommandArgs) (*mcp.CallToolResult, commandOutput, error) {
-	driver, err := s.registry.Get(ctx, args.DeviceID)
+func (h *Handler) RunCommand(ctx context.Context, _ *mcp.CallToolRequest, args runCommandArgs) (*mcp.CallToolResult, commandOutput, error) {
+	if h.Registry == nil {
+		return mcputil.ToolError(commandOutput{DeviceID: args.DeviceID, Command: args.Command, Error: "device registry not configured"})
+	}
+
+	driver, err := h.Registry.Get(ctx, args.DeviceID)
 	if err != nil {
-		return toolError(commandOutput{DeviceID: args.DeviceID, Command: args.Command, Error: err.Error()})
+		return mcputil.ToolError(commandOutput{DeviceID: args.DeviceID, Command: args.Command, Error: err.Error()})
 	}
 
 	cmd := command.Command{Raw: args.Command, Args: args.Args}
 	result, err := network.ExecuteCommandPreApproved(ctx, driver, cmd)
 	if err != nil {
-		return toolError(commandOutput{DeviceID: args.DeviceID, Command: args.Command, Error: err.Error()})
+		return mcputil.ToolError(commandOutput{DeviceID: args.DeviceID, Command: args.Command, Error: err.Error()})
 	}
 
-	s.auditBestEffort(ctx, args.DeviceID, args.Command, result)
+	mcputil.AuditBestEffort(ctx, h.Audit, args.DeviceID, args.Command, result)
 
 	out := commandOutput{
 		DeviceID: args.DeviceID,
@@ -59,5 +63,5 @@ func (s *Server) runCommand(ctx context.Context, _ *mcp.CallToolRequest, args ru
 	if out.Output == "" && out.RowCount == 0 {
 		out.Output = "ok"
 	}
-	return toolOK(out)
+	return mcputil.ToolOK(out)
 }

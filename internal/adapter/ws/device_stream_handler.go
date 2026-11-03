@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/coder/websocket"
 
@@ -54,9 +55,19 @@ func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	_ = conn.Write(ctx, websocket.MessageText, []byte(fmt.Sprintf("\r\n\x1b[38;5;39m[Polyglot Engine] Opening SSH PTY session for device '%s'...\x1b[0m\r\n", deviceID)))
 
-	termSession, err := h.openTermUC.Execute(ctx, deviceID, 120, 35)
+	cols := 80
+	rows := 24
+	if c, err := strconv.Atoi(r.URL.Query().Get("cols")); err == nil && c > 0 {
+		cols = c
+	}
+	if rw, err := strconv.Atoi(r.URL.Query().Get("rows")); err == nil && rw > 0 {
+		rows = rw
+	}
+
+	termSession, err := h.openTermUC.Execute(ctx, deviceID, cols, rows)
 	if err != nil {
 		_ = conn.Write(ctx, websocket.MessageText, []byte(fmt.Sprintf("\r\n\x1b[31m[SSH Connection Failed]: %v\x1b[0m\r\n\x1b[33m[Notice]: Ensure target device has SSH service enabled and credentials configured.\x1b[0m\r\n", err)))
+		_ = conn.Close(websocket.StatusNormalClosure, "connection failed")
 		return
 	}
 	defer func() { _ = termSession.Close() }()

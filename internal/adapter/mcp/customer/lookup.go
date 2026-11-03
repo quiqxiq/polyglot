@@ -1,4 +1,4 @@
-package mcp
+package customer
 
 import (
 	"context"
@@ -6,7 +6,8 @@ import (
 	"strings"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/mcputil"
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/subscription"
 )
 
@@ -32,28 +33,30 @@ type customerLookupOutput struct {
 	Customers []customerDetail `json:"customers,omitempty"`
 }
 
-func (s *Server) customerLookup(ctx context.Context, _ *mcp.CallToolRequest, args customerLookupArgs) (*mcp.CallToolResult, customerLookupOutput, error) {
+// CustomerLookup handles the "customer_lookup" tool.
+func (h *Handler) CustomerLookup(ctx context.Context, _ *mcp.CallToolRequest, args customerLookupArgs) (*mcp.CallToolResult, customerLookupOutput, error) {
 	if args.Phone == "" && args.Name == "" && args.CustomerID == "" {
-		return toolError(customerLookupOutput{Status: "error", Summary: "at least one search criterion (phone, name, or customer_id) is required"})
+		return mcputil.ToolError(customerLookupOutput{Status: "error", Summary: "at least one search criterion (phone, name, or customer_id) is required"})
 	}
 
-	if s.customerRepo == nil {
-		return toolOK(customerLookupOutput{
+	repo := h.repo()
+	if repo == nil {
+		return mcputil.ToolOK(customerLookupOutput{
 			Status:  "success",
 			Summary: "Customer repository not configured in server mode",
 		})
 	}
 
-	var matched []customer.Customer
+	var matched []domainCustomer.Customer
 	if args.CustomerID != "" {
-		c, err := s.customerRepo.FindByID(ctx, args.CustomerID)
+		c, err := repo.FindByID(ctx, args.CustomerID)
 		if err == nil {
 			matched = append(matched, c)
 		}
 	} else {
-		all, err := s.customerRepo.FindAll(ctx)
+		all, err := repo.FindAll(ctx)
 		if err != nil {
-			return toolError(customerLookupOutput{Status: "error", Summary: err.Error()})
+			return mcputil.ToolError(customerLookupOutput{Status: "error", Summary: err.Error()})
 		}
 		for _, c := range all {
 			matchPhone := args.Phone != "" && strings.Contains(c.Phone, args.Phone)
@@ -65,7 +68,7 @@ func (s *Server) customerLookup(ctx context.Context, _ *mcp.CallToolRequest, arg
 	}
 
 	if len(matched) == 0 {
-		return toolOK(customerLookupOutput{
+		return mcputil.ToolOK(customerLookupOutput{
 			Status:  "success",
 			Summary: "No customers matched the search criteria",
 		})
@@ -73,7 +76,7 @@ func (s *Server) customerLookup(ctx context.Context, _ *mcp.CallToolRequest, arg
 
 	details := make([]customerDetail, len(matched))
 	for i, c := range matched {
-		subs, _ := s.customerRepo.FindSubscriptions(ctx, c.ID)
+		subs, _ := repo.FindSubscriptions(ctx, c.ID)
 		details[i] = customerDetail{
 			ID:            c.ID,
 			Name:          c.Name,
@@ -86,7 +89,7 @@ func (s *Server) customerLookup(ctx context.Context, _ *mcp.CallToolRequest, arg
 	}
 
 	summary := fmt.Sprintf("Found %d customer(s) matching query", len(details))
-	return toolOK(customerLookupOutput{
+	return mcputil.ToolOK(customerLookupOutput{
 		Status:    "success",
 		Summary:   summary,
 		Customers: details,

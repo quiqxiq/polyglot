@@ -5,13 +5,17 @@ import (
 	"net/http"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/customer"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/device"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/mikrotik"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/olt"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/skill"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
+	oltUC "github.com/quixiq/polyglot/internal/usecase/olt"
 )
 
-// Server wraps the MCP SDK server and holds the dependencies every tool
-// handler needs: the device driver registry, audit writer, Mikhmon use case,
 // Server wraps the MCP SDK server and holds the dependencies every tool
 // handler needs: the device driver registry, audit writer, Mikhmon use case,
 // customer repository, and skill repository.
@@ -20,8 +24,10 @@ type Server struct {
 	registry     *registry.Registry
 	audit        port.AuditWriter
 	mikhmonUC    *hotspotUC.UseCase
+	oltSvc       *oltUC.Service
 	customerRepo port.CustomerRepository
 	skillRepo    port.SkillRepository
+	deviceRepo   port.DeviceRepository
 }
 
 // New builds an MCP Server with registered tools.
@@ -31,13 +37,28 @@ func New(reg *registry.Registry, audit port.AuditWriter) *Server {
 		registry:  reg,
 		audit:     audit,
 	}
+	if reg != nil {
+		s.deviceRepo = reg.DeviceRepo()
+	}
 	s.registerTools()
+	return s
+}
+
+// WithDeviceRepository sets the DeviceRepository dependency.
+func (s *Server) WithDeviceRepository(repo port.DeviceRepository) *Server {
+	s.deviceRepo = repo
 	return s
 }
 
 // WithMikhmonUseCase sets the MikhmonUseCase dependency.
 func (s *Server) WithMikhmonUseCase(uc *hotspotUC.UseCase) *Server {
 	s.mikhmonUC = uc
+	return s
+}
+
+// WithOLTService sets the OLT Service dependency.
+func (s *Server) WithOLTService(svc *oltUC.Service) *Server {
+	s.oltSvc = svc
 	return s
 }
 
@@ -54,63 +75,25 @@ func (s *Server) WithSkillRepository(sr port.SkillRepository) *Server {
 }
 
 func (s *Server) registerTools() {
-	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "get_device_status",
-		Description: "Get the current status of a network device. Read-only — no approval needed.",
-		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
-	}, s.getDeviceStatus)
+	deviceH := device.NewHandler(s.registry, func() port.DeviceRepository { return s.deviceRepo }, s.audit)
+	device.Register(s.mcpServer, deviceH)
 
-	destructive := true
-	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "run_command",
-		Description: "Execute a raw vendor-native command on a device. Potentially destructive — approval required.",
-		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive},
-	}, s.runCommand)
+	mikrotikH := mikrotik.NewHandler(s.registry, func() *hotspotUC.UseCase { return s.mikhmonUC }, mikrotik.WithAudit(s.audit))
+	mikrotik.Register(s.mcpServer, mikrotikH)
 
-	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "push_config",
-		Description: "Push a configuration change to a device. Destructive — approval required.",
-		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive},
-	}, s.pushConfig)
+	oltH := olt.NewHandler(s.registry, func() *oltUC.Service { return s.oltSvc })
+	olt.Register(s.mcpServer, oltH)
 
-	// Mikhmon & Hotspot Tools
-	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "mikhmon_get_dashboard",
-		Description: "Get Mikrotik Mikhmon hotspot dashboard metrics (CPU, Memory, Uptime, Active users, Today income). Read-only.",
-		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
-	}, s.mikhmonGetDashboard)
+	customerH := customer.NewHandler(func() port.CustomerRepository { return s.customerRepo })
+	customer.Register(s.mcpServer, customerH)
 
-	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "mikhmon_generate_voucher",
-		Description: "Generate a batch of hotspot user vouchers for a given profile. Destructive — approval required.",
-		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive},
-	}, s.mikhmonGenerateVoucher)
-
-	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "mikhmon_kick_session",
-		Description: "Disconnect an active hotspot user session by username, IP, or session ID. Destructive — approval required.",
-		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive},
-	}, s.mikhmonKickSession)
-
-	// Customer & Support Tools
-	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "customer_lookup",
-		Description: "Lookup ISP customer profile and active subscriptions by phone number, name, or customer ID. Read-only.",
-		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
-	}, s.customerLookup)
-
-	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "list_skills",
-		Description: "List active modular skills and standard operational procedures (SOP). Read-only.",
-		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
-	}, s.listSkills)
+	skillH := skill.NewHandler(func() port.SkillRepository { return s.skillRepo })
+	skill.Register(s.mcpServer, skillH)
 }
 
 // HTTPHandler returns an http.Handler that serves the MCP streamable-HTTP
-// transport. Mount it on any HTTP mux (e.g. Gin router at /mcp). The same
-// underlying *mcp.Server serves all sessions — it is stateless across
-// requests, so this is safe behind a load balancer once the stateless spec
-// revision lands (see TECH-STACK-DAN-PERSIAPAN.md §5, 28 Juli 2026).
+// transport. Mount it on any HTTP mux (e.g. at /mcp). The same
+// underlying *mcp.Server serves all sessions.
 func (s *Server) HTTPHandler() http.Handler {
 	return mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server {
 		return s.mcpServer

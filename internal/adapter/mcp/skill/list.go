@@ -1,10 +1,11 @@
-package mcp
+package skill
 
 import (
 	"context"
 	"fmt"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"github.com/quixiq/polyglot/internal/adapter/mcp/mcputil"
 )
 
 type listSkillsArgs struct{}
@@ -23,21 +24,23 @@ type listSkillsOutput struct {
 	Skills  []skillItem `json:"skills,omitempty"`
 }
 
-func (s *Server) listSkills(ctx context.Context, _ *mcp.CallToolRequest, _ listSkillsArgs) (*mcp.CallToolResult, listSkillsOutput, error) {
-	if s.skillRepo == nil {
-		return toolOK(listSkillsOutput{
+// ListSkills handles the "list_skills" tool.
+func (h *Handler) ListSkills(ctx context.Context, _ *mcp.CallToolRequest, _ listSkillsArgs) (*mcp.CallToolResult, listSkillsOutput, error) {
+	repo := h.repo()
+	if repo == nil {
+		return mcputil.ToolOK(listSkillsOutput{
 			Status:  "success",
 			Summary: "Skill repository not configured",
 		})
 	}
 
-	skills, err := s.skillRepo.ListSkills(ctx, "")
+	skills, err := repo.ListSkills(ctx, "")
 	if err != nil {
-		return toolError(listSkillsOutput{Status: "error", Summary: err.Error()})
+		return mcputil.ToolError(listSkillsOutput{Status: "error", Summary: err.Error()})
 	}
 
 	if len(skills) == 0 {
-		return toolOK(listSkillsOutput{
+		return mcputil.ToolOK(listSkillsOutput{
 			Status:  "success",
 			Summary: "No skills configured in system",
 		})
@@ -54,7 +57,7 @@ func (s *Server) listSkills(ctx context.Context, _ *mcp.CallToolRequest, _ listS
 		}
 	}
 
-	return toolOK(listSkillsOutput{
+	return mcputil.ToolOK(listSkillsOutput{
 		Status:  "success",
 		Summary: fmt.Sprintf("Found %d skills", len(skills)),
 		Skills:  items,

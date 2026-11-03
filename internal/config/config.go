@@ -59,7 +59,7 @@ func Load() Config {
 	}
 	_ = godotenv.Overload(".env.local")
 
-	originsRaw := getEnv("CORS_ORIGINS", "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000")
+	originsRaw := getEnv("CORS_ORIGINS", "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000,http://localhost:3080,http://127.0.0.1:3080")
 	var origins []string
 	if originsRaw == "*" {
 		origins = []string{"*"}

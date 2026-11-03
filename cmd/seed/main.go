@@ -13,6 +13,7 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -41,8 +42,71 @@ func main() {
 	seedUsers(ctx, pgStore)
 	seedLLMConfig(ctx, pgStore, cfg)
 	seedCasbin(ctx, pgStore)
+	seedDevices(ctx, pgStore, cfg)
 
 	logger.WithComponent("Seeder").Info("database seeding completed successfully")
+}
+
+func seedDevices(ctx context.Context, pgStore *postgres.Store, cfg config.Config) {
+	deviceRepo := postgres.NewDeviceRepository(pgStore.DB())
+	vault := postgres.NewCredentialVault(pgStore.DB(), cfg.EncryptionKey)
+	devices := []device.Device{
+		{
+			ID:         "018f2d5e-7a42-7c89-a1b2-c3d4e5f60001",
+			TenantID:   "tenant-default",
+			Name:       "Router-Core-CCR2004",
+			Vendor:     "MikroTik",
+			DriverType: "mikrotik",
+			Host:       "10.0.0.1",
+			Port:       8728,
+			SSHPort:    22,
+			Enabled:    true,
+			Tags:       []string{"core", "gateway", "bgp"},
+		},
+		{
+			ID:         "018f2d5e-7a42-7c89-a1b2-c3d4e5f60002",
+			TenantID:   "tenant-default",
+			Name:       "OLT-ZTE-C320-POP1",
+			Vendor:     "ZTE",
+			DriverType: "zteolt",
+			Host:       "192.168.10.2",
+			Port:       23,
+			Enabled:    true,
+			Tags:       []string{"olt", "gpon", "pop1"},
+		},
+		{
+			ID:         "018f2d5e-7a42-7c89-a1b2-c3d4e5f60003",
+			TenantID:   "tenant-default",
+			Name:       "Switch-Dist-Cisco2960",
+			Vendor:     "Cisco",
+			DriverType: "generic_switch",
+			Host:       "10.0.0.254",
+			Port:       22,
+			SSHPort:    22,
+			Enabled:    true,
+			Tags:       []string{"switch", "distribution"},
+		},
+	}
+
+	for _, d := range devices {
+		if _, err := deviceRepo.FindByID(ctx, d.ID); err != nil {
+			if err := deviceRepo.Save(ctx, d); err != nil {
+				logger.WithComponent("Seeder").WithError(err).WithField("device", d.Name).Error("failed to seed device")
+			} else {
+				logger.WithComponent("Seeder").WithField("device", d.Name).Info("seeded device")
+			}
+		}
+		if _, err := vault.Get(ctx, d.ID); err != nil {
+			if err := vault.Save(ctx, d.ID, device.Credentials{
+				Username: "admin",
+				Password: "password123",
+			}); err != nil {
+				logger.WithComponent("Seeder").WithError(err).WithField("device", d.Name).Error("failed to seed credentials")
+			} else {
+				logger.WithComponent("Seeder").WithField("device", d.Name).Info("seeded credentials")
+			}
+		}
+	}
 }
 
 func seedUsers(ctx context.Context, pgStore *postgres.Store) {

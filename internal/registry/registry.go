@@ -97,6 +97,14 @@ func (r *Registry) Get(ctx context.Context, deviceID string) (port.DeviceDriver,
 	return driver, nil
 }
 
+// DeviceRepo returns the underlying device repository.
+func (r *Registry) DeviceRepo() port.DeviceRepository {
+	if r == nil {
+		return nil
+	}
+	return r.repo
+}
+
 // Evict closes and removes the cached driver for deviceID, forcing subsequent Get calls to dial fresh.
 func (r *Registry) Evict(deviceID string) error {
 	r.mu.Lock()

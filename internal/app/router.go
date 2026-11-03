@@ -31,6 +31,7 @@ import (
 	subConnect "github.com/quixiq/polyglot/internal/adapter/connect/subscription"
 	adminapi "github.com/quixiq/polyglot/internal/adapter/http/adminapi"
 	gatewayHTTP "github.com/quixiq/polyglot/internal/adapter/http/gateway"
+	inventoryHTTP "github.com/quixiq/polyglot/internal/adapter/http/inventory"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	portalHTTP "github.com/quixiq/polyglot/internal/adapter/http/portal"
 	reportHTTP "github.com/quixiq/polyglot/internal/adapter/http/report"
@@ -143,6 +144,9 @@ func buildRouter(d routerDeps) http.Handler {
 	webhookHTTPHandler := webhookHTTP.NewHandler(d.deviceRepo)
 	webhookHTTPHandler.RegisterPublic(rootMux)
 
+	inventoryHTTPHandler := inventoryHTTP.NewHandler(d.deviceRepo)
+	inventoryHTTPHandler.RegisterPublic(rootMux)
+
 	uploadHTTPHandler := uploadHTTP.NewHandler(d.cfg.UploadDir)
 	uploadHTTPHandler.RegisterPublic(rootMux)
 
@@ -166,7 +170,9 @@ func buildRouter(d routerDeps) http.Handler {
 
 	mcpServer := mcp.New(d.reg, nil).
 		WithMikhmonUseCase(d.hotUC).
-		WithCustomerRepository(d.customerRepo)
+		WithOLTService(d.oltService).
+		WithCustomerRepository(d.customerRepo).
+		WithDeviceRepository(d.deviceRepo)
 	rootMux.Handle("/mcp", mcpServer.HTTPHandler())
 
 	wsAdapter.RegisterEventRoutes(rootMux, d.sseHub, d.openTermUC)

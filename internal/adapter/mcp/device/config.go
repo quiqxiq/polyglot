@@ -1,10 +1,10 @@
-package mcp
+package device
 
 import (
 	"context"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-
+	"github.com/quixiq/polyglot/internal/adapter/mcp/mcputil"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/usecase/network"
 )
@@ -16,8 +16,7 @@ type pushConfigArgs struct {
 	Args     map[string]string `json:"args,omitempty" jsonschema:"configuration parameters as key-value pairs"`
 }
 
-// configOutput is the structured result of push_config. Concise: Applied
-// signals success, Message gives a 1-line detail, Error on failure.
+// configOutput is the structured result of push_config.
 type configOutput struct {
 	DeviceID string `json:"device_id"`
 	Applied  bool   `json:"applied"`
@@ -25,30 +24,30 @@ type configOutput struct {
 	Error    string `json:"error,omitempty"`
 }
 
-// pushConfig handles the "push_config" tool. Always destructive (the
-// ToolAnnotations signal this to the client). Uses the same
-// ExecuteCommandPreApproved pipeline as run_command — the semantic
-// distinction is for the LLM: push_config signals "I am writing config",
-// run_command signals "I am running a general command".
-func (s *Server) pushConfig(ctx context.Context, _ *mcp.CallToolRequest, args pushConfigArgs) (*mcp.CallToolResult, configOutput, error) {
-	driver, err := s.registry.Get(ctx, args.DeviceID)
+// PushConfig handles the "push_config" tool. Always destructive.
+func (h *Handler) PushConfig(ctx context.Context, _ *mcp.CallToolRequest, args pushConfigArgs) (*mcp.CallToolResult, configOutput, error) {
+	if h.Registry == nil {
+		return mcputil.ToolError(configOutput{DeviceID: args.DeviceID, Error: "device registry not configured"})
+	}
+
+	driver, err := h.Registry.Get(ctx, args.DeviceID)
 	if err != nil {
-		return toolError(configOutput{DeviceID: args.DeviceID, Error: err.Error()})
+		return mcputil.ToolError(configOutput{DeviceID: args.DeviceID, Error: err.Error()})
 	}
 
 	cmd := command.Command{Raw: args.Command, Args: args.Args}
 	result, err := network.ExecuteCommandPreApproved(ctx, driver, cmd)
 	if err != nil {
-		return toolError(configOutput{DeviceID: args.DeviceID, Error: err.Error()})
+		return mcputil.ToolError(configOutput{DeviceID: args.DeviceID, Error: err.Error()})
 	}
 
-	s.auditBestEffort(ctx, args.DeviceID, args.Command, result)
+	mcputil.AuditBestEffort(ctx, h.Audit, args.DeviceID, args.Command, result)
 
 	msg := result.Output
 	if msg == "" {
 		msg = "configuration applied"
 	}
-	return toolOK(configOutput{
+	return mcputil.ToolOK(configOutput{
 		DeviceID: args.DeviceID,
 		Applied:  true,
 		Message:  msg,
