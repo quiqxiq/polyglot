@@ -96,6 +96,7 @@ type routerosValidateOutput struct {
 	ErrorMessage  string `json:"error_message,omitempty"`
 	ErrorPosition int    `json:"error_position,omitempty"`
 	Summary       string `json:"summary"`
+	Remediation   string `json:"remediation,omitempty"`
 	Error         string `json:"error,omitempty"`
 }
 
@@ -117,5 +118,6 @@ type routerosRunOutput struct {
 	Output          string              `json:"output,omitempty"`
 	Rows            []map[string]string `json:"rows,omitempty"`
 	RowCount        int                 `json:"row_count,omitempty"`
+	Remediation     string              `json:"remediation,omitempty"`
 	Error           string              `json:"error,omitempty"`
 }

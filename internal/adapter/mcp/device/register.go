@@ -14,7 +14,7 @@ func Register(server *mcp.Server, h *Handler) {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "run_command",
-		Description: "Execute a raw vendor-native command on a device. Potentially destructive — approval required.",
+		Description: "Execute a raw vendor-native command on non-MikroTik devices (Cisco, OLT, Switch). NOTE: For MikroTik RouterOS devices, DO NOT use this tool — use 'routeros_run' with 'routeros_validate' and 'routeros_suggest' instead for pre-flight syntax safety. Potentially destructive — approval required.",
 		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive},
 	}, h.RunCommand)
 

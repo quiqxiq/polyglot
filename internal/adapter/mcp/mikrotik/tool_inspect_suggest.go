@@ -101,6 +101,7 @@ func (h *Handler) RouterOSValidate(ctx context.Context, _ *mcp.CallToolRequest, 
 
 	if !result.Valid {
 		summary := fmt.Sprintf("Syntax error: %s (position %d)", result.ErrorMessage, result.ErrorPosition)
+		remediation := formatRouterOSRemediation(args.Input, summary, result.ErrorPosition)
 		return mcputil.ToolOK(routerosValidateOutput{
 			DeviceID:      args.DeviceID,
 			Input:         args.Input,
@@ -108,6 +109,7 @@ func (h *Handler) RouterOSValidate(ctx context.Context, _ *mcp.CallToolRequest, 
 			ErrorMessage:  result.ErrorMessage,
 			ErrorPosition: result.ErrorPosition,
 			Summary:       summary,
+			Remediation:   remediation,
 		})
 	}
 

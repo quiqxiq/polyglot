@@ -309,4 +309,5 @@ func TestMCP_RunCommand_Error_E2E(t *testing.T) {
 	sc, ok := res.StructuredContent.(map[string]any)
 	require.True(t, ok)
 	assert.Contains(t, sc["error"].(string), "unreachable")
+	assert.Contains(t, sc["error"].(string), "For MikroTik RouterOS devices, please use 'routeros_run'")
 }

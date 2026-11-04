@@ -373,6 +373,9 @@ func TestRouterOSRun(t *testing.T) {
 		assert.False(t, out.Executed)
 		assert.False(t, executedActual, "driver must not execute when validation fails")
 		assert.Contains(t, out.Error, "validation failed: expected valid IP address")
+		assert.Contains(t, out.Error, "STOP: Do NOT retry 'routeros_run' or 'run_command' blindly")
+		assert.Contains(t, out.Error, "routeros_suggest")
+		assert.Equal(t, out.Error, out.Remediation)
 	})
 
 	t.Run("auto-validate succeeds and command executes", func(t *testing.T) {
