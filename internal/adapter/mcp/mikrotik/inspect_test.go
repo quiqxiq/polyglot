@@ -445,4 +445,34 @@ func TestRouterOSRun(t *testing.T) {
 		assert.True(t, out.Executed)
 		assert.True(t, actualExecuted)
 	})
+
+	t.Run("compound command parses args and strips metadata like reason", func(t *testing.T) {
+		actualExecuted := false
+		autoVal := false
+
+		drv := &mcptest.TestDriver{
+			ExecuteFn: func(_ context.Context, cmd command.Command) (command.Result, error) {
+				actualExecuted = true
+				assert.Equal(t, "/ping", cmd.Raw)
+				assert.Equal(t, "8.8.8.8", cmd.Args["address"])
+				assert.Equal(t, "4", cmd.Args["count"])
+				assert.NotContains(t, cmd.Args, "reason")
+				return command.Result{Output: "ok"}, nil
+			},
+		}
+
+		reg := setupTestRegistry(t, "dev1", drv)
+		h := NewHandler(reg, nil)
+
+		res, out, err := h.RouterOSRun(context.Background(), nil, routerosRunArgs{
+			DeviceID:     "dev1",
+			Command:      "/ping address=8.8.8.8",
+			Args:         map[string]string{"reason": "testing dns connectivity"},
+			AutoValidate: &autoVal,
+		})
+		require.NoError(t, err)
+		assert.False(t, res.IsError)
+		assert.True(t, out.Executed)
+		assert.True(t, actualExecuted)
+	})
 }

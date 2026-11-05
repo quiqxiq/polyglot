@@ -2,6 +2,8 @@ package network
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
@@ -46,7 +48,16 @@ func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.C
 	case command.DecisionRequireApproval:
 		return command.Result{}, command.ErrApprovalRequired
 	}
-	return driver.Execute(ctx, cmd)
+	res, err := driver.Execute(ctx, cmd)
+	if err != nil {
+		if errors.Is(err, command.ErrStreamingCommand) {
+			if sd, ok := driver.(port.StreamingDeviceDriver); ok {
+				return CollectStream(ctx, sd, cmd)
+			}
+		}
+		return res, fmt.Errorf("execute command: %w", err)
+	}
+	return res, nil
 }
 
 // ExecuteCommandPreApproved runs cmd against a device via driver, skipping
@@ -65,5 +76,14 @@ func ExecuteCommandPreApproved(ctx context.Context, driver port.DeviceDriver, cm
 	if command.Decide(driver.Classify(cmd)) == command.DecisionDeny {
 		return command.Result{}, command.ErrDenied
 	}
-	return driver.Execute(ctx, cmd)
+	res, err := driver.Execute(ctx, cmd)
+	if err != nil {
+		if errors.Is(err, command.ErrStreamingCommand) {
+			if sd, ok := driver.(port.StreamingDeviceDriver); ok {
+				return CollectStream(ctx, sd, cmd)
+			}
+		}
+		return res, fmt.Errorf("execute command: %w", err)
+	}
+	return res, nil
 }

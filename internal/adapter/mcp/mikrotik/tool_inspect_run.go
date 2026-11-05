@@ -43,14 +43,35 @@ func (h *Handler) RouterOSRun(ctx context.Context, _ *mcp.CallToolRequest, args 
 	var cmdArgs map[string]string
 	var consoleLine string
 
-	if len(args.Args) == 0 && strings.Contains(strings.TrimSpace(args.Command), " ") {
-		raw, cmdArgs = parseConsoleCommand(args.Command)
-		consoleLine = normalizeConsoleInput(args.Command)
+	trimmedCmd := strings.TrimSpace(args.Command)
+	if strings.Contains(trimmedCmd, " ") {
+		raw, cmdArgs = parseConsoleCommand(trimmedCmd)
 	} else {
-		raw = args.Command
-		cmdArgs = args.Args
-		consoleLine = buildConsoleLine(raw, cmdArgs)
+		raw = trimmedCmd
+		if !strings.HasPrefix(raw, "/") {
+			raw = "/" + raw
+		}
+		cmdArgs = make(map[string]string)
 	}
+
+	if cmdArgs == nil {
+		cmdArgs = make(map[string]string)
+	}
+
+	for k, v := range args.Args {
+		if strings.EqualFold(k, "reason") || strings.EqualFold(k, "justification") || strings.EqualFold(k, "comment_meta") {
+			continue
+		}
+		cmdArgs[k] = v
+	}
+
+	if raw == "/ping" {
+		if _, ok := cmdArgs["count"]; !ok {
+			cmdArgs["count"] = "4"
+		}
+	}
+
+	consoleLine = buildConsoleLine(raw, cmdArgs)
 
 	autoValidate := true
 	if args.AutoValidate != nil {

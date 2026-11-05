@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -65,4 +66,39 @@ func TestExecuteCommandValidation(t *testing.T) {
 		_, err := ExecuteCommand(ctx, driver, command.Command{Raw: "/system/resource/print"})
 		require.NoError(t, err)
 	})
+
+	t.Run("streaming command fallback on ErrStreamingCommand", func(t *testing.T) {
+		driver := &mockStreamingDeviceDriver{
+			mockDriver: mockDriver{
+				executeFn: func(ctx context.Context, cmd command.Command) (command.Result, error) {
+					return command.Result{}, command.ErrStreamingCommand
+				},
+			},
+			streamFn: func(ctx context.Context, cmd command.Command) (port.StreamHandle, error) {
+				ch := make(chan command.Result, 1)
+				ch <- command.Result{Rows: []map[string]string{{"seq": "1", "host": "8.8.8.8"}}}
+				return &mockStreamHandle{ch: ch}, nil
+			},
+		}
+
+		res, err := ExecuteCommand(ctx, driver, command.Command{Raw: "/ping", Args: map[string]string{"count": "1"}})
+		require.NoError(t, err)
+		assert.Len(t, res.Rows, 1)
+
+		resPre, err := ExecuteCommandPreApproved(ctx, driver, command.Command{Raw: "/ping", Args: map[string]string{"count": "1"}})
+		require.NoError(t, err)
+		assert.Len(t, resPre.Rows, 1)
+	})
+}
+
+type mockStreamingDeviceDriver struct {
+	mockDriver
+	streamFn func(ctx context.Context, cmd command.Command) (port.StreamHandle, error)
+}
+
+func (d *mockStreamingDeviceDriver) Stream(ctx context.Context, cmd command.Command) (port.StreamHandle, error) {
+	if d.streamFn != nil {
+		return d.streamFn(ctx, cmd)
+	}
+	return nil, nil
 }

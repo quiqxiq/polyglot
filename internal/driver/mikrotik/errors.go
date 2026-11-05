@@ -1,6 +1,10 @@
 package mikrotik
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/quixiq/polyglot/internal/domain/command"
+)
 
 // ErrNotConnected indicates Execute or Stream was called while this
 // Driver's underlying connection was down and had not yet reconnected.
@@ -12,7 +16,7 @@ var ErrNotConnected = errors.New("mikrotik: not connected")
 
 // ErrStreamingCommand indicates Execute was called with a command that
 // must be run via Stream instead — see isStreamingCommand in commands.go.
-var ErrStreamingCommand = errors.New("mikrotik: command requires Stream, not Execute")
+var ErrStreamingCommand = command.ErrStreamingCommand
 
 // ErrNotStreamingCommand indicates Stream was called with a command that
 // is not recognized as streaming — use Execute instead.

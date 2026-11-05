@@ -40,7 +40,12 @@ func Translate(op command.Operation) (command.Command, error) {
 // TODO: extend with other natively-streaming commands as they're actually
 // needed (e.g. /tool/torch, /tool/sniffer) — not added now, per agreed scope.
 var streamingBasePaths = map[string]bool{
-	"/ping": true,
+	"/ping":               true,
+	"/tool/flood-ping":    true,
+	"/tool/traceroute":    true,
+	"/tool/torch":         true,
+	"/tool/profile":       true,
+	"/tool/sniffer/quick": true,
 }
 
 // streamingFlagArgs lists Args keys that turn an otherwise one-shot command
@@ -48,6 +53,13 @@ var streamingBasePaths = map[string]bool{
 // "print follow-only", and "print interval=1s" (or any interval) all keep
 // the connection open and keep sending rows instead of returning once.
 var streamingFlagArgs = []string{"follow", "follow-only", "interval", "stats"}
+
+// IsStreamingCommand reports whether cmd must be run via Driver.Stream
+// (Listen — non-blocking, event-driven, no polling) rather than
+// Driver.Execute (Run — blocking, returns exactly once).
+func IsStreamingCommand(cmd command.Command) bool {
+	return isStreamingCommand(cmd)
+}
 
 // isStreamingCommand reports whether cmd must be run via Driver.Stream
 // (Listen — non-blocking, event-driven, no polling) rather than
