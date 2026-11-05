@@ -11,6 +11,8 @@ const Dashboard = {
   targetPingIp: null,
 
   init() {
+    this.applyWidgetVisibility();
+
     RouterSelector.onDeviceChange((deviceId) => {
       if (!deviceId) return;
       this.currentDeviceId = deviceId;
@@ -35,6 +37,24 @@ const Dashboard = {
     window.addEventListener('beforeunload', () => {
       this.cleanupStreams();
     });
+  },
+
+  /**
+   * Hides widgets whose backend permission is missing. The dashboard menu is
+   * visible when any of these capabilities exist, so each card is gated alone.
+   */
+  applyWidgetVisibility() {
+    const hide = (id, allowed) => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden', !allowed);
+    };
+
+    hide('stat-card-active', Auth.can('dial:ppp-active:read'));
+    hide('stat-card-inactive', Auth.can('dial:ppp-non-active:read'));
+    hide('stat-card-secrets', Auth.can('dial:ppp-secrets:read'));
+    hide('stat-card-profiles', Auth.can('dial:ppp-profiles:read'));
+    hide('quick-search-section', Auth.canAction('dashboard', 'search'));
+    hide('resource-section', Auth.canAction('dashboard', 'snapshot'));
   },
 
   cleanupStreams() {
@@ -90,6 +110,7 @@ const Dashboard = {
   startResourceStream() {
     this.cleanupStreams();
     if (!this.currentDeviceId) return;
+    if (!Auth.canAction('dashboard', 'snapshot')) return;
 
     this.resourceStreamController = new AbortController();
     const signal = this.resourceStreamController.signal;
@@ -192,6 +213,7 @@ const Dashboard = {
           badgeEl.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200';
           badgeText.textContent = 'OFFLINE';
         }
+        if (err && (err.permissionDenied || err.status === 403)) return;
         setTimeout(() => {
           if (!signal.aborted && this.currentDeviceId) {
             this.startResourceStream();
@@ -208,11 +230,25 @@ const Dashboard = {
   async loadQuickStats() {
     if (!this.currentDeviceId) return;
     try {
+      const deviceId = this.currentDeviceId;
+      const canActive = Auth.can('dial:ppp-active:read');
+      const canInactive = Auth.can('dial:ppp-non-active:read');
+      const canSecrets = Auth.can('dial:ppp-secrets:read');
+      const canProfiles = Auth.can('dial:ppp-profiles:read');
+
       const [activeRes, inactiveRes, secretsRes, profilesRes] = await Promise.allSettled([
-        API.call('/polyglot.v1.PPPService/ListActiveSessions', { device_id: this.currentDeviceId }),
-        API.call('/polyglot.v1.PPPService/ListInactiveSecrets', { device_id: this.currentDeviceId }),
-        API.call('/polyglot.v1.PPPService/ListSecrets', { device_id: this.currentDeviceId }),
-        API.call('/polyglot.v1.PPPService/ListProfiles', { device_id: this.currentDeviceId })
+        canActive
+          ? API.call('/polyglot.v1.PPPService/ListActiveSessions', { device_id: deviceId })
+          : Promise.resolve({ sessions: [] }),
+        canInactive
+          ? API.call('/polyglot.v1.PPPService/ListInactiveSecrets', { device_id: deviceId })
+          : Promise.resolve({ secrets: [] }),
+        canSecrets
+          ? API.call('/polyglot.v1.PPPService/ListSecrets', { device_id: deviceId })
+          : Promise.resolve({ secrets: [] }),
+        canProfiles
+          ? API.call('/polyglot.v1.PPPService/ListProfiles', { device_id: deviceId })
+          : Promise.resolve({ profiles: [] })
       ]);
 
       const setVal = (id, res, key) => {
@@ -253,6 +289,7 @@ const Dashboard = {
 
   async performSearch(query) {
     if (!this.currentDeviceId) return;
+    if (!Auth.canAction('dashboard', 'search')) return;
     const resultsContainer = document.getElementById('search-results');
     const resultsSection = document.getElementById('search-results-section');
     const countEl = document.getElementById('search-results-count');
@@ -305,6 +342,10 @@ const Dashboard = {
       }
 
       let html = '';
+
+      const canKick = Auth.canAction('dashboard', 'kick');
+      const canPing = Auth.canAction('dashboard', 'ping');
+      const canToggle = Auth.canAction('dashboard', 'toggleSecret');
 
       // 1. Render Matched Active (Card format sama persis dengan ppp-active.js)
       matchedActive.forEach(item => {
@@ -371,40 +412,51 @@ const Dashboard = {
                 </div>
               </div>
 
-              <!-- Desktop Actions -->
+              <!-- Desktop Actions (each button gated by its API permission) -->
+              ${(canKick || address) ? `
               <div class="hidden sm:flex flex-col gap-2 items-end justify-center pl-4 border-l border-slate-100">
+                ${canKick ? `
                 <div class="flex gap-2">
                   <button onclick="Dashboard.kickSession('${rosId}', '${userName}')" class="p-2 bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 rounded-lg transition-all shadow-xs cursor-pointer" title="Putus Sesi (Disconnect)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></svg>
                   </button>
                 </div>
+                ` : ''}
                 <div class="flex gap-2">
                   ${address ? `
+                    ${canPing ? `
                     <button onclick="Dashboard.openPingModal('${address}', '${userName}')" class="p-2 bg-white border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 rounded-lg transition-all shadow-xs cursor-pointer" title="Ping IP Address">
                       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                     </button>
+                    ` : ''}
                     <button onclick="window.open('http://${address}', '_blank')" class="p-2 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 rounded-lg transition-all shadow-xs cursor-pointer" title="Buka CPE / WebFig">
                       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                     </button>
                   ` : ''}
                 </div>
               </div>
+              ` : ''}
               
               <!-- Mobile: Three-dot dropdown menu -->
+              ${(canKick || address) ? `
               <div class="sm:hidden relative">
                 <button class="action-menu-btn p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors cursor-pointer" type="button" aria-label="Menu Opsi">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
                 </button>
                 <div class="action-menu hidden absolute right-0 mt-1 w-48 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50">
+                  ${canKick ? `
                   <button onclick="Dashboard.kickSession('${rosId}', '${userName}')" class="w-full text-left px-4 py-3 text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-3 border-b border-slate-50 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></svg>
                     <span>Putus Sesi</span>
                   </button>
+                  ` : ''}
                   ${address ? `
+                    ${canPing ? `
                     <button onclick="Dashboard.openPingModal('${address}', '${userName}')" class="w-full text-left px-4 py-3 text-sm text-blue-600 hover:bg-blue-50 flex items-center gap-3 border-b border-slate-50 cursor-pointer">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                       <span>Ping IP</span>
                     </button>
+                    ` : ''}
                     <button onclick="window.open('http://${address}', '_blank')" class="w-full text-left px-4 py-3 text-sm text-indigo-600 hover:bg-indigo-50 flex items-center gap-3 cursor-pointer">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                       <span>Buka WebFig</span>
@@ -412,6 +464,7 @@ const Dashboard = {
                   ` : ''}
                 </div>
               </div>
+              ` : ''}
 
             </div>
           </div>
@@ -478,6 +531,7 @@ const Dashboard = {
                 </div>
               </div>
 
+              ${canToggle ? `
               <!-- Desktop Actions -->
               <div class="hidden sm:flex flex-col gap-2 items-end justify-center pl-4 border-l border-slate-100">
                 <button onclick="Dashboard.toggleSecretStatus('${rosId}', ${!isDisabled})" class="p-2 bg-white border ${isDisabled ? 'border-emerald-200 text-emerald-600 hover:bg-emerald-50' : 'border-amber-200 text-amber-600 hover:bg-amber-50'} rounded-lg transition-all shadow-xs cursor-pointer" title="${isDisabled ? 'Aktifkan Secret' : 'Nonaktifkan Secret'}">
@@ -502,6 +556,7 @@ const Dashboard = {
                   </button>
                 </div>
               </div>
+              ` : ''}
 
             </div>
           </div>
@@ -518,6 +573,7 @@ const Dashboard = {
   },
 
   async kickSession(rosId, name) {
+    if (!Auth.canAction('dashboard', 'kick')) return;
     if (!confirm(`Apakah Anda yakin ingin memutuskan sesi koneksi "${name}"?`)) return;
 
     try {
@@ -532,11 +588,12 @@ const Dashboard = {
         this.performSearch(input.value.trim().toLowerCase());
       }
     } catch (err) {
-      showToast('Gagal memutuskan koneksi: ' + err.message, 'error');
+      API.reportError(err, 'Gagal memutuskan koneksi');
     }
   },
 
   async toggleSecretStatus(rosId, newDisabled) {
+    if (!Auth.canAction('dashboard', 'toggleSecret')) return;
     try {
       await API.call('/polyglot.v1.PPPService/SetSecretDisabled', {
         device_id: this.currentDeviceId,
@@ -550,7 +607,7 @@ const Dashboard = {
         this.performSearch(input.value.trim().toLowerCase());
       }
     } catch (err) {
-      showToast('Gagal mengubah status: ' + err.message, 'error');
+      API.reportError(err, 'Gagal mengubah status');
     }
   },
 
@@ -570,6 +627,7 @@ const Dashboard = {
   },
 
   async executePing() {
+    if (!Auth.canAction('dashboard', 'ping')) return;
     if (!this.targetPingIp || !this.currentDeviceId) return;
 
     const resultBox = document.getElementById('ping-results');

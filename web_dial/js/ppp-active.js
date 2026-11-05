@@ -130,7 +130,7 @@ const PPPActive = {
         this.applyFilter();
         this.startLocalTicker();
       } catch (fallbackErr) {
-        showToast('Gagal memuat sesi aktif: ' + fallbackErr.message, 'error');
+        API.reportError(fallbackErr, 'Gagal memuat sesi aktif');
       }
     }
   },
@@ -218,6 +218,8 @@ const PPPActive = {
       const formattedUptime = UIUtils.formatUptime(item.uptime || '');
 
       const profileIcon = UIUtils.getProfileIcon(profile, 'mr-1.5 w-3.5 h-3.5 inline-block');
+      const canKick = Auth.canAction('ppp-active', 'kick');
+      const canPing = Auth.canAction('ppp-active', 'ping');
 
       return `
         <div class="bg-white rounded-xl shadow-xs hover:shadow-md transition-all duration-200 border border-slate-200/80 p-4" data-username="${userName}">
@@ -273,39 +275,50 @@ const PPPActive = {
             </div>
 
             <!-- Desktop Actions -->
+            ${(canKick || address) ? `
             <div class="hidden sm:flex flex-col gap-2 items-end justify-center pl-4 border-l border-slate-100">
+              ${canKick ? `
               <div class="flex gap-2">
                 <button onclick="PPPActive.kickSession('${rosId}', '${userName}')" class="p-2 bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 rounded-lg transition-all shadow-xs cursor-pointer" title="${typeof I18n !== 'undefined' ? I18n.t('kick_session') : 'Putus Sesi'}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></svg>
                 </button>
               </div>
+              ` : ''}
               <div class="flex gap-2">
                 ${address ? `
+                  ${canPing ? `
                   <button onclick="PPPActive.openPingModal('${address}', '${userName}')" class="p-2 bg-white border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 rounded-lg transition-all shadow-xs cursor-pointer" title="${typeof I18n !== 'undefined' ? I18n.t('ping_test') : 'Ping IP'}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                   </button>
+                  ` : ''}
                   <button onclick="window.open('http://${address}', '_blank')" class="p-2 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 rounded-lg transition-all shadow-xs cursor-pointer" title="${typeof I18n !== 'undefined' ? I18n.t('open_cpe') : 'Buka CPE'}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                   </button>
                 ` : ''}
               </div>
             </div>
+            ` : ''}
             
             <!-- Mobile: Three-dot dropdown menu -->
+            ${(canKick || address) ? `
             <div class="sm:hidden relative">
               <button class="action-menu-btn p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors cursor-pointer" type="button" aria-label="Menu Opsi">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
               </button>
               <div class="action-menu hidden absolute right-0 mt-1 w-48 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50">
+                ${canKick ? `
                 <button onclick="PPPActive.kickSession('${rosId}', '${userName}')" class="w-full text-left px-4 py-3 text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-3 border-b border-slate-50 cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></svg>
                   <span>${typeof I18n !== 'undefined' ? I18n.t('kick_session') : 'Putus Sesi'}</span>
                 </button>
+                ` : ''}
                 ${address ? `
+                  ${canPing ? `
                   <button onclick="PPPActive.openPingModal('${address}', '${userName}')" class="w-full text-left px-4 py-3 text-sm text-blue-600 hover:bg-blue-50 flex items-center gap-3 border-b border-slate-50 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                     <span>${typeof I18n !== 'undefined' ? I18n.t('ping_test') : 'Ping IP'}</span>
                   </button>
+                  ` : ''}
                   <button onclick="window.open('http://${address}', '_blank')" class="w-full text-left px-4 py-3 text-sm text-indigo-600 hover:bg-indigo-50 flex items-center gap-3 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                     <span>${typeof I18n !== 'undefined' ? I18n.t('open_cpe') : 'Buka CPE'}</span>
@@ -313,6 +326,7 @@ const PPPActive = {
                 ` : ''}
               </div>
             </div>
+            ` : ''}
 
           </div>
         </div>
@@ -323,6 +337,7 @@ const PPPActive = {
   },
 
   async kickSession(rosId, name) {
+    if (!Auth.canAction('ppp-active', 'kick')) return;
     const confirmMsg = typeof I18n !== 'undefined'
       ? `${I18n.t('confirm_kick_desc')} "${name}"?`
       : `Apakah Anda yakin ingin memutuskan sesi koneksi "${name}"?`;
@@ -339,7 +354,7 @@ const PPPActive = {
       showToast(successMsg, 'success');
       this.loadActiveSessions();
     } catch (err) {
-      showToast('Gagal memutuskan koneksi: ' + err.message, 'error');
+      API.reportError(err, 'Gagal memutuskan koneksi');
     }
   },
 
@@ -359,6 +374,7 @@ const PPPActive = {
   },
 
   async executePing() {
+    if (!Auth.canAction('ppp-active', 'ping')) return;
     if (!this.targetPingIp || !this.currentDeviceId) return;
 
     const resultBox = document.getElementById('ping-results');

@@ -14,8 +14,12 @@ const DialLocales = {
     nav_ppp_secrets: 'PPP Secrets',
     nav_ppp_profiles: 'PPP Profiles',
     nav_settings: 'Pengaturan',
+    nav_settings_users: 'Akun Teknisi',
+    nav_settings_devices: 'Akses Router',
     group_operations: 'Operasional',
     group_management: 'Manajemen PPP',
+    group_ppp: 'Manajemen PPP',
+    group_monitoring: 'Monitoring',
     group_system: 'Sistem',
 
     // Dashboard
@@ -91,8 +95,20 @@ const DialLocales = {
     col_tx: 'Trafik Keluar (TX)',
 
     // Settings
-    settings_title: 'Pengaturan Teknisi & Router',
-    settings_desc: 'Khusus Admin: Kelola akun teknisi dan hak akses router MikroTik',
+    settings_title: 'Pengaturan & Akses',
+    settings_desc: 'Kelola akun teknisi dan atur router MikroTik yang boleh mereka akses',
+    settings_badge: 'Manajemen Akses',
+    settings_users_title: 'Daftar Teknisi Lapangan',
+    settings_users_desc: 'Teknisi hanya dapat mengakses router yang dicentang oleh Admin',
+    settings_readonly: 'Anda hanya dapat melihat data. Perubahan memerlukan izin user:manage.',
+    settings_loading_users: 'Memuat data teknisi...',
+    settings_empty_users: 'Belum ada teknisi',
+    settings_empty_users_desc: 'Klik tombol "Tambah Teknisi Baru" untuk membuat akun teknisi pertama Anda',
+    settings_devices_title: 'Matriks Akses Router',
+    settings_devices_desc: 'Centang router yang boleh diakses setiap teknisi. Perubahan langsung disimpan.',
+    settings_loading_matrix: 'Memuat matriks akses...',
+    settings_empty_matrix: 'Belum ada data untuk ditampilkan',
+    settings_empty_matrix_desc: 'Tambahkan teknisi dan router terlebih dahulu.',
     create_technician: 'Tambah Teknisi Baru',
     save_settings: 'Simpan Perubahan',
 
@@ -123,6 +139,11 @@ const DialLocales = {
     select_router: 'Pilih Router...',
     no_active_sessions: 'Tidak ada sesi PPP aktif yang ditemukan',
     no_secrets: 'Tidak ada data secret yang ditemukan',
+
+    // No Access
+    no_access_title: 'Akses Menu Tidak Tersedia',
+    no_access_desc: 'Akun Anda belum memiliki izin untuk membuka menu apa pun di Portal Dial. Hubungi Admin untuk mendapatkan akses.',
+    no_access_logout: 'Keluar Akun',
   },
 
   en: {
@@ -135,8 +156,12 @@ const DialLocales = {
     nav_ppp_secrets: 'PPP Secrets',
     nav_ppp_profiles: 'PPP Profiles',
     nav_settings: 'Settings',
+    nav_settings_users: 'Technician Accounts',
+    nav_settings_devices: 'Router Access',
     group_operations: 'Operations',
     group_management: 'PPP Management',
+    group_ppp: 'PPP Management',
+    group_monitoring: 'Monitoring',
     group_system: 'System',
 
     // Dashboard
@@ -212,8 +237,20 @@ const DialLocales = {
     col_tx: 'Outbound Traffic (TX)',
 
     // Settings
-    settings_title: 'Technician & Router Settings',
-    settings_desc: 'Admin Only: Manage technician accounts and assign router permissions',
+    settings_title: 'Settings & Access',
+    settings_desc: 'Manage technician accounts and the MikroTik routers they may access',
+    settings_badge: 'Access Management',
+    settings_users_title: 'Field Technician List',
+    settings_users_desc: 'Technicians can only access routers checked by an Admin',
+    settings_readonly: 'You can only view this data. Changes require the user:manage permission.',
+    settings_loading_users: 'Loading technician data...',
+    settings_empty_users: 'No technicians yet',
+    settings_empty_users_desc: 'Click "Add New Technician" to create your first technician account',
+    settings_devices_title: 'Router Access Matrix',
+    settings_devices_desc: 'Check the routers each technician may access. Changes are saved immediately.',
+    settings_loading_matrix: 'Loading access matrix...',
+    settings_empty_matrix: 'Nothing to display yet',
+    settings_empty_matrix_desc: 'Add technicians and routers first.',
     create_technician: 'Add New Technician',
     save_settings: 'Save Changes',
 
@@ -244,5 +281,10 @@ const DialLocales = {
     select_router: 'Select Router...',
     no_active_sessions: 'No active PPP sessions found',
     no_secrets: 'No secret records found',
+
+    // No Access
+    no_access_title: 'Menu Access Unavailable',
+    no_access_desc: 'Your account does not have permission to open any menu in the Dial Portal. Contact an Admin to request access.',
+    no_access_logout: 'Sign Out',
   }
 };

@@ -8,6 +8,12 @@ const RouterSelector = {
   selectedDeviceId: localStorage.getItem('selected_device_id') || null,
 
   async init() {
+    // Router inventory is readable with dial:device:read or device:read.
+    if (typeof Auth !== 'undefined' && !Auth.can('dial:device:read') && !Auth.can('device:read')) {
+      this.devices = [];
+      return false;
+    }
+
     try {
       const res = await API.call('/polyglot.v1.DeviceService/ListDevices', {});
       this.devices = res.devices || [];
@@ -30,10 +36,14 @@ const RouterSelector = {
 
       this.renderDropdowns();
       this.notifyChange();
+      return true;
     } catch (err) {
       console.error('Failed to load devices:', err);
+      this.devices = [];
+      this.renderNoDevices();
       const errMsg = typeof I18n !== 'undefined' ? I18n.t('failed_load_devices') : 'Gagal memuat daftar router yang diizinkan';
-      showToast(errMsg, 'error');
+      API.reportError(err, errMsg);
+      return false;
     }
   },
 

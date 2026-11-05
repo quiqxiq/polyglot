@@ -113,18 +113,20 @@
     </div>
   </div>
 
-  <script src="js/api.js?v=2"></script>
-  <script src="js/auth.js?v=2"></script>
-  <script src="js/locales.js?v=2"></script>
-  <script src="js/i18n.js?v=2"></script>
-  <script src="js/router-selector.js?v=2"></script>
-  <script src="js/layout.js?v=2"></script>
-  <script src="js/ppp-active.js?v=2"></script>
+  <script src="js/api.js?v=3"></script>
+  <script src="js/menu.js?v=3"></script>
+  <script src="js/auth.js?v=3"></script>
+  <script src="js/locales.js?v=3"></script>
+  <script src="js/i18n.js?v=3"></script>
+  <script src="js/router-selector.js?v=3"></script>
+  <script src="js/layout.js?v=3"></script>
+  <script src="js/ppp-active.js?v=3"></script>
   <script>
-    if (Auth.requireAuth()) {
-      Layout.init('ppp-active.html');
+    (async () => {
+      if (!(await Auth.requireMenu('ppp-active.html'))) return;
       PPPActive.init();
-    }
+      await Layout.init('ppp-active.html');
+    })();
   </script>
 </body>
 </html>

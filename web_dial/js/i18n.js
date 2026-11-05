@@ -27,14 +27,9 @@ const I18n = {
     document.documentElement.lang = lang;
     this.applyDOM();
 
-    if (triggerRerender && typeof Layout !== 'undefined' && Layout.init) {
-      const currentHref = window.location.pathname.split('/').pop() || 'index.html';
-      const user = Auth.getUser() || { username: 'Pengguna', role: 'teknisi' };
-      const isAdmin = Auth.isAdmin();
-      Layout.renderSidebar(currentHref, isAdmin, user);
-      Layout.renderHeader(user);
-      Layout.renderMobileNav(currentHref, user, isAdmin);
-      Layout.bindEvents();
+    if (triggerRerender && typeof Layout !== 'undefined' && Layout.rerender) {
+      const currentHref = (window.location.pathname.split('/').pop() || 'index.html') + (window.location.hash || '');
+      Layout.rerender(currentHref);
     }
 
     // Trigger custom event agar view controller dapat memperbarui string dinamis

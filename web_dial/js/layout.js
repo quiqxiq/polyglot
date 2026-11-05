@@ -1,123 +1,106 @@
 // DEVIASI: layout template strings, icons, and navigation markup exceed 500 lines
 /**
  * Polyglot Web Dial Layout Engine
- * Merender navigasi Sidebar, Centered Header, Mobile Top Bar, dan Bottom Navigation Bar secara dinamis.
- * Menerapkan perizinan menu: Menu 'Pengaturan' HANYA muncul untuk role Admin.
+ * Merender navigasi Sidebar, Centered Header, Mobile Top Bar, dan Bottom
+ * Navigation Bar dari registry menu yang sudah difilter permission (DialMenu).
+ *
+ * Tidak ada lagi flag adminOnly: setiap node, submenu, dan aksi mengikuti
+ * permission efektif akun. Router selector dan ping hanya dirender bila akun
+ * memiliki device:read / device:diagnostic:exec.
  */
 
 const Layout = {
-  menus: [
-    {
-      title: 'Dashboard',
-      titleKey: 'nav_dashboard',
-      href: 'index.html',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`,
-      group: 'operasional',
-      bottomNav: true,
-      adminOnly: false
-    },
-    {
-      title: 'PPP Aktif',
-      titleKey: 'nav_ppp_active',
-      href: 'ppp-active.html',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>`,
-      group: 'operasional',
-      bottomNav: true,
-      adminOnly: false
-    },
-    {
-      title: 'PPP Non-Aktif',
-      titleKey: 'nav_ppp_inactive',
-      href: 'ppp-non-active.html',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi-off"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></svg>`,
-      group: 'operasional',
-      bottomNav: true,
-      adminOnly: false
-    },
-    {
-      title: 'Log MikroTik',
-      titleKey: 'nav_logs',
-      href: 'mikrotik-logs.html',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scroll-text"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1z"/></svg>`,
-      group: 'operasional',
-      bottomNav: true,
-      adminOnly: false
-    },
-    {
-      title: 'Monitor Interface',
-      titleKey: 'nav_monitor',
-      href: 'monitor-interface.html',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>`,
-      group: 'operasional',
-      bottomNav: true,
-      adminOnly: false
-    },
-    {
-      title: 'PPP Secrets',
-      titleKey: 'nav_ppp_secrets',
-      href: 'ppp-secrets.html',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-round"><path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>`,
-      group: 'manajemen',
-      bottomNav: false,
-      adminOnly: false
-    },
-    {
-      title: 'PPP Profiles',
-      titleKey: 'nav_ppp_profiles',
-      href: 'ppp-profiles.html',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>`,
-      group: 'manajemen',
-      bottomNav: false,
-      adminOnly: false
-    },
-    {
-      title: 'Pengaturan',
-      titleKey: 'nav_settings',
-      href: 'settings.html',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`,
-      group: 'sistem',
-      bottomNav: false,
-      adminOnly: true
-    }
-  ],
-
   pingStreamController: null,
   currentPingDeviceId: null,
 
-  init(activePageHref = 'index.html') {
-    const user = Auth.getUser() || { username: 'Pengguna', role: 'teknisi' };
-    const isAdmin = Auth.isAdmin();
+  esc(value) {
+    return String(value === null || value === undefined ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  },
 
-    if (typeof I18n !== 'undefined' && I18n.applyDOM) {
-      I18n.applyDOM();
-    }
+  t(key, fallback) {
+    if (typeof I18n !== 'undefined') return I18n.t(key);
+    return fallback || key;
+  },
 
-    this.renderSidebar(activePageHref, isAdmin, user);
+  label(node) {
+    return node.labelKey ? this.t(node.labelKey, node.title) : (node.title || node.id);
+  },
+
+  canUseRouterSelector() {
+    return typeof Auth !== 'undefined' && (Auth.can('dial:device:read') || Auth.can('device:read'));
+  },
+
+  canUseHeaderPing() {
+    return typeof Auth !== 'undefined' && (
+      Auth.can('dial:dashboard:ping') ||
+      Auth.can('dial:ppp-active:ping') ||
+      Auth.can('dial:monitor:diagnostic') ||
+      Auth.can('device:diagnostic:exec')
+    );
+  },
+
+  normalizePage(href) {
+    return String(href || 'index.html').split('?')[0];
+  },
+
+  isNodeActive(node, activePage) {
+    if (!node || !node.href) return false;
+    const active = this.normalizePage(activePage);
+    const target = this.normalizePage(node.href);
+    if (active !== target) return false;
+    const activeHash = String(activePage || '').split('#')[1] || '';
+    const nodeHash = String(node.href).split('#')[1] || '';
+    if (nodeHash) return activeHash === nodeHash;
+    return !activeHash || !(node.children || []).some((child) => child.href && String(child.href).includes('#'));
+  },
+
+  async init(activePageHref = 'index.html') {
+    const user = Auth.getUser() || { username: 'Pengguna', role: 'user', permissions: [] };
+
+    if (typeof I18n !== 'undefined' && I18n.applyDOM) I18n.applyDOM();
+
+    this.renderSidebar(activePageHref, user);
     this.renderHeader(user);
-    this.renderMobileNav(activePageHref, user, isAdmin);
+    this.renderMobileNav(activePageHref, user);
     this.bindEvents();
 
-    if (typeof I18n !== 'undefined' && I18n.applyDOM) {
-      I18n.applyDOM();
+    if (typeof I18n !== 'undefined' && I18n.applyDOM) I18n.applyDOM();
+
+    // Router list and header ping are API calls; only start them when the
+    // account actually holds the matching backend permission.
+    if (this.canUseRouterSelector()) {
+      await RouterSelector.init();
+
+      RouterSelector.onDeviceChange((deviceId) => {
+        if (!deviceId || !this.canUseHeaderPing()) return;
+        this.startHeaderPingStream(deviceId);
+      });
+
+      const initialDeviceId = RouterSelector.getSelectedDeviceId();
+      if (initialDeviceId && this.canUseHeaderPing()) {
+        this.startHeaderPingStream(initialDeviceId);
+      }
     }
-
-    // Inisialisasi daftar router dan streaming ping global di header
-    RouterSelector.init();
-
-    // Segera mulai stream ping jika ID router sudah ada di memory / localStorage
-    const initialDeviceId = RouterSelector.getSelectedDeviceId();
-    if (initialDeviceId) {
-      this.startHeaderPingStream(initialDeviceId);
-    }
-
-    RouterSelector.onDeviceChange((deviceId) => {
-      if (!deviceId) return;
-      this.startHeaderPingStream(deviceId);
-    });
 
     window.addEventListener('beforeunload', () => {
       this.cleanupPingStream();
     });
+  },
+
+  rerender(activePageHref = 'index.html') {
+    const user = Auth.getUser() || { username: 'Pengguna', role: 'user', permissions: [] };
+    this.renderSidebar(activePageHref, user);
+    this.renderHeader(user);
+    this.renderMobileNav(activePageHref, user);
+    this.bindEvents();
+    if (this.canUseRouterSelector() && typeof RouterSelector !== 'undefined' && RouterSelector.devices.length > 0) {
+      RouterSelector.renderDropdowns();
+    }
   },
 
   cleanupPingStream() {
@@ -129,7 +112,7 @@ const Layout = {
   },
 
   startHeaderPingStream(deviceId) {
-    if (!deviceId) return;
+    if (!deviceId || !this.canUseHeaderPing()) return;
     if (this.currentPingDeviceId === deviceId && this.pingStreamController) {
       return;
     }
@@ -150,11 +133,7 @@ const Layout = {
       let pingColor = 'bg-emerald-400';
       let textColor = 'text-emerald-700';
 
-      if (status === 'timeout' || status === 'error') {
-        dotColor = 'bg-rose-500';
-        pingColor = 'bg-rose-400';
-        textColor = 'text-rose-600';
-      } else if (status === 'high') {
+      if (status === 'timeout' || status === 'error' || status === 'high') {
         dotColor = 'bg-rose-500';
         pingColor = 'bg-rose-400';
         textColor = 'text-rose-600';
@@ -195,6 +174,8 @@ const Layout = {
       (err) => {
         if (signal.aborted) return;
         setUI('-- ms', 'error');
+        // Never spin on an authorization failure.
+        if (err && (err.permissionDenied || err.status === 403)) return;
         setTimeout(() => {
           if (!signal.aborted) this.startHeaderPingStream(deviceId);
         }, 5000);
@@ -203,49 +184,21 @@ const Layout = {
     );
   },
 
-  renderSidebar(activePage, isAdmin, user) {
+  renderSidebar(activePage, user) {
     const container = document.getElementById('sidebar-container');
-    if (!container) return;
+    if (!container || typeof DialMenu === 'undefined') return;
 
-    const renderLink = (m) => {
-      const isActive = activePage === m.href || (activePage === '' && m.href === 'index.html');
-      const title = (typeof I18n !== 'undefined' && m.titleKey) ? I18n.t(m.titleKey) : m.title;
-      return `
-        <a href="${m.href}" class="flex items-center px-3.5 py-2.5 mx-3 rounded-xl gap-3 text-sm font-medium transition-all duration-200 group ${
-          isActive
-            ? 'text-blue-600 bg-blue-50/90 font-semibold shadow-xs'
-            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-        }">
-          <span class="${isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'} transition-colors">
-            ${m.icon}
-          </span>
-          <span>${title}</span>
-          ${m.adminOnly ? '<span class="ml-auto text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200/60">Admin</span>' : ''}
-        </a>
-      `;
-    };
+    const tree = DialMenu.visibleTree(Auth.permissionChecker());
+    const navHtml = tree.map((node) => this.renderSidebarNode(node, 0, activePage)).join('');
 
-    const operasionalLinks = this.menus
-      .filter(m => m.group === 'operasional' && (!m.adminOnly || isAdmin))
-      .map(renderLink).join('');
-
-    const manajemenLinks = this.menus
-      .filter(m => m.group === 'manajemen' && (!m.adminOnly || isAdmin))
-      .map(renderLink).join('');
-
-    const sistemLinks = this.menus
-      .filter(m => m.group === 'sistem' && (!m.adminOnly || isAdmin))
-      .map(renderLink).join('');
-
-    const roleName = (user.roles && user.roles.length > 0) ? user.roles[0] : (user.role || 'Teknisi');
-    const groupOperasionalTitle = typeof I18n !== 'undefined' ? I18n.t('group_operations') : 'Operasional';
-    const groupManajemenTitle = typeof I18n !== 'undefined' ? I18n.t('group_management') : 'Manajemen PPP';
-    const groupSistemTitle = typeof I18n !== 'undefined' ? I18n.t('group_system') : 'Sistem';
-    const logoutText = typeof I18n !== 'undefined' ? I18n.t('logout') : 'Keluar Portal';
+    const roleName = Auth.primaryRole(user);
+    const isAdmin = Auth.isAdmin();
+    const logoutText = this.t('logout', 'Keluar Portal');
+    const displayName = this.esc(user.fullName || user.full_name || user.username || 'Pengguna');
+    const initial = this.esc((user.username || 'U')[0].toUpperCase());
 
     container.innerHTML = `
       <aside class="hidden lg:flex fixed top-0 left-0 h-screen w-64 bg-white border-r border-slate-200/80 z-40 flex-col shadow-xs select-none">
-        <!-- Logo Header -->
         <div class="flex items-center justify-between h-16 px-6 border-b border-slate-100 bg-white">
           <div class="flex items-center gap-2.5">
             <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20">
@@ -253,48 +206,25 @@ const Layout = {
             </div>
             <div>
               <span class="font-bold text-base text-slate-900 tracking-tight leading-none block">GNet Dial</span>
-              <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mt-0.5">${groupOperasionalTitle}</span>
+              <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mt-0.5">${this.t('group_operations', 'Operasional')}</span>
             </div>
           </div>
-          <span class="text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200/60 px-2 py-0.5 rounded-full">v2.0</span>
+          <span class="text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200/60 px-2 py-0.5 rounded-full">v2.1</span>
         </div>
 
-        <!-- Grouped Navigation -->
         <nav class="flex-1 overflow-y-auto py-4 space-y-6">
-          <div>
-            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">${groupOperasionalTitle}</div>
-            <div class="space-y-0.5">
-              ${operasionalLinks}
-            </div>
-          </div>
-
-          <div>
-            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">${groupManajemenTitle}</div>
-            <div class="space-y-0.5">
-              ${manajemenLinks}
-            </div>
-          </div>
-
-          ${sistemLinks ? `
-          <div>
-            <div class="px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">${groupSistemTitle}</div>
-            <div class="space-y-0.5">
-              ${sistemLinks}
-            </div>
-          </div>
-          ` : ''}
+          ${navHtml}
         </nav>
 
-        <!-- User Card & Logout Footer -->
         <div class="p-3 border-t border-slate-100 bg-slate-50/60">
           <div class="p-2.5 rounded-xl bg-white border border-slate-200/70 shadow-2xs mb-2 flex items-center justify-between">
             <div class="flex items-center gap-2.5 min-w-0">
               <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
-                ${(user.username || 'U')[0].toUpperCase()}
+                ${initial}
               </div>
               <div class="truncate">
-                <p class="text-xs font-bold text-slate-800 truncate leading-tight">${user.full_name || user.username}</p>
-                <span class="text-[10px] font-semibold uppercase tracking-wider ${isAdmin ? 'text-purple-600' : 'text-blue-600'}">${roleName}</span>
+                <p class="text-xs font-bold text-slate-800 truncate leading-tight">${displayName}</p>
+                <span class="text-[10px] font-semibold uppercase tracking-wider ${isAdmin ? 'text-purple-600' : 'text-blue-600'}">${this.esc(roleName)}</span>
               </div>
             </div>
           </div>
@@ -308,39 +238,89 @@ const Layout = {
     `;
   },
 
+  renderSidebarNode(node, depth, activePage) {
+    if (node.type === 'group') {
+      const children = (node.children || [])
+        .map((child) => this.renderSidebarNode(child, depth + 1, activePage))
+        .join('');
+      if (!children) return '';
+
+      const headingClass = depth === 0
+        ? 'px-6 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400'
+        : 'px-6 pt-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400/80';
+      return `
+        <div>
+          <div class="${headingClass}">${this.label(node)}</div>
+          <div class="space-y-0.5">${children}</div>
+        </div>
+      `;
+    }
+
+    const isActive = this.isNodeActive(node, activePage);
+    const isTab = node.type === 'tab';
+    const padding = isTab ? 'pl-10 pr-3.5 py-2 text-xs' : 'px-3.5 py-2.5 mx-3 text-sm';
+    const icon = isTab ? '' : `<span class="${isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'} transition-colors">${DialMenu.icon(node.icon)}</span>`;
+    const link = `
+      <a href="${node.href}" class="flex items-center ${padding} rounded-xl gap-3 font-medium transition-all duration-200 group ${
+        isActive
+          ? 'text-blue-600 bg-blue-50/90 font-semibold shadow-xs'
+          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+      }">
+        ${icon}
+        <span>${this.label(node)}</span>
+      </a>
+    `;
+
+    if (node.type === 'page' && node.children && node.children.length > 0) {
+      const tabs = node.children
+        .map((child) => this.renderSidebarNode(child, depth + 1, activePage))
+        .join('');
+      return `${link}<div class="space-y-0.5">${tabs}</div>`;
+    }
+
+    return link;
+  },
+
   renderHeader(user) {
     const container = document.getElementById('header-container');
     if (!container) return;
 
-    const roleName = (user.roles && user.roles.length > 0) ? user.roles[0] : (user.role || 'Teknisi');
+    const roleName = Auth.primaryRole(user);
     const isAdmin = Auth.isAdmin();
     const currentLang = typeof I18n !== 'undefined' ? I18n.getLanguage() : 'id';
+    const showRouter = this.canUseRouterSelector();
+    const showPing = this.canUseHeaderPing();
+    const displayName = this.esc(user.fullName || user.full_name || user.username || 'Pengguna');
+    const initial = this.esc((user.username || 'U')[0].toUpperCase());
+
+    const routerHtml = showRouter ? `
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100/90 border border-slate-200/80 text-xs text-slate-700 font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6.01 18h.01"/><path d="M10.01 18h.01"/><path d="M15 10v4"/></svg>
+        <span class="text-slate-500">Router:</span>
+        <select class="router-select-control bg-transparent border-none text-slate-800 font-semibold outline-none cursor-pointer pr-2 min-w-[180px] max-w-[280px]">
+          <option value="">${this.t('select_router', 'Memuat router...')}</option>
+        </select>
+      </div>
+    ` : '';
+
+    const pingHtml = showPing ? `
+      <div id="header-ping-container" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200/80 text-xs shadow-2xs" title="Latensi Ping MikroTik ke Internet (8.8.8.8)">
+        <span class="flex h-2.5 w-2.5 relative">
+          <span id="header-ping-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span id="header-ping-dot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+        </span>
+        <span id="header-ping-val" class="font-bold font-mono text-emerald-700 tracking-tight">-- ms</span>
+      </div>
+    ` : '';
 
     container.innerHTML = `
       <header class="hidden lg:flex fixed top-0 right-0 left-64 h-16 glass-header z-30 items-center shadow-2xs">
-        <!-- Centered Inner Container aligned with main content max-w-7xl mx-auto -->
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
-          <!-- Left: Router Selector & Ping Badge -->
           <div class="flex items-center gap-3">
-            <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100/90 border border-slate-200/80 text-xs text-slate-700 font-medium">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6.01 18h.01"/><path d="M10.01 18h.01"/><path d="M15 10v4"/></svg>
-              <span class="text-slate-500">Router:</span>
-              <select class="router-select-control bg-transparent border-none text-slate-800 font-semibold outline-none cursor-pointer pr-2 min-w-[180px] max-w-[280px]">
-                <option value="">${typeof I18n !== 'undefined' ? I18n.t('select_router') : 'Memuat router...'}</option>
-              </select>
-            </div>
-
-            <!-- Streaming Ping Badge -->
-            <div id="header-ping-container" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200/80 text-xs shadow-2xs" title="Latensi Ping MikroTik ke Internet (8.8.8.8)">
-              <span class="flex h-2.5 w-2.5 relative">
-                <span id="header-ping-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span id="header-ping-dot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-              <span id="header-ping-val" class="font-bold font-mono text-emerald-700 tracking-tight">-- ms</span>
-            </div>
+            ${routerHtml}
+            ${pingHtml}
           </div>
 
-          <!-- Right: Language Switcher & User Identity -->
           <div class="flex items-center gap-3">
             <button onclick="I18n.toggleLanguage()" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/80 text-xs font-semibold text-slate-700 transition-colors cursor-pointer" title="Switch Language (ID / EN)">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
@@ -349,11 +329,11 @@ const Layout = {
 
             <div class="flex items-center gap-2.5 pl-3 py-1 border-l border-slate-200/70">
               <div class="text-right">
-                <span class="text-xs font-bold text-slate-800 leading-tight block">${user.full_name || user.username}</span>
-                <span class="text-[10px] font-semibold uppercase tracking-wider ${isAdmin ? 'text-purple-600' : 'text-blue-600'}">${roleName}</span>
+                <span class="text-xs font-bold text-slate-800 leading-tight block">${displayName}</span>
+                <span class="text-[10px] font-semibold uppercase tracking-wider ${isAdmin ? 'text-purple-600' : 'text-blue-600'}">${this.esc(roleName)}</span>
               </div>
               <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs uppercase shadow-xs">
-                ${(user.username || 'U')[0]}
+                ${initial}
               </div>
             </div>
           </div>
@@ -362,43 +342,49 @@ const Layout = {
     `;
   },
 
-  renderMobileNav(activePage, user, isAdmin) {
-    const container = document.getElementById('mobile-nav-container');
-    if (!container) return;
-
-    const roleName = (user.roles && user.roles.length > 0) ? user.roles[0] : (user.role || 'Teknisi');
-
-    // 5 Bottom Nav Items (Dashboard, PPP Aktif, PPP Non-Aktif, Log, Monitor)
-    const bottomNavItems = [
-      {
-        title: typeof I18n !== 'undefined' ? I18n.t('nav_dashboard') : 'Dashboard',
-        href: 'index.html',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`
-      },
-      {
-        title: typeof I18n !== 'undefined' ? I18n.t('nav_ppp_active') : 'PPP Aktif',
-        href: 'ppp-active.html',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>`
-      },
-      {
-        title: typeof I18n !== 'undefined' ? I18n.t('nav_ppp_inactive') : 'Non-Aktif',
-        href: 'ppp-non-active.html',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="m2 2 20 20"/></svg>`
-      },
-      {
-        title: typeof I18n !== 'undefined' ? I18n.t('nav_logs') : 'Log',
-        href: 'mikrotik-logs.html',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1z"/></svg>`
-      },
-      {
-        title: typeof I18n !== 'undefined' ? I18n.t('nav_monitor') : 'Monitor',
-        href: 'monitor-interface.html',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>`
+  renderDrawerNodes(nodes, depth = 0) {
+    return (nodes || []).map((node) => {
+      if (node.type === 'group') {
+        const children = this.renderDrawerNodes(node.children, depth + 1);
+        if (!children) return '';
+        return `
+          <div class="${depth > 0 ? 'pl-2' : 'pt-3'}">
+            <div class="px-4 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">${this.label(node)}</div>
+            ${children}
+          </div>
+        `;
       }
-    ];
 
-    const bottomNavHtml = bottomNavItems.map(item => {
-      const isActive = activePage === item.href || (activePage === '' && item.href === 'index.html');
+      const isTab = node.type === 'tab';
+      const active = this.isNodeActive(node, window.location.pathname.split('/').pop() || 'index.html');
+      return `
+        <a href="${node.href}" class="flex items-center ${isTab ? 'pl-10 pr-4 py-2 text-xs' : 'px-4 py-3 text-sm'} gap-3 rounded-xl font-medium transition-colors ${
+          active ? 'text-blue-600 bg-blue-50 font-semibold' : 'text-slate-700 hover:bg-slate-100'
+        }">
+          ${isTab ? '' : `<span class="${active ? 'text-blue-600' : 'text-slate-400'}">${DialMenu.icon(node.icon)}</span>`}
+          <span>${this.label(node)}</span>
+        </a>
+      `;
+    }).join('');
+  },
+
+  renderMobileNav(activePage, user) {
+    const container = document.getElementById('mobile-nav-container');
+    if (!container || typeof DialMenu === 'undefined') return;
+
+    const roleName = Auth.primaryRole(user);
+    const tree = DialMenu.visibleTree(Auth.permissionChecker());
+    const items = DialMenu.bottomNavItems(Auth.permissionChecker());
+    const showRouter = this.canUseRouterSelector();
+    const showPing = this.canUseHeaderPing();
+    const currentLang = typeof I18n !== 'undefined' ? I18n.getLanguage() : 'id';
+    const logoutText = this.t('logout', 'Keluar Portal');
+    const initial = this.esc((user.username || 'U')[0].toUpperCase());
+    const displayName = this.esc(user.fullName || user.full_name || user.username || 'Pengguna');
+
+    const bottomNavHtml = items.map((item) => {
+      const isActive = this.isNodeActive(item, activePage) ||
+        (activePage === '' && item.href === 'index.html');
       return `
         <a href="${item.href}" class="flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all duration-200 group interactive-tap ${
           isActive
@@ -406,35 +392,24 @@ const Layout = {
             : 'text-slate-500 hover:text-slate-900'
         }">
           <div class="relative ${isActive ? 'scale-105' : 'scale-100'} transition-transform">
-            ${item.icon}
+            ${DialMenu.icon(item.icon)}
           </div>
-          <span class="text-[10px] mt-0.5 tracking-tight truncate max-w-full font-medium ${isActive ? 'font-bold' : ''}">${item.title}</span>
+          <span class="text-[10px] mt-0.5 tracking-tight truncate max-w-full font-medium ${isActive ? 'font-bold' : ''}">${this.label(item)}</span>
         </a>
       `;
     }).join('');
 
-    // Drawer links for secondary items & full navigation
-    const drawerLinks = this.menus
-      .filter(m => !m.adminOnly || isAdmin)
-      .map(m => {
-        const isActive = activePage === m.href || (activePage === '' && m.href === 'index.html');
-        const title = (typeof I18n !== 'undefined' && m.titleKey) ? I18n.t(m.titleKey) : m.title;
-        return `
-          <a href="${m.href}" class="flex items-center px-4 py-3 gap-3 rounded-xl font-medium text-sm transition-colors ${
-            isActive ? 'text-blue-600 bg-blue-50 font-semibold' : 'text-slate-700 hover:bg-slate-100'
-          }">
-            <span class="${isActive ? 'text-blue-600' : 'text-slate-400'}">${m.icon}</span>
-            <span>${title}</span>
-            ${m.adminOnly ? '<span class="ml-auto text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-purple-100 text-purple-700">Admin</span>' : ''}
-          </a>
-        `;
-      }).join('');
+    const bottomNav = items.length > 0 ? `
+      <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bottom-nav-glass px-2 pt-1 pb-safe shadow-lg">
+        <div class="grid gap-1 items-center justify-around" style="grid-template-columns: repeat(${items.length}, minmax(0, 1fr));">
+          ${bottomNavHtml}
+        </div>
+      </nav>
+    ` : '';
 
-    const currentLang = typeof I18n !== 'undefined' ? I18n.getLanguage() : 'id';
-    const logoutText = typeof I18n !== 'undefined' ? I18n.t('logout') : 'Keluar Portal';
+    const drawerLinks = this.renderDrawerNodes(tree);
 
     container.innerHTML = `
-      <!-- Mobile Top Bar -->
       <header class="lg:hidden fixed top-0 left-0 right-0 h-16 glass-header px-4 z-40 flex items-center justify-between shadow-2xs">
         <div class="flex items-center gap-2 min-w-0">
           <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
@@ -443,48 +418,39 @@ const Layout = {
           <span class="font-bold text-base text-slate-900 tracking-tight">GNet Dial</span>
         </div>
 
-        <!-- Mobile Center/Right: Router Select & Ping & Language Toggle -->
         <div class="flex items-center gap-2">
-          <!-- Mobile Ping Badge -->
+          ${showPing ? `
           <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-mono shadow-2xs" title="Latensi Ping">
             <span class="flex h-2 w-2 relative">
               <span id="mobile-header-ping-dot" class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span id="mobile-header-ping-val" class="font-bold text-emerald-700">-- ms</span>
           </div>
+          ` : ''}
 
-          <!-- Mobile Language Toggle -->
           <button onclick="I18n.toggleLanguage()" class="px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 uppercase" title="Ganti Bahasa">
             ${currentLang}
           </button>
 
-          <!-- Drawer Trigger Button -->
           <button id="mobile-menu-open-btn" class="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer" aria-label="Menu">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
           </button>
         </div>
       </header>
 
-      <!-- Mobile Bottom Navigation Bar (5 Core Tabs) -->
-      <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bottom-nav-glass px-2 pt-1 pb-safe shadow-lg">
-        <div class="grid grid-cols-5 gap-1 items-center justify-around">
-          ${bottomNavHtml}
-        </div>
-      </nav>
+      ${bottomNav}
 
-      <!-- Mobile Slide-over Drawer -->
       <div id="mobile-drawer" class="lg:hidden fixed inset-0 z-50 hidden">
         <div id="mobile-drawer-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"></div>
         <div class="fixed top-0 bottom-0 right-0 w-80 max-w-[85vw] bg-white flex flex-col shadow-2xl z-10 transform translate-x-full transition-transform duration-300" id="mobile-drawer-panel">
-          <!-- Drawer Header -->
           <div class="flex items-center justify-between h-16 px-5 border-b border-slate-100 bg-slate-50/50">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs">
-                ${(user.username || 'U')[0].toUpperCase()}
+                ${initial}
               </div>
               <div>
-                <span class="text-xs font-bold text-slate-800 block">${user.full_name || user.username}</span>
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500">${roleName}</span>
+                <span class="text-xs font-bold text-slate-800 block">${displayName}</span>
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500">${this.esc(roleName)}</span>
               </div>
             </div>
             <button id="mobile-menu-close-btn" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 cursor-pointer">
@@ -492,21 +458,20 @@ const Layout = {
             </button>
           </div>
 
-          <!-- Router Selector in Drawer -->
+          ${showRouter ? `
           <div class="p-4 border-b border-slate-100 bg-slate-50/80">
-            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">${typeof I18n !== 'undefined' ? I18n.t('select_router') : 'Router Aktif'}</label>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">${this.t('select_router', 'Router Aktif')}</label>
             <select class="router-select-control w-full bg-white border border-slate-300 text-slate-800 text-xs rounded-xl px-3 py-2.5 font-semibold outline-none shadow-2xs">
-              <option value="">${typeof I18n !== 'undefined' ? I18n.t('select_router') : 'Memuat router...'}</option>
+              <option value="">${this.t('select_router', 'Memuat router...')}</option>
             </select>
           </div>
+          ` : ''}
 
-          <!-- Menu Links -->
           <div class="px-3 py-2 flex-1 overflow-y-auto space-y-1">
             <div class="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">${currentLang === 'en' ? 'All Menus' : 'Seluruh Menu'}</div>
             ${drawerLinks}
           </div>
 
-          <!-- Drawer Footer Logout -->
           <div class="p-4 border-t border-slate-100 bg-slate-50">
             <button id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-bold transition-colors cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
@@ -519,14 +484,12 @@ const Layout = {
   },
 
   bindEvents() {
-    // Logout buttons
     const sideLogout = document.getElementById('sidebar-logout-btn');
     if (sideLogout) sideLogout.onclick = () => Auth.logout();
 
     const mobLogout = document.getElementById('mobile-logout-btn');
     if (mobLogout) mobLogout.onclick = () => Auth.logout();
 
-    // Mobile Drawer toggling
     const openBtn = document.getElementById('mobile-menu-open-btn');
     const closeBtn = document.getElementById('mobile-menu-close-btn');
     const drawer = document.getElementById('mobile-drawer');
@@ -534,7 +497,7 @@ const Layout = {
     const panel = document.getElementById('mobile-drawer-panel');
 
     const openDrawer = () => {
-      if (!drawer) return;
+      if (!drawer || !panel) return;
       drawer.classList.remove('hidden');
       requestAnimationFrame(() => {
         panel.classList.remove('translate-x-full');
@@ -542,7 +505,7 @@ const Layout = {
     };
 
     const closeDrawer = () => {
-      if (!drawer) return;
+      if (!drawer || !panel) return;
       panel.classList.add('translate-x-full');
       setTimeout(() => drawer.classList.add('hidden'), 300);
     };

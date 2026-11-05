@@ -80,7 +80,7 @@ const PPPNonActive = {
         this.allSecrets = res.secrets || [];
         this.applyFilter();
       } catch (fallbackErr) {
-        showToast('Gagal memuat pelanggan offline: ' + fallbackErr.message, 'error');
+        API.reportError(fallbackErr, 'Gagal memuat pelanggan offline');
       }
     }
   },
@@ -165,6 +165,7 @@ const PPPNonActive = {
       const isDisabled = s.disabled || false;
 
       const profileIcon = UIUtils.getProfileIcon(profile, 'mr-1.5 w-3.5 h-3.5 inline-block text-slate-500');
+      const canToggle = Auth.canAction('ppp-inactive', 'toggleSecret');
 
       return `
         <div class="bg-white rounded-xl shadow-xs hover:shadow-md transition-all duration-200 border border-slate-200/80 p-4" data-username="${userName}">
@@ -213,6 +214,7 @@ const PPPNonActive = {
               </div>
             </div>
 
+            ${canToggle ? `
             <!-- Desktop Actions -->
             <div class="hidden sm:flex flex-col gap-2 items-end justify-center pl-4 border-l border-slate-100">
               <button onclick="PPPNonActive.toggleSecretStatus('${rosId}', ${!isDisabled})" class="p-2 bg-white border ${isDisabled ? 'border-emerald-200 text-emerald-600 hover:bg-emerald-50' : 'border-amber-200 text-amber-600 hover:bg-amber-50'} rounded-lg transition-all shadow-xs cursor-pointer" title="${isDisabled ? 'Aktifkan Secret' : 'Nonaktifkan Secret'}">
@@ -237,6 +239,7 @@ const PPPNonActive = {
                 </button>
               </div>
             </div>
+            ` : ''}
 
           </div>
         </div>
@@ -247,6 +250,7 @@ const PPPNonActive = {
   },
 
   async toggleSecretStatus(rosId, newDisabled) {
+    if (!Auth.canAction('ppp-inactive', 'toggleSecret')) return;
     try {
       await API.call('/polyglot.v1.PPPService/SetSecretDisabled', {
         device_id: this.currentDeviceId,
@@ -256,7 +260,7 @@ const PPPNonActive = {
       showToast(`Status pelanggan berhasil diubah`, 'success');
       this.loadInactive();
     } catch (err) {
-      showToast('Gagal mengubah status: ' + err.message, 'error');
+      API.reportError(err, 'Gagal mengubah status');
     }
   },
 

@@ -5,8 +5,58 @@
 
 const API = {
   // Base URL: Kosong jika reverse proxy (same-origin /polyglot.v1...),
-  // atau ambil dari window.POLYGLOT_API_URL jika di-override.
-  baseUrl: window.POLYGLOT_API_URL || '',
+  // atau ambil dari window.POLYGLOT_API_URL jika di-override,
+  // atau fallback otomatis ke port 8080 saat dev lokal di port statis berbeda.
+  baseUrl: (typeof window !== 'undefined' && window.POLYGLOT_API_URL) || (
+    typeof window !== 'undefined' &&
+    window.location &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') &&
+    window.location.port !== '' &&
+    window.location.port !== '80' &&
+    window.location.port !== '443' &&
+    window.location.port !== '8080'
+      ? `${window.location.protocol}//${window.location.hostname}:8080`
+      : ''
+  ),
+
+  // Deduplicate 403 notifications per procedure for the lifetime of the page.
+  _forbiddenNotified: new Set(),
+
+  /**
+   * Marks an error as an authorization failure and emits a single client-side
+   * notification. UI policy should already hide forbidden actions; reaching
+   * this path means the cached permissions were stale.
+   */
+  handleForbidden(servicePath, message) {
+    const err = new Error(message || 'Anda tidak memiliki izin untuk tindakan ini');
+    err.status = 403;
+    err.code = 'permission_denied';
+    err.permissionDenied = true;
+
+    if (!this._forbiddenNotified.has(servicePath)) {
+      this._forbiddenNotified.add(servicePath);
+      window.dispatchEvent(new CustomEvent('api:permission-denied', {
+        detail: { path: servicePath, message: err.message }
+      }));
+      if (typeof showToast === 'function') {
+        showToast(err.message, 'warning');
+      }
+    }
+
+    return err;
+  },
+
+  /**
+   * Central error reporting for page controllers. 403 responses are already
+   * reported by handleForbidden, so callers suppress the duplicate toast.
+   */
+  reportError(err, fallback) {
+    if (err && err.permissionDenied) return;
+    const message = (err && err.message) ? err.message : 'Terjadi kesalahan';
+    if (typeof showToast === 'function') {
+      showToast(fallback ? `${fallback}: ${message}` : message, 'error');
+    }
+  },
 
   /**
    * Mengirimkan ConnectRPC POST request
@@ -44,6 +94,10 @@ const API = {
       }
 
       const data = await response.json().catch(() => ({}));
+
+      if (response.status === 403) {
+        throw this.handleForbidden(servicePath, data.message);
+      }
 
       if (!response.ok) {
         const errorMsg = data.message || `Request failed with status ${response.status}`;
@@ -122,10 +176,12 @@ const API = {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        const errorMsg = errorData.message || `Stream failed with status ${response.status}`;
-        const err = new Error(errorMsg);
-        err.status = response.status;
-        err.code = errorData.code;
+        const err = response.status === 403
+          ? this.handleForbidden(servicePath, errorData.message)
+          : Object.assign(
+              new Error(errorData.message || `Stream failed with status ${response.status}`),
+              { status: response.status, code: errorData.code }
+            );
         if (typeof onError === 'function') onError(err);
         return;
       }
@@ -183,8 +239,13 @@ const API = {
               const trailerText = new TextDecoder().decode(payloadBytes);
               const trailer = JSON.parse(trailerText);
               if (trailer.error && typeof onError === 'function') {
-                const err = new Error(trailer.error.message || 'Stream error from server');
-                err.code = trailer.error.code;
+                const code = trailer.error.code || '';
+                const err = code === 'permission_denied'
+                  ? this.handleForbidden(servicePath, trailer.error.message)
+                  : Object.assign(
+                      new Error(trailer.error.message || 'Stream error from server'),
+                      { code }
+                    );
                 onError(err);
               }
             } catch (_) {}

@@ -88,10 +88,11 @@
     </div>
   </div>
 
-  <script src="js/api.js?v=2"></script>
-  <script src="js/auth.js?v=2"></script>
-  <script src="js/locales.js?v=2"></script>
-  <script src="js/i18n.js?v=2"></script>
+  <script src="js/api.js?v=3"></script>
+  <script src="js/menu.js?v=3"></script>
+  <script src="js/auth.js?v=3"></script>
+  <script src="js/locales.js?v=3"></script>
+  <script src="js/i18n.js?v=3"></script>
   <script>
     function updateLoginText() {
       const currentLang = typeof I18n !== 'undefined' ? I18n.getLanguage() : 'id';
@@ -131,7 +132,7 @@
         await Auth.login(usernameInput.value, passwordInput.value);
         showToast(typeof I18n !== 'undefined' ? I18n.t('login_success') : 'Login berhasil! Mengalihkan...', 'success');
         setTimeout(() => {
-          window.location.href = 'index.html';
+          window.location.href = Auth.firstAccessibleRoute() || 'no-access.html';
         }, 500);
       } catch (err) {
         errorBox.classList.remove('hidden');

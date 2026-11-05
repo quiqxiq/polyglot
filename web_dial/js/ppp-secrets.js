@@ -40,7 +40,7 @@ const PPPSecrets = {
       this.applyFilter();
     } catch (err) {
       console.error('Failed to load secrets:', err);
-      showToast('Gagal memuat data PPP Secrets: ' + err.message, 'error');
+      API.reportError(err, 'Gagal memuat data PPP Secrets');
     } finally {
       if (loadingEl) loadingEl.classList.add('hidden');
     }
@@ -160,6 +160,8 @@ const PPPSecrets = {
       const toggleBorderClass = disabled
         ? 'border-emerald-200 text-emerald-600 hover:bg-emerald-50'
         : 'border-amber-200 text-amber-600 hover:bg-amber-50';
+      const canToggle = Auth.canAction('ppp-secrets', 'toggleSecret');
+      const canOpenActive = Auth.canAction('ppp-secrets', 'openActive');
 
       return `
         <div class="bg-white rounded-xl shadow-xs hover:shadow-md transition-all duration-200 border border-slate-200/80 p-4" data-username="${userName}">
@@ -196,18 +198,23 @@ const PPPSecrets = {
               </div>
             </div>
 
+            ${(canToggle || canOpenActive) ? `
             <!-- Desktop Actions -->
             <div class="hidden sm:flex flex-col gap-2 items-end justify-center pl-4 border-l border-slate-100">
               <div class="flex gap-2">
+                ${canToggle ? `
                 <button onclick="PPPSecrets.toggleSecret('${rosId}', ${!disabled})" class="p-2 bg-white border ${toggleBorderClass} rounded-lg transition-all shadow-xs cursor-pointer" title="${toggleTitle}">
                   ${disabled 
                     ? '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></svg>'
                     : '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>'
                   }
                 </button>
+                ` : ''}
+                ${canOpenActive ? `
                 <a href="ppp-active.html?search=${encodeURIComponent(userName)}" class="p-2 bg-white border border-blue-200 text-blue-600 hover:bg-blue-50 rounded-lg transition-all shadow-xs cursor-pointer inline-flex items-center justify-center" title="Cek Sesi Aktif">
                   <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
+                ` : ''}
               </div>
             </div>
 
@@ -217,18 +224,23 @@ const PPPSecrets = {
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
               </button>
               <div class="action-menu hidden absolute right-0 mt-1 w-48 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50">
+                ${canToggle ? `
                 <button onclick="PPPSecrets.toggleSecret('${rosId}', ${!disabled})" class="w-full text-left px-4 py-3 text-sm ${disabled ? 'text-emerald-600 hover:bg-emerald-50' : 'text-amber-600 hover:bg-amber-50'} flex items-center gap-3 border-b border-slate-50 cursor-pointer">
                   ${disabled
                     ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></svg><span>Aktifkan Akun</span>'
                     : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg><span>Nonaktifkan Akun</span>'
                   }
                 </button>
+                ` : ''}
+                ${canOpenActive ? `
                 <a href="ppp-active.html?search=${encodeURIComponent(userName)}" class="w-full text-left px-4 py-3 text-sm text-blue-600 hover:bg-blue-50 flex items-center gap-3 cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                   <span>Cek Sesi Aktif</span>
                 </a>
+                ` : ''}
               </div>
             </div>
+            ` : ''}
 
           </div>
         </div>
@@ -239,6 +251,7 @@ const PPPSecrets = {
   },
 
   async toggleSecret(rosId, newDisabled) {
+    if (!Auth.canAction('ppp-secrets', 'toggleSecret')) return;
     try {
       await API.call('/polyglot.v1.PPPService/SetSecretDisabled', {
         device_id: this.currentDeviceId,
@@ -248,7 +261,7 @@ const PPPSecrets = {
       showToast(`Status akun secret berhasil diubah`, 'success');
       this.loadSecrets();
     } catch (err) {
-      showToast('Gagal mengubah status secret: ' + err.message, 'error');
+      API.reportError(err, 'Gagal mengubah status secret');
     }
   },
 
