@@ -1,5 +1,6 @@
 import { Trash2, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useCan } from '@/hooks/use-can'
 import type { HotspotHost } from '@/gen/v1/hotspot_pb'
 import { useHotspot } from '../../context/hotspot-context'
 
@@ -9,6 +10,12 @@ interface HostsRowActionsProps {
 
 export function HostsRowActions({ host }: HostsRowActionsProps) {
   const { setOpen, setCurrentHost, setPrefillBinding } = useHotspot()
+  const canBinding = useCan('hotspot:binding:manage')
+  const canRemove = useCan('hotspot:host:manage')
+
+  if (!canBinding && !canRemove) {
+    return null
+  }
 
   const handleDelete = () => {
     setCurrentHost(host)
@@ -26,27 +33,31 @@ export function HostsRowActions({ host }: HostsRowActionsProps) {
 
   return (
     <div className='flex items-center gap-1'>
-      <Button
-        variant='outline'
-        size='sm'
-        onClick={handleMakeBinding}
-        className='h-7 px-2 text-xs gap-1 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700'
-        title='Make IP Binding (Bypass)'
-      >
-        <ShieldCheck className='size-3.5' />
-        Bypass
-      </Button>
+      {canBinding && (
+        <Button
+          variant='outline'
+          size='sm'
+          onClick={handleMakeBinding}
+          className='h-7 px-2 text-xs gap-1 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700'
+          title='Make IP Binding (Bypass)'
+        >
+          <ShieldCheck className='size-3.5' />
+          Bypass
+        </Button>
+      )}
 
-      <Button
-        variant='ghost'
-        size='sm'
-        onClick={handleDelete}
-        className='h-7 px-2 text-xs text-destructive hover:text-destructive hover:bg-destructive/10'
-        title='Remove host'
-      >
-        <Trash2 className='size-3.5 mr-1' />
-        Remove
-      </Button>
+      {canRemove && (
+        <Button
+          variant='ghost'
+          size='sm'
+          onClick={handleDelete}
+          className='h-7 px-2 text-xs text-destructive hover:text-destructive hover:bg-destructive/10'
+          title='Remove host'
+        >
+          <Trash2 className='size-3.5 mr-1' />
+          Remove
+        </Button>
+      )}
     </div>
   )
 }

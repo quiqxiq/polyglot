@@ -99,23 +99,23 @@ func (u *AuthUseCase) Login(ctx context.Context, username, password, clientIP st
 		_ = u.rateLimit.ResetRateLimit(ctx, rlScope, RateLimitWindow)
 	}
 
-	// 5. Query effective roles & permissions
+	// 5. Reconcile Casbin role assignments with users.role, then query the
+	// effective roles and permissions.
 	var userRoles []string
 	if u.roles != nil {
 		userRoles, _ = u.roles.GetRolesForUser(fmt.Sprintf("%d", user.ID))
 	}
-	if len(userRoles) == 0 && user.Role != "" {
-		userRoles = []string{user.Role}
-	}
+	userRoles = syncEffectiveRoles(u.roles, user.ID, user.Role, userRoles)
 
 	var perms []string
 	if u.roles != nil {
 		perms, _ = u.roles.GetImplicitPermissionsForUser(fmt.Sprintf("%d", user.ID))
 	}
 
-	// 6. Generate access token
+	// 6. Generate access token. users.role is the source of truth for the
+	// token's primary role; Casbin ordering is not stable.
 	primaryRole := user.Role
-	if len(userRoles) > 0 {
+	if primaryRole == "" && len(userRoles) > 0 {
 		primaryRole = userRoles[0]
 	}
 	token, err := u.tokenSvc.GenerateAccessToken(fmt.Sprintf("%d", user.ID), user.Username, primaryRole)

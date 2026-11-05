@@ -12,7 +12,7 @@ import { getSidebarData } from './data/sidebar-data'
 import { NavGroup } from './nav-group'
 import { NavUser } from './nav-user'
 import { DeviceSwitcher } from './device-switcher'
-import { canPermission } from '@/hooks/use-can'
+import { canAllPermissions, canAnyPermission, canPermission } from '@/hooks/use-can'
 import { useAuthStore } from '@/stores/auth-store'
 import { type NavItem } from './types'
 
@@ -22,21 +22,46 @@ export function AppSidebar() {
   const permissions = useAuthStore((s) => s.auth.user?.permissions)
   const sidebarData = useMemo(() => getSidebarData(t), [t])
 
-  // Filter item sidebar berdasarkan permission Casbin user — item tanpa
-  // permission tampil untuk semua user yang sudah login.
-  const filterItems = (items: NavItem[]): NavItem[] =>
-    items
-      .filter((item) => !item.permission || canPermission(permissions, item.permission))
-      .map((item) =>
-        item.items
-          ? {
-              ...item,
-              items: item.items.filter(
-                (child) => !child.permission || canPermission(permissions, child.permission),
-              ),
-            }
-          : item,
-      )
+  const checkItemAccess = (item: {
+    permission?: string
+    anyOf?: string[]
+    allOf?: string[]
+  }): boolean => {
+    if (item.permission && !canPermission(permissions, item.permission)) {
+      return false
+    }
+    if (item.allOf && item.allOf.length > 0 && !canAllPermissions(permissions, item.allOf)) {
+      return false
+    }
+    if (item.anyOf && item.anyOf.length > 0 && !canAnyPermission(permissions, item.anyOf)) {
+      return false
+    }
+    return true
+  }
+
+  // Filter item sidebar berdasarkan permission Casbin user dengan cascading denial:
+  // 1. Jika parent tidak lolos permission, hide parent dan semua anaknya.
+  // 2. Jika collapsible tidak memiliki anak yang dapat diakses, hide collapsible tersebut.
+  const filterItems = (items: NavItem[]): NavItem[] => {
+    const result: NavItem[] = []
+    for (const item of items) {
+      if (!checkItemAccess(item)) {
+        continue
+      }
+      if (item.items) {
+        const visibleChildren = item.items.filter((child) => checkItemAccess(child))
+        if (visibleChildren.length > 0) {
+          result.push({
+            ...item,
+            items: visibleChildren,
+          })
+        }
+      } else {
+        result.push(item)
+      }
+    }
+    return result
+  }
 
   const navGroups = sidebarData.navGroups
     .map((group) => ({ ...group, items: filterItems(group.items) }))

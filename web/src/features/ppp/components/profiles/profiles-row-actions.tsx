@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import type { PPPProfile } from '@/gen/v1/ppp_pb'
+import { useCan } from '@/hooks/use-can'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Edit2, Trash2 } from 'lucide-react'
 import { usePPP } from '../../context/ppp-context'
@@ -17,6 +18,11 @@ interface ProfilesRowActionsProps {
 
 export function ProfilesRowActions({ row }: ProfilesRowActionsProps) {
   const { setOpen, setCurrentProfile } = usePPP()
+  const canWrite = useCan('ppp:profile:write')
+
+  if (!canWrite) {
+    return null
+  }
 
   const handleEdit = () => {
     setCurrentProfile(row)

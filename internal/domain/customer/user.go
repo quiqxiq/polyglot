@@ -1,6 +1,28 @@
 package customer
 
-import "time"
+import (
+	"strings"
+	"time"
+)
+
+// BuiltInRoles are the roles managed by the system policy seeder. Role
+// assignments for these roles are reconciled with users.role at startup and
+// login; custom roles created through the RBAC service are preserved.
+var BuiltInRoles = map[string]struct{}{
+	"owner":      {},
+	"superadmin": {},
+	"admin":      {},
+	"agent":      {},
+	"teknisi":    {},
+	"finance":    {},
+	"technician": {}, // legacy alias, migrated to teknisi
+}
+
+// IsBuiltInRole reports whether role belongs to the system-managed role set.
+func IsBuiltInRole(role string) bool {
+	_, ok := BuiltInRoles[strings.ToLower(strings.TrimSpace(role))]
+	return ok
+}
 
 // User represents an admin, agent, or technician who can access the system.
 type User struct {

@@ -68,9 +68,7 @@ func (u *RefreshTokenUseCase) Refresh(ctx context.Context, currentRefreshToken s
 	if u.roles != nil {
 		userRoles, _ = u.roles.GetRolesForUser(fmt.Sprintf("%d", userID))
 	}
-	if len(userRoles) == 0 && user.Role != "" {
-		userRoles = []string{user.Role}
-	}
+	userRoles = syncEffectiveRoles(u.roles, userID, user.Role, userRoles)
 
 	var perms []string
 	if u.roles != nil {
@@ -78,7 +76,7 @@ func (u *RefreshTokenUseCase) Refresh(ctx context.Context, currentRefreshToken s
 	}
 
 	primaryRole := user.Role
-	if len(userRoles) > 0 {
+	if primaryRole == "" && len(userRoles) > 0 {
 		primaryRole = userRoles[0]
 	}
 

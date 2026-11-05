@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { useCan } from '@/hooks/use-can'
 import type { HotspotUser } from '@/gen/v1/hotspot_pb'
 import { useHotspot } from '../../context/hotspot-context'
 
@@ -16,6 +17,12 @@ interface InactiveRowActionsProps {
 
 export function InactiveRowActions({ user }: InactiveRowActionsProps) {
   const { setOpen, setCurrentUser, setPrintSingleUserId, setPrintBatchComment } = useHotspot()
+  const canPrint = useCan('hotspot:voucher:generate') || useCan('hotspot:template:read')
+  const canWrite = useCan('hotspot:user:write')
+
+  if (!canPrint && !canWrite) {
+    return null
+  }
 
   const handleEdit = () => {
     setCurrentUser(user)
@@ -47,23 +54,29 @@ export function InactiveRowActions({ user }: InactiveRowActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-44'>
-        <DropdownMenuItem onClick={handlePrint}>
-          <Printer className='mr-2 h-4 w-4 text-primary' />
-          Print Voucher
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleEdit}>
-          <Pencil className='mr-2 h-4 w-4' />
-          Edit User
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleReset}>
-          <RotateCcw className='mr-2 h-4 w-4 text-amber-500' />
-          Reset Counters
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleDelete} className='text-destructive focus:text-destructive'>
-          <Trash2 className='mr-2 h-4 w-4' />
-          Delete Voucher
-        </DropdownMenuItem>
+        {canPrint && (
+          <DropdownMenuItem onClick={handlePrint}>
+            <Printer className='mr-2 h-4 w-4 text-primary' />
+            Print Voucher
+          </DropdownMenuItem>
+        )}
+        {canWrite && (
+          <>
+            <DropdownMenuItem onClick={handleEdit}>
+              <Pencil className='mr-2 h-4 w-4' />
+              Edit User
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleReset}>
+              <RotateCcw className='mr-2 h-4 w-4 text-amber-500' />
+              Reset Counters
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleDelete} className='text-destructive focus:text-destructive'>
+              <Trash2 className='mr-2 h-4 w-4' />
+              Delete Voucher
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

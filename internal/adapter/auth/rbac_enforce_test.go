@@ -84,6 +84,11 @@ func TestEnforceRoleMatrix(t *testing.T) {
 		{"teknisi can read technician", "1004", "technician:read", true},
 		{"teknisi can read logs", "1004", "log:read", true},
 		{"teknisi CANNOT manage rbac", "1004", "rbac:manage", false},
+		{"teknisi can read dial ppp-active", "1004", "dial:ppp-active:read", true},
+		{"teknisi CANNOT kick dial ppp-active", "1004", "dial:ppp-active:kick", false},
+		{"teknisi CANNOT read polyglot ppp active", "1004", "ppp:active:read", false},
+		{"admin can kick dial ppp-active", "1002", "dial:ppp-active:kick", true},
+		{"agent CANNOT read dial ppp-active", "1003", "dial:ppp-active:read", false},
 
 		{"unknown user denied", "9999", "skill:read", false},
 	}
@@ -122,6 +127,48 @@ func TestWildcardRegexMatching(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("%s/%s", tt.role, tt.obj), func(t *testing.T) {
+			got, err := ce.Enforce(tt.role, tt.obj, "*")
+			if err != nil {
+				t.Fatalf("Enforce: %v", err)
+			}
+			if got != tt.want {
+				t.Fatalf("Enforce(%s, %q) = %v, want %v", tt.role, tt.obj, got, tt.want)
+			}
+		})
+	}
+}
+
+// TestAnchoredRegexMatching guards the matcher contract in rbac_model.conf:
+// regexMatch(r.obj, "^" + p.obj + "$"). Without the anchors, a policy for
+// "profile:.*" would also match "ppp:profile:read" and a policy for
+// "device:.*" would match "mydevice:read", silently widening access.
+func TestAnchoredRegexMatching(t *testing.T) {
+	ce := newTestEnforcer(t, [][]string{
+		{"agent", "profile:.*", "*"},
+		{"teknisi", "device:.*", "*"},
+		{"teknisi", "ppp:secret:read", "*"},
+	}, nil)
+
+	tests := []struct {
+		name string
+		role string
+		obj  string
+		want bool
+	}{
+		{"profile policy matches profile resource", "agent", "profile:read", true},
+		{"profile policy matches profile update", "agent", "profile:update", true},
+		{"profile policy does not leak into ppp profile", "agent", "ppp:profile:read", false},
+		{"profile policy does not leak into ppp profile manage", "agent", "ppp:profile:manage", false},
+		{"profile policy does not match prefixed resource", "agent", "prefix:profile:read", false},
+		{"device policy matches device read", "teknisi", "device:read", true},
+		{"device policy does not match embedded device resource", "teknisi", "mydevice:read", false},
+		{"exact policy matches", "teknisi", "ppp:secret:read", true},
+		{"exact policy does not match prefixed object", "teknisi", "xppp:secret:read", false},
+		{"exact policy does not match suffixed object", "teknisi", "ppp:secret:read:all", false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
 			got, err := ce.Enforce(tt.role, tt.obj, "*")
 			if err != nil {
 				t.Fatalf("Enforce: %v", err)

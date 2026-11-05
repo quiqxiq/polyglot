@@ -6,6 +6,7 @@ import {
 } from '@/components/ui/tooltip'
 import type { PPPActiveSession } from '@/gen/v1/ppp_pb'
 import { Activity, ExternalLink, Unplug } from 'lucide-react'
+import { useCan } from '@/hooks/use-can'
 import { usePPP } from '../../context/ppp-context'
 
 interface ActiveRowActionsProps {
@@ -14,6 +15,7 @@ interface ActiveRowActionsProps {
 
 export function ActiveRowActions({ row }: ActiveRowActionsProps) {
   const { setOpen, setCurrentActiveSession } = usePPP()
+  const canKick = useCan('ppp:active:kick')
 
   const handleKick = () => {
     setCurrentActiveSession(row)
@@ -71,20 +73,22 @@ export function ActiveRowActions({ row }: ActiveRowActionsProps) {
       </Tooltip>
 
       {/* 3. Disconnect Button */}
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
-            onClick={handleKick}
-          >
-            <Unplug className="h-3.5 w-3.5" />
-            <span className="sr-only">Disconnect</span>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side="top">Disconnect active session</TooltipContent>
-      </Tooltip>
+      {canKick && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+              onClick={handleKick}
+            >
+              <Unplug className="h-3.5 w-3.5" />
+              <span className="sr-only">Disconnect</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="top">Disconnect active session</TooltipContent>
+        </Tooltip>
+      )}
     </div>
   )
 }

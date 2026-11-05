@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { canPermission } from './use-can'
+import { canAllPermissions, canAnyPermission, canPermission } from './use-can'
 
 // Flat effective permissions come from the backend as "resource:action" —
 // the resource part is a regex (e.g. "knowledge:.*"), action usually "*".
@@ -26,6 +26,7 @@ const teknisiPerms = [
   'technician:read:*',
   'probe:read:*',
   'hotspot:read:*',
+  'dial:ppp-active:read:*',
 ]
 
 describe('canPermission', () => {
@@ -71,5 +72,47 @@ describe('canPermission', () => {
     // a non-wildcard action only matches itself
     expect(canPermission(['skill:read:read'], 'skill:read')).toBe(true)
     expect(canPermission(['skill:read:read'], 'skill:manage')).toBe(false)
+  })
+
+  it('anchored regex prevents un-anchored partial substring matching', () => {
+    // "profile:.*:*" should NOT match "ppp:profile:read"
+    expect(canPermission(['profile:.*:*'], 'profile:read')).toBe(true)
+    expect(canPermission(['profile:.*:*'], 'ppp:profile:read')).toBe(false)
+
+    // "dial:.*:*" should NOT match "ppp:active:read"
+    expect(canPermission(['dial:.*:*'], 'dial:ppp-active:read')).toBe(true)
+    expect(canPermission(['dial:.*:*'], 'ppp:active:read')).toBe(false)
+
+    // Having dial permission does NOT grant polyglot permission
+    expect(canPermission(['dial:ppp-active:read:*'], 'ppp:active:read')).toBe(false)
+    expect(canPermission(['ppp:active:read:*'], 'dial:ppp-active:read')).toBe(false)
+  })
+})
+
+describe('canAnyPermission', () => {
+  it('returns true when required list is empty', () => {
+    expect(canAnyPermission(agentPerms, [])).toBe(true)
+    expect(canAnyPermission(undefined, [])).toBe(true)
+  })
+
+  it('returns true if any permission matches', () => {
+    expect(canAnyPermission(teknisiPerms, ['user:read', 'device:read'])).toBe(true)
+    expect(canAnyPermission(teknisiPerms, ['ppp:active:read', 'dial:ppp-active:read'])).toBe(true)
+  })
+
+  it('returns false if none match', () => {
+    expect(canAnyPermission(teknisiPerms, ['user:read', 'user:manage'])).toBe(false)
+  })
+})
+
+describe('canAllPermissions', () => {
+  it('returns true when required list is empty', () => {
+    expect(canAllPermissions(agentPerms, [])).toBe(true)
+    expect(canAllPermissions(undefined, [])).toBe(true)
+  })
+
+  it('returns true only if all permissions match', () => {
+    expect(canAllPermissions(teknisiPerms, ['device:read', 'device:command'])).toBe(true)
+    expect(canAllPermissions(teknisiPerms, ['device:read', 'device:manage'])).toBe(false)
   })
 })

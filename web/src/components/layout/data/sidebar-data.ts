@@ -59,13 +59,24 @@ export const getSidebarData = (t: (key: string) => string): SidebarData => ({
           title: t('nav.hotspot'),
           url: '/hotspot',
           icon: Wifi,
-          permission: 'hotspot:read',
+          anyOf: [
+            'hotspot:read',
+            'hotspot:user:read',
+            'hotspot:profile:read',
+            'hotspot:active:read',
+          ],
         },
         {
           title: t('nav.ppp'),
           url: '/ppp',
           icon: Network,
-          permission: 'ppp:read',
+          anyOf: [
+            'ppp:read',
+            'ppp:secret:read',
+            'ppp:active:read',
+            'ppp:inactive:read',
+            'ppp:profile:read',
+          ],
         },
         {
           title: t('nav.olt'),

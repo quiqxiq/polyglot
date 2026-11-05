@@ -12,6 +12,7 @@ import { DataTableBulkActions as BulkActionsToolbar } from '@/components/data-ta
 import { useResetHotspotUserCountersMutation } from '../../api/use-hotspot-users'
 import { useDeviceStore } from '@/stores/device-store'
 import { useHotspot } from '../../context/hotspot-context'
+import { useCan } from '@/hooks/use-can'
 import type { HotspotUser } from '@/gen/v1/hotspot_pb'
 import { UsersMultiDeleteDialog } from './users-multi-delete-dialog'
 
@@ -26,6 +27,12 @@ export function UsersBulkActions<TData>({
   const { selectedDeviceId } = useDeviceStore()
   const { setOpen, setPrintBatchComment, setPrintSingleUserId } = useHotspot()
   const resetMutation = useResetHotspotUserCountersMutation()
+  const canPrint = useCan('hotspot:voucher:generate') || useCan('hotspot:template:read')
+  const canWrite = useCan('hotspot:user:write')
+
+  if (!canPrint && !canWrite) {
+    return null
+  }
 
   const selectedRows = table.getFilteredSelectedRowModel().rows
   const selectedUsers = selectedRows.map((r) => r.original as HotspotUser)
@@ -80,56 +87,62 @@ export function UsersBulkActions<TData>({
   return (
     <>
       <BulkActionsToolbar table={table} entityName='user'>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant='outline'
-              size='icon'
-              onClick={handleBulkPrint}
-              className='size-8'
-              aria-label='Print vouchers for selected users'
-            >
-              <Printer className='size-4 text-primary' />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Print vouchers</p>
-          </TooltipContent>
-        </Tooltip>
+        {canPrint && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant='outline'
+                size='icon'
+                onClick={handleBulkPrint}
+                className='size-8'
+                aria-label='Print vouchers for selected users'
+              >
+                <Printer className='size-4 text-primary' />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Print vouchers</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant='outline'
-              size='icon'
-              onClick={handleBulkResetCounters}
-              className='size-8'
-              aria-label='Reset counters for selected users'
-            >
-              <RotateCcw className='size-4 text-amber-500' />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Reset counters</p>
-          </TooltipContent>
-        </Tooltip>
+        {canWrite && (
+          <>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant='outline'
+                  size='icon'
+                  onClick={handleBulkResetCounters}
+                  className='size-8'
+                  aria-label='Reset counters for selected users'
+                >
+                  <RotateCcw className='size-4 text-amber-500' />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Reset counters</p>
+              </TooltipContent>
+            </Tooltip>
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant='destructive'
-              size='icon'
-              onClick={() => setShowDeleteConfirm(true)}
-              className='size-8'
-              aria-label='Delete selected users'
-            >
-              <Trash2 className='size-4' />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Delete users</p>
-          </TooltipContent>
-        </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant='destructive'
+                  size='icon'
+                  onClick={() => setShowDeleteConfirm(true)}
+                  className='size-8'
+                  aria-label='Delete selected users'
+                >
+                  <Trash2 className='size-4' />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Delete users</p>
+              </TooltipContent>
+            </Tooltip>
+          </>
+        )}
       </BulkActionsToolbar>
 
       <UsersMultiDeleteDialog

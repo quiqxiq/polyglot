@@ -25,8 +25,8 @@ func AuthorizeProcedure(enforcer PolicyEnforcer) Middleware {
 				return
 			}
 
-			obj, ok := auth.PermissionFor(r.URL.Path)
-			if !ok {
+			objects, ok := auth.PermissionsFor(r.URL.Path)
+			if !ok || len(objects) == 0 {
 				logger.WithComponent("RBAC").WithField("path", r.URL.Path).Warn("unknown procedure; denying request")
 				response.WriteHTTPStatusError(w, http.StatusForbidden, "Access denied. Unknown resource.")
 				return
@@ -46,14 +46,19 @@ func AuthorizeProcedure(enforcer PolicyEnforcer) Middleware {
 
 			allowed := false
 			for _, role := range effectiveRoles {
-				ok, err := enforcer.Enforce(role, obj, "*")
-				if err != nil {
-					logger.WithComponent("RBAC").WithError(err).WithFields(map[string]any{"role": role, "object": obj}).Error("policy evaluation failed")
-					response.WriteHTTPStatusError(w, http.StatusInternalServerError, "Failed to evaluate authorization policy")
-					return
+				for _, obj := range objects {
+					ok, err := enforcer.Enforce(role, obj, "*")
+					if err != nil {
+						logger.WithComponent("RBAC").WithError(err).WithFields(map[string]any{"role": role, "object": obj}).Error("policy evaluation failed")
+						response.WriteHTTPStatusError(w, http.StatusInternalServerError, "Failed to evaluate authorization policy")
+						return
+					}
+					if ok {
+						allowed = true
+						break
+					}
 				}
-				if ok {
-					allowed = true
+				if allowed {
 					break
 				}
 			}

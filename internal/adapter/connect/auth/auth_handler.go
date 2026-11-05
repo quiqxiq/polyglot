@@ -52,7 +52,7 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 	resp := connect.NewResponse(&devicepb.LoginResponse{
 		Token:         res.AccessToken,
 		User:          profile,
-		ExpiresAtUnix: now.Add(24 * time.Hour).Unix(),
+		ExpiresAtUnix: now.Add(h.authUC.TokenService().ExpiryDuration()).Unix(),
 	})
 
 	if res.RefreshToken != "" {
@@ -175,7 +175,7 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 	now := time.Now()
 	resp := connect.NewResponse(&devicepb.RefreshTokenResponse{
 		Token:                res.AccessToken,
-		ExpiresAtUnix:        now.Add(24 * time.Hour).Unix(),
+		ExpiresAtUnix:        now.Add(h.authUC.TokenService().ExpiryDuration()).Unix(),
 		RefreshExpiresAtUnix: now.Add(iauth.RefreshTokenLifetime).Unix(),
 	})
 

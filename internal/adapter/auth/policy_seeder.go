@@ -3,6 +3,7 @@ package auth
 import (
 	"strings"
 
+	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
@@ -13,6 +14,7 @@ import (
 //
 // Role matrix (final, agreed with product owner):
 //   - owner  : full access to everything, including rbac:manage
+//   - superadmin: legacy alias, full access to everything
 //   - admin  : every resource EXCEPT rbac:manage (explicit per-resource list,
 //     no deny rule — admin simply has no rbac policy)
 //   - agent  : conversations (read/write), customer:read, knowledge:read,
@@ -30,6 +32,10 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 	systemPolicies := [][]string{
 		// Owner — wildcard penuh (termasuk rbac:manage).
 		{"owner", ".*", "*"},
+
+		// Superadmin — role legacy; tetap diberi wildcard agar akun lama tidak
+		// kehilangan akses sebelum dimigrasikan ke owner.
+		{"superadmin", ".*", "*"},
 
 		// Admin — semua resource kecuali rbac (daftar eksplisit, tanpa deny).
 		{"admin", "device:.*", "*"},
@@ -57,6 +63,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "network:.*", "*"},
 		{"admin", "olt:.*", "*"},
 		{"admin", "ont:.*", "*"},
+		{"admin", "dial:.*", "*"},
 
 		// Agent / CS — customer service, voucher generator, & knowledge lookup.
 		{"agent", "conversation:.*", "*"},
@@ -101,9 +108,6 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "hotspot:report:read", "*"},
 		{"teknisi", "hotspot:expire:read", "*"},
 		{"teknisi", "hotspot:template:read", "*"},
-		{"teknisi", "ppp:secret:read", "*"},
-		{"teknisi", "ppp:profile:read", "*"},
-		{"teknisi", "ppp:active:read", "*"},
 		{"teknisi", "log:read", "*"},
 		{"teknisi", "profile:.*", "*"},
 		{"teknisi", "registration:read", "*"},
@@ -112,6 +116,19 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "network:read", "*"},
 		{"teknisi", "olt:read", "*"},
 		{"teknisi", "ont:read", "*"},
+
+		// Teknisi — Web Dial dedicated portal permissions (dial:*):
+		{"teknisi", "dial:dashboard:read", "*"},
+		{"teknisi", "dial:dashboard:ping", "*"},
+		{"teknisi", "dial:device:read", "*"},
+		{"teknisi", "dial:ppp-active:read", "*"},
+		{"teknisi", "dial:ppp-active:ping", "*"},
+		{"teknisi", "dial:ppp-non-active:read", "*"},
+		{"teknisi", "dial:ppp-secrets:read", "*"},
+		{"teknisi", "dial:ppp-profiles:read", "*"},
+		{"teknisi", "dial:logs:read", "*"},
+		{"teknisi", "dial:monitor:read", "*"},
+		{"teknisi", "dial:monitor:diagnostic", "*"},
 	}
 
 	added := 0
@@ -137,11 +154,21 @@ func removeLegacyPathPolicies(ce *CasbinEnforcer) {
 	}
 	removed := 0
 	for _, p := range existing {
-		if len(p) < 2 || !strings.HasPrefix(p[1], "/") {
+		if len(p) < 2 {
 			continue
 		}
-		if ok, err := ce.RemovePolicy(p[0], p[1], p[2]); err == nil && ok {
-			removed++
+		// Hapus legacy HTTP path policies ("/api/v1/*")
+		if strings.HasPrefix(p[1], "/") {
+			if ok, err := ce.RemovePolicy(p[0], p[1], p[2]); err == nil && ok {
+				removed++
+			}
+			continue
+		}
+		// Hapus legacy PPP main permissions dari teknisi (dial:* dipakai untuk Web Dial)
+		if p[0] == "teknisi" && (p[1] == "ppp:secret:read" || p[1] == "ppp:profile:read" || p[1] == "ppp:active:read") {
+			if ok, err := ce.RemovePolicy(p[0], p[1], p[2]); err == nil && ok {
+				removed++
+			}
 		}
 	}
 	if removed > 0 {
@@ -150,8 +177,9 @@ func removeLegacyPathPolicies(ce *CasbinEnforcer) {
 }
 
 // EnsureUserRoleAssignments syncs Casbin role assignments (g table) with the
-// users table: every registered user gets the role stored in their users.role column.
-// Stale roles that no longer match are removed.
+// users table: every registered user gets the role stored in their users.role
+// column. Only stale built-in roles (including the legacy "technician" alias)
+// are removed; custom roles created through the RBAC service are preserved.
 func EnsureUserRoleAssignments(ce *CasbinEnforcer, users []*UserRef) {
 	if ce == nil {
 		return
@@ -163,7 +191,10 @@ func EnsureUserRoleAssignments(ce *CasbinEnforcer, users []*UserRef) {
 		}
 		currentRoles, _ := ce.GetRolesForUser(u.ID)
 		for _, r := range currentRoles {
-			if r != u.Role {
+			if strings.EqualFold(r, u.Role) {
+				continue
+			}
+			if customer.IsBuiltInRole(r) {
 				_, _ = ce.DeleteRoleForUser(u.ID, r)
 			}
 		}

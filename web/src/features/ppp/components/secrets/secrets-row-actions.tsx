@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import type { PPPSecret } from '@/gen/v1/ppp_pb'
 import { useDeviceStore } from '@/stores/device-store'
+import { useCan } from '@/hooks/use-can'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { CheckCircle2, Edit2, PowerOff, Trash2 } from 'lucide-react'
 import { useSetPPPSecretDisabledMutation } from '../../api/use-ppp-secrets'
@@ -21,6 +22,11 @@ export function SecretsRowActions({ row }: SecretsRowActionsProps) {
   const { setOpen, setCurrentSecret } = usePPP()
   const selectedDeviceId = useDeviceStore((state) => state.selectedDeviceId)
   const setDisabledMutation = useSetPPPSecretDisabledMutation()
+  const canWrite = useCan('ppp:secret:write')
+
+  if (!canWrite) {
+    return null
+  }
 
   const handleEdit = () => {
     setCurrentSecret(row)

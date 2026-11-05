@@ -17,6 +17,7 @@ type RoleAuthorizer interface {
 	GetRolesForUser(user string) ([]string, error)
 	GetImplicitPermissionsForUser(user string) ([]string, error)
 	AddRoleForUser(user, role string) (bool, error)
+	DeleteRoleForUser(user, role string) (bool, error)
 	DeleteRolesForUser(user string) (bool, error)
 }
 
@@ -36,6 +37,7 @@ type RBACManager interface {
 type TokenService interface {
 	GenerateAccessToken(userID, username, role string) (string, error)
 	ValidateAccessToken(tokenString string) (userID string, username string, role string, err error)
+	ExpiryDuration() time.Duration
 }
 
 // RefreshTokenManager defines the contract for issuing, rotating, and revoking opaque refresh tokens.

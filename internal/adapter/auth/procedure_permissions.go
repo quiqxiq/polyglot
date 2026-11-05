@@ -170,9 +170,9 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.PPPService/ListActiveSessions":    "ppp:active:read",
 	"/polyglot.v1.PPPService/KickActiveSession":     "ppp:active:kick",
 	"/polyglot.v1.PPPService/KickActiveSessions":    "ppp:active:kick",
-	"/polyglot.v1.PPPService/ListInactiveSecrets":   "ppp:active:read",
+	"/polyglot.v1.PPPService/ListInactiveSecrets":   "ppp:inactive:read",
 	"/polyglot.v1.PPPService/StreamActiveSessions":  "ppp:active:read",
-	"/polyglot.v1.PPPService/StreamInactiveSecrets": "ppp:active:read",
+	"/polyglot.v1.PPPService/StreamInactiveSecrets": "ppp:inactive:read",
 
 	// UserService — manajemen user (CRUD, reset password, aktif/nonaktif, device assignment).
 	"/polyglot.v1.UserService/ListUsers":                 "user:read",
@@ -374,7 +374,77 @@ var ProcedurePermissions = map[string]string{
 	"/api/admin/snapshot/refresh": "ispadmin:manage",
 }
 
-// PermissionFor returns the resource:action object for a ConnectRPC procedure.
+// AlternativeProcedurePermissions maps procedures that can also be authorized
+// by alternative permissions (e.g. portal-specific permissions like dial:*).
+var AlternativeProcedurePermissions = map[string][]string{
+	// Device & Monitor
+	"/polyglot.v1.DeviceService/ListDevices":            {"dial:device:read", "dial:dashboard:read"},
+	"/polyglot.v1.DeviceService/GetDevice":              {"dial:device:read"},
+	"/polyglot.v1.DeviceService/TestDeviceConnection":   {"dial:monitor:diagnostic", "dial:dashboard:ping"},
+	"/polyglot.v1.DeviceService/StreamDeviceStatus":     {"dial:device:read", "dial:dashboard:read"},
+	"/polyglot.v1.DeviceService/StreamPing":             {"dial:dashboard:ping", "dial:ppp-active:ping"},
+	"/polyglot.v1.DeviceService/StreamInterfaceTraffic": {"dial:monitor:read"},
+
+	// NetworkMonitorService
+	"/polyglot.v1.NetworkMonitorService/StreamTraffic":           {"dial:monitor:read"},
+	"/polyglot.v1.NetworkMonitorService/StreamResource":          {"dial:monitor:read"},
+	"/polyglot.v1.NetworkMonitorService/StreamSystemSnapshot":    {"dial:monitor:read"},
+	"/polyglot.v1.NetworkMonitorService/StreamInterfaceEthernet": {"dial:monitor:read"},
+	"/polyglot.v1.NetworkMonitorService/StreamQueueStats":        {"dial:monitor:read"},
+	"/polyglot.v1.NetworkMonitorService/StreamLogs":              {"dial:logs:read"},
+	"/polyglot.v1.NetworkMonitorService/StreamPPPActive":         {"dial:ppp-active:read"},
+	"/polyglot.v1.NetworkMonitorService/StreamPPPInactive":       {"dial:ppp-non-active:read"},
+
+	// PPPService
+	"/polyglot.v1.PPPService/ListActiveSessions":    {"dial:ppp-active:read"},
+	"/polyglot.v1.PPPService/StreamActiveSessions":  {"dial:ppp-active:read"},
+	"/polyglot.v1.PPPService/KickActiveSession":     {"dial:ppp-active:kick"},
+	"/polyglot.v1.PPPService/KickActiveSessions":    {"dial:ppp-active:kick"},
+	"/polyglot.v1.PPPService/ListInactiveSecrets":   {"dial:ppp-non-active:read"},
+	"/polyglot.v1.PPPService/StreamInactiveSecrets": {"dial:ppp-non-active:read"},
+	"/polyglot.v1.PPPService/ListSecrets":           {"dial:ppp-secrets:read"},
+	"/polyglot.v1.PPPService/GetSecret":             {"dial:ppp-secrets:read"},
+	"/polyglot.v1.PPPService/CreateSecret":          {"dial:ppp-secrets:write"},
+	"/polyglot.v1.PPPService/UpdateSecret":          {"dial:ppp-secrets:write"},
+	"/polyglot.v1.PPPService/DeleteSecret":          {"dial:ppp-secrets:write"},
+	"/polyglot.v1.PPPService/SetSecretDisabled":     {"dial:ppp-non-active:toggle", "dial:ppp-secrets:write"},
+	"/polyglot.v1.PPPService/ListProfiles":          {"dial:ppp-profiles:read"},
+	"/polyglot.v1.PPPService/GetProfile":            {"dial:ppp-profiles:read"},
+
+	// LogService
+	"/polyglot.v1.LogService/StreamLogs": {"dial:logs:read"},
+	"/polyglot.v1.LogService/ListLogs":   {"dial:logs:read"},
+
+	// UserService
+	"/polyglot.v1.UserService/ListUsers":                 {"dial:settings:users:read"},
+	"/polyglot.v1.UserService/CreateUser":                {"dial:settings:users:manage"},
+	"/polyglot.v1.UserService/UpdateUser":                {"dial:settings:users:manage"},
+	"/polyglot.v1.UserService/ResetPassword":             {"dial:settings:users:manage"},
+	"/polyglot.v1.UserService/ToggleActive":              {"dial:settings:users:manage"},
+	"/polyglot.v1.UserService/DeleteUser":                {"dial:settings:users:manage"},
+	"/polyglot.v1.UserService/AssignDevicesToUser":       {"dial:settings:devices:manage"},
+	"/polyglot.v1.UserService/ListUserAccessibleDevices": {"dial:settings:devices:read"},
+}
+
+// PermissionsFor returns all accepted permission objects for a ConnectRPC procedure,
+// including its primary permission and any alternative portal permissions (e.g. dial:*).
+// Unknown procedures return false — callers must deny (fail closed).
+func PermissionsFor(procedure string) ([]string, bool) {
+	primary, ok := ProcedurePermissions[procedure]
+	if !ok {
+		return nil, false
+	}
+	alts := AlternativeProcedurePermissions[procedure]
+	if len(alts) == 0 {
+		return []string{primary}, true
+	}
+	res := make([]string, 0, 1+len(alts))
+	res = append(res, primary)
+	res = append(res, alts...)
+	return res, true
+}
+
+// PermissionFor returns the primary resource:action object for a ConnectRPC procedure.
 // Unknown procedures return false — callers must deny (fail closed).
 func PermissionFor(procedure string) (string, bool) {
 	perm, ok := ProcedurePermissions[procedure]

@@ -27,11 +27,32 @@ export function canPermission(
     const pAction = flat.slice(pIdx + 1)
     if (pAction !== '*' && pAction !== requestAction) return false
     try {
-      return new RegExp(pResource).test(permission)
+      const pattern = pResource.startsWith('^') ? pResource : `^(?:${pResource})$`
+      return new RegExp(pattern).test(permission)
     } catch {
       return pResource === permission
     }
   })
+}
+
+// canAnyPermission returns true if the user holds at least one of the required permissions.
+// If the required list is empty, returns true (no restriction).
+export function canAnyPermission(
+  permissions: string[] | undefined,
+  required: string[],
+): boolean {
+  if (!required || required.length === 0) return true
+  return required.some((perm) => canPermission(permissions, perm))
+}
+
+// canAllPermissions returns true if the user holds every one of the required permissions.
+// If the required list is empty, returns true (no restriction).
+export function canAllPermissions(
+  permissions: string[] | undefined,
+  required: string[],
+): boolean {
+  if (!required || required.length === 0) return true
+  return required.every((perm) => canPermission(permissions, perm))
 }
 
 // useCan returns whether the signed-in user holds the given permission
@@ -39,4 +60,16 @@ export function canPermission(
 export function useCan(permission: string): boolean {
   const permissions = useAuthStore((s) => s.auth.user?.permissions)
   return canPermission(permissions, permission)
+}
+
+// useCanAny returns true if the signed-in user holds at least one of the permissions.
+export function useCanAny(required: string[]): boolean {
+  const permissions = useAuthStore((s) => s.auth.user?.permissions)
+  return canAnyPermission(permissions, required)
+}
+
+// useCanAll returns true if the signed-in user holds every one of the permissions.
+export function useCanAll(required: string[]): boolean {
+  const permissions = useAuthStore((s) => s.auth.user?.permissions)
+  return canAllPermissions(permissions, required)
 }

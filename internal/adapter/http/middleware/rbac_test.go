@@ -102,4 +102,16 @@ func TestAuthorizeProcedureMiddleware(t *testing.T) {
 			t.Fatalf("status = %d, want 403 (body: %s)", w.Code, w.Body.String())
 		}
 	})
+
+	t.Run("allowed via alternative portal permission (dial:ppp-active:read)", func(t *testing.T) {
+		ce.roles["5"] = []string{"teknisi"}
+		ce.allow["dial:ppp-active:read|teknisi"] = true
+		h := newMux(5, []string{"teknisi"})
+		w := httptest.NewRecorder()
+		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.PPPService/ListActiveSessions", nil)
+		h.ServeHTTP(w, req)
+		if w.Code != http.StatusOK {
+			t.Fatalf("status = %d, want 200 via alternative dial permission (body: %s)", w.Code, w.Body.String())
+		}
+	})
 }

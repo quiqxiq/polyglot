@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { useCan } from '@/hooks/use-can'
 import type { HotspotProfile } from '@/gen/v1/hotspot_pb'
 import { useHotspot } from '../../context/hotspot-context'
 
@@ -16,6 +17,12 @@ interface ProfilesRowActionsProps {
 
 export function ProfilesRowActions({ profile }: ProfilesRowActionsProps) {
   const { setOpen, setCurrentProfile } = useHotspot()
+  const canGenerate = useCan('hotspot:voucher:generate')
+  const canWrite = useCan('hotspot:profile:write')
+
+  if (!canGenerate && !canWrite) {
+    return null
+  }
 
   const handleEdit = () => {
     setCurrentProfile(profile)
@@ -41,19 +48,25 @@ export function ProfilesRowActions({ profile }: ProfilesRowActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-48'>
-        <DropdownMenuItem onClick={handleGenerate}>
-          <Ticket className='mr-2 h-4 w-4 text-primary' />
-          Generate Vouchers
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleEdit}>
-          <Pencil className='mr-2 h-4 w-4' />
-          Edit Profile
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleDelete} className='text-destructive focus:text-destructive'>
-          <Trash2 className='mr-2 h-4 w-4' />
-          Delete Profile
-        </DropdownMenuItem>
+        {canGenerate && (
+          <DropdownMenuItem onClick={handleGenerate}>
+            <Ticket className='mr-2 h-4 w-4 text-primary' />
+            Generate Vouchers
+          </DropdownMenuItem>
+        )}
+        {canWrite && (
+          <>
+            <DropdownMenuItem onClick={handleEdit}>
+              <Pencil className='mr-2 h-4 w-4' />
+              Edit Profile
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleDelete} className='text-destructive focus:text-destructive'>
+              <Trash2 className='mr-2 h-4 w-4' />
+              Delete Profile
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

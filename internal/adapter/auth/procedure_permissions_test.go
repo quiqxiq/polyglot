@@ -29,6 +29,7 @@ func TestPermissionFor(t *testing.T) {
 		{"/polyglot.v1.SubscriptionService/ListSubscriptions", "subscription:read", true},
 		{"/polyglot.v1.BillingService/ListInvoices", "billing:read", true},
 		{"/polyglot.v1.PPPService/ListSecrets", "ppp:secret:read", true},
+		{"/polyglot.v1.PPPService/ListInactiveSecrets", "ppp:inactive:read", true},
 		{"/polyglot.v1.ProbeService/StreamTelemetry", "probe:read", true},
 		{"/polyglot.v1.UserService/ListUsers", "user:read", true},
 		{"/polyglot.v1.RBACService/ListPolicies", "rbac:manage", true},
@@ -46,6 +47,26 @@ func TestPermissionFor(t *testing.T) {
 				t.Fatalf("PermissionFor(%q) = %q, want %q", tt.procedure, got, tt.want)
 			}
 		})
+	}
+}
+
+func TestPermissionsFor(t *testing.T) {
+	// Procedure with dual permissions (Polyglot + Dial)
+	perms, ok := PermissionsFor("/polyglot.v1.PPPService/ListActiveSessions")
+	if !ok {
+		t.Fatal("expected ok = true for ListActiveSessions")
+	}
+	if len(perms) < 2 {
+		t.Fatalf("expected at least 2 permissions for ListActiveSessions, got %v", perms)
+	}
+	if perms[0] != "ppp:active:read" || perms[1] != "dial:ppp-active:read" {
+		t.Fatalf("unexpected permissions for ListActiveSessions: %v", perms)
+	}
+
+	// Unknown procedure
+	_, ok = PermissionsFor("/polyglot.v1.UnknownService/Unknown")
+	if ok {
+		t.Fatal("expected ok = false for unknown procedure")
 	}
 }
 

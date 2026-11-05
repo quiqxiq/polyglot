@@ -17,11 +17,10 @@ import (
 // (errors.go) per DEVELOPMENT-GUIDELINES.md §6.
 
 var KnownRoles = map[string]bool{
-	"owner":      true,
-	"admin":      true,
-	"agent":      true,
-	"teknisi":    true,
-	"technician": true,
+	"owner":   true,
+	"admin":   true,
+	"agent":   true,
+	"teknisi": true,
 }
 
 type ManageUserUseCase struct {

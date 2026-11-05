@@ -1,5 +1,6 @@
 import { LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useCan } from '@/hooks/use-can'
 import type { HotspotActiveSession } from '@/gen/v1/hotspot_pb'
 import { useHotspot } from '../../context/hotspot-context'
 
@@ -9,6 +10,11 @@ interface ActiveRowActionsProps {
 
 export function ActiveRowActions({ session }: ActiveRowActionsProps) {
   const { setOpen, setCurrentSession } = useHotspot()
+  const canKick = useCan('hotspot:active:kick')
+
+  if (!canKick) {
+    return null
+  }
 
   const handleKick = () => {
     setCurrentSession(session)

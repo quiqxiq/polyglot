@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useCan } from '@/hooks/use-can'
 import { useHotspot } from '../../context/hotspot-context'
 import { useUpdateHotspotIPBindingMutation } from '../../api/use-hotspot-bindings'
 import { useDeviceStore } from '@/stores/device-store'
@@ -23,6 +24,11 @@ export function BindingsRowActions({ row }: BindingsRowActionsProps) {
   const { setOpen, setCurrentBinding } = useHotspot()
   const { selectedDeviceId } = useDeviceStore()
   const updateMutation = useUpdateHotspotIPBindingMutation()
+  const canManage = useCan('hotspot:binding:manage')
+
+  if (!canManage) {
+    return null
+  }
 
   const handleToggleDisabled = async () => {
     if (!selectedDeviceId) return
