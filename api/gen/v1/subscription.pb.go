@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/subscription.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1991,7 +1991,7 @@ const file_v1_subscription_proto_rawDesc = "" +
 	"\x14ActivateSubscription\x12(.polyglot.v1.ActivateSubscriptionRequest\x1a).polyglot.v1.ActivateSubscriptionResponse\x12h\n" +
 	"\x13IsolateSubscription\x12'.polyglot.v1.IsolateSubscriptionRequest\x1a(.polyglot.v1.IsolateSubscriptionResponse\x12h\n" +
 	"\x13RestoreSubscription\x12'.polyglot.v1.RestoreSubscriptionRequest\x1a(.polyglot.v1.RestoreSubscriptionResponse\x12Y\n" +
-	"\x0eRetryProvision\x12\".polyglot.v1.RetryProvisionRequest\x1a#.polyglot.v1.RetryProvisionResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0eRetryProvision\x12\".polyglot.v1.RetryProvisionRequest\x1a#.polyglot.v1.RetryProvisionResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_subscription_proto_rawDescOnce sync.Once

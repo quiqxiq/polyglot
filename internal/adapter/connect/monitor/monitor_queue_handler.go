@@ -6,14 +6,14 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // StreamQueueStats streams /queue/simple/print stats interval=<n> natively from RouterOS.
-func (h *NetworkMonitorConnectHandler) StreamQueueStats(ctx context.Context, req *connect.Request[devicepb.StreamQueueStatsRequest], stream *connect.ServerStream[devicepb.QueueStatsFrame]) error {
+func (h *NetworkMonitorConnectHandler) StreamQueueStats(ctx context.Context, req *connect.Request[polyglotv1.StreamQueueStatsRequest], stream *connect.ServerStream[polyglotv1.QueueStatsFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -67,9 +67,9 @@ func (h *NetworkMonitorConnectHandler) StreamQueueStats(ctx context.Context, req
 				continue
 			}
 
-			items := make([]*devicepb.QueueStatsItem, 0, len(queues))
+			items := make([]*polyglotv1.QueueStatsItem, 0, len(queues))
 			for _, q := range queues {
-				items = append(items, &devicepb.QueueStatsItem{
+				items = append(items, &polyglotv1.QueueStatsItem{
 					Id:         q.RosID,
 					Name:       q.Name,
 					Target:     q.Target,
@@ -86,7 +86,7 @@ func (h *NetworkMonitorConnectHandler) StreamQueueStats(ctx context.Context, req
 				})
 			}
 
-			err := stream.Send(&devicepb.QueueStatsFrame{
+			err := stream.Send(&polyglotv1.QueueStatsFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
 				Queues:        items,

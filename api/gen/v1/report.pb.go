@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/report.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -2552,7 +2552,7 @@ const file_v1_report_proto_rawDesc = "" +
 	"\x0eCashflowReport\x12\".polyglot.v1.CashflowReportRequest\x1a#.polyglot.v1.CashflowReportResponse\x12P\n" +
 	"\vAgingDetail\x12\x1f.polyglot.v1.AgingDetailRequest\x1a .polyglot.v1.AgingDetailResponse\x12V\n" +
 	"\rClosingReport\x12!.polyglot.v1.ClosingReportRequest\x1a\".polyglot.v1.ClosingReportResponse\x12S\n" +
-	"\fExportReport\x12 .polyglot.v1.ExportReportRequest\x1a!.polyglot.v1.ExportReportResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\fExportReport\x12 .polyglot.v1.ExportReportRequest\x1a!.polyglot.v1.ExportReportResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_report_proto_rawDescOnce sync.Once

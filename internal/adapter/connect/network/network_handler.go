@@ -6,7 +6,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/port"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
@@ -52,7 +52,7 @@ func (h *NetworkConnectHandler) getDriver(ctx context.Context, deviceID string) 
 }
 
 // ListDHCPLeases lists current DHCP leases from the target router.
-func (h *NetworkConnectHandler) ListDHCPLeases(ctx context.Context, req *connect.Request[devicepb.ListDHCPLeasesRequest]) (*connect.Response[devicepb.ListDHCPLeasesResponse], error) {
+func (h *NetworkConnectHandler) ListDHCPLeases(ctx context.Context, req *connect.Request[polyglotv1.ListDHCPLeasesRequest]) (*connect.Response[polyglotv1.ListDHCPLeasesResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -66,13 +66,13 @@ func (h *NetworkConnectHandler) ListDHCPLeases(ctx context.Context, req *connect
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListDHCPLeasesResponse{
+	return connect.NewResponse(&polyglotv1.ListDHCPLeasesResponse{
 		Leases: ToProtoDHCPLeases(leases),
 	}), nil
 }
 
 // BlockDHCPLease modifies the blocked status of a DHCP lease on the target router.
-func (h *NetworkConnectHandler) BlockDHCPLease(ctx context.Context, req *connect.Request[devicepb.BlockDHCPLeaseRequest]) (*connect.Response[devicepb.BlockDHCPLeaseResponse], error) {
+func (h *NetworkConnectHandler) BlockDHCPLease(ctx context.Context, req *connect.Request[polyglotv1.BlockDHCPLeaseRequest]) (*connect.Response[polyglotv1.BlockDHCPLeaseResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -86,13 +86,13 @@ func (h *NetworkConnectHandler) BlockDHCPLease(ctx context.Context, req *connect
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.BlockDHCPLeaseResponse{
+	return connect.NewResponse(&polyglotv1.BlockDHCPLeaseResponse{
 		Message: fmt.Sprintf("lease block status updated: output=%s", res.Output),
 	}), nil
 }
 
 // ListParentQueues lists parent simple queue entries from the target router.
-func (h *NetworkConnectHandler) ListParentQueues(ctx context.Context, req *connect.Request[devicepb.ListParentQueuesRequest]) (*connect.Response[devicepb.ListParentQueuesResponse], error) {
+func (h *NetworkConnectHandler) ListParentQueues(ctx context.Context, req *connect.Request[polyglotv1.ListParentQueuesRequest]) (*connect.Response[polyglotv1.ListParentQueuesResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -106,20 +106,20 @@ func (h *NetworkConnectHandler) ListParentQueues(ctx context.Context, req *conne
 		return nil, response.MapDomainError(err)
 	}
 
-	entries := make([]*devicepb.ParentQueueEntry, 0, len(queues))
+	entries := make([]*polyglotv1.ParentQueueEntry, 0, len(queues))
 	for _, q := range queues {
-		entries = append(entries, &devicepb.ParentQueueEntry{
+		entries = append(entries, &polyglotv1.ParentQueueEntry{
 			RosId:    q.RosID,
 			Name:     q.Name,
 			MaxLimit: q.MaxLimit,
 		})
 	}
 
-	return connect.NewResponse(&devicepb.ListParentQueuesResponse{Queues: entries}), nil
+	return connect.NewResponse(&polyglotv1.ListParentQueuesResponse{Queues: entries}), nil
 }
 
 // ListIPPools lists configured IP pools from the target router.
-func (h *NetworkConnectHandler) ListIPPools(ctx context.Context, req *connect.Request[devicepb.ListIPPoolsRequest]) (*connect.Response[devicepb.ListIPPoolsResponse], error) {
+func (h *NetworkConnectHandler) ListIPPools(ctx context.Context, req *connect.Request[polyglotv1.ListIPPoolsRequest]) (*connect.Response[polyglotv1.ListIPPoolsResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -133,14 +133,14 @@ func (h *NetworkConnectHandler) ListIPPools(ctx context.Context, req *connect.Re
 		return nil, response.MapDomainError(err)
 	}
 
-	entries := make([]*devicepb.IPPoolEntry, 0, len(pools))
+	entries := make([]*polyglotv1.IPPoolEntry, 0, len(pools))
 	for _, p := range pools {
-		entries = append(entries, &devicepb.IPPoolEntry{
+		entries = append(entries, &polyglotv1.IPPoolEntry{
 			RosId:  p.RosID,
 			Name:   p.Name,
 			Ranges: p.Ranges,
 		})
 	}
 
-	return connect.NewResponse(&devicepb.ListIPPoolsResponse{Pools: entries}), nil
+	return connect.NewResponse(&polyglotv1.ListIPPoolsResponse{Pools: entries}), nil
 }

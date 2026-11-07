@@ -12,37 +12,25 @@ describe('RBAC catalog & module groups', () => {
     const dialGroup = RBAC_MODULE_GROUPS.find((g) => g.id === 'dial')
     expect(dialGroup).toBeDefined()
     expect(dialGroup?.label).toContain('Web Dial')
-    expect(dialGroup?.permissions.length).toBeGreaterThanOrEqual(18)
+    expect(dialGroup?.permissions.length).toBe(8)
   })
 
-  it('contains all dial:* permissions with correct prefixes and non-empty metadata', () => {
+  it('contains all 8 dial page permissions with correct prefixes and non-empty metadata', () => {
     const dialGroup = RBAC_MODULE_GROUPS.find((g) => g.id === 'dial')!
     const dialPermIds = dialGroup.permissions.map((p) => p.id)
 
     const expectedDialPerms = [
       'dial:dashboard:read',
-      'dial:dashboard:ping',
-      'dial:device:read',
       'dial:ppp-active:read',
-      'dial:ppp-active:kick',
-      'dial:ppp-active:ping',
       'dial:ppp-non-active:read',
-      'dial:ppp-non-active:toggle',
       'dial:ppp-secrets:read',
-      'dial:ppp-secrets:write',
       'dial:ppp-profiles:read',
       'dial:logs:read',
       'dial:monitor:read',
-      'dial:monitor:diagnostic',
-      'dial:settings:users:read',
-      'dial:settings:users:manage',
-      'dial:settings:devices:read',
-      'dial:settings:devices:manage',
+      'dial:settings:read',
     ]
 
-    for (const expected of expectedDialPerms) {
-      expect(dialPermIds).toContain(expected)
-    }
+    expect(dialPermIds).toEqual(expectedDialPerms)
 
     for (const perm of dialGroup.permissions) {
       expect(perm.id.startsWith('dial:')).toBe(true)
@@ -61,8 +49,8 @@ describe('RBAC catalog & module groups', () => {
 
   it('includes all dial permissions in ALL_PERMISSION_IDS', () => {
     expect(ALL_PERMISSION_IDS).toContain('dial:dashboard:read')
-    expect(ALL_PERMISSION_IDS).toContain('dial:ppp-active:kick')
-    expect(ALL_PERMISSION_IDS).toContain('dial:settings:devices:manage')
+    expect(ALL_PERMISSION_IDS).toContain('dial:ppp-active:read')
+    expect(ALL_PERMISSION_IDS).toContain('dial:settings:read')
     expect(ALL_PERMISSION_IDS).toContain('ppp:inactive:read')
   })
 

@@ -108,27 +108,21 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "hotspot:report:read", "*"},
 		{"teknisi", "hotspot:expire:read", "*"},
 		{"teknisi", "hotspot:template:read", "*"},
-		{"teknisi", "log:read", "*"},
 		{"teknisi", "profile:.*", "*"},
 		{"teknisi", "registration:read", "*"},
 		{"teknisi", "registration:install", "*"},
-		{"teknisi", "monitor:read", "*"},
 		{"teknisi", "network:read", "*"},
 		{"teknisi", "olt:read", "*"},
 		{"teknisi", "ont:read", "*"},
 
-		// Teknisi — Web Dial dedicated portal permissions (dial:*):
+		// Teknisi — Web Dial dedicated portal page permissions (dial:*):
 		{"teknisi", "dial:dashboard:read", "*"},
-		{"teknisi", "dial:dashboard:ping", "*"},
-		{"teknisi", "dial:device:read", "*"},
 		{"teknisi", "dial:ppp-active:read", "*"},
-		{"teknisi", "dial:ppp-active:ping", "*"},
 		{"teknisi", "dial:ppp-non-active:read", "*"},
 		{"teknisi", "dial:ppp-secrets:read", "*"},
 		{"teknisi", "dial:ppp-profiles:read", "*"},
 		{"teknisi", "dial:logs:read", "*"},
 		{"teknisi", "dial:monitor:read", "*"},
-		{"teknisi", "dial:monitor:diagnostic", "*"},
 	}
 
 	added := 0
@@ -164,8 +158,11 @@ func removeLegacyPathPolicies(ce *CasbinEnforcer) {
 			}
 			continue
 		}
-		// Hapus legacy PPP main permissions dari teknisi (dial:* dipakai untuk Web Dial)
-		if p[0] == "teknisi" && (p[1] == "ppp:secret:read" || p[1] == "ppp:profile:read" || p[1] == "ppp:active:read") {
+		// Hapus legacy PPP, log, monitor main permissions, dan granular dial action permissions dari teknisi (1:1 page-only model)
+		if p[0] == "teknisi" && (p[1] == "ppp:secret:read" || p[1] == "ppp:profile:read" || p[1] == "ppp:active:read" || p[1] == "log:read" || p[1] == "monitor:read" ||
+			p[1] == "dial:device:read" || p[1] == "dial:dashboard:ping" || p[1] == "dial:ppp-active:ping" || p[1] == "dial:monitor:diagnostic" ||
+			p[1] == "dial:ppp-active:kick" || p[1] == "dial:ppp-non-active:toggle" || p[1] == "dial:ppp-secrets:write" ||
+			p[1] == "dial:settings:users:read" || p[1] == "dial:settings:users:manage" || p[1] == "dial:settings:devices:read" || p[1] == "dial:settings:devices:manage") {
 			if ok, err := ce.RemovePolicy(p[0], p[1], p[2]); err == nil && ok {
 				removed++
 			}

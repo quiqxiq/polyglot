@@ -32,11 +32,22 @@ const Layout = {
   },
 
   canUseRouterSelector() {
-    return typeof Auth !== 'undefined' && (Auth.can('dial:device:read') || Auth.can('device:read'));
+    if (typeof Auth === 'undefined') return false;
+    if (typeof DialMenu !== 'undefined' && DialMenu.hasAnyMenu(Auth.permissionChecker())) {
+      return true;
+    }
+    return Auth.can('dial:device:read') || Auth.can('device:read');
   },
 
   canUseHeaderPing() {
-    return typeof Auth !== 'undefined' && (
+    if (typeof Auth === 'undefined') return false;
+    if (typeof DialMenu !== 'undefined' && DialMenu.hasAnyMenu(Auth.permissionChecker())) {
+      return true;
+    }
+    return (
+      Auth.can('dial:dashboard:read') ||
+      Auth.can('dial:ppp-active:read') ||
+      Auth.can('dial:monitor:read') ||
       Auth.can('dial:dashboard:ping') ||
       Auth.can('dial:ppp-active:ping') ||
       Auth.can('dial:monitor:diagnostic') ||

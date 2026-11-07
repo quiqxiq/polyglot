@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
@@ -18,7 +18,7 @@ import (
 // StreamPPPActive streams /ppp/active/print follow natively from
 // RouterOS — maintains a local state map of active PPPoE sessions updated
 // on each event and pushes the updated snapshot to the client.
-func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req *connect.Request[devicepb.StreamPPPActiveRequest], stream *connect.ServerStream[devicepb.PPPActiveFrame]) error {
+func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req *connect.Request[polyglotv1.StreamPPPActiveRequest], stream *connect.ServerStream[polyglotv1.PPPActiveFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -40,9 +40,9 @@ func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req 
 		}
 	}
 
-	initialItems := make([]*devicepb.PPPActiveSessionItem, 0, len(activeMap))
+	initialItems := make([]*polyglotv1.PPPActiveSessionItem, 0, len(activeMap))
 	for _, s := range activeMap {
-		initialItems = append(initialItems, &devicepb.PPPActiveSessionItem{
+		initialItems = append(initialItems, &polyglotv1.PPPActiveSessionItem{
 			Id:        s.RosID,
 			Name:      s.Name,
 			Service:   s.Service,
@@ -55,7 +55,7 @@ func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req 
 	}
 
 	// Immediately send an initial frame
-	_ = stream.Send(&devicepb.PPPActiveFrame{
+	_ = stream.Send(&polyglotv1.PPPActiveFrame{
 		DeviceId:      req.Msg.DeviceId,
 		TimestampUnix: time.Now().Unix(),
 		Sessions:      initialItems,
@@ -100,9 +100,9 @@ func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req 
 				}
 			}
 
-			items := make([]*devicepb.PPPActiveSessionItem, 0, len(activeMap))
+			items := make([]*polyglotv1.PPPActiveSessionItem, 0, len(activeMap))
 			for _, s := range activeMap {
-				items = append(items, &devicepb.PPPActiveSessionItem{
+				items = append(items, &polyglotv1.PPPActiveSessionItem{
 					Id:        s.RosID,
 					Name:      s.Name,
 					Service:   s.Service,
@@ -114,7 +114,7 @@ func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req 
 				})
 			}
 
-			err := stream.Send(&devicepb.PPPActiveFrame{
+			err := stream.Send(&polyglotv1.PPPActiveFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
 				Sessions:      items,
@@ -214,7 +214,7 @@ func (s *pppSessionState) inactive() []port.PPPoESecret {
 
 // StreamPPPInactive computes the inactive PPPoE subscriber list from two
 // native RouterOS follow streams.
-func (h *NetworkMonitorConnectHandler) StreamPPPInactive(ctx context.Context, req *connect.Request[devicepb.StreamPPPInactiveRequest], stream *connect.ServerStream[devicepb.PPPInactiveFrame]) error {
+func (h *NetworkMonitorConnectHandler) StreamPPPInactive(ctx context.Context, req *connect.Request[polyglotv1.StreamPPPInactiveRequest], stream *connect.ServerStream[polyglotv1.PPPInactiveFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -239,9 +239,9 @@ func (h *NetworkMonitorConnectHandler) StreamPPPInactive(ctx context.Context, re
 		}
 	}
 
-	initialItems := make([]*devicepb.PPPSecretItem, 0, len(state.secretMap))
+	initialItems := make([]*polyglotv1.PPPSecretItem, 0, len(state.secretMap))
 	for _, s := range state.secretMap {
-		initialItems = append(initialItems, &devicepb.PPPSecretItem{
+		initialItems = append(initialItems, &polyglotv1.PPPSecretItem{
 			Id:            s.RosID,
 			Name:          s.Name,
 			Profile:       s.Profile,
@@ -256,7 +256,7 @@ func (h *NetworkMonitorConnectHandler) StreamPPPInactive(ctx context.Context, re
 	}
 
 	// Immediately send an initial frame
-	_ = stream.Send(&devicepb.PPPInactiveFrame{
+	_ = stream.Send(&polyglotv1.PPPInactiveFrame{
 		DeviceId:      req.Msg.DeviceId,
 		TimestampUnix: time.Now().Unix(),
 		Secrets:       initialItems,
@@ -333,9 +333,9 @@ func (h *NetworkMonitorConnectHandler) StreamPPPInactive(ctx context.Context, re
 				}
 			}
 			inactive := state.inactive()
-			secrets := make([]*devicepb.PPPSecretItem, 0, len(inactive))
+			secrets := make([]*polyglotv1.PPPSecretItem, 0, len(inactive))
 			for _, s := range inactive {
-				secrets = append(secrets, &devicepb.PPPSecretItem{
+				secrets = append(secrets, &polyglotv1.PPPSecretItem{
 					Id:            s.RosID,
 					Name:          s.Name,
 					Profile:       s.Profile,
@@ -349,7 +349,7 @@ func (h *NetworkMonitorConnectHandler) StreamPPPInactive(ctx context.Context, re
 				})
 			}
 
-			err := stream.Send(&devicepb.PPPInactiveFrame{
+			err := stream.Send(&polyglotv1.PPPInactiveFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
 				Secrets:       secrets,

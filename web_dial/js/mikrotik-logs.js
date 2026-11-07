@@ -144,7 +144,7 @@ const MikroTikLogs = {
         }
       },
       (err) => {
-        if (signal.aborted) return;
+        if (signal.aborted || (err && err.permissionDenied)) return;
         setTimeout(() => {
           if (!signal.aborted) this.startStream();
         }, 5000);

@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/device.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -3253,7 +3253,7 @@ const file_v1_device_proto_rawDesc = "" +
 	"\x16UpdateIsolationProfile\x12*.polyglot.v1.UpdateIsolationProfileRequest\x1a+.polyglot.v1.UpdateIsolationProfileResponse\x12q\n" +
 	"\x16DeleteIsolationProfile\x12*.polyglot.v1.DeleteIsolationProfileRequest\x1a+.polyglot.v1.DeleteIsolationProfileResponse\x12}\n" +
 	"\x1aGetRouterIntegrationScript\x12..polyglot.v1.GetRouterIntegrationScriptRequest\x1a/.polyglot.v1.GetRouterIntegrationScriptResponse\x12\x83\x01\n" +
-	"\x1cApplyRouterIntegrationScript\x120.polyglot.v1.ApplyRouterIntegrationScriptRequest\x1a1.polyglot.v1.ApplyRouterIntegrationScriptResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x1cApplyRouterIntegrationScript\x120.polyglot.v1.ApplyRouterIntegrationScriptRequest\x1a1.polyglot.v1.ApplyRouterIntegrationScriptResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_device_proto_rawDescOnce sync.Once

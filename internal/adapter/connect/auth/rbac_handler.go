@@ -7,7 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -22,9 +22,9 @@ func NewRBACConnectHandler(enforcer port.RBACManager) *RBACConnectHandler {
 	return &RBACConnectHandler{enforcer: enforcer}
 }
 
-func (h *RBACConnectHandler) ListPolicies(ctx context.Context, req *connect.Request[devicepb.ListPoliciesRequest]) (*connect.Response[devicepb.ListPoliciesResponse], error) {
+func (h *RBACConnectHandler) ListPolicies(ctx context.Context, req *connect.Request[polyglotv1.ListPoliciesRequest]) (*connect.Response[polyglotv1.ListPoliciesResponse], error) {
 	if h.enforcer == nil {
-		return connect.NewResponse(&devicepb.ListPoliciesResponse{Policies: []*devicepb.Policy{}}), nil
+		return connect.NewResponse(&polyglotv1.ListPoliciesResponse{Policies: []*polyglotv1.Policy{}}), nil
 	}
 
 	rawPolicies, err := h.enforcer.GetPolicies()
@@ -32,10 +32,10 @@ func (h *RBACConnectHandler) ListPolicies(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	policies := make([]*devicepb.Policy, 0, len(rawPolicies))
+	policies := make([]*polyglotv1.Policy, 0, len(rawPolicies))
 	for _, p := range rawPolicies {
 		if len(p) >= 3 {
-			policies = append(policies, &devicepb.Policy{
+			policies = append(policies, &polyglotv1.Policy{
 				Sub: p[0],
 				Obj: p[1],
 				Act: p[2],
@@ -43,10 +43,10 @@ func (h *RBACConnectHandler) ListPolicies(ctx context.Context, req *connect.Requ
 		}
 	}
 
-	return connect.NewResponse(&devicepb.ListPoliciesResponse{Policies: policies}), nil
+	return connect.NewResponse(&polyglotv1.ListPoliciesResponse{Policies: policies}), nil
 }
 
-func (h *RBACConnectHandler) AddPolicy(ctx context.Context, req *connect.Request[devicepb.AddPolicyRequest]) (*connect.Response[devicepb.AddPolicyResponse], error) {
+func (h *RBACConnectHandler) AddPolicy(ctx context.Context, req *connect.Request[polyglotv1.AddPolicyRequest]) (*connect.Response[polyglotv1.AddPolicyResponse], error) {
 	if h.enforcer == nil {
 		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
@@ -56,10 +56,10 @@ func (h *RBACConnectHandler) AddPolicy(ctx context.Context, req *connect.Request
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.AddPolicyResponse{Success: ok}), nil
+	return connect.NewResponse(&polyglotv1.AddPolicyResponse{Success: ok}), nil
 }
 
-func (h *RBACConnectHandler) RemovePolicy(ctx context.Context, req *connect.Request[devicepb.RemovePolicyRequest]) (*connect.Response[devicepb.RemovePolicyResponse], error) {
+func (h *RBACConnectHandler) RemovePolicy(ctx context.Context, req *connect.Request[polyglotv1.RemovePolicyRequest]) (*connect.Response[polyglotv1.RemovePolicyResponse], error) {
 	if h.enforcer == nil {
 		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
@@ -69,12 +69,12 @@ func (h *RBACConnectHandler) RemovePolicy(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.RemovePolicyResponse{Success: ok}), nil
+	return connect.NewResponse(&polyglotv1.RemovePolicyResponse{Success: ok}), nil
 }
 
-func (h *RBACConnectHandler) ListRoleAssignments(ctx context.Context, req *connect.Request[devicepb.ListRoleAssignmentsRequest]) (*connect.Response[devicepb.ListRoleAssignmentsResponse], error) {
+func (h *RBACConnectHandler) ListRoleAssignments(ctx context.Context, req *connect.Request[polyglotv1.ListRoleAssignmentsRequest]) (*connect.Response[polyglotv1.ListRoleAssignmentsResponse], error) {
 	if h.enforcer == nil {
-		return connect.NewResponse(&devicepb.ListRoleAssignmentsResponse{RoleAssignments: []*devicepb.RoleAssignment{}}), nil
+		return connect.NewResponse(&polyglotv1.ListRoleAssignmentsResponse{RoleAssignments: []*polyglotv1.RoleAssignment{}}), nil
 	}
 
 	rawRoles, err := h.enforcer.GetGroupingPolicies()
@@ -82,20 +82,20 @@ func (h *RBACConnectHandler) ListRoleAssignments(ctx context.Context, req *conne
 		return nil, response.MapDomainError(err)
 	}
 
-	assignments := make([]*devicepb.RoleAssignment, 0, len(rawRoles))
+	assignments := make([]*polyglotv1.RoleAssignment, 0, len(rawRoles))
 	for _, r := range rawRoles {
 		if len(r) >= 2 {
-			assignments = append(assignments, &devicepb.RoleAssignment{
+			assignments = append(assignments, &polyglotv1.RoleAssignment{
 				User: r[0],
 				Role: r[1],
 			})
 		}
 	}
 
-	return connect.NewResponse(&devicepb.ListRoleAssignmentsResponse{RoleAssignments: assignments}), nil
+	return connect.NewResponse(&polyglotv1.ListRoleAssignmentsResponse{RoleAssignments: assignments}), nil
 }
 
-func (h *RBACConnectHandler) AssignRole(ctx context.Context, req *connect.Request[devicepb.AssignRoleRequest]) (*connect.Response[devicepb.AssignRoleResponse], error) {
+func (h *RBACConnectHandler) AssignRole(ctx context.Context, req *connect.Request[polyglotv1.AssignRoleRequest]) (*connect.Response[polyglotv1.AssignRoleResponse], error) {
 	if h.enforcer == nil {
 		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
@@ -105,10 +105,10 @@ func (h *RBACConnectHandler) AssignRole(ctx context.Context, req *connect.Reques
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.AssignRoleResponse{Success: ok}), nil
+	return connect.NewResponse(&polyglotv1.AssignRoleResponse{Success: ok}), nil
 }
 
-func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Request[devicepb.UnassignRoleRequest]) (*connect.Response[devicepb.UnassignRoleResponse], error) {
+func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Request[polyglotv1.UnassignRoleRequest]) (*connect.Response[polyglotv1.UnassignRoleResponse], error) {
 	if h.enforcer == nil {
 		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
@@ -118,10 +118,10 @@ func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.UnassignRoleResponse{Success: ok}), nil
+	return connect.NewResponse(&polyglotv1.UnassignRoleResponse{Success: ok}), nil
 }
 
-func (h *RBACConnectHandler) SyncRolePermissions(ctx context.Context, req *connect.Request[devicepb.SyncRolePermissionsRequest]) (*connect.Response[devicepb.SyncRolePermissionsResponse], error) {
+func (h *RBACConnectHandler) SyncRolePermissions(ctx context.Context, req *connect.Request[polyglotv1.SyncRolePermissionsRequest]) (*connect.Response[polyglotv1.SyncRolePermissionsResponse], error) {
 	if h.enforcer == nil {
 		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
@@ -130,13 +130,13 @@ func (h *RBACConnectHandler) SyncRolePermissions(ctx context.Context, req *conne
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.SyncRolePermissionsResponse{
+	return connect.NewResponse(&polyglotv1.SyncRolePermissionsResponse{
 		Success: true,
 		Message: fmt.Sprintf("permissions synced for role %s", req.Msg.Role),
 	}), nil
 }
 
-func (h *RBACConnectHandler) DeleteRole(ctx context.Context, req *connect.Request[devicepb.DeleteRoleRequest]) (*connect.Response[devicepb.DeleteRoleResponse], error) {
+func (h *RBACConnectHandler) DeleteRole(ctx context.Context, req *connect.Request[polyglotv1.DeleteRoleRequest]) (*connect.Response[polyglotv1.DeleteRoleResponse], error) {
 	if req.Msg.Role == "owner" {
 		return nil, response.PermissionDenied("role owner cannot be deleted")
 	}
@@ -149,7 +149,7 @@ func (h *RBACConnectHandler) DeleteRole(ctx context.Context, req *connect.Reques
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeleteRoleResponse{
+	return connect.NewResponse(&polyglotv1.DeleteRoleResponse{
 		Success: true,
 		Message: fmt.Sprintf("role %s deleted successfully", req.Msg.Role),
 	}), nil

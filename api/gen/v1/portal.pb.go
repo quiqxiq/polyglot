@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/portal.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1007,7 +1007,7 @@ const file_v1_portal_proto_rawDesc = "" +
 	"MyInvoices\x12\x1e.polyglot.v1.MyInvoicesRequest\x1a\x1f.polyglot.v1.MyInvoicesResponse\x12M\n" +
 	"\n" +
 	"MyPayments\x12\x1e.polyglot.v1.MyPaymentsRequest\x1a\x1f.polyglot.v1.MyPaymentsResponse\x12M\n" +
-	"\x06Logout\x12 .polyglot.v1.PortalLogoutRequest\x1a!.polyglot.v1.PortalLogoutResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x06Logout\x12 .polyglot.v1.PortalLogoutRequest\x1a!.polyglot.v1.PortalLogoutResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_portal_proto_rawDescOnce sync.Once

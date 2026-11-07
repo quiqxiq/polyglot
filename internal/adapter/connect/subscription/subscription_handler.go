@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -30,7 +30,7 @@ func NewSubscriptionConnectHandler(
 	}
 }
 
-func (h *SubscriptionConnectHandler) toEnrichedProto(ctx context.Context, sub *domainSub.Subscription) *devicepb.Subscription {
+func (h *SubscriptionConnectHandler) toEnrichedProto(ctx context.Context, sub *domainSub.Subscription) *polyglotv1.Subscription {
 	if sub == nil {
 		return nil
 	}
@@ -42,7 +42,7 @@ func (h *SubscriptionConnectHandler) toEnrichedProto(ctx context.Context, sub *d
 }
 
 // RetryProvision mengantrekan ulang provisioning langganan ke router.
-func (h *SubscriptionConnectHandler) RetryProvision(ctx context.Context, req *connect.Request[devicepb.RetryProvisionRequest]) (*connect.Response[devicepb.RetryProvisionResponse], error) {
+func (h *SubscriptionConnectHandler) RetryProvision(ctx context.Context, req *connect.Request[polyglotv1.RetryProvisionRequest]) (*connect.Response[polyglotv1.RetryProvisionResponse], error) {
 	if h.lifecycleUC == nil {
 		return nil, response.Unavailable("subscription lifecycle usecase unavailable")
 	}
@@ -50,14 +50,14 @@ func (h *SubscriptionConnectHandler) RetryProvision(ctx context.Context, req *co
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RetryProvisionResponse{
+	return connect.NewResponse(&polyglotv1.RetryProvisionResponse{
 		JobId:  job.ID,
 		Status: string(job.Status),
 	}), nil
 }
 
 // ListSubscriptions returns subscriptions for a given customer.
-func (h *SubscriptionConnectHandler) ListSubscriptions(ctx context.Context, req *connect.Request[devicepb.ListSubscriptionsRequest]) (*connect.Response[devicepb.ListSubscriptionsResponse], error) {
+func (h *SubscriptionConnectHandler) ListSubscriptions(ctx context.Context, req *connect.Request[polyglotv1.ListSubscriptionsRequest]) (*connect.Response[polyglotv1.ListSubscriptionsResponse], error) {
 	if h.subUC == nil {
 		return nil, response.Unavailable("subscription usecase unavailable")
 	}
@@ -65,13 +65,13 @@ func (h *SubscriptionConnectHandler) ListSubscriptions(ctx context.Context, req 
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListSubscriptionsResponse{
+	return connect.NewResponse(&polyglotv1.ListSubscriptionsResponse{
 		Subscriptions: ToProtoSubscriptionDetailList(details),
 	}), nil
 }
 
 // GetSubscription returns a single subscription by identifier.
-func (h *SubscriptionConnectHandler) GetSubscription(ctx context.Context, req *connect.Request[devicepb.GetSubscriptionRequest]) (*connect.Response[devicepb.GetSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) GetSubscription(ctx context.Context, req *connect.Request[polyglotv1.GetSubscriptionRequest]) (*connect.Response[polyglotv1.GetSubscriptionResponse], error) {
 	if h.subUC == nil {
 		return nil, response.Unavailable("subscription usecase unavailable")
 	}
@@ -79,13 +79,13 @@ func (h *SubscriptionConnectHandler) GetSubscription(ctx context.Context, req *c
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.GetSubscriptionResponse{
 		Subscription: ToProtoSubscriptionDetail(&detail),
 	}), nil
 }
 
 // ChangePlan changes the plan assigned to a subscription.
-func (h *SubscriptionConnectHandler) ChangePlan(ctx context.Context, req *connect.Request[devicepb.ChangePlanRequest]) (*connect.Response[devicepb.ChangePlanResponse], error) {
+func (h *SubscriptionConnectHandler) ChangePlan(ctx context.Context, req *connect.Request[polyglotv1.ChangePlanRequest]) (*connect.Response[polyglotv1.ChangePlanResponse], error) {
 	if h.lifecycleUC == nil {
 		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
@@ -93,13 +93,13 @@ func (h *SubscriptionConnectHandler) ChangePlan(ctx context.Context, req *connec
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ChangePlanResponse{
+	return connect.NewResponse(&polyglotv1.ChangePlanResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
 // SuspendSubscription suspends a subscription.
-func (h *SubscriptionConnectHandler) SuspendSubscription(ctx context.Context, req *connect.Request[devicepb.SuspendSubscriptionRequest]) (*connect.Response[devicepb.SuspendSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) SuspendSubscription(ctx context.Context, req *connect.Request[polyglotv1.SuspendSubscriptionRequest]) (*connect.Response[polyglotv1.SuspendSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
 		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
@@ -107,13 +107,13 @@ func (h *SubscriptionConnectHandler) SuspendSubscription(ctx context.Context, re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SuspendSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.SuspendSubscriptionResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
 // ResumeSubscription resumes a suspended subscription.
-func (h *SubscriptionConnectHandler) ResumeSubscription(ctx context.Context, req *connect.Request[devicepb.ResumeSubscriptionRequest]) (*connect.Response[devicepb.ResumeSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) ResumeSubscription(ctx context.Context, req *connect.Request[polyglotv1.ResumeSubscriptionRequest]) (*connect.Response[polyglotv1.ResumeSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
 		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
@@ -121,13 +121,13 @@ func (h *SubscriptionConnectHandler) ResumeSubscription(ctx context.Context, req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ResumeSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.ResumeSubscriptionResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
 // TerminateSubscription terminates a subscription.
-func (h *SubscriptionConnectHandler) TerminateSubscription(ctx context.Context, req *connect.Request[devicepb.TerminateSubscriptionRequest]) (*connect.Response[devicepb.TerminateSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) TerminateSubscription(ctx context.Context, req *connect.Request[polyglotv1.TerminateSubscriptionRequest]) (*connect.Response[polyglotv1.TerminateSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
 		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
@@ -135,13 +135,13 @@ func (h *SubscriptionConnectHandler) TerminateSubscription(ctx context.Context, 
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.TerminateSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.TerminateSubscriptionResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
 // ActivateSubscription activates a subscription with a target device.
-func (h *SubscriptionConnectHandler) ActivateSubscription(ctx context.Context, req *connect.Request[devicepb.ActivateSubscriptionRequest]) (*connect.Response[devicepb.ActivateSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) ActivateSubscription(ctx context.Context, req *connect.Request[polyglotv1.ActivateSubscriptionRequest]) (*connect.Response[polyglotv1.ActivateSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
 		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
@@ -149,13 +149,13 @@ func (h *SubscriptionConnectHandler) ActivateSubscription(ctx context.Context, r
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ActivateSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.ActivateSubscriptionResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
 // IsolateSubscription isolates a customer subscription.
-func (h *SubscriptionConnectHandler) IsolateSubscription(ctx context.Context, req *connect.Request[devicepb.IsolateSubscriptionRequest]) (*connect.Response[devicepb.IsolateSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) IsolateSubscription(ctx context.Context, req *connect.Request[polyglotv1.IsolateSubscriptionRequest]) (*connect.Response[polyglotv1.IsolateSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
 		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
@@ -163,14 +163,14 @@ func (h *SubscriptionConnectHandler) IsolateSubscription(ctx context.Context, re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.IsolateSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.IsolateSubscriptionResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 		Message:      "Pelanggan berhasil diisolir",
 	}), nil
 }
 
 // RestoreSubscription restores an isolated customer subscription.
-func (h *SubscriptionConnectHandler) RestoreSubscription(ctx context.Context, req *connect.Request[devicepb.RestoreSubscriptionRequest]) (*connect.Response[devicepb.RestoreSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) RestoreSubscription(ctx context.Context, req *connect.Request[polyglotv1.RestoreSubscriptionRequest]) (*connect.Response[polyglotv1.RestoreSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
 		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
@@ -178,14 +178,14 @@ func (h *SubscriptionConnectHandler) RestoreSubscription(ctx context.Context, re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RestoreSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.RestoreSubscriptionResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 		Message:      "Layanan pelanggan berhasil dipulihkan",
 	}), nil
 }
 
 // CreateSubscription creates a new subscription.
-func (h *SubscriptionConnectHandler) CreateSubscription(ctx context.Context, req *connect.Request[devicepb.CreateSubscriptionRequest]) (*connect.Response[devicepb.CreateSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) CreateSubscription(ctx context.Context, req *connect.Request[polyglotv1.CreateSubscriptionRequest]) (*connect.Response[polyglotv1.CreateSubscriptionResponse], error) {
 	if h.subUC == nil {
 		return nil, response.Unavailable("subscription manager usecase unavailable")
 	}
@@ -251,13 +251,13 @@ func (h *SubscriptionConnectHandler) CreateSubscription(ctx context.Context, req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CreateSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.CreateSubscriptionResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
 // UpdateSubscription updates an existing subscription.
-func (h *SubscriptionConnectHandler) UpdateSubscription(ctx context.Context, req *connect.Request[devicepb.UpdateSubscriptionRequest]) (*connect.Response[devicepb.UpdateSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) UpdateSubscription(ctx context.Context, req *connect.Request[polyglotv1.UpdateSubscriptionRequest]) (*connect.Response[polyglotv1.UpdateSubscriptionResponse], error) {
 	if h.subUC == nil {
 		return nil, response.Unavailable("subscription manager usecase unavailable")
 	}
@@ -322,20 +322,20 @@ func (h *SubscriptionConnectHandler) UpdateSubscription(ctx context.Context, req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.UpdateSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.UpdateSubscriptionResponse{
 		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
 // DeleteSubscription deletes a subscription.
-func (h *SubscriptionConnectHandler) DeleteSubscription(ctx context.Context, req *connect.Request[devicepb.DeleteSubscriptionRequest]) (*connect.Response[devicepb.DeleteSubscriptionResponse], error) {
+func (h *SubscriptionConnectHandler) DeleteSubscription(ctx context.Context, req *connect.Request[polyglotv1.DeleteSubscriptionRequest]) (*connect.Response[polyglotv1.DeleteSubscriptionResponse], error) {
 	if h.subUC == nil {
 		return nil, response.Unavailable("subscription manager usecase unavailable")
 	}
 	if err := h.subUC.Delete(ctx, req.Msg.Id); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeleteSubscriptionResponse{
+	return connect.NewResponse(&polyglotv1.DeleteSubscriptionResponse{
 		Message: "langganan dihapus",
 	}), nil
 }

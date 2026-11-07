@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 )
 
 func main() {
@@ -36,13 +36,13 @@ func main() {
 	}
 	defer func() { _ = conn.Close() }()
 
-	client := devicepb.NewDeviceServiceClient(conn)
+	client := polyglotv1.NewDeviceServiceClient(conn)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	// 1. Test ListDevices RPC
 	log.Println("\n1️⃣  Executing ListDevices gRPC RPC...")
-	listRes, err := client.ListDevices(ctx, &devicepb.ListDevicesRequest{})
+	listRes, err := client.ListDevices(ctx, &polyglotv1.ListDevicesRequest{})
 	if err != nil {
 		log.Fatalf("ListDevices failed: %v", err)
 	}
@@ -55,7 +55,7 @@ func main() {
 	if len(listRes.Devices) > 0 {
 		targetID := listRes.Devices[0].Id
 		log.Printf("\n2️⃣  Executing GetDevice gRPC RPC for ID %q...", targetID)
-		getRes, err := client.GetDevice(ctx, &devicepb.GetDeviceRequest{Id: targetID})
+		getRes, err := client.GetDevice(ctx, &polyglotv1.GetDeviceRequest{Id: targetID})
 		if err != nil {
 			log.Fatalf("GetDevice failed: %v", err)
 		}
@@ -63,8 +63,8 @@ func main() {
 
 		// 3. Test UpdateDevice RPC
 		log.Printf("\n3️⃣  Executing UpdateDevice gRPC RPC for ID %q...", targetID)
-		updateReq := &devicepb.UpdateDeviceRequest{
-			Device: &devicepb.Device{
+		updateReq := &polyglotv1.UpdateDeviceRequest{
+			Device: &polyglotv1.Device{
 				Id:         getRes.Device.Id,
 				TenantId:   getRes.Device.TenantId,
 				Name:       getRes.Device.Name + " (gRPC Updated)",
@@ -90,7 +90,7 @@ func main() {
 	streamCtx, streamCancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer streamCancel()
 
-	stream, err := client.StreamDeviceStatus(streamCtx, &devicepb.StreamDeviceStatusRequest{})
+	stream, err := client.StreamDeviceStatus(streamCtx, &polyglotv1.StreamDeviceStatusRequest{})
 	if err != nil {
 		log.Fatalf("StreamDeviceStatus failed: %v", err)
 	}

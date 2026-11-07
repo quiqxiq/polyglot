@@ -3,14 +3,14 @@ package hotspot
 import (
 	"testing"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func TestHotspotUserParamsFromProto(t *testing.T) {
-	p := HotspotUserParamsFromProto(&devicepb.CreateHotspotUserRequest{
+	p := HotspotUserParamsFromProto(&polyglotv1.CreateHotspotUserRequest{
 		Name:       "user1",
 		Password:   "pass1",
 		Profile:    "1Day_10K",
@@ -30,7 +30,7 @@ func TestHotspotUserParamsFromProto(t *testing.T) {
 }
 
 func TestHotspotUserParamsUpdateFromProto(t *testing.T) {
-	p := HotspotUserParamsUpdateFromProto(&devicepb.UpdateHotspotUserRequest{
+	p := HotspotUserParamsUpdateFromProto(&polyglotv1.UpdateHotspotUserRequest{
 		RosId:      "*1",
 		Password:   "newpass",
 		Profile:    "7Day_25K",
@@ -45,7 +45,7 @@ func TestHotspotUserParamsUpdateFromProto(t *testing.T) {
 }
 
 func TestProfileParamsFromProto(t *testing.T) {
-	p := ProfileParamsFromProto(&devicepb.HotspotProfileParams{
+	p := ProfileParamsFromProto(&polyglotv1.HotspotProfileParams{
 		Name:            "1Day_10K",
 		AddressPool:     "hs-pool",
 		SharedUsers:     "2",

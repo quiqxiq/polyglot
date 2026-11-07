@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	billingConnect "github.com/quixiq/polyglot/internal/adapter/connect/billing"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
@@ -39,7 +39,7 @@ func TestPaymentHandler_SubmitApproveReject(t *testing.T) {
 	ctx := context.Background()
 
 	// Submit publik
-	subResp, err := h.SubmitManualPayment(ctx, connect.NewRequest(&devicepb.SubmitManualPaymentRequest{
+	subResp, err := h.SubmitManualPayment(ctx, connect.NewRequest(&polyglotv1.SubmitManualPaymentRequest{
 		ManualPaymentCode: "PAY-1",
 		Amount:            100000,
 		SenderName:        "Budi",
@@ -52,14 +52,14 @@ func TestPaymentHandler_SubmitApproveReject(t *testing.T) {
 	assert.Equal(t, "inv-1", sub.InvoiceId)
 
 	// List pending
-	listResp, err := h.ListPaymentSubmissions(ctx, connect.NewRequest(&devicepb.ListPaymentSubmissionsRequest{
+	listResp, err := h.ListPaymentSubmissions(ctx, connect.NewRequest(&polyglotv1.ListPaymentSubmissionsRequest{
 		Status: "PENDING",
 	}))
 	require.NoError(t, err)
 	require.Len(t, listResp.Msg.Submissions, 1)
 
 	// Reject
-	rejResp, err := h.RejectPaymentSubmission(ctx, connect.NewRequest(&devicepb.RejectPaymentSubmissionRequest{
+	rejResp, err := h.RejectPaymentSubmission(ctx, connect.NewRequest(&polyglotv1.RejectPaymentSubmissionRequest{
 		Id: sub.Id, Reason: "nominal tidak sesuai",
 	}))
 	require.NoError(t, err)
@@ -70,12 +70,12 @@ func TestPaymentHandler_SubmitApproveReject(t *testing.T) {
 func TestPaymentHandler_Approve(t *testing.T) {
 	h, _ := newPaymentHandlerFixture(t)
 	ctx := context.Background()
-	subResp, err := h.SubmitManualPayment(ctx, connect.NewRequest(&devicepb.SubmitManualPaymentRequest{
+	subResp, err := h.SubmitManualPayment(ctx, connect.NewRequest(&polyglotv1.SubmitManualPaymentRequest{
 		ManualPaymentCode: "PAY-1", Amount: 100000, SenderName: "Budi", ProofImageUrl: "/x.jpg",
 	}))
 	require.NoError(t, err)
 
-	appResp, err := h.ApprovePaymentSubmission(ctx, connect.NewRequest(&devicepb.ApprovePaymentSubmissionRequest{
+	appResp, err := h.ApprovePaymentSubmission(ctx, connect.NewRequest(&polyglotv1.ApprovePaymentSubmissionRequest{
 		Id: subResp.Msg.Submission.Id,
 	}))
 	require.NoError(t, err)
@@ -85,7 +85,7 @@ func TestPaymentHandler_Approve(t *testing.T) {
 
 func TestPaymentHandler_Reverse(t *testing.T) {
 	h, _ := newPaymentHandlerFixture(t)
-	resp, err := h.ReversePayment(context.Background(), connect.NewRequest(&devicepb.ReversePaymentRequest{
+	resp, err := h.ReversePayment(context.Background(), connect.NewRequest(&polyglotv1.ReversePaymentRequest{
 		PaymentId: "pay-1",
 		Reason:    "salah input",
 	}))
@@ -97,7 +97,7 @@ func TestPaymentHandler_Reverse(t *testing.T) {
 
 func TestPaymentHandler_SubmitUnknownCode(t *testing.T) {
 	h, _ := newPaymentHandlerFixture(t)
-	_, err := h.SubmitManualPayment(context.Background(), connect.NewRequest(&devicepb.SubmitManualPaymentRequest{
+	_, err := h.SubmitManualPayment(context.Background(), connect.NewRequest(&polyglotv1.SubmitManualPaymentRequest{
 		ManualPaymentCode: "PAY-UNKNOWN", Amount: 1000, SenderName: "X", ProofImageUrl: "/x.jpg",
 	}))
 	require.Error(t, err)

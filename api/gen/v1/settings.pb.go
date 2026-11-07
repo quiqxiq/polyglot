@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/settings.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -789,7 +789,7 @@ const file_v1_settings_proto_rawDesc = "" +
 	"\rUpdateSetting\x12!.polyglot.v1.UpdateSettingRequest\x1a\".polyglot.v1.UpdateSettingResponse\x12h\n" +
 	"\x13BatchUpdateSettings\x12'.polyglot.v1.BatchUpdateSettingsRequest\x1a(.polyglot.v1.BatchUpdateSettingsResponse\x12Y\n" +
 	"\x0eGetBotSettings\x12\".polyglot.v1.GetBotSettingsRequest\x1a#.polyglot.v1.GetBotSettingsResponse\x12b\n" +
-	"\x11UpdateBotSettings\x12%.polyglot.v1.UpdateBotSettingsRequest\x1a&.polyglot.v1.UpdateBotSettingsResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x11UpdateBotSettings\x12%.polyglot.v1.UpdateBotSettingsRequest\x1a&.polyglot.v1.UpdateBotSettingsResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_settings_proto_rawDescOnce sync.Once

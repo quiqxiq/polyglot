@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/debt.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1353,7 +1353,7 @@ const file_v1_debt_proto_rawDesc = "" +
 	"\aPayDebt\x12\x1b.polyglot.v1.PayDebtRequest\x1a\x1c.polyglot.v1.PayDebtResponse\x12_\n" +
 	"\x10ListDebtPayments\x12$.polyglot.v1.ListDebtPaymentsRequest\x1a%.polyglot.v1.ListDebtPaymentsResponse\x12Y\n" +
 	"\x0eGetDebtSummary\x12\".polyglot.v1.GetDebtSummaryRequest\x1a#.polyglot.v1.GetDebtSummaryResponse\x12P\n" +
-	"\vExportDebts\x12\x1f.polyglot.v1.ExportDebtsRequest\x1a .polyglot.v1.ExportDebtsResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\vExportDebts\x12\x1f.polyglot.v1.ExportDebtsRequest\x1a .polyglot.v1.ExportDebtsResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_debt_proto_rawDescOnce sync.Once

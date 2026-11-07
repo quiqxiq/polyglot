@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -14,7 +14,7 @@ import (
 // StreamTerminal establishes an interactive bidirectional PTY terminal session.
 func (h *DeviceConnectHandler) StreamTerminal(
 	ctx context.Context,
-	stream *connect.BidiStream[devicepb.TerminalFrame, devicepb.TerminalFrame],
+	stream *connect.BidiStream[polyglotv1.TerminalFrame, polyglotv1.TerminalFrame],
 ) error {
 	firstFrame, err := stream.Receive()
 	if err != nil {
@@ -55,7 +55,7 @@ func (h *DeviceConnectHandler) StreamTerminal(
 			if n > 0 {
 				chunk := make([]byte, n)
 				copy(chunk, buf[:n])
-				if sErr := stream.Send(&devicepb.TerminalFrame{
+				if sErr := stream.Send(&polyglotv1.TerminalFrame{
 					DeviceId:   firstFrame.DeviceId,
 					OutputData: chunk,
 				}); sErr != nil {

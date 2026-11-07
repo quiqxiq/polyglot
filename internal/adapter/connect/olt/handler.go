@@ -9,7 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainOLT "github.com/quixiq/polyglot/internal/domain/olt"
 	"github.com/quixiq/polyglot/internal/domain/ont"
 	"github.com/quixiq/polyglot/internal/port"
@@ -28,8 +28,8 @@ func NewConnectHandler(svc *oltUC.Service, settings port.SettingReader) *Connect
 	return &ConnectHandler{svc: svc, settings: settings}
 }
 
-func toProtoOLT(o oltUC.OLT) *devicepb.OltDevice {
-	return &devicepb.OltDevice{
+func toProtoOLT(o oltUC.OLT) *polyglotv1.OltDevice {
+	return &polyglotv1.OltDevice{
 		Id:          o.DeviceID,
 		Name:        o.Name,
 		Host:        o.Host,
@@ -48,8 +48,8 @@ func toProtoOLT(o oltUC.OLT) *devicepb.OltDevice {
 	}
 }
 
-func toProtoHealth(h oltUC.Health) *devicepb.OltHealth {
-	return &devicepb.OltHealth{
+func toProtoHealth(h oltUC.Health) *polyglotv1.OltHealth {
+	return &polyglotv1.OltHealth{
 		Reachable: h.Reachable,
 		Variant:   h.Variant,
 		Firmware:  h.Firmware,
@@ -71,8 +71,8 @@ func (h *ConnectHandler) rxClass(ctx context.Context, rx *float64) string {
 	return string(ont.ClassifyRx(rx, warning, critical))
 }
 
-func (h *ConnectHandler) toProtoONU(ctx context.Context, o ont.ONT) *devicepb.Onu {
-	pb := &devicepb.Onu{
+func (h *ConnectHandler) toProtoONU(ctx context.Context, o ont.ONT) *polyglotv1.Onu {
+	pb := &polyglotv1.Onu{
 		Id:             o.ID,
 		OltDeviceId:    o.OLTDeviceID,
 		PonIndex:       int32(o.PONIndex),
@@ -129,19 +129,19 @@ func (h *ConnectHandler) toProtoONU(ctx context.Context, o ont.ONT) *devicepb.On
 	return pb
 }
 
-func (h *ConnectHandler) ListOlts(ctx context.Context, _ *connect.Request[devicepb.ListOltsRequest]) (*connect.Response[devicepb.ListOltsResponse], error) {
+func (h *ConnectHandler) ListOlts(ctx context.Context, _ *connect.Request[polyglotv1.ListOltsRequest]) (*connect.Response[polyglotv1.ListOltsResponse], error) {
 	list, err := h.svc.List(ctx)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.OltDevice, 0, len(list))
+	out := make([]*polyglotv1.OltDevice, 0, len(list))
 	for _, o := range list {
 		out = append(out, toProtoOLT(o))
 	}
-	return connect.NewResponse(&devicepb.ListOltsResponse{Olts: out}), nil
+	return connect.NewResponse(&polyglotv1.ListOltsResponse{Olts: out}), nil
 }
 
-func (h *ConnectHandler) GetOlt(ctx context.Context, req *connect.Request[devicepb.GetOltRequest]) (*connect.Response[devicepb.GetOltResponse], error) {
+func (h *ConnectHandler) GetOlt(ctx context.Context, req *connect.Request[polyglotv1.GetOltRequest]) (*connect.Response[polyglotv1.GetOltResponse], error) {
 	o, err := h.svc.Get(ctx, req.Msg.GetId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -150,10 +150,10 @@ func (h *ConnectHandler) GetOlt(ctx context.Context, req *connect.Request[device
 	if errProbe != nil {
 		health = oltUC.Health{Reachable: false}
 	}
-	return connect.NewResponse(&devicepb.GetOltResponse{Olt: toProtoOLT(o), Health: toProtoHealth(health)}), nil
+	return connect.NewResponse(&polyglotv1.GetOltResponse{Olt: toProtoOLT(o), Health: toProtoHealth(health)}), nil
 }
 
-func (h *ConnectHandler) CreateOlt(ctx context.Context, req *connect.Request[devicepb.CreateOltRequest]) (*connect.Response[devicepb.CreateOltResponse], error) {
+func (h *ConnectHandler) CreateOlt(ctx context.Context, req *connect.Request[polyglotv1.CreateOltRequest]) (*connect.Response[polyglotv1.CreateOltResponse], error) {
 	in := oltUC.Input{
 		Name: req.Msg.GetName(), Host: req.Msg.GetHost(),
 		TelnetPort: int(req.Msg.GetTelnetPort()), SSHPort: int(req.Msg.GetSshPort()), SNMPPort: int(req.Msg.GetSnmpPort()),
@@ -166,10 +166,10 @@ func (h *ConnectHandler) CreateOlt(ctx context.Context, req *connect.Request[dev
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CreateOltResponse{Olt: toProtoOLT(o)}), nil
+	return connect.NewResponse(&polyglotv1.CreateOltResponse{Olt: toProtoOLT(o)}), nil
 }
 
-func (h *ConnectHandler) UpdateOlt(ctx context.Context, req *connect.Request[devicepb.UpdateOltRequest]) (*connect.Response[devicepb.UpdateOltResponse], error) {
+func (h *ConnectHandler) UpdateOlt(ctx context.Context, req *connect.Request[polyglotv1.UpdateOltRequest]) (*connect.Response[polyglotv1.UpdateOltResponse], error) {
 	in := oltUC.Input{
 		Name: req.Msg.GetName(), Host: req.Msg.GetHost(),
 		TelnetPort: int(req.Msg.GetTelnetPort()), SSHPort: int(req.Msg.GetSshPort()), SNMPPort: int(req.Msg.GetSnmpPort()),
@@ -182,25 +182,25 @@ func (h *ConnectHandler) UpdateOlt(ctx context.Context, req *connect.Request[dev
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.UpdateOltResponse{Olt: toProtoOLT(o)}), nil
+	return connect.NewResponse(&polyglotv1.UpdateOltResponse{Olt: toProtoOLT(o)}), nil
 }
 
-func (h *ConnectHandler) DeleteOlt(ctx context.Context, req *connect.Request[devicepb.DeleteOltRequest]) (*connect.Response[devicepb.DeleteOltResponse], error) {
+func (h *ConnectHandler) DeleteOlt(ctx context.Context, req *connect.Request[polyglotv1.DeleteOltRequest]) (*connect.Response[polyglotv1.DeleteOltResponse], error) {
 	if err := h.svc.Delete(ctx, req.Msg.GetId()); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeleteOltResponse{Message: "OLT dihapus"}), nil
+	return connect.NewResponse(&polyglotv1.DeleteOltResponse{Message: "OLT dihapus"}), nil
 }
 
-func (h *ConnectHandler) TestOltConnection(ctx context.Context, req *connect.Request[devicepb.TestOltConnectionRequest]) (*connect.Response[devicepb.TestOltConnectionResponse], error) {
+func (h *ConnectHandler) TestOltConnection(ctx context.Context, req *connect.Request[polyglotv1.TestOltConnectionRequest]) (*connect.Response[polyglotv1.TestOltConnectionResponse], error) {
 	health, err := h.svc.TestConnection(ctx, req.Msg.GetId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.TestOltConnectionResponse{Health: toProtoHealth(health)}), nil
+	return connect.NewResponse(&polyglotv1.TestOltConnectionResponse{Health: toProtoHealth(health)}), nil
 }
 
-func (h *ConnectHandler) ListOnus(ctx context.Context, req *connect.Request[devicepb.ListOnusRequest]) (*connect.Response[devicepb.ListOnusResponse], error) {
+func (h *ConnectHandler) ListOnus(ctx context.Context, req *connect.Request[polyglotv1.ListOnusRequest]) (*connect.Response[polyglotv1.ListOnusResponse], error) {
 	filter := port.ONTFilter{
 		OLTDeviceID: req.Msg.GetOltDeviceId(),
 		PONIndex:    int(req.Msg.GetPonIndex()),
@@ -213,38 +213,38 @@ func (h *ConnectHandler) ListOnus(ctx context.Context, req *connect.Request[devi
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.Onu, 0, len(list))
+	out := make([]*polyglotv1.Onu, 0, len(list))
 	for _, o := range list {
 		out = append(out, h.toProtoONU(ctx, o))
 	}
-	return connect.NewResponse(&devicepb.ListOnusResponse{Onus: out, Total: int32(len(out))}), nil
+	return connect.NewResponse(&polyglotv1.ListOnusResponse{Onus: out, Total: int32(len(out))}), nil
 }
 
-func (h *ConnectHandler) GetOnu(ctx context.Context, req *connect.Request[devicepb.GetOnuRequest]) (*connect.Response[devicepb.GetOnuResponse], error) {
+func (h *ConnectHandler) GetOnu(ctx context.Context, req *connect.Request[polyglotv1.GetOnuRequest]) (*connect.Response[polyglotv1.GetOnuResponse], error) {
 	o, err := h.svc.GetONT(ctx, req.Msg.GetId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetOnuResponse{Onu: h.toProtoONU(ctx, o)}), nil
+	return connect.NewResponse(&polyglotv1.GetOnuResponse{Onu: h.toProtoONU(ctx, o)}), nil
 }
 
-func (h *ConnectHandler) ListOnuEvents(ctx context.Context, req *connect.Request[devicepb.ListOnuEventsRequest]) (*connect.Response[devicepb.ListOnuEventsResponse], error) {
+func (h *ConnectHandler) ListOnuEvents(ctx context.Context, req *connect.Request[polyglotv1.ListOnuEventsRequest]) (*connect.Response[polyglotv1.ListOnuEventsResponse], error) {
 	events, err := h.svc.ListONTEvents(ctx, req.Msg.GetOnuId(), int(req.Msg.GetLimit()))
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.OnuEvent, 0, len(events))
+	out := make([]*polyglotv1.OnuEvent, 0, len(events))
 	for _, e := range events {
-		out = append(out, &devicepb.OnuEvent{
+		out = append(out, &polyglotv1.OnuEvent{
 			Id: e.ID, OnuId: e.ONTID, EventType: e.EventType,
 			OldState: e.OldState, NewState: e.NewState, Message: e.Message,
 			CreatedAt: e.CreatedAt.Format(time.RFC3339),
 		})
 	}
-	return connect.NewResponse(&devicepb.ListOnuEventsResponse{Events: out}), nil
+	return connect.NewResponse(&polyglotv1.ListOnuEventsResponse{Events: out}), nil
 }
 
-func (h *ConnectHandler) GetOnuOpticalHistory(ctx context.Context, req *connect.Request[devicepb.GetOnuOpticalHistoryRequest]) (*connect.Response[devicepb.GetOnuOpticalHistoryResponse], error) {
+func (h *ConnectHandler) GetOnuOpticalHistory(ctx context.Context, req *connect.Request[polyglotv1.GetOnuOpticalHistoryRequest]) (*connect.Response[polyglotv1.GetOnuOpticalHistoryResponse], error) {
 	hours := int(req.Msg.GetHours())
 	if hours <= 0 {
 		hours = 24
@@ -254,9 +254,9 @@ func (h *ConnectHandler) GetOnuOpticalHistory(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.OnuMetricSample, 0, len(samples))
+	out := make([]*polyglotv1.OnuMetricSample, 0, len(samples))
 	for _, s := range samples {
-		item := &devicepb.OnuMetricSample{SampledAt: s.SampledAt.Format(time.RFC3339), Online: s.Online}
+		item := &polyglotv1.OnuMetricSample{SampledAt: s.SampledAt.Format(time.RFC3339), Online: s.Online}
 		if s.RxPowerDBM != nil {
 			v := *s.RxPowerDBM
 			item.RxPowerDbm = &v
@@ -275,23 +275,23 @@ func (h *ConnectHandler) GetOnuOpticalHistory(ctx context.Context, req *connect.
 		}
 		out = append(out, item)
 	}
-	return connect.NewResponse(&devicepb.GetOnuOpticalHistoryResponse{Samples: out}), nil
+	return connect.NewResponse(&polyglotv1.GetOnuOpticalHistoryResponse{Samples: out}), nil
 }
 
-func (h *ConnectHandler) SyncOlt(ctx context.Context, req *connect.Request[devicepb.SyncOltRequest]) (*connect.Response[devicepb.SyncOltResponse], error) {
+func (h *ConnectHandler) SyncOlt(ctx context.Context, req *connect.Request[polyglotv1.SyncOltRequest]) (*connect.Response[polyglotv1.SyncOltResponse], error) {
 	job, err := h.svc.EnqueueSync(ctx, req.Msg.GetOltDeviceId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SyncOltResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.SyncOltResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) SaveOltConfig(ctx context.Context, req *connect.Request[devicepb.SaveOltConfigRequest]) (*connect.Response[devicepb.SaveOltConfigResponse], error) {
+func (h *ConnectHandler) SaveOltConfig(ctx context.Context, req *connect.Request[polyglotv1.SaveOltConfigRequest]) (*connect.Response[polyglotv1.SaveOltConfigResponse], error) {
 	job, err := h.svc.EnqueueSaveConfig(ctx, req.Msg.GetOltDeviceId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SaveOltConfigResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.SaveOltConfigResponse{JobId: job.ID}), nil
 }
 
 func (h *ConnectHandler) onuPosition(ctx context.Context, onuID string) (ont.ONT, error) {
@@ -305,7 +305,7 @@ func (h *ConnectHandler) onuPosition(ctx context.Context, onuID string) (ont.ONT
 	return o, nil
 }
 
-func (h *ConnectHandler) RenameOnu(ctx context.Context, req *connect.Request[devicepb.RenameOnuRequest]) (*connect.Response[devicepb.RenameOnuResponse], error) {
+func (h *ConnectHandler) RenameOnu(ctx context.Context, req *connect.Request[polyglotv1.RenameOnuRequest]) (*connect.Response[polyglotv1.RenameOnuResponse], error) {
 	o, err := h.onuPosition(ctx, req.Msg.GetOnuId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -314,10 +314,10 @@ func (h *ConnectHandler) RenameOnu(ctx context.Context, req *connect.Request[dev
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RenameOnuResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.RenameOnuResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) RebootOnu(ctx context.Context, req *connect.Request[devicepb.RebootOnuRequest]) (*connect.Response[devicepb.RebootOnuResponse], error) {
+func (h *ConnectHandler) RebootOnu(ctx context.Context, req *connect.Request[polyglotv1.RebootOnuRequest]) (*connect.Response[polyglotv1.RebootOnuResponse], error) {
 	o, err := h.onuPosition(ctx, req.Msg.GetOnuId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -326,10 +326,10 @@ func (h *ConnectHandler) RebootOnu(ctx context.Context, req *connect.Request[dev
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RebootOnuResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.RebootOnuResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) SetOnuAdminState(ctx context.Context, req *connect.Request[devicepb.SetOnuAdminStateRequest]) (*connect.Response[devicepb.SetOnuAdminStateResponse], error) {
+func (h *ConnectHandler) SetOnuAdminState(ctx context.Context, req *connect.Request[polyglotv1.SetOnuAdminStateRequest]) (*connect.Response[polyglotv1.SetOnuAdminStateResponse], error) {
 	o, err := h.onuPosition(ctx, req.Msg.GetOnuId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -338,10 +338,10 @@ func (h *ConnectHandler) SetOnuAdminState(ctx context.Context, req *connect.Requ
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SetOnuAdminStateResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.SetOnuAdminStateResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) DeleteOnu(ctx context.Context, req *connect.Request[devicepb.DeleteOnuRequest]) (*connect.Response[devicepb.DeleteOnuResponse], error) {
+func (h *ConnectHandler) DeleteOnu(ctx context.Context, req *connect.Request[polyglotv1.DeleteOnuRequest]) (*connect.Response[polyglotv1.DeleteOnuResponse], error) {
 	o, err := h.onuPosition(ctx, req.Msg.GetOnuId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -350,5 +350,5 @@ func (h *ConnectHandler) DeleteOnu(ctx context.Context, req *connect.Request[dev
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeleteOnuResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.DeleteOnuResponse{JobId: job.ID}), nil
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	connectReg "github.com/quixiq/polyglot/internal/adapter/connect/registration"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
@@ -48,7 +48,7 @@ func TestRegistrationConnectHandler_Submit_Approve_Convert(t *testing.T) {
 	ctx := context.Background()
 
 	// 1. Submit (Public RPC)
-	subResp, err := handler.SubmitRegistration(ctx, connect.NewRequest(&devicepb.SubmitRegistrationRequest{
+	subResp, err := handler.SubmitRegistration(ctx, connect.NewRequest(&polyglotv1.SubmitRegistrationRequest{
 		FullName: "Ahmad Dahlan",
 		Phone:    "085606846141",
 		Address:  "Jl. Ahmad Yani No. 1",
@@ -60,12 +60,12 @@ func TestRegistrationConnectHandler_Submit_Approve_Convert(t *testing.T) {
 	assert.Equal(t, "PENDING", subResp.Msg.Registration.Status)
 
 	// 2. Get
-	getResp, err := handler.GetRegistration(ctx, connect.NewRequest(&devicepb.GetRegistrationRequest{Id: regID}))
+	getResp, err := handler.GetRegistration(ctx, connect.NewRequest(&polyglotv1.GetRegistrationRequest{Id: regID}))
 	require.NoError(t, err)
 	assert.Equal(t, "Ahmad Dahlan", getResp.Msg.Registration.FullName)
 
 	// 3. Approve
-	appResp, err := handler.ApproveRegistration(ctx, connect.NewRequest(&devicepb.ApproveRegistrationRequest{
+	appResp, err := handler.ApproveRegistration(ctx, connect.NewRequest(&polyglotv1.ApproveRegistrationRequest{
 		Id:         regID,
 		AdminNotes: "Disetujui admin",
 	}))
@@ -73,7 +73,7 @@ func TestRegistrationConnectHandler_Submit_Approve_Convert(t *testing.T) {
 	assert.Equal(t, "APPROVED", appResp.Msg.Registration.Status)
 
 	// 4. Mark Installed
-	instResp, err := handler.MarkInstalled(ctx, connect.NewRequest(&devicepb.MarkInstalledRequest{
+	instResp, err := handler.MarkInstalled(ctx, connect.NewRequest(&polyglotv1.MarkInstalledRequest{
 		Id:              regID,
 		DeviceId:        "dev-bras-1",
 		TechnicianNotes: "ONT terpasang di ruang tamu",
@@ -83,7 +83,7 @@ func TestRegistrationConnectHandler_Submit_Approve_Convert(t *testing.T) {
 	assert.Equal(t, "dev-bras-1", instResp.Msg.Registration.TargetDeviceId)
 
 	// 5. Convert
-	convResp, err := handler.ConvertRegistration(ctx, connect.NewRequest(&devicepb.ConvertRegistrationRequest{
+	convResp, err := handler.ConvertRegistration(ctx, connect.NewRequest(&polyglotv1.ConvertRegistrationRequest{
 		Id: regID,
 	}))
 	require.NoError(t, err)
@@ -100,7 +100,7 @@ func TestRegistrationConnectHandler_ValidationErrors(t *testing.T) {
 	ctx := context.Background()
 
 	// Submit dengan nama kosong
-	_, err := handler.SubmitRegistration(ctx, connect.NewRequest(&devicepb.SubmitRegistrationRequest{
+	_, err := handler.SubmitRegistration(ctx, connect.NewRequest(&polyglotv1.SubmitRegistrationRequest{
 		FullName: "",
 		Phone:    "081234567890",
 		Address:  "Jl. Test",
@@ -109,7 +109,7 @@ func TestRegistrationConnectHandler_ValidationErrors(t *testing.T) {
 	assert.Error(t, err)
 
 	// Get dengan ID kosong
-	_, err = handler.GetRegistration(ctx, connect.NewRequest(&devicepb.GetRegistrationRequest{Id: ""}))
+	_, err = handler.GetRegistration(ctx, connect.NewRequest(&polyglotv1.GetRegistrationRequest{Id: ""}))
 	assert.Error(t, err)
 
 	_ = domainRegistration.StatusActive

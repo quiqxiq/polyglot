@@ -1,12 +1,12 @@
 package plan
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 )
 
 // ToProtoPlan maps a domain ServicePlan to a protobuf Plan message.
-func ToProtoPlan(p *domainPlan.ServicePlan) *devicepb.Plan {
+func ToProtoPlan(p *domainPlan.ServicePlan) *polyglotv1.Plan {
 	if p == nil {
 		return nil
 	}
@@ -14,7 +14,7 @@ func ToProtoPlan(p *domainPlan.ServicePlan) *devicepb.Plan {
 	if sharedUsers <= 0 {
 		sharedUsers = 1
 	}
-	pb := &devicepb.Plan{
+	pb := &polyglotv1.Plan{
 		Id:                    p.ID,
 		Name:                  p.Name,
 		ServiceType:           p.ServiceType,
@@ -39,7 +39,7 @@ func ToProtoPlan(p *domainPlan.ServicePlan) *devicepb.Plan {
 	}
 
 	if p.ServiceType == domainPlan.TypeHotspot {
-		cfg := &devicepb.HotspotPlanConfig{
+		cfg := &polyglotv1.HotspotPlanConfig{
 			IpPoolName:     p.IPPoolName,
 			AddressList:    p.AddressList,
 			SharedUsers:    sharedUsers,
@@ -65,7 +65,7 @@ func ToProtoPlan(p *domainPlan.ServicePlan) *devicepb.Plan {
 		}
 		pb.HotspotConfig = cfg
 	} else {
-		cfg := &devicepb.PPPoEPlanConfig{
+		cfg := &polyglotv1.PPPoEPlanConfig{
 			RemoteAddressPool: p.RemoteAddressPool,
 			AddressList:       p.AddressList,
 			SessionTimeout:    p.SessionTimeout,
@@ -91,8 +91,8 @@ func ToProtoPlan(p *domainPlan.ServicePlan) *devicepb.Plan {
 }
 
 // ToProtoPlanList converts a slice of domain ServicePlans into a slice of protobuf Plans.
-func ToProtoPlanList(plans []domainPlan.ServicePlan) []*devicepb.Plan {
-	out := make([]*devicepb.Plan, len(plans))
+func ToProtoPlanList(plans []domainPlan.ServicePlan) []*polyglotv1.Plan {
+	out := make([]*polyglotv1.Plan, len(plans))
 	for i := range plans {
 		out[i] = ToProtoPlan(&plans[i])
 	}
@@ -100,7 +100,7 @@ func ToProtoPlanList(plans []domainPlan.ServicePlan) []*devicepb.Plan {
 }
 
 // FromProtoPlan maps a protobuf Plan message to a domain ServicePlan.
-func FromProtoPlan(pb *devicepb.Plan) domainPlan.ServicePlan {
+func FromProtoPlan(pb *polyglotv1.Plan) domainPlan.ServicePlan {
 	if pb == nil {
 		return domainPlan.ServicePlan{}
 	}

@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/skill.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -2611,7 +2611,7 @@ const file_v1_skill_proto_rawDesc = "" +
 	"\rToggleGitRepo\x12!.polyglot.v1.ToggleGitRepoRequest\x1a\".polyglot.v1.ToggleGitRepoResponse\x12P\n" +
 	"\vToggleSkill\x12\x1f.polyglot.v1.ToggleSkillRequest\x1a .polyglot.v1.ToggleSkillResponse\x12\\\n" +
 	"\x0fGetGlobalPrompt\x12#.polyglot.v1.GetGlobalPromptRequest\x1a$.polyglot.v1.GetGlobalPromptResponse\x12_\n" +
-	"\x10SaveGlobalPrompt\x12$.polyglot.v1.SaveGlobalPromptRequest\x1a%.polyglot.v1.SaveGlobalPromptResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x10SaveGlobalPrompt\x12$.polyglot.v1.SaveGlobalPromptRequest\x1a%.polyglot.v1.SaveGlobalPromptResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_skill_proto_rawDescOnce sync.Once

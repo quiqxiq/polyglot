@@ -20,11 +20,12 @@ const Settings = {
   editingUser: null,
 
   async init() {
-    this.canReadUsers = Auth.canMenu('settings-users');
-    this.canManageUsers = Auth.canAction('settings-users', 'manage');
-    this.canManageDevices = Auth.canMenu('settings-devices');
+    const hasAccess = Auth.canMenu('settings');
+    this.canReadUsers = hasAccess;
+    this.canManageUsers = hasAccess;
+    this.canManageDevices = hasAccess;
 
-    if (!this.canReadUsers && !this.canManageDevices) {
+    if (!hasAccess) {
       window.location.replace(Auth.firstAccessibleRoute() || 'no-access.html');
       return;
     }
@@ -33,7 +34,7 @@ const Settings = {
     if (addBtn) addBtn.classList.toggle('hidden', !this.canManageUsers);
 
     const readonlyNote = document.getElementById('users-readonly-note');
-    if (readonlyNote) readonlyNote.classList.toggle('hidden', this.canManageUsers);
+    if (readonlyNote) readonlyNote.classList.add('hidden');
 
     this.bindTabs();
     this.bindModals();
@@ -48,9 +49,8 @@ const Settings = {
   },
 
   resolveTab(tab) {
-    if (tab === 'devices' && this.canManageDevices) return 'devices';
-    if (tab === 'users' && this.canReadUsers) return 'users';
-    return this.canReadUsers ? 'users' : 'devices';
+    if (tab === 'devices') return 'devices';
+    return 'users';
   },
 
   bindTabs() {
@@ -58,12 +58,9 @@ const Settings = {
     const devicesBtn = document.getElementById('settings-tab-devices');
     const tabsEl = document.getElementById('settings-tabs');
 
-    if (usersBtn) usersBtn.classList.toggle('hidden', !this.canReadUsers);
-    if (devicesBtn) devicesBtn.classList.toggle('hidden', !this.canManageDevices);
-    if (tabsEl) {
-      const visible = [this.canReadUsers, this.canManageDevices].filter(Boolean).length;
-      tabsEl.classList.toggle('hidden', visible < 2);
-    }
+    if (usersBtn) usersBtn.classList.remove('hidden');
+    if (devicesBtn) devicesBtn.classList.remove('hidden');
+    if (tabsEl) tabsEl.classList.remove('hidden');
 
     document.querySelectorAll('[data-settings-tab]').forEach((btn) => {
       btn.onclick = () => this.switchTab(btn.getAttribute('data-settings-tab'));
@@ -106,7 +103,7 @@ const Settings = {
   },
 
   async loadDevices() {
-    if (!Auth.can('dial:settings:devices:read') && !Auth.can('device:read')) {
+    if (!Auth.canMenu('settings') && !Auth.can('dial:settings:read') && !Auth.can('device:read')) {
       this.devices = [];
       return;
     }
@@ -126,7 +123,7 @@ const Settings = {
     const tableEl = document.getElementById('tech-table');
     const emptyEl = document.getElementById('empty-state');
 
-    if (!Auth.can('dial:settings:users:read') && !Auth.can('user:read')) {
+    if (!Auth.canMenu('settings') && !Auth.can('dial:settings:read') && !Auth.can('user:read')) {
       this.users = [];
       this.technicians = [];
       if (loadingEl) loadingEl.classList.add('hidden');
@@ -175,7 +172,7 @@ const Settings = {
     if (emptyEl) emptyEl.classList.add('hidden');
 
     const deviceMap = new Map(this.devices.map((d) => [String(d.id), d.name || d.host]));
-    const canAssign = Auth.canAction('settings-devices', 'assign');
+    const canAssign = this.canManageDevices;
 
     tbody.innerHTML = this.technicians.map((tech, idx) => {
       const assignedIds = tech.assignedDeviceIds || tech.assigned_device_ids || [];
@@ -431,7 +428,7 @@ const Settings = {
 
     if (saveAssignBtn) {
       saveAssignBtn.onclick = async () => {
-        if (!this.editingUser || !Auth.canAction('settings-devices', 'assign')) return;
+        if (!this.editingUser || !this.canManageDevices) return;
 
         const selectedDevices = Array.from(
           document.querySelectorAll('#edit-router-checkboxes input:checked')
@@ -491,7 +488,7 @@ const Settings = {
   },
 
   openAssignModal(techId) {
-    if (!Auth.canAction('settings-devices', 'assign')) return;
+    if (!this.canManageDevices) return;
 
     const tech = this.technicians.find((t) => String(t.id) === String(techId));
     if (!tech) return;

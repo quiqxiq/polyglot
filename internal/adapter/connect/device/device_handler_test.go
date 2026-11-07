@@ -3,7 +3,7 @@ package device
 import (
 	"testing"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 )
 
@@ -82,7 +82,7 @@ func TestConnectJSONCodec(t *testing.T) {
 
 	t.Run("StreamDeviceTrafficRequest camelCase", func(t *testing.T) {
 		jsonData := []byte(`{"id":"dev123","interfaceName":"ether4"}`)
-		var req devicepb.StreamDeviceTrafficRequest
+		var req polyglotv1.StreamDeviceTrafficRequest
 		if err := codec.Unmarshal(jsonData, &req); err != nil {
 			t.Fatalf("Unmarshal failed: %v", err)
 		}
@@ -96,7 +96,7 @@ func TestConnectJSONCodec(t *testing.T) {
 
 	t.Run("TestDeviceConnectionRequest camelCase", func(t *testing.T) {
 		jsonData := []byte(`{"id":"dev123","selectedInterface":"ether2"}`)
-		var req devicepb.TestDeviceConnectionRequest
+		var req polyglotv1.TestDeviceConnectionRequest
 		if err := codec.Unmarshal(jsonData, &req); err != nil {
 			t.Fatalf("Unmarshal failed: %v", err)
 		}

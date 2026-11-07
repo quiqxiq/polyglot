@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/registration.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -2343,7 +2343,7 @@ const file_v1_registration_proto_rawDesc = "" +
 	"\x16ListRegistrationEvents\x12*.polyglot.v1.ListRegistrationEventsRequest\x1a+.polyglot.v1.ListRegistrationEventsResponse\x12e\n" +
 	"\x12RejectRegistration\x12&.polyglot.v1.RejectRegistrationRequest\x1a'.polyglot.v1.RejectRegistrationResponse\x12e\n" +
 	"\x12CancelRegistration\x12&.polyglot.v1.CancelRegistrationRequest\x1a'.polyglot.v1.CancelRegistrationResponse\x12h\n" +
-	"\x13ConvertRegistration\x12'.polyglot.v1.ConvertRegistrationRequest\x1a(.polyglot.v1.ConvertRegistrationResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x13ConvertRegistration\x12'.polyglot.v1.ConvertRegistrationRequest\x1a(.polyglot.v1.ConvertRegistrationResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_registration_proto_rawDescOnce sync.Once

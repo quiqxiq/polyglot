@@ -1,16 +1,16 @@
 package setting
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/setting"
 )
 
 // DomainSettingToPb converts domain Setting entity to proto SettingItem message.
-func DomainSettingToPb(s *setting.Setting) *devicepb.SettingItem {
+func DomainSettingToPb(s *setting.Setting) *polyglotv1.SettingItem {
 	if s == nil {
 		return nil
 	}
-	return &devicepb.SettingItem{
+	return &polyglotv1.SettingItem{
 		Key:           s.Key,
 		Value:         s.Value,
 		Category:      s.Category,
@@ -20,8 +20,8 @@ func DomainSettingToPb(s *setting.Setting) *devicepb.SettingItem {
 }
 
 // DomainSettingsToPb converts slice of domain Setting entities to proto slice.
-func DomainSettingsToPb(items []setting.Setting) []*devicepb.SettingItem {
-	res := make([]*devicepb.SettingItem, 0, len(items))
+func DomainSettingsToPb(items []setting.Setting) []*polyglotv1.SettingItem {
+	res := make([]*polyglotv1.SettingItem, 0, len(items))
 	for i := range items {
 		res = append(res, DomainSettingToPb(&items[i]))
 	}
@@ -29,7 +29,7 @@ func DomainSettingsToPb(items []setting.Setting) []*devicepb.SettingItem {
 }
 
 // PbSettingToDomain converts proto SettingItem to domain Setting entity.
-func PbSettingToDomain(pb *devicepb.SettingItem) *setting.Setting {
+func PbSettingToDomain(pb *polyglotv1.SettingItem) *setting.Setting {
 	if pb == nil {
 		return nil
 	}
@@ -42,11 +42,11 @@ func PbSettingToDomain(pb *devicepb.SettingItem) *setting.Setting {
 }
 
 // DomainBotSettingsToPb converts domain BotSettings entity to proto BotSettings message.
-func DomainBotSettingsToPb(s *setting.BotSettings) *devicepb.BotSettings {
+func DomainBotSettingsToPb(s *setting.BotSettings) *polyglotv1.BotSettings {
 	if s == nil {
 		return nil
 	}
-	return &devicepb.BotSettings{
+	return &polyglotv1.BotSettings{
 		BurstLimit:            int32(s.BurstLimit),
 		BurstWindowSecs:       int32(s.BurstWindowSecs),
 		Mute_1HSecs:           int32(s.Mute1HourSecs),
@@ -61,7 +61,7 @@ func DomainBotSettingsToPb(s *setting.BotSettings) *devicepb.BotSettings {
 }
 
 // PbBotSettingsToDomain converts proto BotSettings message to domain BotSettings entity.
-func PbBotSettingsToDomain(pb *devicepb.BotSettings) *setting.BotSettings {
+func PbBotSettingsToDomain(pb *polyglotv1.BotSettings) *setting.BotSettings {
 	if pb == nil {
 		return setting.DefaultBotSettings()
 	}

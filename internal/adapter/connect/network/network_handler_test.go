@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	connectNetwork "github.com/quixiq/polyglot/internal/adapter/connect/network"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
@@ -71,7 +71,7 @@ func TestNetworkConnectHandler_ListDHCPLeases(t *testing.T) {
 	handler := connectNetwork.NewNetworkConnectHandler(hotUC, activeUC, provider)
 	ctx := context.Background()
 
-	resp, err := handler.ListDHCPLeases(ctx, connect.NewRequest(&devicepb.ListDHCPLeasesRequest{
+	resp, err := handler.ListDHCPLeases(ctx, connect.NewRequest(&polyglotv1.ListDHCPLeasesRequest{
 		DeviceId: "dev-1",
 	}))
 	require.NoError(t, err)

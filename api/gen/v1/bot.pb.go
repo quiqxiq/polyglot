@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/bot.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1810,7 +1810,7 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\x10CreateTechnician\x12$.polyglot.v1.CreateTechnicianRequest\x1a%.polyglot.v1.CreateTechnicianResponse\x12_\n" +
 	"\x10UpdateTechnician\x12$.polyglot.v1.UpdateTechnicianRequest\x1a%.polyglot.v1.UpdateTechnicianResponse\x12q\n" +
 	"\x16ToggleTechnicianActive\x12*.polyglot.v1.ToggleTechnicianActiveRequest\x1a+.polyglot.v1.ToggleTechnicianActiveResponse\x12_\n" +
-	"\x10DeleteTechnician\x12$.polyglot.v1.DeleteTechnicianRequest\x1a%.polyglot.v1.DeleteTechnicianResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x10DeleteTechnician\x12$.polyglot.v1.DeleteTechnicianRequest\x1a%.polyglot.v1.DeleteTechnicianResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_bot_proto_rawDescOnce sync.Once

@@ -3,16 +3,16 @@ package llm
 import (
 	"fmt"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
 )
 
 // ToProtoLLMConfig maps domain Config to proto LLMConfig message.
-func ToProtoLLMConfig(cfg *domainllm.Config) *devicepb.LLMConfig {
+func ToProtoLLMConfig(cfg *domainllm.Config) *polyglotv1.LLMConfig {
 	if cfg == nil {
-		return &devicepb.LLMConfig{}
+		return &polyglotv1.LLMConfig{}
 	}
-	return &devicepb.LLMConfig{
+	return &polyglotv1.LLMConfig{
 		Id:             fmt.Sprintf("%d", cfg.ID),
 		Provider:       cfg.Provider,
 		ModelName:      cfg.Model,
@@ -29,8 +29,8 @@ func ToProtoLLMConfig(cfg *domainllm.Config) *devicepb.LLMConfig {
 }
 
 // ToProtoLLMConfigList converts a slice of domain Configs into proto messages.
-func ToProtoLLMConfigList(configs []domainllm.Config) []*devicepb.LLMConfig {
-	items := make([]*devicepb.LLMConfig, len(configs))
+func ToProtoLLMConfigList(configs []domainllm.Config) []*polyglotv1.LLMConfig {
+	items := make([]*polyglotv1.LLMConfig, len(configs))
 	for i := range configs {
 		items[i] = ToProtoLLMConfig(&configs[i])
 	}

@@ -6,7 +6,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	llmUC "github.com/quixiq/polyglot/internal/usecase/llm"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -26,21 +26,21 @@ func NewLLMConnectHandler(useCase *llmUC.ManageConfigUseCase) *LLMConnectHandler
 }
 
 // ListLLMConfigs returns all configured LLM models and credentials.
-func (h *LLMConnectHandler) ListLLMConfigs(ctx context.Context, req *connect.Request[devicepb.ListLLMConfigsRequest]) (*connect.Response[devicepb.ListLLMConfigsResponse], error) {
+func (h *LLMConnectHandler) ListLLMConfigs(ctx context.Context, req *connect.Request[polyglotv1.ListLLMConfigsRequest]) (*connect.Response[polyglotv1.ListLLMConfigsResponse], error) {
 	if h.useCase == nil {
-		return connect.NewResponse(&devicepb.ListLLMConfigsResponse{}), nil
+		return connect.NewResponse(&polyglotv1.ListLLMConfigsResponse{}), nil
 	}
 	configs, err := h.useCase.List(ctx)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListLLMConfigsResponse{
+	return connect.NewResponse(&polyglotv1.ListLLMConfigsResponse{
 		Configs: ToProtoLLMConfigList(configs),
 	}), nil
 }
 
 // CreateLLMConfig adds a new LLM provider/model configuration.
-func (h *LLMConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Request[devicepb.CreateLLMConfigRequest]) (*connect.Response[devicepb.CreateLLMConfigResponse], error) {
+func (h *LLMConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Request[polyglotv1.CreateLLMConfigRequest]) (*connect.Response[polyglotv1.CreateLLMConfigResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("llm usecase not initialized")
 	}
@@ -62,13 +62,13 @@ func (h *LLMConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Re
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.CreateLLMConfigResponse{
+	return connect.NewResponse(&polyglotv1.CreateLLMConfigResponse{
 		Config: ToProtoLLMConfig(cfg),
 	}), nil
 }
 
 // UpdateLLMConfig updates an existing LLM model configuration.
-func (h *LLMConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Request[devicepb.UpdateLLMConfigRequest]) (*connect.Response[devicepb.UpdateLLMConfigResponse], error) {
+func (h *LLMConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Request[polyglotv1.UpdateLLMConfigRequest]) (*connect.Response[polyglotv1.UpdateLLMConfigResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("llm usecase not initialized")
 	}
@@ -91,13 +91,13 @@ func (h *LLMConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Re
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.UpdateLLMConfigResponse{
+	return connect.NewResponse(&polyglotv1.UpdateLLMConfigResponse{
 		Config: ToProtoLLMConfig(cfg),
 	}), nil
 }
 
 // ActivateLLMConfig activates an LLM configuration as the default active model.
-func (h *LLMConnectHandler) ActivateLLMConfig(ctx context.Context, req *connect.Request[devicepb.ActivateLLMConfigRequest]) (*connect.Response[devicepb.ActivateLLMConfigResponse], error) {
+func (h *LLMConnectHandler) ActivateLLMConfig(ctx context.Context, req *connect.Request[polyglotv1.ActivateLLMConfigRequest]) (*connect.Response[polyglotv1.ActivateLLMConfigResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("llm usecase not initialized")
 	}
@@ -105,33 +105,33 @@ func (h *LLMConnectHandler) ActivateLLMConfig(ctx context.Context, req *connect.
 	if err := h.useCase.SetActive(ctx, uint(idNum)); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ActivateLLMConfigResponse{
+	return connect.NewResponse(&polyglotv1.ActivateLLMConfigResponse{
 		Message: "llm config activated successfully",
 	}), nil
 }
 
 // TestLLMConfig tests network and authentication connectivity for an LLM configuration.
-func (h *LLMConnectHandler) TestLLMConfig(ctx context.Context, req *connect.Request[devicepb.TestLLMConfigRequest]) (*connect.Response[devicepb.TestLLMConfigResponse], error) {
+func (h *LLMConnectHandler) TestLLMConfig(ctx context.Context, req *connect.Request[polyglotv1.TestLLMConfigRequest]) (*connect.Response[polyglotv1.TestLLMConfigResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("llm usecase not initialized")
 	}
 	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
 	msg, err := h.useCase.TestConnection(ctx, uint(idNum))
 	if err != nil {
-		return connect.NewResponse(&devicepb.TestLLMConfigResponse{
+		return connect.NewResponse(&polyglotv1.TestLLMConfigResponse{
 			Success:      false,
 			ErrorMessage: err.Error(),
 		}), nil
 	}
 
-	return connect.NewResponse(&devicepb.TestLLMConfigResponse{
+	return connect.NewResponse(&polyglotv1.TestLLMConfigResponse{
 		Success:      true,
 		ResponseText: msg,
 	}), nil
 }
 
 // DeleteLLMConfig deletes an LLM configuration by ID.
-func (h *LLMConnectHandler) DeleteLLMConfig(ctx context.Context, req *connect.Request[devicepb.DeleteLLMConfigRequest]) (*connect.Response[devicepb.DeleteLLMConfigResponse], error) {
+func (h *LLMConnectHandler) DeleteLLMConfig(ctx context.Context, req *connect.Request[polyglotv1.DeleteLLMConfigRequest]) (*connect.Response[polyglotv1.DeleteLLMConfigResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("llm usecase not initialized")
 	}
@@ -139,7 +139,7 @@ func (h *LLMConnectHandler) DeleteLLMConfig(ctx context.Context, req *connect.Re
 	if err := h.useCase.Delete(ctx, uint(idNum)); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeleteLLMConfigResponse{
+	return connect.NewResponse(&polyglotv1.DeleteLLMConfigResponse{
 		Message: "llm config deleted successfully",
 	}), nil
 }

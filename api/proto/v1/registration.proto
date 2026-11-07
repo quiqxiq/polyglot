@@ -4,7 +4,7 @@ package polyglot.v1;
 
 import "buf/validate/validate.proto";
 
-option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;polyglotv1";
 
 message Registration {
   string id = 1;

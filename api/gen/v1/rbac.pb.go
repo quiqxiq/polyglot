@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/rbac.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -905,7 +905,7 @@ const file_v1_rbac_proto_rawDesc = "" +
 	"\fUnassignRole\x12 .polyglot.v1.UnassignRoleRequest\x1a!.polyglot.v1.UnassignRoleResponse\x12h\n" +
 	"\x13SyncRolePermissions\x12'.polyglot.v1.SyncRolePermissionsRequest\x1a(.polyglot.v1.SyncRolePermissionsResponse\x12M\n" +
 	"\n" +
-	"DeleteRole\x12\x1e.polyglot.v1.DeleteRoleRequest\x1a\x1f.polyglot.v1.DeleteRoleResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"DeleteRole\x12\x1e.polyglot.v1.DeleteRoleRequest\x1a\x1f.polyglot.v1.DeleteRoleResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_rbac_proto_rawDescOnce sync.Once

@@ -8,13 +8,13 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // StreamActiveSessions streams /ppp/active/print follow natively from RouterOS.
-func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *connect.Request[devicepb.StreamPPPActiveSessionsRequest], stream *connect.ServerStream[devicepb.PPPActiveSessionsFrame]) error {
+func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *connect.Request[polyglotv1.StreamPPPActiveSessionsRequest], stream *connect.ServerStream[polyglotv1.PPPActiveSessionsFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -34,13 +34,13 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 		}
 	}
 
-	initialItems := make([]*devicepb.PPPActiveSession, 0, len(activeMap))
+	initialItems := make([]*polyglotv1.PPPActiveSession, 0, len(activeMap))
 	for _, s := range activeMap {
 		initialItems = append(initialItems, toProtoPPPActiveSession(s))
 	}
 
 	// Immediately send an initial frame
-	_ = stream.Send(&devicepb.PPPActiveSessionsFrame{
+	_ = stream.Send(&polyglotv1.PPPActiveSessionsFrame{
 		DeviceId:      req.Msg.DeviceId,
 		TimestampUnix: time.Now().Unix(),
 		Sessions:      initialItems,
@@ -116,7 +116,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 				}
 			}
 
-			items := make([]*devicepb.PPPActiveSession, 0, len(activeMap))
+			items := make([]*polyglotv1.PPPActiveSession, 0, len(activeMap))
 			for _, s := range activeMap {
 				items = append(items, toProtoPPPActiveSession(s))
 			}
@@ -124,7 +124,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 				return items[i].Name < items[j].Name
 			})
 
-			if err := stream.Send(&devicepb.PPPActiveSessionsFrame{
+			if err := stream.Send(&polyglotv1.PPPActiveSessionsFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
 				Sessions:      items,
@@ -136,7 +136,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 }
 
 // StreamInactiveSecrets streams offline subscribers via dual native RouterOS follow (/ppp/active/print follow and /ppp/secret/print follow).
-func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *connect.Request[devicepb.StreamPPPInactiveSecretsRequest], stream *connect.ServerStream[devicepb.PPPInactiveSecretsFrame]) error {
+func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *connect.Request[polyglotv1.StreamPPPInactiveSecretsRequest], stream *connect.ServerStream[polyglotv1.PPPInactiveSecretsFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -166,8 +166,8 @@ func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *conn
 		activeNames[a.Name] = true
 	}
 
-	getInactiveList := func() []*devicepb.PPPSecret {
-		inactive := make([]*devicepb.PPPSecret, 0)
+	getInactiveList := func() []*polyglotv1.PPPSecret {
+		inactive := make([]*polyglotv1.PPPSecret, 0)
 		for _, s := range secretsMap {
 			if !activeNames[s.Name] {
 				inactive = append(inactive, toProtoPPPSecret(s))
@@ -180,7 +180,7 @@ func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *conn
 	}
 
 	// Send initial snapshot immediately
-	if err := stream.Send(&devicepb.PPPInactiveSecretsFrame{
+	if err := stream.Send(&polyglotv1.PPPInactiveSecretsFrame{
 		DeviceId:      req.Msg.DeviceId,
 		TimestampUnix: time.Now().Unix(),
 		Secrets:       getInactiveList(),
@@ -241,7 +241,7 @@ func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *conn
 				}
 			}
 			if changed {
-				if err := stream.Send(&devicepb.PPPInactiveSecretsFrame{
+				if err := stream.Send(&polyglotv1.PPPInactiveSecretsFrame{
 					DeviceId:      req.Msg.DeviceId,
 					TimestampUnix: time.Now().Unix(),
 					Secrets:       getInactiveList(),
@@ -304,7 +304,7 @@ func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *conn
 				changed = true
 			}
 			if changed {
-				if err := stream.Send(&devicepb.PPPInactiveSecretsFrame{
+				if err := stream.Send(&polyglotv1.PPPInactiveSecretsFrame{
 					DeviceId:      req.Msg.DeviceId,
 					TimestampUnix: time.Now().Unix(),
 					Secrets:       getInactiveList(),

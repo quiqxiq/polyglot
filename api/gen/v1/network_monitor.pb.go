@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/network_monitor.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -2697,7 +2697,7 @@ const file_v1_network_monitor_proto_rawDesc = "" +
 	"StreamLogs\x12\x1e.polyglot.v1.StreamLogsRequest\x1a\x1c.polyglot.v1.LogsStreamFrame0\x01\x12g\n" +
 	"\x15StreamHotspotInactive\x12).polyglot.v1.StreamHotspotInactiveRequest\x1a!.polyglot.v1.HotspotInactiveFrame0\x01\x12U\n" +
 	"\x0fStreamPPPActive\x12#.polyglot.v1.StreamPPPActiveRequest\x1a\x1b.polyglot.v1.PPPActiveFrame0\x01\x12[\n" +
-	"\x11StreamPPPInactive\x12%.polyglot.v1.StreamPPPInactiveRequest\x1a\x1d.polyglot.v1.PPPInactiveFrame0\x01B0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x11StreamPPPInactive\x12%.polyglot.v1.StreamPPPInactiveRequest\x1a\x1d.polyglot.v1.PPPInactiveFrame0\x01B2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_network_monitor_proto_rawDescOnce sync.Once

@@ -7,7 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
 	"github.com/quixiq/polyglot/internal/port"
 	uc "github.com/quixiq/polyglot/internal/usecase/registration"
@@ -27,7 +27,7 @@ func NewRegistrationConnectHandler(
 }
 
 // SubmitRegistration — PUBLIC (calon pelanggan).
-func (h *RegistrationConnectHandler) SubmitRegistration(ctx context.Context, req *connect.Request[devicepb.SubmitRegistrationRequest]) (*connect.Response[devicepb.SubmitRegistrationResponse], error) {
+func (h *RegistrationConnectHandler) SubmitRegistration(ctx context.Context, req *connect.Request[polyglotv1.SubmitRegistrationRequest]) (*connect.Response[polyglotv1.SubmitRegistrationResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -53,12 +53,12 @@ func (h *RegistrationConnectHandler) SubmitRegistration(ctx context.Context, req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SubmitRegistrationResponse{
+	return connect.NewResponse(&polyglotv1.SubmitRegistrationResponse{
 		Registration: toProtoRegistration(&submitted),
 	}), nil
 }
 
-func (h *RegistrationConnectHandler) ListRegistrations(ctx context.Context, req *connect.Request[devicepb.ListRegistrationsRequest]) (*connect.Response[devicepb.ListRegistrationsResponse], error) {
+func (h *RegistrationConnectHandler) ListRegistrations(ctx context.Context, req *connect.Request[polyglotv1.ListRegistrationsRequest]) (*connect.Response[polyglotv1.ListRegistrationsResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -69,12 +69,12 @@ func (h *RegistrationConnectHandler) ListRegistrations(ctx context.Context, req 
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListRegistrationsResponse{
+	return connect.NewResponse(&polyglotv1.ListRegistrationsResponse{
 		Registrations: toProtoRegistrationList(list),
 	}), nil
 }
 
-func (h *RegistrationConnectHandler) GetRegistration(ctx context.Context, req *connect.Request[devicepb.GetRegistrationRequest]) (*connect.Response[devicepb.GetRegistrationResponse], error) {
+func (h *RegistrationConnectHandler) GetRegistration(ctx context.Context, req *connect.Request[polyglotv1.GetRegistrationRequest]) (*connect.Response[polyglotv1.GetRegistrationResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -82,12 +82,12 @@ func (h *RegistrationConnectHandler) GetRegistration(ctx context.Context, req *c
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetRegistrationResponse{
+	return connect.NewResponse(&polyglotv1.GetRegistrationResponse{
 		Registration: toProtoRegistration(&reg),
 	}), nil
 }
 
-func (h *RegistrationConnectHandler) ApproveRegistration(ctx context.Context, req *connect.Request[devicepb.ApproveRegistrationRequest]) (*connect.Response[devicepb.ApproveRegistrationResponse], error) {
+func (h *RegistrationConnectHandler) ApproveRegistration(ctx context.Context, req *connect.Request[polyglotv1.ApproveRegistrationRequest]) (*connect.Response[polyglotv1.ApproveRegistrationResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -95,12 +95,12 @@ func (h *RegistrationConnectHandler) ApproveRegistration(ctx context.Context, re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ApproveRegistrationResponse{
+	return connect.NewResponse(&polyglotv1.ApproveRegistrationResponse{
 		Registration: toProtoRegistration(&approved),
 	}), nil
 }
 
-func (h *RegistrationConnectHandler) ScheduleInstall(ctx context.Context, req *connect.Request[devicepb.ScheduleInstallRequest]) (*connect.Response[devicepb.ScheduleInstallResponse], error) {
+func (h *RegistrationConnectHandler) ScheduleInstall(ctx context.Context, req *connect.Request[polyglotv1.ScheduleInstallRequest]) (*connect.Response[polyglotv1.ScheduleInstallResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -122,12 +122,12 @@ func (h *RegistrationConnectHandler) ScheduleInstall(ctx context.Context, req *c
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ScheduleInstallResponse{
+	return connect.NewResponse(&polyglotv1.ScheduleInstallResponse{
 		Registration: toProtoRegistration(&scheduled),
 	}), nil
 }
 
-func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *connect.Request[devicepb.MarkInstalledRequest]) (*connect.Response[devicepb.MarkInstalledResponse], error) {
+func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *connect.Request[polyglotv1.MarkInstalledRequest]) (*connect.Response[polyglotv1.MarkInstalledResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -144,13 +144,13 @@ func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *con
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.MarkInstalledResponse{
+	return connect.NewResponse(&polyglotv1.MarkInstalledResponse{
 		Registration: toProtoRegistration(&installed),
 	}), nil
 }
 
 // RecordSurvey mencatat hasil survey lokasi (PSB v2): PENDING/APPROVED → SURVEY.
-func (h *RegistrationConnectHandler) RecordSurvey(ctx context.Context, req *connect.Request[devicepb.RecordSurveyRequest]) (*connect.Response[devicepb.RecordSurveyResponse], error) {
+func (h *RegistrationConnectHandler) RecordSurvey(ctx context.Context, req *connect.Request[polyglotv1.RecordSurveyRequest]) (*connect.Response[polyglotv1.RecordSurveyResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -178,13 +178,13 @@ func (h *RegistrationConnectHandler) RecordSurvey(ctx context.Context, req *conn
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RecordSurveyResponse{
+	return connect.NewResponse(&polyglotv1.RecordSurveyResponse{
 		Registration: toProtoRegistration(&surveyed),
 	}), nil
 }
 
 // StartInstallation memulai pekerjaan lapangan (APPROVED → ON_PROGRESS).
-func (h *RegistrationConnectHandler) StartInstallation(ctx context.Context, req *connect.Request[devicepb.StartInstallationRequest]) (*connect.Response[devicepb.StartInstallationResponse], error) {
+func (h *RegistrationConnectHandler) StartInstallation(ctx context.Context, req *connect.Request[polyglotv1.StartInstallationRequest]) (*connect.Response[polyglotv1.StartInstallationResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -192,13 +192,13 @@ func (h *RegistrationConnectHandler) StartInstallation(ctx context.Context, req 
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.StartInstallationResponse{
+	return connect.NewResponse(&polyglotv1.StartInstallationResponse{
 		Registration: toProtoRegistration(&started),
 	}), nil
 }
 
 // TrackRegistration — PUBLIC: lacak status pendaftaran via token tanpa login.
-func (h *RegistrationConnectHandler) TrackRegistration(ctx context.Context, req *connect.Request[devicepb.TrackRegistrationRequest]) (*connect.Response[devicepb.TrackRegistrationResponse], error) {
+func (h *RegistrationConnectHandler) TrackRegistration(ctx context.Context, req *connect.Request[polyglotv1.TrackRegistrationRequest]) (*connect.Response[polyglotv1.TrackRegistrationResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -210,14 +210,14 @@ func (h *RegistrationConnectHandler) TrackRegistration(ctx context.Context, req 
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.TrackRegistrationResponse{
+	return connect.NewResponse(&polyglotv1.TrackRegistrationResponse{
 		Registration: toProtoRegistration(&reg),
 		Events:       toProtoRegistrationEvents(events),
 	}), nil
 }
 
 // ListPublicPlans — PUBLIC: pilihan paket aktif untuk formulir pendaftaran.
-func (h *RegistrationConnectHandler) ListPublicPlans(ctx context.Context, req *connect.Request[devicepb.ListPublicPlansRequest]) (*connect.Response[devicepb.ListPublicPlansResponse], error) {
+func (h *RegistrationConnectHandler) ListPublicPlans(ctx context.Context, req *connect.Request[polyglotv1.ListPublicPlansRequest]) (*connect.Response[polyglotv1.ListPublicPlansResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -225,10 +225,10 @@ func (h *RegistrationConnectHandler) ListPublicPlans(ctx context.Context, req *c
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.PublicPlan, len(plans))
+	out := make([]*polyglotv1.PublicPlan, len(plans))
 	for i := range plans {
 		p := plans[i]
-		out[i] = &devicepb.PublicPlan{
+		out[i] = &polyglotv1.PublicPlan{
 			Id:                    p.ID,
 			Name:                  p.Name,
 			ServiceType:           p.ServiceType,
@@ -238,11 +238,11 @@ func (h *RegistrationConnectHandler) ListPublicPlans(ctx context.Context, req *c
 			InstallationFee:       p.InstallationFee,
 		}
 	}
-	return connect.NewResponse(&devicepb.ListPublicPlansResponse{Plans: out}), nil
+	return connect.NewResponse(&polyglotv1.ListPublicPlansResponse{Plans: out}), nil
 }
 
 // ListRegistrationEvents mengembalikan timeline PSB satu pendaftaran.
-func (h *RegistrationConnectHandler) ListRegistrationEvents(ctx context.Context, req *connect.Request[devicepb.ListRegistrationEventsRequest]) (*connect.Response[devicepb.ListRegistrationEventsResponse], error) {
+func (h *RegistrationConnectHandler) ListRegistrationEvents(ctx context.Context, req *connect.Request[polyglotv1.ListRegistrationEventsRequest]) (*connect.Response[polyglotv1.ListRegistrationEventsResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -250,12 +250,12 @@ func (h *RegistrationConnectHandler) ListRegistrationEvents(ctx context.Context,
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListRegistrationEventsResponse{
+	return connect.NewResponse(&polyglotv1.ListRegistrationEventsResponse{
 		Events: toProtoRegistrationEvents(events),
 	}), nil
 }
 
-func (h *RegistrationConnectHandler) RejectRegistration(ctx context.Context, req *connect.Request[devicepb.RejectRegistrationRequest]) (*connect.Response[devicepb.RejectRegistrationResponse], error) {
+func (h *RegistrationConnectHandler) RejectRegistration(ctx context.Context, req *connect.Request[polyglotv1.RejectRegistrationRequest]) (*connect.Response[polyglotv1.RejectRegistrationResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -263,12 +263,12 @@ func (h *RegistrationConnectHandler) RejectRegistration(ctx context.Context, req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RejectRegistrationResponse{
+	return connect.NewResponse(&polyglotv1.RejectRegistrationResponse{
 		Registration: toProtoRegistration(&rejected),
 	}), nil
 }
 
-func (h *RegistrationConnectHandler) CancelRegistration(ctx context.Context, req *connect.Request[devicepb.CancelRegistrationRequest]) (*connect.Response[devicepb.CancelRegistrationResponse], error) {
+func (h *RegistrationConnectHandler) CancelRegistration(ctx context.Context, req *connect.Request[polyglotv1.CancelRegistrationRequest]) (*connect.Response[polyglotv1.CancelRegistrationResponse], error) {
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
@@ -276,12 +276,12 @@ func (h *RegistrationConnectHandler) CancelRegistration(ctx context.Context, req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CancelRegistrationResponse{
+	return connect.NewResponse(&polyglotv1.CancelRegistrationResponse{
 		Registration: toProtoRegistration(&cancelled),
 	}), nil
 }
 
-func (h *RegistrationConnectHandler) ConvertRegistration(ctx context.Context, req *connect.Request[devicepb.ConvertRegistrationRequest]) (*connect.Response[devicepb.ConvertRegistrationResponse], error) {
+func (h *RegistrationConnectHandler) ConvertRegistration(ctx context.Context, req *connect.Request[polyglotv1.ConvertRegistrationRequest]) (*connect.Response[polyglotv1.ConvertRegistrationResponse], error) {
 	if h.convertUC == nil {
 		return nil, response.Unavailable("convert usecase unavailable")
 	}
@@ -289,7 +289,7 @@ func (h *RegistrationConnectHandler) ConvertRegistration(ctx context.Context, re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ConvertRegistrationResponse{
+	return connect.NewResponse(&polyglotv1.ConvertRegistrationResponse{
 		Registration:   toProtoRegistration(&converted),
 		CustomerId:     converted.CustomerID,
 		SubscriptionId: converted.SubscriptionID,

@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainRouterJob "github.com/quixiq/polyglot/internal/domain/routerjob"
 	"github.com/quixiq/polyglot/internal/port"
 	jobuc "github.com/quixiq/polyglot/internal/usecase/routerjob"
@@ -26,12 +26,12 @@ func NewConnectHandler(jobs port.RouterJobRepository, exporter *jobuc.Exporter) 
 	return &ConnectHandler{jobs: jobs, exporter: exporter}
 }
 
-func toProtoJob(j domainRouterJob.Job) *devicepb.RouterJob {
+func toProtoJob(j domainRouterJob.Job) *polyglotv1.RouterJob {
 	payload := "{}"
 	if len(j.Payload) > 0 {
 		payload = string(j.Payload)
 	}
-	return &devicepb.RouterJob{
+	return &polyglotv1.RouterJob{
 		Id:             j.ID,
 		TenantId:       j.TenantID,
 		DeviceId:       j.DeviceID,
@@ -49,7 +49,7 @@ func toProtoJob(j domainRouterJob.Job) *devicepb.RouterJob {
 }
 
 // ListRouterJobs mengembalikan antrean job router (opsional per status).
-func (h *ConnectHandler) ListRouterJobs(ctx context.Context, req *connect.Request[devicepb.ListRouterJobsRequest]) (*connect.Response[devicepb.ListRouterJobsResponse], error) {
+func (h *ConnectHandler) ListRouterJobs(ctx context.Context, req *connect.Request[polyglotv1.ListRouterJobsRequest]) (*connect.Response[polyglotv1.ListRouterJobsResponse], error) {
 	if h.jobs == nil {
 		return nil, response.Unavailable("router job repository unavailable")
 	}
@@ -57,15 +57,15 @@ func (h *ConnectHandler) ListRouterJobs(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.RouterJob, len(list))
+	out := make([]*polyglotv1.RouterJob, len(list))
 	for i := range list {
 		out[i] = toProtoJob(list[i])
 	}
-	return connect.NewResponse(&devicepb.ListRouterJobsResponse{Jobs: out}), nil
+	return connect.NewResponse(&polyglotv1.ListRouterJobsResponse{Jobs: out}), nil
 }
 
 // RetryRouterJob mengembalikan job DEAD/FAILED ke antrean (retry manual).
-func (h *ConnectHandler) RetryRouterJob(ctx context.Context, req *connect.Request[devicepb.RetryRouterJobRequest]) (*connect.Response[devicepb.RetryRouterJobResponse], error) {
+func (h *ConnectHandler) RetryRouterJob(ctx context.Context, req *connect.Request[polyglotv1.RetryRouterJobRequest]) (*connect.Response[polyglotv1.RetryRouterJobResponse], error) {
 	if h.jobs == nil {
 		return nil, response.Unavailable("router job repository unavailable")
 	}
@@ -88,11 +88,11 @@ func (h *ConnectHandler) RetryRouterJob(ctx context.Context, req *connect.Reques
 		return nil, response.MapDomainError(fmt.Errorf("%w: job %s sudah %s",
 			domainRouterJob.ErrInvalidTransition, job.ID, job.Status))
 	}
-	return connect.NewResponse(&devicepb.RetryRouterJobResponse{Job: toProtoJob(job)}), nil
+	return connect.NewResponse(&polyglotv1.RetryRouterJobResponse{Job: toProtoJob(job)}), nil
 }
 
 // ExportRouterJobScript menghasilkan file .rsc fallback untuk dieksekusi manual.
-func (h *ConnectHandler) ExportRouterJobScript(ctx context.Context, req *connect.Request[devicepb.ExportRouterJobScriptRequest]) (*connect.Response[devicepb.ExportRouterJobScriptResponse], error) {
+func (h *ConnectHandler) ExportRouterJobScript(ctx context.Context, req *connect.Request[polyglotv1.ExportRouterJobScriptRequest]) (*connect.Response[polyglotv1.ExportRouterJobScriptResponse], error) {
 	if h.exporter == nil {
 		return nil, response.Unavailable("router job exporter unavailable")
 	}
@@ -100,7 +100,7 @@ func (h *ConnectHandler) ExportRouterJobScript(ctx context.Context, req *connect
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ExportRouterJobScriptResponse{
+	return connect.NewResponse(&polyglotv1.ExportRouterJobScriptResponse{
 		Filename: req.Msg.Id + ".rsc",
 		Script:   script,
 	}), nil

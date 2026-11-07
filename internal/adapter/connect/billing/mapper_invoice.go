@@ -3,11 +3,11 @@ package billing
 import (
 	"time"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 )
 
-func toProtoInvoice(inv *domainBilling.Invoice) *devicepb.Invoice {
+func toProtoInvoice(inv *domainBilling.Invoice) *polyglotv1.Invoice {
 	if inv == nil {
 		return nil
 	}
@@ -37,7 +37,7 @@ func toProtoInvoice(inv *domainBilling.Invoice) *devicepb.Invoice {
 			daysOverdue = int32(diff.Hours() / 24)
 		}
 	}
-	return &devicepb.Invoice{
+	return &polyglotv1.Invoice{
 		Id:                inv.ID,
 		TenantId:          inv.TenantID,
 		InvoiceNumber:     inv.InvoiceNumber,
@@ -72,8 +72,8 @@ func toProtoInvoice(inv *domainBilling.Invoice) *devicepb.Invoice {
 	}
 }
 
-func toProtoInvoiceList(invoices []domainBilling.Invoice) []*devicepb.Invoice {
-	out := make([]*devicepb.Invoice, len(invoices))
+func toProtoInvoiceList(invoices []domainBilling.Invoice) []*polyglotv1.Invoice {
+	out := make([]*polyglotv1.Invoice, len(invoices))
 	for i := range invoices {
 		out[i] = toProtoInvoice(&invoices[i])
 	}

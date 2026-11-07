@@ -5,7 +5,7 @@ package polyglot.v1;
 import "v1/subscription.proto";
 import "buf/validate/validate.proto";
 
-option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;polyglotv1";
 
 message Customer {
   string id = 1;

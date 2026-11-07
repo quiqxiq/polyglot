@@ -1,7 +1,7 @@
 package hotspot
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 )
 
 // parseRowBool converts a RouterOS print row boolean string ("true"/"false")
@@ -12,13 +12,13 @@ func parseRowBool(v string) bool {
 
 // toProtoHotspotHosts converts raw /ip/hotspot/host/print rows into proto.
 // Rows missing ".id" or "mac-address" are skipped.
-func toProtoHotspotHosts(rows []map[string]string) []*devicepb.HotspotHost {
-	hosts := make([]*devicepb.HotspotHost, 0, len(rows))
+func toProtoHotspotHosts(rows []map[string]string) []*polyglotv1.HotspotHost {
+	hosts := make([]*polyglotv1.HotspotHost, 0, len(rows))
 	for _, row := range rows {
 		if row[".id"] == "" || row["mac-address"] == "" {
 			continue
 		}
-		hosts = append(hosts, &devicepb.HotspotHost{
+		hosts = append(hosts, &polyglotv1.HotspotHost{
 			Id:         row[".id"],
 			MacAddress: row["mac-address"],
 			Address:    row["address"],
@@ -34,13 +34,13 @@ func toProtoHotspotHosts(rows []map[string]string) []*devicepb.HotspotHost {
 
 // toProtoHotspotServers converts raw /ip/hotspot/print rows into proto.
 // Rows missing ".id" or "name" are skipped.
-func toProtoHotspotServers(rows []map[string]string) []*devicepb.HotspotServerInfo {
-	servers := make([]*devicepb.HotspotServerInfo, 0, len(rows))
+func toProtoHotspotServers(rows []map[string]string) []*polyglotv1.HotspotServerInfo {
+	servers := make([]*polyglotv1.HotspotServerInfo, 0, len(rows))
 	for _, row := range rows {
 		if row[".id"] == "" || row["name"] == "" {
 			continue
 		}
-		servers = append(servers, &devicepb.HotspotServerInfo{
+		servers = append(servers, &polyglotv1.HotspotServerInfo{
 			Id:          row[".id"],
 			Name:        row["name"],
 			Interface:   row["interface"],

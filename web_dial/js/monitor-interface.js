@@ -93,7 +93,7 @@ const MonitorInterface = {
       this.renderActiveTable();
     } catch (err) {
       console.error('Failed to load router data:', err);
-      if (!silent) showToast('Gagal memuat data router: ' + err.message, 'error');
+      if (!silent) API.reportError(err, 'Gagal memuat data router');
     } finally {
       if (loadingEl) loadingEl.classList.add('hidden');
       if (refreshIcon) refreshIcon.classList.remove('animate-spin');

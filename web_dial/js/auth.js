@@ -130,12 +130,12 @@ const Auth = {
    * without waiting for the next login. Falls back to the cached profile when
    * the account cannot call GetMe (no profile:read) or the network is offline.
    */
-  async ensureFreshUser(maxAgeMs = 60_000) {
+  async ensureFreshUser(maxAgeMs = 10_000, force = false) {
     if (!this.hasSession()) return null;
     if (!this.can('profile:read')) return this.getUser();
 
     const lastSync = Number(localStorage.getItem(this.SYNCED_KEY) || 0);
-    if (lastSync > 0 && Date.now() - lastSync < maxAgeMs) {
+    if (!force && lastSync > 0 && Date.now() - lastSync < maxAgeMs) {
       return this.getUser();
     }
 
@@ -190,7 +190,8 @@ const Auth = {
       return false;
     }
 
-    await this.ensureFreshUser();
+    // Always fetch fresh permissions on route navigation to prevent stale access
+    await this.ensureFreshUser(0, true);
 
     if (!this.hasSession()) {
       API.redirectToLogin('Sesi Anda telah berakhir, silakan login kembali');
@@ -211,8 +212,12 @@ const Auth = {
 
     const node = this.resolveMenu(menuIdOrHref);
     if (!node || !DialMenu.canAccess(node.id, can)) {
+      // Immediately hide page body so forbidden DOM is never seen by the user
+      if (typeof document !== 'undefined' && document.body) {
+        document.body.style.display = 'none';
+      }
       const target = DialMenu.firstAccessibleRoute(can);
-      if (target && target !== 'no-access.html') {
+      if (target && target !== 'no-access.html' && target !== (menuIdOrHref || '')) {
         window.location.replace(target);
       } else {
         this.redirectNoAccess();
@@ -288,6 +293,28 @@ function showToast(message, type = 'info') {
       setTimeout(() => toast.remove(), 300);
     }
   }, 3500);
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('focus', () => {
+    if (typeof Auth !== 'undefined' && typeof Auth.hasSession === 'function' && Auth.hasSession()) {
+      Auth.ensureFreshUser(5000, true).then(() => {
+        if (typeof DialMenu !== 'undefined') {
+          const can = Auth.permissionChecker();
+          const currentPage = (window.location.pathname.split('/').pop() || 'index.html').split('?')[0];
+          const node = Auth.resolveMenu(currentPage);
+          if (node && !DialMenu.canAccess(node.id, can)) {
+            const target = DialMenu.firstAccessibleRoute(can) || 'no-access.html';
+            window.location.replace(target);
+            return;
+          }
+          if (typeof Layout !== 'undefined' && typeof Layout.rerender === 'function') {
+            Layout.rerender(currentPage);
+          }
+        }
+      }).catch(() => {});
+    }
+  });
 }
 
 window.Auth = Auth;

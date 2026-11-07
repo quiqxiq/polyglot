@@ -8,10 +8,15 @@ const RouterSelector = {
   selectedDeviceId: localStorage.getItem('selected_device_id') || null,
 
   async init() {
-    // Router inventory is readable with dial:device:read or device:read.
-    if (typeof Auth !== 'undefined' && !Auth.can('dial:device:read') && !Auth.can('device:read')) {
-      this.devices = [];
-      return false;
+    // Router inventory is readable when user has access to any Web Dial page or device:read.
+    if (typeof Auth !== 'undefined') {
+      const hasAccess = (typeof DialMenu !== 'undefined' && DialMenu.hasAnyMenu(Auth.permissionChecker())) ||
+        Auth.can('dial:device:read') ||
+        Auth.can('device:read');
+      if (!hasAccess) {
+        this.devices = [];
+        return false;
+      }
     }
 
     try {

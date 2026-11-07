@@ -5,13 +5,13 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // ListHotspotIPBindings returns all /ip/hotspot/ip-binding entries.
-func (h *HotspotConnectHandler) ListHotspotIPBindings(ctx context.Context, req *connect.Request[devicepb.ListHotspotIPBindingsRequest]) (*connect.Response[devicepb.ListHotspotIPBindingsResponse], error) {
+func (h *HotspotConnectHandler) ListHotspotIPBindings(ctx context.Context, req *connect.Request[polyglotv1.ListHotspotIPBindingsRequest]) (*connect.Response[polyglotv1.ListHotspotIPBindingsResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -22,9 +22,9 @@ func (h *HotspotConnectHandler) ListHotspotIPBindings(ctx context.Context, req *
 		return nil, response.MapDomainError(err)
 	}
 
-	protoBindings := make([]*devicepb.HotspotIPBinding, 0, len(bindings))
+	protoBindings := make([]*polyglotv1.HotspotIPBinding, 0, len(bindings))
 	for _, b := range bindings {
-		protoBindings = append(protoBindings, &devicepb.HotspotIPBinding{
+		protoBindings = append(protoBindings, &polyglotv1.HotspotIPBinding{
 			Id:         b.RosID,
 			MacAddress: b.MACAddress,
 			Address:    b.Address,
@@ -36,13 +36,13 @@ func (h *HotspotConnectHandler) ListHotspotIPBindings(ctx context.Context, req *
 		})
 	}
 
-	return connect.NewResponse(&devicepb.ListHotspotIPBindingsResponse{
+	return connect.NewResponse(&polyglotv1.ListHotspotIPBindingsResponse{
 		Bindings: protoBindings,
 	}), nil
 }
 
 // CreateHotspotIPBinding adds an IP Binding entry.
-func (h *HotspotConnectHandler) CreateHotspotIPBinding(ctx context.Context, req *connect.Request[devicepb.CreateHotspotIPBindingRequest]) (*connect.Response[devicepb.CreateHotspotIPBindingResponse], error) {
+func (h *HotspotConnectHandler) CreateHotspotIPBinding(ctx context.Context, req *connect.Request[polyglotv1.CreateHotspotIPBindingRequest]) (*connect.Response[polyglotv1.CreateHotspotIPBindingResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -63,8 +63,8 @@ func (h *HotspotConnectHandler) CreateHotspotIPBinding(ctx context.Context, req 
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.CreateHotspotIPBindingResponse{
-		Binding: &devicepb.HotspotIPBinding{
+	return connect.NewResponse(&polyglotv1.CreateHotspotIPBindingResponse{
+		Binding: &polyglotv1.HotspotIPBinding{
 			Id:         res.Output,
 			MacAddress: p.MACAddress,
 			Address:    p.Address,
@@ -79,7 +79,7 @@ func (h *HotspotConnectHandler) CreateHotspotIPBinding(ctx context.Context, req 
 }
 
 // UpdateHotspotIPBinding updates an existing IP Binding entry.
-func (h *HotspotConnectHandler) UpdateHotspotIPBinding(ctx context.Context, req *connect.Request[devicepb.UpdateHotspotIPBindingRequest]) (*connect.Response[devicepb.UpdateHotspotIPBindingResponse], error) {
+func (h *HotspotConnectHandler) UpdateHotspotIPBinding(ctx context.Context, req *connect.Request[polyglotv1.UpdateHotspotIPBindingRequest]) (*connect.Response[polyglotv1.UpdateHotspotIPBindingResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -99,8 +99,8 @@ func (h *HotspotConnectHandler) UpdateHotspotIPBinding(ctx context.Context, req 
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.UpdateHotspotIPBindingResponse{
-		Binding: &devicepb.HotspotIPBinding{
+	return connect.NewResponse(&polyglotv1.UpdateHotspotIPBindingResponse{
+		Binding: &polyglotv1.HotspotIPBinding{
 			Id:         req.Msg.RosId,
 			MacAddress: p.MACAddress,
 			Address:    p.Address,
@@ -115,7 +115,7 @@ func (h *HotspotConnectHandler) UpdateHotspotIPBinding(ctx context.Context, req 
 }
 
 // DeleteHotspotIPBinding removes an IP Binding entry.
-func (h *HotspotConnectHandler) DeleteHotspotIPBinding(ctx context.Context, req *connect.Request[devicepb.DeleteHotspotIPBindingRequest]) (*connect.Response[devicepb.DeleteHotspotIPBindingResponse], error) {
+func (h *HotspotConnectHandler) DeleteHotspotIPBinding(ctx context.Context, req *connect.Request[polyglotv1.DeleteHotspotIPBindingRequest]) (*connect.Response[polyglotv1.DeleteHotspotIPBindingResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -125,7 +125,7 @@ func (h *HotspotConnectHandler) DeleteHotspotIPBinding(ctx context.Context, req 
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeleteHotspotIPBindingResponse{
+	return connect.NewResponse(&polyglotv1.DeleteHotspotIPBindingResponse{
 		Message: "IP binding deleted successfully",
 	}), nil
 }

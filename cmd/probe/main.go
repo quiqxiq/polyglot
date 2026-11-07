@@ -12,7 +12,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
@@ -56,7 +56,7 @@ func runHeartbeatLoop(ctx context.Context, client *probeClient, probeID string) 
 			return
 		case <-ticker.C:
 			uptimeSec := int64(time.Since(startTime).Seconds())
-			req := connect.NewRequest(&devicepb.ProbeStatusRequest{
+			req := connect.NewRequest(&polyglotv1.ProbeStatusRequest{
 				ProbeId:       probeID,
 				Version:       "v1.0.0-probe",
 				UptimeSeconds: uptimeSec,
@@ -126,11 +126,11 @@ func newJSONConnectClient(baseURL string) *probeClient {
 	}
 }
 
-func (c *probeClient) ReportStatus(ctx context.Context, req *connect.Request[devicepb.ProbeStatusRequest]) (*connect.Response[devicepb.ProbeStatusResponse], error) {
+func (c *probeClient) ReportStatus(ctx context.Context, req *connect.Request[polyglotv1.ProbeStatusRequest]) (*connect.Response[polyglotv1.ProbeStatusResponse], error) {
 	serviceName := "polyglot.v1.ProbeService"
 	url := fmt.Sprintf("%s/%s/ReportStatus", c.baseURL, serviceName)
 
-	client := connect.NewClient[devicepb.ProbeStatusRequest, devicepb.ProbeStatusResponse](
+	client := connect.NewClient[polyglotv1.ProbeStatusRequest, polyglotv1.ProbeStatusResponse](
 		c.httpClient,
 		url,
 	)

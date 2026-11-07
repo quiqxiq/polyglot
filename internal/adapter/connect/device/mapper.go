@@ -1,20 +1,20 @@
 package device
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	"github.com/quixiq/polyglot/pkg/ping"
 )
 
 // DomainToPb converts domain device entity into proto device message.
-func DomainToPb(d device.Device) *devicepb.Device {
+func DomainToPb(d device.Device) *polyglotv1.Device {
 	sshPort := int32(d.SSHPort)
 	if sshPort <= 0 {
 		sshPort = 22
 	}
 	cfg := d.PingConfig()
-	return &devicepb.Device{
+	return &polyglotv1.Device{
 		Id:                d.ID,
 		TenantId:          d.TenantID,
 		Name:              d.Name,
@@ -35,7 +35,7 @@ func DomainToPb(d device.Device) *devicepb.Device {
 }
 
 // PbToDomain converts proto device message into domain device entity.
-func PbToDomain(pb *devicepb.Device) device.Device {
+func PbToDomain(pb *polyglotv1.Device) device.Device {
 	if pb == nil {
 		return device.Device{}
 	}
@@ -73,10 +73,10 @@ func PbToDomain(pb *devicepb.Device) device.Device {
 }
 
 // ToProtoInterfaceDetails converts usecase interface details to proto list.
-func ToProtoInterfaceDetails(details []deviceUC.DeviceInterfaceDetail) []*devicepb.DeviceInterfaceInfo {
-	list := make([]*devicepb.DeviceInterfaceInfo, 0, len(details))
+func ToProtoInterfaceDetails(details []deviceUC.DeviceInterfaceDetail) []*polyglotv1.DeviceInterfaceInfo {
+	list := make([]*polyglotv1.DeviceInterfaceInfo, 0, len(details))
 	for _, ifc := range details {
-		list = append(list, &devicepb.DeviceInterfaceInfo{
+		list = append(list, &polyglotv1.DeviceInterfaceInfo{
 			Name:       ifc.Name,
 			Type:       ifc.Type,
 			Running:    ifc.Running,
@@ -94,7 +94,7 @@ func parsePingLatency(row map[string]string) (int64, string) {
 }
 
 // IsolationConfigToDomain converts proto isolation config to domain model.
-func IsolationConfigToDomain(pb *devicepb.IsolationConfig) device.IsolationConfig {
+func IsolationConfigToDomain(pb *polyglotv1.IsolationConfig) device.IsolationConfig {
 	if pb == nil {
 		return device.DefaultIsolationConfig()
 	}
@@ -115,14 +115,14 @@ func IsolationConfigToDomain(pb *devicepb.IsolationConfig) device.IsolationConfi
 }
 
 // IsolationStatusToPb converts domain isolation status to proto message.
-func IsolationStatusToPb(s device.IsolationStatus) *devicepb.IsolationStatus {
-	return &devicepb.IsolationStatus{
+func IsolationStatusToPb(s device.IsolationStatus) *polyglotv1.IsolationStatus {
+	return &polyglotv1.IsolationStatus{
 		PppoeProfileExists:   s.PPPoEProfileExists,
 		HotspotProfileExists: s.HotspotProfileExists,
 		AddressListExists:    s.AddressListExists,
 		NatRedirectExists:    s.NATRedirectExists,
 		IsolatedUsersCount:   int32(s.IsolatedUsersCount),
-		Config: &devicepb.IsolationConfig{
+		Config: &polyglotv1.IsolationConfig{
 			PppoeProfileName:    s.Config.PPPoEProfileName,
 			HotspotProfileName:  s.Config.HotspotProfileName,
 			AddressListName:     s.Config.AddressListName,

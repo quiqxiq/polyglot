@@ -3,17 +3,17 @@ package hotspot
 import (
 	"strconv"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // toProtoHotspotReports converts Mikhmon transaction records to proto list,
 // converting the Price string into a float64 (proto field is double).
-func toProtoHotspotReports(records []port.MikhmonTransaction) []*devicepb.HotspotReport {
-	pbReports := make([]*devicepb.HotspotReport, len(records))
+func toProtoHotspotReports(records []port.MikhmonTransaction) []*polyglotv1.HotspotReport {
+	pbReports := make([]*polyglotv1.HotspotReport, len(records))
 	for i, r := range records {
 		price, _ := strconv.ParseFloat(r.Price, 64)
-		pbReports[i] = &devicepb.HotspotReport{
+		pbReports[i] = &polyglotv1.HotspotReport{
 			Id:       r.RosID,
 			Date:     r.Date,
 			Time:     r.Time,

@@ -3,16 +3,16 @@ package skill
 import (
 	"time"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/skill"
 )
 
 // ToProtoSkill maps domain Skill to proto Skill message.
-func ToProtoSkill(s *skill.Skill) *devicepb.Skill {
+func ToProtoSkill(s *skill.Skill) *polyglotv1.Skill {
 	if s == nil {
-		return &devicepb.Skill{}
+		return &polyglotv1.Skill{}
 	}
-	return &devicepb.Skill{
+	return &polyglotv1.Skill{
 		Id:            s.ID,
 		Name:          s.Name,
 		Description:   s.Description,
@@ -30,8 +30,8 @@ func ToProtoSkill(s *skill.Skill) *devicepb.Skill {
 }
 
 // ToProtoSkillList converts a slice of domain Skills into proto messages.
-func ToProtoSkillList(skills []skill.Skill) []*devicepb.Skill {
-	items := make([]*devicepb.Skill, len(skills))
+func ToProtoSkillList(skills []skill.Skill) []*polyglotv1.Skill {
+	items := make([]*polyglotv1.Skill, len(skills))
 	for i := range skills {
 		items[i] = ToProtoSkill(&skills[i])
 	}
@@ -39,11 +39,11 @@ func ToProtoSkillList(skills []skill.Skill) []*devicepb.Skill {
 }
 
 // ToProtoSkillResource maps domain SkillResource to proto SkillResource message.
-func ToProtoSkillResource(r *skill.SkillResource) *devicepb.SkillResource {
+func ToProtoSkillResource(r *skill.SkillResource) *polyglotv1.SkillResource {
 	if r == nil {
-		return &devicepb.SkillResource{}
+		return &polyglotv1.SkillResource{}
 	}
-	return &devicepb.SkillResource{
+	return &polyglotv1.SkillResource{
 		Path:     r.Path,
 		Name:     r.Name,
 		Type:     r.Type,
@@ -55,8 +55,8 @@ func ToProtoSkillResource(r *skill.SkillResource) *devicepb.SkillResource {
 }
 
 // ToProtoSkillResourceList converts a slice of domain SkillResources into proto messages.
-func ToProtoSkillResourceList(resources []skill.SkillResource) []*devicepb.SkillResource {
-	items := make([]*devicepb.SkillResource, len(resources))
+func ToProtoSkillResourceList(resources []skill.SkillResource) []*polyglotv1.SkillResource {
+	items := make([]*polyglotv1.SkillResource, len(resources))
 	for i := range resources {
 		items[i] = ToProtoSkillResource(&resources[i])
 	}
@@ -64,11 +64,11 @@ func ToProtoSkillResourceList(resources []skill.SkillResource) []*devicepb.Skill
 }
 
 // ToProtoResourceContent maps domain ResourceContent to proto ResourceContent message.
-func ToProtoResourceContent(c *skill.ResourceContent) *devicepb.ResourceContent {
+func ToProtoResourceContent(c *skill.ResourceContent) *polyglotv1.ResourceContent {
 	if c == nil {
-		return &devicepb.ResourceContent{}
+		return &polyglotv1.ResourceContent{}
 	}
-	return &devicepb.ResourceContent{
+	return &polyglotv1.ResourceContent{
 		Content:  c.Content,
 		Encoding: c.Encoding,
 		MimeType: c.MimeType,
@@ -77,11 +77,11 @@ func ToProtoResourceContent(c *skill.ResourceContent) *devicepb.ResourceContent 
 }
 
 // ToProtoGitRepoInfo maps domain GitRepoInfo to proto GitRepoInfo message.
-func ToProtoGitRepoInfo(g *skill.GitRepoInfo) *devicepb.GitRepoInfo {
+func ToProtoGitRepoInfo(g *skill.GitRepoInfo) *polyglotv1.GitRepoInfo {
 	if g == nil {
-		return &devicepb.GitRepoInfo{}
+		return &polyglotv1.GitRepoInfo{}
 	}
-	return &devicepb.GitRepoInfo{
+	return &polyglotv1.GitRepoInfo{
 		Id:           g.ID,
 		Url:          g.URL,
 		Name:         g.Name,
@@ -91,8 +91,8 @@ func ToProtoGitRepoInfo(g *skill.GitRepoInfo) *devicepb.GitRepoInfo {
 }
 
 // ToProtoGitRepoInfoList converts a slice of domain GitRepoInfos into proto messages.
-func ToProtoGitRepoInfoList(repos []skill.GitRepoInfo) []*devicepb.GitRepoInfo {
-	items := make([]*devicepb.GitRepoInfo, len(repos))
+func ToProtoGitRepoInfoList(repos []skill.GitRepoInfo) []*polyglotv1.GitRepoInfo {
+	items := make([]*polyglotv1.GitRepoInfo, len(repos))
 	for i := range repos {
 		items[i] = ToProtoGitRepoInfo(&repos[i])
 	}

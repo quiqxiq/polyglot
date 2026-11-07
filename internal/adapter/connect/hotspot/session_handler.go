@@ -6,11 +6,11 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
-func (h *HotspotConnectHandler) ListActiveSessions(ctx context.Context, req *connect.Request[devicepb.ListHotspotActiveSessionsRequest]) (*connect.Response[devicepb.ListHotspotActiveSessionsResponse], error) {
+func (h *HotspotConnectHandler) ListActiveSessions(ctx context.Context, req *connect.Request[polyglotv1.ListHotspotActiveSessionsRequest]) (*connect.Response[polyglotv1.ListHotspotActiveSessionsResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -21,12 +21,12 @@ func (h *HotspotConnectHandler) ListActiveSessions(ctx context.Context, req *con
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListHotspotActiveSessionsResponse{
+	return connect.NewResponse(&polyglotv1.ListHotspotActiveSessionsResponse{
 		Sessions: toProtoActiveSessions(sessions),
 	}), nil
 }
 
-func (h *HotspotConnectHandler) KickActiveSession(ctx context.Context, req *connect.Request[devicepb.KickHotspotSessionRequest]) (*connect.Response[devicepb.KickHotspotSessionResponse], error) {
+func (h *HotspotConnectHandler) KickActiveSession(ctx context.Context, req *connect.Request[polyglotv1.KickHotspotSessionRequest]) (*connect.Response[polyglotv1.KickHotspotSessionResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (h *HotspotConnectHandler) KickActiveSession(ctx context.Context, req *conn
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.KickHotspotSessionResponse{
+	return connect.NewResponse(&polyglotv1.KickHotspotSessionResponse{
 		Message: fmt.Sprintf("session kicked: output=%s", res.Output),
 	}), nil
 }

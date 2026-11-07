@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/plan.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -927,7 +927,7 @@ const file_v1_plan_proto_rawDesc = "" +
 	"\n" +
 	"UpdatePlan\x12\x1e.polyglot.v1.UpdatePlanRequest\x1a\x1f.polyglot.v1.UpdatePlanResponse\x12M\n" +
 	"\n" +
-	"DeletePlan\x12\x1e.polyglot.v1.DeletePlanRequest\x1a\x1f.polyglot.v1.DeletePlanResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"DeletePlan\x12\x1e.polyglot.v1.DeletePlanRequest\x1a\x1f.polyglot.v1.DeletePlanResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_plan_proto_rawDescOnce sync.Once

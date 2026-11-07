@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
@@ -22,7 +22,7 @@ func NewUserConnectHandler(uc *userUC.ManageUserUseCase) *UserConnectHandler {
 	}
 }
 
-func (h *UserConnectHandler) ListUsers(ctx context.Context, req *connect.Request[devicepb.ListUsersRequest]) (*connect.Response[devicepb.ListUsersResponse], error) {
+func (h *UserConnectHandler) ListUsers(ctx context.Context, req *connect.Request[polyglotv1.ListUsersRequest]) (*connect.Response[polyglotv1.ListUsersResponse], error) {
 	page := int(req.Msg.Page)
 	if page < 1 {
 		page = 1
@@ -37,13 +37,13 @@ func (h *UserConnectHandler) ListUsers(ctx context.Context, req *connect.Request
 		return nil, response.MapDomainError(err)
 	}
 
-	pbUsers := make([]*devicepb.User, len(users))
+	pbUsers := make([]*polyglotv1.User, len(users))
 	for i, u := range users {
 		roles, _ := h.userUC.GetRoles(ctx, u.ID)
 		pbUsers[i] = DomainUserToPb(u, roles)
 	}
 
-	return connect.NewResponse(&devicepb.ListUsersResponse{
+	return connect.NewResponse(&polyglotv1.ListUsersResponse{
 		Users:    pbUsers,
 		Total:    total,
 		Page:     int32(page),
@@ -51,7 +51,7 @@ func (h *UserConnectHandler) ListUsers(ctx context.Context, req *connect.Request
 	}), nil
 }
 
-func (h *UserConnectHandler) CreateUser(ctx context.Context, req *connect.Request[devicepb.CreateUserRequest]) (*connect.Response[devicepb.CreateUserResponse], error) {
+func (h *UserConnectHandler) CreateUser(ctx context.Context, req *connect.Request[polyglotv1.CreateUserRequest]) (*connect.Response[polyglotv1.CreateUserResponse], error) {
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 
 	u, err := h.userUC.CreateUser(
@@ -72,12 +72,12 @@ func (h *UserConnectHandler) CreateUser(ctx context.Context, req *connect.Reques
 	}
 
 	roles, _ := h.userUC.GetRoles(ctx, u.ID)
-	return connect.NewResponse(&devicepb.CreateUserResponse{
+	return connect.NewResponse(&polyglotv1.CreateUserResponse{
 		User: DomainUserToPb(u, roles),
 	}), nil
 }
 
-func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Request[devicepb.UpdateUserRequest]) (*connect.Response[devicepb.UpdateUserResponse], error) {
+func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Request[polyglotv1.UpdateUserRequest]) (*connect.Response[polyglotv1.UpdateUserResponse], error) {
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 
 	u, err := h.userUC.UpdateUser(
@@ -98,25 +98,25 @@ func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Reques
 	}
 
 	roles, _ := h.userUC.GetRoles(ctx, u.ID)
-	return connect.NewResponse(&devicepb.UpdateUserResponse{
+	return connect.NewResponse(&polyglotv1.UpdateUserResponse{
 		User: DomainUserToPb(u, roles),
 	}), nil
 }
 
-func (h *UserConnectHandler) AssignDevicesToUser(ctx context.Context, req *connect.Request[devicepb.AssignDevicesRequest]) (*connect.Response[devicepb.AssignDevicesResponse], error) {
+func (h *UserConnectHandler) AssignDevicesToUser(ctx context.Context, req *connect.Request[polyglotv1.AssignDevicesRequest]) (*connect.Response[polyglotv1.AssignDevicesResponse], error) {
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 	assigned, err := h.userUC.AssignDevicesToUser(ctx, callerID, callerRoles, uint(req.Msg.UserId), req.Msg.DeviceIds)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.AssignDevicesResponse{
+	return connect.NewResponse(&polyglotv1.AssignDevicesResponse{
 		Success:           true,
 		AssignedDeviceIds: assigned,
 	}), nil
 }
 
-func (h *UserConnectHandler) ListUserAccessibleDevices(ctx context.Context, req *connect.Request[devicepb.ListUserDevicesRequest]) (*connect.Response[devicepb.ListUserDevicesResponse], error) {
+func (h *UserConnectHandler) ListUserAccessibleDevices(ctx context.Context, req *connect.Request[polyglotv1.ListUserDevicesRequest]) (*connect.Response[polyglotv1.ListUserDevicesResponse], error) {
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 	targetID := uint(req.Msg.UserId)
 	if targetID == 0 {
@@ -128,24 +128,24 @@ func (h *UserConnectHandler) ListUserAccessibleDevices(ctx context.Context, req 
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListUserDevicesResponse{
+	return connect.NewResponse(&polyglotv1.ListUserDevicesResponse{
 		DeviceIds: devices,
 	}), nil
 }
 
-func (h *UserConnectHandler) ResetPassword(ctx context.Context, req *connect.Request[devicepb.ResetPasswordRequest]) (*connect.Response[devicepb.ResetPasswordResponse], error) {
+func (h *UserConnectHandler) ResetPassword(ctx context.Context, req *connect.Request[polyglotv1.ResetPasswordRequest]) (*connect.Response[polyglotv1.ResetPasswordResponse], error) {
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 
 	if err := h.userUC.AdminResetPassword(ctx, callerID, callerRoles, uint(req.Msg.Id), req.Msg.NewPassword); err != nil {
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ResetPasswordResponse{
+	return connect.NewResponse(&polyglotv1.ResetPasswordResponse{
 		Success: true,
 	}), nil
 }
 
-func (h *UserConnectHandler) ToggleActive(ctx context.Context, req *connect.Request[devicepb.ToggleActiveRequest]) (*connect.Response[devicepb.ToggleActiveResponse], error) {
+func (h *UserConnectHandler) ToggleActive(ctx context.Context, req *connect.Request[polyglotv1.ToggleActiveRequest]) (*connect.Response[polyglotv1.ToggleActiveResponse], error) {
 	callerID, callerRoles, exists := iauth.IdentityFromContext(ctx)
 	if exists && callerID == uint(req.Msg.Id) {
 		return nil, response.MapDomainError(domainCustomer.ErrSelfOperation)
@@ -168,12 +168,12 @@ func (h *UserConnectHandler) ToggleActive(ctx context.Context, req *connect.Requ
 	}
 
 	roles, _ := h.userUC.GetRoles(ctx, updated.ID)
-	return connect.NewResponse(&devicepb.ToggleActiveResponse{
+	return connect.NewResponse(&polyglotv1.ToggleActiveResponse{
 		User: DomainUserToPb(updated, roles),
 	}), nil
 }
 
-func (h *UserConnectHandler) DeleteUser(ctx context.Context, req *connect.Request[devicepb.DeleteUserRequest]) (*connect.Response[devicepb.DeleteUserResponse], error) {
+func (h *UserConnectHandler) DeleteUser(ctx context.Context, req *connect.Request[polyglotv1.DeleteUserRequest]) (*connect.Response[polyglotv1.DeleteUserResponse], error) {
 	callerID, callerRoles, exists := iauth.IdentityFromContext(ctx)
 	if exists && callerID == uint(req.Msg.Id) {
 		return nil, response.MapDomainError(domainCustomer.ErrSelfOperation)
@@ -183,7 +183,7 @@ func (h *UserConnectHandler) DeleteUser(ctx context.Context, req *connect.Reques
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeleteUserResponse{
+	return connect.NewResponse(&polyglotv1.DeleteUserResponse{
 		Success: true,
 	}), nil
 }

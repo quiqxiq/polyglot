@@ -6,7 +6,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	domainDebt "github.com/quixiq/polyglot/internal/domain/debt"
 	"github.com/quixiq/polyglot/internal/port"
@@ -24,7 +24,7 @@ func NewDebtConnectHandler(svc *debtUC.Service) *DebtConnectHandler {
 	return &DebtConnectHandler{svc: svc}
 }
 
-func toProtoDebt(d *domainDebt.Debt) *devicepb.Debt {
+func toProtoDebt(d *domainDebt.Debt) *polyglotv1.Debt {
 	if d == nil {
 		return nil
 	}
@@ -39,7 +39,7 @@ func toProtoDebt(d *domainDebt.Debt) *devicepb.Debt {
 	if d.PaidAt != nil {
 		paidUnix = d.PaidAt.Unix()
 	}
-	return &devicepb.Debt{
+	return &polyglotv1.Debt{
 		Id:              d.ID,
 		CustomerId:      d.CustomerID,
 		SubscriptionId:  subID,
@@ -54,7 +54,7 @@ func toProtoDebt(d *domainDebt.Debt) *devicepb.Debt {
 	}
 }
 
-func toProtoDebtPayment(p *domainDebt.Payment) *devicepb.DebtPayment {
+func toProtoDebtPayment(p *domainDebt.Payment) *polyglotv1.DebtPayment {
 	if p == nil {
 		return nil
 	}
@@ -62,7 +62,7 @@ func toProtoDebtPayment(p *domainDebt.Payment) *devicepb.DebtPayment {
 	if p.PaymentMethodID != nil {
 		pmID = *p.PaymentMethodID
 	}
-	return &devicepb.DebtPayment{
+	return &polyglotv1.DebtPayment{
 		Id:              p.ID,
 		DebtId:          p.DebtID,
 		Amount:          p.Amount,
@@ -72,7 +72,7 @@ func toProtoDebtPayment(p *domainDebt.Payment) *devicepb.DebtPayment {
 	}
 }
 
-func (h *DebtConnectHandler) ListDebts(ctx context.Context, req *connect.Request[devicepb.ListDebtsRequest]) (*connect.Response[devicepb.ListDebtsResponse], error) {
+func (h *DebtConnectHandler) ListDebts(ctx context.Context, req *connect.Request[polyglotv1.ListDebtsRequest]) (*connect.Response[polyglotv1.ListDebtsResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -88,17 +88,17 @@ func (h *DebtConnectHandler) ListDebts(ctx context.Context, req *connect.Request
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.Debt, len(debts))
+	out := make([]*polyglotv1.Debt, len(debts))
 	for i := range debts {
 		out[i] = toProtoDebt(&debts[i])
 	}
-	return connect.NewResponse(&devicepb.ListDebtsResponse{
+	return connect.NewResponse(&polyglotv1.ListDebtsResponse{
 		Debts: out,
 		Total: int32(total),
 	}), nil
 }
 
-func (h *DebtConnectHandler) GetDebt(ctx context.Context, req *connect.Request[devicepb.GetDebtRequest]) (*connect.Response[devicepb.GetDebtResponse], error) {
+func (h *DebtConnectHandler) GetDebt(ctx context.Context, req *connect.Request[polyglotv1.GetDebtRequest]) (*connect.Response[polyglotv1.GetDebtResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -106,12 +106,12 @@ func (h *DebtConnectHandler) GetDebt(ctx context.Context, req *connect.Request[d
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetDebtResponse{
+	return connect.NewResponse(&polyglotv1.GetDebtResponse{
 		Debt: toProtoDebt(&d),
 	}), nil
 }
 
-func (h *DebtConnectHandler) CreateDebt(ctx context.Context, req *connect.Request[devicepb.CreateDebtRequest]) (*connect.Response[devicepb.CreateDebtResponse], error) {
+func (h *DebtConnectHandler) CreateDebt(ctx context.Context, req *connect.Request[polyglotv1.CreateDebtRequest]) (*connect.Response[polyglotv1.CreateDebtResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -148,12 +148,12 @@ func (h *DebtConnectHandler) CreateDebt(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CreateDebtResponse{
+	return connect.NewResponse(&polyglotv1.CreateDebtResponse{
 		Debt: toProtoDebt(&d),
 	}), nil
 }
 
-func (h *DebtConnectHandler) UpdateDebt(ctx context.Context, req *connect.Request[devicepb.UpdateDebtRequest]) (*connect.Response[devicepb.UpdateDebtResponse], error) {
+func (h *DebtConnectHandler) UpdateDebt(ctx context.Context, req *connect.Request[polyglotv1.UpdateDebtRequest]) (*connect.Response[polyglotv1.UpdateDebtResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -166,12 +166,12 @@ func (h *DebtConnectHandler) UpdateDebt(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.UpdateDebtResponse{
+	return connect.NewResponse(&polyglotv1.UpdateDebtResponse{
 		Debt: toProtoDebt(&d),
 	}), nil
 }
 
-func (h *DebtConnectHandler) CancelDebt(ctx context.Context, req *connect.Request[devicepb.CancelDebtRequest]) (*connect.Response[devicepb.CancelDebtResponse], error) {
+func (h *DebtConnectHandler) CancelDebt(ctx context.Context, req *connect.Request[polyglotv1.CancelDebtRequest]) (*connect.Response[polyglotv1.CancelDebtResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -179,12 +179,12 @@ func (h *DebtConnectHandler) CancelDebt(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CancelDebtResponse{
+	return connect.NewResponse(&polyglotv1.CancelDebtResponse{
 		Debt: toProtoDebt(&d),
 	}), nil
 }
 
-func (h *DebtConnectHandler) PayDebt(ctx context.Context, req *connect.Request[devicepb.PayDebtRequest]) (*connect.Response[devicepb.PayDebtResponse], error) {
+func (h *DebtConnectHandler) PayDebt(ctx context.Context, req *connect.Request[polyglotv1.PayDebtRequest]) (*connect.Response[polyglotv1.PayDebtResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -210,13 +210,13 @@ func (h *DebtConnectHandler) PayDebt(ctx context.Context, req *connect.Request[d
 		return nil, response.MapDomainError(err)
 	}
 	d, _ := h.svc.GetDebt(ctx, req.Msg.GetDebtId())
-	return connect.NewResponse(&devicepb.PayDebtResponse{
+	return connect.NewResponse(&polyglotv1.PayDebtResponse{
 		Payment: toProtoDebtPayment(&payment),
 		Debt:    toProtoDebt(&d),
 	}), nil
 }
 
-func (h *DebtConnectHandler) ListDebtPayments(ctx context.Context, req *connect.Request[devicepb.ListDebtPaymentsRequest]) (*connect.Response[devicepb.ListDebtPaymentsResponse], error) {
+func (h *DebtConnectHandler) ListDebtPayments(ctx context.Context, req *connect.Request[polyglotv1.ListDebtPaymentsRequest]) (*connect.Response[polyglotv1.ListDebtPaymentsResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -224,16 +224,16 @@ func (h *DebtConnectHandler) ListDebtPayments(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.DebtPayment, len(payments))
+	out := make([]*polyglotv1.DebtPayment, len(payments))
 	for i := range payments {
 		out[i] = toProtoDebtPayment(&payments[i])
 	}
-	return connect.NewResponse(&devicepb.ListDebtPaymentsResponse{
+	return connect.NewResponse(&polyglotv1.ListDebtPaymentsResponse{
 		Payments: out,
 	}), nil
 }
 
-func (h *DebtConnectHandler) GetDebtSummary(ctx context.Context, req *connect.Request[devicepb.GetDebtSummaryRequest]) (*connect.Response[devicepb.GetDebtSummaryResponse], error) {
+func (h *DebtConnectHandler) GetDebtSummary(ctx context.Context, req *connect.Request[polyglotv1.GetDebtSummaryRequest]) (*connect.Response[polyglotv1.GetDebtSummaryResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -241,8 +241,8 @@ func (h *DebtConnectHandler) GetDebtSummary(ctx context.Context, req *connect.Re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetDebtSummaryResponse{
-		Summary: &devicepb.DebtSummary{
+	return connect.NewResponse(&polyglotv1.GetDebtSummaryResponse{
+		Summary: &polyglotv1.DebtSummary{
 			Count:       int32(sum.Count),
 			TotalAmount: sum.TotalAmount,
 			Outstanding: sum.Outstanding,
@@ -251,7 +251,7 @@ func (h *DebtConnectHandler) GetDebtSummary(ctx context.Context, req *connect.Re
 	}), nil
 }
 
-func (h *DebtConnectHandler) ExportDebts(ctx context.Context, req *connect.Request[devicepb.ExportDebtsRequest]) (*connect.Response[devicepb.ExportDebtsResponse], error) {
+func (h *DebtConnectHandler) ExportDebts(ctx context.Context, req *connect.Request[polyglotv1.ExportDebtsRequest]) (*connect.Response[polyglotv1.ExportDebtsResponse], error) {
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
@@ -270,7 +270,7 @@ func (h *DebtConnectHandler) ExportDebts(ctx context.Context, req *connect.Reque
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ExportDebtsResponse{
+	return connect.NewResponse(&polyglotv1.ExportDebtsResponse{
 		Payload:     payload,
 		ContentType: contentType,
 		Filename:    filename,

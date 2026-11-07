@@ -3,12 +3,12 @@ package auth
 import (
 	"fmt"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 )
 
 // DomainUserToPb converts domain customer.User entity to proto User message.
-func DomainUserToPb(u *customer.User, roles []string) *devicepb.User {
+func DomainUserToPb(u *customer.User, roles []string) *polyglotv1.User {
 	if u == nil {
 		return nil
 	}
@@ -18,7 +18,7 @@ func DomainUserToPb(u *customer.User, roles []string) *devicepb.User {
 		primaryRole = roles[0]
 	}
 
-	return &devicepb.User{
+	return &polyglotv1.User{
 		Id:                uint64(u.ID),
 		Username:          u.Username,
 		Email:             u.Email,
@@ -35,7 +35,7 @@ func DomainUserToPb(u *customer.User, roles []string) *devicepb.User {
 }
 
 // DomainUserToProfile converts domain customer.User entity to proto UserProfile message.
-func DomainUserToProfile(u *customer.User, roles []string, perms []string) *devicepb.UserProfile {
+func DomainUserToProfile(u *customer.User, roles []string, perms []string) *polyglotv1.UserProfile {
 	if u == nil {
 		return nil
 	}
@@ -45,7 +45,7 @@ func DomainUserToProfile(u *customer.User, roles []string, perms []string) *devi
 		primaryRole = roles[0]
 	}
 
-	return &devicepb.UserProfile{
+	return &polyglotv1.UserProfile{
 		Id:             fmt.Sprintf("%d", u.ID),
 		Username:       u.Username,
 		Email:          u.Email,

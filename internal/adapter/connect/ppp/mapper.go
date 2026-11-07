@@ -1,13 +1,13 @@
 package ppp
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // toProtoPPPSecret converts a domain port.PPPoESecret to protobuf PPPSecret.
-func toProtoPPPSecret(s port.PPPoESecret) *devicepb.PPPSecret {
-	return &devicepb.PPPSecret{
+func toProtoPPPSecret(s port.PPPoESecret) *polyglotv1.PPPSecret {
+	return &polyglotv1.PPPSecret{
 		Id:            s.RosID,
 		Name:          s.Name,
 		Password:      "", // password is kept write-only/redacted in lists
@@ -23,8 +23,8 @@ func toProtoPPPSecret(s port.PPPoESecret) *devicepb.PPPSecret {
 }
 
 // toProtoPPPSecrets converts a slice of domain port.PPPoESecret to protobuf PPPSecrets.
-func toProtoPPPSecrets(secrets []port.PPPoESecret) []*devicepb.PPPSecret {
-	res := make([]*devicepb.PPPSecret, len(secrets))
+func toProtoPPPSecrets(secrets []port.PPPoESecret) []*polyglotv1.PPPSecret {
+	res := make([]*polyglotv1.PPPSecret, len(secrets))
 	for i, s := range secrets {
 		res[i] = toProtoPPPSecret(s)
 	}
@@ -32,8 +32,8 @@ func toProtoPPPSecrets(secrets []port.PPPoESecret) []*devicepb.PPPSecret {
 }
 
 // toProtoPPPProfile converts a domain port.PPPProfile to protobuf PPPProfile.
-func toProtoPPPProfile(p port.PPPProfile) *devicepb.PPPProfile {
-	return &devicepb.PPPProfile{
+func toProtoPPPProfile(p port.PPPProfile) *polyglotv1.PPPProfile {
+	return &polyglotv1.PPPProfile{
 		Id:             p.RosID,
 		Name:           p.Name,
 		RateLimit:      p.RateLimit,
@@ -54,8 +54,8 @@ func toProtoPPPProfile(p port.PPPProfile) *devicepb.PPPProfile {
 }
 
 // toProtoPPPProfiles converts a slice of domain port.PPPProfile to protobuf PPPProfiles.
-func toProtoPPPProfiles(profiles []port.PPPProfile) []*devicepb.PPPProfile {
-	res := make([]*devicepb.PPPProfile, len(profiles))
+func toProtoPPPProfiles(profiles []port.PPPProfile) []*polyglotv1.PPPProfile {
+	res := make([]*polyglotv1.PPPProfile, len(profiles))
 	for i, p := range profiles {
 		res[i] = toProtoPPPProfile(p)
 	}
@@ -63,8 +63,8 @@ func toProtoPPPProfiles(profiles []port.PPPProfile) []*devicepb.PPPProfile {
 }
 
 // toProtoPPPActiveSession converts a domain port.PPPActiveSession to protobuf PPPActiveSession.
-func toProtoPPPActiveSession(s port.PPPActiveSession) *devicepb.PPPActiveSession {
-	return &devicepb.PPPActiveSession{
+func toProtoPPPActiveSession(s port.PPPActiveSession) *polyglotv1.PPPActiveSession {
+	return &polyglotv1.PPPActiveSession{
 		Id:        s.RosID,
 		Name:      s.Name,
 		Service:   s.Service,
@@ -79,8 +79,8 @@ func toProtoPPPActiveSession(s port.PPPActiveSession) *devicepb.PPPActiveSession
 }
 
 // toProtoPPPActiveSessions converts a slice of domain port.PPPActiveSession to protobuf PPPActiveSessions.
-func toProtoPPPActiveSessions(sessions []port.PPPActiveSession) []*devicepb.PPPActiveSession {
-	res := make([]*devicepb.PPPActiveSession, len(sessions))
+func toProtoPPPActiveSessions(sessions []port.PPPActiveSession) []*polyglotv1.PPPActiveSession {
+	res := make([]*polyglotv1.PPPActiveSession, len(sessions))
 	for i, s := range sessions {
 		res[i] = toProtoPPPActiveSession(s)
 	}
@@ -88,7 +88,7 @@ func toProtoPPPActiveSessions(sessions []port.PPPActiveSession) []*devicepb.PPPA
 }
 
 // FromProtoCreateSecretRequest maps CreatePPPSecretRequest to domain port.PPPoESecretParams.
-func FromProtoCreateSecretRequest(req *devicepb.CreatePPPSecretRequest) port.PPPoESecretParams {
+func FromProtoCreateSecretRequest(req *polyglotv1.CreatePPPSecretRequest) port.PPPoESecretParams {
 	return port.PPPoESecretParams{
 		Name:          req.Name,
 		Password:      req.Password,
@@ -103,7 +103,7 @@ func FromProtoCreateSecretRequest(req *devicepb.CreatePPPSecretRequest) port.PPP
 }
 
 // FromProtoUpdateSecretRequest maps UpdatePPPSecretRequest to domain port.PPPoESecretParams.
-func FromProtoUpdateSecretRequest(req *devicepb.UpdatePPPSecretRequest) port.PPPoESecretParams {
+func FromProtoUpdateSecretRequest(req *polyglotv1.UpdatePPPSecretRequest) port.PPPoESecretParams {
 	return port.PPPoESecretParams{
 		Name:          req.Name,
 		Password:      req.Password,
@@ -117,7 +117,7 @@ func FromProtoUpdateSecretRequest(req *devicepb.UpdatePPPSecretRequest) port.PPP
 }
 
 // FromProtoCreateProfileRequest maps CreatePPPProfileRequest to domain port.PPPProfileParams.
-func FromProtoCreateProfileRequest(req *devicepb.CreatePPPProfileRequest) port.PPPProfileParams {
+func FromProtoCreateProfileRequest(req *polyglotv1.CreatePPPProfileRequest) port.PPPProfileParams {
 	return port.PPPProfileParams{
 		Name:           req.Name,
 		RateLimit:      req.RateLimit,
@@ -138,7 +138,7 @@ func FromProtoCreateProfileRequest(req *devicepb.CreatePPPProfileRequest) port.P
 }
 
 // FromProtoUpdateProfileRequest maps UpdatePPPProfileRequest to domain port.PPPProfileParams.
-func FromProtoUpdateProfileRequest(req *devicepb.UpdatePPPProfileRequest) port.PPPProfileParams {
+func FromProtoUpdateProfileRequest(req *polyglotv1.UpdatePPPProfileRequest) port.PPPProfileParams {
 	return port.PPPProfileParams{
 		Name:           req.Name,
 		RateLimit:      req.RateLimit,

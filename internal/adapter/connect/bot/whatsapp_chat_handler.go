@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
@@ -24,9 +24,9 @@ func parseSessionID(raw string) (uint, error) {
 	return uint(id), nil
 }
 
-func (h *WhatsAppConnectHandler) ListChats(ctx context.Context, req *connect.Request[devicepb.ListChatsRequest]) (*connect.Response[devicepb.ListChatsResponse], error) {
+func (h *WhatsAppConnectHandler) ListChats(ctx context.Context, req *connect.Request[polyglotv1.ListChatsRequest]) (*connect.Response[polyglotv1.ListChatsResponse], error) {
 	if h.chatService == nil {
-		return connect.NewResponse(&devicepb.ListChatsResponse{Chats: []*devicepb.WAChat{}}), nil
+		return connect.NewResponse(&polyglotv1.ListChatsResponse{Chats: []*polyglotv1.WAChat{}}), nil
 	}
 
 	sessionID, err := parseSessionID(req.Msg.SessionId)
@@ -39,13 +39,13 @@ func (h *WhatsAppConnectHandler) ListChats(ctx context.Context, req *connect.Req
 		return nil, response.MapDomainError(err)
 	}
 
-	pbChats := make([]*devicepb.WAChat, len(chats))
+	pbChats := make([]*polyglotv1.WAChat, len(chats))
 	for i, c := range chats {
 		lastTime := ""
 		if !c.LastMessageTime.IsZero() {
 			lastTime = c.LastMessageTime.Format(time.RFC3339)
 		}
-		pbChats[i] = &devicepb.WAChat{
+		pbChats[i] = &polyglotv1.WAChat{
 			Id:                 fmt.Sprintf("%d", c.ID),
 			SessionId:          fmt.Sprintf("%d", c.SessionID),
 			ChatJid:            c.ChatJID,
@@ -59,12 +59,12 @@ func (h *WhatsAppConnectHandler) ListChats(ctx context.Context, req *connect.Req
 	}
 
 	// Total = ukuran halaman saat ini (belum ada COUNT query untuk total sebenarnya).
-	return connect.NewResponse(&devicepb.ListChatsResponse{Chats: pbChats, Total: int32(len(pbChats))}), nil
+	return connect.NewResponse(&polyglotv1.ListChatsResponse{Chats: pbChats, Total: int32(len(pbChats))}), nil
 }
 
-func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *connect.Request[devicepb.GetChatMessagesRequest]) (*connect.Response[devicepb.GetChatMessagesResponse], error) {
+func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *connect.Request[polyglotv1.GetChatMessagesRequest]) (*connect.Response[polyglotv1.GetChatMessagesResponse], error) {
 	if h.chatService == nil {
-		return connect.NewResponse(&devicepb.GetChatMessagesResponse{Messages: []*devicepb.WAChatMessage{}}), nil
+		return connect.NewResponse(&polyglotv1.GetChatMessagesResponse{Messages: []*polyglotv1.WAChatMessage{}}), nil
 	}
 
 	sessionID, err := parseSessionID(req.Msg.SessionId)
@@ -77,13 +77,13 @@ func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *conne
 		return nil, response.MapDomainError(err)
 	}
 
-	pbMsgs := make([]*devicepb.WAChatMessage, len(msgs))
+	pbMsgs := make([]*polyglotv1.WAChatMessage, len(msgs))
 	for i, m := range msgs {
 		ts := ""
 		if !m.Timestamp.IsZero() {
 			ts = m.Timestamp.Format(time.RFC3339)
 		}
-		pbMsgs[i] = &devicepb.WAChatMessage{
+		pbMsgs[i] = &polyglotv1.WAChatMessage{
 			Id:         fmt.Sprintf("%d", m.ID),
 			ChatJid:    m.ChatJID,
 			SenderJid:  m.SenderJID,
@@ -97,12 +97,12 @@ func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *conne
 		}
 	}
 
-	return connect.NewResponse(&devicepb.GetChatMessagesResponse{Messages: pbMsgs, Total: int32(len(pbMsgs))}), nil
+	return connect.NewResponse(&polyglotv1.GetChatMessagesResponse{Messages: pbMsgs, Total: int32(len(pbMsgs))}), nil
 }
 
-func (h *WhatsAppConnectHandler) ToggleChatBot(ctx context.Context, req *connect.Request[devicepb.ToggleChatBotRequest]) (*connect.Response[devicepb.ToggleChatBotResponse], error) {
+func (h *WhatsAppConnectHandler) ToggleChatBot(ctx context.Context, req *connect.Request[polyglotv1.ToggleChatBotRequest]) (*connect.Response[polyglotv1.ToggleChatBotResponse], error) {
 	if h.chatService == nil {
-		return connect.NewResponse(&devicepb.ToggleChatBotResponse{Message: "chat service not available", IsActive: req.Msg.IsActive}), nil
+		return connect.NewResponse(&polyglotv1.ToggleChatBotResponse{Message: "chat service not available", IsActive: req.Msg.IsActive}), nil
 	}
 
 	sessionID, err := parseSessionID(req.Msg.SessionId)
@@ -114,15 +114,15 @@ func (h *WhatsAppConnectHandler) ToggleChatBot(ctx context.Context, req *connect
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ToggleChatBotResponse{
+	return connect.NewResponse(&polyglotv1.ToggleChatBotResponse{
 		Message:  "chat bot toggled",
 		IsActive: req.Msg.IsActive,
 	}), nil
 }
 
-func (h *WhatsAppConnectHandler) MarkChatRead(ctx context.Context, req *connect.Request[devicepb.MarkChatReadRequest]) (*connect.Response[devicepb.MarkChatReadResponse], error) {
+func (h *WhatsAppConnectHandler) MarkChatRead(ctx context.Context, req *connect.Request[polyglotv1.MarkChatReadRequest]) (*connect.Response[polyglotv1.MarkChatReadResponse], error) {
 	if h.chatService == nil {
-		return connect.NewResponse(&devicepb.MarkChatReadResponse{Message: "chat marked as read"}), nil
+		return connect.NewResponse(&polyglotv1.MarkChatReadResponse{Message: "chat marked as read"}), nil
 	}
 
 	sessionID, err := parseSessionID(req.Msg.SessionId)
@@ -134,5 +134,5 @@ func (h *WhatsAppConnectHandler) MarkChatRead(ctx context.Context, req *connect.
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.MarkChatReadResponse{Message: "chat marked as read"}), nil
+	return connect.NewResponse(&polyglotv1.MarkChatReadResponse{Message: "chat marked as read"}), nil
 }

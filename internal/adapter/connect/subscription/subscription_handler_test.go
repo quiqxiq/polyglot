@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	connectSub "github.com/quixiq/polyglot/internal/adapter/connect/subscription"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
@@ -49,7 +49,7 @@ func TestSubscriptionConnectHandler_CRUDAndEnrichment(t *testing.T) {
 	handler := connectSub.NewSubscriptionConnectHandler(manageUC, lifecycleUC)
 
 	// 1. GetSubscription
-	getResp, err := handler.GetSubscription(ctx, connect.NewRequest(&devicepb.GetSubscriptionRequest{Id: "sub-100"}))
+	getResp, err := handler.GetSubscription(ctx, connect.NewRequest(&polyglotv1.GetSubscriptionRequest{Id: "sub-100"}))
 	require.NoError(t, err)
 	sub := getResp.Msg.Subscription
 	assert.Equal(t, "sub-100", sub.Id)
@@ -60,7 +60,7 @@ func TestSubscriptionConnectHandler_CRUDAndEnrichment(t *testing.T) {
 	assert.Equal(t, "PAKET-50M", sub.PppoeConfig.RouterProfile)
 
 	// 2. ListSubscriptions
-	listResp, err := handler.ListSubscriptions(ctx, connect.NewRequest(&devicepb.ListSubscriptionsRequest{CustomerId: "cust-1"}))
+	listResp, err := handler.ListSubscriptions(ctx, connect.NewRequest(&polyglotv1.ListSubscriptionsRequest{CustomerId: "cust-1"}))
 	require.NoError(t, err)
 	require.Len(t, listResp.Msg.Subscriptions, 1)
 	assert.Equal(t, "PAKET-50M", listResp.Msg.Subscriptions[0].PlanName)

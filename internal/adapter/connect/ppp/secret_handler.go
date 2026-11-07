@@ -6,12 +6,12 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // ListSecrets retrieves all PPPoE secrets on the router.
-func (h *PPPConnectHandler) ListSecrets(ctx context.Context, req *connect.Request[devicepb.ListPPPSecretsRequest]) (*connect.Response[devicepb.ListPPPSecretsResponse], error) {
+func (h *PPPConnectHandler) ListSecrets(ctx context.Context, req *connect.Request[polyglotv1.ListPPPSecretsRequest]) (*connect.Response[polyglotv1.ListPPPSecretsResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -22,13 +22,13 @@ func (h *PPPConnectHandler) ListSecrets(ctx context.Context, req *connect.Reques
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListPPPSecretsResponse{
+	return connect.NewResponse(&polyglotv1.ListPPPSecretsResponse{
 		Secrets: toProtoPPPSecrets(secrets),
 	}), nil
 }
 
 // GetSecret fetches a single PPPoE secret by its RouterOS ID.
-func (h *PPPConnectHandler) GetSecret(ctx context.Context, req *connect.Request[devicepb.GetPPPSecretRequest]) (*connect.Response[devicepb.GetPPPSecretResponse], error) {
+func (h *PPPConnectHandler) GetSecret(ctx context.Context, req *connect.Request[polyglotv1.GetPPPSecretRequest]) (*connect.Response[polyglotv1.GetPPPSecretResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -39,13 +39,13 @@ func (h *PPPConnectHandler) GetSecret(ctx context.Context, req *connect.Request[
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.GetPPPSecretResponse{
+	return connect.NewResponse(&polyglotv1.GetPPPSecretResponse{
 		Secret: toProtoPPPSecret(secret),
 	}), nil
 }
 
 // CreateSecret adds a new PPPoE secret to the router.
-func (h *PPPConnectHandler) CreateSecret(ctx context.Context, req *connect.Request[devicepb.CreatePPPSecretRequest]) (*connect.Response[devicepb.CreatePPPSecretResponse], error) {
+func (h *PPPConnectHandler) CreateSecret(ctx context.Context, req *connect.Request[polyglotv1.CreatePPPSecretRequest]) (*connect.Response[polyglotv1.CreatePPPSecretResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -65,14 +65,14 @@ func (h *PPPConnectHandler) CreateSecret(ctx context.Context, req *connect.Reque
 		return nil, response.Internal("secret created but could not be loaded")
 	}
 
-	return connect.NewResponse(&devicepb.CreatePPPSecretResponse{
+	return connect.NewResponse(&polyglotv1.CreatePPPSecretResponse{
 		Secret:  toProtoPPPSecret(secrets[0]),
 		Message: fmt.Sprintf("secret %q created successfully", req.Msg.Name),
 	}), nil
 }
 
 // UpdateSecret modifies an existing PPPoE secret on the router.
-func (h *PPPConnectHandler) UpdateSecret(ctx context.Context, req *connect.Request[devicepb.UpdatePPPSecretRequest]) (*connect.Response[devicepb.UpdatePPPSecretResponse], error) {
+func (h *PPPConnectHandler) UpdateSecret(ctx context.Context, req *connect.Request[polyglotv1.UpdatePPPSecretRequest]) (*connect.Response[polyglotv1.UpdatePPPSecretResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -88,14 +88,14 @@ func (h *PPPConnectHandler) UpdateSecret(ctx context.Context, req *connect.Reque
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.UpdatePPPSecretResponse{
+	return connect.NewResponse(&polyglotv1.UpdatePPPSecretResponse{
 		Secret:  toProtoPPPSecret(secret),
 		Message: fmt.Sprintf("secret %q updated successfully", secret.Name),
 	}), nil
 }
 
 // DeleteSecret removes a PPPoE secret from the router.
-func (h *PPPConnectHandler) DeleteSecret(ctx context.Context, req *connect.Request[devicepb.DeletePPPSecretRequest]) (*connect.Response[devicepb.DeletePPPSecretResponse], error) {
+func (h *PPPConnectHandler) DeleteSecret(ctx context.Context, req *connect.Request[polyglotv1.DeletePPPSecretRequest]) (*connect.Response[polyglotv1.DeletePPPSecretResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -106,13 +106,13 @@ func (h *PPPConnectHandler) DeleteSecret(ctx context.Context, req *connect.Reque
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeletePPPSecretResponse{
+	return connect.NewResponse(&polyglotv1.DeletePPPSecretResponse{
 		Message: fmt.Sprintf("secret deleted: output=%s", res.Output),
 	}), nil
 }
 
 // SetSecretDisabled enables or disables a PPPoE secret on the router.
-func (h *PPPConnectHandler) SetSecretDisabled(ctx context.Context, req *connect.Request[devicepb.SetPPPSecretDisabledRequest]) (*connect.Response[devicepb.SetPPPSecretDisabledResponse], error) {
+func (h *PPPConnectHandler) SetSecretDisabled(ctx context.Context, req *connect.Request[polyglotv1.SetPPPSecretDisabledRequest]) (*connect.Response[polyglotv1.SetPPPSecretDisabledResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -127,7 +127,7 @@ func (h *PPPConnectHandler) SetSecretDisabled(ctx context.Context, req *connect.
 		status = "disabled"
 	}
 
-	return connect.NewResponse(&devicepb.SetPPPSecretDisabledResponse{
+	return connect.NewResponse(&polyglotv1.SetPPPSecretDisabledResponse{
 		Message: fmt.Sprintf("secret %s successfully", status),
 	}), nil
 }

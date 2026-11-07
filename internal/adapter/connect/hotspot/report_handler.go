@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
@@ -14,7 +14,7 @@ import (
 // summary_only omits the record list, returning just total_income + total
 // (efficient for dashboard polling). With no filters all mikhmon records are
 // returned (decision #3).
-func (h *HotspotConnectHandler) ListReports(ctx context.Context, req *connect.Request[devicepb.ListHotspotReportsRequest]) (*connect.Response[devicepb.ListHotspotReportsResponse], error) {
+func (h *HotspotConnectHandler) ListReports(ctx context.Context, req *connect.Request[polyglotv1.ListHotspotReportsRequest]) (*connect.Response[polyglotv1.ListHotspotReportsResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func (h *HotspotConnectHandler) ListReports(ctx context.Context, req *connect.Re
 		return nil, response.MapDomainError(err)
 	}
 
-	resp := &devicepb.ListHotspotReportsResponse{
+	resp := &polyglotv1.ListHotspotReportsResponse{
 		TotalIncome: SumReportIncome(records),
 		Total:       int32(len(records)),
 	}
@@ -37,7 +37,7 @@ func (h *HotspotConnectHandler) ListReports(ctx context.Context, req *connect.Re
 
 // DeleteReport removes a report script record by RouterOS .id. This is a new
 // operation — legacy Mikhmon had no delete for report records.
-func (h *HotspotConnectHandler) DeleteReport(ctx context.Context, req *connect.Request[devicepb.DeleteHotspotReportRequest]) (*connect.Response[devicepb.DeleteHotspotReportResponse], error) {
+func (h *HotspotConnectHandler) DeleteReport(ctx context.Context, req *connect.Request[polyglotv1.DeleteHotspotReportRequest]) (*connect.Response[polyglotv1.DeleteHotspotReportResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -49,5 +49,5 @@ func (h *HotspotConnectHandler) DeleteReport(ctx context.Context, req *connect.R
 	if _, err := h.useCase.DeleteReport(ctx, driver, req.Msg.RosId); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeleteHotspotReportResponse{Message: "report deleted"}), nil
+	return connect.NewResponse(&polyglotv1.DeleteHotspotReportResponse{Message: "report deleted"}), nil
 }

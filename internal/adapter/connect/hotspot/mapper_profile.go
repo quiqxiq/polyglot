@@ -1,14 +1,14 @@
 package hotspot
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ProfileParamsFromProto maps a HotspotProfileParams proto into
 // port.MikhmonProfileParams ready for the on-login script builder.
-func ProfileParamsFromProto(p *devicepb.HotspotProfileParams) port.MikhmonProfileParams {
+func ProfileParamsFromProto(p *polyglotv1.HotspotProfileParams) port.MikhmonProfileParams {
 	return port.MikhmonProfileParams{
 		Name:            p.Name,
 		AddressPool:     p.AddressPool,
@@ -28,9 +28,9 @@ func ProfileParamsFromProto(p *devicepb.HotspotProfileParams) port.MikhmonProfil
 
 // toProtoHotspotProfile converts a single hotspot profile to proto, parsing
 // the Mikhmon metadata out of the on-login script (mode/price/validity/locks).
-func toProtoHotspotProfile(p port.HotspotUserProfile) *devicepb.HotspotProfile {
+func toProtoHotspotProfile(p port.HotspotUserProfile) *polyglotv1.HotspotProfile {
 	meta, _ := domainHotspot.ParseOnLoginScript(p.OnLogin)
-	return &devicepb.HotspotProfile{
+	return &polyglotv1.HotspotProfile{
 		Id:           p.RosID,
 		Name:         p.Name,
 		SharedUsers:  p.SharedUsers,
@@ -48,8 +48,8 @@ func toProtoHotspotProfile(p port.HotspotUserProfile) *devicepb.HotspotProfile {
 }
 
 // toProtoHotspotProfiles converts hotspot profile list to proto list.
-func toProtoHotspotProfiles(profiles []port.HotspotUserProfile) []*devicepb.HotspotProfile {
-	pbProfiles := make([]*devicepb.HotspotProfile, len(profiles))
+func toProtoHotspotProfiles(profiles []port.HotspotUserProfile) []*polyglotv1.HotspotProfile {
+	pbProfiles := make([]*polyglotv1.HotspotProfile, len(profiles))
 	for i, p := range profiles {
 		pbProfiles[i] = toProtoHotspotProfile(p)
 	}

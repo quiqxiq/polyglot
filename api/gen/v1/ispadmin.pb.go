@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/ispadmin.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1683,7 +1683,7 @@ const file_v1_ispadmin_proto_rawDesc = "" +
 	"\x0fPullRouterPlans\x12#.polyglot.v1.PullRouterPlansRequest\x1a$.polyglot.v1.PullRouterPlansResponse\x12P\n" +
 	"\vCommitPlans\x12\x1f.polyglot.v1.CommitPlansRequest\x1a .polyglot.v1.CommitPlansResponse\x12h\n" +
 	"\x13PullRouterCustomers\x12'.polyglot.v1.PullRouterCustomersRequest\x1a(.polyglot.v1.PullRouterCustomersResponse\x12\\\n" +
-	"\x0fCommitCustomers\x12#.polyglot.v1.CommitCustomersRequest\x1a$.polyglot.v1.CommitCustomersResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0fCommitCustomers\x12#.polyglot.v1.CommitCustomersRequest\x1a$.polyglot.v1.CommitCustomersResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_ispadmin_proto_rawDescOnce sync.Once

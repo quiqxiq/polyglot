@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -25,7 +25,7 @@ func NewPlanConnectHandler(planUC *planUC.ManagePlanUseCase) *PlanConnectHandler
 }
 
 // ListPlans lists service plans.
-func (h *PlanConnectHandler) ListPlans(ctx context.Context, req *connect.Request[devicepb.ListPlansRequest]) (*connect.Response[devicepb.ListPlansResponse], error) {
+func (h *PlanConnectHandler) ListPlans(ctx context.Context, req *connect.Request[polyglotv1.ListPlansRequest]) (*connect.Response[polyglotv1.ListPlansResponse], error) {
 	if h.planUC == nil {
 		return nil, response.Unavailable("plan usecase unavailable")
 	}
@@ -33,13 +33,13 @@ func (h *PlanConnectHandler) ListPlans(ctx context.Context, req *connect.Request
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListPlansResponse{
+	return connect.NewResponse(&polyglotv1.ListPlansResponse{
 		Plans: ToProtoPlanList(plans),
 	}), nil
 }
 
 // GetPlan retrieves a single plan by identifier.
-func (h *PlanConnectHandler) GetPlan(ctx context.Context, req *connect.Request[devicepb.GetPlanRequest]) (*connect.Response[devicepb.GetPlanResponse], error) {
+func (h *PlanConnectHandler) GetPlan(ctx context.Context, req *connect.Request[polyglotv1.GetPlanRequest]) (*connect.Response[polyglotv1.GetPlanResponse], error) {
 	if h.planUC == nil {
 		return nil, response.Unavailable("plan usecase unavailable")
 	}
@@ -47,13 +47,13 @@ func (h *PlanConnectHandler) GetPlan(ctx context.Context, req *connect.Request[d
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetPlanResponse{
+	return connect.NewResponse(&polyglotv1.GetPlanResponse{
 		Plan: ToProtoPlan(&pl),
 	}), nil
 }
 
 // CreatePlan creates a new plan.
-func (h *PlanConnectHandler) CreatePlan(ctx context.Context, req *connect.Request[devicepb.CreatePlanRequest]) (*connect.Response[devicepb.CreatePlanResponse], error) {
+func (h *PlanConnectHandler) CreatePlan(ctx context.Context, req *connect.Request[polyglotv1.CreatePlanRequest]) (*connect.Response[polyglotv1.CreatePlanResponse], error) {
 	if h.planUC == nil {
 		return nil, response.Unavailable("plan usecase unavailable")
 	}
@@ -62,13 +62,13 @@ func (h *PlanConnectHandler) CreatePlan(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CreatePlanResponse{
+	return connect.NewResponse(&polyglotv1.CreatePlanResponse{
 		Plan: ToProtoPlan(&created),
 	}), nil
 }
 
 // UpdatePlan updates an existing plan.
-func (h *PlanConnectHandler) UpdatePlan(ctx context.Context, req *connect.Request[devicepb.UpdatePlanRequest]) (*connect.Response[devicepb.UpdatePlanResponse], error) {
+func (h *PlanConnectHandler) UpdatePlan(ctx context.Context, req *connect.Request[polyglotv1.UpdatePlanRequest]) (*connect.Response[polyglotv1.UpdatePlanResponse], error) {
 	if h.planUC == nil {
 		return nil, response.Unavailable("plan usecase unavailable")
 	}
@@ -77,20 +77,20 @@ func (h *PlanConnectHandler) UpdatePlan(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.UpdatePlanResponse{
+	return connect.NewResponse(&polyglotv1.UpdatePlanResponse{
 		Plan: ToProtoPlan(&updated),
 	}), nil
 }
 
 // DeletePlan deletes an existing plan.
-func (h *PlanConnectHandler) DeletePlan(ctx context.Context, req *connect.Request[devicepb.DeletePlanRequest]) (*connect.Response[devicepb.DeletePlanResponse], error) {
+func (h *PlanConnectHandler) DeletePlan(ctx context.Context, req *connect.Request[polyglotv1.DeletePlanRequest]) (*connect.Response[polyglotv1.DeletePlanResponse], error) {
 	if h.planUC == nil {
 		return nil, response.Unavailable("plan usecase unavailable")
 	}
 	if err := h.planUC.Delete(ctx, req.Msg.Id, req.Msg.DeviceId); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeletePlanResponse{
+	return connect.NewResponse(&polyglotv1.DeletePlanResponse{
 		Message: "Plan deleted successfully",
 	}), nil
 }

@@ -302,15 +302,15 @@ Setiap modul ConnectRPC dibagi menjadi minimal 3 file:
 package customer
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 )
 
-func DomainUserToPb(u *customer.User) *devicepb.User {
+func DomainUserToPb(u *customer.User) *polyglotv1.User {
 	if u == nil {
 		return nil
 	}
-	return &devicepb.User{
+	return &polyglotv1.User{
 		Id:        u.ID,
 		Username:  u.Username,
 		Email:     u.Email,
@@ -330,7 +330,7 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -343,12 +343,12 @@ func NewUserConnectHandler(uc *userUC.ManageUserUseCase) *UserConnectHandler {
 	return &UserConnectHandler{useCase: uc}
 }
 
-func (h *UserConnectHandler) GetUser(ctx context.Context, req *connect.Request[devicepb.GetUserRequest]) (*connect.Response[devicepb.GetUserResponse], error) {
+func (h *UserConnectHandler) GetUser(ctx context.Context, req *connect.Request[polyglotv1.GetUserRequest]) (*connect.Response[polyglotv1.GetUserResponse], error) {
 	u, err := h.useCase.GetUser(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetUserResponse{
+	return connect.NewResponse(&polyglotv1.GetUserResponse{
 		User: DomainUserToPb(u),
 	}), nil
 }

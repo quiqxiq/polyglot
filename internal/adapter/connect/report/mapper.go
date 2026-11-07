@@ -3,14 +3,14 @@ package report
 import (
 	"encoding/json"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainReporting "github.com/quixiq/polyglot/internal/domain/reporting"
 )
 
 type doubleAlias = float64
 
-func toProtoSummary(period string, snaps []domainReporting.DailyFinancialSnapshot) *devicepb.ReportSummary {
-	sum := &devicepb.ReportSummary{
+func toProtoSummary(period string, snaps []domainReporting.DailyFinancialSnapshot) *polyglotv1.ReportSummary {
+	sum := &polyglotv1.ReportSummary{
 		Period: period, CashBalances: map[string]doubleAlias{},
 	}
 	for _, s := range snaps {

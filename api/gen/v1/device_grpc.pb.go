@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: v1/device.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	context "context"

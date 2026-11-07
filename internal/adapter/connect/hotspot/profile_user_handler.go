@@ -5,12 +5,12 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
-func (h *HotspotConnectHandler) ListProfiles(ctx context.Context, req *connect.Request[devicepb.ListHotspotProfilesRequest]) (*connect.Response[devicepb.ListHotspotProfilesResponse], error) {
+func (h *HotspotConnectHandler) ListProfiles(ctx context.Context, req *connect.Request[polyglotv1.ListHotspotProfilesRequest]) (*connect.Response[polyglotv1.ListHotspotProfilesResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -21,12 +21,12 @@ func (h *HotspotConnectHandler) ListProfiles(ctx context.Context, req *connect.R
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListHotspotProfilesResponse{
+	return connect.NewResponse(&polyglotv1.ListHotspotProfilesResponse{
 		Profiles: toProtoHotspotProfiles(profiles),
 	}), nil
 }
 
-func (h *HotspotConnectHandler) ListUsers(ctx context.Context, req *connect.Request[devicepb.ListHotspotUsersRequest]) (*connect.Response[devicepb.ListHotspotUsersResponse], error) {
+func (h *HotspotConnectHandler) ListUsers(ctx context.Context, req *connect.Request[polyglotv1.ListHotspotUsersRequest]) (*connect.Response[polyglotv1.ListHotspotUsersResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (h *HotspotConnectHandler) ListUsers(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListHotspotUsersResponse{
+	return connect.NewResponse(&polyglotv1.ListHotspotUsersResponse{
 		Users: toProtoHotspotUsers(users),
 	}), nil
 }

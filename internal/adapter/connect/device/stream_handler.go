@@ -12,7 +12,7 @@ import (
 	"connectrpc.com/connect"
 	"google.golang.org/protobuf/proto"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/fault"
@@ -22,15 +22,15 @@ import (
 
 type deviceStatusStreamState struct {
 	mu       sync.Mutex
-	metrics  *devicepb.DeviceTestMetrics
-	ifaceMap map[string]*devicepb.DeviceInterfaceInfo
+	metrics  *polyglotv1.DeviceTestMetrics
+	ifaceMap map[string]*polyglotv1.DeviceInterfaceInfo
 }
 
 // StreamDeviceStatus streams device status updates continuously using native RouterOS events.
 func (h *DeviceConnectHandler) StreamDeviceStatus(
 	ctx context.Context,
-	req *connect.Request[devicepb.StreamDeviceStatusRequest],
-	stream *connect.ServerStream[devicepb.DeviceStatusFrame],
+	req *connect.Request[polyglotv1.StreamDeviceStatusRequest],
+	stream *connect.ServerStream[polyglotv1.DeviceStatusFrame],
 ) error {
 	if req.Msg.Id == "" {
 		return response.InvalidArgument("device id is required")
@@ -41,7 +41,7 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 		return response.MapDomainError(err)
 	}
 
-	frame := &devicepb.DeviceStatusFrame{
+	frame := &polyglotv1.DeviceStatusFrame{
 		Device: DomainToPb(dev),
 	}
 
@@ -69,7 +69,7 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 	}
 	pbIfaces := ToProtoInterfaceDetails(initialRes.InterfaceDetails)
 
-	metrics := &devicepb.DeviceTestMetrics{
+	metrics := &polyglotv1.DeviceTestMetrics{
 		DeviceId:      dev.ID,
 		Status:        initialRes.Status,
 		LatencyMs:     initialRes.LatencyMS,
@@ -98,7 +98,7 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 		return nil
 	}
 
-	ifaceMap := make(map[string]*devicepb.DeviceInterfaceInfo, len(pbIfaces))
+	ifaceMap := make(map[string]*polyglotv1.DeviceInterfaceInfo, len(pbIfaces))
 	for _, ifc := range pbIfaces {
 		if ifc != nil && ifc.Name != "" {
 			ifaceMap[ifc.Name] = ifc
@@ -181,7 +181,7 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 			if ifc.Name == "" {
 				continue
 			}
-			state.ifaceMap[ifc.Name] = &devicepb.DeviceInterfaceInfo{
+			state.ifaceMap[ifc.Name] = &polyglotv1.DeviceInterfaceInfo{
 				Name:       ifc.Name,
 				Type:       ifc.Type,
 				Disabled:   ifc.Disabled,
@@ -191,7 +191,7 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 		}
 
 		names := make([]string, 0, len(state.ifaceMap))
-		details := make([]*devicepb.DeviceInterfaceInfo, 0, len(state.ifaceMap))
+		details := make([]*polyglotv1.DeviceInterfaceInfo, 0, len(state.ifaceMap))
 		for _, ifc := range state.ifaceMap {
 			names = append(names, ifc.Name)
 			details = append(details, ifc)
@@ -245,14 +245,14 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 			}
 
 			state.mu.Lock()
-			clonedMetrics, ok := proto.Clone(state.metrics).(*devicepb.DeviceTestMetrics)
+			clonedMetrics, ok := proto.Clone(state.metrics).(*polyglotv1.DeviceTestMetrics)
 			state.mu.Unlock()
 
 			if !ok || clonedMetrics == nil {
 				continue
 			}
 
-			if err := stream.Send(&devicepb.DeviceStatusFrame{
+			if err := stream.Send(&polyglotv1.DeviceStatusFrame{
 				Device: DomainToPb(dev),
 				Test:   clonedMetrics,
 			}); err != nil {
@@ -264,8 +264,8 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 
 func (h *DeviceConnectHandler) StreamPing(
 	ctx context.Context,
-	req *connect.Request[devicepb.StreamDevicePingRequest],
-	stream *connect.ServerStream[devicepb.StreamDevicePingFrame],
+	req *connect.Request[polyglotv1.StreamDevicePingRequest],
+	stream *connect.ServerStream[polyglotv1.StreamDevicePingFrame],
 ) error {
 	if req.Msg.Id == "" {
 		return response.InvalidArgument("device id is required")
@@ -344,7 +344,7 @@ func (h *DeviceConnectHandler) StreamPing(
 				avgRTT := ping.ParseDurationMs(row["avg-rtt"])
 				maxRTT := ping.ParseDurationMs(row["max-rtt"])
 
-				frame := &devicepb.StreamDevicePingFrame{
+				frame := &polyglotv1.StreamDevicePingFrame{
 					DeviceId:   dev.ID,
 					Address:    pingTarget,
 					LatencyMs:  latency,
@@ -370,8 +370,8 @@ func (h *DeviceConnectHandler) StreamPing(
 // StreamInterfaceTraffic streams real-time traffic statistics for a specific interface.
 func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 	ctx context.Context,
-	req *connect.Request[devicepb.StreamDeviceTrafficRequest],
-	stream *connect.ServerStream[devicepb.StreamDeviceTrafficFrame],
+	req *connect.Request[polyglotv1.StreamDeviceTrafficRequest],
+	stream *connect.ServerStream[polyglotv1.StreamDeviceTrafficFrame],
 ) error {
 	if req.Msg.Id == "" {
 		return response.InvalidArgument("device id is required")
@@ -420,7 +420,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 			stats := h.streamGW.ParseInterfaceTraffic(res)
 			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
 			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
-			frame := &devicepb.StreamDeviceTrafficFrame{
+			frame := &polyglotv1.StreamDeviceTrafficFrame{
 				DeviceId:      dev.ID,
 				InterfaceName: ifaceName,
 				RxBps:         rx,

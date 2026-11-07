@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	uc "github.com/quixiq/polyglot/internal/usecase/portal"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -18,7 +18,7 @@ func NewPortalConnectHandler(u *uc.UseCase) *PortalConnectHandler {
 	return &PortalConnectHandler{usecase: u}
 }
 
-func (h *PortalConnectHandler) RequestOTP(ctx context.Context, req *connect.Request[devicepb.RequestOTPRequest]) (*connect.Response[devicepb.RequestOTPResponse], error) {
+func (h *PortalConnectHandler) RequestOTP(ctx context.Context, req *connect.Request[polyglotv1.RequestOTPRequest]) (*connect.Response[polyglotv1.RequestOTPResponse], error) {
 	if h.usecase == nil {
 		return nil, response.Unavailable("portal usecase unavailable")
 	}
@@ -26,13 +26,13 @@ func (h *PortalConnectHandler) RequestOTP(ctx context.Context, req *connect.Requ
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RequestOTPResponse{
+	return connect.NewResponse(&polyglotv1.RequestOTPResponse{
 		Message:     "OTP dikirim via WhatsApp ke " + masked,
 		MaskedPhone: masked,
 	}), nil
 }
 
-func (h *PortalConnectHandler) Login(ctx context.Context, req *connect.Request[devicepb.PortalLoginRequest]) (*connect.Response[devicepb.PortalLoginResponse], error) {
+func (h *PortalConnectHandler) Login(ctx context.Context, req *connect.Request[polyglotv1.PortalLoginRequest]) (*connect.Response[polyglotv1.PortalLoginResponse], error) {
 	if h.usecase == nil {
 		return nil, response.Unavailable("portal usecase unavailable")
 	}
@@ -40,14 +40,14 @@ func (h *PortalConnectHandler) Login(ctx context.Context, req *connect.Request[d
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.PortalLoginResponse{
+	return connect.NewResponse(&polyglotv1.PortalLoginResponse{
 		Token:         token,
 		ExpiresAtUnix: expiresAt.Unix(),
 		Customer:      toProtoCustomerPortal(&cust),
 	}), nil
 }
 
-func (h *PortalConnectHandler) Overview(ctx context.Context, req *connect.Request[devicepb.PortalOverviewRequest]) (*connect.Response[devicepb.PortalOverviewResponse], error) {
+func (h *PortalConnectHandler) Overview(ctx context.Context, req *connect.Request[polyglotv1.PortalOverviewRequest]) (*connect.Response[polyglotv1.PortalOverviewResponse], error) {
 	if h.usecase == nil {
 		return nil, response.Unavailable("portal usecase unavailable")
 	}
@@ -59,7 +59,7 @@ func (h *PortalConnectHandler) Overview(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	resp := &devicepb.PortalOverviewResponse{
+	resp := &polyglotv1.PortalOverviewResponse{
 		Customer:     toProtoCustomerPortal(&ov.Customer),
 		Status:       ov.Status,
 		PaymentUrl:   ov.PaymentURL,
@@ -71,7 +71,7 @@ func (h *PortalConnectHandler) Overview(ctx context.Context, req *connect.Reques
 	return connect.NewResponse(resp), nil
 }
 
-func (h *PortalConnectHandler) MyInvoices(ctx context.Context, req *connect.Request[devicepb.MyInvoicesRequest]) (*connect.Response[devicepb.MyInvoicesResponse], error) {
+func (h *PortalConnectHandler) MyInvoices(ctx context.Context, req *connect.Request[polyglotv1.MyInvoicesRequest]) (*connect.Response[polyglotv1.MyInvoicesResponse], error) {
 	if h.usecase == nil {
 		return nil, response.Unavailable("portal usecase unavailable")
 	}
@@ -83,12 +83,12 @@ func (h *PortalConnectHandler) MyInvoices(ctx context.Context, req *connect.Requ
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.MyInvoicesResponse{
+	return connect.NewResponse(&polyglotv1.MyInvoicesResponse{
 		Invoices: toProtoInvoicePortalList(invoices),
 	}), nil
 }
 
-func (h *PortalConnectHandler) MyPayments(ctx context.Context, req *connect.Request[devicepb.MyPaymentsRequest]) (*connect.Response[devicepb.MyPaymentsResponse], error) {
+func (h *PortalConnectHandler) MyPayments(ctx context.Context, req *connect.Request[polyglotv1.MyPaymentsRequest]) (*connect.Response[polyglotv1.MyPaymentsResponse], error) {
 	if h.usecase == nil {
 		return nil, response.Unavailable("portal usecase unavailable")
 	}
@@ -104,15 +104,15 @@ func (h *PortalConnectHandler) MyPayments(ctx context.Context, req *connect.Requ
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.MyPaymentsResponse{
+	return connect.NewResponse(&polyglotv1.MyPaymentsResponse{
 		Payments: toProtoPaymentEntries(payments),
 	}), nil
 }
 
-func (h *PortalConnectHandler) Logout(ctx context.Context, req *connect.Request[devicepb.PortalLogoutRequest]) (*connect.Response[devicepb.PortalLogoutResponse], error) {
+func (h *PortalConnectHandler) Logout(ctx context.Context, req *connect.Request[polyglotv1.PortalLogoutRequest]) (*connect.Response[polyglotv1.PortalLogoutResponse], error) {
 	if h.usecase == nil {
 		return nil, response.Unavailable("portal usecase unavailable")
 	}
 	_ = h.usecase.Logout(ctx, req.Msg.Token)
-	return connect.NewResponse(&devicepb.PortalLogoutResponse{Message: "logged out"}), nil
+	return connect.NewResponse(&polyglotv1.PortalLogoutResponse{Message: "logged out"}), nil
 }

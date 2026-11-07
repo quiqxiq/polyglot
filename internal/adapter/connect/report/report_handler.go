@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	reportUC "github.com/quixiq/polyglot/internal/usecase/report"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -19,7 +19,7 @@ func NewReportConnectHandler(uc *reportUC.ManageReportUseCase) *ReportConnectHan
 	return &ReportConnectHandler{useCase: uc}
 }
 
-func (h *ReportConnectHandler) DailyReport(ctx context.Context, req *connect.Request[devicepb.DailyReportRequest]) (*connect.Response[devicepb.DailyReportResponse], error) {
+func (h *ReportConnectHandler) DailyReport(ctx context.Context, req *connect.Request[polyglotv1.DailyReportRequest]) (*connect.Response[polyglotv1.DailyReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -27,12 +27,12 @@ func (h *ReportConnectHandler) DailyReport(ctx context.Context, req *connect.Req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DailyReportResponse{
+	return connect.NewResponse(&polyglotv1.DailyReportResponse{
 		Summary: toProtoSummary(period, snaps),
 	}), nil
 }
 
-func (h *ReportConnectHandler) MonthlyReport(ctx context.Context, req *connect.Request[devicepb.MonthlyReportRequest]) (*connect.Response[devicepb.MonthlyReportResponse], error) {
+func (h *ReportConnectHandler) MonthlyReport(ctx context.Context, req *connect.Request[polyglotv1.MonthlyReportRequest]) (*connect.Response[polyglotv1.MonthlyReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -40,12 +40,12 @@ func (h *ReportConnectHandler) MonthlyReport(ctx context.Context, req *connect.R
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.MonthlyReportResponse{
+	return connect.NewResponse(&polyglotv1.MonthlyReportResponse{
 		Summary: toProtoSummary(period, snaps),
 	}), nil
 }
 
-func (h *ReportConnectHandler) YearlyReport(ctx context.Context, req *connect.Request[devicepb.YearlyReportRequest]) (*connect.Response[devicepb.YearlyReportResponse], error) {
+func (h *ReportConnectHandler) YearlyReport(ctx context.Context, req *connect.Request[polyglotv1.YearlyReportRequest]) (*connect.Response[polyglotv1.YearlyReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -53,12 +53,12 @@ func (h *ReportConnectHandler) YearlyReport(ctx context.Context, req *connect.Re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.YearlyReportResponse{
+	return connect.NewResponse(&polyglotv1.YearlyReportResponse{
 		Summary: toProtoSummary(period, snaps),
 	}), nil
 }
 
-func (h *ReportConnectHandler) RefreshSnapshot(ctx context.Context, req *connect.Request[devicepb.RefreshSnapshotRequest]) (*connect.Response[devicepb.RefreshSnapshotResponse], error) {
+func (h *ReportConnectHandler) RefreshSnapshot(ctx context.Context, req *connect.Request[polyglotv1.RefreshSnapshotRequest]) (*connect.Response[polyglotv1.RefreshSnapshotResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -66,14 +66,14 @@ func (h *ReportConnectHandler) RefreshSnapshot(ctx context.Context, req *connect
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RefreshSnapshotResponse{
+	return connect.NewResponse(&polyglotv1.RefreshSnapshotResponse{
 		Message: "Snapshot refreshed",
 		Date:    dateStr,
 	}), nil
 }
 
 // ARAging mengembalikan umur piutang tagihan pelanggan.
-func (h *ReportConnectHandler) ARAging(ctx context.Context, req *connect.Request[devicepb.ARAgingRequest]) (*connect.Response[devicepb.ARAgingResponse], error) {
+func (h *ReportConnectHandler) ARAging(ctx context.Context, req *connect.Request[polyglotv1.ARAgingRequest]) (*connect.Response[polyglotv1.ARAgingResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -81,15 +81,15 @@ func (h *ReportConnectHandler) ARAging(ctx context.Context, req *connect.Request
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	buckets := make([]*devicepb.ARAgingBucket, len(report.Rows))
+	buckets := make([]*polyglotv1.ARAgingBucket, len(report.Rows))
 	for i := range report.Rows {
-		buckets[i] = &devicepb.ARAgingBucket{
+		buckets[i] = &polyglotv1.ARAgingBucket{
 			Bucket:       report.Rows[i].Bucket,
 			InvoiceCount: int32(report.Rows[i].InvoiceCount),
 			Outstanding:  report.Rows[i].Outstanding,
 		}
 	}
-	return connect.NewResponse(&devicepb.ARAgingResponse{
+	return connect.NewResponse(&polyglotv1.ARAgingResponse{
 		AsOf:             report.AsOf.Format("2006-01-02"),
 		Buckets:          buckets,
 		TotalCount:       int32(report.TotalCount),
@@ -98,7 +98,7 @@ func (h *ReportConnectHandler) ARAging(ctx context.Context, req *connect.Request
 }
 
 // GatewayReconciliation membandingkan transaksi gateway dengan buku kas.
-func (h *ReportConnectHandler) GatewayReconciliation(ctx context.Context, req *connect.Request[devicepb.GatewayReconciliationRequest]) (*connect.Response[devicepb.GatewayReconciliationResponse], error) {
+func (h *ReportConnectHandler) GatewayReconciliation(ctx context.Context, req *connect.Request[polyglotv1.GatewayReconciliationRequest]) (*connect.Response[polyglotv1.GatewayReconciliationResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -106,10 +106,10 @@ func (h *ReportConnectHandler) GatewayReconciliation(ctx context.Context, req *c
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	rows := make([]*devicepb.GatewayReconciliationRow, len(report.Rows))
+	rows := make([]*polyglotv1.GatewayReconciliationRow, len(report.Rows))
 	for i := range report.Rows {
 		row := report.Rows[i]
-		rows[i] = &devicepb.GatewayReconciliationRow{
+		rows[i] = &polyglotv1.GatewayReconciliationRow{
 			Gateway:          row.Gateway,
 			TransactionCount: int32(row.TransactionCount),
 			GatewayAmount:    row.GatewayAmount,
@@ -118,7 +118,7 @@ func (h *ReportConnectHandler) GatewayReconciliation(ctx context.Context, req *c
 			Difference:       row.GatewayAmount - row.RecordedAmount,
 		}
 	}
-	return connect.NewResponse(&devicepb.GatewayReconciliationResponse{
+	return connect.NewResponse(&polyglotv1.GatewayReconciliationResponse{
 		From:          report.From.Format("2006-01-02"),
 		To:            report.To.Format("2006-01-02"),
 		Rows:          rows,
@@ -129,7 +129,7 @@ func (h *ReportConnectHandler) GatewayReconciliation(ctx context.Context, req *c
 }
 
 // PSBStats mengembalikan statistik efisiensi & durasi PSB.
-func (h *ReportConnectHandler) PSBStats(ctx context.Context, req *connect.Request[devicepb.PSBStatsRequest]) (*connect.Response[devicepb.PSBStatsResponse], error) {
+func (h *ReportConnectHandler) PSBStats(ctx context.Context, req *connect.Request[polyglotv1.PSBStatsRequest]) (*connect.Response[polyglotv1.PSBStatsResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -137,14 +137,14 @@ func (h *ReportConnectHandler) PSBStats(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	statuses := make([]*devicepb.PSBStatusCount, len(report.ByStatus))
+	statuses := make([]*polyglotv1.PSBStatusCount, len(report.ByStatus))
 	for i := range report.ByStatus {
-		statuses[i] = &devicepb.PSBStatusCount{
+		statuses[i] = &polyglotv1.PSBStatusCount{
 			Status: report.ByStatus[i].Status,
 			Count:  int32(report.ByStatus[i].Count),
 		}
 	}
-	return connect.NewResponse(&devicepb.PSBStatsResponse{
+	return connect.NewResponse(&polyglotv1.PSBStatsResponse{
 		From:            report.From.Format("2006-01-02"),
 		To:              report.To.Format("2006-01-02"),
 		Total:           int32(report.Total),
@@ -158,7 +158,7 @@ func (h *ReportConnectHandler) PSBStats(ctx context.Context, req *connect.Reques
 }
 
 // TaxReport returns PPN tax recap for a billing period.
-func (h *ReportConnectHandler) TaxReport(ctx context.Context, req *connect.Request[devicepb.TaxReportRequest]) (*connect.Response[devicepb.TaxReportResponse], error) {
+func (h *ReportConnectHandler) TaxReport(ctx context.Context, req *connect.Request[polyglotv1.TaxReportRequest]) (*connect.Response[polyglotv1.TaxReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -166,9 +166,9 @@ func (h *ReportConnectHandler) TaxReport(ctx context.Context, req *connect.Reque
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	rows := make([]*devicepb.TaxRow, len(report.Rows))
+	rows := make([]*polyglotv1.TaxRow, len(report.Rows))
 	for i, r := range report.Rows {
-		rows[i] = &devicepb.TaxRow{
+		rows[i] = &polyglotv1.TaxRow{
 			Period:       r.Period,
 			InvoiceCount: int32(r.InvoiceCount),
 			Subtotal:     r.Subtotal,
@@ -178,7 +178,7 @@ func (h *ReportConnectHandler) TaxReport(ctx context.Context, req *connect.Reque
 			PaidTax:      r.PaidTax,
 		}
 	}
-	return connect.NewResponse(&devicepb.TaxReportResponse{
+	return connect.NewResponse(&polyglotv1.TaxReportResponse{
 		Period:        report.Period,
 		Rows:          rows,
 		TotalSubtotal: report.TotalSubtotal,
@@ -189,7 +189,7 @@ func (h *ReportConnectHandler) TaxReport(ctx context.Context, req *connect.Reque
 }
 
 // SalesReport returns sales and revenue recap by service plan.
-func (h *ReportConnectHandler) SalesReport(ctx context.Context, req *connect.Request[devicepb.SalesReportRequest]) (*connect.Response[devicepb.SalesReportResponse], error) {
+func (h *ReportConnectHandler) SalesReport(ctx context.Context, req *connect.Request[polyglotv1.SalesReportRequest]) (*connect.Response[polyglotv1.SalesReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -197,9 +197,9 @@ func (h *ReportConnectHandler) SalesReport(ctx context.Context, req *connect.Req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	rows := make([]*devicepb.SalesRow, len(report.Rows))
+	rows := make([]*polyglotv1.SalesRow, len(report.Rows))
 	for i, r := range report.Rows {
-		rows[i] = &devicepb.SalesRow{
+		rows[i] = &polyglotv1.SalesRow{
 			PlanName:     r.PlanName,
 			ServiceType:  r.ServiceType,
 			InvoiceCount: int32(r.InvoiceCount),
@@ -207,7 +207,7 @@ func (h *ReportConnectHandler) SalesReport(ctx context.Context, req *connect.Req
 			TotalPaid:    r.TotalPaid,
 		}
 	}
-	return connect.NewResponse(&devicepb.SalesReportResponse{
+	return connect.NewResponse(&polyglotv1.SalesReportResponse{
 		Period:        report.Period,
 		Rows:          rows,
 		TotalBilled:   report.TotalBilled,
@@ -218,7 +218,7 @@ func (h *ReportConnectHandler) SalesReport(ctx context.Context, req *connect.Req
 }
 
 // CollectionReport returns collection performance and overdue rates.
-func (h *ReportConnectHandler) CollectionReport(ctx context.Context, req *connect.Request[devicepb.CollectionReportRequest]) (*connect.Response[devicepb.CollectionReportResponse], error) {
+func (h *ReportConnectHandler) CollectionReport(ctx context.Context, req *connect.Request[polyglotv1.CollectionReportRequest]) (*connect.Response[polyglotv1.CollectionReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -226,7 +226,7 @@ func (h *ReportConnectHandler) CollectionReport(ctx context.Context, req *connec
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CollectionReportResponse{
+	return connect.NewResponse(&polyglotv1.CollectionReportResponse{
 		Period:           report.Period,
 		TotalInvoices:    int32(report.TotalInvoices),
 		PaidInvoices:     int32(report.PaidInvoices),
@@ -239,7 +239,7 @@ func (h *ReportConnectHandler) CollectionReport(ctx context.Context, req *connec
 }
 
 // CashflowReport returns cash inflows and outflows by category.
-func (h *ReportConnectHandler) CashflowReport(ctx context.Context, req *connect.Request[devicepb.CashflowReportRequest]) (*connect.Response[devicepb.CashflowReportResponse], error) {
+func (h *ReportConnectHandler) CashflowReport(ctx context.Context, req *connect.Request[polyglotv1.CashflowReportRequest]) (*connect.Response[polyglotv1.CashflowReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -247,16 +247,16 @@ func (h *ReportConnectHandler) CashflowReport(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	rows := make([]*devicepb.CashflowRow, len(report.Rows))
+	rows := make([]*polyglotv1.CashflowRow, len(report.Rows))
 	for i, r := range report.Rows {
-		rows[i] = &devicepb.CashflowRow{
+		rows[i] = &polyglotv1.CashflowRow{
 			CategoryName: r.CategoryName,
 			Direction:    r.Direction,
 			TrxCount:     int32(r.TrxCount),
 			TotalAmount:  r.TotalAmount,
 		}
 	}
-	return connect.NewResponse(&devicepb.CashflowReportResponse{
+	return connect.NewResponse(&polyglotv1.CashflowReportResponse{
 		From:        report.From.Format("2006-01-02"),
 		To:          report.To.Format("2006-01-02"),
 		Rows:        rows,
@@ -267,7 +267,7 @@ func (h *ReportConnectHandler) CashflowReport(ctx context.Context, req *connect.
 }
 
 // AgingDetail returns detailed overdue balances per customer.
-func (h *ReportConnectHandler) AgingDetail(ctx context.Context, req *connect.Request[devicepb.AgingDetailRequest]) (*connect.Response[devicepb.AgingDetailResponse], error) {
+func (h *ReportConnectHandler) AgingDetail(ctx context.Context, req *connect.Request[polyglotv1.AgingDetailRequest]) (*connect.Response[polyglotv1.AgingDetailResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -275,9 +275,9 @@ func (h *ReportConnectHandler) AgingDetail(ctx context.Context, req *connect.Req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	rows := make([]*devicepb.AgingDetailRow, len(report.Rows))
+	rows := make([]*polyglotv1.AgingDetailRow, len(report.Rows))
 	for i, r := range report.Rows {
-		rows[i] = &devicepb.AgingDetailRow{
+		rows[i] = &polyglotv1.AgingDetailRow{
 			CustomerId:    r.CustomerID,
 			CustomerName:  r.CustomerName,
 			Phone:         r.Phone,
@@ -287,7 +287,7 @@ func (h *ReportConnectHandler) AgingDetail(ctx context.Context, req *connect.Req
 			DaysOverdue:   int32(r.DaysOverdue),
 		}
 	}
-	return connect.NewResponse(&devicepb.AgingDetailResponse{
+	return connect.NewResponse(&polyglotv1.AgingDetailResponse{
 		AsOf:             report.AsOf.Format("2006-01-02"),
 		Rows:             rows,
 		TotalCustomers:   int32(report.TotalCustomers),
@@ -296,7 +296,7 @@ func (h *ReportConnectHandler) AgingDetail(ctx context.Context, req *connect.Req
 }
 
 // ClosingReport returns closing date summary and operational metrics.
-func (h *ReportConnectHandler) ClosingReport(ctx context.Context, req *connect.Request[devicepb.ClosingReportRequest]) (*connect.Response[devicepb.ClosingReportResponse], error) {
+func (h *ReportConnectHandler) ClosingReport(ctx context.Context, req *connect.Request[polyglotv1.ClosingReportRequest]) (*connect.Response[polyglotv1.ClosingReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -304,7 +304,7 @@ func (h *ReportConnectHandler) ClosingReport(ctx context.Context, req *connect.R
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ClosingReportResponse{
+	return connect.NewResponse(&polyglotv1.ClosingReportResponse{
 		Period:           report.Period,
 		ClosingDateUnix:  report.ClosingDate.Unix(),
 		TotalInvoices:    int32(report.TotalInvoices),
@@ -318,7 +318,7 @@ func (h *ReportConnectHandler) ClosingReport(ctx context.Context, req *connect.R
 }
 
 // ExportReport exports a report in CSV or XLSX format.
-func (h *ReportConnectHandler) ExportReport(ctx context.Context, req *connect.Request[devicepb.ExportReportRequest]) (*connect.Response[devicepb.ExportReportResponse], error) {
+func (h *ReportConnectHandler) ExportReport(ctx context.Context, req *connect.Request[polyglotv1.ExportReportRequest]) (*connect.Response[polyglotv1.ExportReportResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("report usecase unavailable")
 	}
@@ -326,7 +326,7 @@ func (h *ReportConnectHandler) ExportReport(ctx context.Context, req *connect.Re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ExportReportResponse{
+	return connect.NewResponse(&polyglotv1.ExportReportResponse{
 		Payload:     payload,
 		ContentType: contentType,
 		Filename:    filename,

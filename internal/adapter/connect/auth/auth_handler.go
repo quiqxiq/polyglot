@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
@@ -39,7 +39,7 @@ func NewAuthConnectHandler(
 	}
 }
 
-func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[devicepb.LoginRequest]) (*connect.Response[devicepb.LoginResponse], error) {
+func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[polyglotv1.LoginRequest]) (*connect.Response[polyglotv1.LoginResponse], error) {
 	clientIP := clientIPFromRequest(req)
 	res, err := h.authUC.Login(ctx, req.Msg.Username, req.Msg.Password, clientIP)
 	if err != nil {
@@ -49,7 +49,7 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 	profile := DomainUserToProfile(res.User, res.Roles, res.Permissions)
 	now := time.Now()
 
-	resp := connect.NewResponse(&devicepb.LoginResponse{
+	resp := connect.NewResponse(&polyglotv1.LoginResponse{
 		Token:         res.AccessToken,
 		User:          profile,
 		ExpiresAtUnix: now.Add(h.authUC.TokenService().ExpiryDuration()).Unix(),
@@ -62,7 +62,7 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 	return resp, nil
 }
 
-func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[devicepb.GetMeRequest]) (*connect.Response[devicepb.GetMeResponse], error) {
+func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[polyglotv1.GetMeRequest]) (*connect.Response[polyglotv1.GetMeResponse], error) {
 	authHeader := req.Header().Get("Authorization")
 	if authHeader == "" {
 		return nil, response.Unauthenticated("authorization header missing")
@@ -93,10 +93,10 @@ func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[dev
 	perms, _ := h.userUC.GetPermissions(ctx, uid)
 
 	profile := DomainUserToProfile(user, roles, perms)
-	return connect.NewResponse(&devicepb.GetMeResponse{User: profile}), nil
+	return connect.NewResponse(&polyglotv1.GetMeResponse{User: profile}), nil
 }
 
-func (h *AuthConnectHandler) UpdateMe(ctx context.Context, req *connect.Request[devicepb.UpdateMeRequest]) (*connect.Response[devicepb.UpdateMeResponse], error) {
+func (h *AuthConnectHandler) UpdateMe(ctx context.Context, req *connect.Request[polyglotv1.UpdateMeRequest]) (*connect.Response[polyglotv1.UpdateMeResponse], error) {
 	authHeader := req.Header().Get("Authorization")
 	if authHeader == "" {
 		return nil, response.Unauthenticated("authorization header missing")
@@ -125,10 +125,10 @@ func (h *AuthConnectHandler) UpdateMe(ctx context.Context, req *connect.Request[
 	perms, _ := h.userUC.GetPermissions(ctx, uid)
 
 	profile := DomainUserToProfile(user, roles, perms)
-	return connect.NewResponse(&devicepb.UpdateMeResponse{User: profile}), nil
+	return connect.NewResponse(&polyglotv1.UpdateMeResponse{User: profile}), nil
 }
 
-func (h *AuthConnectHandler) ChangePassword(ctx context.Context, req *connect.Request[devicepb.ChangePasswordRequest]) (*connect.Response[devicepb.ChangePasswordResponse], error) {
+func (h *AuthConnectHandler) ChangePassword(ctx context.Context, req *connect.Request[polyglotv1.ChangePasswordRequest]) (*connect.Response[polyglotv1.ChangePasswordResponse], error) {
 	authHeader := req.Header().Get("Authorization")
 	if authHeader == "" {
 		return nil, response.Unauthenticated("authorization header missing")
@@ -152,13 +152,13 @@ func (h *AuthConnectHandler) ChangePassword(ctx context.Context, req *connect.Re
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ChangePasswordResponse{
+	return connect.NewResponse(&polyglotv1.ChangePasswordResponse{
 		Success: true,
 		Message: "Password updated successfully",
 	}), nil
 }
 
-func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Request[devicepb.RefreshTokenRequest]) (*connect.Response[devicepb.RefreshTokenResponse], error) {
+func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Request[polyglotv1.RefreshTokenRequest]) (*connect.Response[polyglotv1.RefreshTokenResponse], error) {
 	rawToken := req.Msg.RefreshToken
 	if rawToken == "" {
 		rawToken = iauth.ExtractRefreshTokenCookie(req.Header())
@@ -173,7 +173,7 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 	}
 
 	now := time.Now()
-	resp := connect.NewResponse(&devicepb.RefreshTokenResponse{
+	resp := connect.NewResponse(&polyglotv1.RefreshTokenResponse{
 		Token:                res.AccessToken,
 		ExpiresAtUnix:        now.Add(h.authUC.TokenService().ExpiryDuration()).Unix(),
 		RefreshExpiresAtUnix: now.Add(iauth.RefreshTokenLifetime).Unix(),
@@ -186,14 +186,14 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 	return resp, nil
 }
 
-func (h *AuthConnectHandler) Logout(ctx context.Context, req *connect.Request[devicepb.LogoutRequest]) (*connect.Response[devicepb.LogoutResponse], error) {
+func (h *AuthConnectHandler) Logout(ctx context.Context, req *connect.Request[polyglotv1.LogoutRequest]) (*connect.Response[polyglotv1.LogoutResponse], error) {
 	rawToken := iauth.ExtractRefreshTokenCookie(req.Header())
 	if rawToken != "" && h.refreshUC != nil {
 		// best-effort: logout tetap mengembalikan sukses meski revoke refresh token gagal.
 		_ = h.refreshUC.Revoke(ctx, rawToken)
 	}
 
-	resp := connect.NewResponse(&devicepb.LogoutResponse{
+	resp := connect.NewResponse(&polyglotv1.LogoutResponse{
 		Success: true,
 	})
 	iauth.ClearRefreshTokenCookie(resp.Header(), h.secure)

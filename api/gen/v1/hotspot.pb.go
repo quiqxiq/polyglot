@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/hotspot.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -5226,7 +5226,7 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\x13RemoveExpireMonitor\x12'.polyglot.v1.RemoveExpireMonitorRequest\x1a(.polyglot.v1.RemoveExpireMonitorResponse\x12V\n" +
 	"\rListTemplates\x12!.polyglot.v1.ListTemplatesRequest\x1a\".polyglot.v1.ListTemplatesResponse\x12e\n" +
 	"\x12GetTemplateSection\x12&.polyglot.v1.GetTemplateSectionRequest\x1a'.polyglot.v1.GetTemplateSectionResponse\x12Y\n" +
-	"\x0eRenderVouchers\x12\".polyglot.v1.RenderVouchersRequest\x1a#.polyglot.v1.RenderVouchersResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0eRenderVouchers\x12\".polyglot.v1.RenderVouchersRequest\x1a#.polyglot.v1.RenderVouchersResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_hotspot_proto_rawDescOnce sync.Once

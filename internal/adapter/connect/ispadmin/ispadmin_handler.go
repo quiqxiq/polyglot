@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
@@ -46,13 +46,13 @@ func NewISPAdminConnectHandler(
 }
 
 // ImportFile parses an uploaded CSV or XLSX file and upserts subscriber records.
-func (h *ISPAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Request[devicepb.ImportFileRequest]) (*connect.Response[devicepb.ImportFileResponse], error) {
+func (h *ISPAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Request[polyglotv1.ImportFileRequest]) (*connect.Response[polyglotv1.ImportFileResponse], error) {
 	if h.upsert == nil {
 		return nil, response.Unavailable("importer unavailable")
 	}
 	var rows []importer.Row
 	var err error
-	if req.Msg.Format == devicepb.ImportFormat_IMPORT_FORMAT_XLSX {
+	if req.Msg.Format == polyglotv1.ImportFormat_IMPORT_FORMAT_XLSX {
 		rows, err = importer.ParseXLSX(req.Msg.Payload)
 	} else {
 		rows, err = importer.ParseCSV(bytes.NewReader(req.Msg.Payload))
@@ -75,16 +75,16 @@ func (h *ISPAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 			}
 			preview = append(preview, fmt.Sprintf("%s | %s | %s | %s", r.Name, r.Username, r.PlanName, r.DeviceName))
 		}
-		return connect.NewResponse(&devicepb.ImportFileResponse{
-			Result:           &devicepb.ImportResult{RowsTotal: int32(len(rows))},
+		return connect.NewResponse(&polyglotv1.ImportFileResponse{
+			Result:           &polyglotv1.ImportResult{RowsTotal: int32(len(rows))},
 			PreviewRows:      preview,
 			ValidationErrors: errMsgs,
 		}), nil
 	}
 
 	if len(verrs) > 0 {
-		return connect.NewResponse(&devicepb.ImportFileResponse{
-			Result:           &devicepb.ImportResult{RowsTotal: int32(len(rows))},
+		return connect.NewResponse(&polyglotv1.ImportFileResponse{
+			Result:           &polyglotv1.ImportResult{RowsTotal: int32(len(rows))},
 			ValidationErrors: errMsgs,
 		}), nil
 	}
@@ -93,13 +93,13 @@ func (h *ISPAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 	if uerr != nil {
 		return nil, response.MapDomainError(uerr)
 	}
-	return connect.NewResponse(&devicepb.ImportFileResponse{
+	return connect.NewResponse(&polyglotv1.ImportFileResponse{
 		Result: toProtoImportResult(res),
 	}), nil
 }
 
 // ImportRouter pulls PPPoE and/or Hotspot accounts from a connected MikroTik router and registers them.
-func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.Request[devicepb.ImportRouterRequest]) (*connect.Response[devicepb.ImportRouterResponse], error) {
+func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.Request[polyglotv1.ImportRouterRequest]) (*connect.Response[polyglotv1.ImportRouterResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
 		return nil, response.MapDomainError(device.ErrNotFound)
@@ -140,8 +140,8 @@ func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.
 			}
 			preview = append(preview, fmt.Sprintf("[%s] %s @ %s (%s)", r.ServiceType, r.Username, r.PlanName, r.Status))
 		}
-		return connect.NewResponse(&devicepb.ImportRouterResponse{
-			Result:                   &devicepb.ImportResult{RowsTotal: int32(len(rows))},
+		return connect.NewResponse(&polyglotv1.ImportRouterResponse{
+			Result:                   &polyglotv1.ImportResult{RowsTotal: int32(len(rows))},
 			PreviewRows:              preview,
 			ValidationErrors:         errMsgs,
 			PppoeDetected:            int32(pullRes.PPPoEDetected),
@@ -152,8 +152,8 @@ func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.
 	}
 
 	if len(verrs) > 0 {
-		return connect.NewResponse(&devicepb.ImportRouterResponse{
-			Result:           &devicepb.ImportResult{RowsTotal: int32(len(rows))},
+		return connect.NewResponse(&polyglotv1.ImportRouterResponse{
+			Result:           &polyglotv1.ImportResult{RowsTotal: int32(len(rows))},
 			ValidationErrors: errMsgs,
 		}), nil
 	}
@@ -162,7 +162,7 @@ func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.
 	if uerr != nil {
 		return nil, response.MapDomainError(uerr)
 	}
-	return connect.NewResponse(&devicepb.ImportRouterResponse{
+	return connect.NewResponse(&polyglotv1.ImportRouterResponse{
 		Result:                   toProtoImportResult(res),
 		PppoeDetected:            int32(pullRes.PPPoEDetected),
 		HotspotPermanentDetected: int32(pullRes.HotspotPermanentDetected),
@@ -172,14 +172,14 @@ func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.
 }
 
 // ExportCustomers dumps customer records to CSV or XLSX format.
-func (h *ISPAdminConnectHandler) ExportCustomers(ctx context.Context, req *connect.Request[devicepb.ExportCustomersRequest]) (*connect.Response[devicepb.ExportCustomersResponse], error) {
+func (h *ISPAdminConnectHandler) ExportCustomers(ctx context.Context, req *connect.Request[polyglotv1.ExportCustomersRequest]) (*connect.Response[polyglotv1.ExportCustomersResponse], error) {
 	if h.exporter == nil {
 		return nil, response.Unavailable("exporter unavailable")
 	}
 	format := "csv"
 	contentType := "text/csv"
 	filename := "pelanggan.csv"
-	if req.Msg.Format == devicepb.ImportFormat_IMPORT_FORMAT_XLSX {
+	if req.Msg.Format == polyglotv1.ImportFormat_IMPORT_FORMAT_XLSX {
 		format = "xlsx"
 		contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 		filename = "pelanggan.xlsx"
@@ -188,13 +188,13 @@ func (h *ISPAdminConnectHandler) ExportCustomers(ctx context.Context, req *conne
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ExportCustomersResponse{
+	return connect.NewResponse(&polyglotv1.ExportCustomersResponse{
 		Payload: bytesOut, ContentType: contentType, Filename: filename,
 	}), nil
 }
 
 // Reconcile compares router state against database subscriptions and flags mismatches.
-func (h *ISPAdminConnectHandler) Reconcile(ctx context.Context, req *connect.Request[devicepb.ReconcileRequest]) (*connect.Response[devicepb.ReconcileResponse], error) {
+func (h *ISPAdminConnectHandler) Reconcile(ctx context.Context, req *connect.Request[polyglotv1.ReconcileRequest]) (*connect.Response[polyglotv1.ReconcileResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
 		return nil, response.MapDomainError(device.ErrNotFound)
@@ -203,18 +203,18 @@ func (h *ISPAdminConnectHandler) Reconcile(ctx context.Context, req *connect.Req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ReconcileResponse{
+	return connect.NewResponse(&polyglotv1.ReconcileResponse{
 		MissingInDb:     report.MissingInDB,
 		MissingInRouter: report.MissingInRoute,
 		ProfileMismatch: report.ProfileMismatch,
 	}), nil
 }
 
-func toProtoImportResult(res *importer.Result) *devicepb.ImportResult {
+func toProtoImportResult(res *importer.Result) *polyglotv1.ImportResult {
 	if res == nil {
 		return nil
 	}
-	return &devicepb.ImportResult{
+	return &polyglotv1.ImportResult{
 		RowsTotal:            int32(res.RowsTotal),
 		CustomersCreated:     int32(res.CustomersCreated),
 		CustomersUpdated:     int32(res.CustomersUpdated),
@@ -227,8 +227,8 @@ func toProtoImportResult(res *importer.Result) *devicepb.ImportResult {
 // PullRouterPlans mengambil profil PPP dan/atau Hotspot dari router untuk ditampilkan di preview table.
 func (h *ISPAdminConnectHandler) PullRouterPlans(
 	ctx context.Context,
-	req *connect.Request[devicepb.PullRouterPlansRequest],
-) (*connect.Response[devicepb.PullRouterPlansResponse], error) {
+	req *connect.Request[polyglotv1.PullRouterPlansRequest],
+) (*connect.Response[polyglotv1.PullRouterPlansResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
 		return nil, response.MapDomainError(device.ErrNotFound)
@@ -239,9 +239,9 @@ func (h *ISPAdminConnectHandler) PullRouterPlans(
 		return nil, response.MapDomainError(err)
 	}
 
-	protoRows := make([]*devicepb.PlanImportRow, 0, len(rows))
+	protoRows := make([]*polyglotv1.PlanImportRow, 0, len(rows))
 	for _, r := range rows {
-		protoRows = append(protoRows, &devicepb.PlanImportRow{
+		protoRows = append(protoRows, &polyglotv1.PlanImportRow{
 			Name:                  r.Name,
 			ServiceType:           r.ServiceType,
 			RateLimit:             r.RateLimit,
@@ -260,7 +260,7 @@ func (h *ISPAdminConnectHandler) PullRouterPlans(
 		})
 	}
 
-	return connect.NewResponse(&devicepb.PullRouterPlansResponse{
+	return connect.NewResponse(&polyglotv1.PullRouterPlansResponse{
 		Rows:            protoRows,
 		PppoeDetected:   int32(pppoeCount),
 		HotspotDetected: int32(hotspotCount),
@@ -270,8 +270,8 @@ func (h *ISPAdminConnectHandler) PullRouterPlans(
 // CommitPlans mengupsert daftar paket yang telah diedit/dikonfirmasi oleh admin.
 func (h *ISPAdminConnectHandler) CommitPlans(
 	ctx context.Context,
-	req *connect.Request[devicepb.CommitPlansRequest],
-) (*connect.Response[devicepb.CommitPlansResponse], error) {
+	req *connect.Request[polyglotv1.CommitPlansRequest],
+) (*connect.Response[polyglotv1.CommitPlansResponse], error) {
 	if h.upsert == nil {
 		return nil, response.Unavailable("importer unavailable")
 	}
@@ -301,7 +301,7 @@ func (h *ISPAdminConnectHandler) CommitPlans(
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.CommitPlansResponse{
+	return connect.NewResponse(&polyglotv1.CommitPlansResponse{
 		PlansCreated: int32(res.PlansCreated),
 		PlansUpdated: int32(res.PlansUpdated),
 		Errors:       res.Errors,
@@ -311,8 +311,8 @@ func (h *ISPAdminConnectHandler) CommitPlans(
 // PullRouterCustomers mengambil akun pelanggan & langganan terstruktur dari router.
 func (h *ISPAdminConnectHandler) PullRouterCustomers(
 	ctx context.Context,
-	req *connect.Request[devicepb.PullRouterCustomersRequest],
-) (*connect.Response[devicepb.PullRouterCustomersResponse], error) {
+	req *connect.Request[polyglotv1.PullRouterCustomersRequest],
+) (*connect.Response[polyglotv1.PullRouterCustomersResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
 		return nil, response.MapDomainError(device.ErrNotFound)
@@ -331,9 +331,9 @@ func (h *ISPAdminConnectHandler) PullRouterCustomers(
 		return nil, response.MapDomainError(err)
 	}
 
-	protoRows := make([]*devicepb.CustomerSubscriptionImportRow, 0, len(rows))
+	protoRows := make([]*polyglotv1.CustomerSubscriptionImportRow, 0, len(rows))
 	for _, r := range rows {
-		protoRows = append(protoRows, &devicepb.CustomerSubscriptionImportRow{
+		protoRows = append(protoRows, &polyglotv1.CustomerSubscriptionImportRow{
 			CustomerCode:       r.CustomerCode,
 			Name:               r.Name,
 			Phone:              r.Phone,
@@ -359,7 +359,7 @@ func (h *ISPAdminConnectHandler) PullRouterCustomers(
 		})
 	}
 
-	return connect.NewResponse(&devicepb.PullRouterCustomersResponse{
+	return connect.NewResponse(&polyglotv1.PullRouterCustomersResponse{
 		Rows:                     protoRows,
 		PppoeDetected:            int32(pppoeCount),
 		HotspotPermanentDetected: int32(permCount),
@@ -371,8 +371,8 @@ func (h *ISPAdminConnectHandler) PullRouterCustomers(
 // CommitCustomers mengupsert pelanggan & langganan yang telah diedit/dikonfirmasi dari UI.
 func (h *ISPAdminConnectHandler) CommitCustomers(
 	ctx context.Context,
-	req *connect.Request[devicepb.CommitCustomersRequest],
-) (*connect.Response[devicepb.CommitCustomersResponse], error) {
+	req *connect.Request[polyglotv1.CommitCustomersRequest],
+) (*connect.Response[polyglotv1.CommitCustomersResponse], error) {
 	if h.upsert == nil {
 		return nil, response.Unavailable("importer unavailable")
 	}
@@ -409,7 +409,7 @@ func (h *ISPAdminConnectHandler) CommitCustomers(
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.CommitCustomersResponse{
+	return connect.NewResponse(&polyglotv1.CommitCustomersResponse{
 		CustomersCreated:     int32(res.CustomersCreated),
 		CustomersUpdated:     int32(res.CustomersUpdated),
 		SubscriptionsCreated: int32(res.SubscriptionsCreated),

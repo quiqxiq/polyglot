@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/whatsapp.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1801,7 +1801,7 @@ const file_v1_whatsapp_proto_rawDesc = "" +
 	"\tListChats\x12\x1d.polyglot.v1.ListChatsRequest\x1a\x1e.polyglot.v1.ListChatsResponse\x12\\\n" +
 	"\x0fGetChatMessages\x12#.polyglot.v1.GetChatMessagesRequest\x1a$.polyglot.v1.GetChatMessagesResponse\x12S\n" +
 	"\fMarkChatRead\x12 .polyglot.v1.MarkChatReadRequest\x1a!.polyglot.v1.MarkChatReadResponse\x12V\n" +
-	"\rToggleChatBot\x12!.polyglot.v1.ToggleChatBotRequest\x1a\".polyglot.v1.ToggleChatBotResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\rToggleChatBot\x12!.polyglot.v1.ToggleChatBotRequest\x1a\".polyglot.v1.ToggleChatBotResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_whatsapp_proto_rawDescOnce sync.Once

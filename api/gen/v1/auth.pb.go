@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/auth.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -780,7 +780,7 @@ const file_v1_auth_proto_rawDesc = "" +
 	"\bUpdateMe\x12\x1c.polyglot.v1.UpdateMeRequest\x1a\x1d.polyglot.v1.UpdateMeResponse\x12Y\n" +
 	"\x0eChangePassword\x12\".polyglot.v1.ChangePasswordRequest\x1a#.polyglot.v1.ChangePasswordResponse\x12S\n" +
 	"\fRefreshToken\x12 .polyglot.v1.RefreshTokenRequest\x1a!.polyglot.v1.RefreshTokenResponse\x12A\n" +
-	"\x06Logout\x12\x1a.polyglot.v1.LogoutRequest\x1a\x1b.polyglot.v1.LogoutResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x06Logout\x12\x1a.polyglot.v1.LogoutRequest\x1a\x1b.polyglot.v1.LogoutResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_auth_proto_rawDescOnce sync.Once

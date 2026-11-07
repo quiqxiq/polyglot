@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -26,7 +26,7 @@ func NewPaymentConnectHandler(
 	return &PaymentConnectHandler{submissions: submissions, payments: payments}
 }
 
-func toProtoSubmission(s *domainBilling.PaymentSubmission) *devicepb.ManualPaymentSubmission {
+func toProtoSubmission(s *domainBilling.PaymentSubmission) *polyglotv1.ManualPaymentSubmission {
 	if s == nil {
 		return nil
 	}
@@ -38,7 +38,7 @@ func toProtoSubmission(s *domainBilling.PaymentSubmission) *devicepb.ManualPayme
 	if s.PaymentID != nil {
 		paymentID = *s.PaymentID
 	}
-	return &devicepb.ManualPaymentSubmission{
+	return &polyglotv1.ManualPaymentSubmission{
 		Id:              s.ID,
 		InvoiceId:       s.InvoiceID,
 		Amount:          s.Amount,
@@ -55,7 +55,7 @@ func toProtoSubmission(s *domainBilling.PaymentSubmission) *devicepb.ManualPayme
 }
 
 // ResolveManualPayment — PUBLIC: tampilkan ringkasan tagihan untuk kode bayar.
-func (h *PaymentConnectHandler) ResolveManualPayment(ctx context.Context, req *connect.Request[devicepb.ResolveManualPaymentRequest]) (*connect.Response[devicepb.ResolveManualPaymentResponse], error) {
+func (h *PaymentConnectHandler) ResolveManualPayment(ctx context.Context, req *connect.Request[polyglotv1.ResolveManualPaymentRequest]) (*connect.Response[polyglotv1.ResolveManualPaymentResponse], error) {
 	if h.submissions == nil {
 		return nil, response.Unavailable("payment submission usecase unavailable")
 	}
@@ -63,7 +63,7 @@ func (h *PaymentConnectHandler) ResolveManualPayment(ctx context.Context, req *c
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ResolveManualPaymentResponse{
+	return connect.NewResponse(&polyglotv1.ResolveManualPaymentResponse{
 		InvoiceId:     inv.ID,
 		InvoiceNumber: inv.InvoiceNumber,
 		Period:        inv.Period,
@@ -76,7 +76,7 @@ func (h *PaymentConnectHandler) ResolveManualPayment(ctx context.Context, req *c
 }
 
 // SubmitManualPayment — PUBLIC: pelanggan mengunggah bukti transfer via kode bayar.
-func (h *PaymentConnectHandler) SubmitManualPayment(ctx context.Context, req *connect.Request[devicepb.SubmitManualPaymentRequest]) (*connect.Response[devicepb.SubmitManualPaymentResponse], error) {
+func (h *PaymentConnectHandler) SubmitManualPayment(ctx context.Context, req *connect.Request[polyglotv1.SubmitManualPaymentRequest]) (*connect.Response[polyglotv1.SubmitManualPaymentResponse], error) {
 	if h.submissions == nil {
 		return nil, response.Unavailable("payment submission usecase unavailable")
 	}
@@ -91,13 +91,13 @@ func (h *PaymentConnectHandler) SubmitManualPayment(ctx context.Context, req *co
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SubmitManualPaymentResponse{
+	return connect.NewResponse(&polyglotv1.SubmitManualPaymentResponse{
 		Submission: toProtoSubmission(&sub),
 	}), nil
 }
 
 // ListPaymentSubmissions mengembalikan antrean bukti transfer untuk finance.
-func (h *PaymentConnectHandler) ListPaymentSubmissions(ctx context.Context, req *connect.Request[devicepb.ListPaymentSubmissionsRequest]) (*connect.Response[devicepb.ListPaymentSubmissionsResponse], error) {
+func (h *PaymentConnectHandler) ListPaymentSubmissions(ctx context.Context, req *connect.Request[polyglotv1.ListPaymentSubmissionsRequest]) (*connect.Response[polyglotv1.ListPaymentSubmissionsResponse], error) {
 	if h.submissions == nil {
 		return nil, response.Unavailable("payment submission usecase unavailable")
 	}
@@ -105,15 +105,15 @@ func (h *PaymentConnectHandler) ListPaymentSubmissions(ctx context.Context, req 
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.ManualPaymentSubmission, len(list))
+	out := make([]*polyglotv1.ManualPaymentSubmission, len(list))
 	for i := range list {
 		out[i] = toProtoSubmission(&list[i])
 	}
-	return connect.NewResponse(&devicepb.ListPaymentSubmissionsResponse{Submissions: out}), nil
+	return connect.NewResponse(&polyglotv1.ListPaymentSubmissionsResponse{Submissions: out}), nil
 }
 
 // ApprovePaymentSubmission menyetujui bukti transfer (lunasi + kas + un-isolir).
-func (h *PaymentConnectHandler) ApprovePaymentSubmission(ctx context.Context, req *connect.Request[devicepb.ApprovePaymentSubmissionRequest]) (*connect.Response[devicepb.ApprovePaymentSubmissionResponse], error) {
+func (h *PaymentConnectHandler) ApprovePaymentSubmission(ctx context.Context, req *connect.Request[polyglotv1.ApprovePaymentSubmissionRequest]) (*connect.Response[polyglotv1.ApprovePaymentSubmissionResponse], error) {
 	if h.submissions == nil {
 		return nil, response.Unavailable("payment submission usecase unavailable")
 	}
@@ -122,13 +122,13 @@ func (h *PaymentConnectHandler) ApprovePaymentSubmission(ctx context.Context, re
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ApprovePaymentSubmissionResponse{
+	return connect.NewResponse(&polyglotv1.ApprovePaymentSubmissionResponse{
 		Submission: toProtoSubmission(&sub),
 	}), nil
 }
 
 // RejectPaymentSubmission menolak bukti transfer tanpa menyentuh buku kas.
-func (h *PaymentConnectHandler) RejectPaymentSubmission(ctx context.Context, req *connect.Request[devicepb.RejectPaymentSubmissionRequest]) (*connect.Response[devicepb.RejectPaymentSubmissionResponse], error) {
+func (h *PaymentConnectHandler) RejectPaymentSubmission(ctx context.Context, req *connect.Request[polyglotv1.RejectPaymentSubmissionRequest]) (*connect.Response[polyglotv1.RejectPaymentSubmissionResponse], error) {
 	if h.submissions == nil {
 		return nil, response.Unavailable("payment submission usecase unavailable")
 	}
@@ -137,13 +137,13 @@ func (h *PaymentConnectHandler) RejectPaymentSubmission(ctx context.Context, req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RejectPaymentSubmissionResponse{
+	return connect.NewResponse(&polyglotv1.RejectPaymentSubmissionResponse{
 		Submission: toProtoSubmission(&sub),
 	}), nil
 }
 
 // ReversePayment membatalkan pembayaran dengan jurnal koreksi kas.
-func (h *PaymentConnectHandler) ReversePayment(ctx context.Context, req *connect.Request[devicepb.ReversePaymentRequest]) (*connect.Response[devicepb.ReversePaymentResponse], error) {
+func (h *PaymentConnectHandler) ReversePayment(ctx context.Context, req *connect.Request[polyglotv1.ReversePaymentRequest]) (*connect.Response[polyglotv1.ReversePaymentResponse], error) {
 	if h.payments == nil {
 		return nil, response.Unavailable("payment usecase unavailable")
 	}
@@ -152,7 +152,7 @@ func (h *PaymentConnectHandler) ReversePayment(ctx context.Context, req *connect
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ReversePaymentResponse{
+	return connect.NewResponse(&polyglotv1.ReversePaymentResponse{
 		PaymentId: pay.ID,
 		InvoiceId: pay.InvoiceID,
 		Amount:    pay.Amount,

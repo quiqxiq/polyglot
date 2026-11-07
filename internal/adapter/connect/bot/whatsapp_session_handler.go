@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -22,9 +22,9 @@ func formatTime(t time.Time) string {
 	return t.Format("2006-01-02 15:04:05")
 }
 
-func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.Request[devicepb.ListWASessionsRequest]) (*connect.Response[devicepb.ListWASessionsResponse], error) {
+func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.Request[polyglotv1.ListWASessionsRequest]) (*connect.Response[polyglotv1.ListWASessionsResponse], error) {
 	if h.sessionRepo == nil {
-		return connect.NewResponse(&devicepb.ListWASessionsResponse{Sessions: []*devicepb.WASession{}}), nil
+		return connect.NewResponse(&polyglotv1.ListWASessionsResponse{Sessions: []*polyglotv1.WASession{}}), nil
 	}
 
 	sessions, err := h.sessionRepo.FindAllSessions(ctx)
@@ -32,7 +32,7 @@ func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.
 		return nil, response.MapDomainError(err)
 	}
 
-	pbSessions := make([]*devicepb.WASession, len(sessions))
+	pbSessions := make([]*polyglotv1.WASession, len(sessions))
 	for i, s := range sessions {
 		// Status live dari client (online/offline/connecting/needs_rescan),
 		// fallback ke status tersimpan di DB bila gateway tidak tersedia.
@@ -43,7 +43,7 @@ func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.
 			}
 		}
 
-		pbSessions[i] = &devicepb.WASession{
+		pbSessions[i] = &polyglotv1.WASession{
 			Id:          fmt.Sprintf("%d", s.ID),
 			Name:        s.DeviceName,
 			PhoneNumber: s.PhoneNumber,
@@ -55,10 +55,10 @@ func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.
 		}
 	}
 
-	return connect.NewResponse(&devicepb.ListWASessionsResponse{Sessions: pbSessions}), nil
+	return connect.NewResponse(&polyglotv1.ListWASessionsResponse{Sessions: pbSessions}), nil
 }
 
-func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect.Request[devicepb.CreateWASessionRequest]) (*connect.Response[devicepb.CreateWASessionResponse], error) {
+func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect.Request[polyglotv1.CreateWASessionRequest]) (*connect.Response[polyglotv1.CreateWASessionResponse], error) {
 	if h.sessionRepo == nil {
 		return nil, response.Unavailable("session repo not initialized")
 	}
@@ -85,8 +85,8 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 		_ = h.sessionRepo.UpdateSession(ctx, sess)
 	}
 
-	return connect.NewResponse(&devicepb.CreateWASessionResponse{
-		Session: &devicepb.WASession{
+	return connect.NewResponse(&polyglotv1.CreateWASessionResponse{
+		Session: &polyglotv1.WASession{
 			Id:          fmt.Sprintf("%d", sess.ID),
 			Name:        sess.DeviceName,
 			PhoneNumber: sess.PhoneNumber,
@@ -97,7 +97,7 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 	}), nil
 }
 
-func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Request[devicepb.GetWASessionQRRequest]) (*connect.Response[devicepb.GetWASessionQRResponse], error) {
+func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Request[polyglotv1.GetWASessionQRRequest]) (*connect.Response[polyglotv1.GetWASessionQRResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
 		return nil, response.InvalidArgument("invalid session_id")
@@ -125,14 +125,14 @@ func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Req
 		return nil, response.MapDomainError(fmt.Errorf("get QR code: %w", qrErr))
 	}
 
-	return connect.NewResponse(&devicepb.GetWASessionQRResponse{
+	return connect.NewResponse(&polyglotv1.GetWASessionQRResponse{
 		QrCodeBase64:    qrBase64,
 		QrCodePath:      "",
 		DurationSeconds: 60,
 	}), nil
 }
 
-func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connect.Request[devicepb.GetWASessionPairingRequest]) (*connect.Response[devicepb.GetWASessionPairingResponse], error) {
+func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connect.Request[polyglotv1.GetWASessionPairingRequest]) (*connect.Response[polyglotv1.GetWASessionPairingResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
 		return nil, response.InvalidArgument("invalid session_id")
@@ -158,17 +158,17 @@ func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connec
 	if err != nil {
 		return nil, response.MapDomainError(fmt.Errorf("get pairing code: %w", err))
 	}
-	return connect.NewResponse(&devicepb.GetWASessionPairingResponse{PairingCode: code}), nil
+	return connect.NewResponse(&polyglotv1.GetWASessionPairingResponse{PairingCode: code}), nil
 }
 
-func (h *WhatsAppConnectHandler) ToggleBot(ctx context.Context, req *connect.Request[devicepb.ToggleWABotRequest]) (*connect.Response[devicepb.ToggleWABotResponse], error) {
-	return connect.NewResponse(&devicepb.ToggleWABotResponse{
+func (h *WhatsAppConnectHandler) ToggleBot(ctx context.Context, req *connect.Request[polyglotv1.ToggleWABotRequest]) (*connect.Response[polyglotv1.ToggleWABotResponse], error) {
+	return connect.NewResponse(&polyglotv1.ToggleWABotResponse{
 		Message:  "bot toggled successfully",
 		IsActive: req.Msg.IsActive,
 	}), nil
 }
 
-func (h *WhatsAppConnectHandler) ReconnectSession(ctx context.Context, req *connect.Request[devicepb.ReconnectWASessionRequest]) (*connect.Response[devicepb.ReconnectWASessionResponse], error) {
+func (h *WhatsAppConnectHandler) ReconnectSession(ctx context.Context, req *connect.Request[polyglotv1.ReconnectWASessionRequest]) (*connect.Response[polyglotv1.ReconnectWASessionResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
 		return nil, response.InvalidArgument("invalid session_id")
@@ -179,13 +179,13 @@ func (h *WhatsAppConnectHandler) ReconnectSession(ctx context.Context, req *conn
 	if err := h.waGateway.Reconnect(uint(idUint)); err != nil {
 		return nil, response.Internal("reconnect failed")
 	}
-	return connect.NewResponse(&devicepb.ReconnectWASessionResponse{
+	return connect.NewResponse(&polyglotv1.ReconnectWASessionResponse{
 		Message: "manual reconnect initiated (auto-reconnect active)",
 		Status:  "connecting",
 	}), nil
 }
 
-func (h *WhatsAppConnectHandler) LogoutSession(ctx context.Context, req *connect.Request[devicepb.LogoutWASessionRequest]) (*connect.Response[devicepb.LogoutWASessionResponse], error) {
+func (h *WhatsAppConnectHandler) LogoutSession(ctx context.Context, req *connect.Request[polyglotv1.LogoutWASessionRequest]) (*connect.Response[polyglotv1.LogoutWASessionResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
 		return nil, response.InvalidArgument("invalid session_id")
@@ -199,10 +199,10 @@ func (h *WhatsAppConnectHandler) LogoutSession(ctx context.Context, req *connect
 	if err := h.waGateway.Logout(uint(idUint)); err != nil {
 		return nil, response.Internal("logout failed")
 	}
-	return connect.NewResponse(&devicepb.LogoutWASessionResponse{Message: "session logged out (slot kept for re-pairing)"}), nil
+	return connect.NewResponse(&polyglotv1.LogoutWASessionResponse{Message: "session logged out (slot kept for re-pairing)"}), nil
 }
 
-func (h *WhatsAppConnectHandler) PurgeSession(ctx context.Context, req *connect.Request[devicepb.PurgeWASessionRequest]) (*connect.Response[devicepb.PurgeWASessionResponse], error) {
+func (h *WhatsAppConnectHandler) PurgeSession(ctx context.Context, req *connect.Request[polyglotv1.PurgeWASessionRequest]) (*connect.Response[polyglotv1.PurgeWASessionResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
 		return nil, response.InvalidArgument("invalid session_id")
@@ -220,10 +220,10 @@ func (h *WhatsAppConnectHandler) PurgeSession(ctx context.Context, req *connect.
 			return nil, response.Internal("delete session record failed")
 		}
 	}
-	return connect.NewResponse(&devicepb.PurgeWASessionResponse{Message: "session purged permanently"}), nil
+	return connect.NewResponse(&polyglotv1.PurgeWASessionResponse{Message: "session purged permanently"}), nil
 }
 
-func (h *WhatsAppConnectHandler) SendTextMessage(ctx context.Context, req *connect.Request[devicepb.SendWATextMessageRequest]) (*connect.Response[devicepb.SendWATextMessageResponse], error) {
+func (h *WhatsAppConnectHandler) SendTextMessage(ctx context.Context, req *connect.Request[polyglotv1.SendWATextMessageRequest]) (*connect.Response[polyglotv1.SendWATextMessageResponse], error) {
 	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	var err error
 	if h.waGateway != nil && idUint > 0 {
@@ -232,7 +232,7 @@ func (h *WhatsAppConnectHandler) SendTextMessage(ctx context.Context, req *conne
 	if err != nil {
 		return nil, response.Internal("send text message failed")
 	}
-	return connect.NewResponse(&devicepb.SendWATextMessageResponse{
+	return connect.NewResponse(&polyglotv1.SendWATextMessageResponse{
 		MessageId: "msg-sent-ok",
 		Status:    "SENT",
 	}), nil

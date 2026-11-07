@@ -6,7 +6,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/port"
@@ -15,7 +15,7 @@ import (
 )
 
 // ListInvoices returns invoices matching the request filters.
-func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.Request[devicepb.ListInvoicesRequest]) (*connect.Response[devicepb.ListInvoicesResponse], error) {
+func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.Request[polyglotv1.ListInvoicesRequest]) (*connect.Response[polyglotv1.ListInvoicesResponse], error) {
 	if h.invoiceUC == nil {
 		return nil, response.Unavailable("invoice usecase unavailable")
 	}
@@ -47,9 +47,9 @@ func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.R
 	}
 	summary, _ := h.invoiceUC.Summary(ctx, f)
 
-	return connect.NewResponse(&devicepb.ListInvoicesResponse{
+	return connect.NewResponse(&polyglotv1.ListInvoicesResponse{
 		Invoices: toProtoInvoiceList(invoices),
-		Summary: &devicepb.InvoiceSummary{
+		Summary: &polyglotv1.InvoiceSummary{
 			Count:            int32(summary.Count),
 			TotalBilled:      summary.TotalBilled,
 			TotalPaid:        summary.TotalPaid,
@@ -61,7 +61,7 @@ func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.R
 }
 
 // CreateInvoice creates a manual invoice.
-func (h *BillingConnectHandler) CreateInvoice(ctx context.Context, req *connect.Request[devicepb.CreateInvoiceRequest]) (*connect.Response[devicepb.CreateInvoiceResponse], error) {
+func (h *BillingConnectHandler) CreateInvoice(ctx context.Context, req *connect.Request[polyglotv1.CreateInvoiceRequest]) (*connect.Response[polyglotv1.CreateInvoiceResponse], error) {
 	if h.invoiceUC == nil {
 		return nil, response.Unavailable("invoice usecase unavailable")
 	}
@@ -96,13 +96,13 @@ func (h *BillingConnectHandler) CreateInvoice(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CreateInvoiceResponse{
+	return connect.NewResponse(&polyglotv1.CreateInvoiceResponse{
 		Invoice: toProtoInvoice(&inv),
 	}), nil
 }
 
 // ExportInvoices exports invoices to CSV or XLSX format.
-func (h *BillingConnectHandler) ExportInvoices(ctx context.Context, req *connect.Request[devicepb.ExportInvoicesRequest]) (*connect.Response[devicepb.ExportInvoicesResponse], error) {
+func (h *BillingConnectHandler) ExportInvoices(ctx context.Context, req *connect.Request[polyglotv1.ExportInvoicesRequest]) (*connect.Response[polyglotv1.ExportInvoicesResponse], error) {
 	if h.invoiceUC == nil {
 		return nil, response.Unavailable("invoice usecase unavailable")
 	}
@@ -137,7 +137,7 @@ func (h *BillingConnectHandler) ExportInvoices(ctx context.Context, req *connect
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ExportInvoicesResponse{
+	return connect.NewResponse(&polyglotv1.ExportInvoicesResponse{
 		Payload:     payload,
 		ContentType: contentType,
 		Filename:    filename,
@@ -145,7 +145,7 @@ func (h *BillingConnectHandler) ExportInvoices(ctx context.Context, req *connect
 }
 
 // GetInvoice returns one invoice by identifier.
-func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Request[devicepb.GetInvoiceRequest]) (*connect.Response[devicepb.GetInvoiceResponse], error) {
+func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Request[polyglotv1.GetInvoiceRequest]) (*connect.Response[polyglotv1.GetInvoiceResponse], error) {
 	if h.invoiceUC == nil {
 		return nil, response.Unavailable("invoice usecase unavailable")
 	}
@@ -153,13 +153,13 @@ func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetInvoiceResponse{
+	return connect.NewResponse(&polyglotv1.GetInvoiceResponse{
 		Invoice: toProtoInvoice(&inv),
 	}), nil
 }
 
 // CancelInvoice cancels an invoice officially.
-func (h *BillingConnectHandler) CancelInvoice(ctx context.Context, req *connect.Request[devicepb.CancelInvoiceRequest]) (*connect.Response[devicepb.CancelInvoiceResponse], error) {
+func (h *BillingConnectHandler) CancelInvoice(ctx context.Context, req *connect.Request[polyglotv1.CancelInvoiceRequest]) (*connect.Response[polyglotv1.CancelInvoiceResponse], error) {
 	if h.invoiceUC == nil {
 		return nil, response.Unavailable("invoice usecase unavailable")
 	}
@@ -167,13 +167,13 @@ func (h *BillingConnectHandler) CancelInvoice(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CancelInvoiceResponse{
+	return connect.NewResponse(&polyglotv1.CancelInvoiceResponse{
 		Invoice: toProtoInvoice(&inv),
 	}), nil
 }
 
 // CashierResolve resolves an invoice for cashier payment.
-func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect.Request[devicepb.CashierResolveRequest]) (*connect.Response[devicepb.CashierResolveResponse], error) {
+func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect.Request[polyglotv1.CashierResolveRequest]) (*connect.Response[polyglotv1.CashierResolveResponse], error) {
 	if h.checkoutUC == nil {
 		return nil, response.Unavailable("checkout usecase unavailable")
 	}
@@ -182,9 +182,9 @@ func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect
 	var inv domainBillingInvoiceAlias
 	var err error
 	switch req.Msg.Method {
-	case devicepb.ResolveMethod_RESOLVE_QR:
+	case polyglotv1.ResolveMethod_RESOLVE_QR:
 		inv, err = h.checkoutUC.ResolveByQR(ctx, ident)
-	case devicepb.ResolveMethod_RESOLVE_PORTAL:
+	case polyglotv1.ResolveMethod_RESOLVE_PORTAL:
 		inv, err = h.checkoutUC.ResolveByPortalCode(ctx, ident)
 	default: // RESOLVE_CODE
 		inv, err = h.checkoutUC.ResolveByPaymentCode(ctx, ident)
@@ -192,13 +192,13 @@ func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CashierResolveResponse{
+	return connect.NewResponse(&polyglotv1.CashierResolveResponse{
 		Invoice: toProtoInvoice(&inv),
 	}), nil
 }
 
 // CashierPay records a cashier payment for an invoice.
-func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Request[devicepb.CashierPayRequest]) (*connect.Response[devicepb.CashierPayResponse], error) {
+func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Request[polyglotv1.CashierPayRequest]) (*connect.Response[polyglotv1.CashierPayResponse], error) {
 	if h.checkoutUC == nil {
 		return nil, response.Unavailable("checkout usecase unavailable")
 	}
@@ -236,7 +236,7 @@ func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Req
 	}
 
 	inv, _ := h.invoiceUC.GetInvoice(ctx, req.Msg.InvoiceId)
-	return connect.NewResponse(&devicepb.CashierPayResponse{
+	return connect.NewResponse(&polyglotv1.CashierPayResponse{
 		PaymentId: pay.ID,
 		PaymentNo: pay.PaymentNo,
 		Invoice:   toProtoInvoice(&inv),
@@ -244,7 +244,7 @@ func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Req
 }
 
 // GenerateInvoices runs the billing invoice generation for the given period.
-func (h *BillingConnectHandler) GenerateInvoices(ctx context.Context, req *connect.Request[devicepb.GenerateInvoicesRequest]) (*connect.Response[devicepb.GenerateInvoicesResponse], error) {
+func (h *BillingConnectHandler) GenerateInvoices(ctx context.Context, req *connect.Request[polyglotv1.GenerateInvoicesRequest]) (*connect.Response[polyglotv1.GenerateInvoicesResponse], error) {
 	if h.runBilling == nil {
 		return nil, response.Unavailable("billing runner unavailable")
 	}
@@ -256,14 +256,14 @@ func (h *BillingConnectHandler) GenerateInvoices(ctx context.Context, req *conne
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GenerateInvoicesResponse{
+	return connect.NewResponse(&polyglotv1.GenerateInvoicesResponse{
 		Created: int32(res.Created),
 		Skipped: int32(res.Skipped),
 	}), nil
 }
 
 // ApplyInvoiceDiscount menerapkan diskon/promo code manual pada faktur.
-func (h *BillingConnectHandler) ApplyInvoiceDiscount(ctx context.Context, req *connect.Request[devicepb.ApplyInvoiceDiscountRequest]) (*connect.Response[devicepb.ApplyInvoiceDiscountResponse], error) {
+func (h *BillingConnectHandler) ApplyInvoiceDiscount(ctx context.Context, req *connect.Request[polyglotv1.ApplyInvoiceDiscountRequest]) (*connect.Response[polyglotv1.ApplyInvoiceDiscountResponse], error) {
 	if h.invoiceUC == nil {
 		return nil, response.Unavailable("invoice usecase unavailable")
 	}
@@ -271,14 +271,14 @@ func (h *BillingConnectHandler) ApplyInvoiceDiscount(ctx context.Context, req *c
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ApplyInvoiceDiscountResponse{
+	return connect.NewResponse(&polyglotv1.ApplyInvoiceDiscountResponse{
 		Invoice: toProtoInvoice(&inv),
 	}), nil
 }
 
 // ─── Payment Methods ────────────────────────────────────────────────────────
 
-func (h *BillingConnectHandler) ListPaymentMethods(ctx context.Context, req *connect.Request[devicepb.ListPaymentMethodsRequest]) (*connect.Response[devicepb.ListPaymentMethodsResponse], error) {
+func (h *BillingConnectHandler) ListPaymentMethods(ctx context.Context, req *connect.Request[polyglotv1.ListPaymentMethodsRequest]) (*connect.Response[polyglotv1.ListPaymentMethodsResponse], error) {
 	if h.payMethodUC == nil {
 		return nil, response.Unavailable("payment method usecase unavailable")
 	}
@@ -286,9 +286,9 @@ func (h *BillingConnectHandler) ListPaymentMethods(ctx context.Context, req *con
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.PaymentMethod, len(methods))
+	out := make([]*polyglotv1.PaymentMethod, len(methods))
 	for i, m := range methods {
-		out[i] = &devicepb.PaymentMethod{
+		out[i] = &polyglotv1.PaymentMethod{
 			Id:            m.ID,
 			Name:          m.Name,
 			Type:          m.Type,
@@ -301,12 +301,12 @@ func (h *BillingConnectHandler) ListPaymentMethods(ctx context.Context, req *con
 			SortOrder:     int32(m.SortOrder),
 		}
 	}
-	return connect.NewResponse(&devicepb.ListPaymentMethodsResponse{
+	return connect.NewResponse(&polyglotv1.ListPaymentMethodsResponse{
 		PaymentMethods: out,
 	}), nil
 }
 
-func (h *BillingConnectHandler) SavePaymentMethod(ctx context.Context, req *connect.Request[devicepb.SavePaymentMethodRequest]) (*connect.Response[devicepb.SavePaymentMethodResponse], error) {
+func (h *BillingConnectHandler) SavePaymentMethod(ctx context.Context, req *connect.Request[polyglotv1.SavePaymentMethodRequest]) (*connect.Response[polyglotv1.SavePaymentMethodResponse], error) {
 	if h.payMethodUC == nil {
 		return nil, response.Unavailable("payment method usecase unavailable")
 	}
@@ -330,8 +330,8 @@ func (h *BillingConnectHandler) SavePaymentMethod(ctx context.Context, req *conn
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SavePaymentMethodResponse{
-		PaymentMethod: &devicepb.PaymentMethod{
+	return connect.NewResponse(&polyglotv1.SavePaymentMethodResponse{
+		PaymentMethod: &polyglotv1.PaymentMethod{
 			Id:            saved.ID,
 			Name:          saved.Name,
 			Type:          saved.Type,
@@ -346,21 +346,21 @@ func (h *BillingConnectHandler) SavePaymentMethod(ctx context.Context, req *conn
 	}), nil
 }
 
-func (h *BillingConnectHandler) DeletePaymentMethod(ctx context.Context, req *connect.Request[devicepb.DeletePaymentMethodRequest]) (*connect.Response[devicepb.DeletePaymentMethodResponse], error) {
+func (h *BillingConnectHandler) DeletePaymentMethod(ctx context.Context, req *connect.Request[polyglotv1.DeletePaymentMethodRequest]) (*connect.Response[polyglotv1.DeletePaymentMethodResponse], error) {
 	if h.payMethodUC == nil {
 		return nil, response.Unavailable("payment method usecase unavailable")
 	}
 	if err := h.payMethodUC.DeletePaymentMethod(ctx, req.Msg.GetId()); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeletePaymentMethodResponse{
+	return connect.NewResponse(&polyglotv1.DeletePaymentMethodResponse{
 		Message: "Metode pembayaran dinonaktifkan",
 	}), nil
 }
 
 // ─── Mass Payment ───────────────────────────────────────────────────────────
 
-func (h *BillingConnectHandler) CreateMassPayment(ctx context.Context, req *connect.Request[devicepb.CreateMassPaymentRequest]) (*connect.Response[devicepb.CreateMassPaymentResponse], error) {
+func (h *BillingConnectHandler) CreateMassPayment(ctx context.Context, req *connect.Request[polyglotv1.CreateMassPaymentRequest]) (*connect.Response[polyglotv1.CreateMassPaymentResponse], error) {
 	if h.massPayUC == nil {
 		return nil, response.Unavailable("mass payment usecase unavailable")
 	}
@@ -377,14 +377,14 @@ func (h *BillingConnectHandler) CreateMassPayment(ctx context.Context, req *conn
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CreateMassPaymentResponse{
+	return connect.NewResponse(&polyglotv1.CreateMassPaymentResponse{
 		BatchId:      batch.ID,
 		JobId:        batch.JobID,
 		InvoiceCount: int32(batch.InvoiceCount),
 	}), nil
 }
 
-func (h *BillingConnectHandler) ListMassPayments(ctx context.Context, req *connect.Request[devicepb.ListMassPaymentsRequest]) (*connect.Response[devicepb.ListMassPaymentsResponse], error) {
+func (h *BillingConnectHandler) ListMassPayments(ctx context.Context, req *connect.Request[polyglotv1.ListMassPaymentsRequest]) (*connect.Response[polyglotv1.ListMassPaymentsResponse], error) {
 	if h.massPayUC == nil {
 		return nil, response.Unavailable("mass payment usecase unavailable")
 	}
@@ -396,9 +396,9 @@ func (h *BillingConnectHandler) ListMassPayments(ctx context.Context, req *conne
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.BulkPaymentBatch, len(batches))
+	out := make([]*polyglotv1.BulkPaymentBatch, len(batches))
 	for i, b := range batches {
-		out[i] = &devicepb.BulkPaymentBatch{
+		out[i] = &polyglotv1.BulkPaymentBatch{
 			Id:            b.ID,
 			InvoiceCount:  int32(b.InvoiceCount),
 			Status:        b.Status,
@@ -407,12 +407,12 @@ func (h *BillingConnectHandler) ListMassPayments(ctx context.Context, req *conne
 			CreatedAtUnix: b.CreatedAt.Unix(),
 		}
 	}
-	return connect.NewResponse(&devicepb.ListMassPaymentsResponse{
+	return connect.NewResponse(&polyglotv1.ListMassPaymentsResponse{
 		Batches: out,
 	}), nil
 }
 
-func (h *BillingConnectHandler) GetMassPayment(ctx context.Context, req *connect.Request[devicepb.GetMassPaymentRequest]) (*connect.Response[devicepb.GetMassPaymentResponse], error) {
+func (h *BillingConnectHandler) GetMassPayment(ctx context.Context, req *connect.Request[polyglotv1.GetMassPaymentRequest]) (*connect.Response[polyglotv1.GetMassPaymentResponse], error) {
 	if h.massPayUC == nil {
 		return nil, response.Unavailable("mass payment usecase unavailable")
 	}
@@ -420,7 +420,7 @@ func (h *BillingConnectHandler) GetMassPayment(ctx context.Context, req *connect
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	outItems := make([]*devicepb.BulkPaymentItem, len(items))
+	outItems := make([]*polyglotv1.BulkPaymentItem, len(items))
 	for i, it := range items {
 		var procAt int64
 		if it.ProcessedAt != nil {
@@ -430,7 +430,7 @@ func (h *BillingConnectHandler) GetMassPayment(ctx context.Context, req *connect
 		if it.PaymentID != nil {
 			payID = *it.PaymentID
 		}
-		outItems[i] = &devicepb.BulkPaymentItem{
+		outItems[i] = &polyglotv1.BulkPaymentItem{
 			Id:              it.ID,
 			InvoiceId:       it.InvoiceID,
 			Amount:          it.Amount,
@@ -440,8 +440,8 @@ func (h *BillingConnectHandler) GetMassPayment(ctx context.Context, req *connect
 			ProcessedAtUnix: procAt,
 		}
 	}
-	return connect.NewResponse(&devicepb.GetMassPaymentResponse{
-		Batch: &devicepb.BulkPaymentBatch{
+	return connect.NewResponse(&polyglotv1.GetMassPaymentResponse{
+		Batch: &polyglotv1.BulkPaymentBatch{
 			Id:            batch.ID,
 			InvoiceCount:  int32(batch.InvoiceCount),
 			Status:        batch.Status,
@@ -455,7 +455,7 @@ func (h *BillingConnectHandler) GetMassPayment(ctx context.Context, req *connect
 
 // ─── Gateway Operations ─────────────────────────────────────────────────────
 
-func (h *BillingConnectHandler) ListGatewayTransactions(ctx context.Context, req *connect.Request[devicepb.ListGatewayTransactionsRequest]) (*connect.Response[devicepb.ListGatewayTransactionsResponse], error) {
+func (h *BillingConnectHandler) ListGatewayTransactions(ctx context.Context, req *connect.Request[polyglotv1.ListGatewayTransactionsRequest]) (*connect.Response[polyglotv1.ListGatewayTransactionsResponse], error) {
 	if h.gwTxRepo == nil {
 		return nil, response.Unavailable("gateway transaction repository unavailable")
 	}
@@ -474,7 +474,7 @@ func (h *BillingConnectHandler) ListGatewayTransactions(ctx context.Context, req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.GatewayTransaction, len(txs))
+	out := make([]*polyglotv1.GatewayTransaction, len(txs))
 	for i, t := range txs {
 		var paidAt int64
 		if t.PaidAt != nil {
@@ -487,7 +487,7 @@ func (h *BillingConnectHandler) ListGatewayTransactions(ctx context.Context, req
 		if t.PaymentID != nil {
 			payID = *t.PaymentID
 		}
-		out[i] = &devicepb.GatewayTransaction{
+		out[i] = &polyglotv1.GatewayTransaction{
 			Id:             t.ID,
 			Gateway:        t.Gateway,
 			ExternalId:     t.ExternalID,
@@ -502,13 +502,13 @@ func (h *BillingConnectHandler) ListGatewayTransactions(ctx context.Context, req
 			PaidAtUnix:     paidAt,
 		}
 	}
-	return connect.NewResponse(&devicepb.ListGatewayTransactionsResponse{
+	return connect.NewResponse(&polyglotv1.ListGatewayTransactionsResponse{
 		Transactions: out,
 		Total:        int32(total),
 	}), nil
 }
 
-func (h *BillingConnectHandler) SyncGatewayTransactions(ctx context.Context, _ *connect.Request[devicepb.SyncGatewayTransactionsRequest]) (*connect.Response[devicepb.SyncGatewayTransactionsResponse], error) {
+func (h *BillingConnectHandler) SyncGatewayTransactions(ctx context.Context, _ *connect.Request[polyglotv1.SyncGatewayTransactionsRequest]) (*connect.Response[polyglotv1.SyncGatewayTransactionsResponse], error) {
 	if h.chargeUC == nil {
 		return nil, response.Unavailable("gateway usecase unavailable")
 	}
@@ -516,13 +516,13 @@ func (h *BillingConnectHandler) SyncGatewayTransactions(ctx context.Context, _ *
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SyncGatewayTransactionsResponse{
+	return connect.NewResponse(&polyglotv1.SyncGatewayTransactionsResponse{
 		Synced:  int32(synced),
 		Expired: int32(expired),
 	}), nil
 }
 
-func (h *BillingConnectHandler) ListGatewaySettlements(ctx context.Context, req *connect.Request[devicepb.ListGatewaySettlementsRequest]) (*connect.Response[devicepb.ListGatewaySettlementsResponse], error) {
+func (h *BillingConnectHandler) ListGatewaySettlements(ctx context.Context, req *connect.Request[polyglotv1.ListGatewaySettlementsRequest]) (*connect.Response[polyglotv1.ListGatewaySettlementsResponse], error) {
 	if h.settlementRepo == nil {
 		return nil, response.Unavailable("gateway settlement repository unavailable")
 	}
@@ -534,7 +534,7 @@ func (h *BillingConnectHandler) ListGatewaySettlements(ctx context.Context, req 
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.GatewaySettlement, len(settlements))
+	out := make([]*polyglotv1.GatewaySettlement, len(settlements))
 	for i, s := range settlements {
 		var fromUnix, toUnix int64
 		if s.PeriodFrom != nil {
@@ -543,7 +543,7 @@ func (h *BillingConnectHandler) ListGatewaySettlements(ctx context.Context, req 
 		if s.PeriodTo != nil {
 			toUnix = s.PeriodTo.Unix()
 		}
-		out[i] = &devicepb.GatewaySettlement{
+		out[i] = &polyglotv1.GatewaySettlement{
 			Id:             s.ID,
 			Gateway:        s.Gateway,
 			SettlementRef:  s.SettlementRef,
@@ -556,12 +556,12 @@ func (h *BillingConnectHandler) ListGatewaySettlements(ctx context.Context, req 
 			Notes:          s.Notes,
 		}
 	}
-	return connect.NewResponse(&devicepb.ListGatewaySettlementsResponse{
+	return connect.NewResponse(&polyglotv1.ListGatewaySettlementsResponse{
 		Settlements: out,
 	}), nil
 }
 
-func (h *BillingConnectHandler) SaveGatewaySettlement(ctx context.Context, req *connect.Request[devicepb.SaveGatewaySettlementRequest]) (*connect.Response[devicepb.SaveGatewaySettlementResponse], error) {
+func (h *BillingConnectHandler) SaveGatewaySettlement(ctx context.Context, req *connect.Request[polyglotv1.SaveGatewaySettlementRequest]) (*connect.Response[polyglotv1.SaveGatewaySettlementResponse], error) {
 	if h.settlementRepo == nil {
 		return nil, response.Unavailable("gateway settlement repository unavailable")
 	}
@@ -599,7 +599,7 @@ func (h *BillingConnectHandler) SaveGatewaySettlement(ctx context.Context, req *
 	if err := h.settlementRepo.Save(ctx, domainSettlement); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SaveGatewaySettlementResponse{
+	return connect.NewResponse(&polyglotv1.SaveGatewaySettlementResponse{
 		Settlement: s,
 	}), nil
 }

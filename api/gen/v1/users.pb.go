@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/users.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1135,7 +1135,7 @@ const file_v1_users_proto_rawDesc = "" +
 	"\n" +
 	"DeleteUser\x12\x1e.polyglot.v1.DeleteUserRequest\x1a\x1f.polyglot.v1.DeleteUserResponse\x12\\\n" +
 	"\x13AssignDevicesToUser\x12!.polyglot.v1.AssignDevicesRequest\x1a\".polyglot.v1.AssignDevicesResponse\x12f\n" +
-	"\x19ListUserAccessibleDevices\x12#.polyglot.v1.ListUserDevicesRequest\x1a$.polyglot.v1.ListUserDevicesResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x19ListUserAccessibleDevices\x12#.polyglot.v1.ListUserDevicesRequest\x1a$.polyglot.v1.ListUserDevicesResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_users_proto_rawDescOnce sync.Once

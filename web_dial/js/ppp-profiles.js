@@ -39,7 +39,7 @@ const PPPProfiles = {
       this.applyFilter();
     } catch (err) {
       console.error('Failed to load profiles:', err);
-      showToast('Gagal memuat profil: ' + err.message, 'error');
+      API.reportError(err, 'Gagal memuat profil');
     } finally {
       if (loadingEl) loadingEl.classList.add('hidden');
     }

@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/notification.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1033,7 +1033,7 @@ const file_v1_notification_proto_rawDesc = "" +
 	"\fPendingCount\x12 .polyglot.v1.PendingCountRequest\x1a!.polyglot.v1.PendingCountResponse\x12k\n" +
 	"\x14MarkNotificationSent\x12(.polyglot.v1.MarkNotificationSentRequest\x1a).polyglot.v1.MarkNotificationSentResponse\x12q\n" +
 	"\x16MarkNotificationFailed\x12*.polyglot.v1.MarkNotificationFailedRequest\x1a+.polyglot.v1.MarkNotificationFailedResponse\x12G\n" +
-	"\bTestSend\x12\x1c.polyglot.v1.TestSendRequest\x1a\x1d.polyglot.v1.TestSendResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\bTestSend\x12\x1c.polyglot.v1.TestSendRequest\x1a\x1d.polyglot.v1.TestSendResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_notification_proto_rawDescOnce sync.Once

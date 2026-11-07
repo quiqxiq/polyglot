@@ -6,12 +6,12 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // ListProfiles retrieves all PPP profiles on the router.
-func (h *PPPConnectHandler) ListProfiles(ctx context.Context, req *connect.Request[devicepb.ListPPPProfilesRequest]) (*connect.Response[devicepb.ListPPPProfilesResponse], error) {
+func (h *PPPConnectHandler) ListProfiles(ctx context.Context, req *connect.Request[polyglotv1.ListPPPProfilesRequest]) (*connect.Response[polyglotv1.ListPPPProfilesResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -22,13 +22,13 @@ func (h *PPPConnectHandler) ListProfiles(ctx context.Context, req *connect.Reque
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListPPPProfilesResponse{
+	return connect.NewResponse(&polyglotv1.ListPPPProfilesResponse{
 		Profiles: toProtoPPPProfiles(profiles),
 	}), nil
 }
 
 // GetProfile fetches a single PPP profile by its RouterOS ID.
-func (h *PPPConnectHandler) GetProfile(ctx context.Context, req *connect.Request[devicepb.GetPPPProfileRequest]) (*connect.Response[devicepb.GetPPPProfileResponse], error) {
+func (h *PPPConnectHandler) GetProfile(ctx context.Context, req *connect.Request[polyglotv1.GetPPPProfileRequest]) (*connect.Response[polyglotv1.GetPPPProfileResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -39,13 +39,13 @@ func (h *PPPConnectHandler) GetProfile(ctx context.Context, req *connect.Request
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.GetPPPProfileResponse{
+	return connect.NewResponse(&polyglotv1.GetPPPProfileResponse{
 		Profile: toProtoPPPProfile(profile),
 	}), nil
 }
 
 // CreateProfile adds a new PPP profile to the router.
-func (h *PPPConnectHandler) CreateProfile(ctx context.Context, req *connect.Request[devicepb.CreatePPPProfileRequest]) (*connect.Response[devicepb.CreatePPPProfileResponse], error) {
+func (h *PPPConnectHandler) CreateProfile(ctx context.Context, req *connect.Request[polyglotv1.CreatePPPProfileRequest]) (*connect.Response[polyglotv1.CreatePPPProfileResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -64,14 +64,14 @@ func (h *PPPConnectHandler) CreateProfile(ctx context.Context, req *connect.Requ
 		return nil, response.Internal("profile created but could not be loaded")
 	}
 
-	return connect.NewResponse(&devicepb.CreatePPPProfileResponse{
+	return connect.NewResponse(&polyglotv1.CreatePPPProfileResponse{
 		Profile: toProtoPPPProfile(profiles[0]),
 		Message: fmt.Sprintf("profile %q created successfully", req.Msg.Name),
 	}), nil
 }
 
 // UpdateProfile modifies an existing PPP profile on the router.
-func (h *PPPConnectHandler) UpdateProfile(ctx context.Context, req *connect.Request[devicepb.UpdatePPPProfileRequest]) (*connect.Response[devicepb.UpdatePPPProfileResponse], error) {
+func (h *PPPConnectHandler) UpdateProfile(ctx context.Context, req *connect.Request[polyglotv1.UpdatePPPProfileRequest]) (*connect.Response[polyglotv1.UpdatePPPProfileResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -87,14 +87,14 @@ func (h *PPPConnectHandler) UpdateProfile(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.UpdatePPPProfileResponse{
+	return connect.NewResponse(&polyglotv1.UpdatePPPProfileResponse{
 		Profile: toProtoPPPProfile(profile),
 		Message: fmt.Sprintf("profile %q updated successfully", profile.Name),
 	}), nil
 }
 
 // DeleteProfile removes a PPP profile from the router.
-func (h *PPPConnectHandler) DeleteProfile(ctx context.Context, req *connect.Request[devicepb.DeletePPPProfileRequest]) (*connect.Response[devicepb.DeletePPPProfileResponse], error) {
+func (h *PPPConnectHandler) DeleteProfile(ctx context.Context, req *connect.Request[polyglotv1.DeletePPPProfileRequest]) (*connect.Response[polyglotv1.DeletePPPProfileResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -105,7 +105,7 @@ func (h *PPPConnectHandler) DeleteProfile(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeletePPPProfileResponse{
+	return connect.NewResponse(&polyglotv1.DeletePPPProfileResponse{
 		Message: fmt.Sprintf("profile deleted: output=%s", res.Output),
 	}), nil
 }

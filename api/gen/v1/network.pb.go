@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/network.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -665,7 +665,7 @@ const file_v1_network_proto_rawDesc = "" +
 	"\x0eListDHCPLeases\x12\".polyglot.v1.ListDHCPLeasesRequest\x1a#.polyglot.v1.ListDHCPLeasesResponse\x12Y\n" +
 	"\x0eBlockDHCPLease\x12\".polyglot.v1.BlockDHCPLeaseRequest\x1a#.polyglot.v1.BlockDHCPLeaseResponse\x12_\n" +
 	"\x10ListParentQueues\x12$.polyglot.v1.ListParentQueuesRequest\x1a%.polyglot.v1.ListParentQueuesResponse\x12P\n" +
-	"\vListIPPools\x12\x1f.polyglot.v1.ListIPPoolsRequest\x1a .polyglot.v1.ListIPPoolsResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\vListIPPools\x12\x1f.polyglot.v1.ListIPPoolsRequest\x1a .polyglot.v1.ListIPPoolsResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_network_proto_rawDescOnce sync.Once

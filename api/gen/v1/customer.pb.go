@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/customer.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1461,7 +1461,7 @@ const file_v1_customer_proto_rawDesc = "" +
 	"\vFindByPhone\x12'.polyglot.v1.FindCustomerByPhoneRequest\x1a!.polyglot.v1.FindCustomerResponse\x12_\n" +
 	"\x12FindByCustomerCode\x12&.polyglot.v1.FindCustomerByCodeRequest\x1a!.polyglot.v1.FindCustomerResponse\x12c\n" +
 	"\x10FindByPortalCode\x12,.polyglot.v1.FindCustomerByPortalCodeRequest\x1a!.polyglot.v1.FindCustomerResponse\x12b\n" +
-	"\x11ListSubscriptions\x12%.polyglot.v1.ListSubscriptionsRequest\x1a&.polyglot.v1.ListSubscriptionsResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x11ListSubscriptions\x12%.polyglot.v1.ListSubscriptionsRequest\x1a&.polyglot.v1.ListSubscriptionsResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_customer_proto_rawDescOnce sync.Once

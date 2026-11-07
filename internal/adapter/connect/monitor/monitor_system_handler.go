@@ -7,7 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -56,19 +56,19 @@ func (s *systemSnapshotState) setHealth(h port.SystemHealth) {
 }
 
 // toFrame builds a combined SystemSnapshotFrame from the latest known data.
-func (s *systemSnapshotState) toFrame(deviceID string) *devicepb.SystemSnapshotFrame {
+func (s *systemSnapshotState) toFrame(deviceID string) *polyglotv1.SystemSnapshotFrame {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	return &devicepb.SystemSnapshotFrame{
+	return &polyglotv1.SystemSnapshotFrame{
 		DeviceId:      deviceID,
 		TimestampUnix: time.Now().Unix(),
-		Clock: &devicepb.SystemClockInfo{
+		Clock: &polyglotv1.SystemClockInfo{
 			Time:         s.clock.Time,
 			Date:         s.clock.Date,
 			TimeZoneName: s.clock.TimeZoneName,
 			GmtOffset:    s.clock.GMTOffset,
 		},
-		Resource: &devicepb.SystemResourceInfo{
+		Resource: &polyglotv1.SystemResourceInfo{
 			CpuLoad:       int32(s.resource.CPULoad),
 			CpuCount:      int32(s.resource.CPUCount),
 			CpuFrequency:  s.resource.CPUFrequency,
@@ -87,7 +87,7 @@ func (s *systemSnapshotState) toFrame(deviceID string) *devicepb.SystemSnapshotF
 			Version:       s.resource.Version,
 			BoardName:     s.resource.BoardName,
 		},
-		Routerboard: &devicepb.SystemRouterboardInfo{
+		Routerboard: &polyglotv1.SystemRouterboardInfo{
 			BoardName:       s.routerboard.BoardName,
 			Model:           s.routerboard.Model,
 			SerialNumber:    s.routerboard.SerialNumber,
@@ -97,7 +97,7 @@ func (s *systemSnapshotState) toFrame(deviceID string) *devicepb.SystemSnapshotF
 			UpgradeFirmware: s.routerboard.UpgradeFirmware,
 		},
 		Identity: s.identity,
-		Health: &devicepb.SystemHealthInfo{
+		Health: &polyglotv1.SystemHealthInfo{
 			Voltage:        s.health.Voltage,
 			Temperature:    s.health.Temperature,
 			CpuTemperature: s.health.CPUTemperature,
@@ -111,7 +111,7 @@ func (s *systemSnapshotState) toFrame(deviceID string) *devicepb.SystemSnapshotF
 }
 
 // StreamSystemSnapshot combines five native RouterOS streams.
-func (h *NetworkMonitorConnectHandler) StreamSystemSnapshot(ctx context.Context, req *connect.Request[devicepb.StreamSystemSnapshotRequest], stream *connect.ServerStream[devicepb.SystemSnapshotFrame]) error {
+func (h *NetworkMonitorConnectHandler) StreamSystemSnapshot(ctx context.Context, req *connect.Request[polyglotv1.StreamSystemSnapshotRequest], stream *connect.ServerStream[polyglotv1.SystemSnapshotFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -215,7 +215,7 @@ func (h *NetworkMonitorConnectHandler) StreamSystemSnapshot(ctx context.Context,
 }
 
 // StreamResource streams /system/resource/print interval=1s natively from RouterOS.
-func (h *NetworkMonitorConnectHandler) StreamResource(ctx context.Context, req *connect.Request[devicepb.StreamResourceRequest], stream *connect.ServerStream[devicepb.ResourceStreamData]) error {
+func (h *NetworkMonitorConnectHandler) StreamResource(ctx context.Context, req *connect.Request[polyglotv1.StreamResourceRequest], stream *connect.ServerStream[polyglotv1.ResourceStreamData]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -241,7 +241,7 @@ func (h *NetworkMonitorConnectHandler) StreamResource(ctx context.Context, req *
 				return handle.Err()
 			}
 			sysRes := h.streamGW.ParseResource(res)
-			err := stream.Send(&devicepb.ResourceStreamData{
+			err := stream.Send(&polyglotv1.ResourceStreamData{
 				DeviceId:      req.Msg.DeviceId,
 				CpuLoad:       int32(sysRes.CPULoad),
 				FreeMemory:    sysRes.FreeMemory,

@@ -11,7 +11,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 )
 
@@ -24,21 +24,21 @@ func NewProbeConnectHandler() *ProbeConnectHandler {
 }
 
 // ReportStatus acknowledges a probe heartbeat.
-func (h *ProbeConnectHandler) ReportStatus(ctx context.Context, req *connect.Request[devicepb.ProbeStatusRequest]) (*connect.Response[devicepb.ProbeStatusResponse], error) {
+func (h *ProbeConnectHandler) ReportStatus(ctx context.Context, req *connect.Request[polyglotv1.ProbeStatusRequest]) (*connect.Response[polyglotv1.ProbeStatusResponse], error) {
 	logger.WithComponent("ProbeServer").WithFields(map[string]any{
 		"probe_id":       req.Msg.ProbeId,
 		"version":        req.Msg.Version,
 		"uptime_seconds": req.Msg.UptimeSeconds,
 	}).Info("probe heartbeat received")
 
-	return connect.NewResponse(&devicepb.ProbeStatusResponse{
+	return connect.NewResponse(&polyglotv1.ProbeStatusResponse{
 		Acknowledged:   true,
 		ServerTimeUnix: time.Now().Unix(),
 	}), nil
 }
 
 // StreamTelemetry receives telemetry from a remote probe.
-func (h *ProbeConnectHandler) StreamTelemetry(ctx context.Context, stream *connect.BidiStream[devicepb.PingTelemetry, devicepb.ProbeControlCommand]) error {
+func (h *ProbeConnectHandler) StreamTelemetry(ctx context.Context, stream *connect.BidiStream[polyglotv1.PingTelemetry, polyglotv1.ProbeControlCommand]) error {
 	for {
 		msg, err := stream.Receive()
 		if err != nil {

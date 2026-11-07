@@ -9,7 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
@@ -17,7 +17,7 @@ import (
 )
 
 // StreamActiveSessions streams /ip/hotspot/active/print follow natively from RouterOS.
-func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context, req *connect.Request[devicepb.StreamActiveSessionsRequest], stream *connect.ServerStream[devicepb.ActiveSessionsStreamData]) error {
+func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context, req *connect.Request[polyglotv1.StreamActiveSessionsRequest], stream *connect.ServerStream[polyglotv1.ActiveSessionsStreamData]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -48,7 +48,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context,
 	})
 
 	// Immediately send initial snapshot frame so frontend has data right away
-	_ = stream.Send(&devicepb.ActiveSessionsStreamData{
+	_ = stream.Send(&polyglotv1.ActiveSessionsStreamData{
 		DeviceId:      req.Msg.DeviceId,
 		Sessions:      toProtoActiveSessions(initialSessions),
 		TimestampUnix: time.Now().Unix(),
@@ -113,7 +113,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context,
 				return sessions[i].User < sessions[j].User
 			})
 
-			err := stream.Send(&devicepb.ActiveSessionsStreamData{
+			err := stream.Send(&polyglotv1.ActiveSessionsStreamData{
 				DeviceId:      req.Msg.DeviceId,
 				Sessions:      toProtoActiveSessions(sessions),
 				TimestampUnix: time.Now().Unix(),
@@ -126,7 +126,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context,
 }
 
 // StreamActiveStats streams /ip/hotspot/active/print stats interval=<interval> natively from RouterOS.
-func (h *NetworkMonitorConnectHandler) StreamActiveStats(ctx context.Context, req *connect.Request[devicepb.StreamActiveStatsRequest], stream *connect.ServerStream[devicepb.ActiveStatsStreamData]) error {
+func (h *NetworkMonitorConnectHandler) StreamActiveStats(ctx context.Context, req *connect.Request[polyglotv1.StreamActiveStatsRequest], stream *connect.ServerStream[polyglotv1.ActiveStatsStreamData]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -161,7 +161,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveStats(ctx context.Context, re
 				continue
 			}
 
-			if err := stream.Send(&devicepb.ActiveStatsStreamData{
+			if err := stream.Send(&polyglotv1.ActiveStatsStreamData{
 				DeviceId:      req.Msg.DeviceId,
 				Stats:         toProtoActiveStats(stats),
 				TimestampUnix: time.Now().Unix(),
@@ -260,7 +260,7 @@ func (s *hotspotSessionState) inactive() []port.HotspotUser {
 
 // StreamHotspotInactive computes the inactive hotspot user list from two
 // native RouterOS follow streams.
-func (h *NetworkMonitorConnectHandler) StreamHotspotInactive(ctx context.Context, req *connect.Request[devicepb.StreamHotspotInactiveRequest], stream *connect.ServerStream[devicepb.HotspotInactiveFrame]) error {
+func (h *NetworkMonitorConnectHandler) StreamHotspotInactive(ctx context.Context, req *connect.Request[polyglotv1.StreamHotspotInactiveRequest], stream *connect.ServerStream[polyglotv1.HotspotInactiveFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -285,7 +285,7 @@ func (h *NetworkMonitorConnectHandler) StreamHotspotInactive(ctx context.Context
 	}
 
 	initialInactive := state.inactive()
-	_ = stream.Send(&devicepb.HotspotInactiveFrame{
+	_ = stream.Send(&polyglotv1.HotspotInactiveFrame{
 		DeviceId:      req.Msg.DeviceId,
 		TimestampUnix: time.Now().Unix(),
 		Users:         toProtoHotspotUsers(initialInactive),
@@ -362,7 +362,7 @@ func (h *NetworkMonitorConnectHandler) StreamHotspotInactive(ctx context.Context
 				}
 			}
 			inactive := state.inactive()
-			err := stream.Send(&devicepb.HotspotInactiveFrame{
+			err := stream.Send(&polyglotv1.HotspotInactiveFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
 				Users:         toProtoHotspotUsers(inactive),

@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/cashbook.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -1066,7 +1066,7 @@ const file_v1_cashbook_proto_rawDesc = "" +
 	"\fSaveCategory\x12 .polyglot.v1.SaveCategoryRequest\x1a!.polyglot.v1.SaveCategoryResponse\x12Y\n" +
 	"\x0eAddTransaction\x12\".polyglot.v1.AddTransactionRequest\x1a#.polyglot.v1.AddTransactionResponse\x12^\n" +
 	"\x10ListTransactions\x12#.polyglot.v1.ListTransactionsFilter\x1a%.polyglot.v1.ListTransactionsResponse\x12G\n" +
-	"\bBalances\x12\x1c.polyglot.v1.BalancesRequest\x1a\x1d.polyglot.v1.BalancesResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\bBalances\x12\x1c.polyglot.v1.BalancesRequest\x1a\x1d.polyglot.v1.BalancesResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_cashbook_proto_rawDescOnce sync.Once

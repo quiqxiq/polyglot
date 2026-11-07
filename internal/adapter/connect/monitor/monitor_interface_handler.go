@@ -7,13 +7,13 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // StreamTraffic streams /interface/monitor-traffic for one interface by name.
-func (h *NetworkMonitorConnectHandler) StreamTraffic(ctx context.Context, req *connect.Request[devicepb.StreamTrafficRequest], stream *connect.ServerStream[devicepb.TrafficStreamData]) error {
+func (h *NetworkMonitorConnectHandler) StreamTraffic(ctx context.Context, req *connect.Request[polyglotv1.StreamTrafficRequest], stream *connect.ServerStream[polyglotv1.TrafficStreamData]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -47,7 +47,7 @@ func (h *NetworkMonitorConnectHandler) StreamTraffic(ctx context.Context, req *c
 			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
 			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
 
-			err := stream.Send(&devicepb.TrafficStreamData{
+			err := stream.Send(&polyglotv1.TrafficStreamData{
 				DeviceId:      req.Msg.DeviceId,
 				Interface:     ifaceName,
 				RxBps:         rx,
@@ -62,7 +62,7 @@ func (h *NetworkMonitorConnectHandler) StreamTraffic(ctx context.Context, req *c
 }
 
 // StreamInterfaceEthernet streams /interface/ethernet/print interval=<n>.
-func (h *NetworkMonitorConnectHandler) StreamInterfaceEthernet(ctx context.Context, req *connect.Request[devicepb.StreamInterfaceEthernetRequest], stream *connect.ServerStream[devicepb.InterfaceEthernetFrame]) error {
+func (h *NetworkMonitorConnectHandler) StreamInterfaceEthernet(ctx context.Context, req *connect.Request[polyglotv1.StreamInterfaceEthernetRequest], stream *connect.ServerStream[polyglotv1.InterfaceEthernetFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -93,9 +93,9 @@ func (h *NetworkMonitorConnectHandler) StreamInterfaceEthernet(ctx context.Conte
 				return handle.Err()
 			}
 			ifaces := h.streamGW.ParseInterfaces(res)
-			items := make([]*devicepb.InterfaceEthernetItem, 0, len(ifaces))
+			items := make([]*polyglotv1.InterfaceEthernetItem, 0, len(ifaces))
 			for _, ifc := range ifaces {
-				items = append(items, &devicepb.InterfaceEthernetItem{
+				items = append(items, &polyglotv1.InterfaceEthernetItem{
 					Id:         ifc.RosID,
 					Name:       ifc.Name,
 					Type:       ifc.Type,
@@ -111,7 +111,7 @@ func (h *NetworkMonitorConnectHandler) StreamInterfaceEthernet(ctx context.Conte
 				})
 			}
 
-			err := stream.Send(&devicepb.InterfaceEthernetFrame{
+			err := stream.Send(&polyglotv1.InterfaceEthernetFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
 				Interfaces:    items,

@@ -9,7 +9,7 @@ import (
 
 	"strings"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
@@ -53,7 +53,7 @@ func NewDeviceConnectHandler(
 }
 
 // ListDevices returns devices visible to the caller.
-func (h *DeviceConnectHandler) ListDevices(ctx context.Context, req *connect.Request[devicepb.ListDevicesRequest]) (*connect.Response[devicepb.ListDevicesResponse], error) {
+func (h *DeviceConnectHandler) ListDevices(ctx context.Context, req *connect.Request[polyglotv1.ListDevicesRequest]) (*connect.Response[polyglotv1.ListDevicesResponse], error) {
 	callerID, callerRoles, hasIdentity := iauth.IdentityFromContext(ctx)
 	var devices []device.Device
 	var err error
@@ -66,16 +66,16 @@ func (h *DeviceConnectHandler) ListDevices(ctx context.Context, req *connect.Req
 		return nil, response.MapDomainError(err)
 	}
 
-	pbDevices := make([]*devicepb.Device, len(devices))
+	pbDevices := make([]*polyglotv1.Device, len(devices))
 	for i, d := range devices {
 		pbDevices[i] = DomainToPb(d)
 	}
 
-	return connect.NewResponse(&devicepb.ListDevicesResponse{Devices: pbDevices}), nil
+	return connect.NewResponse(&polyglotv1.ListDevicesResponse{Devices: pbDevices}), nil
 }
 
 // GetDevice returns one device by identifier.
-func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Request[devicepb.GetDeviceRequest]) (*connect.Response[devicepb.GetDeviceResponse], error) {
+func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Request[polyglotv1.GetDeviceRequest]) (*connect.Response[polyglotv1.GetDeviceResponse], error) {
 	callerID, callerRoles, hasIdentity := iauth.IdentityFromContext(ctx)
 	if hasIdentity && !isOwnerRole(callerRoles) {
 		accessible, err := h.useCase.ListDevicesForUser(ctx, callerID, callerRoles)
@@ -99,7 +99,7 @@ func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Reque
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.GetDeviceResponse{Device: DomainToPb(d)}), nil
+	return connect.NewResponse(&polyglotv1.GetDeviceResponse{Device: DomainToPb(d)}), nil
 }
 
 func isOwnerRole(roles []string) bool {
@@ -112,7 +112,7 @@ func isOwnerRole(roles []string) bool {
 }
 
 // UpdateDevice updates one device configuration.
-func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Request[devicepb.UpdateDeviceRequest]) (*connect.Response[devicepb.UpdateDeviceResponse], error) {
+func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Request[polyglotv1.UpdateDeviceRequest]) (*connect.Response[polyglotv1.UpdateDeviceResponse], error) {
 	d := PbToDomain(req.Msg.Device)
 	c := device.Credentials{
 		Username: req.Msg.Username,
@@ -145,30 +145,30 @@ func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Re
 		msg = "device created successfully via ConnectRPC"
 	}
 
-	return connect.NewResponse(&devicepb.UpdateDeviceResponse{
+	return connect.NewResponse(&polyglotv1.UpdateDeviceResponse{
 		Device:  DomainToPb(updated),
 		Message: msg,
 	}), nil
 }
 
 // DeleteDevice removes one device configuration.
-func (h *DeviceConnectHandler) DeleteDevice(ctx context.Context, req *connect.Request[devicepb.DeleteDeviceRequest]) (*connect.Response[devicepb.DeleteDeviceResponse], error) {
+func (h *DeviceConnectHandler) DeleteDevice(ctx context.Context, req *connect.Request[polyglotv1.DeleteDeviceRequest]) (*connect.Response[polyglotv1.DeleteDeviceResponse], error) {
 	if err := h.useCase.DeleteDevice(ctx, req.Msg.Id); err != nil {
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeleteDeviceResponse{
+	return connect.NewResponse(&polyglotv1.DeleteDeviceResponse{
 		Message: "device deleted successfully",
 	}), nil
 }
 
 // TestDeviceConnection checks connectivity to a device.
-func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *connect.Request[devicepb.TestDeviceConnectionRequest]) (*connect.Response[devicepb.TestDeviceConnectionResponse], error) {
+func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *connect.Request[polyglotv1.TestDeviceConnectionRequest]) (*connect.Response[polyglotv1.TestDeviceConnectionResponse], error) {
 	var drv port.DeviceDriver
 	if h.driverGetter != nil {
 		d, err := h.driverGetter(ctx, req.Msg.Id)
 		if err != nil {
-			return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
+			return connect.NewResponse(&polyglotv1.TestDeviceConnectionResponse{
 				DeviceId: req.Msg.Id,
 				Status:   "failed",
 				Message:  fmt.Sprintf("Failed to connect to device: %v", err),
@@ -187,7 +187,7 @@ func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *co
 		req.Msg.InterfaceNameFilter,
 	)
 	if err != nil {
-		return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
+		return connect.NewResponse(&polyglotv1.TestDeviceConnectionResponse{
 			DeviceId: req.Msg.Id,
 			Status:   "error",
 			Message:  err.Error(),
@@ -197,7 +197,7 @@ func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *co
 
 	pbIfaces := ToProtoInterfaceDetails(res.InterfaceDetails)
 
-	return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
+	return connect.NewResponse(&polyglotv1.TestDeviceConnectionResponse{
 		DeviceId:      req.Msg.Id,
 		Status:        res.Status,
 		LatencyMs:     res.LatencyMS,
@@ -216,7 +216,7 @@ func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *co
 }
 
 // GetIsolationStatus retrieves the router isolation infrastructure status.
-func (h *DeviceConnectHandler) GetIsolationStatus(ctx context.Context, req *connect.Request[devicepb.GetIsolationStatusRequest]) (*connect.Response[devicepb.GetIsolationStatusResponse], error) {
+func (h *DeviceConnectHandler) GetIsolationStatus(ctx context.Context, req *connect.Request[polyglotv1.GetIsolationStatusRequest]) (*connect.Response[polyglotv1.GetIsolationStatusResponse], error) {
 	if h.isolationUC == nil {
 		return nil, response.Unavailable("isolation usecase unavailable")
 	}
@@ -224,13 +224,13 @@ func (h *DeviceConnectHandler) GetIsolationStatus(ctx context.Context, req *conn
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetIsolationStatusResponse{
+	return connect.NewResponse(&polyglotv1.GetIsolationStatusResponse{
 		Status: IsolationStatusToPb(status),
 	}), nil
 }
 
 // CreateIsolationProfile provisions isolation profiles on the target router.
-func (h *DeviceConnectHandler) CreateIsolationProfile(ctx context.Context, req *connect.Request[devicepb.CreateIsolationProfileRequest]) (*connect.Response[devicepb.CreateIsolationProfileResponse], error) {
+func (h *DeviceConnectHandler) CreateIsolationProfile(ctx context.Context, req *connect.Request[polyglotv1.CreateIsolationProfileRequest]) (*connect.Response[polyglotv1.CreateIsolationProfileResponse], error) {
 	if h.isolationUC == nil {
 		return nil, response.Unavailable("isolation usecase unavailable")
 	}
@@ -239,14 +239,14 @@ func (h *DeviceConnectHandler) CreateIsolationProfile(ctx context.Context, req *
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.CreateIsolationProfileResponse{
+	return connect.NewResponse(&polyglotv1.CreateIsolationProfileResponse{
 		Status:  IsolationStatusToPb(status),
 		Message: "Profil isolir dan firewall redirect berhasil dipasang di router",
 	}), nil
 }
 
 // UpdateIsolationProfile updates isolation profiles and configuration on the target router.
-func (h *DeviceConnectHandler) UpdateIsolationProfile(ctx context.Context, req *connect.Request[devicepb.UpdateIsolationProfileRequest]) (*connect.Response[devicepb.UpdateIsolationProfileResponse], error) {
+func (h *DeviceConnectHandler) UpdateIsolationProfile(ctx context.Context, req *connect.Request[polyglotv1.UpdateIsolationProfileRequest]) (*connect.Response[polyglotv1.UpdateIsolationProfileResponse], error) {
 	if h.isolationUC == nil {
 		return nil, response.Unavailable("isolation usecase unavailable")
 	}
@@ -255,27 +255,27 @@ func (h *DeviceConnectHandler) UpdateIsolationProfile(ctx context.Context, req *
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.UpdateIsolationProfileResponse{
+	return connect.NewResponse(&polyglotv1.UpdateIsolationProfileResponse{
 		Status:  IsolationStatusToPb(status),
 		Message: "Profil isolir berhasil diperbarui",
 	}), nil
 }
 
 // DeleteIsolationProfile removes the isolation profile from the target router.
-func (h *DeviceConnectHandler) DeleteIsolationProfile(ctx context.Context, req *connect.Request[devicepb.DeleteIsolationProfileRequest]) (*connect.Response[devicepb.DeleteIsolationProfileResponse], error) {
+func (h *DeviceConnectHandler) DeleteIsolationProfile(ctx context.Context, req *connect.Request[polyglotv1.DeleteIsolationProfileRequest]) (*connect.Response[polyglotv1.DeleteIsolationProfileResponse], error) {
 	if h.isolationUC == nil {
 		return nil, response.Unavailable("isolation usecase unavailable")
 	}
 	if err := h.isolationUC.DeleteIsolationProfile(ctx, req.Msg.DeviceId, req.Msg.RemoveFirewallRules); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeleteIsolationProfileResponse{
+	return connect.NewResponse(&polyglotv1.DeleteIsolationProfileResponse{
 		Message: "Profil isolir berhasil dihapus",
 	}), nil
 }
 
 // GetRouterIntegrationScript generates webhook integration scripts for the router.
-func (h *DeviceConnectHandler) GetRouterIntegrationScript(ctx context.Context, req *connect.Request[devicepb.GetRouterIntegrationScriptRequest]) (*connect.Response[devicepb.GetRouterIntegrationScriptResponse], error) {
+func (h *DeviceConnectHandler) GetRouterIntegrationScript(ctx context.Context, req *connect.Request[polyglotv1.GetRouterIntegrationScriptRequest]) (*connect.Response[polyglotv1.GetRouterIntegrationScriptResponse], error) {
 	if h.isolationUC == nil {
 		return nil, response.Unavailable("isolation usecase unavailable")
 	}
@@ -283,7 +283,7 @@ func (h *DeviceConnectHandler) GetRouterIntegrationScript(ctx context.Context, r
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetRouterIntegrationScriptResponse{
+	return connect.NewResponse(&polyglotv1.GetRouterIntegrationScriptResponse{
 		PppOnUpScript:         scripts.PPPOnUpScript,
 		PppOnDownScript:       scripts.PPPOnDownScript,
 		HotspotOnLoginScript:  scripts.HotspotOnLoginScript,
@@ -293,14 +293,14 @@ func (h *DeviceConnectHandler) GetRouterIntegrationScript(ctx context.Context, r
 }
 
 // ApplyRouterIntegrationScript applies webhook integration scripts to a profile on the router.
-func (h *DeviceConnectHandler) ApplyRouterIntegrationScript(ctx context.Context, req *connect.Request[devicepb.ApplyRouterIntegrationScriptRequest]) (*connect.Response[devicepb.ApplyRouterIntegrationScriptResponse], error) {
+func (h *DeviceConnectHandler) ApplyRouterIntegrationScript(ctx context.Context, req *connect.Request[polyglotv1.ApplyRouterIntegrationScriptRequest]) (*connect.Response[polyglotv1.ApplyRouterIntegrationScriptResponse], error) {
 	if h.isolationUC == nil {
 		return nil, response.Unavailable("isolation usecase unavailable")
 	}
 	if err := h.isolationUC.ApplyRouterIntegrationScript(ctx, req.Msg.DeviceId, req.Msg.ProfileName, req.Msg.ServiceType); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ApplyRouterIntegrationScriptResponse{
+	return connect.NewResponse(&polyglotv1.ApplyRouterIntegrationScriptResponse{
 		Message: fmt.Sprintf("Script webhook berhasil diterapkan pada profile %s", req.Msg.ProfileName),
 	}), nil
 }

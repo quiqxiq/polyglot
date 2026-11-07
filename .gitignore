@@ -45,6 +45,7 @@ lerna-debug.log*
 .ref
 mikhmon4
 mikhmon_v4/
+/dashbox/
 .hermes/
 .codebuddy/
 

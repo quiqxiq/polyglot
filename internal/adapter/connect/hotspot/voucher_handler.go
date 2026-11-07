@@ -7,7 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -15,7 +15,7 @@ import (
 
 // GenerateVouchers generates a batch of count vouchers. All legacy fields are
 // mapped: server, time_limit, data_limit and comment (batch tag).
-func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *connect.Request[devicepb.GenerateVouchersRequest]) (*connect.Response[devicepb.GenerateVouchersResponse], error) {
+func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *connect.Request[polyglotv1.GenerateVouchersRequest]) (*connect.Response[polyglotv1.GenerateVouchersResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -43,9 +43,9 @@ func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *conne
 	}
 
 	limitBytes := dataLimitBytes(req.Msg.DataLimit)
-	pbVouchers := make([]*devicepb.HotspotUser, len(batch.Vouchers))
+	pbVouchers := make([]*polyglotv1.HotspotUser, len(batch.Vouchers))
 	for i, u := range batch.Vouchers {
-		pbVouchers[i] = &devicepb.HotspotUser{
+		pbVouchers[i] = &polyglotv1.HotspotUser{
 			Name:        u.Username,
 			Password:    u.Password,
 			Profile:     req.Msg.Profile,
@@ -55,7 +55,7 @@ func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *conne
 		}
 	}
 
-	return connect.NewResponse(&devicepb.GenerateVouchersResponse{
+	return connect.NewResponse(&polyglotv1.GenerateVouchersResponse{
 		Vouchers: pbVouchers,
 		Message:  fmt.Sprintf("successfully generated %d vouchers", len(pbVouchers)),
 	}), nil
@@ -63,7 +63,7 @@ func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *conne
 
 // GetVoucherBatch returns all vouchers of a batch tag that have never logged
 // in (uptime=0s), the replacement for legacy post_cache_voucher.php.
-func (h *HotspotConnectHandler) GetVoucherBatch(ctx context.Context, req *connect.Request[devicepb.GetVoucherBatchRequest]) (*connect.Response[devicepb.GetVoucherBatchResponse], error) {
+func (h *HotspotConnectHandler) GetVoucherBatch(ctx context.Context, req *connect.Request[polyglotv1.GetVoucherBatchRequest]) (*connect.Response[polyglotv1.GetVoucherBatchResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (h *HotspotConnectHandler) GetVoucherBatch(ctx context.Context, req *connec
 		}
 	}
 
-	return connect.NewResponse(&devicepb.GetVoucherBatchResponse{
+	return connect.NewResponse(&polyglotv1.GetVoucherBatchResponse{
 		Vouchers: toProtoHotspotUsers(users),
 		Count:    int32(len(users)),
 	}), nil

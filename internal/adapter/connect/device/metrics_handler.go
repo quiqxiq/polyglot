@@ -6,7 +6,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -15,16 +15,16 @@ import (
 // GetDevicePingConfig handles fetching ping configuration and TimescaleDB availability.
 func (h *DeviceConnectHandler) GetDevicePingConfig(
 	ctx context.Context,
-	req *connect.Request[devicepb.GetDevicePingConfigRequest],
-) (*connect.Response[devicepb.GetDevicePingConfigResponse], error) {
+	req *connect.Request[polyglotv1.GetDevicePingConfigRequest],
+) (*connect.Response[polyglotv1.GetDevicePingConfigResponse], error) {
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 	cfg, timescaleAvailable, err := h.metricsUC.GetPingConfig(ctx, req.Msg.DeviceId, callerID, callerRoles)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 
-	res := &devicepb.GetDevicePingConfigResponse{
-		Config: &devicepb.DevicePingConfig{
+	res := &polyglotv1.GetDevicePingConfigResponse{
+		Config: &polyglotv1.DevicePingConfig{
 			Enabled:       cfg.Enabled,
 			Target:        cfg.Target,
 			RetentionDays: int32(cfg.RetentionDays),
@@ -37,8 +37,8 @@ func (h *DeviceConnectHandler) GetDevicePingConfig(
 // UpdateDevicePingConfig handles updating ping settings for a router.
 func (h *DeviceConnectHandler) UpdateDevicePingConfig(
 	ctx context.Context,
-	req *connect.Request[devicepb.UpdateDevicePingConfigRequest],
-) (*connect.Response[devicepb.UpdateDevicePingConfigResponse], error) {
+	req *connect.Request[polyglotv1.UpdateDevicePingConfigRequest],
+) (*connect.Response[polyglotv1.UpdateDevicePingConfigResponse], error) {
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 	cfg := device.DevicePingConfig{
 		Enabled:       req.Msg.Config.Enabled,
@@ -51,8 +51,8 @@ func (h *DeviceConnectHandler) UpdateDevicePingConfig(
 		return nil, response.MapDomainError(err)
 	}
 
-	res := &devicepb.UpdateDevicePingConfigResponse{
-		Config: &devicepb.DevicePingConfig{
+	res := &polyglotv1.UpdateDevicePingConfigResponse{
+		Config: &polyglotv1.DevicePingConfig{
 			Enabled:       savedCfg.Enabled,
 			Target:        savedCfg.Target,
 			RetentionDays: int32(savedCfg.RetentionDays),
@@ -65,8 +65,8 @@ func (h *DeviceConnectHandler) UpdateDevicePingConfig(
 // QueryDevicePingMetrics retrieves historical time-series ping telemetry within the filter window.
 func (h *DeviceConnectHandler) QueryDevicePingMetrics(
 	ctx context.Context,
-	req *connect.Request[devicepb.QueryDevicePingMetricsRequest],
-) (*connect.Response[devicepb.QueryDevicePingMetricsResponse], error) {
+	req *connect.Request[polyglotv1.QueryDevicePingMetricsRequest],
+) (*connect.Response[polyglotv1.QueryDevicePingMetricsResponse], error) {
 	var startTime, endTime time.Time
 	var err error
 	if startTime, err = time.Parse(time.RFC3339, req.Msg.StartTime); err != nil {
@@ -92,7 +92,7 @@ func (h *DeviceConnectHandler) QueryDevicePingMetrics(
 		return nil, response.MapDomainError(err)
 	}
 
-	pbPoints := make([]*devicepb.PingMetricPointData, len(points))
+	pbPoints := make([]*polyglotv1.PingMetricPointData, len(points))
 	for i, p := range points {
 		var minRTT, avgRTT, maxRTT float32
 		if p.MinRTTMS != nil {
@@ -105,7 +105,7 @@ func (h *DeviceConnectHandler) QueryDevicePingMetrics(
 			maxRTT = *p.MaxRTTMS
 		}
 
-		pbPoints[i] = &devicepb.PingMetricPointData{
+		pbPoints[i] = &polyglotv1.PingMetricPointData{
 			Timestamp:  p.RecordedAt.Format(time.RFC3339),
 			Target:     p.Target,
 			Seq:        int32(p.Seq),
@@ -122,7 +122,7 @@ func (h *DeviceConnectHandler) QueryDevicePingMetrics(
 		}
 	}
 
-	res := &devicepb.QueryDevicePingMetricsResponse{
+	res := &polyglotv1.QueryDevicePingMetricsResponse{
 		Points:               pbPoints,
 		MinRtt:               summary.MinRTT,
 		AvgRtt:               summary.AvgRTT,

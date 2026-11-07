@@ -1,14 +1,14 @@
 package subscription
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
 )
 
 // ToProtoSubscription maps a domain Subscription model to a protobuf Subscription message.
-func ToProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
+func ToProtoSubscription(sub *domainSub.Subscription) *polyglotv1.Subscription {
 	if sub == nil {
 		return nil
 	}
@@ -24,7 +24,7 @@ func ToProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 	if sub.CustomPrice != nil {
 		customPrice = *sub.CustomPrice
 	}
-	pb := &devicepb.Subscription{
+	pb := &polyglotv1.Subscription{
 		Id:              sub.ID,
 		TenantId:        sub.TenantID,
 		CustomerId:      sub.CustomerID,
@@ -45,7 +45,7 @@ func ToProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 	}
 
 	if sub.ServiceType == domainPlan.TypeHotspot {
-		cfg := &devicepb.HotspotSubscriptionConfig{
+		cfg := &polyglotv1.HotspotSubscriptionConfig{
 			Server:        "all",
 			RateLimit:     sub.RateLimit,
 			RouterProfile: sub.RouterProfile,
@@ -61,7 +61,7 @@ func ToProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 		}
 		pb.HotspotConfig = cfg
 	} else {
-		cfg := &devicepb.PPPoESubscriptionConfig{
+		cfg := &polyglotv1.PPPoESubscriptionConfig{
 			RateLimit:     sub.RateLimit,
 			RouterProfile: sub.RouterProfile,
 		}
@@ -77,7 +77,7 @@ func ToProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 }
 
 // ToProtoSubscriptionDetail maps an enriched subscription detail to a protobuf Subscription message.
-func ToProtoSubscriptionDetail(detail *subUC.Detail) *devicepb.Subscription {
+func ToProtoSubscriptionDetail(detail *subUC.Detail) *polyglotv1.Subscription {
 	if detail == nil {
 		return nil
 	}
@@ -128,8 +128,8 @@ func ToProtoSubscriptionDetail(detail *subUC.Detail) *devicepb.Subscription {
 }
 
 // ToProtoSubscriptionDetailList converts a slice of subscription details into a protobuf slice.
-func ToProtoSubscriptionDetailList(details []subUC.Detail) []*devicepb.Subscription {
-	out := make([]*devicepb.Subscription, len(details))
+func ToProtoSubscriptionDetailList(details []subUC.Detail) []*polyglotv1.Subscription {
+	out := make([]*polyglotv1.Subscription, len(details))
 	for i := range details {
 		out[i] = ToProtoSubscriptionDetail(&details[i])
 	}

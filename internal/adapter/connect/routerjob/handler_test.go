@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	routerjobConnect "github.com/quixiq/polyglot/internal/adapter/connect/routerjob"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainRouterJob "github.com/quixiq/polyglot/internal/domain/routerjob"
@@ -41,18 +41,18 @@ func TestRouterJobHandler_ListRetryExport(t *testing.T) {
 	ctx := context.Background()
 
 	// List semua
-	listResp, err := h.ListRouterJobs(ctx, connect.NewRequest(&devicepb.ListRouterJobsRequest{}))
+	listResp, err := h.ListRouterJobs(ctx, connect.NewRequest(&polyglotv1.ListRouterJobsRequest{}))
 	require.NoError(t, err)
 	require.Len(t, listResp.Msg.Jobs, 1)
 	assert.Equal(t, "DEAD", listResp.Msg.Jobs[0].Status)
 
 	// Retry job DEAD → QUEUED
-	retryResp, err := h.RetryRouterJob(ctx, connect.NewRequest(&devicepb.RetryRouterJobRequest{Id: "job-1"}))
+	retryResp, err := h.RetryRouterJob(ctx, connect.NewRequest(&polyglotv1.RetryRouterJobRequest{Id: "job-1"}))
 	require.NoError(t, err)
 	assert.Equal(t, "QUEUED", retryResp.Msg.Job.Status)
 
 	// Export script .rsc
-	expResp, err := h.ExportRouterJobScript(ctx, connect.NewRequest(&devicepb.ExportRouterJobScriptRequest{Id: "job-1"}))
+	expResp, err := h.ExportRouterJobScript(ctx, connect.NewRequest(&polyglotv1.ExportRouterJobScriptRequest{Id: "job-1"}))
 	require.NoError(t, err)
 	assert.Contains(t, expResp.Msg.Script, "/ppp secret add")
 	assert.Equal(t, "job-1.rsc", expResp.Msg.Filename)
@@ -61,7 +61,7 @@ func TestRouterJobHandler_ListRetryExport(t *testing.T) {
 func TestRouterJobHandler_RetrySuccessJobRejected(t *testing.T) {
 	h := routerJobFixture(t)
 	// job sukses tidak boleh di-retry — pakai job baru berstatus SUCCEEDED.
-	_, err := h.RetryRouterJob(context.Background(), connect.NewRequest(&devicepb.RetryRouterJobRequest{Id: "tidak-ada"}))
+	_, err := h.RetryRouterJob(context.Background(), connect.NewRequest(&polyglotv1.RetryRouterJobRequest{Id: "tidak-ada"}))
 	require.Error(t, err)
 	assert.Equal(t, connect.CodeNotFound, connect.CodeOf(err))
 }

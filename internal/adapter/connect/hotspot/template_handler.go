@@ -9,7 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	templatefs "github.com/quixiq/polyglot/internal/template"
@@ -20,18 +20,18 @@ import (
 
 // ListTemplates returns the supported voucher template layouts and their
 // sections. Templates are embedded read-only (decision #5 — no Save).
-func (h *HotspotConnectHandler) ListTemplates(ctx context.Context, req *connect.Request[devicepb.ListTemplatesRequest]) (*connect.Response[devicepb.ListTemplatesResponse], error) {
+func (h *HotspotConnectHandler) ListTemplates(ctx context.Context, req *connect.Request[polyglotv1.ListTemplatesRequest]) (*connect.Response[polyglotv1.ListTemplatesResponse], error) {
 	infos := voucher.ListTemplates()
-	pbTemplates := make([]*devicepb.TemplateInfo, len(infos))
+	pbTemplates := make([]*polyglotv1.TemplateInfo, len(infos))
 	for i, ti := range infos {
-		pbTemplates[i] = &devicepb.TemplateInfo{Name: ti.Name, Sections: ti.Sections}
+		pbTemplates[i] = &polyglotv1.TemplateInfo{Name: ti.Name, Sections: ti.Sections}
 	}
-	return connect.NewResponse(&devicepb.ListTemplatesResponse{Templates: pbTemplates}), nil
+	return connect.NewResponse(&polyglotv1.ListTemplatesResponse{Templates: pbTemplates}), nil
 }
 
 // GetTemplateSection returns the raw content of one template section
 // (header|row|footer) for the given layout, read from the embedded FS.
-func (h *HotspotConnectHandler) GetTemplateSection(ctx context.Context, req *connect.Request[devicepb.GetTemplateSectionRequest]) (*connect.Response[devicepb.GetTemplateSectionResponse], error) {
+func (h *HotspotConnectHandler) GetTemplateSection(ctx context.Context, req *connect.Request[polyglotv1.GetTemplateSectionRequest]) (*connect.Response[polyglotv1.GetTemplateSectionResponse], error) {
 	layout, err := normalizeTemplateLayout(req.Msg.TemplateName)
 	if err != nil {
 		return nil, response.InvalidArgument(err.Error())
@@ -45,7 +45,7 @@ func (h *HotspotConnectHandler) GetTemplateSection(ctx context.Context, req *con
 	if err != nil {
 		return nil, response.MapDomainError(fault.Wrap(fault.KindNotFound, err))
 	}
-	return connect.NewResponse(&devicepb.GetTemplateSectionResponse{Content: string(data)}), nil
+	return connect.NewResponse(&polyglotv1.GetTemplateSectionResponse{Content: string(data)}), nil
 }
 
 // RenderVouchers produces the printable HTML for a single voucher (.id), a
@@ -53,7 +53,7 @@ func (h *HotspotConnectHandler) GetTemplateSection(ctx context.Context, req *con
 // scoped down (decision #4): hotspot name comes from router identity, dns
 // name from the first hotspot server, price/validity from the profile's
 // on-login script. QR encodes the login URL (decision #6).
-func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect.Request[devicepb.RenderVouchersRequest]) (*connect.Response[devicepb.RenderVouchersResponse], error) {
+func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect.Request[polyglotv1.RenderVouchersRequest]) (*connect.Response[polyglotv1.RenderVouchersResponse], error) {
 	layout, err := normalizeTemplateLayout(req.Msg.TemplateName)
 	if err != nil {
 		return nil, response.InvalidArgument(err.Error())
@@ -65,7 +65,7 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 		if err != nil {
 			return nil, response.MapDomainError(err)
 		}
-		return connect.NewResponse(&devicepb.RenderVouchersResponse{Html: html, TotalVouchers: 3}), nil
+		return connect.NewResponse(&polyglotv1.RenderVouchersResponse{Html: html, TotalVouchers: 3}), nil
 	}
 
 	if req.Msg.UserId == "" && req.Msg.Comment == "" {
@@ -170,7 +170,7 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RenderVouchersResponse{
+	return connect.NewResponse(&polyglotv1.RenderVouchersResponse{
 		Html:          html,
 		TotalVouchers: int32(len(data)),
 	}), nil

@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -25,7 +25,7 @@ func NewSkillConnectHandler(skillUC *skillUC.ManageSkillUseCase) *SkillConnectHa
 }
 
 // ListSkills returns all skills registered in the system.
-func (h *SkillConnectHandler) ListSkills(ctx context.Context, req *connect.Request[devicepb.ListSkillsRequest]) (*connect.Response[devicepb.ListSkillsResponse], error) {
+func (h *SkillConnectHandler) ListSkills(ctx context.Context, req *connect.Request[polyglotv1.ListSkillsRequest]) (*connect.Response[polyglotv1.ListSkillsResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -34,13 +34,13 @@ func (h *SkillConnectHandler) ListSkills(ctx context.Context, req *connect.Reque
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListSkillsResponse{
+	return connect.NewResponse(&polyglotv1.ListSkillsResponse{
 		Skills: ToProtoSkillList(skills),
 	}), nil
 }
 
 // GetSkill returns details of a single skill by ID.
-func (h *SkillConnectHandler) GetSkill(ctx context.Context, req *connect.Request[devicepb.GetSkillRequest]) (*connect.Response[devicepb.GetSkillResponse], error) {
+func (h *SkillConnectHandler) GetSkill(ctx context.Context, req *connect.Request[polyglotv1.GetSkillRequest]) (*connect.Response[polyglotv1.GetSkillResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -49,13 +49,13 @@ func (h *SkillConnectHandler) GetSkill(ctx context.Context, req *connect.Request
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.GetSkillResponse{
+	return connect.NewResponse(&polyglotv1.GetSkillResponse{
 		Skill: ToProtoSkill(sk),
 	}), nil
 }
 
 // CreateSkill creates a new skill with the given definition.
-func (h *SkillConnectHandler) CreateSkill(ctx context.Context, req *connect.Request[devicepb.CreateSkillRequest]) (*connect.Response[devicepb.CreateSkillResponse], error) {
+func (h *SkillConnectHandler) CreateSkill(ctx context.Context, req *connect.Request[polyglotv1.CreateSkillRequest]) (*connect.Response[polyglotv1.CreateSkillResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -74,13 +74,13 @@ func (h *SkillConnectHandler) CreateSkill(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.CreateSkillResponse{
+	return connect.NewResponse(&polyglotv1.CreateSkillResponse{
 		Skill: ToProtoSkill(sk),
 	}), nil
 }
 
 // UpdateSkill updates an existing skill's configuration and content.
-func (h *SkillConnectHandler) UpdateSkill(ctx context.Context, req *connect.Request[devicepb.UpdateSkillRequest]) (*connect.Response[devicepb.UpdateSkillResponse], error) {
+func (h *SkillConnectHandler) UpdateSkill(ctx context.Context, req *connect.Request[polyglotv1.UpdateSkillRequest]) (*connect.Response[polyglotv1.UpdateSkillResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -99,13 +99,13 @@ func (h *SkillConnectHandler) UpdateSkill(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.UpdateSkillResponse{
+	return connect.NewResponse(&polyglotv1.UpdateSkillResponse{
 		Skill: ToProtoSkill(sk),
 	}), nil
 }
 
 // DeleteSkill deletes a skill by ID.
-func (h *SkillConnectHandler) DeleteSkill(ctx context.Context, req *connect.Request[devicepb.DeleteSkillRequest]) (*connect.Response[devicepb.DeleteSkillResponse], error) {
+func (h *SkillConnectHandler) DeleteSkill(ctx context.Context, req *connect.Request[polyglotv1.DeleteSkillRequest]) (*connect.Response[polyglotv1.DeleteSkillResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -114,14 +114,14 @@ func (h *SkillConnectHandler) DeleteSkill(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeleteSkillResponse{
+	return connect.NewResponse(&polyglotv1.DeleteSkillResponse{
 		Success: true,
 		Message: "Skill deleted successfully",
 	}), nil
 }
 
 // ExportSkill exports a skill as a zip archive.
-func (h *SkillConnectHandler) ExportSkill(_ context.Context, req *connect.Request[devicepb.ExportSkillRequest]) (*connect.Response[devicepb.ExportSkillResponse], error) {
+func (h *SkillConnectHandler) ExportSkill(_ context.Context, req *connect.Request[polyglotv1.ExportSkillRequest]) (*connect.Response[polyglotv1.ExportSkillResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -130,14 +130,14 @@ func (h *SkillConnectHandler) ExportSkill(_ context.Context, req *connect.Reques
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ExportSkillResponse{
+	return connect.NewResponse(&polyglotv1.ExportSkillResponse{
 		Archive:  data,
 		Filename: req.Msg.Id + ".zip",
 	}), nil
 }
 
 // ImportSkill imports a skill from a zip archive.
-func (h *SkillConnectHandler) ImportSkill(ctx context.Context, req *connect.Request[devicepb.ImportSkillRequest]) (*connect.Response[devicepb.ImportSkillResponse], error) {
+func (h *SkillConnectHandler) ImportSkill(ctx context.Context, req *connect.Request[polyglotv1.ImportSkillRequest]) (*connect.Response[polyglotv1.ImportSkillResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -146,13 +146,13 @@ func (h *SkillConnectHandler) ImportSkill(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ImportSkillResponse{
+	return connect.NewResponse(&polyglotv1.ImportSkillResponse{
 		Skill: ToProtoSkill(sk),
 	}), nil
 }
 
 // ListResources returns the static resource files for a skill.
-func (h *SkillConnectHandler) ListResources(_ context.Context, req *connect.Request[devicepb.ListResourcesRequest]) (*connect.Response[devicepb.ListResourcesResponse], error) {
+func (h *SkillConnectHandler) ListResources(_ context.Context, req *connect.Request[polyglotv1.ListResourcesRequest]) (*connect.Response[polyglotv1.ListResourcesResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -161,13 +161,13 @@ func (h *SkillConnectHandler) ListResources(_ context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListResourcesResponse{
+	return connect.NewResponse(&polyglotv1.ListResourcesResponse{
 		Resources: ToProtoSkillResourceList(res),
 	}), nil
 }
 
 // GetResource returns the content of a specific resource file.
-func (h *SkillConnectHandler) GetResource(_ context.Context, req *connect.Request[devicepb.GetResourceRequest]) (*connect.Response[devicepb.GetResourceResponse], error) {
+func (h *SkillConnectHandler) GetResource(_ context.Context, req *connect.Request[polyglotv1.GetResourceRequest]) (*connect.Response[polyglotv1.GetResourceResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -176,14 +176,14 @@ func (h *SkillConnectHandler) GetResource(_ context.Context, req *connect.Reques
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.GetResourceResponse{
+	return connect.NewResponse(&polyglotv1.GetResourceResponse{
 		Content:  ToProtoResourceContent(content),
 		Metadata: ToProtoSkillResource(meta),
 	}), nil
 }
 
 // SaveResource creates or updates a resource file within a skill.
-func (h *SkillConnectHandler) SaveResource(_ context.Context, req *connect.Request[devicepb.SaveResourceRequest]) (*connect.Response[devicepb.SaveResourceResponse], error) {
+func (h *SkillConnectHandler) SaveResource(_ context.Context, req *connect.Request[polyglotv1.SaveResourceRequest]) (*connect.Response[polyglotv1.SaveResourceResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -192,14 +192,14 @@ func (h *SkillConnectHandler) SaveResource(_ context.Context, req *connect.Reque
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.SaveResourceResponse{
+	return connect.NewResponse(&polyglotv1.SaveResourceResponse{
 		Success: true,
 		Message: "Resource saved successfully",
 	}), nil
 }
 
 // DeleteResource deletes a resource file from a skill.
-func (h *SkillConnectHandler) DeleteResource(_ context.Context, req *connect.Request[devicepb.DeleteResourceRequest]) (*connect.Response[devicepb.DeleteResourceResponse], error) {
+func (h *SkillConnectHandler) DeleteResource(_ context.Context, req *connect.Request[polyglotv1.DeleteResourceRequest]) (*connect.Response[polyglotv1.DeleteResourceResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -208,14 +208,14 @@ func (h *SkillConnectHandler) DeleteResource(_ context.Context, req *connect.Req
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeleteResourceResponse{
+	return connect.NewResponse(&polyglotv1.DeleteResourceResponse{
 		Success: true,
 		Message: "Resource deleted successfully",
 	}), nil
 }
 
 // ListGitRepos lists all registered skill Git repositories.
-func (h *SkillConnectHandler) ListGitRepos(_ context.Context, _ *connect.Request[devicepb.ListGitReposRequest]) (*connect.Response[devicepb.ListGitReposResponse], error) {
+func (h *SkillConnectHandler) ListGitRepos(_ context.Context, _ *connect.Request[polyglotv1.ListGitReposRequest]) (*connect.Response[polyglotv1.ListGitReposResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -224,13 +224,13 @@ func (h *SkillConnectHandler) ListGitRepos(_ context.Context, _ *connect.Request
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ListGitReposResponse{
+	return connect.NewResponse(&polyglotv1.ListGitReposResponse{
 		Repos: ToProtoGitRepoInfoList(repos),
 	}), nil
 }
 
 // AddGitRepo adds a new skill Git repository.
-func (h *SkillConnectHandler) AddGitRepo(ctx context.Context, req *connect.Request[devicepb.AddGitRepoRequest]) (*connect.Response[devicepb.AddGitRepoResponse], error) {
+func (h *SkillConnectHandler) AddGitRepo(ctx context.Context, req *connect.Request[polyglotv1.AddGitRepoRequest]) (*connect.Response[polyglotv1.AddGitRepoResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -239,13 +239,13 @@ func (h *SkillConnectHandler) AddGitRepo(ctx context.Context, req *connect.Reque
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.AddGitRepoResponse{
+	return connect.NewResponse(&polyglotv1.AddGitRepoResponse{
 		Repo: ToProtoGitRepoInfo(repo),
 	}), nil
 }
 
 // UpdateGitRepo updates an existing skill Git repository configuration.
-func (h *SkillConnectHandler) UpdateGitRepo(_ context.Context, req *connect.Request[devicepb.UpdateGitRepoRequest]) (*connect.Response[devicepb.UpdateGitRepoResponse], error) {
+func (h *SkillConnectHandler) UpdateGitRepo(_ context.Context, req *connect.Request[polyglotv1.UpdateGitRepoRequest]) (*connect.Response[polyglotv1.UpdateGitRepoResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -254,13 +254,13 @@ func (h *SkillConnectHandler) UpdateGitRepo(_ context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.UpdateGitRepoResponse{
+	return connect.NewResponse(&polyglotv1.UpdateGitRepoResponse{
 		Repo: ToProtoGitRepoInfo(repo),
 	}), nil
 }
 
 // DeleteGitRepo removes a skill Git repository.
-func (h *SkillConnectHandler) DeleteGitRepo(ctx context.Context, req *connect.Request[devicepb.DeleteGitRepoRequest]) (*connect.Response[devicepb.DeleteGitRepoResponse], error) {
+func (h *SkillConnectHandler) DeleteGitRepo(ctx context.Context, req *connect.Request[polyglotv1.DeleteGitRepoRequest]) (*connect.Response[polyglotv1.DeleteGitRepoResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -269,14 +269,14 @@ func (h *SkillConnectHandler) DeleteGitRepo(ctx context.Context, req *connect.Re
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.DeleteGitRepoResponse{
+	return connect.NewResponse(&polyglotv1.DeleteGitRepoResponse{
 		Success: true,
 		Message: "Git repository deleted successfully",
 	}), nil
 }
 
 // SyncGitRepo synchronizes skills from a Git repository.
-func (h *SkillConnectHandler) SyncGitRepo(ctx context.Context, req *connect.Request[devicepb.SyncGitRepoRequest]) (*connect.Response[devicepb.SyncGitRepoResponse], error) {
+func (h *SkillConnectHandler) SyncGitRepo(ctx context.Context, req *connect.Request[polyglotv1.SyncGitRepoRequest]) (*connect.Response[polyglotv1.SyncGitRepoResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -285,14 +285,14 @@ func (h *SkillConnectHandler) SyncGitRepo(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.SyncGitRepoResponse{
+	return connect.NewResponse(&polyglotv1.SyncGitRepoResponse{
 		Success: true,
 		Message: "Git repository synced successfully",
 	}), nil
 }
 
 // ToggleGitRepo enables or disables a Git repository.
-func (h *SkillConnectHandler) ToggleGitRepo(_ context.Context, req *connect.Request[devicepb.ToggleGitRepoRequest]) (*connect.Response[devicepb.ToggleGitRepoResponse], error) {
+func (h *SkillConnectHandler) ToggleGitRepo(_ context.Context, req *connect.Request[polyglotv1.ToggleGitRepoRequest]) (*connect.Response[polyglotv1.ToggleGitRepoResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -301,13 +301,13 @@ func (h *SkillConnectHandler) ToggleGitRepo(_ context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ToggleGitRepoResponse{
+	return connect.NewResponse(&polyglotv1.ToggleGitRepoResponse{
 		Repo: ToProtoGitRepoInfo(repo),
 	}), nil
 }
 
 // ToggleSkill enables or disables an individual skill.
-func (h *SkillConnectHandler) ToggleSkill(ctx context.Context, req *connect.Request[devicepb.ToggleSkillRequest]) (*connect.Response[devicepb.ToggleSkillResponse], error) {
+func (h *SkillConnectHandler) ToggleSkill(ctx context.Context, req *connect.Request[polyglotv1.ToggleSkillRequest]) (*connect.Response[polyglotv1.ToggleSkillResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -316,14 +316,14 @@ func (h *SkillConnectHandler) ToggleSkill(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.ToggleSkillResponse{
+	return connect.NewResponse(&polyglotv1.ToggleSkillResponse{
 		Success: true,
 		Message: "Skill toggled successfully",
 	}), nil
 }
 
 // GetGlobalPrompt returns the system-wide global prompt.
-func (h *SkillConnectHandler) GetGlobalPrompt(ctx context.Context, _ *connect.Request[devicepb.GetGlobalPromptRequest]) (*connect.Response[devicepb.GetGlobalPromptResponse], error) {
+func (h *SkillConnectHandler) GetGlobalPrompt(ctx context.Context, _ *connect.Request[polyglotv1.GetGlobalPromptRequest]) (*connect.Response[polyglotv1.GetGlobalPromptResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -332,13 +332,13 @@ func (h *SkillConnectHandler) GetGlobalPrompt(ctx context.Context, _ *connect.Re
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.GetGlobalPromptResponse{
+	return connect.NewResponse(&polyglotv1.GetGlobalPromptResponse{
 		Content: content,
 	}), nil
 }
 
 // SaveGlobalPrompt saves the system-wide global prompt.
-func (h *SkillConnectHandler) SaveGlobalPrompt(ctx context.Context, req *connect.Request[devicepb.SaveGlobalPromptRequest]) (*connect.Response[devicepb.SaveGlobalPromptResponse], error) {
+func (h *SkillConnectHandler) SaveGlobalPrompt(ctx context.Context, req *connect.Request[polyglotv1.SaveGlobalPromptRequest]) (*connect.Response[polyglotv1.SaveGlobalPromptResponse], error) {
 	if h.skillUC == nil {
 		return nil, response.Unavailable("skill usecase unavailable")
 	}
@@ -347,7 +347,7 @@ func (h *SkillConnectHandler) SaveGlobalPrompt(ctx context.Context, req *connect
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.SaveGlobalPromptResponse{
+	return connect.NewResponse(&polyglotv1.SaveGlobalPromptResponse{
 		Success: true,
 		Message: "Global prompt saved successfully",
 	}), nil

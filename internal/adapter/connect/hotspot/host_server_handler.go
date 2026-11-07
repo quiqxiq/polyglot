@@ -6,12 +6,12 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // ListHosts returns all /ip/hotspot/host entries.
-func (h *HotspotConnectHandler) ListHosts(ctx context.Context, req *connect.Request[devicepb.ListHotspotHostsRequest]) (*connect.Response[devicepb.ListHotspotHostsResponse], error) {
+func (h *HotspotConnectHandler) ListHosts(ctx context.Context, req *connect.Request[polyglotv1.ListHotspotHostsRequest]) (*connect.Response[polyglotv1.ListHotspotHostsResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -21,14 +21,14 @@ func (h *HotspotConnectHandler) ListHosts(ctx context.Context, req *connect.Requ
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListHotspotHostsResponse{
+	return connect.NewResponse(&polyglotv1.ListHotspotHostsResponse{
 		Hosts: toProtoHotspotHosts(rows),
 	}), nil
 }
 
 // RemoveHost deletes a single /ip/hotspot/host entry by RouterOS .id.
 // Note: this only removes the host entry, not the hotspot user.
-func (h *HotspotConnectHandler) RemoveHost(ctx context.Context, req *connect.Request[devicepb.RemoveHotspotHostRequest]) (*connect.Response[devicepb.RemoveHotspotHostResponse], error) {
+func (h *HotspotConnectHandler) RemoveHost(ctx context.Context, req *connect.Request[polyglotv1.RemoveHotspotHostRequest]) (*connect.Response[polyglotv1.RemoveHotspotHostResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -38,13 +38,13 @@ func (h *HotspotConnectHandler) RemoveHost(ctx context.Context, req *connect.Req
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RemoveHotspotHostResponse{
+	return connect.NewResponse(&polyglotv1.RemoveHotspotHostResponse{
 		Message: fmt.Sprintf("host removed: output=%s", res.Output),
 	}), nil
 }
 
 // ListHotspotServers returns all /ip/hotspot server instances.
-func (h *HotspotConnectHandler) ListHotspotServers(ctx context.Context, req *connect.Request[devicepb.ListHotspotServersRequest]) (*connect.Response[devicepb.ListHotspotServersResponse], error) {
+func (h *HotspotConnectHandler) ListHotspotServers(ctx context.Context, req *connect.Request[polyglotv1.ListHotspotServersRequest]) (*connect.Response[polyglotv1.ListHotspotServersResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func (h *HotspotConnectHandler) ListHotspotServers(ctx context.Context, req *con
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListHotspotServersResponse{
+	return connect.NewResponse(&polyglotv1.ListHotspotServersResponse{
 		Servers: toProtoHotspotServers(rows),
 	}), nil
 }

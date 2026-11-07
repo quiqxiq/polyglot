@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/ppp.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -2703,7 +2703,7 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\x12KickActiveSessions\x12).polyglot.v1.KickPPPActiveSessionsRequest\x1a*.polyglot.v1.KickPPPActiveSessionsResponse\x12n\n" +
 	"\x13ListInactiveSecrets\x12*.polyglot.v1.ListPPPInactiveSecretsRequest\x1a+.polyglot.v1.ListPPPInactiveSecretsResponse\x12j\n" +
 	"\x14StreamActiveSessions\x12+.polyglot.v1.StreamPPPActiveSessionsRequest\x1a#.polyglot.v1.PPPActiveSessionsFrame0\x01\x12m\n" +
-	"\x15StreamInactiveSecrets\x12,.polyglot.v1.StreamPPPInactiveSecretsRequest\x1a$.polyglot.v1.PPPInactiveSecretsFrame0\x01B0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x15StreamInactiveSecrets\x12,.polyglot.v1.StreamPPPInactiveSecretsRequest\x1a$.polyglot.v1.PPPInactiveSecretsFrame0\x01B2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_ppp_proto_rawDescOnce sync.Once

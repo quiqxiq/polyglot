@@ -42,48 +42,19 @@
       icon: 'dashboard',
       href: 'index.html',
       bottomNav: true,
-      allOf: ['dial:dashboard:read', 'dial:device:read'],
-      anyOf: [
-        'dial:monitor:read',
-        'dial:ppp-active:read',
-        'dial:ppp-non-active:read',
-        'dial:ppp-secrets:read',
-        'dial:ppp-profiles:read'
-      ],
-      actions: {
-        snapshot: 'dial:monitor:read',
-        search: 'dial:ppp-active:read',
-        kick: 'dial:ppp-active:kick',
-        toggleSecret: 'dial:ppp-non-active:toggle',
-        ping: 'dial:dashboard:ping'
-      }
+      allOf: ['dial:dashboard:read']
     },
     {
       id: 'operations',
       type: 'group',
       labelKey: 'group_operations',
       icon: 'activity',
-      allOf: ['dial:device:read'],
-      anyOf: [
-        'dial:ppp-active:read',
-        'dial:ppp-non-active:read',
-        'dial:ppp-secrets:read',
-        'dial:ppp-profiles:read',
-        'dial:logs:read',
-        'dial:monitor:read'
-      ],
       children: [
         {
           id: 'ppp',
           type: 'group',
           labelKey: 'group_ppp',
           icon: 'wifi',
-          anyOf: [
-            'dial:ppp-active:read',
-            'dial:ppp-non-active:read',
-            'dial:ppp-secrets:read',
-            'dial:ppp-profiles:read'
-          ],
           children: [
             {
               id: 'ppp-active',
@@ -92,11 +63,7 @@
               icon: 'wifi',
               href: 'ppp-active.html',
               bottomNav: true,
-              allOf: ['dial:ppp-active:read'],
-              actions: {
-                kick: 'dial:ppp-active:kick',
-                ping: 'dial:ppp-active:ping'
-              }
+              allOf: ['dial:ppp-active:read']
             },
             {
               id: 'ppp-inactive',
@@ -105,10 +72,7 @@
               icon: 'wifi-off',
               href: 'ppp-non-active.html',
               bottomNav: true,
-              allOf: ['dial:ppp-non-active:read'],
-              actions: {
-                toggleSecret: 'dial:ppp-non-active:toggle'
-              }
+              allOf: ['dial:ppp-non-active:read']
             },
             {
               id: 'ppp-secrets',
@@ -116,11 +80,7 @@
               labelKey: 'nav_ppp_secrets',
               icon: 'key',
               href: 'ppp-secrets.html',
-              allOf: ['dial:ppp-secrets:read'],
-              actions: {
-                toggleSecret: 'dial:ppp-secrets:write',
-                openActive: 'dial:ppp-active:read'
-              }
+              allOf: ['dial:ppp-secrets:read']
             },
             {
               id: 'ppp-profiles',
@@ -137,7 +97,6 @@
           type: 'group',
           labelKey: 'group_monitoring',
           icon: 'monitor',
-          anyOf: ['dial:logs:read', 'dial:monitor:read'],
           children: [
             {
               id: 'logs',
@@ -155,10 +114,7 @@
               icon: 'monitor',
               href: 'monitor-interface.html',
               bottomNav: true,
-              allOf: ['dial:monitor:read', 'dial:monitor:diagnostic'],
-              actions: {
-                testConnection: 'dial:monitor:diagnostic'
-              }
+              allOf: ['dial:monitor:read']
             }
           ]
         }
@@ -169,7 +125,6 @@
       type: 'group',
       labelKey: 'group_system',
       icon: 'settings',
-      anyOf: ['dial:settings:users:read', 'dial:settings:devices:read'],
       children: [
         {
           id: 'settings',
@@ -177,37 +132,7 @@
           labelKey: 'nav_settings',
           icon: 'settings',
           href: 'settings.html',
-          anyOf: ['dial:settings:users:read', 'dial:settings:devices:read'],
-          actions: {
-            manageUsers: 'dial:settings:users:manage',
-            listDevices: 'dial:settings:devices:read',
-            assignDevices: ['dial:settings:users:manage', 'dial:settings:devices:read']
-          },
-          children: [
-            {
-              id: 'settings-users',
-              type: 'tab',
-              labelKey: 'nav_settings_users',
-              icon: 'users',
-              href: 'settings.html#users',
-              allOf: ['dial:settings:users:read'],
-              actions: {
-                manage: 'dial:settings:users:manage'
-              }
-            },
-            {
-              id: 'settings-devices',
-              type: 'tab',
-              labelKey: 'nav_settings_devices',
-              icon: 'router',
-              href: 'settings.html#devices',
-              allOf: ['dial:settings:devices:read', 'dial:settings:devices:manage'],
-              actions: {
-                assign: ['dial:settings:users:manage', 'dial:settings:devices:read'],
-                listDevices: 'dial:settings:devices:read'
-              }
-            }
-          ]
+          allOf: ['dial:settings:read']
         }
       ]
     }
@@ -217,6 +142,29 @@
     if (!value) return [];
     return Array.isArray(value) ? value : [value];
   }
+
+  const PERMISSION_EQUIVALENTS = {
+    'dial:dashboard:read': ['device:read'],
+    'dial:ppp-active:read': ['ppp:active:read'],
+    'dial:ppp-non-active:read': ['ppp:inactive:read'],
+    'dial:ppp-secrets:read': ['ppp:secret:manage', 'ppp:secret:write'],
+    'dial:ppp-profiles:read': ['ppp:profile:read'],
+    'dial:logs:read': ['log:read'],
+    'dial:monitor:read': ['monitor:read'],
+    'dial:settings:read': ['setting:read', 'user:read', 'user:manage', 'device:manage'],
+    // Backward compatibility for legacy tokens/checks:
+    'dial:device:read': ['device:read'],
+    'dial:dashboard:ping': ['device:diagnostic:exec'],
+    'dial:ppp-active:kick': ['ppp:active:kick'],
+    'dial:ppp-active:ping': ['device:diagnostic:exec'],
+    'dial:ppp-non-active:toggle': ['ppp:secret:write'],
+    'dial:ppp-secrets:write': ['ppp:secret:write'],
+    'dial:monitor:diagnostic': ['device:diagnostic:exec'],
+    'dial:settings:users:read': ['user:read', 'setting:read'],
+    'dial:settings:users:manage': ['user:manage'],
+    'dial:settings:devices:read': ['device:read', 'setting:read'],
+    'dial:settings:devices:manage': ['device:manage']
+  };
 
   /**
    * Meniru enforcement Casbin: flat permission "resource:action" (bisa regex
@@ -245,7 +193,16 @@
 
   function hasPermission(permissions, required) {
     if (!Array.isArray(permissions) || permissions.length === 0) return false;
-    return permissions.some((granted) => matchesPermission(granted, required));
+    if (permissions.some((granted) => matchesPermission(granted, required))) {
+      return true;
+    }
+    const equivalents = PERMISSION_EQUIVALENTS[required];
+    if (Array.isArray(equivalents)) {
+      return equivalents.some((eq) =>
+        permissions.some((granted) => matchesPermission(granted, eq))
+      );
+    }
+    return false;
   }
 
   function canAll(permissions, required) {
@@ -297,22 +254,31 @@
     });
   }
 
+  function normalizeMenuId(menuId) {
+    if (menuId === 'settings-users' || menuId === 'settings-devices') {
+      return 'settings';
+    }
+    return menuId;
+  }
+
   function findNode(menuId, tree) {
+    const targetId = normalizeMenuId(menuId);
     let found = null;
     walk(Array.isArray(tree) ? tree : TREE, (node) => {
-      if (!found && node.id === menuId) found = node;
+      if (!found && node.id === targetId) found = node;
     });
     return found;
   }
 
   function findPath(menuId, tree) {
+    const targetId = normalizeMenuId(menuId);
     const source = Array.isArray(tree) ? tree : TREE;
     const stack = [];
 
     function visit(nodes) {
       for (const node of nodes) {
         stack.push(node);
-        if (node.id === menuId) return true;
+        if (node.id === targetId) return true;
         if (node.children && visit(node.children)) return true;
         stack.pop();
       }
@@ -325,14 +291,17 @@
   function canAccess(menuId, canFn) {
     const path = findPath(menuId);
     if (!path || path.length === 0) return false;
-    return path.every((node) => checkNode(node, canFn));
+    if (!path.every((node) => checkNode(node, canFn))) return false;
+    const targetNode = path[path.length - 1];
+    if (targetNode && targetNode.type === 'group') {
+      const resolved = resolveNode(targetNode, true, canFn);
+      return resolved !== null && Array.isArray(resolved.children) && resolved.children.length > 0;
+    }
+    return true;
   }
 
   function canAction(menuId, actionKey, canFn) {
-    const node = findNode(menuId);
-    if (!node || !node.actions || !node.actions[actionKey]) return false;
-    if (!canAccess(menuId, canFn)) return false;
-    return permissionList(node.actions[actionKey]).every((p) => canFn(p));
+    return canAccess(menuId, canFn);
   }
 
   function flattenPages(tree) {

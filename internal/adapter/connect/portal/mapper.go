@@ -3,17 +3,17 @@ package portal
 import (
 	"time"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
 )
 
-func toProtoCustomerPortal(c *domainCustomer.Customer) *devicepb.Customer {
+func toProtoCustomerPortal(c *domainCustomer.Customer) *polyglotv1.Customer {
 	if c == nil {
 		return nil
 	}
-	return &devicepb.Customer{
+	return &polyglotv1.Customer{
 		Id:           c.ID,
 		TenantId:     c.TenantID,
 		CustomerCode: c.CustomerCode,
@@ -25,7 +25,7 @@ func toProtoCustomerPortal(c *domainCustomer.Customer) *devicepb.Customer {
 	}
 }
 
-func toProtoSubscriptionSummary(sub *portalUC.SubscriptionView) *devicepb.PortalSubscriptionSummary {
+func toProtoSubscriptionSummary(sub *portalUC.SubscriptionView) *polyglotv1.PortalSubscriptionSummary {
 	if sub == nil {
 		return nil
 	}
@@ -35,7 +35,7 @@ func toProtoSubscriptionSummary(sub *portalUC.SubscriptionView) *devicepb.Portal
 			endUnix = t.Unix()
 		}
 	}
-	return &devicepb.PortalSubscriptionSummary{
+	return &polyglotv1.PortalSubscriptionSummary{
 		Id:          sub.ID,
 		PlanId:      sub.PlanID,
 		ServiceType: sub.ServiceType,
@@ -46,8 +46,8 @@ func toProtoSubscriptionSummary(sub *portalUC.SubscriptionView) *devicepb.Portal
 	}
 }
 
-func toProtoUnpaidInvoiceSummary(inv portalUC.InvoiceView) *devicepb.UnpaidInvoiceSummary {
-	return &devicepb.UnpaidInvoiceSummary{
+func toProtoUnpaidInvoiceSummary(inv portalUC.InvoiceView) *polyglotv1.UnpaidInvoiceSummary {
+	return &polyglotv1.UnpaidInvoiceSummary{
 		Id:                inv.ID,
 		InvoiceNumber:     inv.InvoiceNumber,
 		Period:            inv.Period,
@@ -60,10 +60,10 @@ func toProtoUnpaidInvoiceSummary(inv portalUC.InvoiceView) *devicepb.UnpaidInvoi
 	}
 }
 
-func toProtoInvoicePortalList(list []domainBilling.Invoice) []*devicepb.Invoice {
-	out := make([]*devicepb.Invoice, len(list))
+func toProtoInvoicePortalList(list []domainBilling.Invoice) []*polyglotv1.Invoice {
+	out := make([]*polyglotv1.Invoice, len(list))
 	for i, inv := range list {
-		out[i] = &devicepb.Invoice{
+		out[i] = &polyglotv1.Invoice{
 			Id:                inv.ID,
 			InvoiceNumber:     inv.InvoiceNumber,
 			Period:            inv.Period,
@@ -77,10 +77,10 @@ func toProtoInvoicePortalList(list []domainBilling.Invoice) []*devicepb.Invoice 
 	return out
 }
 
-func toProtoPaymentEntries(payments []domainBilling.Payment) []*devicepb.PaymentEntry {
-	entries := make([]*devicepb.PaymentEntry, len(payments))
+func toProtoPaymentEntries(payments []domainBilling.Payment) []*polyglotv1.PaymentEntry {
+	entries := make([]*polyglotv1.PaymentEntry, len(payments))
 	for i, p := range payments {
-		entries[i] = &devicepb.PaymentEntry{
+		entries[i] = &polyglotv1.PaymentEntry{
 			Id:              p.ID,
 			PaymentNo:       p.PaymentNo,
 			Amount:          p.Amount,

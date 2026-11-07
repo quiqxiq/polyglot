@@ -33,6 +33,11 @@ const API = {
     err.code = 'permission_denied';
     err.permissionDenied = true;
 
+    // Immediately invalidate cached sync timestamp so next check is guaranteed fresh
+    try {
+      localStorage.removeItem('polyglot_user_synced_at');
+    } catch (_) {}
+
     if (!this._forbiddenNotified.has(servicePath)) {
       this._forbiddenNotified.add(servicePath);
       window.dispatchEvent(new CustomEvent('api:permission-denied', {
@@ -41,6 +46,28 @@ const API = {
       if (typeof showToast === 'function') {
         showToast(err.message, 'warning');
       }
+    }
+
+    // Immediately refresh permissions and reconcile current page access
+    if (typeof Auth !== 'undefined' && typeof Auth.refreshUser === 'function') {
+      Auth.refreshUser().then(() => {
+        if (typeof DialMenu !== 'undefined') {
+          const can = Auth.permissionChecker();
+          const currentPage = (window.location.pathname.split('/').pop() || 'index.html').split('?')[0];
+          const node = Auth.resolveMenu(currentPage);
+          if (node && !DialMenu.canAccess(node.id, can)) {
+            if (typeof document !== 'undefined' && document.body) {
+              document.body.style.display = 'none';
+            }
+            const target = DialMenu.firstAccessibleRoute(can) || 'no-access.html';
+            window.location.replace(target);
+            return;
+          }
+          if (typeof Layout !== 'undefined' && typeof Layout.rerender === 'function') {
+            Layout.rerender(currentPage);
+          }
+        }
+      }).catch(() => {});
     }
 
     return err;

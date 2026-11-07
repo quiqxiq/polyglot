@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/ont.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -1438,7 +1438,7 @@ const file_v1_ont_proto_rawDesc = "" +
 	"\tUnlinkOnt\x12\x1d.polyglot.v1.UnlinkOntRequest\x1a\x1e.polyglot.v1.UnlinkOntResponse\x12S\n" +
 	"\fPinAcsDevice\x12 .polyglot.v1.PinAcsDeviceRequest\x1a!.polyglot.v1.PinAcsDeviceResponse\x12Y\n" +
 	"\x0eUnpinAcsDevice\x12\".polyglot.v1.UnpinAcsDeviceRequest\x1a#.polyglot.v1.UnpinAcsDeviceResponse\x12\\\n" +
-	"\x0fEnsureAcsPreset\x12#.polyglot.v1.EnsureAcsPresetRequest\x1a$.polyglot.v1.EnsureAcsPresetResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0fEnsureAcsPreset\x12#.polyglot.v1.EnsureAcsPresetRequest\x1a$.polyglot.v1.EnsureAcsPresetResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_ont_proto_rawDescOnce sync.Once

@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -24,7 +24,7 @@ func NewNotificationConnectHandler(uc *notificationUC.ManageNotificationUseCase)
 }
 
 // ListTemplates returns notification templates.
-func (h *NotificationConnectHandler) ListTemplates(ctx context.Context, req *connect.Request[devicepb.ListNotificationTemplatesRequest]) (*connect.Response[devicepb.ListNotificationTemplatesResponse], error) {
+func (h *NotificationConnectHandler) ListTemplates(ctx context.Context, req *connect.Request[polyglotv1.ListNotificationTemplatesRequest]) (*connect.Response[polyglotv1.ListNotificationTemplatesResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("notification usecase unavailable")
 	}
@@ -32,13 +32,13 @@ func (h *NotificationConnectHandler) ListTemplates(ctx context.Context, req *con
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListNotificationTemplatesResponse{
+	return connect.NewResponse(&polyglotv1.ListNotificationTemplatesResponse{
 		Templates: toProtoTemplateList(list),
 	}), nil
 }
 
 // GetTemplate returns one notification template.
-func (h *NotificationConnectHandler) GetTemplate(ctx context.Context, req *connect.Request[devicepb.GetNotificationTemplateRequest]) (*connect.Response[devicepb.GetNotificationTemplateResponse], error) {
+func (h *NotificationConnectHandler) GetTemplate(ctx context.Context, req *connect.Request[polyglotv1.GetNotificationTemplateRequest]) (*connect.Response[polyglotv1.GetNotificationTemplateResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("notification usecase unavailable")
 	}
@@ -46,13 +46,13 @@ func (h *NotificationConnectHandler) GetTemplate(ctx context.Context, req *conne
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetNotificationTemplateResponse{
+	return connect.NewResponse(&polyglotv1.GetNotificationTemplateResponse{
 		Template: toProtoTemplate(&t),
 	}), nil
 }
 
 // SaveTemplate creates or updates a notification template.
-func (h *NotificationConnectHandler) SaveTemplate(ctx context.Context, req *connect.Request[devicepb.SaveNotificationTemplateRequest]) (*connect.Response[devicepb.SaveNotificationTemplateResponse], error) {
+func (h *NotificationConnectHandler) SaveTemplate(ctx context.Context, req *connect.Request[polyglotv1.SaveNotificationTemplateRequest]) (*connect.Response[polyglotv1.SaveNotificationTemplateResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("notification usecase unavailable")
 	}
@@ -69,13 +69,13 @@ func (h *NotificationConnectHandler) SaveTemplate(ctx context.Context, req *conn
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SaveNotificationTemplateResponse{
+	return connect.NewResponse(&polyglotv1.SaveNotificationTemplateResponse{
 		Template: toProtoTemplate(&saved),
 	}), nil
 }
 
 // ListNotifications returns notification records.
-func (h *NotificationConnectHandler) ListNotifications(ctx context.Context, req *connect.Request[devicepb.ListNotificationsRequest]) (*connect.Response[devicepb.ListNotificationsResponse], error) {
+func (h *NotificationConnectHandler) ListNotifications(ctx context.Context, req *connect.Request[polyglotv1.ListNotificationsRequest]) (*connect.Response[polyglotv1.ListNotificationsResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("notification usecase unavailable")
 	}
@@ -83,13 +83,13 @@ func (h *NotificationConnectHandler) ListNotifications(ctx context.Context, req 
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListNotificationsResponse{
+	return connect.NewResponse(&polyglotv1.ListNotificationsResponse{
 		Notifications: toProtoWANotificationList(list),
 	}), nil
 }
 
 // PendingCount returns the number of pending notifications.
-func (h *NotificationConnectHandler) PendingCount(ctx context.Context, _ *connect.Request[devicepb.PendingCountRequest]) (*connect.Response[devicepb.PendingCountResponse], error) {
+func (h *NotificationConnectHandler) PendingCount(ctx context.Context, _ *connect.Request[polyglotv1.PendingCountRequest]) (*connect.Response[polyglotv1.PendingCountResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("notification usecase unavailable")
 	}
@@ -97,40 +97,40 @@ func (h *NotificationConnectHandler) PendingCount(ctx context.Context, _ *connec
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.PendingCountResponse{
+	return connect.NewResponse(&polyglotv1.PendingCountResponse{
 		Queued: int32(count),
 	}), nil
 }
 
 // MarkNotificationSent marks a notification as sent.
-func (h *NotificationConnectHandler) MarkNotificationSent(ctx context.Context, req *connect.Request[devicepb.MarkNotificationSentRequest]) (*connect.Response[devicepb.MarkNotificationSentResponse], error) {
+func (h *NotificationConnectHandler) MarkNotificationSent(ctx context.Context, req *connect.Request[polyglotv1.MarkNotificationSentRequest]) (*connect.Response[polyglotv1.MarkNotificationSentResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("notification usecase unavailable")
 	}
 	if err := h.useCase.MarkSent(ctx, req.Msg.Id); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.MarkNotificationSentResponse{}), nil
+	return connect.NewResponse(&polyglotv1.MarkNotificationSentResponse{}), nil
 }
 
 // MarkNotificationFailed marks a notification as failed.
-func (h *NotificationConnectHandler) MarkNotificationFailed(ctx context.Context, req *connect.Request[devicepb.MarkNotificationFailedRequest]) (*connect.Response[devicepb.MarkNotificationFailedResponse], error) {
+func (h *NotificationConnectHandler) MarkNotificationFailed(ctx context.Context, req *connect.Request[polyglotv1.MarkNotificationFailedRequest]) (*connect.Response[polyglotv1.MarkNotificationFailedResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("notification usecase unavailable")
 	}
 	if err := h.useCase.MarkFailed(ctx, req.Msg.Id, req.Msg.ErrorMessage); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.MarkNotificationFailedResponse{}), nil
+	return connect.NewResponse(&polyglotv1.MarkNotificationFailedResponse{}), nil
 }
 
 // TestSend sends a test notification.
-func (h *NotificationConnectHandler) TestSend(ctx context.Context, req *connect.Request[devicepb.TestSendRequest]) (*connect.Response[devicepb.TestSendResponse], error) {
+func (h *NotificationConnectHandler) TestSend(ctx context.Context, req *connect.Request[polyglotv1.TestSendRequest]) (*connect.Response[polyglotv1.TestSendResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("notification usecase unavailable")
 	}
 	if err := h.useCase.TestSend(ctx, req.Msg.Phone, req.Msg.Content); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.TestSendResponse{Sent: true}), nil
+	return connect.NewResponse(&polyglotv1.TestSendResponse{Sent: true}), nil
 }

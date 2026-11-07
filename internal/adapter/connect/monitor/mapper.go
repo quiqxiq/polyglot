@@ -1,14 +1,14 @@
 package monitor
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-func toProtoActiveSessions(sessions []port.HotspotActiveSession) []*devicepb.HotspotActiveSession {
-	out := make([]*devicepb.HotspotActiveSession, len(sessions))
+func toProtoActiveSessions(sessions []port.HotspotActiveSession) []*polyglotv1.HotspotActiveSession {
+	out := make([]*polyglotv1.HotspotActiveSession, len(sessions))
 	for i, s := range sessions {
-		out[i] = &devicepb.HotspotActiveSession{
+		out[i] = &polyglotv1.HotspotActiveSession{
 			Id:         s.RosID,
 			Server:     s.Server,
 			User:       s.User,
@@ -19,10 +19,10 @@ func toProtoActiveSessions(sessions []port.HotspotActiveSession) []*devicepb.Hot
 	return out
 }
 
-func toProtoActiveStats(stats []port.HotspotActiveStat) []*devicepb.HotspotActiveStat {
-	out := make([]*devicepb.HotspotActiveStat, len(stats))
+func toProtoActiveStats(stats []port.HotspotActiveStat) []*polyglotv1.HotspotActiveStat {
+	out := make([]*polyglotv1.HotspotActiveStat, len(stats))
 	for i, s := range stats {
-		out[i] = &devicepb.HotspotActiveStat{
+		out[i] = &polyglotv1.HotspotActiveStat{
 			Id:              s.RosID,
 			Uptime:          s.Uptime,
 			SessionTimeLeft: s.SessionTimeLeft,
@@ -36,10 +36,10 @@ func toProtoActiveStats(stats []port.HotspotActiveStat) []*devicepb.HotspotActiv
 	return out
 }
 
-func toProtoHotspotUsers(users []port.HotspotUser) []*devicepb.HotspotUser {
-	out := make([]*devicepb.HotspotUser, len(users))
+func toProtoHotspotUsers(users []port.HotspotUser) []*polyglotv1.HotspotUser {
+	out := make([]*polyglotv1.HotspotUser, len(users))
 	for i, u := range users {
-		out[i] = &devicepb.HotspotUser{
+		out[i] = &polyglotv1.HotspotUser{
 			Id:          u.RosID,
 			Name:        u.Name,
 			Password:    u.Password,

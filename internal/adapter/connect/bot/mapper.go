@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"time"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/domain/skill"
 )
 
 // toProtoWASession converts a domain bot.WASession into its Protobuf representation.
-func toProtoWASession(s *bot.WASession) *devicepb.WASession {
+func toProtoWASession(s *bot.WASession) *polyglotv1.WASession {
 	if s == nil {
-		return &devicepb.WASession{}
+		return &polyglotv1.WASession{}
 	}
-	return &devicepb.WASession{
+	return &polyglotv1.WASession{
 		Id:          fmt.Sprintf("%d", s.ID),
 		Name:        s.DeviceName,
 		PhoneNumber: s.PhoneNumber,
@@ -26,8 +26,8 @@ func toProtoWASession(s *bot.WASession) *devicepb.WASession {
 }
 
 // toProtoWASessionList converts a slice of domain bot.WASession into Protobuf representations.
-func toProtoWASessionList(sessions []bot.WASession) []*devicepb.WASession {
-	items := make([]*devicepb.WASession, len(sessions))
+func toProtoWASessionList(sessions []bot.WASession) []*polyglotv1.WASession {
+	items := make([]*polyglotv1.WASession, len(sessions))
 	for i := range sessions {
 		items[i] = toProtoWASession(&sessions[i])
 	}
@@ -35,11 +35,11 @@ func toProtoWASessionList(sessions []bot.WASession) []*devicepb.WASession {
 }
 
 // toProtoLLMConfig converts a domain llm.Config into its Protobuf representation.
-func toProtoLLMConfig(cfg *llm.Config) *devicepb.LLMConfig {
+func toProtoLLMConfig(cfg *llm.Config) *polyglotv1.LLMConfig {
 	if cfg == nil {
-		return &devicepb.LLMConfig{}
+		return &polyglotv1.LLMConfig{}
 	}
-	return &devicepb.LLMConfig{
+	return &polyglotv1.LLMConfig{
 		Id:             fmt.Sprintf("%d", cfg.ID),
 		Provider:       cfg.Provider,
 		ModelName:      cfg.Model,
@@ -56,8 +56,8 @@ func toProtoLLMConfig(cfg *llm.Config) *devicepb.LLMConfig {
 }
 
 // toProtoLLMConfigList converts a slice of domain llm.Config into Protobuf representations.
-func toProtoLLMConfigList(configs []llm.Config) []*devicepb.LLMConfig {
-	items := make([]*devicepb.LLMConfig, len(configs))
+func toProtoLLMConfigList(configs []llm.Config) []*polyglotv1.LLMConfig {
+	items := make([]*polyglotv1.LLMConfig, len(configs))
 	for i := range configs {
 		items[i] = toProtoLLMConfig(&configs[i])
 	}
@@ -65,11 +65,11 @@ func toProtoLLMConfigList(configs []llm.Config) []*devicepb.LLMConfig {
 }
 
 // toProtoConversation converts a domain bot.Conversation into its Protobuf representation.
-func toProtoConversation(c *bot.Conversation) *devicepb.Conversation {
+func toProtoConversation(c *bot.Conversation) *polyglotv1.Conversation {
 	if c == nil {
-		return &devicepb.Conversation{}
+		return &polyglotv1.Conversation{}
 	}
-	return &devicepb.Conversation{
+	return &polyglotv1.Conversation{
 		Id:          fmt.Sprintf("%d", c.ID),
 		SessionId:   fmt.Sprintf("%d", c.SessionID),
 		ClientPhone: c.CustomerWANumber,
@@ -79,8 +79,8 @@ func toProtoConversation(c *bot.Conversation) *devicepb.Conversation {
 }
 
 // toProtoConversationList converts a slice of domain bot.Conversation into Protobuf representations.
-func toProtoConversationList(convs []bot.Conversation) []*devicepb.Conversation {
-	items := make([]*devicepb.Conversation, len(convs))
+func toProtoConversationList(convs []bot.Conversation) []*polyglotv1.Conversation {
+	items := make([]*polyglotv1.Conversation, len(convs))
 	for i := range convs {
 		items[i] = toProtoConversation(&convs[i])
 	}
@@ -89,11 +89,11 @@ func toProtoConversationList(convs []bot.Conversation) []*devicepb.Conversation 
 
 // --- Skills Mappers ---
 
-func toProtoSkill(s *skill.Skill) *devicepb.Skill {
+func toProtoSkill(s *skill.Skill) *polyglotv1.Skill {
 	if s == nil {
-		return &devicepb.Skill{}
+		return &polyglotv1.Skill{}
 	}
-	return &devicepb.Skill{
+	return &polyglotv1.Skill{
 		Id:            s.ID,
 		Name:          s.Name,
 		Description:   s.Description,
@@ -110,19 +110,19 @@ func toProtoSkill(s *skill.Skill) *devicepb.Skill {
 	}
 }
 
-func toProtoSkillList(skills []skill.Skill) []*devicepb.Skill {
-	items := make([]*devicepb.Skill, len(skills))
+func toProtoSkillList(skills []skill.Skill) []*polyglotv1.Skill {
+	items := make([]*polyglotv1.Skill, len(skills))
 	for i := range skills {
 		items[i] = toProtoSkill(&skills[i])
 	}
 	return items
 }
 
-func toProtoSkillResource(r *skill.SkillResource) *devicepb.SkillResource {
+func toProtoSkillResource(r *skill.SkillResource) *polyglotv1.SkillResource {
 	if r == nil {
-		return &devicepb.SkillResource{}
+		return &polyglotv1.SkillResource{}
 	}
-	return &devicepb.SkillResource{
+	return &polyglotv1.SkillResource{
 		Path:     r.Path,
 		Name:     r.Name,
 		Type:     r.Type,
@@ -133,19 +133,19 @@ func toProtoSkillResource(r *skill.SkillResource) *devicepb.SkillResource {
 	}
 }
 
-func toProtoSkillResourceList(resources []skill.SkillResource) []*devicepb.SkillResource {
-	items := make([]*devicepb.SkillResource, len(resources))
+func toProtoSkillResourceList(resources []skill.SkillResource) []*polyglotv1.SkillResource {
+	items := make([]*polyglotv1.SkillResource, len(resources))
 	for i := range resources {
 		items[i] = toProtoSkillResource(&resources[i])
 	}
 	return items
 }
 
-func toProtoResourceContent(c *skill.ResourceContent) *devicepb.ResourceContent {
+func toProtoResourceContent(c *skill.ResourceContent) *polyglotv1.ResourceContent {
 	if c == nil {
-		return &devicepb.ResourceContent{}
+		return &polyglotv1.ResourceContent{}
 	}
-	return &devicepb.ResourceContent{
+	return &polyglotv1.ResourceContent{
 		Content:  c.Content,
 		Encoding: c.Encoding,
 		MimeType: c.MimeType,
@@ -153,11 +153,11 @@ func toProtoResourceContent(c *skill.ResourceContent) *devicepb.ResourceContent 
 	}
 }
 
-func toProtoGitRepoInfo(g *skill.GitRepoInfo) *devicepb.GitRepoInfo {
+func toProtoGitRepoInfo(g *skill.GitRepoInfo) *polyglotv1.GitRepoInfo {
 	if g == nil {
-		return &devicepb.GitRepoInfo{}
+		return &polyglotv1.GitRepoInfo{}
 	}
-	return &devicepb.GitRepoInfo{
+	return &polyglotv1.GitRepoInfo{
 		Id:           g.ID,
 		Url:          g.URL,
 		Name:         g.Name,
@@ -166,8 +166,8 @@ func toProtoGitRepoInfo(g *skill.GitRepoInfo) *devicepb.GitRepoInfo {
 	}
 }
 
-func toProtoGitRepoInfoList(repos []skill.GitRepoInfo) []*devicepb.GitRepoInfo {
-	items := make([]*devicepb.GitRepoInfo, len(repos))
+func toProtoGitRepoInfoList(repos []skill.GitRepoInfo) []*polyglotv1.GitRepoInfo {
+	items := make([]*polyglotv1.GitRepoInfo, len(repos))
 	for i := range repos {
 		items[i] = toProtoGitRepoInfo(&repos[i])
 	}

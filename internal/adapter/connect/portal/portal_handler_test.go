@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	connectPortal "github.com/quixiq/polyglot/internal/adapter/connect/portal"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
@@ -44,11 +44,11 @@ func TestPortalConnectHandler_RequestOTP_Validation(t *testing.T) {
 	ctx := context.Background()
 
 	// Identifier kosong -> error
-	_, err := handler.RequestOTP(ctx, connect.NewRequest(&devicepb.RequestOTPRequest{Identifier: ""}))
+	_, err := handler.RequestOTP(ctx, connect.NewRequest(&polyglotv1.RequestOTPRequest{Identifier: ""}))
 	assert.Error(t, err)
 
 	// Identifier valid -> sukses
-	resp, err := handler.RequestOTP(ctx, connect.NewRequest(&devicepb.RequestOTPRequest{Identifier: "085606846141"}))
+	resp, err := handler.RequestOTP(ctx, connect.NewRequest(&polyglotv1.RequestOTPRequest{Identifier: "085606846141"}))
 	require.NoError(t, err)
 	assert.Contains(t, resp.Msg.Message, "OTP dikirim")
 }
@@ -58,7 +58,7 @@ func TestPortalConnectHandler_Overview_Unauthenticated(t *testing.T) {
 	ctx := context.Background()
 
 	// Token palsu -> 401 unauthenticated
-	_, err := handler.Overview(ctx, connect.NewRequest(&devicepb.PortalOverviewRequest{Token: "invalid-token"}))
+	_, err := handler.Overview(ctx, connect.NewRequest(&polyglotv1.PortalOverviewRequest{Token: "invalid-token"}))
 	assert.Error(t, err)
 
 	var dateTmp time.Time

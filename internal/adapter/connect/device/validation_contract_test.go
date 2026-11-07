@@ -12,16 +12,16 @@ import (
 	validatepb "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	"connectrpc.com/connect"
 	"connectrpc.com/validate"
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	connectDevice "github.com/quixiq/polyglot/internal/adapter/connect/device"
 )
 
 func TestValidationInterceptorPreservesViolationDetails(t *testing.T) {
 	interceptor := validate.NewInterceptor()
 	handler := interceptor.WrapUnary(func(_ context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
-		return connect.NewResponse(&devicepb.GetDeviceResponse{}), nil
+		return connect.NewResponse(&polyglotv1.GetDeviceResponse{}), nil
 	})
-	_, err := handler(context.Background(), connect.NewRequest(&devicepb.GetDeviceRequest{}))
+	_, err := handler(context.Background(), connect.NewRequest(&polyglotv1.GetDeviceRequest{}))
 	if err == nil {
 		t.Fatal("validation interceptor error = nil, want invalid request")
 	}

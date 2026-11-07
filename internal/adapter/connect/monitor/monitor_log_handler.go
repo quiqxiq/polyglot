@@ -6,14 +6,14 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // StreamLogs streams /log/print follow natively from RouterOS.
-func (h *NetworkMonitorConnectHandler) StreamLogs(ctx context.Context, req *connect.Request[devicepb.StreamLogsRequest], stream *connect.ServerStream[devicepb.LogsStreamFrame]) error {
+func (h *NetworkMonitorConnectHandler) StreamLogs(ctx context.Context, req *connect.Request[polyglotv1.StreamLogsRequest], stream *connect.ServerStream[polyglotv1.LogsStreamFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -44,9 +44,9 @@ func (h *NetworkMonitorConnectHandler) StreamLogs(ctx context.Context, req *conn
 				continue
 			}
 
-			items := make([]*devicepb.LogEntryItem, 0, len(logs))
+			items := make([]*polyglotv1.LogEntryItem, 0, len(logs))
 			for _, l := range logs {
-				items = append(items, &devicepb.LogEntryItem{
+				items = append(items, &polyglotv1.LogEntryItem{
 					Id:      l.RosID,
 					Time:    l.Time,
 					Topics:  l.Topics,
@@ -54,7 +54,7 @@ func (h *NetworkMonitorConnectHandler) StreamLogs(ctx context.Context, req *conn
 				})
 			}
 
-			err := stream.Send(&devicepb.LogsStreamFrame{
+			err := stream.Send(&polyglotv1.LogsStreamFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
 				Logs:          items,

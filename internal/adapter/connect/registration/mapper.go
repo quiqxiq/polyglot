@@ -3,11 +3,11 @@ package registration
 import (
 	"strconv"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
 )
 
-func toProtoRegistration(r *domainRegistration.Registration) *devicepb.Registration {
+func toProtoRegistration(r *domainRegistration.Registration) *polyglotv1.Registration {
 	if r == nil {
 		return nil
 	}
@@ -52,7 +52,7 @@ func toProtoRegistration(r *domainRegistration.Registration) *devicepb.Registrat
 	if r.InstallationStartedAt != nil {
 		installationStartedAtUnix = r.InstallationStartedAt.Unix()
 	}
-	return &devicepb.Registration{
+	return &polyglotv1.Registration{
 		Id:                        r.ID,
 		TenantId:                  r.TenantID,
 		RegistrationNo:            r.RegistrationNo,
@@ -99,15 +99,15 @@ func toProtoRegistration(r *domainRegistration.Registration) *devicepb.Registrat
 	}
 }
 
-func toProtoRegistrationEvents(events []domainRegistration.RegistrationEvent) []*devicepb.RegistrationEvent {
-	out := make([]*devicepb.RegistrationEvent, len(events))
+func toProtoRegistrationEvents(events []domainRegistration.RegistrationEvent) []*polyglotv1.RegistrationEvent {
+	out := make([]*polyglotv1.RegistrationEvent, len(events))
 	for i := range events {
 		e := events[i]
 		var actorID string
 		if e.ActorID != nil {
 			actorID = fmtInt(*e.ActorID)
 		}
-		out[i] = &devicepb.RegistrationEvent{
+		out[i] = &polyglotv1.RegistrationEvent{
 			Id:             e.ID,
 			RegistrationId: e.RegistrationID,
 			EventType:      e.EventType,
@@ -121,8 +121,8 @@ func toProtoRegistrationEvents(events []domainRegistration.RegistrationEvent) []
 	return out
 }
 
-func toProtoRegistrationList(regs []domainRegistration.Registration) []*devicepb.Registration {
-	out := make([]*devicepb.Registration, len(regs))
+func toProtoRegistrationList(regs []domainRegistration.Registration) []*polyglotv1.Registration {
+	out := make([]*polyglotv1.Registration, len(regs))
 	for i := range regs {
 		out[i] = toProtoRegistration(&regs[i])
 	}

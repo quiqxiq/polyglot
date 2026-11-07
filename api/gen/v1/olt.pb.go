@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/olt.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -2589,7 +2589,7 @@ const file_v1_olt_proto_rawDesc = "" +
 	"\tRenameOnu\x12\x1d.polyglot.v1.RenameOnuRequest\x1a\x1e.polyglot.v1.RenameOnuResponse\x12J\n" +
 	"\tRebootOnu\x12\x1d.polyglot.v1.RebootOnuRequest\x1a\x1e.polyglot.v1.RebootOnuResponse\x12_\n" +
 	"\x10SetOnuAdminState\x12$.polyglot.v1.SetOnuAdminStateRequest\x1a%.polyglot.v1.SetOnuAdminStateResponse\x12J\n" +
-	"\tDeleteOnu\x12\x1d.polyglot.v1.DeleteOnuRequest\x1a\x1e.polyglot.v1.DeleteOnuResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\tDeleteOnu\x12\x1d.polyglot.v1.DeleteOnuRequest\x1a\x1e.polyglot.v1.DeleteOnuResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_olt_proto_rawDescOnce sync.Once

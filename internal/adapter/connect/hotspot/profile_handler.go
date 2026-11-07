@@ -7,7 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -16,7 +16,7 @@ import (
 // CreateProfile creates a hotspot user profile with full Mikhmon metadata.
 // The profile name is normalized (whitespace -> "-") exactly like legacy
 // post_add_profile.php before it is embedded in report script names.
-func (h *HotspotConnectHandler) CreateProfile(ctx context.Context, req *connect.Request[devicepb.CreateHotspotProfileRequest]) (*connect.Response[devicepb.CreateHotspotProfileResponse], error) {
+func (h *HotspotConnectHandler) CreateProfile(ctx context.Context, req *connect.Request[polyglotv1.CreateHotspotProfileRequest]) (*connect.Response[polyglotv1.CreateHotspotProfileResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -34,14 +34,14 @@ func (h *HotspotConnectHandler) CreateProfile(ctx context.Context, req *connect.
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.CreateHotspotProfileResponse{
+	return connect.NewResponse(&polyglotv1.CreateHotspotProfileResponse{
 		Profile: toProtoHotspotProfile(created),
 		Message: fmt.Sprintf("profile %q created", params.Name),
 	}), nil
 }
 
 // UpdateProfile modifies an existing hotspot user profile by RouterOS .id.
-func (h *HotspotConnectHandler) UpdateProfile(ctx context.Context, req *connect.Request[devicepb.UpdateHotspotProfileRequest]) (*connect.Response[devicepb.UpdateHotspotProfileResponse], error) {
+func (h *HotspotConnectHandler) UpdateProfile(ctx context.Context, req *connect.Request[polyglotv1.UpdateHotspotProfileRequest]) (*connect.Response[polyglotv1.UpdateHotspotProfileResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (h *HotspotConnectHandler) UpdateProfile(ctx context.Context, req *connect.
 		return nil, response.MapDomainError(err)
 	}
 
-	return connect.NewResponse(&devicepb.UpdateHotspotProfileResponse{
+	return connect.NewResponse(&polyglotv1.UpdateHotspotProfileResponse{
 		Profile: toProtoHotspotProfile(updated),
 		Message: fmt.Sprintf("profile %q updated", updated.Name),
 	}), nil
@@ -66,7 +66,7 @@ func (h *HotspotConnectHandler) UpdateProfile(ctx context.Context, req *connect.
 // DeleteProfile removes a hotspot user profile by RouterOS .id. RouterOS will
 // !trap when the profile is still referenced by users — the original message
 // is propagated.
-func (h *HotspotConnectHandler) DeleteProfile(ctx context.Context, req *connect.Request[devicepb.DeleteHotspotProfileRequest]) (*connect.Response[devicepb.DeleteHotspotProfileResponse], error) {
+func (h *HotspotConnectHandler) DeleteProfile(ctx context.Context, req *connect.Request[polyglotv1.DeleteHotspotProfileRequest]) (*connect.Response[polyglotv1.DeleteHotspotProfileResponse], error) {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
@@ -76,7 +76,7 @@ func (h *HotspotConnectHandler) DeleteProfile(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.DeleteHotspotProfileResponse{
+	return connect.NewResponse(&polyglotv1.DeleteHotspotProfileResponse{
 		Message: fmt.Sprintf("profile deleted: output=%s", res.Output),
 	}), nil
 }

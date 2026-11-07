@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/routerjob.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -473,7 +473,7 @@ const file_v1_routerjob_proto_rawDesc = "" +
 	"\x10RouterJobService\x12Y\n" +
 	"\x0eListRouterJobs\x12\".polyglot.v1.ListRouterJobsRequest\x1a#.polyglot.v1.ListRouterJobsResponse\x12Y\n" +
 	"\x0eRetryRouterJob\x12\".polyglot.v1.RetryRouterJobRequest\x1a#.polyglot.v1.RetryRouterJobResponse\x12n\n" +
-	"\x15ExportRouterJobScript\x12).polyglot.v1.ExportRouterJobScriptRequest\x1a*.polyglot.v1.ExportRouterJobScriptResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x15ExportRouterJobScript\x12).polyglot.v1.ExportRouterJobScriptRequest\x1a*.polyglot.v1.ExportRouterJobScriptResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_routerjob_proto_rawDescOnce sync.Once

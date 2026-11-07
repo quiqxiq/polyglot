@@ -6,7 +6,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainCashbook "github.com/quixiq/polyglot/internal/domain/cashbook"
 	"github.com/quixiq/polyglot/internal/port"
 	cashbookUC "github.com/quixiq/polyglot/internal/usecase/cashbook"
@@ -26,7 +26,7 @@ func NewCashbookConnectHandler(useCase *cashbookUC.ManageCashbookUseCase) *Cashb
 }
 
 // ListAccounts returns cash accounts.
-func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.Request[devicepb.ListAccountsRequest]) (*connect.Response[devicepb.ListAccountsResponse], error) {
+func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.Request[polyglotv1.ListAccountsRequest]) (*connect.Response[polyglotv1.ListAccountsResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
@@ -34,13 +34,13 @@ func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListAccountsResponse{
+	return connect.NewResponse(&polyglotv1.ListAccountsResponse{
 		Accounts: toProtoAccountList(list),
 	}), nil
 }
 
 // SaveAccount creates or updates a cash account.
-func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.Request[devicepb.SaveAccountRequest]) (*connect.Response[devicepb.SaveAccountResponse], error) {
+func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.Request[polyglotv1.SaveAccountRequest]) (*connect.Response[polyglotv1.SaveAccountResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
@@ -55,13 +55,13 @@ func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.R
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SaveAccountResponse{
+	return connect.NewResponse(&polyglotv1.SaveAccountResponse{
 		Account: toProtoAccount(a),
 	}), nil
 }
 
 // ListCategories returns cash categories.
-func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connect.Request[devicepb.ListCategoriesRequest]) (*connect.Response[devicepb.ListCategoriesResponse], error) {
+func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connect.Request[polyglotv1.ListCategoriesRequest]) (*connect.Response[polyglotv1.ListCategoriesResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
@@ -69,13 +69,13 @@ func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connec
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListCategoriesResponse{
+	return connect.NewResponse(&polyglotv1.ListCategoriesResponse{
 		Categories: toProtoCategoryList(list),
 	}), nil
 }
 
 // SaveCategory creates or updates a cash category.
-func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.Request[devicepb.SaveCategoryRequest]) (*connect.Response[devicepb.SaveCategoryResponse], error) {
+func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.Request[polyglotv1.SaveCategoryRequest]) (*connect.Response[polyglotv1.SaveCategoryResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
@@ -89,13 +89,13 @@ func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SaveCategoryResponse{
+	return connect.NewResponse(&polyglotv1.SaveCategoryResponse{
 		Category: toProtoCategory(c),
 	}), nil
 }
 
 // AddTransaction records a cash transaction.
-func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connect.Request[devicepb.AddTransactionRequest]) (*connect.Response[devicepb.AddTransactionResponse], error) {
+func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connect.Request[polyglotv1.AddTransactionRequest]) (*connect.Response[polyglotv1.AddTransactionResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
@@ -109,13 +109,13 @@ func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connec
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.AddTransactionResponse{
+	return connect.NewResponse(&polyglotv1.AddTransactionResponse{
 		Transaction: toProtoTransaction(t),
 	}), nil
 }
 
 // ListTransactions returns cash transactions matching the filter.
-func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *connect.Request[devicepb.ListTransactionsFilter]) (*connect.Response[devicepb.ListTransactionsResponse], error) {
+func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *connect.Request[polyglotv1.ListTransactionsFilter]) (*connect.Response[polyglotv1.ListTransactionsResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
@@ -135,13 +135,13 @@ func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *conn
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.ListTransactionsResponse{
+	return connect.NewResponse(&polyglotv1.ListTransactionsResponse{
 		Transactions: toProtoTransactionList(list),
 	}), nil
 }
 
 // Balances returns account balances for the selected period.
-func (h *CashbookConnectHandler) Balances(ctx context.Context, req *connect.Request[devicepb.BalancesRequest]) (*connect.Response[devicepb.BalancesResponse], error) {
+func (h *CashbookConnectHandler) Balances(ctx context.Context, req *connect.Request[polyglotv1.BalancesRequest]) (*connect.Response[polyglotv1.BalancesResponse], error) {
 	if h.useCase == nil {
 		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
@@ -156,7 +156,7 @@ func (h *CashbookConnectHandler) Balances(ctx context.Context, req *connect.Requ
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.BalancesResponse{
+	return connect.NewResponse(&polyglotv1.BalancesResponse{
 		BalanceByAccount: balances,
 	}), nil
 }

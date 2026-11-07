@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainONT "github.com/quixiq/polyglot/internal/domain/ont"
 	ontUC "github.com/quixiq/polyglot/internal/usecase/ont"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -24,9 +24,9 @@ func NewConnectHandler(svc *ontUC.Service) *ConnectHandler {
 	return &ConnectHandler{svc: svc}
 }
 
-func (h *ConnectHandler) GetAcsConfig(ctx context.Context, _ *connect.Request[devicepb.GetAcsConfigRequest]) (*connect.Response[devicepb.GetAcsConfigResponse], error) {
+func (h *ConnectHandler) GetAcsConfig(ctx context.Context, _ *connect.Request[polyglotv1.GetAcsConfigRequest]) (*connect.Response[polyglotv1.GetAcsConfigResponse], error) {
 	cfg := h.svc.Config(ctx)
-	return connect.NewResponse(&devicepb.GetAcsConfigResponse{Config: &devicepb.AcsConfig{
+	return connect.NewResponse(&polyglotv1.GetAcsConfigResponse{Config: &polyglotv1.AcsConfig{
 		Enabled:                cfg.Enabled,
 		ServerDeviceId:         cfg.ServerDeviceID,
 		AcsUrl:                 cfg.ACSURL,
@@ -35,15 +35,15 @@ func (h *ConnectHandler) GetAcsConfig(ctx context.Context, _ *connect.Request[de
 	}}), nil
 }
 
-func (h *ConnectHandler) SyncAcsDevices(ctx context.Context, _ *connect.Request[devicepb.SyncAcsDevicesRequest]) (*connect.Response[devicepb.SyncAcsDevicesResponse], error) {
+func (h *ConnectHandler) SyncAcsDevices(ctx context.Context, _ *connect.Request[polyglotv1.SyncAcsDevicesRequest]) (*connect.Response[polyglotv1.SyncAcsDevicesResponse], error) {
 	job, err := h.svc.EnqueueSyncDevices(ctx, "")
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SyncAcsDevicesResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.SyncAcsDevicesResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) ListAcsDevices(ctx context.Context, req *connect.Request[devicepb.ListAcsDevicesRequest]) (*connect.Response[devicepb.ListAcsDevicesResponse], error) {
+func (h *ConnectHandler) ListAcsDevices(ctx context.Context, req *connect.Request[polyglotv1.ListAcsDevicesRequest]) (*connect.Response[polyglotv1.ListAcsDevicesResponse], error) {
 	limit := int(req.Msg.GetLimit())
 	if limit <= 0 {
 		limit = 200
@@ -52,9 +52,9 @@ func (h *ConnectHandler) ListAcsDevices(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	out := make([]*devicepb.AcsDevice, 0, len(list))
+	out := make([]*polyglotv1.AcsDevice, 0, len(list))
 	for _, d := range list {
-		item := &devicepb.AcsDevice{
+		item := &polyglotv1.AcsDevice{
 			Id: d.ID, AcsDeviceId: d.ACSDeviceID, Oui: d.OUI,
 			ProductClass: d.ProductClass, SerialNumber: d.SerialNumber,
 			SoftwareVersion: d.SoftwareVersion, Tags: d.Tags, MacCandidates: d.MACCandidates,
@@ -68,42 +68,42 @@ func (h *ConnectHandler) ListAcsDevices(ctx context.Context, req *connect.Reques
 		}
 		out = append(out, item)
 	}
-	return connect.NewResponse(&devicepb.ListAcsDevicesResponse{Devices: out}), nil
+	return connect.NewResponse(&polyglotv1.ListAcsDevicesResponse{Devices: out}), nil
 }
 
-func (h *ConnectHandler) RefreshOntTelemetry(ctx context.Context, req *connect.Request[devicepb.RefreshOntTelemetryRequest]) (*connect.Response[devicepb.RefreshOntTelemetryResponse], error) {
+func (h *ConnectHandler) RefreshOntTelemetry(ctx context.Context, req *connect.Request[polyglotv1.RefreshOntTelemetryRequest]) (*connect.Response[polyglotv1.RefreshOntTelemetryResponse], error) {
 	job, err := h.svc.EnqueueRefreshTelemetry(ctx, req.Msg.GetOntId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RefreshOntTelemetryResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.RefreshOntTelemetryResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) RebootOnt(ctx context.Context, req *connect.Request[devicepb.RebootOntRequest]) (*connect.Response[devicepb.RebootOntResponse], error) {
+func (h *ConnectHandler) RebootOnt(ctx context.Context, req *connect.Request[polyglotv1.RebootOntRequest]) (*connect.Response[polyglotv1.RebootOntResponse], error) {
 	job, err := h.svc.EnqueueReboot(ctx, req.Msg.GetOntId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.RebootOntResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.RebootOntResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) SetOntWifi(ctx context.Context, req *connect.Request[devicepb.SetOntWifiRequest]) (*connect.Response[devicepb.SetOntWifiResponse], error) {
+func (h *ConnectHandler) SetOntWifi(ctx context.Context, req *connect.Request[polyglotv1.SetOntWifiRequest]) (*connect.Response[polyglotv1.SetOntWifiResponse], error) {
 	job, err := h.svc.EnqueueSetWiFi(ctx, req.Msg.GetOntId(), req.Msg.GetSsid(), req.Msg.GetPassword(), req.Msg.GetBand())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.SetOntWifiResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.SetOntWifiResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) PushOntPppoe(ctx context.Context, req *connect.Request[devicepb.PushOntPppoeRequest]) (*connect.Response[devicepb.PushOntPppoeResponse], error) {
+func (h *ConnectHandler) PushOntPppoe(ctx context.Context, req *connect.Request[polyglotv1.PushOntPppoeRequest]) (*connect.Response[polyglotv1.PushOntPppoeResponse], error) {
 	job, err := h.svc.EnqueuePushPPPoE(ctx, req.Msg.GetOntId(), req.Msg.GetUsername(), req.Msg.GetPassword())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.PushOntPppoeResponse{JobId: job.ID}), nil
+	return connect.NewResponse(&polyglotv1.PushOntPppoeResponse{JobId: job.ID}), nil
 }
 
-func (h *ConnectHandler) LinkOnt(ctx context.Context, req *connect.Request[devicepb.LinkOntRequest]) (*connect.Response[devicepb.LinkOntResponse], error) {
+func (h *ConnectHandler) LinkOnt(ctx context.Context, req *connect.Request[polyglotv1.LinkOntRequest]) (*connect.Response[polyglotv1.LinkOntResponse], error) {
 	err := h.svc.Link(ctx, req.Msg.GetOntId(), ontUC.LinkInput{
 		CustomerID:     req.Msg.GetCustomerId(),
 		SubscriptionID: req.Msg.GetSubscriptionId(),
@@ -112,35 +112,35 @@ func (h *ConnectHandler) LinkOnt(ctx context.Context, req *connect.Request[devic
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.LinkOntResponse{Message: "ONT ditautkan"}), nil
+	return connect.NewResponse(&polyglotv1.LinkOntResponse{Message: "ONT ditautkan"}), nil
 }
 
-func (h *ConnectHandler) UnlinkOnt(ctx context.Context, req *connect.Request[devicepb.UnlinkOntRequest]) (*connect.Response[devicepb.UnlinkOntResponse], error) {
+func (h *ConnectHandler) UnlinkOnt(ctx context.Context, req *connect.Request[polyglotv1.UnlinkOntRequest]) (*connect.Response[polyglotv1.UnlinkOntResponse], error) {
 	if err := h.svc.Unlink(ctx, req.Msg.GetOntId()); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.UnlinkOntResponse{Message: "tautan ONT dilepas"}), nil
+	return connect.NewResponse(&polyglotv1.UnlinkOntResponse{Message: "tautan ONT dilepas"}), nil
 }
 
-func (h *ConnectHandler) PinAcsDevice(ctx context.Context, req *connect.Request[devicepb.PinAcsDeviceRequest]) (*connect.Response[devicepb.PinAcsDeviceResponse], error) {
+func (h *ConnectHandler) PinAcsDevice(ctx context.Context, req *connect.Request[polyglotv1.PinAcsDeviceRequest]) (*connect.Response[polyglotv1.PinAcsDeviceResponse], error) {
 	if err := h.svc.PinACSDevice(ctx, req.Msg.GetOntId(), req.Msg.GetAcsDeviceId()); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.PinAcsDeviceResponse{Message: "device ACS disematkan"}), nil
+	return connect.NewResponse(&polyglotv1.PinAcsDeviceResponse{Message: "device ACS disematkan"}), nil
 }
 
-func (h *ConnectHandler) UnpinAcsDevice(ctx context.Context, req *connect.Request[devicepb.UnpinAcsDeviceRequest]) (*connect.Response[devicepb.UnpinAcsDeviceResponse], error) {
+func (h *ConnectHandler) UnpinAcsDevice(ctx context.Context, req *connect.Request[polyglotv1.UnpinAcsDeviceRequest]) (*connect.Response[polyglotv1.UnpinAcsDeviceResponse], error) {
 	if err := h.svc.UnpinACSDevice(ctx, req.Msg.GetOntId()); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.UnpinAcsDeviceResponse{Message: "pin device ACS dilepas"}), nil
+	return connect.NewResponse(&polyglotv1.UnpinAcsDeviceResponse{Message: "pin device ACS dilepas"}), nil
 }
 
-func (h *ConnectHandler) EnsureAcsPreset(ctx context.Context, _ *connect.Request[devicepb.EnsureAcsPresetRequest]) (*connect.Response[devicepb.EnsureAcsPresetResponse], error) {
+func (h *ConnectHandler) EnsureAcsPreset(ctx context.Context, _ *connect.Request[polyglotv1.EnsureAcsPresetRequest]) (*connect.Response[polyglotv1.EnsureAcsPresetResponse], error) {
 	if err := h.svc.BootstrapPreset(ctx); err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.EnsureAcsPresetResponse{Message: "preset ACS disinkronkan"}), nil
+	return connect.NewResponse(&polyglotv1.EnsureAcsPresetResponse{Message: "preset ACS disinkronkan"}), nil
 }
 
 var _ = domainONT.ErrACSNotConfigured

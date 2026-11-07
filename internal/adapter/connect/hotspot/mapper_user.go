@@ -3,18 +3,18 @@ package hotspot
 import (
 	"fmt"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // toProtoHotspotUser converts a single mikrotik user to proto.
-func toProtoHotspotUser(u port.HotspotUser) *devicepb.HotspotUser {
+func toProtoHotspotUser(u port.HotspotUser) *polyglotv1.HotspotUser {
 	limitBytes := u.LimitBytesOut
 	if limitBytes == "" {
 		limitBytes = u.LimitBytesIn
 	}
-	return &devicepb.HotspotUser{
+	return &polyglotv1.HotspotUser{
 		Id:          u.RosID,
 		Name:        u.Name,
 		Password:    u.Password,
@@ -34,7 +34,7 @@ func toProtoHotspotUser(u port.HotspotUser) *devicepb.HotspotUser {
 // port.HotspotUserParams. comment must already be resolved by the handler
 // (auto vc-/up- prefix via hotspot.BuildCreateUserComment). data_limit
 // ("1000M") is converted to a RouterOS byte string via hotspot.ParseDataLimit.
-func HotspotUserParamsFromProto(req *devicepb.CreateHotspotUserRequest, comment string) port.HotspotUserParams {
+func HotspotUserParamsFromProto(req *polyglotv1.CreateHotspotUserRequest, comment string) port.HotspotUserParams {
 	return port.HotspotUserParams{
 		Name:          req.Name,
 		Password:      req.Password,
@@ -50,7 +50,7 @@ func HotspotUserParamsFromProto(req *devicepb.CreateHotspotUserRequest, comment 
 // HotspotUserParamsUpdateFromProto maps an UpdateHotspotUserRequest into
 // port.HotspotUserParams. comment must already be resolved by the handler
 // (legacy rebuild rules via hotspot.BuildUpdatedComment).
-func HotspotUserParamsUpdateFromProto(req *devicepb.UpdateHotspotUserRequest, comment string) port.HotspotUserParams {
+func HotspotUserParamsUpdateFromProto(req *polyglotv1.UpdateHotspotUserRequest, comment string) port.HotspotUserParams {
 	return port.HotspotUserParams{
 		Name:          req.Name,
 		Password:      req.Password,

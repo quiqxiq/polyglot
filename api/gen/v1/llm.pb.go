@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/llm.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -959,7 +959,7 @@ const file_v1_llm_proto_rawDesc = "" +
 	"\x0fUpdateLLMConfig\x12#.polyglot.v1.UpdateLLMConfigRequest\x1a$.polyglot.v1.UpdateLLMConfigResponse\x12b\n" +
 	"\x11ActivateLLMConfig\x12%.polyglot.v1.ActivateLLMConfigRequest\x1a&.polyglot.v1.ActivateLLMConfigResponse\x12V\n" +
 	"\rTestLLMConfig\x12!.polyglot.v1.TestLLMConfigRequest\x1a\".polyglot.v1.TestLLMConfigResponse\x12\\\n" +
-	"\x0fDeleteLLMConfig\x12#.polyglot.v1.DeleteLLMConfigRequest\x1a$.polyglot.v1.DeleteLLMConfigResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0fDeleteLLMConfig\x12#.polyglot.v1.DeleteLLMConfigRequest\x1a$.polyglot.v1.DeleteLLMConfigResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_llm_proto_rawDescOnce sync.Once

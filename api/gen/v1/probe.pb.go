@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/probe.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -296,7 +296,7 @@ const file_v1_probe_proto_rawDesc = "" +
 	"\x10server_time_unix\x18\x02 \x01(\x03R\x0eserverTimeUnix2\xb6\x01\n" +
 	"\fProbeService\x12Q\n" +
 	"\fReportStatus\x12\x1f.polyglot.v1.ProbeStatusRequest\x1a .polyglot.v1.ProbeStatusResponse\x12S\n" +
-	"\x0fStreamTelemetry\x12\x1a.polyglot.v1.PingTelemetry\x1a .polyglot.v1.ProbeControlCommand(\x010\x01B0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0fStreamTelemetry\x12\x1a.polyglot.v1.PingTelemetry\x1a .polyglot.v1.ProbeControlCommand(\x010\x01B2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_probe_proto_rawDescOnce sync.Once

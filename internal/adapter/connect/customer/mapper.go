@@ -1,12 +1,12 @@
 package customer
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 )
 
-func toProtoCustomer(c *domainCustomer.Customer) *devicepb.Customer {
+func toProtoCustomer(c *domainCustomer.Customer) *polyglotv1.Customer {
 	if c == nil {
 		return nil
 	}
@@ -23,7 +23,7 @@ func toProtoCustomer(c *domainCustomer.Customer) *devicepb.Customer {
 	if !c.RegisteredAt.IsZero() {
 		registeredAtUnix = c.RegisteredAt.Unix()
 	}
-	return &devicepb.Customer{
+	return &polyglotv1.Customer{
 		Id:               c.ID,
 		TenantId:         c.TenantID,
 		CustomerCode:     c.CustomerCode,
@@ -42,7 +42,7 @@ func toProtoCustomer(c *domainCustomer.Customer) *devicepb.Customer {
 	}
 }
 
-func toProtoCustomerDetail(cd *customerUC.Detail) *devicepb.Customer {
+func toProtoCustomerDetail(cd *customerUC.Detail) *polyglotv1.Customer {
 	if cd == nil {
 		return nil
 	}
@@ -55,23 +55,23 @@ func toProtoCustomerDetail(cd *customerUC.Detail) *devicepb.Customer {
 	return pb
 }
 
-func toProtoCustomerDetailList(details []customerUC.Detail) []*devicepb.Customer {
-	out := make([]*devicepb.Customer, len(details))
+func toProtoCustomerDetailList(details []customerUC.Detail) []*polyglotv1.Customer {
+	out := make([]*polyglotv1.Customer, len(details))
 	for i := range details {
 		out[i] = toProtoCustomerDetail(&details[i])
 	}
 	return out
 }
 
-func toProtoCustomerList(customers []domainCustomer.Customer) []*devicepb.Customer {
-	out := make([]*devicepb.Customer, len(customers))
+func toProtoCustomerList(customers []domainCustomer.Customer) []*polyglotv1.Customer {
+	out := make([]*polyglotv1.Customer, len(customers))
 	for i := range customers {
 		out[i] = toProtoCustomer(&customers[i])
 	}
 	return out
 }
 
-func fromProtoCustomer(pb *devicepb.Customer) domainCustomer.Customer {
+func fromProtoCustomer(pb *polyglotv1.Customer) domainCustomer.Customer {
 	if pb == nil {
 		return domainCustomer.Customer{}
 	}

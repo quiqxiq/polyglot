@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: v1/billing.proto
 
-package devicepb
+package polyglotv1
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
@@ -4387,7 +4387,7 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\x17ListGatewayTransactions\x12+.polyglot.v1.ListGatewayTransactionsRequest\x1a,.polyglot.v1.ListGatewayTransactionsResponse\x12t\n" +
 	"\x17SyncGatewayTransactions\x12+.polyglot.v1.SyncGatewayTransactionsRequest\x1a,.polyglot.v1.SyncGatewayTransactionsResponse\x12q\n" +
 	"\x16ListGatewaySettlements\x12*.polyglot.v1.ListGatewaySettlementsRequest\x1a+.polyglot.v1.ListGatewaySettlementsResponse\x12n\n" +
-	"\x15SaveGatewaySettlement\x12).polyglot.v1.SaveGatewaySettlementRequest\x1a*.polyglot.v1.SaveGatewaySettlementResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x15SaveGatewaySettlement\x12).polyglot.v1.SaveGatewaySettlementRequest\x1a*.polyglot.v1.SaveGatewaySettlementResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_billing_proto_rawDescOnce sync.Once

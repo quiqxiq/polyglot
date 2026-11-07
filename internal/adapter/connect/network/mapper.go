@@ -1,15 +1,15 @@
 package network
 
 import (
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ToProtoDHCPLeases maps a slice of domain DHCPLeases to protobuf DHCPLease messages.
-func ToProtoDHCPLeases(leases []port.DHCPLease) []*devicepb.DHCPLease {
-	out := make([]*devicepb.DHCPLease, len(leases))
+func ToProtoDHCPLeases(leases []port.DHCPLease) []*polyglotv1.DHCPLease {
+	out := make([]*polyglotv1.DHCPLease, len(leases))
 	for i, l := range leases {
-		out[i] = &devicepb.DHCPLease{
+		out[i] = &polyglotv1.DHCPLease{
 			Id:         l.RosID,
 			Address:    l.Address,
 			MacAddress: l.MACAddress,

@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	connectBilling "github.com/quixiq/polyglot/internal/adapter/connect/billing"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
@@ -48,7 +48,7 @@ func TestBillingConnectHandler_CashierPay(t *testing.T) {
 		ManualPaymentCode: "PAY-101010",
 	}))
 
-	payResp, err := handler.CashierPay(ctx, connect.NewRequest(&devicepb.CashierPayRequest{
+	payResp, err := handler.CashierPay(ctx, connect.NewRequest(&polyglotv1.CashierPayRequest{
 		InvoiceId:        "inv-10",
 		Amount:           100000,
 		CashAccountId:    "ca-1001-kas-kantor",
@@ -72,7 +72,7 @@ func TestBillingConnectHandler_GenerateInvoices(t *testing.T) {
 		Status: domainSub.StatusActive,
 	})
 
-	genResp, err := handler.GenerateInvoices(ctx, connect.NewRequest(&devicepb.GenerateInvoicesRequest{
+	genResp, err := handler.GenerateInvoices(ctx, connect.NewRequest(&polyglotv1.GenerateInvoicesRequest{
 		Period: "2026-08",
 	}))
 	require.NoError(t, err)
@@ -91,7 +91,7 @@ func TestBillingConnectHandler_CancelInvoice(t *testing.T) {
 		Status:     domainBilling.StatusUnpaid,
 	}))
 
-	resp, err := handler.CancelInvoice(ctx, connect.NewRequest(&devicepb.CancelInvoiceRequest{
+	resp, err := handler.CancelInvoice(ctx, connect.NewRequest(&polyglotv1.CancelInvoiceRequest{
 		Id:     "inv-cancel-1",
 		Reason: "salah input oleh admin",
 	}))
@@ -105,7 +105,7 @@ func TestBillingConnectHandler_CancelInvoice(t *testing.T) {
 		Total:      100000,
 		Status:     domainBilling.StatusPaid,
 	}))
-	_, err = handler.CancelInvoice(ctx, connect.NewRequest(&devicepb.CancelInvoiceRequest{
+	_, err = handler.CancelInvoice(ctx, connect.NewRequest(&polyglotv1.CancelInvoiceRequest{
 		Id:     "inv-paid-1",
 		Reason: "coba batalkan lunas",
 	}))
