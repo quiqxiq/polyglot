@@ -39,6 +39,7 @@ import (
 	reportHTTP "github.com/quixiq/polyglot/internal/adapter/http/report"
 	uploadHTTP "github.com/quixiq/polyglot/internal/adapter/http/upload"
 	webhookHTTP "github.com/quixiq/polyglot/internal/adapter/http/webhook"
+	whatsappHTTP "github.com/quixiq/polyglot/internal/adapter/http/whatsapp"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
@@ -72,6 +73,7 @@ import (
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
+	whatsappUC "github.com/quixiq/polyglot/internal/usecase/whatsapp"
 )
 
 type routerDeps struct {
@@ -133,6 +135,7 @@ type routerDeps struct {
 	oltService             *oltUC.Service
 	ontService             *ontUC.Service
 	settingReader          port.SettingReader
+	cacheStore             port.CacheStore
 	notifManagerUC         *notificationUC.ManageNotificationUseCase
 	reportManagerUC        *reportUC.ManageReportUseCase
 	streamGW               port.MonitorStreamGateway
@@ -152,6 +155,18 @@ var protectedPlainPaths = []string{
 	"/api/reports/daily", "/api/reports/monthly", "/api/reports/yearly",
 	"/api/admin/import", "/api/admin/import-router", "/api/admin/reconcile",
 	"/api/admin/export", "/api/admin/snapshot/refresh",
+	"/api/whatsapp/sessions",
+	"/api/whatsapp/session/status",
+	"/api/whatsapp/session/qr",
+	"/api/whatsapp/session/pair-code",
+	"/api/whatsapp/session/reconnect",
+	"/api/whatsapp/session/logout",
+	"/api/whatsapp/send/message",
+	"/api/whatsapp/send/image",
+	"/api/whatsapp/send/document",
+	"/api/whatsapp/presence",
+	"/api/whatsapp/message/read",
+	"/api/whatsapp/identity",
 }
 
 func buildRouter(d routerDeps) (http.Handler, error) {
@@ -289,6 +304,8 @@ func buildRouter(d routerDeps) (http.Handler, error) {
 	reportHTTP.NewHandler(d.reportingRepo).Register(protectedMux)
 	adminapi.NewHandler(d.upsertImport, d.routerSource, d.reconciler, d.reportingRepo, d.exportUC, d.driverResolverConnect).
 		RegisterProtected(protectedMux)
+	whatsappResolver := whatsappUC.NewIdentityResolver(d.userRepo, d.customerRepo, d.cacheStore)
+	whatsappHTTP.NewHandler(d.pgStore, d.waManager, whatsappResolver).RegisterProtected(protectedMux)
 
 	protectedHandler := middleware.Chain(
 		protectedMux,

@@ -88,6 +88,14 @@ func (m *mockUserRepoForRateLimit) FindByUsername(ctx context.Context, username 
 func (m *mockUserRepoForRateLimit) FindByEmail(ctx context.Context, email string) (*customer.User, error) {
 	return nil, nil
 }
+func (m *mockUserRepoForRateLimit) FindByPhone(ctx context.Context, phone string) (*customer.User, error) {
+	for _, u := range m.users {
+		if u.PhoneNumber == phone {
+			return u, nil
+		}
+	}
+	return nil, nil
+}
 func (m *mockUserRepoForRateLimit) FindByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
 	return nil, nil
 }

@@ -74,6 +74,24 @@ func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*custom
 	return u, nil
 }
 
+// FindByPhone retrieves a user by exact phone number.
+func (r *UserRepository) FindByPhone(ctx context.Context, phone string) (*customer.User, error) {
+	phone = strings.TrimSpace(phone)
+	if phone == "" {
+		return nil, ErrNotFound
+	}
+	var m model.UserModel
+	if err := r.db.WithContext(ctx).Where("phone_number = ?", phone).First(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrNotFound
+		}
+		return nil, err
+	}
+	u := m.ToDomain()
+	u.AssignedDeviceIDs, _ = r.GetAssignedDeviceIDs(ctx, u.ID)
+	return u, nil
+}
+
 func (r *UserRepository) Count(ctx context.Context) (int64, error) {
 	var count int64
 	err := r.db.WithContext(ctx).Model(&model.UserModel{}).Count(&count).Error
@@ -232,6 +250,11 @@ func (s *Store) FindUserByUsername(ctx context.Context, username string) (*custo
 
 func (s *Store) FindUserByEmail(ctx context.Context, email string) (*customer.User, error) {
 	return NewUserRepository(s.db).FindByEmail(ctx, email)
+}
+
+// FindUserByPhone retrieves a user by exact phone number.
+func (s *Store) FindUserByPhone(ctx context.Context, phone string) (*customer.User, error) {
+	return NewUserRepository(s.db).FindByPhone(ctx, phone)
 }
 
 func (s *Store) CountUsers(ctx context.Context) (int64, error) {

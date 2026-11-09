@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"go.mau.fi/whatsmeow"
 	"go.mau.fi/whatsmeow/proto/waE2E"
@@ -126,6 +127,68 @@ func (c *Client) SendImage(ctx context.Context, to string, imageBytes []byte, co
 	}
 
 	c.recordOutgoingMessage(jid, string(respID.ID), caption, "image")
+	return nil
+}
+
+// SendChatPresence updates the typing or recording status for a chat.
+func (c *Client) SendChatPresence(ctx context.Context, to string, state string, media string) error {
+	if !c.waClient.IsConnected() {
+		return fmt.Errorf("WA client for session %d is disconnected", c.SessionID)
+	}
+
+	jid, err := parseJID(to)
+	if err != nil {
+		return fmt.Errorf("invalid recipient JID (%s): %w", to, err)
+	}
+
+	presenceState := types.ChatPresence(state)
+	if presenceState == "" {
+		presenceState = types.ChatPresenceComposing
+	}
+	presenceMedia := types.ChatPresenceMedia(media)
+
+	if err := c.waClient.SendChatPresence(ctx, jid, presenceState, presenceMedia); err != nil {
+		return fmt.Errorf("failed to send WA chat presence: %w", err)
+	}
+	return nil
+}
+
+// MarkRead sends read receipts for the given message IDs.
+func (c *Client) MarkRead(ctx context.Context, messageIDs []string, chatJID string, senderJID string) error {
+	if !c.waClient.IsConnected() {
+		return fmt.Errorf("WA client for session %d is disconnected", c.SessionID)
+	}
+	if len(messageIDs) == 0 {
+		return nil
+	}
+
+	chat, err := parseJID(chatJID)
+	if err != nil {
+		return fmt.Errorf("invalid chat JID (%s): %w", chatJID, err)
+	}
+
+	var sender types.JID
+	if senderJID != "" {
+		sJID, err := parseJID(senderJID)
+		if err != nil {
+			return fmt.Errorf("invalid sender JID (%s): %w", senderJID, err)
+		}
+		sender = sJID
+	}
+
+	typesMsgIDs := make([]types.MessageID, len(messageIDs))
+	for i, id := range messageIDs {
+		typesMsgIDs[i] = types.MessageID(id)
+	}
+
+	if err := c.waClient.MarkRead(ctx, typesMsgIDs, time.Now(), chat, sender); err != nil {
+		return fmt.Errorf("failed to mark messages as read: %w", err)
+	}
+
+	if c.chatRepo != nil {
+		_ = c.chatRepo.MarkMessagesStatus(ctx, c.SessionID, chat.String(), messageIDs, "read")
+		_ = c.chatRepo.MarkChatRead(ctx, c.SessionID, chat.String())
+	}
 	return nil
 }
 

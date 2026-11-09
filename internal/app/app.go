@@ -417,6 +417,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		oltService:             oltService,
 		ontService:             ontService,
 		settingReader:          settingRepo,
+		cacheStore:             redisStore,
 		connectDriverProvider:  connectDriverProvider,
 		driverResolverConnect:  driverResolverConnect,
 	})

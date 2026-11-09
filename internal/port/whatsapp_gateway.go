@@ -27,6 +27,8 @@ type WhatsAppGateway interface {
 	SendMessage(sessionID uint, to string, content string) error
 	SendDocument(ctx context.Context, sessionID uint, to string, fileBytes []byte, fileName string, contentType string, caption string) error
 	SendImage(ctx context.Context, sessionID uint, to string, imageBytes []byte, contentType string, caption string) error
+	SendChatPresence(ctx context.Context, sessionID uint, to string, state string, media string) error
+	MarkRead(ctx context.Context, sessionID uint, messageIDs []string, chatJID string, senderJID string) error
 	GetStatus(sessionID uint) (string, error)
 	GetQRCode(sessionID uint) (string, error)
 	GetPairingCode(sessionID uint, phoneNumber string) (string, error)

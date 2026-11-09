@@ -57,6 +57,16 @@ func (m *mockUserRepo) FindByEmail(ctx context.Context, email string) (*customer
 	return nil, errors.New("not found")
 }
 
+func (m *mockUserRepo) FindByPhone(ctx context.Context, phone string) (*customer.User, error) {
+	for _, u := range m.users {
+		if u.PhoneNumber == phone {
+			copyU := *u
+			return &copyU, nil
+		}
+	}
+	return nil, errors.New("not found")
+}
+
 func (m *mockUserRepo) Count(ctx context.Context) (int64, error) {
 	return int64(len(m.users)), nil
 }

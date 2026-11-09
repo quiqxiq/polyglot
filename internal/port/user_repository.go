@@ -12,6 +12,7 @@ type UserRepository interface {
 	FindByID(ctx context.Context, id uint) (*customer.User, error)
 	FindByUsername(ctx context.Context, username string) (*customer.User, error)
 	FindByEmail(ctx context.Context, email string) (*customer.User, error)
+	FindByPhone(ctx context.Context, phone string) (*customer.User, error)
 	Count(ctx context.Context) (int64, error)
 	List(ctx context.Context, page, pageSize int, search string) ([]*customer.User, int64, error)
 	FindAll(ctx context.Context) ([]*customer.User, error)

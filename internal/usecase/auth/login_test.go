@@ -60,6 +60,15 @@ func (m *mockUserRepo) FindByEmail(ctx context.Context, email string) (*customer
 	return nil, nil
 }
 
+func (m *mockUserRepo) FindByPhone(ctx context.Context, phone string) (*customer.User, error) {
+	for _, u := range m.users {
+		if u.PhoneNumber == phone {
+			return u, nil
+		}
+	}
+	return nil, nil
+}
+
 func (m *mockUserRepo) FindByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
 	return nil, nil
 }

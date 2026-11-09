@@ -32,6 +32,12 @@ func (f *fakeGateway) SendDocument(context.Context, uint, string, []byte, string
 func (f *fakeGateway) SendImage(context.Context, uint, string, []byte, string, string) error {
 	return nil
 }
+func (f *fakeGateway) SendChatPresence(context.Context, uint, string, string, string) error {
+	return nil
+}
+func (f *fakeGateway) MarkRead(context.Context, uint, []string, string, string) error {
+	return nil
+}
 func (f *fakeGateway) GetStatus(uint) (string, error)              { return "online", nil }
 func (f *fakeGateway) GetQRCode(uint) (string, error)              { return "", nil }
 func (f *fakeGateway) GetPairingCode(uint, string) (string, error) { return "", nil }
@@ -236,6 +242,14 @@ func (f *fakeUserRepo) FindByUsername(ctx context.Context, username string) (*cu
 	return nil, nil
 }
 func (f *fakeUserRepo) FindByEmail(ctx context.Context, email string) (*customer.User, error) {
+	return nil, nil
+}
+func (f *fakeUserRepo) FindByPhone(ctx context.Context, phone string) (*customer.User, error) {
+	for _, u := range f.users {
+		if u.PhoneNumber == phone {
+			return u, nil
+		}
+	}
 	return nil, nil
 }
 func (f *fakeUserRepo) Count(ctx context.Context) (int64, error) { return int64(len(f.users)), nil }

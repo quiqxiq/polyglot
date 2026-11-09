@@ -139,6 +139,18 @@ func TestIspProceduresMapped(t *testing.T) {
 		"/polyglot.v1.DeviceService/DeleteIsolationProfile",
 		"/polyglot.v1.DeviceService/GetRouterIntegrationScript",
 		"/polyglot.v1.DeviceService/ApplyRouterIntegrationScript",
+		"/api/whatsapp/sessions",
+		"/api/whatsapp/session/status",
+		"/api/whatsapp/session/qr",
+		"/api/whatsapp/session/pair-code",
+		"/api/whatsapp/session/reconnect",
+		"/api/whatsapp/session/logout",
+		"/api/whatsapp/send/message",
+		"/api/whatsapp/send/image",
+		"/api/whatsapp/send/document",
+		"/api/whatsapp/presence",
+		"/api/whatsapp/message/read",
+		"/api/whatsapp/identity",
 	}
 
 	for _, proc := range required {

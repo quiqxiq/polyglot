@@ -377,6 +377,20 @@ var ProcedurePermissions = map[string]string{
 	"/api/admin/reconcile":        "ispadmin:manage",
 	"/api/admin/export":           "ispadmin:manage",
 	"/api/admin/snapshot/refresh": "ispadmin:manage",
+
+	// ─── Plain-HTTP WhatsApp Endpoints (JWT Guarded) ─────────────────────────
+	"/api/whatsapp/sessions":          "whatsapp:read",
+	"/api/whatsapp/session/status":    "whatsapp:read",
+	"/api/whatsapp/session/qr":        "whatsapp:manage",
+	"/api/whatsapp/session/pair-code": "whatsapp:manage",
+	"/api/whatsapp/session/reconnect": "whatsapp:manage",
+	"/api/whatsapp/session/logout":    "whatsapp:manage",
+	"/api/whatsapp/send/message":      "whatsapp:manage",
+	"/api/whatsapp/send/image":        "whatsapp:manage",
+	"/api/whatsapp/send/document":     "whatsapp:manage",
+	"/api/whatsapp/presence":          "whatsapp:manage",
+	"/api/whatsapp/message/read":      "whatsapp:manage",
+	"/api/whatsapp/identity":          "whatsapp:read",
 }
 
 // PermissionsFor returns all accepted permission objects for a ConnectRPC procedure,

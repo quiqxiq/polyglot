@@ -249,6 +249,38 @@ func (sm *SessionManager) SendImage(ctx context.Context, sessionID uint, to stri
 	return client.SendImage(ctx, to, imageBytes, contentType, caption)
 }
 
+// SendChatPresence forwards presence updates to the targeted session client.
+func (sm *SessionManager) SendChatPresence(ctx context.Context, sessionID uint, to string, state string, media string) error {
+	if sm == nil {
+		return fmt.Errorf("session manager not initialized")
+	}
+	sm.mutex.RLock()
+	client, ok := sm.clients[sessionID]
+	sm.mutex.RUnlock()
+
+	if !ok {
+		return fmt.Errorf("session %d is not connected or registered", sessionID)
+	}
+
+	return client.SendChatPresence(ctx, to, state, media)
+}
+
+// MarkRead forwards read receipts to the targeted session client.
+func (sm *SessionManager) MarkRead(ctx context.Context, sessionID uint, messageIDs []string, chatJID string, senderJID string) error {
+	if sm == nil {
+		return fmt.Errorf("session manager not initialized")
+	}
+	sm.mutex.RLock()
+	client, ok := sm.clients[sessionID]
+	sm.mutex.RUnlock()
+
+	if !ok {
+		return fmt.Errorf("session %d is not connected or registered", sessionID)
+	}
+
+	return client.MarkRead(ctx, messageIDs, chatJID, senderJID)
+}
+
 func (sm *SessionManager) GetStatus(sessionID uint) (string, error) {
 	if sm == nil {
 		return "offline", nil
