@@ -161,7 +161,7 @@ func restoreHandler(deps HandlerDeps) Handler {
 			}
 		}
 		if profile == "" {
-			return fmt.Errorf("normal profile unknown for subscription %s", sub.ID)
+			return fmt.Errorf("%w: normal profile unknown for subscription %s", domainRouterJob.ErrInvalidInput, sub.ID)
 		}
 		deviceID := job.DeviceID
 		if deviceID == "" && sub.DeviceID != nil {

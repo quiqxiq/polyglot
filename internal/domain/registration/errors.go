@@ -10,4 +10,6 @@ var (
 	ErrInvalidInput = fault.New(fault.KindInvalidInput, "registration: validation failed")
 	// ErrInvalidTransition indicates an illegal registration status transition.
 	ErrInvalidTransition = fault.New(fault.KindFailedPrecondition, "registration: invalid status transition")
+	// ErrWriterNotConfigured indicates the conversion writer is not configured.
+	ErrWriterNotConfigured = fault.New(fault.KindFailedPrecondition, "registration: conversion writer not configured")
 )

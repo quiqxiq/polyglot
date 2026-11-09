@@ -74,4 +74,40 @@ func TestKindStringStable(t *testing.T) {
 			t.Errorf("Kind(%d).String() = %q, want %q", int(k), k.String(), want)
 		}
 	}
+	if got := fault.Kind(9999).String(); got != "unknown" {
+		t.Errorf("Kind(9999).String() = %q, want unknown", got)
+	}
+}
+
+func TestErrorsAsExtraction(t *testing.T) {
+	sentinel := fault.New(fault.KindConflict, "billing: conflict detected")
+	wrapped := fmt.Errorf("level 1: %w", sentinel)
+	wrapped2 := fmt.Errorf("level 2: %w", wrapped)
+
+	var ferr *fault.Error
+	if !errors.As(wrapped2, &ferr) {
+		t.Fatal("errors.As failed to extract *fault.Error from wrap chain")
+	}
+	if ferr.Kind() != fault.KindConflict {
+		t.Errorf("extracted Kind = %v, want %v", ferr.Kind(), fault.KindConflict)
+	}
+	if ferr.Error() != "billing: conflict detected" {
+		t.Errorf("extracted Error = %q, want 'billing: conflict detected'", ferr.Error())
+	}
+	if ferr.Unwrap() != nil {
+		t.Errorf("sentinel root Unwrap() should be nil, got: %v", ferr.Unwrap())
+	}
+}
+
+func TestErrorsJoinWithFault(t *testing.T) {
+	err1 := errors.New("something background failed")
+	err2 := fault.New(fault.KindNotFound, "customer: customer not found")
+	joined := errors.Join(err1, err2)
+
+	if got := fault.KindOf(joined); got != fault.KindNotFound {
+		t.Errorf("KindOf(joined) = %v, want %v", got, fault.KindNotFound)
+	}
+	if !errors.Is(joined, err2) {
+		t.Fatal("errors.Is must find err2 in joined error")
+	}
 }

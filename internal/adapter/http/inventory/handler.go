@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // DeviceDTO represents the non-sensitive public representation of an inventory device.
@@ -47,8 +48,7 @@ func (h *Handler) handleListDevices(w http.ResponseWriter, r *http.Request) {
 
 	devices, err := h.devices.FindAll(r.Context())
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode(map[string]string{"error": err.Error()})
+		response.WriteHTTPError(w, err)
 		return
 	}
 

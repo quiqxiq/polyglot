@@ -123,7 +123,7 @@ func TestExportReportUnknownType(t *testing.T) {
 	repo := &fakeAdvancedRepo{}
 	useCase := uc.NewManageReportUseCase(nil, nil).WithAdvancedRepository(repo)
 	_, _, _, err := useCase.ExportReport(context.Background(), "UNKNOWN", "csv", nil)
-	assert.Error(t, err)
+	assert.ErrorIs(t, err, domainReporting.ErrInvalidInput)
 }
 
 func TestAdvancedReports_InvalidDates(t *testing.T) {

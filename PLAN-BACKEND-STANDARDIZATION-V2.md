@@ -32,7 +32,7 @@ Status berikut diverifikasi terhadap HEAD `77273db` dan hasil command terbaru.
 |---|---|---|
 | F0 | **DONE** | Toolchain CI sudah Go 1.26, baseline test/build/vet lulus, E2E router diberi tag eksplisit, `make check` tersedia. |
 | F1 | **DONE** | Logging terpusat via `pkg/logger` (Logrus), request correlation context helpers, streaming request lifecycle logging, 0 direct Logrus imports di luar `pkg/logger`, 0 direct `Infof/Warnf/Errorf/Debugf`, dan 100% test passing. |
-| F2 | **PARTIAL** | `pkg/fault`, Connect mapper, HTTP mapper, dan sentinel utama sudah ada; seluruh error domain belum dimigrasikan secara konsisten. |
+| F2 | **DONE** | Error taxonomy stabil via `pkg/fault` (100% test coverage), domain sentinels terinventarisasi di domain packages, wrapping standar `%w`, zero unclassified errors di production usecase, Connect mapper via `pkg/response` (0 direct `connect.NewError` di internal/cmd), dan plain HTTP mapper standar via `response.WriteHTTPError`/`WriteHTTPStatusError`. |
 | F3 | **PARTIAL** | Protovalidate aktif pada router, inventory request tersedia, test unary/stream tersedia; inventory belum seluruhnya covered dan validasi manual masih tersisa. |
 | F4 | **PARTIAL** | Mapper dan HTTP error envelope sudah distandardisasi pada beberapa area; seluruh endpoint belum memiliki contract test dan pagination contract. |
 | F5 | **PARTIAL** | ConnectRPC, layer boundary checker, dan integration test compile sudah ditegakkan; seluruh unit-test dependency inversion dan lifecycle worker coverage belum selesai. |
@@ -72,10 +72,9 @@ yang dapat diverifikasi, tanpa mengubah wire compatibility:
   lifecycle; handler billing dipecah per domain operasi; permission alternatif
   dipisahkan dari peta permission utama.
 
-Sisa pekerjaan besar yang belum diklaim selesai: migrasi seluruh log legacy,
-taxonomy error domain, pembersihan 32 alias `internal/port`, pemecahan
-`roscache/stream.go` dan driver besar lain, serta enforcement MCP/OAuth
-per-user sesuai arsitektur target.
+Sisa pekerjaan besar yang belum diklaim selesai: audit dan integrasi
+protovalidate menyeluruh (Fase 3), pemecahan `roscache/stream.go` dan driver
+besar lain, serta enforcement MCP/OAuth per-user sesuai arsitektur target.
 
 ### 2.1 Hal yang sudah ada
 
@@ -338,6 +337,13 @@ check: build lint test
 ---
 
 ### Fase 2: Error taxonomy dan public error mapping
+
+**Status: DONE (2026-11-09)**
+- Task 2.1: `pkg/fault` stabil, test nil, wrapping berlapis, `errors.Is`/`errors.As`, `errors.Join`, dan unknown kind (100% coverage).
+- Task 2.2: Seluruh bounded context (`billing`, `bot`, `cashbook`, `command`, `customer`, `debt`, `device`, `hotspot`, `llm`, `notification`, `olt`, `ont`, `plan`, `ppp`, `registration`, `reporting`, `routerjob`, `session`, `setting`, `skill`, `subscription`, `audit`) memiliki sentinels bertipe di package domain masing-masing dengan pesan lowercase English berprefix domain.
+- Task 2.3: Standardisasi error wrapping `%w` di seluruh usecase; zero unclassified `errors.New` di kode non-test usecase.
+- Task 2.4: ConnectRPC mapper terpusat di `pkg/response.MapDomainError`; `scripts/check-connect-errors.sh` melarang direct `connect.NewError` di `internal/` dan `cmd/`.
+- Task 2.5: Plain HTTP error responses distandardkan lewat `response.WriteHTTPError` dan `response.WriteHTTPStatusError` dengan envelope `HTTPErrorResponse`; seluruh endpoint inventory, adminapi, gateway, reporting, portal, webhook, dan upload compliant.
 
 **Tujuan:** membuat error dapat diklasifikasikan secara konsisten dan aman di semua transport.
 

@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	domainReporting "github.com/quixiq/polyglot/internal/domain/reporting"
 	"github.com/xuri/excelize/v2"
 )
 
@@ -99,7 +100,7 @@ func (uc *ManageReportUseCase) ExportReport(ctx context.Context, reportType, for
 		}
 
 	default:
-		return nil, "", "", fmt.Errorf("tipe laporan %q tidak dikenal", reportType)
+		return nil, "", "", fmt.Errorf("%w: unknown report type %q", domainReporting.ErrInvalidInput, reportType)
 	}
 
 	filename := fmt.Sprintf("%s-%s", title, time.Now().Format("20060102150405"))

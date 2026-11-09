@@ -2,7 +2,6 @@ package registration
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"time"
 
@@ -106,7 +105,7 @@ func (u *ConvertUseCase) ConvertWithDevice(ctx context.Context, regID, deviceID,
 		return domainRegistration.Registration{}, fmt.Errorf("%w: already converted (%s)", domainRegistration.ErrInvalidTransition, reg.CustomerID)
 	}
 	if u.deps.Writer == nil {
-		return domainRegistration.Registration{}, errors.New("convert: conversion writer not configured")
+		return domainRegistration.Registration{}, domainRegistration.ErrWriterNotConfigured
 	}
 	// Fallback router: pilihan teknisi saat pemasangan (F2-7) bila pemanggil
 	// tidak menentukan device.
