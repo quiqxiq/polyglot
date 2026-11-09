@@ -7,6 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 const requestIDHeader = "X-Request-ID"
@@ -16,6 +17,7 @@ type requestIDInterceptor struct{}
 func (requestIDInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
 	return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
 		requestID := requestID(req.Header())
+		ctx = logger.ContextWithRequestID(ctx, requestID)
 		response, err := next(ctx, req)
 		if response != nil {
 			response.Header().Set(requestIDHeader, requestID)
@@ -32,6 +34,7 @@ func (requestIDInterceptor) WrapStreamingHandler(next connect.StreamingHandlerFu
 	return func(ctx context.Context, stream connect.StreamingHandlerConn) error {
 		requestID := requestID(stream.RequestHeader())
 		stream.ResponseHeader().Set(requestIDHeader, requestID)
+		ctx = logger.ContextWithRequestID(ctx, requestID)
 		return next(ctx, stream)
 	}
 }

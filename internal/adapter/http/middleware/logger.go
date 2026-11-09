@@ -2,10 +2,10 @@ package middleware
 
 import (
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/quixiq/polyglot/pkg/logger"
-	"github.com/sirupsen/logrus"
 )
 
 type responseWriterWrapper struct {
@@ -45,11 +45,22 @@ func (w *responseWriterWrapper) Unwrap() http.ResponseWriter {
 
 var _ http.Flusher = (*responseWriterWrapper)(nil)
 
-// RequestLogger returns a standard net/http middleware logging all HTTP requests via Logrus.
+// RequestLogger returns a standard net/http middleware logging all HTTP requests via pkg/logger.
 func RequestLogger() Middleware {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()
+			reqID := RequestIDFromContext(r.Context())
+			isStream := isStreamingRequest(r)
+
+			if isStream {
+				logger.WithComponent("HTTP").WithFields(logger.Fields{
+					"request_id": reqID,
+					"method":     r.Method,
+					"path":       r.URL.Path,
+					"remote":     r.RemoteAddr,
+				}).Info("streaming started")
+			}
 
 			wrapper := &responseWriterWrapper{
 				ResponseWriter: w,
@@ -60,15 +71,33 @@ func RequestLogger() Middleware {
 
 			duration := time.Since(start)
 
-			logger.WithComponent("HTTP").WithFields(logrus.Fields{
-				"request_id":  RequestIDFromContext(r.Context()),
+			msg := "request completed"
+			if isStream {
+				msg = "streaming completed"
+			}
+
+			logger.WithComponent("HTTP").WithFields(logger.Fields{
+				"request_id":  reqID,
 				"method":      r.Method,
 				"path":        r.URL.Path,
 				"status":      wrapper.statusCode,
 				"duration_ms": duration.Milliseconds(),
 				"remote":      r.RemoteAddr,
 				"size":        wrapper.bytesCount,
-			}).Info("request completed")
+			}).Info(msg)
 		})
 	}
+}
+
+func isStreamingRequest(r *http.Request) bool {
+	if strings.Contains(r.Header.Get("Accept"), "text/event-stream") {
+		return true
+	}
+	if strings.EqualFold(r.Header.Get("Upgrade"), "websocket") {
+		return true
+	}
+	if strings.Contains(r.URL.Path, "/Stream") {
+		return true
+	}
+	return false
 }

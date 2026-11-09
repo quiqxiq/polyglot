@@ -13,7 +13,21 @@ import (
 var (
 	defaultLogger *logrus.Logger
 	once          sync.Once
+	loggerMu      sync.RWMutex
 )
+
+// Fields is an alias for structured log fields.
+type Fields = logrus.Fields
+
+type correlationContextKey struct{}
+
+// Correlation holds structured correlation identifiers for request lifecycle tracking.
+type Correlation struct {
+	RequestID string
+	UserID    string
+	DeviceID  string
+	Operation string
+}
 
 func init() {
 	once.Do(func() {
@@ -31,6 +45,9 @@ func init() {
 
 // Init configures the global logger based on environment and log level.
 func Init(level, env string, output ...io.Writer) {
+	loggerMu.Lock()
+	defer loggerMu.Unlock()
+
 	if len(output) > 0 && output[0] != nil {
 		defaultLogger.SetOutput(output[0])
 	} else {
@@ -61,6 +78,8 @@ func Init(level, env string, output ...io.Writer) {
 
 // GetLogger returns the underlying logrus.Logger instance.
 func GetLogger() *logrus.Logger {
+	loggerMu.RLock()
+	defer loggerMu.RUnlock()
 	return defaultLogger
 }
 
@@ -83,9 +102,151 @@ func WithFields(fields logrus.Fields) *logrus.Entry {
 	return defaultLogger.WithFields(redacted)
 }
 
-// WithContext returns a log entry with context attached.
+// ContextWithRequestID returns a copy of ctx with request ID attached.
+func ContextWithRequestID(ctx context.Context, requestID string) context.Context {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	corr := correlationFromCtx(ctx)
+	corr.RequestID = requestID
+	return context.WithValue(ctx, correlationContextKey{}, corr)
+}
+
+// RequestIDFromContext extracts the request ID from ctx, returning an empty string if absent.
+func RequestIDFromContext(ctx context.Context) string {
+	return correlationFromCtx(ctx).RequestID
+}
+
+// ContextWithUserID returns a copy of ctx with user ID attached.
+func ContextWithUserID(ctx context.Context, userID string) context.Context {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	corr := correlationFromCtx(ctx)
+	corr.UserID = userID
+	return context.WithValue(ctx, correlationContextKey{}, corr)
+}
+
+// UserIDFromContext extracts the user ID from ctx, returning an empty string if absent.
+func UserIDFromContext(ctx context.Context) string {
+	return correlationFromCtx(ctx).UserID
+}
+
+// ContextWithDeviceID returns a copy of ctx with device ID attached.
+func ContextWithDeviceID(ctx context.Context, deviceID string) context.Context {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	corr := correlationFromCtx(ctx)
+	corr.DeviceID = deviceID
+	return context.WithValue(ctx, correlationContextKey{}, corr)
+}
+
+// DeviceIDFromContext extracts the device ID from ctx, returning an empty string if absent.
+func DeviceIDFromContext(ctx context.Context) string {
+	return correlationFromCtx(ctx).DeviceID
+}
+
+// ContextWithOperation returns a copy of ctx with operation name attached.
+func ContextWithOperation(ctx context.Context, operation string) context.Context {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	corr := correlationFromCtx(ctx)
+	corr.Operation = operation
+	return context.WithValue(ctx, correlationContextKey{}, corr)
+}
+
+// OperationFromContext extracts the operation from ctx, returning an empty string if absent.
+func OperationFromContext(ctx context.Context) string {
+	return correlationFromCtx(ctx).Operation
+}
+
+// ContextWithCorrelation returns a copy of ctx with all non-empty correlation fields attached.
+func ContextWithCorrelation(ctx context.Context, corr Correlation) context.Context {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	existing := correlationFromCtx(ctx)
+	if corr.RequestID != "" {
+		existing.RequestID = corr.RequestID
+	}
+	if corr.UserID != "" {
+		existing.UserID = corr.UserID
+	}
+	if corr.DeviceID != "" {
+		existing.DeviceID = corr.DeviceID
+	}
+	if corr.Operation != "" {
+		existing.Operation = corr.Operation
+	}
+	return context.WithValue(ctx, correlationContextKey{}, existing)
+}
+
+// CorrelationFromContext extracts correlation fields from ctx.
+func CorrelationFromContext(ctx context.Context) Correlation {
+	return correlationFromCtx(ctx)
+}
+
+func correlationFromCtx(ctx context.Context) Correlation {
+	if ctx == nil {
+		return Correlation{}
+	}
+	val, ok := ctx.Value(correlationContextKey{}).(Correlation)
+	if !ok {
+		return Correlation{}
+	}
+	return val
+}
+
+// WithContext returns a log entry with context attached and automatically populates
+// any non-empty correlation fields (request_id, user_id, device_id, operation) present in ctx.
 func WithContext(ctx context.Context) *logrus.Entry {
-	return defaultLogger.WithContext(ctx)
+	entry := defaultLogger.WithContext(ctx)
+	if ctx == nil {
+		return entry
+	}
+	corr := correlationFromCtx(ctx)
+	fields := logrus.Fields{}
+	if corr.RequestID != "" {
+		fields["request_id"] = corr.RequestID
+	}
+	if corr.UserID != "" {
+		fields["user_id"] = corr.UserID
+	}
+	if corr.DeviceID != "" {
+		fields["device_id"] = corr.DeviceID
+	}
+	if corr.Operation != "" {
+		fields["operation"] = corr.Operation
+	}
+	if len(fields) > 0 {
+		return entry.WithFields(fields)
+	}
+	return entry
+}
+
+// WithOperation returns an entry tagged with an operation field.
+func WithOperation(operation string) *logrus.Entry {
+	return defaultLogger.WithField("operation", operation)
+}
+
+// WithCorrelation returns an entry tagged with all non-empty correlation fields.
+func WithCorrelation(corr Correlation) *logrus.Entry {
+	fields := logrus.Fields{}
+	if corr.RequestID != "" {
+		fields["request_id"] = corr.RequestID
+	}
+	if corr.UserID != "" {
+		fields["user_id"] = corr.UserID
+	}
+	if corr.DeviceID != "" {
+		fields["device_id"] = corr.DeviceID
+	}
+	if corr.Operation != "" {
+		fields["operation"] = corr.Operation
+	}
+	return defaultLogger.WithFields(fields)
 }
 
 // WithError returns a log entry with an error attached.

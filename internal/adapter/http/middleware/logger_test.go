@@ -1,9 +1,13 @@
 package middleware
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
+
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 // TestRequestLoggerPreservesStreamingInterfaces guards against regressions
@@ -65,5 +69,65 @@ func TestRequestIDGeneratesMissingID(t *testing.T) {
 
 	if rec.Header().Get(requestIDHeader) == "" {
 		t.Fatal("response request ID is empty")
+	}
+}
+
+func TestRequestLoggerUnaryOutput(t *testing.T) {
+	var buf bytes.Buffer
+	logger.Init("info", "production", &buf)
+	t.Cleanup(func() { logger.Init("info", "development") })
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte("ok"))
+	})
+
+	rec := httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/health", nil)
+	req.Header.Set(requestIDHeader, "req-unary-101")
+
+	Chain(handler, RequestID(), RequestLogger()).ServeHTTP(rec, req)
+
+	output := buf.String()
+	if !strings.Contains(output, "request completed") {
+		t.Errorf("expected 'request completed' in log, got: %s", output)
+	}
+	if !strings.Contains(output, `"request_id":"req-unary-101"`) {
+		t.Errorf("expected request_id in log, got: %s", output)
+	}
+	if !strings.Contains(output, `"path":"/api/v1/health"`) {
+		t.Errorf("expected path in log, got: %s", output)
+	}
+	if !strings.Contains(output, `"status":200`) {
+		t.Errorf("expected status 200 in log, got: %s", output)
+	}
+}
+
+func TestRequestLoggerStreamingLifecycle(t *testing.T) {
+	var buf bytes.Buffer
+	logger.Init("info", "production", &buf)
+	t.Cleanup(func() { logger.Init("info", "development") })
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte("data: ping\n\n"))
+	})
+
+	rec := httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodGet, "/events", nil)
+	req.Header.Set("Accept", "text/event-stream")
+	req.Header.Set(requestIDHeader, "req-stream-202")
+
+	Chain(handler, RequestID(), RequestLogger()).ServeHTTP(rec, req)
+
+	output := buf.String()
+	if !strings.Contains(output, "streaming started") {
+		t.Errorf("expected 'streaming started' in log, got: %s", output)
+	}
+	if !strings.Contains(output, "streaming completed") {
+		t.Errorf("expected 'streaming completed' in log, got: %s", output)
+	}
+	if !strings.Contains(output, `"request_id":"req-stream-202"`) {
+		t.Errorf("expected request_id in log, got: %s", output)
 	}
 }

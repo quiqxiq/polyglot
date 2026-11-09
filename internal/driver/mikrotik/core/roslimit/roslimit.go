@@ -422,18 +422,25 @@ func StartStats(every time.Duration) {
 			// nothing to poll.
 			if open > 0 {
 				sort.Strings(held)
-				logger.Debugf("[roslimit] %d open stream(s) across %d router(s): %s",
-					open, len(held), strings.Join(held, " "))
+				logger.WithComponent("roslimit").WithFields(logger.Fields{
+					"open_streams":  open,
+					"routers_count": len(held),
+					"routers":       strings.Join(held, " "),
+				}).Debug("open streams summary")
 			}
 
 			if total == 0 {
 				continue
 			}
 			sort.Strings(parts)
-			logger.Debugf("[roslimit] %d commands in %s across %d router(s): %s",
-				total, every, len(parts), strings.Join(parts, " "))
+			logger.WithComponent("roslimit").WithFields(logger.Fields{
+				"commands_total": total,
+				"interval":       every.String(),
+				"routers_count":  len(parts),
+				"routers":        strings.Join(parts, " "),
+			}).Debug("commands summary")
 			if top != "" {
-				logger.Debugf("[roslimit] busiest menus: %s", top)
+				logger.WithComponent("roslimit").WithField("busiest_menus", top).Debug("busiest menus summary")
 			}
 		}
 	}()

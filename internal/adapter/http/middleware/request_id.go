@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type requestIDContextKey struct{}
@@ -23,6 +24,7 @@ func RequestID() Middleware {
 
 			w.Header().Set(requestIDHeader, requestID)
 			ctx := context.WithValue(r.Context(), requestIDContextKey{}, requestID)
+			ctx = logger.ContextWithRequestID(ctx, requestID)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
@@ -30,6 +32,8 @@ func RequestID() Middleware {
 
 // RequestIDFromContext returns request correlation ID, when present.
 func RequestIDFromContext(ctx context.Context) string {
-	requestID, _ := ctx.Value(requestIDContextKey{}).(string)
-	return requestID
+	if requestID, ok := ctx.Value(requestIDContextKey{}).(string); ok && requestID != "" {
+		return requestID
+	}
+	return logger.RequestIDFromContext(ctx)
 }

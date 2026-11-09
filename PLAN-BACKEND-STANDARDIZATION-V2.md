@@ -31,7 +31,7 @@ Status berikut diverifikasi terhadap HEAD `77273db` dan hasil command terbaru.
 | Fase | Status | Ringkasan |
 |---|---|---|
 | F0 | **DONE** | Toolchain CI sudah Go 1.26, baseline test/build/vet lulus, E2E router diberi tag eksplisit, `make check` tersedia. |
-| F1 | **PARTIAL** | Logrus `pkg/logger`, structured logging, redaction hook, test, dan request ID middleware sudah ada; audit seluruh log repository belum selesai. |
+| F1 | **DONE** | Logging terpusat via `pkg/logger` (Logrus), request correlation context helpers, streaming request lifecycle logging, 0 direct Logrus imports di luar `pkg/logger`, 0 direct `Infof/Warnf/Errorf/Debugf`, dan 100% test passing. |
 | F2 | **PARTIAL** | `pkg/fault`, Connect mapper, HTTP mapper, dan sentinel utama sudah ada; seluruh error domain belum dimigrasikan secara konsisten. |
 | F3 | **PARTIAL** | Protovalidate aktif pada router, inventory request tersedia, test unary/stream tersedia; inventory belum seluruhnya covered dan validasi manual masih tersisa. |
 | F4 | **PARTIAL** | Mapper dan HTTP error envelope sudah distandardisasi pada beberapa area; seluruh endpoint belum memiliki contract test dan pagination contract. |
@@ -720,10 +720,10 @@ Jika generated output harus committed, CI harus gagal ketika hasil generate berb
 
 | Task | Status | Bukti atau sisa |
 |---|---|---|
-| 1.1 Logging contract | **PARTIAL** | `pkg/logger` tetap Logrus dan structured fields sudah digunakan; HTTP request correlation ID tersedia, tetapi propagasi lintas semua entry point belum diaudit. |
-| 1.2 API pemakaian | **PARTIAL** | Driver WhatsApp, BotEngine, app lifecycle, probe, user, dan beberapa adapter sudah migrated; audit seluruh repository masih diperlukan. |
-| 1.3 Request logging middleware | **PARTIAL** | Middleware logger sudah ada, tetapi field schema, redaction, dan streaming lifecycle belum diverifikasi di semua route. |
-| 1.4 Test logger | **DONE** | Test JSON/text, fields, errors, dan redaction token/JID/phone/password/payload sudah ada. |
+| 1.1 Logging contract | **DONE** | `pkg/logger` menyediakan alias `Fields`, korelasi context (`ContextWithRequestID`, `ContextWithUserID`, `ContextWithDeviceID`, `ContextWithOperation`, `ContextWithCorrelation`), extraction otomatis pada `WithContext(ctx)`, serta thread-safe mutex pada `Init` dan `GetLogger`. |
+| 1.2 API pemakaian | **DONE** | Seluruh panggilan format legacy (`Debugf`) di `roslimit` dimigrasikan ke static message + structured fields; 0 direct import `github.com/sirupsen/logrus` di `internal/` dan `cmd/`; propagasi context ID aktif pada HTTP middleware dan ConnectRPC interceptor. |
+| 1.3 Request logging middleware | **DONE** | Middleware logger mencatat request lifecycle lengkap untuk unary (`request completed`) dan streaming (`streaming started` & `streaming completed`), tanpa membocorkan kredensial/token/PII. |
+| 1.4 Test logger | **DONE** | Unit tests lengkap untuk korelasi context, konkurensi `Init`, HTTP request logger unary/streaming lifecycle, dan ConnectRPC context request ID propagation. |
 
 ### F2: Error Taxonomy dan Mapping
 
