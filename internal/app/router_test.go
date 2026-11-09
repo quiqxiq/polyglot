@@ -13,7 +13,10 @@ func TestBuildRouter_RouteConflictAndAuthSeparation(t *testing.T) {
 		}
 	}()
 
-	handler := buildRouter(routerDeps{})
+	handler, err := buildRouter(routerDeps{})
+	if err != nil {
+		t.Fatalf("buildRouter() error = %v", err)
+	}
 	if handler == nil {
 		t.Fatal("expected non-nil handler from buildRouter")
 	}
@@ -48,5 +51,13 @@ func TestBuildRouter_RouteConflictAndAuthSeparation(t *testing.T) {
 	handler.ServeHTTP(recRegPub, reqRegPub)
 	if recRegPub.Code == http.StatusUnauthorized {
 		t.Errorf("public registration route should not require JWT, got 401")
+	}
+
+	// 5. Protected plain-HTTP route: GET /api/devices without JWT should return 401.
+	reqDevices := httptest.NewRequest(http.MethodGet, "/api/devices", nil)
+	recDevices := httptest.NewRecorder()
+	handler.ServeHTTP(recDevices, reqDevices)
+	if recDevices.Code != http.StatusUnauthorized {
+		t.Errorf("expected 401 for /api/devices without JWT, got %d", recDevices.Code)
 	}
 }

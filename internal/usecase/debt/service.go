@@ -11,6 +11,7 @@ import (
 
 	domainDebt "github.com/quixiq/polyglot/internal/domain/debt"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/phone"
@@ -19,10 +20,10 @@ import (
 
 // Service provides debt management operations.
 type Service struct {
-	repo      port.DebtRepository
-	customs   port.CustomerRepository
-	notif     port.NotificationRepository
-	settings  port.SettingReader
+	repo     port.DebtRepository
+	customs  port.CustomerRepository
+	notif    port.NotificationRepository
+	settings port.SettingReader
 }
 
 // NewService constructs a debt management service.
@@ -61,7 +62,7 @@ func (s *Service) CreateDebt(ctx context.Context, in CreateDebtInput) (domainDeb
 		in.DebtDate = time.Now().UTC()
 	}
 	if in.TenantID == "" {
-		in.TenantID = "tenant-default"
+		in.TenantID = domainTenant.DefaultID
 	}
 	if s.customs != nil {
 		if _, err := s.customs.FindByID(ctx, in.CustomerID); err != nil {

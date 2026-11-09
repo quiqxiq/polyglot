@@ -7,7 +7,12 @@ run:
 issues:
   # Adopt linting incrementally: legacy findings remain visible in full scans,
   # but new changes cannot add to the existing backlog.
-  new-from-rev: 17e6090
+  #
+  # Baseline refreshed at the start of the backend standardization work. The
+  # previous baseline (17e6090) was 64 commits behind and reported 145 legacy
+  # findings. Keep this value pinned to a known-good commit and refresh it only
+  # after a cleanup PR has actually reduced the backlog.
+  new-from-rev: "0653671"
 
 linters:
   # "standard" sudah mencakup: errcheck, govet, ineffassign, staticcheck,
@@ -19,6 +24,7 @@ linters:
     - bodyclose
     - errorlint
     - wrapcheck
+    - depguard
   exclusions:
     rules:
       - linters:
@@ -30,6 +36,49 @@ linters:
       # setiap switch pada enum/tipe tertutup — exhaustive membantu menangkap
       # switch yang lupa menangani kasus baru.
       default-signifies-exhaustive: true
+    depguard:
+      # Ratchet untuk batas layer: aturan ini hanya melarang impor ke luar
+      # layer, sehingga temuan legacy lain tetap diurus oleh baseline
+      # new-from-rev. Pola diawali "**/" karena depguard menerima path absolut.
+      rules:
+        domain-purity:
+          list-mode: lax
+          files:
+            - "internal/domain/**"
+            - "**/internal/domain/**"
+          deny:
+            - pkg: "github.com/quixiq/polyglot/internal/port"
+              desc: "domain tidak boleh bergantung pada port; port dimiliki consumer"
+            - pkg: "github.com/quixiq/polyglot/internal/usecase"
+              desc: "domain tidak boleh bergantung pada usecase"
+            - pkg: "github.com/quixiq/polyglot/internal/adapter"
+              desc: "domain tidak boleh bergantung pada adapter"
+            - pkg: "github.com/quixiq/polyglot/internal/driver"
+              desc: "domain tidak boleh bergantung pada driver"
+            - pkg: "github.com/quixiq/polyglot/api/gen"
+              desc: "domain tidak boleh bergantung pada tipe transport hasil generate"
+        usecase-boundaries:
+          list-mode: lax
+          files:
+            - "internal/usecase/**"
+            - "**/internal/usecase/**"
+          deny:
+            - pkg: "github.com/quixiq/polyglot/internal/adapter"
+              desc: "usecase harus bergantung pada port, bukan adapter"
+            - pkg: "github.com/quixiq/polyglot/internal/driver"
+              desc: "usecase harus bergantung pada port, bukan driver"
+        port-boundaries:
+          list-mode: lax
+          files:
+            - "internal/port/**"
+            - "**/internal/port/**"
+          deny:
+            - pkg: "github.com/quixiq/polyglot/internal/usecase"
+              desc: "port adalah interface milik consumer dan tidak boleh bergantung pada usecase"
+            - pkg: "github.com/quixiq/polyglot/internal/adapter"
+              desc: "port tidak boleh bergantung pada adapter"
+            - pkg: "github.com/quixiq/polyglot/internal/driver"
+              desc: "port tidak boleh bergantung pada driver"
     revive:
       rules:
         - name: exported

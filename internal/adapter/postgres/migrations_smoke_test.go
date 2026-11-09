@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -23,6 +24,12 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/port"
 )
+
+func init() {
+	if os.Getenv("TESTCONTAINERS_RYUK_DISABLED") == "" {
+		_ = os.Setenv("TESTCONTAINERS_RYUK_DISABLED", "true")
+	}
+}
 
 // migrationsDir resolves the absolute path of ../../migrations from this file.
 func migrationsDir(t *testing.T) string {

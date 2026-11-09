@@ -10,6 +10,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/billing"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -32,7 +33,7 @@ func (r *BulkPaymentRepository) SaveBatch(ctx context.Context, b billing.BulkPay
 		b.ID = idgen.New("bpb")
 	}
 	if b.TenantID == "" {
-		b.TenantID = "tenant-default"
+		b.TenantID = domainTenant.DefaultID
 	}
 	now := time.Now().UTC()
 	if b.CreatedAt.IsZero() {
@@ -58,7 +59,7 @@ func (r *BulkPaymentRepository) FindBatchByID(ctx context.Context, id string) (b
 // ListBatches lists recent batches for a tenant.
 func (r *BulkPaymentRepository) ListBatches(ctx context.Context, tenantID string, limit int) ([]billing.BulkPaymentBatch, error) {
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	if limit <= 0 {
 		limit = 50

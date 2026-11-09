@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -214,7 +215,7 @@ func todayUTC() time.Time {
 	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, time.UTC)
 }
 
-func tenantDefault() string { return "tenant-default" }
+func tenantDefault() string { return domainTenant.DefaultID }
 
 func errMsgs(errs []error) []string {
 	out := make([]string, len(errs))

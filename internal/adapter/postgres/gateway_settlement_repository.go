@@ -9,6 +9,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/billing"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -31,7 +32,7 @@ func (r *GatewaySettlementRepository) Save(ctx context.Context, s billing.Gatewa
 		s.ID = idgen.New("gws")
 	}
 	if s.TenantID == "" {
-		s.TenantID = "tenant-default"
+		s.TenantID = domainTenant.DefaultID
 	}
 	now := time.Now().UTC()
 	if s.CreatedAt.IsZero() {
@@ -57,7 +58,7 @@ func (r *GatewaySettlementRepository) FindByID(ctx context.Context, id string) (
 // FindByRef retrieves a settlement by tenant, gateway, and settlement_ref.
 func (r *GatewaySettlementRepository) FindByRef(ctx context.Context, tenantID, gateway, ref string) (billing.GatewaySettlement, error) {
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	var m model.GatewaySettlementModel
 	if err := r.db.WithContext(ctx).
@@ -74,7 +75,7 @@ func (r *GatewaySettlementRepository) FindByRef(ctx context.Context, tenantID, g
 func (r *GatewaySettlementRepository) List(ctx context.Context, f port.GatewaySettlementFilter) ([]billing.GatewaySettlement, error) {
 	tenantID := f.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	q := r.db.WithContext(ctx).Where("tenant_id = ?", tenantID)
 	if f.Gateway != "" {

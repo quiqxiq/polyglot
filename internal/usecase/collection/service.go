@@ -10,6 +10,7 @@ import (
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/phone"
@@ -58,7 +59,7 @@ type Summary struct {
 // GetSummary calculates collection summary statistics.
 func (s *Service) GetSummary(ctx context.Context, tenantID string) (Summary, error) {
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	var res Summary
 
@@ -100,7 +101,7 @@ type OverdueCustomer struct {
 // ListOverdueCustomers returns customers with overdue balance.
 func (s *Service) ListOverdueCustomers(ctx context.Context, tenantID string, limit int) ([]OverdueCustomer, error) {
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	fRepo, ok := s.invoices.(port.InvoiceFilteredRepository)
 	if !ok {

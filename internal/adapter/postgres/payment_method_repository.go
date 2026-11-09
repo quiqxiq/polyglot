@@ -9,6 +9,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/billing"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -31,7 +32,7 @@ func (r *PaymentMethodRepository) Save(ctx context.Context, m billing.PaymentMet
 		m.ID = idgen.New("pm")
 	}
 	if m.TenantID == "" {
-		m.TenantID = "tenant-default"
+		m.TenantID = domainTenant.DefaultID
 	}
 	now := time.Now().UTC()
 	if m.CreatedAt.IsZero() {
@@ -57,7 +58,7 @@ func (r *PaymentMethodRepository) FindByID(ctx context.Context, id string) (bill
 // List returns payment methods for a tenant, sorted by sort_order ASC, name ASC.
 func (r *PaymentMethodRepository) List(ctx context.Context, tenantID string, activeOnly bool) ([]billing.PaymentMethod, error) {
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	q := r.db.WithContext(ctx).Where("tenant_id = ?", tenantID)
 	if activeOnly {

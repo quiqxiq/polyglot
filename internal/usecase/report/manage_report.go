@@ -7,6 +7,7 @@ import (
 	"time"
 
 	domainReporting "github.com/quixiq/polyglot/internal/domain/reporting"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -38,7 +39,7 @@ func (uc *ManageReportUseCase) DailyReport(ctx context.Context, dateStr string) 
 		}
 		day = d
 	}
-	snap, err := uc.repo.GetByDate(ctx, "tenant-default", day)
+	snap, err := uc.repo.GetByDate(ctx, domainTenant.DefaultID, day)
 	if err != nil {
 		return "", nil, fmt.Errorf("get daily report: %w", err)
 	}
@@ -59,7 +60,7 @@ func (uc *ManageReportUseCase) MonthlyReport(ctx context.Context, monthStr strin
 		return "", nil, fmt.Errorf("%w: month must be YYYY-MM", domainReporting.ErrInvalidInput)
 	}
 	to := from.AddDate(0, 1, -1)
-	snaps, err := uc.repo.ListRange(ctx, "tenant-default", from, to)
+	snaps, err := uc.repo.ListRange(ctx, domainTenant.DefaultID, from, to)
 	if err != nil {
 		return "", nil, fmt.Errorf("list monthly range: %w", err)
 	}
@@ -76,7 +77,7 @@ func (uc *ManageReportUseCase) YearlyReport(ctx context.Context, year int) (stri
 	}
 	from := time.Date(year, 1, 1, 0, 0, 0, 0, time.UTC)
 	to := from.AddDate(1, 0, -1)
-	snaps, err := uc.repo.ListRange(ctx, "tenant-default", from, to)
+	snaps, err := uc.repo.ListRange(ctx, domainTenant.DefaultID, from, to)
 	if err != nil {
 		return "", nil, fmt.Errorf("list yearly range: %w", err)
 	}
@@ -96,7 +97,7 @@ func (uc *ManageReportUseCase) RefreshSnapshot(ctx context.Context, dateStr stri
 		}
 		day = d
 	}
-	if err := uc.snapshotter.RecomputeDaily(ctx, "tenant-default", day); err != nil {
+	if err := uc.snapshotter.RecomputeDaily(ctx, domainTenant.DefaultID, day); err != nil {
 		return "", fmt.Errorf("recompute daily snapshot: %w", err)
 	}
 	return day.Format("2006-01-02"), nil

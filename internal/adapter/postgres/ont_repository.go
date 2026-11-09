@@ -11,12 +11,13 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/ont"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // defaultTenantID adalah tenant tunggal deployment saat ini (D16
 // PLAN-ACS-OLT-HIOSO.md), konsisten dengan default kolom tenant_id.
-const defaultTenantID = "tenant-default"
+const defaultTenantID = domainTenant.DefaultID
 
 // ONTRepository adalah implementasi port.ONTRepository berbasis GORM/Postgres
 // untuk inventori ONT/ONU, timeline event, dan sampel metrik optik.

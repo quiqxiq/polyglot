@@ -48,7 +48,7 @@ func TestListDevicesHTTP(t *testing.T) {
 
 	handler := NewHandler(repo)
 	mux := http.NewServeMux()
-	handler.RegisterPublic(mux)
+	handler.RegisterProtected(mux)
 
 	req := httptest.NewRequest(http.MethodGet, "/api/devices", nil)
 	rec := httptest.NewRecorder()

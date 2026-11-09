@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/reporting"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -40,7 +41,7 @@ type summary struct {
 	CashBalances        json.RawMessage `json:"cash_balances,omitempty"`
 }
 
-const defaultTenant = "tenant-default"
+const defaultTenant = domainTenant.DefaultID
 
 func (h *Handler) daily(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query().Get("date")

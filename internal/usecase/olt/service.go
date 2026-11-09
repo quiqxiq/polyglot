@@ -15,11 +15,12 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/device"
 	domainOLT "github.com/quixiq/polyglot/internal/domain/olt"
 	"github.com/quixiq/polyglot/internal/domain/ont"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 const (
-	tenantDefault   = "tenant-default"
+	tenantDefault   = domainTenant.DefaultID
 	vendorHioso     = "hioso"
 	driverTypeHioso = "hioso"
 	tagOLT          = "olt"

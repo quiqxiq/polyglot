@@ -30,6 +30,7 @@
 - Context is a parameter, never a struct field. Every goroutine has cancellation or wait ownership.
 - Keep production files under 500 lines; mark deliberate exceptions `// DEVIASI: <reason>`.
 - Preserve protobuf field names, numbers, services, and wire semantics. Add fields only backward-compatibly.
+- Treat the deployment as single-tenant: use `internal/domain/tenant.DefaultID`; never add tenant literals or tenant input paths. See `docs/adr/0011-single-tenant-deployment.md`.
 
 ## Commands
 
@@ -40,7 +41,7 @@ make test
 make lint
 make check
 make proto-check
-make check-connect-errors check-layer-boundaries
+make check-connect-errors check-layer-boundaries check-tenant-literals check-port-aliases
 make test-integration
 make security
 ```

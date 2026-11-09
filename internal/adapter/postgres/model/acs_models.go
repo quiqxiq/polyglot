@@ -7,6 +7,7 @@ import (
 	"github.com/lib/pq"
 
 	"github.com/quixiq/polyglot/internal/domain/ont"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 )
 
 // ACSDeviceModel is the GORM model for the GenieACS device cache used to
@@ -73,7 +74,7 @@ func (m *ACSDeviceModel) ToDomain() ont.ACSDevice {
 func ACSDeviceModelFromDomain(d ont.ACSDevice) *ACSDeviceModel {
 	tenantID := d.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	tags := pq.StringArray(d.Tags)
 	if tags == nil {
@@ -154,7 +155,7 @@ func (m *ACSPresetModel) ToDomain() ont.ACSPreset {
 func ACSPresetModelFromDomain(p ont.ACSPreset) *ACSPresetModel {
 	tenantID := p.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	configurations := "[]"
 	if len(p.Configurations) > 0 {

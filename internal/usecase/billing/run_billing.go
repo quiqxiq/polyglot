@@ -13,6 +13,7 @@ import (
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -367,7 +368,7 @@ func endOfMonthPeriod(year int, month time.Month) time.Time {
 
 func orTenantID(t string) string {
 	if t == "" {
-		return "tenant-default"
+		return domainTenant.DefaultID
 	}
 	return t
 }

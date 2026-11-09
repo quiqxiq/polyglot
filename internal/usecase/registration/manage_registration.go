@@ -14,6 +14,7 @@ import (
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -456,7 +457,7 @@ func (u *ManageRegistrationUseCase) writeAudit(ctx context.Context, actorType, a
 		return
 	}
 	err := u.audit.Write(ctx, audit.AuditLog{
-		TenantID:   "tenant-default",
+		TenantID:   domainTenant.DefaultID,
 		ActorType:  actorType,
 		ActorID:    actorID,
 		Action:     action,

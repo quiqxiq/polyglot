@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -33,7 +34,7 @@ func (u *ManagePlanUseCase) Create(ctx context.Context, p domainPlan.ServicePlan
 		p.ID = idgen.New("plan")
 	}
 	if p.TenantID == "" {
-		p.TenantID = "tenant-default"
+		p.TenantID = domainTenant.DefaultID
 	}
 	if p.ParentQueue == "" {
 		p.ParentQueue = "none"

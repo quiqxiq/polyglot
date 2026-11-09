@@ -1,4 +1,4 @@
-.PHONY: build vet test test-integration test-mikrotik-e2e security check-connect-errors check-layer-boundaries proto-check lint check fmt run dev setup seed \
+.PHONY: build vet test test-integration test-mikrotik-e2e security check-connect-errors check-layer-boundaries check-tenant-literals check-port-aliases proto-check proto-check-go ci lint check fmt run dev setup seed \
         proto proto-tools proto-clean \
         dev-up dev-down dev-logs dev-setup \
         prod-build prod-up prod-down prod-logs prod-setup \
@@ -15,6 +15,7 @@ export
 endif
 
 # ─── Defaults (overridable via env or .env) ───────────────────────────
+export TESTCONTAINERS_RYUK_DISABLED ?= true
 POSTGRES_HOST     ?= localhost
 POSTGRES_PORT     ?= 5432
 POSTGRES_USER     ?= postgres
@@ -61,14 +62,30 @@ check-connect-errors:
 check-layer-boundaries:
 	bash scripts/check-layer-boundaries.sh
 
+check-tenant-literals:
+	bash scripts/check-tenant-literals.sh
+
+check-port-aliases:
+	bash scripts/check-port-aliases.sh
+
 proto-check:
 	@test -x "$$(command -v buf)" || (echo "buf is required; install Buf before running proto-check" >&2; exit 1)
 	buf lint
 	buf generate --template buf.gen.yaml
 	git diff --exit-code -- api/gen web/src/gen
 
+# Go-only generation check for CI: avoids requiring the web toolchain while
+# still guaranteeing that api/gen matches api/proto.
+proto-check-go:
+	@test -x "$$(command -v buf)" || (echo "buf is required; install Buf before running proto-check-go" >&2; exit 1)
+	buf lint
+	buf generate --template buf.gen.go.yaml
+	git diff --exit-code -- api/gen
+
 lint:
-	golangci-lint run ./... && $(MAKE) check-connect-errors check-layer-boundaries
+	golangci-lint run ./... && $(MAKE) check-connect-errors check-layer-boundaries check-tenant-literals check-port-aliases
+
+ci: verify-mod build vet lint test proto-check-go
 
 fmt:
 	gofmt -l .

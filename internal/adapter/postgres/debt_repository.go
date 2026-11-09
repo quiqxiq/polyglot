@@ -12,6 +12,7 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/cashbook"
 	"github.com/quixiq/polyglot/internal/domain/debt"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -34,7 +35,7 @@ func (r *DebtRepository) Save(ctx context.Context, d debt.Debt) error {
 		d.ID = idgen.New("debt")
 	}
 	if d.TenantID == "" {
-		d.TenantID = "tenant-default"
+		d.TenantID = domainTenant.DefaultID
 	}
 	now := time.Now().UTC()
 	if d.CreatedAt.IsZero() {
@@ -61,7 +62,7 @@ func (r *DebtRepository) FindByID(ctx context.Context, id string) (debt.Debt, er
 func (r *DebtRepository) List(ctx context.Context, f port.DebtFilter) ([]debt.Debt, int, error) {
 	tenantID := f.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	q := r.db.WithContext(ctx).Model(&model.DebtModel{}).Where("customer_debts.tenant_id = ?", tenantID)
 
@@ -131,7 +132,7 @@ func (r *DebtRepository) ApplyPayment(ctx context.Context, cmd port.DebtPaymentC
 
 	tenantID := cmd.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 
 	var outPayment debt.Payment
@@ -259,7 +260,7 @@ func (r *DebtRepository) ListPayments(ctx context.Context, debtID string) ([]deb
 // Summary returns aggregated stats for customer debts.
 func (r *DebtRepository) Summary(ctx context.Context, tenantID, customerID string, asOf time.Time) (debt.Summary, error) {
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	if asOf.IsZero() {
 		asOf = time.Now().UTC()

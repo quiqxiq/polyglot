@@ -6,6 +6,7 @@ import (
 	"time"
 
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -41,7 +42,7 @@ func (uc *ManageNotificationUseCase) GetTemplate(ctx context.Context, templateKe
 	if uc.repo == nil {
 		return domainNotification.NotificationTemplate{}, domainNotification.ErrRepositoryUnavailable
 	}
-	tmpl, err := uc.repo.FindTemplateByKey(ctx, "tenant-default", templateKey)
+	tmpl, err := uc.repo.FindTemplateByKey(ctx, domainTenant.DefaultID, templateKey)
 	if err != nil {
 		return domainNotification.NotificationTemplate{}, fmt.Errorf("find template by key: %w", err)
 	}
@@ -57,7 +58,7 @@ func (uc *ManageNotificationUseCase) SaveTemplate(ctx context.Context, tmpl doma
 		tmpl.ID = idgen.New("nt")
 	}
 	if tmpl.TenantID == "" {
-		tmpl.TenantID = "tenant-default"
+		tmpl.TenantID = domainTenant.DefaultID
 	}
 	if err := uc.repo.SaveTemplate(ctx, tmpl); err != nil {
 		return domainNotification.NotificationTemplate{}, fmt.Errorf("save template: %w", err)

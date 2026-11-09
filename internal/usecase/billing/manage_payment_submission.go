@@ -8,6 +8,7 @@ import (
 
 	domainAudit "github.com/quixiq/polyglot/internal/domain/audit"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -224,7 +225,7 @@ func (u *PaymentSubmissionUseCase) writeAudit(ctx context.Context, actorID, acti
 		return
 	}
 	err := u.audit.Write(ctx, domainAudit.AuditLog{
-		TenantID:   "tenant-default",
+		TenantID:   domainTenant.DefaultID,
 		ActorType:  domainAudit.ActorUser,
 		ActorID:    actorID,
 		Action:     action,

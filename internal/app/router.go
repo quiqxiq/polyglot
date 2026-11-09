@@ -2,7 +2,9 @@ package app
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
@@ -138,20 +140,33 @@ type routerDeps struct {
 	driverResolverConnect  func(ctx context.Context, deviceID string) (port.DeviceDriver, bool)
 }
 
-func buildRouter(d routerDeps) http.Handler {
+// protectedPlainPaths lists plain-HTTP handlers mounted on protectedMux that
+// must also be reachable from the root mux. Keep this in sync with the
+// RegisterProtected calls above.
+var protectedPlainPaths = []string{
+	"/api/devices",
+	"/api/v1/devices",
+	"/api/cashier/charge",
+	"/api/cashier/check-charge",
+	"/api/cashier/gateways",
+	"/api/reports/daily", "/api/reports/monthly", "/api/reports/yearly",
+	"/api/admin/import", "/api/admin/import-router", "/api/admin/reconcile",
+	"/api/admin/export", "/api/admin/snapshot/refresh",
+}
+
+func buildRouter(d routerDeps) (http.Handler, error) {
 	rootMux := http.NewServeMux()
 
 	webhookHTTPHandler := webhookHTTP.NewHandler(d.deviceRepo)
 	webhookHTTPHandler.RegisterPublic(rootMux)
 
 	inventoryHTTPHandler := inventoryHTTP.NewHandler(d.deviceRepo)
-	inventoryHTTPHandler.RegisterPublic(rootMux)
 
 	uploadHTTPHandler := uploadHTTP.NewHandler(d.cfg.UploadDir)
 	uploadHTTPHandler.RegisterPublic(rootMux)
 
 	authPath, authHandler := authConnect.NewAuthServiceHandler(
-		d.authUseCase, d.refreshUseCase, d.manageUserUseCase, d.cfg.AppEnv == "production",
+		d.authUseCase, d.refreshUseCase, d.manageUserUseCase, d.cfg.IsProduction(),
 	)
 	rootMux.Handle(authPath, authHandler)
 
@@ -270,6 +285,7 @@ func buildRouter(d routerDeps) http.Handler {
 	registerProtected(probePath, probeHandler)
 
 	gatewayHTTPHandler.RegisterProtected(protectedMux)
+	inventoryHTTPHandler.RegisterProtected(protectedMux)
 	reportHTTP.NewHandler(d.reportingRepo).Register(protectedMux)
 	adminapi.NewHandler(d.upsertImport, d.routerSource, d.reconciler, d.reportingRepo, d.exportUC, d.driverResolverConnect).
 		RegisterProtected(protectedMux)
@@ -279,15 +295,20 @@ func buildRouter(d routerDeps) http.Handler {
 		middleware.AuthenticateJWT(d.jwtService),
 		middleware.AuthorizeProcedure(d.casbinEnforcer),
 	)
+
+	// Plain-HTTP handlers mounted on protectedMux must also be reachable from
+	// the root mux; protectedPlainPaths is the single source for that list.
+	allProtectedPaths := make([]string, 0, len(protectedPaths)+len(protectedPlainPaths))
+	allProtectedPaths = append(allProtectedPaths, protectedPaths...)
+	allProtectedPaths = append(allProtectedPaths, protectedPlainPaths...)
+	if err := validateProtectedRoutePermissions(allProtectedPaths); err != nil {
+		return nil, err
+	}
+
 	for _, path := range protectedPaths {
 		rootMux.Handle(path, protectedHandler)
 	}
-	for _, plainPath := range []string{
-		"/api/cashier/charge",
-		"/api/reports/daily", "/api/reports/monthly", "/api/reports/yearly",
-		"/api/admin/import", "/api/admin/import-router", "/api/admin/reconcile",
-		"/api/admin/export", "/api/admin/snapshot/refresh",
-	} {
+	for _, plainPath := range protectedPlainPaths {
 		rootMux.Handle(plainPath, protectedHandler)
 	}
 
@@ -297,5 +318,36 @@ func buildRouter(d routerDeps) http.Handler {
 		middleware.RequestLogger(),
 		middleware.CORS(d.cfg.CORSOrigins, d.cfg.AppEnv),
 		middleware.Recovery(),
-	)
+	), nil
+}
+
+// validateProtectedRoutePermissions fails startup when a protected route has no
+// RBAC mapping. A missing mapping would otherwise fail closed at request time
+// (403) and only be discovered by users.
+func validateProtectedRoutePermissions(paths []string) error {
+	var missing []string
+	for _, path := range paths {
+		if strings.HasSuffix(path, "/") {
+			if !hasPermissionPrefix(path) {
+				missing = append(missing, path)
+			}
+			continue
+		}
+		if _, ok := auth.PermissionFor(path); !ok {
+			missing = append(missing, path)
+		}
+	}
+	if len(missing) == 0 {
+		return nil
+	}
+	return fmt.Errorf("protected routes missing RBAC permission mapping: %s", strings.Join(missing, ", "))
+}
+
+func hasPermissionPrefix(prefix string) bool {
+	for procedure := range auth.ProcedurePermissions {
+		if strings.HasPrefix(procedure, prefix) {
+			return true
+		}
+	}
+	return false
 }

@@ -3,6 +3,8 @@ package billing
 import (
 	"fmt"
 	"time"
+
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 )
 
 // FirstInvoiceInput is the input for building the first installation invoice
@@ -49,7 +51,7 @@ func BuildFirstInvoice(in FirstInvoiceInput) (Invoice, []InvoiceItem) {
 
 	tenant := in.TenantID
 	if tenant == "" {
-		tenant = "tenant-default"
+		tenant = domainTenant.DefaultID
 	}
 	discountType := in.DiscountType
 	if discountType == "" {

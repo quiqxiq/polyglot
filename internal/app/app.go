@@ -355,7 +355,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	notifManagerUC := notificationUC.NewManageNotificationUseCase(notifRepo, waSender)
 	streamGW := mikrotik.NewMonitorStreamGateway()
 
-	routerHandler := buildRouter(routerDeps{
+	routerHandler, err := buildRouter(routerDeps{
 		cfg:                    cfg,
 		jwtService:             jwtService,
 		casbinEnforcer:         casbinEnforcer,
@@ -420,106 +420,31 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		connectDriverProvider:  connectDriverProvider,
 		driverResolverConnect:  driverResolverConnect,
 	})
+	if err != nil {
+		return nil, fmt.Errorf("build router: %w", err)
+	}
 
 	// ─── 4. Scheduler (Cron) ────────────────────────────────────────────────
-	var sched *Scheduler
-	if cfg.SchedulerEnabled && cfg.BillingCronSpec != "" && cfg.IsolationCronSpec != "" {
-		isolateWorker := billingUC.NewIsolateWorker(
-			subRepo, invRepo, customerRepo, planRepo, accountMgr, notifRepo, settingRepo,
-		)
-		reminderWorker := billingUC.NewReminderWorker(subRepo, invRepo, customerRepo, notifRepo).WithSettings(settingRepo)
-		waWorker := notificationUC.NewWASenderWorker(notifRepo, waSender, settingRepo)
-		snapshotJob := func(ctx context.Context) error {
-			return reportingRepo.RecomputeDaily(ctx, "tenant-default", timeNowUTC())
-		}
-		routerJobsJob := func(ctx context.Context) error {
-			res, rerr := routerJobWorker.Run(ctx)
-			if res.Processed > 0 {
-				logger.WithComponent("App").WithFields(map[string]any{
-					"processed": res.Processed, "succeeded": res.Succeeded,
-					"retried": res.Retried, "dead": res.Dead,
-					"stopped_early": res.StoppedEarly,
-				}).Info("router job batch summary")
-			}
-			if rerr != nil {
-				return fmt.Errorf("router job batch: %w", rerr)
-			}
-			return nil
-		}
-		driftJob := func(ctx context.Context) error {
-			if err := runDriftReconciliation(ctx, repo, driverResolverConnect, reconciler); err != nil {
-				return fmt.Errorf("drift reconciliation: %w", err)
-			}
-			return nil
-		}
-		acsMatchJob := func(ctx context.Context) error {
-			stats, aerr := ontService.SyncDevices(ctx)
-			if aerr == nil {
-				logger.WithComponent("App").WithFields(map[string]any{
-					"devices": stats.Devices, "matched": stats.Matched,
-					"unmatched": stats.Unmatched, "conflicts": stats.Conflicts,
-				}).Info("acs match summary")
-			} else {
-				return fmt.Errorf("acs sync devices: %w", aerr)
-			}
-			return nil
-		}
-		acsTelemetryJob := func(ctx context.Context) error {
-			ok, terr := ontService.RefreshTelemetryAll(ctx)
-			if terr == nil {
-				logger.WithComponent("App").WithField("updated", ok).Info("acs telemetry summary")
-			} else {
-				return fmt.Errorf("acs telemetry refresh: %w", terr)
-			}
-			return nil
-		}
-		oltSyncJob := func(ctx context.Context) error {
-			res, serr := oltService.SyncAll(ctx)
-			for deviceID, r := range res {
-				logger.WithComponent("App").WithFields(map[string]any{
-					"device_id": deviceID, "discovered": r.Discovered, "updated": r.Updated,
-					"removed": r.Removed, "online": r.Online, "offline": r.Offline,
-				}).Info("olt sync summary")
-			}
-			if serr != nil {
-				return fmt.Errorf("olt sync all: %w", serr)
-			}
-			return nil
-		}
-		sched = newScheduler(schedulerJobs{
-			billing:      runBillingUC,
-			isolate:      isolateWorker,
-			reminder:     reminderWorker,
-			waSend:       waWorker,
-			routerJobs:   routerJobsJob,
-			drift:        driftJob,
-			snapshot:     snapshotJob,
-			oltSync:      oltSyncJob,
-			acsMatch:     acsMatchJob,
-			acsTelemetry: acsTelemetryJob,
-		}, schedulerSpecs{
-			billing:      cfg.BillingCronSpec,
-			isolation:    cfg.IsolationCronSpec,
-			reminder:     cfg.ReminderCronSpec,
-			waSend:       cfg.WaSendCronSpec,
-			routerJobs:   cfg.RouterJobCronSpec,
-			drift:        cfg.DriftCronSpec,
-			snapshot:     cfg.SnapshotCronSpec,
-			oltSync:      cfg.OltSyncCronSpec,
-			acsMatch:     cfg.ACSMatchCronSpec,
-			acsTelemetry: cfg.ACSTelemetryCron,
-		}, "tenant-default", postgres.NewAdvisoryLocker(pgStore.DB()))
-		sched.Start()
-		logger.WithComponent("App").WithFields(map[string]any{
-			"billing_cron":    cfg.BillingCronSpec,
-			"isolation_cron":  cfg.IsolationCronSpec,
-			"reminder_cron":   cfg.ReminderCronSpec,
-			"wa_send_cron":    cfg.WaSendCronSpec,
-			"snapshot_cron":   cfg.SnapshotCronSpec,
-			"router_job_cron": cfg.RouterJobCronSpec,
-			"drift_cron":      cfg.DriftCronSpec,
-		}).Info("ISP scheduler started (7 jobs)")
-	}
+	sched := buildScheduler(ctx, schedulerDeps{
+		cfg:            cfg,
+		pgStore:        pgStore,
+		subscriptions:  subRepo,
+		invoices:       invRepo,
+		customers:      customerRepo,
+		plans:          planRepo,
+		accountManager: accountMgr,
+		notifications:  notifRepo,
+		settings:       settingRepo,
+		waSender:       waSender,
+		reporting:      reportingRepo,
+		routerJobs:     routerJobWorker,
+		devices:        repo,
+		driverResolver: driverResolverConnect,
+		reconciler:     reconciler,
+		ontService:     ontService,
+		oltService:     oltService,
+		billing:        runBillingUC,
+	})
 
 	server := &http.Server{
 		Addr:        ":" + cfg.Port,
@@ -539,46 +464,4 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		pingStreamMgr: pingStreamMgr,
 		scheduler:     sched,
 	}, nil
-}
-
-func (a *App) Run() error {
-	logger.WithComponent("App").WithField("address", a.httpServer.Addr).Info("engine starting")
-	if err := a.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		return fmt.Errorf("http server failed: %w", err)
-	}
-	return nil
-}
-
-func (a *App) Shutdown(ctx context.Context) error {
-	logger.WithComponent("App").Info("shutting down server...")
-	if a.scheduler != nil {
-		a.scheduler.Stop()
-	}
-	if a.pingStreamMgr != nil {
-		a.pingStreamMgr.Stop()
-	}
-	if a.sseHub != nil {
-		a.sseHub.Close()
-	}
-	if err := a.httpServer.Shutdown(ctx); err != nil {
-		logger.WithComponent("App").WithError(err).Warn("error shutting down HTTP server")
-		_ = a.httpServer.Close()
-	}
-	if a.waManager != nil {
-		a.waManager.DisconnectAll()
-	}
-	if a.registry != nil {
-		_ = a.registry.Close()
-	}
-	logger.WithComponent("App").Info("shutdown complete")
-	return nil
-}
-
-func loadInitialDevices(pgStore *postgres.Store, encKey string) (port.DeviceRepository, port.CredentialVault) {
-	return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB(), encKey)
-}
-
-func timeNowUTC() time.Time {
-	n := time.Now().UTC()
-	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, time.UTC)
 }

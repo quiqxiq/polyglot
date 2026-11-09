@@ -8,6 +8,7 @@ import (
 	domainAudit "github.com/quixiq/polyglot/internal/domain/audit"
 	domainRouterJob "github.com/quixiq/polyglot/internal/domain/routerjob"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -348,7 +349,7 @@ func (u *LifecycleUseCase) writeAudit(ctx context.Context, actorID, action, enti
 		return
 	}
 	err := u.audit.Write(ctx, domainAudit.AuditLog{
-		TenantID:   "tenant-default",
+		TenantID:   domainTenant.DefaultID,
 		ActorType:  domainAudit.ActorUser,
 		ActorID:    actorID,
 		Action:     action,

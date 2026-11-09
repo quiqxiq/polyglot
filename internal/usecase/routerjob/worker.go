@@ -11,6 +11,7 @@ import (
 	"time"
 
 	domainRouterJob "github.com/quixiq/polyglot/internal/domain/routerjob"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -222,7 +223,7 @@ func atoiSetting(s string) int {
 
 func orDefaultTenant(t string) string {
 	if strings.TrimSpace(t) == "" {
-		return "tenant-default"
+		return domainTenant.DefaultID
 	}
 	return t
 }

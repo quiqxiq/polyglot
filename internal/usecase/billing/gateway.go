@@ -11,6 +11,7 @@ import (
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainCashbook "github.com/quixiq/polyglot/internal/domain/cashbook"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -387,7 +388,7 @@ func (u *GatewayChargeUseCase) SyncPendingTransactions(ctx context.Context) (syn
 		}
 	}
 	before := time.Now().UTC().Add(-time.Duration(staleMin) * time.Minute)
-	pendingList, err := fRepo.ListPendingBefore(ctx, "tenant-default", before, 50)
+	pendingList, err := fRepo.ListPendingBefore(ctx, domainTenant.DefaultID, before, 50)
 	if err != nil {
 		return 0, 0, err
 	}

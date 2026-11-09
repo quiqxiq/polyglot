@@ -12,6 +12,7 @@ import (
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	"github.com/quixiq/polyglot/pkg/idgen"
@@ -20,7 +21,7 @@ import (
 
 func orTenant(t string) string {
 	if t == "" {
-		return "tenant-default"
+		return domainTenant.DefaultID
 	}
 	return t
 }
@@ -232,7 +233,7 @@ func writeAudit(ctx context.Context, w port.AuditLogWriter, actorID, action, ent
 		return
 	}
 	err := w.Write(ctx, audit.AuditLog{
-		TenantID:   "tenant-default",
+		TenantID:   domainTenant.DefaultID,
 		ActorType:  audit.ActorUser,
 		ActorID:    actorID,
 		Action:     action,

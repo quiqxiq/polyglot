@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/ont"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 )
 
 // ONTModel is the GORM model for ONT/ONU inventory rows per OLT
@@ -114,7 +115,7 @@ func (m *ONTModel) ToDomain() ont.ONT {
 func ONTModelFromDomain(o ont.ONT) *ONTModel {
 	tenantID := o.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	state := o.State
 	if state == "" {
@@ -210,7 +211,7 @@ func (m *ONTEventModel) ToDomain() ont.Event {
 func ONTEventModelFromDomain(e ont.Event) *ONTEventModel {
 	tenantID := e.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	return &ONTEventModel{
 		ID:        e.ID,

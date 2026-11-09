@@ -32,8 +32,8 @@ func NewHandler(devices port.DeviceRepository) *Handler {
 	return &Handler{devices: devices}
 }
 
-// RegisterPublic registers device listing endpoints on the public root mux.
-func (h *Handler) RegisterPublic(mux *http.ServeMux) {
+// RegisterProtected mounts device inventory endpoints on the authenticated mux.
+func (h *Handler) RegisterProtected(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/devices", h.handleListDevices)
 	mux.HandleFunc("GET /api/v1/devices", h.handleListDevices)
 }

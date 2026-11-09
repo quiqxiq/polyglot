@@ -9,6 +9,7 @@ import (
 	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	domainDebt "github.com/quixiq/polyglot/internal/domain/debt"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	debtUC "github.com/quixiq/polyglot/internal/usecase/debt"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -77,7 +78,7 @@ func (h *DebtConnectHandler) ListDebts(ctx context.Context, req *connect.Request
 		return nil, response.Unavailable("debt service unavailable")
 	}
 	debts, total, err := h.svc.ListDebts(ctx, port.DebtFilter{
-		TenantID:    "tenant-default",
+		TenantID:    domainTenant.DefaultID,
 		CustomerID:  req.Msg.GetCustomerId(),
 		Status:      req.Msg.GetStatus(),
 		Search:      req.Msg.GetSearch(),
@@ -136,7 +137,7 @@ func (h *DebtConnectHandler) CreateDebt(ctx context.Context, req *connect.Reques
 		dueDate = &t
 	}
 	d, err := h.svc.CreateDebt(ctx, debtUC.CreateDebtInput{
-		TenantID:       "tenant-default",
+		TenantID:       domainTenant.DefaultID,
 		CustomerID:     req.Msg.GetCustomerId(),
 		SubscriptionID: subID,
 		Amount:         req.Msg.GetAmount(),
@@ -198,7 +199,7 @@ func (h *DebtConnectHandler) PayDebt(ctx context.Context, req *connect.Request[p
 		pmID = &id
 	}
 	payment, err := h.svc.PayDebt(ctx, port.DebtPaymentCommand{
-		TenantID:        "tenant-default",
+		TenantID:        domainTenant.DefaultID,
 		DebtID:          req.Msg.GetDebtId(),
 		Amount:          req.Msg.GetAmount(),
 		PaymentMethodID: pmID,
@@ -237,7 +238,7 @@ func (h *DebtConnectHandler) GetDebtSummary(ctx context.Context, req *connect.Re
 	if h.svc == nil {
 		return nil, response.Unavailable("debt service unavailable")
 	}
-	sum, err := h.svc.GetDebtSummary(ctx, "tenant-default", req.Msg.GetCustomerId())
+	sum, err := h.svc.GetDebtSummary(ctx, domainTenant.DefaultID, req.Msg.GetCustomerId())
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -259,7 +260,7 @@ func (h *DebtConnectHandler) ExportDebts(ctx context.Context, req *connect.Reque
 	if req.Msg.GetFilter() != nil {
 		flt := req.Msg.GetFilter()
 		f = port.DebtFilter{
-			TenantID:    "tenant-default",
+			TenantID:    domainTenant.DefaultID,
 			CustomerID:  flt.GetCustomerId(),
 			Status:      flt.GetStatus(),
 			Search:      flt.GetSearch(),

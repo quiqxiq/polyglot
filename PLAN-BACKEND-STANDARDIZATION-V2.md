@@ -44,6 +44,38 @@ Status berikut diverifikasi terhadap HEAD `77273db` dan hasil command terbaru.
 
 **Catatan verifikasi:** `go build ./...`, `go vet ./...`, `go test ./... -race -count=1`, golangci-lint v2.1.6, `buf lint`, `buf generate --template buf.gen.yaml`, dan boundary checks lulus. Knowledge graph perlu rebuild setelah commit terbaru sebelum dipakai sebagai bukti coverage berikutnya.
 
+### 2.0.1 Status Implementasi Standardisasi (2026-11-09)
+
+Pekerjaan pada branch `feat/gnet-dial-technician-portal` menambahkan ratchet
+yang dapat diverifikasi, tanpa mengubah wire compatibility:
+
+- **Single-tenant dikunci:** `internal/domain/tenant.DefaultID` menjadi satu-
+  satunya sumber literal tenant; `scripts/check-tenant-literals.sh` mencegah
+  literal baru, dan ADR `docs/adr/0011-single-tenant-deployment.md` mencatat
+  keputusan serta batas kompatibilitas kolom/proto legacy.
+- **Lint dan CI:** baseline `golangci-lint` dipin ke `0653671`; `depguard`
+  menegakkan batas `domain`, `usecase`, dan `port`; `scripts/check-port-
+  aliases.sh` membekukan 32 alias legacy agar tidak bertambah; workflow
+  `.github/workflows/backend-ci.yml` menjalankan build, vet, lint, test, dan
+  pemeriksaan generated Go protobuf.
+- **Kontrak route dan RBAC:** `internal/app/router_contract_test.go` memastikan
+  setiap method proto terdaftar, route protected memiliki permission, dan route
+  publik hanya yang ada di allowlist. `buildRouter` gagal saat startup bila
+  route protected tidak punya mapping RBAC.
+- **Konfigurasi:** `Config.Validate` memeriksa port, TTL, serta menolak default
+  development (database, JWT, encryption key, CORS wildcard) di production.
+- **Permukaan publik:** `/api/devices` dan `/api/v1/devices` dipindahkan ke
+  mux JWT+RBAC (`device:read`); listing direktori `/uploads/` ditutup sehingga
+  hanya nama berkas acak yang dapat diakses.
+- **Struktur file:** `internal/app/app.go` dipecah menjadi wiring scheduler dan
+  lifecycle; handler billing dipecah per domain operasi; permission alternatif
+  dipisahkan dari peta permission utama.
+
+Sisa pekerjaan besar yang belum diklaim selesai: migrasi seluruh log legacy,
+taxonomy error domain, pembersihan 32 alias `internal/port`, pemecahan
+`roscache/stream.go` dan driver besar lain, serta enforcement MCP/OAuth
+per-user sesuai arsitektur target.
+
 ### 2.1 Hal yang sudah ada
 
 - `pkg/fault` sudah tersedia dan tidak bergantung pada `internal/*`.

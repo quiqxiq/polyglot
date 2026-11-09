@@ -46,8 +46,30 @@ func NewHandler(dir string) *Handler {
 // RegisterPublic mounts endpoint unggah + penyajian berkas pada mux publik.
 func (h *Handler) RegisterPublic(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/public/payment-proof", h.uploadPaymentProof)
+
 	fileServer := http.FileServer(http.Dir(h.dir))
-	mux.Handle("GET /uploads/", http.StripPrefix("/uploads/", fileServer))
+	uploads := http.StripPrefix("/uploads/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Bukti transfer memakai nama acak. Jangan pernah menampilkan isi
+		// direktori: listing akan membatalkan sifat unguessable dari nama file.
+		name := strings.TrimPrefix(r.URL.Path, "/")
+		if name == "" || strings.HasSuffix(r.URL.Path, "/") {
+			http.NotFound(w, r)
+			return
+		}
+		f, err := http.Dir(h.dir).Open(name)
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+		defer func() { _ = f.Close() }()
+		info, err := f.Stat()
+		if err != nil || info.IsDir() {
+			http.NotFound(w, r)
+			return
+		}
+		fileServer.ServeHTTP(w, r)
+	}))
+	mux.Handle("GET /uploads/", uploads)
 }
 
 func (h *Handler) uploadPaymentProof(w http.ResponseWriter, r *http.Request) {

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	domainReporting "github.com/quixiq/polyglot/internal/domain/reporting"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -30,7 +31,11 @@ func (uc *ManageReportUseCase) ARAging(ctx context.Context, asOf string) (domain
 		}
 		day = d
 	}
-	return uc.advanced.ARAging(ctx, "tenant-default", day)
+	res, err := uc.advanced.ARAging(ctx, domainTenant.DefaultID, day)
+	if err != nil {
+		return domainReporting.ARAgingReport{}, fmt.Errorf("ar aging: %w", err)
+	}
+	return res, nil
 }
 
 // GatewayReconciliation membandingkan transaksi gateway dengan kas tercatat.
@@ -42,7 +47,11 @@ func (uc *ManageReportUseCase) GatewayReconciliation(ctx context.Context, fromSt
 	if err != nil {
 		return domainReporting.GatewayReconciliationReport{}, err
 	}
-	return uc.advanced.GatewayReconciliation(ctx, "tenant-default", from, to)
+	res, err := uc.advanced.GatewayReconciliation(ctx, domainTenant.DefaultID, from, to)
+	if err != nil {
+		return domainReporting.GatewayReconciliationReport{}, fmt.Errorf("gateway reconciliation: %w", err)
+	}
+	return res, nil
 }
 
 // PSBStats menghitung efisiensi & durasi penyelesaian PSB.
@@ -54,7 +63,11 @@ func (uc *ManageReportUseCase) PSBStats(ctx context.Context, fromStr, toStr stri
 	if err != nil {
 		return domainReporting.PSBStatsReport{}, err
 	}
-	return uc.advanced.PSBStats(ctx, "tenant-default", from, to)
+	res, err := uc.advanced.PSBStats(ctx, domainTenant.DefaultID, from, to)
+	if err != nil {
+		return domainReporting.PSBStatsReport{}, fmt.Errorf("psb stats: %w", err)
+	}
+	return res, nil
 }
 
 // parseRange mem-parse rentang tanggal; default: awal bulan berjalan s/d besok.
@@ -87,7 +100,11 @@ func (uc *ManageReportUseCase) TaxReport(ctx context.Context, period string) (do
 	if strings.TrimSpace(period) == "" {
 		period = time.Now().UTC().Format("2006-01")
 	}
-	return uc.advanced.TaxReport(ctx, "tenant-default", period)
+	res, err := uc.advanced.TaxReport(ctx, domainTenant.DefaultID, period)
+	if err != nil {
+		return domainReporting.TaxReport{}, fmt.Errorf("tax report: %w", err)
+	}
+	return res, nil
 }
 
 // SalesReport menghitung pendapatan penjualan per paket.
@@ -98,7 +115,11 @@ func (uc *ManageReportUseCase) SalesReport(ctx context.Context, period string) (
 	if strings.TrimSpace(period) == "" {
 		period = time.Now().UTC().Format("2006-01")
 	}
-	return uc.advanced.SalesReport(ctx, "tenant-default", period)
+	res, err := uc.advanced.SalesReport(ctx, domainTenant.DefaultID, period)
+	if err != nil {
+		return domainReporting.SalesReport{}, fmt.Errorf("sales report: %w", err)
+	}
+	return res, nil
 }
 
 // CollectionReport menghitung efektivitas penagihan pada periode YYYY-MM.
@@ -109,7 +130,11 @@ func (uc *ManageReportUseCase) CollectionReport(ctx context.Context, period stri
 	if strings.TrimSpace(period) == "" {
 		period = time.Now().UTC().Format("2006-01")
 	}
-	return uc.advanced.CollectionReport(ctx, "tenant-default", period)
+	res, err := uc.advanced.CollectionReport(ctx, domainTenant.DefaultID, period)
+	if err != nil {
+		return domainReporting.CollectionReport{}, fmt.Errorf("collection report: %w", err)
+	}
+	return res, nil
 }
 
 // CashflowReport merangkum mutasi kas masuk dan keluar per kategori.
@@ -121,7 +146,11 @@ func (uc *ManageReportUseCase) CashflowReport(ctx context.Context, fromStr, toSt
 	if err != nil {
 		return domainReporting.CashflowReport{}, err
 	}
-	return uc.advanced.CashflowReport(ctx, "tenant-default", from, to)
+	res, err := uc.advanced.CashflowReport(ctx, domainTenant.DefaultID, from, to)
+	if err != nil {
+		return domainReporting.CashflowReport{}, fmt.Errorf("cashflow report: %w", err)
+	}
+	return res, nil
 }
 
 // AgingDetail menampilkan rincian piutang per pelanggan.
@@ -137,7 +166,11 @@ func (uc *ManageReportUseCase) AgingDetail(ctx context.Context, asOf string, lim
 		}
 		day = d
 	}
-	return uc.advanced.AgingDetail(ctx, "tenant-default", day, limit)
+	res, err := uc.advanced.AgingDetail(ctx, domainTenant.DefaultID, day, limit)
+	if err != nil {
+		return domainReporting.AgingDetailReport{}, fmt.Errorf("aging detail: %w", err)
+	}
+	return res, nil
 }
 
 // ClosingReport merangkum performa dan saldo pada tanggal tutup buku.
@@ -152,5 +185,9 @@ func (uc *ManageReportUseCase) ClosingReport(ctx context.Context, period string)
 	if p, err := time.Parse("2006-01", period); err == nil {
 		closingDate = time.Date(p.Year(), p.Month()+1, 0, 0, 0, 0, 0, time.UTC)
 	}
-	return uc.advanced.ClosingReport(ctx, "tenant-default", period, closingDate)
+	res, err := uc.advanced.ClosingReport(ctx, domainTenant.DefaultID, period, closingDate)
+	if err != nil {
+		return domainReporting.ClosingReport{}, fmt.Errorf("closing report: %w", err)
+	}
+	return res, nil
 }

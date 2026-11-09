@@ -6,6 +6,7 @@ import (
 	"time"
 
 	domainCashbook "github.com/quixiq/polyglot/internal/domain/cashbook"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -41,7 +42,7 @@ func (uc *ManageCashbookUseCase) SaveAccount(ctx context.Context, a domainCashbo
 		a.ID = idgen.New("ca")
 	}
 	if a.TenantID == "" {
-		a.TenantID = "tenant-default"
+		a.TenantID = domainTenant.DefaultID
 	}
 	if a.Type == "" {
 		a.Type = domainCashbook.AccountTypeCash
@@ -73,7 +74,7 @@ func (uc *ManageCashbookUseCase) SaveCategory(ctx context.Context, c domainCashb
 		c.ID = idgen.New("cc")
 	}
 	if c.TenantID == "" {
-		c.TenantID = "tenant-default"
+		c.TenantID = domainTenant.DefaultID
 	}
 	if c.Type == "" {
 		c.Type = domainCashbook.CategoryTypeExpense
@@ -108,7 +109,7 @@ func (uc *ManageCashbookUseCase) AddTransaction(ctx context.Context, input AddTr
 	}
 	t := domainCashbook.CashTransaction{
 		ID:            idgen.New("trx"),
-		TenantID:      "tenant-default",
+		TenantID:      domainTenant.DefaultID,
 		TransactionNo: fmt.Sprintf("TRX-%s-%06d", now.Format("200601"), now.UnixNano()%1000000),
 		AccountID:     input.AccountID,
 		CategoryID:    input.CategoryID,

@@ -11,6 +11,7 @@ import (
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	"github.com/quixiq/polyglot/pkg/idgen"
@@ -152,7 +153,7 @@ func (u *ManageSubscriptionUseCase) ListSubscriptions(ctx context.Context, custo
 	if customerID != "" {
 		subs, err = u.subs.FindByCustomerID(ctx, customerID)
 	} else {
-		subs, err = u.subs.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"})
+		subs, err = u.subs.FindPaged(ctx, port.PageFilter{TenantID: domainTenant.DefaultID})
 	}
 	if err != nil {
 		return nil, fmt.Errorf("find subscriptions: %w", err)
@@ -454,7 +455,7 @@ func (u *ManageSubscriptionUseCase) writeAudit(ctx context.Context, action, enti
 		return
 	}
 	err := u.audit.Write(ctx, domainAudit.AuditLog{
-		TenantID:   "tenant-default",
+		TenantID:   domainTenant.DefaultID,
 		ActorType:  domainAudit.ActorUser,
 		Action:     action,
 		EntityType: entityType,

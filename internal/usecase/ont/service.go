@@ -12,12 +12,13 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/ont"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
 
 const (
-	tenantDefault = "tenant-default"
+	tenantDefault = domainTenant.DefaultID
 	jobMaxAttempt = 5
 )
 

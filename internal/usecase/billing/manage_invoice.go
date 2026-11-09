@@ -11,6 +11,7 @@ import (
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/phone"
@@ -84,7 +85,7 @@ func (u *InvoiceUseCase) CreateManualInvoice(ctx context.Context, in CreateManua
 		in.DueDate = time.Now().UTC().AddDate(0, 0, 7)
 	}
 	if in.TenantID == "" {
-		in.TenantID = "tenant-default"
+		in.TenantID = domainTenant.DefaultID
 	}
 	now := time.Now().UTC()
 	period := in.Period
@@ -276,7 +277,7 @@ func (u *InvoiceUseCase) ListInvoices(ctx context.Context, customerID string) ([
 	if customerID != "" {
 		return u.repo.FindByCustomerID(ctx, customerID)
 	}
-	invoices, err := u.repo.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"})
+	invoices, err := u.repo.FindPaged(ctx, port.PageFilter{TenantID: domainTenant.DefaultID})
 	if err != nil {
 		return nil, fmt.Errorf("list invoices: %w", err)
 	}

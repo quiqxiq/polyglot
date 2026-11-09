@@ -12,6 +12,7 @@ import (
 	"github.com/lib/pq"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 )
 
 // DeviceModel is the GORM database model for network devices inventory.
@@ -91,7 +92,7 @@ func DeviceModelFromDomain(d device.Device) *DeviceModel {
 
 	tenantID := d.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 
 	sshPort := d.SSHPort

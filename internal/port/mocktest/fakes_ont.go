@@ -13,11 +13,12 @@ import (
 	"github.com/quixiq/polyglot/pkg/idgen"
 
 	domainONT "github.com/quixiq/polyglot/internal/domain/ont"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // fakeDefaultTenantID menjaga perilaku fake sama dengan repository Postgres.
-const fakeDefaultTenantID = "tenant-default"
+const fakeDefaultTenantID = domainTenant.DefaultID
 
 // ─── ONTRepository ──────────────────────────────────────────────────────
 

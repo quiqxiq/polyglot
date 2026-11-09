@@ -9,6 +9,7 @@ import (
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainRouterJob "github.com/quixiq/polyglot/internal/domain/routerjob"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -46,7 +47,7 @@ func (u *MassPaymentUseCase) CreateMassPayment(ctx context.Context, tenantID str
 		return domainBilling.BulkPaymentBatch{}, fmt.Errorf("%w: invoice_ids cannot be empty", domainBilling.ErrInvalidInput)
 	}
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 
 	now := time.Now().UTC()

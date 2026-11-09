@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
 
@@ -47,7 +48,7 @@ func (u *UpsertUseCase) CommitPlans(ctx context.Context, rows []PlanRow) (*Commi
 			sharedUsers = 1
 		}
 
-		existing, err := u.plans.FindByName(ctx, "tenant-default", name)
+		existing, err := u.plans.FindByName(ctx, domainTenant.DefaultID, name)
 		if err == nil && existing.ID != "" {
 			existing.ServiceType = st
 			existing.BandwidthDownloadKbps = dl
@@ -82,7 +83,7 @@ func (u *UpsertUseCase) CommitPlans(ctx context.Context, rows []PlanRow) (*Commi
 		} else {
 			newPlan := domainPlan.ServicePlan{
 				ID:                    idgen.New("plan"),
-				TenantID:              "tenant-default",
+				TenantID:              domainTenant.DefaultID,
 				Name:                  name,
 				ServiceType:           st,
 				BandwidthDownloadKbps: dl,

@@ -8,6 +8,7 @@ import (
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/subscription"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -84,14 +85,14 @@ func (uc *ManageCustomerUseCase) Enrich(ctx context.Context, c customer.Customer
 // ListCustomers mengembalikan daftar pelanggan beserta counter langganan dan tagihan aktif.
 func (uc *ManageCustomerUseCase) ListCustomers(ctx context.Context) ([]Detail, error) {
 	// Tenant filter di level query (F6-8); paginasi menyusul di endpoint.
-	customers, err := uc.repo.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"})
+	customers, err := uc.repo.FindPaged(ctx, port.PageFilter{TenantID: domainTenant.DefaultID})
 	if err != nil {
 		return nil, fmt.Errorf("list customers: %w", err)
 	}
 
 	subCountByCust := make(map[string]int)
 	if uc.subRepo != nil {
-		if subs, err := uc.subRepo.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"}); err == nil {
+		if subs, err := uc.subRepo.FindPaged(ctx, port.PageFilter{TenantID: domainTenant.DefaultID}); err == nil {
 			for _, sub := range subs {
 				if sub.Status != subscription.StatusTerminated && sub.Status != subscription.StatusCancelled {
 					subCountByCust[sub.CustomerID]++
@@ -102,7 +103,7 @@ func (uc *ManageCustomerUseCase) ListCustomers(ctx context.Context) ([]Detail, e
 
 	unpaidCountByCust := make(map[string]int)
 	if uc.invRepo != nil {
-		if invoices, err := uc.invRepo.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"}); err == nil {
+		if invoices, err := uc.invRepo.FindPaged(ctx, port.PageFilter{TenantID: domainTenant.DefaultID}); err == nil {
 			for _, inv := range invoices {
 				if inv.Status != domainBilling.StatusPaid {
 					unpaidCountByCust[inv.CustomerID]++
@@ -143,7 +144,7 @@ func (uc *ManageCustomerUseCase) CreateCustomer(ctx context.Context, c customer.
 		c.ID = idgen.New("cust")
 	}
 	if c.TenantID == "" {
-		c.TenantID = "tenant-default"
+		c.TenantID = domainTenant.DefaultID
 	}
 	if c.Status == "" {
 		c.Status = customer.StatusActive

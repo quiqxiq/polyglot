@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -345,7 +346,7 @@ func (s *RouterSource) PullRouterCustomerSubscriptionRows(
 		planID := ""
 		price := r.Price
 		if s.plans != nil && r.PlanName != "" {
-			if pl, err := s.plans.FindByName(ctx, "tenant-default", r.PlanName); err == nil && pl.ID != "" {
+			if pl, err := s.plans.FindByName(ctx, domainTenant.DefaultID, r.PlanName); err == nil && pl.ID != "" {
 				planID = pl.ID
 				if price == 0 && pl.Price > 0 {
 					price = pl.Price

@@ -14,6 +14,12 @@ import (
 //go:embed rbac_model.conf
 var RBACModelConf string
 
+const (
+	defaultEncryptionKey = "12345678901234567890123456789012"
+	defaultJWTSecret     = "polyglot-super-secret-jwt-key-change-in-production"
+	defaultDatabaseURL   = "postgres://postgres:postgres@localhost:5432/polyglot?sslmode=disable"
+)
+
 // Config holds foundational infrastructure and environment configuration.
 type Config struct {
 	Port     string
@@ -76,10 +82,10 @@ func Load() Config {
 		Port:                 getEnv("PORT", "8080"),
 		AppEnv:               getEnv("APP_ENV", "development"),
 		LogLevel:             getEnv("LOG_LEVEL", "info"),
-		DatabaseURL:          getEnv("DATABASE_URL", "postgres://postgres:postgres@localhost:5432/polyglot?sslmode=disable"),
+		DatabaseURL:          getEnv("DATABASE_URL", defaultDatabaseURL),
 		RedisURL:             getEnv("REDIS_URL", "redis://localhost:6379/0"),
-		EncryptionKey:        getEnv("ENCRYPTION_KEY", "12345678901234567890123456789012"),
-		JWTSecret:            getEnv("JWT_SECRET", "polyglot-super-secret-jwt-key-change-in-production"),
+		EncryptionKey:        getEnv("ENCRYPTION_KEY", defaultEncryptionKey),
+		JWTSecret:            getEnv("JWT_SECRET", defaultJWTSecret),
 		JWTExpiryHours:       getEnvAsInt("JWT_EXPIRY_HOURS", 24),
 		RefreshTokenTTLHours: getEnvAsInt("REFRESH_TOKEN_TTL_HOURS", 168),
 		WAStoreDir:           getEnv("WA_STORE_DIR", "./data/whatsapp"),
@@ -102,12 +108,59 @@ func Load() Config {
 	}
 }
 
+// IsProduction reports whether the application runs with production safety
+// checks enabled.
+func (c Config) IsProduction() bool {
+	switch strings.ToLower(strings.TrimSpace(c.AppEnv)) {
+	case "prod", "production":
+		return true
+	default:
+		return false
+	}
+}
+
+// Validate enforces configuration invariants. Production additionally rejects
+// the development defaults that would otherwise silently weaken security.
 func (c *Config) Validate() error {
 	if len(c.EncryptionKey) != 32 {
 		return fmt.Errorf("ENCRYPTION_KEY must be exactly 32 bytes (got %d)", len(c.EncryptionKey))
 	}
-	if len(c.JWTSecret) < 16 {
-		return fmt.Errorf("JWT_SECRET must be at least 16 characters for security")
+
+	minJWTLength := 16
+	if c.IsProduction() {
+		minJWTLength = 32
+	}
+	if len(c.JWTSecret) < minJWTLength {
+		return fmt.Errorf("JWT_SECRET must be at least %d characters for security", minJWTLength)
+	}
+
+	if port, err := strconv.Atoi(strings.TrimSpace(c.Port)); err != nil || port < 1 || port > 65535 {
+		return fmt.Errorf("PORT must be a valid TCP port (got %q)", c.Port)
+	}
+	if c.JWTExpiryHours <= 0 {
+		return fmt.Errorf("JWT_EXPIRY_HOURS must be positive (got %d)", c.JWTExpiryHours)
+	}
+	if c.RefreshTokenTTLHours <= 0 {
+		return fmt.Errorf("REFRESH_TOKEN_TTL_HOURS must be positive (got %d)", c.RefreshTokenTTLHours)
+	}
+
+	if !c.IsProduction() {
+		return nil
+	}
+
+	if strings.TrimSpace(c.DatabaseURL) == "" || c.DatabaseURL == defaultDatabaseURL {
+		return fmt.Errorf("DATABASE_URL must point to a production database, not the development default")
+	}
+	if c.JWTSecret == defaultJWTSecret {
+		return fmt.Errorf("JWT_SECRET must not use the development default in production")
+	}
+	if c.EncryptionKey == defaultEncryptionKey {
+		return fmt.Errorf("ENCRYPTION_KEY must not use the development default in production")
+	}
+	for _, origin := range c.CORSOrigins {
+		if strings.TrimSpace(origin) == "*" {
+			return fmt.Errorf("CORS_ORIGINS must not contain '*' in production")
+		}
 	}
 	return nil
 }

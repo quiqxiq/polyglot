@@ -15,6 +15,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/domain/llm"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
@@ -53,7 +54,7 @@ func seedDevices(ctx context.Context, pgStore *postgres.Store, cfg config.Config
 	devices := []device.Device{
 		{
 			ID:         "018f2d5e-7a42-7c89-a1b2-c3d4e5f60001",
-			TenantID:   "tenant-default",
+			TenantID:   domainTenant.DefaultID,
 			Name:       "Router-Core-CCR2004",
 			Vendor:     "MikroTik",
 			DriverType: "mikrotik",
@@ -65,7 +66,7 @@ func seedDevices(ctx context.Context, pgStore *postgres.Store, cfg config.Config
 		},
 		{
 			ID:         "018f2d5e-7a42-7c89-a1b2-c3d4e5f60002",
-			TenantID:   "tenant-default",
+			TenantID:   domainTenant.DefaultID,
 			Name:       "OLT-ZTE-C320-POP1",
 			Vendor:     "ZTE",
 			DriverType: "zteolt",
@@ -76,7 +77,7 @@ func seedDevices(ctx context.Context, pgStore *postgres.Store, cfg config.Config
 		},
 		{
 			ID:         "018f2d5e-7a42-7c89-a1b2-c3d4e5f60003",
-			TenantID:   "tenant-default",
+			TenantID:   domainTenant.DefaultID,
 			Name:       "Switch-Dist-Cisco2960",
 			Vendor:     "Cisco",
 			DriverType: "generic_switch",
@@ -216,7 +217,7 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 			PhoneNumber:    u.phoneNumber,
 			Specialization: u.specialization,
 			IsActive:       true,
-			TenantID:       "tenant-default",
+			TenantID:       domainTenant.DefaultID,
 		}
 
 		if err := pgStore.CreateUser(ctx, user); err != nil {

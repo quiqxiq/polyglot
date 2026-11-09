@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -54,7 +55,7 @@ func (s *RouterSource) PullRouterPlans(
 			price := extractPriceFromComment(p.Comment)
 			isNew := true
 			if s.plans != nil {
-				if _, err := s.plans.FindByName(ctx, "tenant-default", name); err == nil {
+				if _, err := s.plans.FindByName(ctx, domainTenant.DefaultID, name); err == nil {
 					isNew = false
 				}
 			}
@@ -96,7 +97,7 @@ func (s *RouterSource) PullRouterPlans(
 			}
 			isNew := true
 			if s.plans != nil {
-				if _, err := s.plans.FindByName(ctx, "tenant-default", name); err == nil {
+				if _, err := s.plans.FindByName(ctx, domainTenant.DefaultID, name); err == nil {
 					isNew = false
 				}
 			}

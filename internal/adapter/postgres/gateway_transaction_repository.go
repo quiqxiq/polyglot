@@ -9,6 +9,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -81,7 +82,7 @@ func (r *GatewayTransactionRepository) LinkPayment(ctx context.Context, id, paym
 func (r *GatewayTransactionRepository) ListFiltered(ctx context.Context, f port.GatewayTransactionFilter) ([]domainBilling.GatewayTransaction, int, error) {
 	tenantID := f.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	q := r.db.WithContext(ctx).Model(&model.GatewayTransactionModel{}).
 		Where("tenant_id = ?", tenantID)
@@ -125,7 +126,7 @@ func (r *GatewayTransactionRepository) ListFiltered(ctx context.Context, f port.
 // ListPendingBefore returns transactions stuck in PENDING status before a given timestamp.
 func (r *GatewayTransactionRepository) ListPendingBefore(ctx context.Context, tenantID string, before time.Time, limit int) ([]domainBilling.GatewayTransaction, error) {
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	if limit <= 0 {
 		limit = 100

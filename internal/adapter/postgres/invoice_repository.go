@@ -11,6 +11,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/billing"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -243,7 +244,7 @@ func (r *InvoiceRepository) DeleteByCustomerID(ctx context.Context, customerID s
 func (r *InvoiceRepository) applyFilter(ctx context.Context, f port.InvoiceFilter, now time.Time) *gorm.DB {
 	tenantID := f.TenantID
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	q := r.db.WithContext(ctx).Model(&model.InvoiceModel{}).
 		Where("invoices.tenant_id = ? AND invoices.deleted_at IS NULL", tenantID)
@@ -356,7 +357,7 @@ func (r *InvoiceRepository) Summary(ctx context.Context, f port.InvoiceFilter) (
 // FindOverdueCandidates returns outstanding invoices where due_date < now.
 func (r *InvoiceRepository) FindOverdueCandidates(ctx context.Context, tenantID string, now time.Time, limit int) ([]billing.Invoice, error) {
 	if tenantID == "" {
-		tenantID = "tenant-default"
+		tenantID = domainTenant.DefaultID
 	}
 	if limit <= 0 {
 		limit = 100

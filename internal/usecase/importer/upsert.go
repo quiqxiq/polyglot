@@ -9,6 +9,7 @@ import (
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
+	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -157,12 +158,12 @@ func (u *UpsertUseCase) ensurePlan(ctx context.Context, r Row) (string, error) {
 	if planName == "" {
 		return "", fmt.Errorf("%w: plan name is required", domainPlan.ErrInvalidInput)
 	}
-	if pl, err := u.plans.FindByName(ctx, "tenant-default", planName); err == nil {
+	if pl, err := u.plans.FindByName(ctx, domainTenant.DefaultID, planName); err == nil {
 		return pl.ID, nil
 	}
 	dl, ul := splitRate(r.RateLimit)
 	pl := domainPlan.ServicePlan{
-		ID: idgen.New("plan"), TenantID: "tenant-default", Name: planName,
+		ID: idgen.New("plan"), TenantID: domainTenant.DefaultID, Name: planName,
 		ServiceType:           serviceTypeOf(r.ServiceType),
 		BandwidthDownloadKbps: dl, BandwidthUploadKbps: ul,
 		Price:       r.Price,
@@ -197,7 +198,7 @@ func (u *UpsertUseCase) upsertCustomer(ctx context.Context, r Row, now time.Time
 		}
 	}
 	cust := domainCustomer.Customer{
-		ID: idgen.New("cust"), TenantID: "tenant-default",
+		ID: idgen.New("cust"), TenantID: domainTenant.DefaultID,
 		CustomerCode:     orValue(r.CustomerCode, "IMP-"+idgen.Digits(6)),
 		PortalAccessCode: idgen.Digits(8),
 		Name:             r.Name, Phone: phoneN, Email: r.Email,
@@ -338,7 +339,7 @@ func (u *UpsertUseCase) CommitCustomerSubscriptionRows(
 		planID := r.PlanID
 		if planID == "" && strings.TrimSpace(r.PlanName) != "" {
 			trimmedPlan := strings.TrimSpace(r.PlanName)
-			if pl, err := u.plans.FindByName(ctx, "tenant-default", trimmedPlan); err == nil && pl.ID != "" {
+			if pl, err := u.plans.FindByName(ctx, domainTenant.DefaultID, trimmedPlan); err == nil && pl.ID != "" {
 				planID = pl.ID
 			} else {
 				pID, err := u.ensurePlan(ctx, Row{
@@ -383,7 +384,7 @@ func (u *UpsertUseCase) CommitCustomerSubscriptionRows(
 		if cust.ID == "" {
 			cust = domainCustomer.Customer{
 				ID:               idgen.New("cust"),
-				TenantID:         "tenant-default",
+				TenantID:         domainTenant.DefaultID,
 				CustomerCode:     orValue(r.CustomerCode, "IMP-"+idgen.Digits(6)),
 				PortalAccessCode: idgen.Digits(8),
 				Name:             custName,
