@@ -28,15 +28,15 @@ func ParseActiveSessions(result command.Result) []HotspotActiveSession {
 	return sessions
 }
 
-// ParseActiveStats converts command.Result rows from /ip/hotspot/active/print stats into typed HotspotActiveStat values.
-func ParseActiveStats(result command.Result) []HotspotActiveStat {
-	stats := make([]HotspotActiveStat, 0, len(result.Rows))
+// ParseActiveStats converts command.Result rows from /ip/hotspot/active/print stats into typed ActiveStat values.
+func ParseActiveStats(result command.Result) []ActiveStat {
+	stats := make([]ActiveStat, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		if id == "" {
 			continue
 		}
-		stats = append(stats, HotspotActiveStat{
+		stats = append(stats, ActiveStat{
 			RosID:           id,
 			Uptime:          row["uptime"],
 			SessionTimeLeft: row["session-time-left"],

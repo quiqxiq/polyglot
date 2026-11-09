@@ -10,12 +10,12 @@ import (
 )
 
 // GenerateVouchers generates a batch of count vouchers and executes their creation commands.
-func (u *UseCase) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error) {
+func (u *UseCase) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error) {
 	return u.gateway.GenerateVouchers(ctx, driver, p, count)
 }
 
 // CheckVoucherStatus inspects a voucher username and aggregates all relevant status.
-func (u *UseCase) CheckVoucherStatus(ctx context.Context, driver port.DeviceDriver, username string) (*port.VoucherStatusDetails, error) {
+func (u *UseCase) CheckVoucherStatus(ctx context.Context, driver port.DeviceDriver, username string) (*domainHotspot.VoucherStatusDetails, error) {
 	if strings.TrimSpace(username) == "" {
 		return nil, domainHotspot.ErrInvalidInput
 	}
@@ -25,7 +25,7 @@ func (u *UseCase) CheckVoucherStatus(ctx context.Context, driver port.DeviceDriv
 		return nil, fmt.Errorf("lookup hotspot user: %w", err)
 	}
 	if len(users) == 0 {
-		return &port.VoucherStatusDetails{
+		return &domainHotspot.VoucherStatusDetails{
 			Found:   false,
 			Status:  "not_found",
 			Message: fmt.Sprintf("Voucher %q not found on router", username),
@@ -33,7 +33,7 @@ func (u *UseCase) CheckVoucherStatus(ctx context.Context, driver port.DeviceDriv
 	}
 
 	user := users[0]
-	details := &port.VoucherStatusDetails{
+	details := &domainHotspot.VoucherStatusDetails{
 		Found:   true,
 		User:    &user,
 		Status:  "unused",

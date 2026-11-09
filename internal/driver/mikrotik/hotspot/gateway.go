@@ -6,6 +6,8 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/firewall"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/queue"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
@@ -72,16 +74,16 @@ func (g *Gateway) DeleteUserProfile(ctx context.Context, driver port.DeviceDrive
 }
 
 // GenerateVouchers implements port.HotspotGateway.
-func (g *Gateway) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error) {
+func (g *Gateway) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error) {
 	batch := NewGenerateVoucherBatchCommands(p, count)
 	for _, cmd := range batch.Commands {
 		if _, err := g.exec(ctx, driver, cmd); err != nil {
-			return port.VoucherBatch{}, fmt.Errorf("failed to create voucher: %w", err)
+			return domainHotspot.VoucherBatch{}, fmt.Errorf("failed to create voucher: %w", err)
 		}
 	}
-	out := port.VoucherBatch{Vouchers: make([]port.GeneratedVoucher, 0, len(batch.Vouchers))}
+	out := domainHotspot.VoucherBatch{Vouchers: make([]domainHotspot.GeneratedVoucher, 0, len(batch.Vouchers))}
 	for _, v := range batch.Vouchers {
-		out.Vouchers = append(out.Vouchers, port.GeneratedVoucher{
+		out.Vouchers = append(out.Vouchers, domainHotspot.GeneratedVoucher{
 			Username: v.Username,
 			Password: v.Password,
 			Comment:  v.Comment,
@@ -219,15 +221,15 @@ func (g *Gateway) ListHotspotServers(ctx context.Context, driver port.DeviceDriv
 }
 
 // ListIPPools implements port.HotspotGateway.
-func (g *Gateway) ListIPPools(ctx context.Context, driver port.DeviceDriver) ([]port.IPPool, error) {
+func (g *Gateway) ListIPPools(ctx context.Context, driver port.DeviceDriver) ([]domainDevice.IPPool, error) {
 	res, err := g.exec(ctx, driver, firewall.NewPrintPoolsCommand(""))
 	if err != nil {
 		return nil, err
 	}
 	pools := firewall.ParsePools(res)
-	portPools := make([]port.IPPool, len(pools))
+	portPools := make([]domainDevice.IPPool, len(pools))
 	for i, p := range pools {
-		portPools[i] = port.IPPool{
+		portPools[i] = domainDevice.IPPool{
 			RosID:    p.RosID,
 			Name:     p.Name,
 			Ranges:   p.Ranges,
@@ -313,10 +315,10 @@ func (g *Gateway) SetupExpireMonitor(ctx context.Context, driver port.DeviceDriv
 }
 
 // GetExpireMonitorStatus implements port.HotspotGateway.
-func (g *Gateway) GetExpireMonitorStatus(ctx context.Context, driver port.DeviceDriver) (port.ExpireMonitorStatus, error) {
+func (g *Gateway) GetExpireMonitorStatus(ctx context.Context, driver port.DeviceDriver) (domainHotspot.ExpireMonitorStatus, error) {
 	res, err := g.exec(ctx, driver, system.NewPrintSchedulerCommand(""))
 	if err != nil {
-		return port.ExpireMonitorStatus{}, err
+		return domainHotspot.ExpireMonitorStatus{}, err
 	}
 	return classifyExpireMonitorSchedulers(system.ParseScheduler(res)), nil
 }
@@ -344,7 +346,7 @@ func (g *Gateway) RemoveExpireMonitor(ctx context.Context, driver port.DeviceDri
 }
 
 // ListReports implements port.HotspotGateway.
-func (g *Gateway) ListReports(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]port.MikhmonTransaction, error) {
+func (g *Gateway) ListReports(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]domainHotspot.MikhmonTransaction, error) {
 	args := map[string]string{}
 	if f.Day != "" {
 		args["?source"] = f.Day
@@ -366,7 +368,7 @@ func (g *Gateway) ListReports(ctx context.Context, driver port.DeviceDriver, f p
 	if f.Year == "" {
 		return records, nil
 	}
-	filtered := make([]port.MikhmonTransaction, 0, len(records))
+	filtered := make([]domainHotspot.MikhmonTransaction, 0, len(records))
 	for _, r := range records {
 		if strings.HasSuffix(r.Date, f.Year) {
 			filtered = append(filtered, r)
@@ -385,6 +387,6 @@ func (g *Gateway) DeleteReport(ctx context.Context, driver port.DeviceDriver, ro
 }
 
 // ParseUserComment implements port.HotspotGateway.
-func (g *Gateway) ParseUserComment(comment string) (port.MikhmonComment, error) {
+func (g *Gateway) ParseUserComment(comment string) (domainHotspot.MikhmonComment, error) {
 	return ParseMikhmonComment(comment)
 }

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	domainOLT "github.com/quixiq/polyglot/internal/domain/olt"
 	"github.com/quixiq/polyglot/internal/domain/routerjob"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
@@ -54,11 +55,11 @@ func (s *Service) EnqueueSaveConfig(ctx context.Context, oltDeviceID string) (ro
 
 func (s *Service) enqueue(ctx context.Context, oltDeviceID string, typ routerjob.Type, payload map[string]any, idempotencyKey string) (routerjob.Job, error) {
 	if s.deps.Jobs == nil {
-		return routerjob.Job{}, fmt.Errorf("olt: job queue belum dikonfigurasi")
+		return routerjob.Job{}, fmt.Errorf("%w: job queue not configured", domainOLT.ErrQueueNotConfigured)
 	}
 	raw, err := json.Marshal(payload)
 	if err != nil {
-		return routerjob.Job{}, fmt.Errorf("olt: marshal payload: %w", err)
+		return routerjob.Job{}, fmt.Errorf("%w: marshal payload: %w", domainOLT.ErrInvalidInput, err)
 	}
 	now := time.Now().UTC()
 	job := routerjob.Job{

@@ -1,14 +1,15 @@
 package hotspot
 
 import (
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // HotspotActiveSession is the vendor-neutral hotspot active session row.
 type HotspotActiveSession = port.HotspotActiveSession
 
-// HotspotActiveStat is the vendor-neutral hotspot active session telemetry stats row.
-type HotspotActiveStat = port.HotspotActiveStat
+// ActiveStat is the vendor-neutral hotspot active session telemetry stats row.
+type ActiveStat = domainHotspot.HotspotActiveStat
 
 // HotspotUser is the vendor-neutral hotspot user row.
 type HotspotUser = port.HotspotUser

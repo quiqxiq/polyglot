@@ -4,20 +4,21 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ListIPBindings implements port.HotspotGateway.
-func (g *Gateway) ListIPBindings(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotIPBinding, error) {
+func (g *Gateway) ListIPBindings(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotIPBinding, error) {
 	cmd := command.Command{Raw: "/ip/hotspot/ip-binding/print"}
 	res, err := g.exec(ctx, driver, cmd)
 	if err != nil {
 		return nil, err
 	}
 
-	bindings := make([]port.HotspotIPBinding, 0, len(res.Rows))
+	bindings := make([]domainHotspot.HotspotIPBinding, 0, len(res.Rows))
 	for _, row := range res.Rows {
-		b := port.HotspotIPBinding{
+		b := domainHotspot.HotspotIPBinding{
 			RosID:      row[".id"],
 			MACAddress: row["mac-address"],
 			Address:    row["address"],

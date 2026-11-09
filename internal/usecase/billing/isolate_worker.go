@@ -10,6 +10,7 @@ import (
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
+	domainSetting "github.com/quixiq/polyglot/internal/domain/setting"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
@@ -127,7 +128,7 @@ func (w *IsolateWorker) markOverdueInvoices(ctx context.Context, sub domainSubsc
 
 // retryProvisioning mencoba push akun ke router untuk langganan yang belum
 // tersinkron (PENDING/FAILED/NONE tapi sudah punya device).
-func (w *IsolateWorker) retryProvisioning(ctx context.Context, sub domainSubscription.Subscription, cfg port.ISPSettings, res *IsolationResult) error {
+func (w *IsolateWorker) retryProvisioning(ctx context.Context, sub domainSubscription.Subscription, cfg domainSetting.ISPSettings, res *IsolationResult) error {
 	if sub.DeviceID == nil || *sub.DeviceID == "" || sub.ProvisionStatus == domainSubscription.ProvisionOK {
 		return nil
 	}
@@ -177,7 +178,7 @@ func (w *IsolateWorker) retryProvisioning(ctx context.Context, sub domainSubscri
 }
 
 // processIsolation handles isolate + auto-suspend transitions.
-func (w *IsolateWorker) processIsolation(ctx context.Context, sub domainSubscription.Subscription, cfg port.ISPSettings, now time.Time, res *IsolationResult) error {
+func (w *IsolateWorker) processIsolation(ctx context.Context, sub domainSubscription.Subscription, cfg domainSetting.ISPSettings, now time.Time, res *IsolationResult) error {
 	switch sub.Status {
 	case domainSubscription.StatusIsolated:
 		return w.maybeAutoSuspend(ctx, sub, cfg, now, res)
@@ -228,7 +229,7 @@ func (w *IsolateWorker) processIsolation(ctx context.Context, sub domainSubscrip
 
 // maybeAutoSuspend menonaktifkan akun ISOLATED yang sudah terlalu lama —
 // hanya bila isp.suspend_after_days > 0 (selain itu manual oleh admin).
-func (w *IsolateWorker) maybeAutoSuspend(ctx context.Context, sub domainSubscription.Subscription, cfg port.ISPSettings, now time.Time, res *IsolationResult) error {
+func (w *IsolateWorker) maybeAutoSuspend(ctx context.Context, sub domainSubscription.Subscription, cfg domainSetting.ISPSettings, now time.Time, res *IsolationResult) error {
 	if cfg.SuspendAfterDays <= 0 {
 		return nil
 	}
@@ -306,7 +307,7 @@ func isOutstandingInvoice(status string) bool {
 
 // effectiveGraceDays: isolation_grace_days per-langganan menang atas setting
 // global bila diisi (> 0) — F2-11.
-func effectiveGraceDays(cfg port.ISPSettings, sub domainSubscription.Subscription) int {
+func effectiveGraceDays(cfg domainSetting.ISPSettings, sub domainSubscription.Subscription) int {
 	if sub.IsolationGraceDays > 0 {
 		return sub.IsolationGraceDays
 	}
@@ -371,7 +372,7 @@ func (w *IsolateWorker) accountForRetry(ctx context.Context, sub domainSubscript
 
 // redirectConfig membangun konfigurasi dst-nat dari settings; URL kosong
 // berarti tanpa rule global (isolir cukup profil 0/0).
-func redirectConfig(cfg port.ISPSettings) *port.IsolationRedirectConfig {
+func redirectConfig(cfg domainSetting.ISPSettings) *port.IsolationRedirectConfig {
 	host, pport, ok := splitHostPort(cfg.PaymentRedirectURL)
 	if !ok || host == "" {
 		return nil

@@ -1,12 +1,5 @@
 package port
 
-import (
-	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
-)
-
-// MikhmonTransaction alias to domain model.
-type MikhmonTransaction = domainHotspot.MikhmonTransaction
-
 // ReportFilter selects Mikhmon transaction report records from
 // /system/script. Filter values follow the legacy Mikhmon frontend:
 //   - Day   : exact date string ("aug/17/2026") → RouterOS ?source= (get_report)

@@ -4,20 +4,21 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ListCookies implements port.HotspotGateway.
-func (g *Gateway) ListCookies(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotCookie, error) {
+func (g *Gateway) ListCookies(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotCookie, error) {
 	cmd := command.Command{Raw: "/ip/hotspot/cookie/print"}
 	res, err := g.exec(ctx, driver, cmd)
 	if err != nil {
 		return nil, err
 	}
 
-	cookies := make([]port.HotspotCookie, 0, len(res.Rows))
+	cookies := make([]domainHotspot.HotspotCookie, 0, len(res.Rows))
 	for _, row := range res.Rows {
-		c := port.HotspotCookie{
+		c := domainHotspot.HotspotCookie{
 			RosID:      row[".id"],
 			User:       row["user"],
 			MACAddress: row["mac-address"],

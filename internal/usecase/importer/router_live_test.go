@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 )
@@ -34,7 +35,7 @@ func (m *mockPPPGateway) ListProfiles(ctx context.Context, driver port.DeviceDri
 type mockHotspotGateway struct {
 	port.HotspotGateway
 	getUserProfilesFn func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error)
-	listIPBindingsFn  func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotIPBinding, error)
+	listIPBindingsFn  func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotIPBinding, error)
 	listUsersFn       func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error)
 }
 
@@ -45,7 +46,7 @@ func (m *mockHotspotGateway) GetUserProfiles(ctx context.Context, driver port.De
 	return nil, nil
 }
 
-func (m *mockHotspotGateway) ListIPBindings(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotIPBinding, error) {
+func (m *mockHotspotGateway) ListIPBindings(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotIPBinding, error) {
 	if m.listIPBindingsFn != nil {
 		return m.listIPBindingsFn(ctx, driver)
 	}
@@ -91,8 +92,8 @@ func TestPullHotspotRows_PermanentVsVoucher(t *testing.T) {
 				{Name: "Member-Bulanan", OnLogin: ""},
 			}, nil
 		},
-		listIPBindingsFn: func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotIPBinding, error) {
-			return []port.HotspotIPBinding{
+		listIPBindingsFn: func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotIPBinding, error) {
+			return []domainHotspot.HotspotIPBinding{
 				{
 					MACAddress: "AA:BB:CC:DD:EE:FF",
 					Address:    "192.168.88.50",
@@ -163,7 +164,7 @@ func TestPullRouterRows_Unified(t *testing.T) {
 				{Name: "Hotspot-Member", OnLogin: ""},
 			}, nil
 		},
-		listIPBindingsFn: func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotIPBinding, error) {
+		listIPBindingsFn: func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotIPBinding, error) {
 			return nil, nil
 		},
 		listUsersFn: func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {

@@ -64,11 +64,11 @@ func (s *Service) enqueue(ctx context.Context, ontID string, typ routerjob.Type,
 
 func (s *Service) enqueueWithDevice(ctx context.Context, deviceID string, typ routerjob.Type, payload map[string]any, keySuffix string) (routerjob.Job, error) {
 	if s.deps.Jobs == nil {
-		return routerjob.Job{}, fmt.Errorf("ont: job queue belum dikonfigurasi")
+		return routerjob.Job{}, fmt.Errorf("%w: job queue not configured", ont.ErrQueueNotConfigured)
 	}
 	raw, err := json.Marshal(payload)
 	if err != nil {
-		return routerjob.Job{}, fmt.Errorf("ont: marshal payload: %w", err)
+		return routerjob.Job{}, fmt.Errorf("%w: marshal payload: %w", ont.ErrInvalidInput, err)
 	}
 	now := time.Now().UTC()
 	job := routerjob.Job{

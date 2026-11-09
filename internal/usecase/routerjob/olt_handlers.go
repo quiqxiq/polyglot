@@ -20,17 +20,17 @@ type ontPositionPayload struct {
 func parseONTPosition(job domainRouterJob.Job) (ontPositionPayload, error) {
 	var p ontPositionPayload
 	if err := json.Unmarshal(job.Payload, &p); err != nil {
-		return p, fmt.Errorf("payload job %s tidak valid: %w", job.JobType, err)
+		return p, fmt.Errorf("%w: payload job %s is invalid: %w", domainRouterJob.ErrInvalidInput, job.JobType, err)
 	}
 	if p.OLTDeviceID == "" || p.PONIndex <= 0 || p.ONUIndex <= 0 {
-		return p, fmt.Errorf("payload job %s tidak lengkap", job.JobType)
+		return p, fmt.Errorf("%w: payload job %s incomplete", domainRouterJob.ErrInvalidInput, job.JobType)
 	}
 	return p, nil
 }
 
 func oltRequired(deps HandlerDeps) error {
 	if deps.OLT == nil {
-		return fmt.Errorf("OLT actions belum dikonfigurasi")
+		return fmt.Errorf("%w: OLT actions not configured", domainRouterJob.ErrQueueNotConfigured)
 	}
 	return nil
 }
@@ -44,7 +44,7 @@ func syncOLTHandler(deps HandlerDeps) Handler {
 			OLTDeviceID string `json:"olt_device_id"`
 		}
 		if err := json.Unmarshal(job.Payload, &p); err != nil || p.OLTDeviceID == "" {
-			return fmt.Errorf("payload SYNC_OLT tidak valid")
+			return fmt.Errorf("%w: payload SYNC_OLT invalid", domainRouterJob.ErrInvalidInput)
 		}
 		_, err := deps.OLT.SyncONUs(ctx, p.OLTDeviceID)
 		return err
@@ -112,7 +112,7 @@ func oltSaveConfigHandler(deps HandlerDeps) Handler {
 			OLTDeviceID string `json:"olt_device_id"`
 		}
 		if err := json.Unmarshal(job.Payload, &p); err != nil || p.OLTDeviceID == "" {
-			return fmt.Errorf("payload OLT_SAVE_CONFIG tidak valid")
+			return fmt.Errorf("%w: payload OLT_SAVE_CONFIG invalid", domainRouterJob.ErrInvalidInput)
 		}
 		return deps.OLT.SaveOLTConfig(ctx, p.OLTDeviceID)
 	}

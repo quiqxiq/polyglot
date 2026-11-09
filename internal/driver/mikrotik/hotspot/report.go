@@ -4,13 +4,13 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
 // MikhmonTransaction is the vendor-neutral Mikhmon transaction row.
-// Canonical definition lives in internal/port (see port.MikhmonTransaction docs).
-type MikhmonTransaction = port.MikhmonTransaction
+// Canonical definition lives in internal/domain/hotspot.
+type MikhmonTransaction = domainHotspot.MikhmonTransaction
 
 // NewPrintMikhmonReportsCommand builds a command.Command to fetch transaction logs
 // from RouterOS /system/script entries matching comment="mikhmon".

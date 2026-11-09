@@ -34,29 +34,6 @@ func toProtoActiveSessions(sessions []port.HotspotActiveSession) []*polyglotv1.H
 	return pbSessions
 }
 
-// toProtoHotspotActiveStat converts a single active stat to proto.
-func toProtoHotspotActiveStat(s port.HotspotActiveStat) *polyglotv1.HotspotActiveStat {
-	return &polyglotv1.HotspotActiveStat{
-		Id:              s.RosID,
-		Uptime:          s.Uptime,
-		SessionTimeLeft: s.SessionTimeLeft,
-		IdleTime:        s.IdleTime,
-		BytesIn:         s.BytesIn,
-		BytesOut:        s.BytesOut,
-		PacketsIn:       s.PacketsIn,
-		PacketsOut:      s.PacketsOut,
-	}
-}
-
-// toProtoActiveStats converts hotspot active stats to proto list.
-func toProtoActiveStats(stats []port.HotspotActiveStat) []*polyglotv1.HotspotActiveStat {
-	pbStats := make([]*polyglotv1.HotspotActiveStat, len(stats))
-	for i, s := range stats {
-		pbStats[i] = toProtoHotspotActiveStat(s)
-	}
-	return pbStats
-}
-
 // toProtoDHCPLease converts a single port.DHCPLease to proto.
 func toProtoDHCPLease(l port.DHCPLease) *polyglotv1.DHCPLease {
 	return &polyglotv1.DHCPLease{

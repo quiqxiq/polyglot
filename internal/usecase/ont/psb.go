@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/quixiq/polyglot/internal/domain/ont"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
 	"github.com/quixiq/polyglot/internal/domain/routerjob"
-	"github.com/quixiq/polyglot/internal/domain/ont"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )

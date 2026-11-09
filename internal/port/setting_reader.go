@@ -14,12 +14,9 @@ type SettingReader interface {
 	GetValue(ctx context.Context, key, fallback string) string
 }
 
-// ISPSettings adalah alias ke domain model per DEVELOPMENT-GUIDELINES.md §4.2.
-type ISPSettings = setting.ISPSettings
-
 // LoadISPSettings membaca seluruh key isp.* dengan fallback default.
-func LoadISPSettings(ctx context.Context, r SettingReader) ISPSettings {
-	return ISPSettings{
+func LoadISPSettings(ctx context.Context, r SettingReader) setting.ISPSettings {
+	return setting.ISPSettings{
 		BillingCycleStartDay: atoiOrDefault(r.GetValue(ctx, "isp.billing_cycle_start_day", "1"), 1),
 		BillingDueDays:       atoiOrDefault(r.GetValue(ctx, "isp.billing_due_days", "20"), 20),
 		AutoIsolate:          r.GetValue(ctx, "isp.auto_isolate", "true") == "true",

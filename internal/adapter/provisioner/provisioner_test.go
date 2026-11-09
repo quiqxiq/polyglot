@@ -9,6 +9,7 @@ import (
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
@@ -275,7 +276,7 @@ func (m *mockHotspotGateway) ListActiveSessions(_ context.Context, _ port.Device
 	return nil, nil
 }
 
-func (m *mockHotspotGateway) ListCookies(_ context.Context, _ port.DeviceDriver) ([]port.HotspotCookie, error) {
+func (m *mockHotspotGateway) ListCookies(_ context.Context, _ port.DeviceDriver) ([]domainHotspot.HotspotCookie, error) {
 	return nil, nil
 }
 

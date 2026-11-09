@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"github.com/quixiq/polyglot/internal/domain/audit"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -34,7 +35,7 @@ func AuditBestEffort(ctx context.Context, writer port.AuditWriter, deviceID, cmd
 	if len(result.Rows) > 0 {
 		out = fmt.Sprintf("%s (%d rows)", out, len(result.Rows))
 	}
-	_ = writer.Write(ctx, port.AuditEvent{
+	_ = writer.Write(ctx, audit.Event{
 		DeviceID:  deviceID,
 		UserID:    "mcp",
 		Command:   cmd,

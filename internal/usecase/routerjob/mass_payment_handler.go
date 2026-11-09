@@ -15,11 +15,11 @@ type massPaymentPayload struct {
 func massPaymentHandler(deps HandlerDeps) Handler {
 	return func(ctx context.Context, job domainRouterJob.Job) error {
 		if deps.MassPay == nil {
-			return fmt.Errorf("mass payment action belum dikonfigurasi")
+			return fmt.Errorf("%w: mass payment action not configured", domainRouterJob.ErrQueueNotConfigured)
 		}
 		var p massPaymentPayload
 		if err := json.Unmarshal(job.Payload, &p); err != nil || p.BatchID == "" {
-			return fmt.Errorf("payload mass payment tidak valid: %w", err)
+			return fmt.Errorf("%w: payload mass payment is invalid: %w", domainRouterJob.ErrInvalidInput, err)
 		}
 		return deps.MassPay.ProcessBatch(ctx, p.BatchID)
 	}

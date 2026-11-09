@@ -36,8 +36,8 @@ func TestCreateAndPayDebtPartialThenFull(t *testing.T) {
 	seedCustomer(t, customs, "cust-1")
 
 	d, err := svc.CreateDebt(ctx, debtUC.CreateDebtInput{
-		CustomerID: "cust-1",
-		Amount:     150000,
+		CustomerID:  "cust-1",
+		Amount:      150000,
 		Description: "pinjaman",
 	})
 	if err != nil {

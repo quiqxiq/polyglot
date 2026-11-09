@@ -146,7 +146,7 @@ func (g *Gateway) ListDHCPLeases(ctx context.Context, driver port.DeviceDriver, 
 }
 
 func (g *Gateway) SetDHCPLeaseBlock(ctx context.Context, driver port.DeviceDriver, rosID string, blocked bool, comment string) (command.Result, error) {
-	return dhcp.SetLeaseBlock(ctx, driver, g.exec, rosID, dhcp.DHCPLeaseBlockParams{
+	return dhcp.SetLeaseBlock(ctx, driver, g.exec, rosID, dhcp.LeaseBlockParams{
 		Blocked: blocked,
 		Comment: comment,
 	})

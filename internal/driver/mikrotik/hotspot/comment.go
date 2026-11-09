@@ -7,7 +7,6 @@ import (
 	"time"
 
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ErrInvalidMikhmonComment indicates a comment string could not be parsed
@@ -15,8 +14,8 @@ import (
 var ErrInvalidMikhmonComment = errors.New("mikhmon: invalid comment format")
 
 // MikhmonComment is the vendor-neutral parsed Mikhmon comment metadata.
-// Canonical definition lives in internal/port (see port.MikhmonComment docs).
-type MikhmonComment = port.MikhmonComment
+// Canonical definition lives in internal/domain/hotspot.
+type MikhmonComment = domainHotspot.MikhmonComment
 
 // FormatPreLoginComment delegates to domainHotspot.FormatPreLoginComment.
 func FormatPreLoginComment(vcType, code, tag string, t time.Time) string {

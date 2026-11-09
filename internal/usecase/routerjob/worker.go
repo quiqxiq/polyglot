@@ -73,7 +73,7 @@ func (w *Worker) Run(ctx context.Context) (Result, error) {
 		handler, ok := w.handlers[job.JobType]
 		var execErr error
 		if !ok {
-			execErr = fmt.Errorf("no handler for job type %s", job.JobType)
+			execErr = fmt.Errorf("%w: %s", domainRouterJob.ErrHandlerNotFound, job.JobType)
 		} else {
 			execErr = safeExec(ctx, handler, job)
 		}
@@ -125,7 +125,7 @@ func (w *Worker) EnqueueProvision(ctx context.Context, tenantID, deviceID, subsc
 		return domainRouterJob.Job{}, err
 	}
 	if strings.TrimSpace(deviceID) == "" {
-		return domainRouterJob.Job{}, fmt.Errorf("device_id is required")
+		return domainRouterJob.Job{}, fmt.Errorf("%w: device_id is required", domainRouterJob.ErrInvalidInput)
 	}
 	payload, _ := json.Marshal(map[string]string{"subscription_id": subscriptionID})
 	now := w.now().UTC()
@@ -148,7 +148,7 @@ func (w *Worker) EnqueueProvision(ctx context.Context, tenantID, deviceID, subsc
 // EnqueueSyncProfile menambahkan job sinkronisasi profil paket ke router.
 func (w *Worker) EnqueueSyncProfile(ctx context.Context, tenantID, deviceID, planID string) (domainRouterJob.Job, error) {
 	if strings.TrimSpace(deviceID) == "" || strings.TrimSpace(planID) == "" {
-		return domainRouterJob.Job{}, fmt.Errorf("device_id and plan_id are required")
+		return domainRouterJob.Job{}, fmt.Errorf("%w: device_id and plan_id are required", domainRouterJob.ErrInvalidInput)
 	}
 	payload, _ := json.Marshal(map[string]string{"plan_id": planID})
 	now := w.now().UTC()
@@ -178,7 +178,7 @@ func JobTypeForService(serviceType string) (domainRouterJob.Type, error) {
 	case "dedicated":
 		return domainRouterJob.TypeProvisionDedicated, nil
 	default:
-		return "", fmt.Errorf("unknown service type %q", serviceType)
+		return "", fmt.Errorf("%w: %q", domainRouterJob.ErrUnsupportedType, serviceType)
 	}
 }
 

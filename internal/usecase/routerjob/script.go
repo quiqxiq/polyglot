@@ -81,7 +81,7 @@ func (e *Exporter) ExportScript(ctx context.Context, jobID string) (string, erro
 			PlanID string `json:"plan_id"`
 		}
 		if err := json.Unmarshal(job.Payload, &payload); err != nil || payload.PlanID == "" {
-			return "", fmt.Errorf("payload plan_id tidak valid")
+			return "", fmt.Errorf("%w: payload plan_id invalid", domainRouterJob.ErrInvalidInput)
 		}
 		pl, plerr := e.plans.FindByID(ctx, payload.PlanID)
 		if plerr != nil {
@@ -92,7 +92,7 @@ func (e *Exporter) ExportScript(ctx context.Context, jobID string) (string, erro
 			pl.RouterProfile(), pl.RateLimitWithBurst(), "polyglot plan:"+pl.ID,
 		))
 	default:
-		return "", fmt.Errorf("job type %s tidak mendukung ekspor script", job.JobType)
+		return "", fmt.Errorf("%w: job type %s does not support script export", domainRouterJob.ErrUnsupportedType, job.JobType)
 	}
 	return strings.Join(lines, "\n") + "\n", nil
 }

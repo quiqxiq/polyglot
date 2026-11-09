@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
 	mikrotikppp "github.com/quixiq/polyglot/internal/driver/mikrotik/ppp"
@@ -87,11 +89,11 @@ func (g *monitorStreamGateway) ParseInterfaces(res command.Result) []port.Interf
 	return iface.ParseInterfaces(res)
 }
 
-func (g *monitorStreamGateway) ParseIdentity(res command.Result) port.SystemIdentity {
+func (g *monitorStreamGateway) ParseIdentity(res command.Result) domainDevice.SystemIdentity {
 	return mikrotiksystem.ParseIdentity(res)
 }
 
-func (g *monitorStreamGateway) ParseLogEntries(res command.Result) []port.LogEntry {
+func (g *monitorStreamGateway) ParseLogEntries(res command.Result) []domainDevice.LogEntry {
 	return mikrotiksystem.ParseLogs(res)
 }
 
@@ -107,18 +109,18 @@ func (g *monitorStreamGateway) ParseHotspotActive(res command.Result) []port.Hot
 	return hotspot.ParseActiveSessions(res)
 }
 
-func (g *monitorStreamGateway) ParseHotspotActiveStats(res command.Result) []port.HotspotActiveStat {
+func (g *monitorStreamGateway) ParseHotspotActiveStats(res command.Result) []domainHotspot.HotspotActiveStat {
 	return hotspot.ParseActiveStats(res)
 }
 
-func (g *monitorStreamGateway) ParseClock(res command.Result) port.SystemClock {
+func (g *monitorStreamGateway) ParseClock(res command.Result) domainDevice.SystemClock {
 	return mikrotiksystem.ParseClock(res)
 }
 
-func (g *monitorStreamGateway) ParseRouterboard(res command.Result) port.SystemRouterboard {
+func (g *monitorStreamGateway) ParseRouterboard(res command.Result) domainDevice.SystemRouterboard {
 	return mikrotiksystem.ParseRouterboard(res)
 }
 
-func (g *monitorStreamGateway) ParseHealth(res command.Result) port.SystemHealth {
+func (g *monitorStreamGateway) ParseHealth(res command.Result) domainDevice.SystemHealth {
 	return mikrotiksystem.ParseHealth(res)
 }

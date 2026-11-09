@@ -47,13 +47,14 @@ var knownInitialisms = map[string]string{
 
 // ToPascalCase converts RouterOS kebab-case or dot-prefixed names to idiomatic Go PascalCase.
 // Examples:
-//   ".id"             -> "ID"
-//   "caller-id"       -> "CallerID"
-//   "local-address"   -> "LocalAddress"
-//   "dns-server"      -> "DNSServer"
-//   "change-tcp-mss"  -> "ChangeTCPMSS"
-//   "use-upnp"        -> "UseUPnP"
-//   "limit-bytes-in"  -> "LimitBytesIn"
+//
+//	".id"             -> "ID"
+//	"caller-id"       -> "CallerID"
+//	"local-address"   -> "LocalAddress"
+//	"dns-server"      -> "DNSServer"
+//	"change-tcp-mss"  -> "ChangeTCPMSS"
+//	"use-upnp"        -> "UseUPnP"
+//	"limit-bytes-in"  -> "LimitBytesIn"
 func ToPascalCase(s string) string {
 	s = strings.TrimPrefix(s, ".")
 	if s == "" {

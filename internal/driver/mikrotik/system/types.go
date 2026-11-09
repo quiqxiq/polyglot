@@ -1,6 +1,7 @@
 package system
 
 import (
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -8,19 +9,19 @@ import (
 type SystemResource = port.SystemResource
 
 // Health holds the parsed sensor data from /system/health/print.
-type Health = port.SystemHealth
+type Health = domainDevice.SystemHealth
 
 // Clock holds the parsed clock data from /system/clock/print.
-type Clock = port.SystemClock
+type Clock = domainDevice.SystemClock
 
 // Identity holds the router's configured identity name.
-type Identity = port.SystemIdentity
+type Identity = domainDevice.SystemIdentity
 
 // Routerboard holds the parsed data from /system/routerboard/print.
-type Routerboard = port.SystemRouterboard
+type Routerboard = domainDevice.SystemRouterboard
 
 // LogEntry represents one row returned by /log/print.
-type LogEntry = port.LogEntry
+type LogEntry = domainDevice.LogEntry
 
 // PingResult holds one "!re" row from a /ping command.
 type PingResult struct {

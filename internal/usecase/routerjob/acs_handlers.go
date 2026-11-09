@@ -19,17 +19,17 @@ type acsOntPayload struct {
 func parseACSJob(job domainRouterJob.Job) (acsOntPayload, error) {
 	var p acsOntPayload
 	if err := json.Unmarshal(job.Payload, &p); err != nil {
-		return p, fmt.Errorf("payload job %s tidak valid: %w", job.JobType, err)
+		return p, fmt.Errorf("%w: payload job %s is invalid: %w", domainRouterJob.ErrInvalidInput, job.JobType, err)
 	}
 	if p.ONTID == "" && job.JobType != domainRouterJob.TypeACSSyncMatch && job.JobType != domainRouterJob.TypeACSBootstrapPreset {
-		return p, fmt.Errorf("payload job %s tidak memiliki ont_id", job.JobType)
+		return p, fmt.Errorf("%w: payload job %s missing ont_id", domainRouterJob.ErrInvalidInput, job.JobType)
 	}
 	return p, nil
 }
 
 func acsRequired(deps HandlerDeps) error {
 	if deps.ACS == nil {
-		return fmt.Errorf("ACS actions belum dikonfigurasi")
+		return fmt.Errorf("%w: ACS actions not configured", domainRouterJob.ErrQueueNotConfigured)
 	}
 	return nil
 }

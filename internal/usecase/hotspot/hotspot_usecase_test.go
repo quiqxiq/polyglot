@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -31,15 +32,15 @@ func (m *mockDriver) Close() error {
 type mockHotspotGateway struct {
 	port.HotspotGateway
 	createUserProfileFn  func(ctx context.Context, driver port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error)
-	generateVouchersFn   func(ctx context.Context, driver port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error)
+	generateVouchersFn   func(ctx context.Context, driver port.DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error)
 	getSystemResourceFn  func(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error)
 	getSystemIdentityFn  func(ctx context.Context, driver port.DeviceDriver) (string, error)
 	listUsersFn          func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error)
 	listActiveSessionsFn func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error)
-	listReportsFn        func(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]port.MikhmonTransaction, error)
+	listReportsFn        func(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]domainHotspot.MikhmonTransaction, error)
 }
 
-func (m *mockHotspotGateway) ListReports(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]port.MikhmonTransaction, error) {
+func (m *mockHotspotGateway) ListReports(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]domainHotspot.MikhmonTransaction, error) {
 	if m.listReportsFn != nil {
 		return m.listReportsFn(ctx, driver, f)
 	}
@@ -53,11 +54,11 @@ func (m *mockHotspotGateway) CreateUserProfile(ctx context.Context, driver port.
 	return command.Result{}, nil
 }
 
-func (m *mockHotspotGateway) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error) {
+func (m *mockHotspotGateway) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error) {
 	if m.generateVouchersFn != nil {
 		return m.generateVouchersFn(ctx, driver, p, count)
 	}
-	return port.VoucherBatch{}, nil
+	return domainHotspot.VoucherBatch{}, nil
 }
 
 func (m *mockHotspotGateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
@@ -113,16 +114,16 @@ func TestHotspotUseCase(t *testing.T) {
 
 	t.Run("GenerateVouchers", func(t *testing.T) {
 		gw := &mockHotspotGateway{
-			generateVouchersFn: func(ctx context.Context, drv port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error) {
+			generateVouchersFn: func(ctx context.Context, drv port.DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error) {
 				assert.Equal(t, "1Day_10K", p.Profile)
 				assert.Equal(t, 3, count)
-				return port.VoucherBatch{
-					Vouchers: make([]port.GeneratedVoucher, count),
+				return domainHotspot.VoucherBatch{
+					Vouchers: make([]domainHotspot.GeneratedVoucher, count),
 				}, nil
 			},
 		}
 		uc := New(gw)
-		batch, err := uc.GenerateVouchers(ctx, driver, port.VoucherGenerateParams{
+		batch, err := uc.GenerateVouchers(ctx, driver, domainHotspot.VoucherGenerateParams{
 			Profile: "1Day_10K",
 		}, 3)
 		require.NoError(t, err)

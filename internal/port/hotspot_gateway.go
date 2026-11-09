@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 )
 
 // HotspotGateway abstracts vendor-specific hotspot and voucher operations on
@@ -27,7 +29,7 @@ type HotspotGateway interface {
 	DeleteUserProfile(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// GenerateVouchers generates a batch of count vouchers and executes their
 	// creation commands, returning the generated voucher metadata.
-	GenerateVouchers(ctx context.Context, driver DeviceDriver, p VoucherGenerateParams, count int) (VoucherBatch, error)
+	GenerateVouchers(ctx context.Context, driver DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error)
 	// ListUsers lists hotspot users, optionally filtered (profile/comment/name/only_unused).
 	ListUsers(ctx context.Context, driver DeviceDriver, f ListUsersFilter) ([]HotspotUser, error)
 	// GetUser fetches a single hotspot user by RouterOS .id.
@@ -51,7 +53,7 @@ type HotspotGateway interface {
 	// ListHotspotServers fetches all /ip/hotspot/print entries.
 	ListHotspotServers(ctx context.Context, driver DeviceDriver) ([]map[string]string, error)
 	// ListIPPools fetches all /ip/pool entries.
-	ListIPPools(ctx context.Context, driver DeviceDriver) ([]IPPool, error)
+	ListIPPools(ctx context.Context, driver DeviceDriver) ([]domainDevice.IPPool, error)
 	// ListParentQueues fetches all parent /queue/simple entries.
 	ListParentQueues(ctx context.Context, driver DeviceDriver) ([]SimpleQueue, error)
 	// ListNATRules fetches all /ip/firewall/nat entries.
@@ -59,7 +61,7 @@ type HotspotGateway interface {
 	// DeleteUsersByFilter deletes hotspot users matching filter mode (by_profile, by_comment, expired).
 	DeleteUsersByFilter(ctx context.Context, driver DeviceDriver, mode, value string) (int, error)
 	// ListIPBindings fetches all /ip/hotspot/ip-binding entries.
-	ListIPBindings(ctx context.Context, driver DeviceDriver) ([]HotspotIPBinding, error)
+	ListIPBindings(ctx context.Context, driver DeviceDriver) ([]domainHotspot.HotspotIPBinding, error)
 	// CreateIPBinding creates a new /ip/hotspot/ip-binding entry.
 	CreateIPBinding(ctx context.Context, driver DeviceDriver, p HotspotIPBindingParams) (command.Result, error)
 	// UpdateIPBinding updates an existing /ip/hotspot/ip-binding entry.
@@ -67,7 +69,7 @@ type HotspotGateway interface {
 	// DeleteIPBinding removes an /ip/hotspot/ip-binding entry by RouterOS .id.
 	DeleteIPBinding(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// ListCookies fetches all /ip/hotspot/cookie entries.
-	ListCookies(ctx context.Context, driver DeviceDriver) ([]HotspotCookie, error)
+	ListCookies(ctx context.Context, driver DeviceDriver) ([]domainHotspot.HotspotCookie, error)
 	// DeleteCookie removes a cookie by RouterOS .id (or all cookies if rosID is empty or "all").
 	DeleteCookie(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// SetupExpireMonitor adds or updates the Mikhmon expire-monitor scheduler.
@@ -77,18 +79,18 @@ type HotspotGateway interface {
 	// GetExpireMonitorStatus reports the state of the expire-monitor scheduler
 	// (recognises both the legacy "Mikhmon-Expire-Monitor" and the gateway
 	// "mikhmon-expire-scheduler" names).
-	GetExpireMonitorStatus(ctx context.Context, driver DeviceDriver) (ExpireMonitorStatus, error)
+	GetExpireMonitorStatus(ctx context.Context, driver DeviceDriver) (domainHotspot.ExpireMonitorStatus, error)
 	// SetExpireMonitorDisabled toggles the scheduler disabled flag by RouterOS .id.
 	SetExpireMonitorDisabled(ctx context.Context, driver DeviceDriver, rosID string, disabled bool) (command.Result, error)
 	// RemoveExpireMonitor deletes the expire-monitor scheduler by RouterOS .id.
 	RemoveExpireMonitor(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// ListReports fetches report records from /system/script filtered by f.
-	ListReports(ctx context.Context, driver DeviceDriver, f ReportFilter) ([]MikhmonTransaction, error)
+	ListReports(ctx context.Context, driver DeviceDriver, f ReportFilter) ([]domainHotspot.MikhmonTransaction, error)
 	// DeleteReport deletes a report script record by RouterOS .id.
 	DeleteReport(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// ParseUserComment parses a Mikhmon-formatted user comment. Pure parse —
 	// driver is unused and kept only for a uniform interface shape.
-	ParseUserComment(comment string) (MikhmonComment, error)
+	ParseUserComment(comment string) (domainHotspot.MikhmonComment, error)
 	// EnsureWalledGarden ensures that the specified domains and portal destination are allowed in Hotspot Walled Garden.
 	EnsureWalledGarden(ctx context.Context, driver DeviceDriver, domains []string, portalHost, portalPort string) error
 	// RemoveWalledGarden menghapus seluruh entri walled-garden milik app

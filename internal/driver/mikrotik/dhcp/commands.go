@@ -47,7 +47,7 @@ func NewStreamLeasesCommand(macFilter string) command.Command {
 // mutation the application performs on DHCP leases.
 //
 // rosID must come from a prior /ip/dhcp-server/lease/print result.
-func NewSetLeaseBlockCommand(rosID string, p DHCPLeaseBlockParams) command.Command {
+func NewSetLeaseBlockCommand(rosID string, p LeaseBlockParams) command.Command {
 	blocked := "no"
 	if p.Blocked {
 		blocked = "yes"

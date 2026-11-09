@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -71,7 +72,7 @@ func (u *UseCase) GetHotspotServers(ctx context.Context, driver port.DeviceDrive
 }
 
 // GetIPPools fetches all /ip/pool entries.
-func (u *UseCase) GetIPPools(ctx context.Context, driver port.DeviceDriver) ([]port.IPPool, error) {
+func (u *UseCase) GetIPPools(ctx context.Context, driver port.DeviceDriver) ([]domainDevice.IPPool, error) {
 	return u.gateway.ListIPPools(ctx, driver)
 }
 
@@ -92,7 +93,7 @@ func (u *UseCase) SetupExpireMonitor(ctx context.Context, driver port.DeviceDriv
 
 // GetExpireMonitorStatus reports the install/enabled state of the expire
 // monitor scheduler.
-func (u *UseCase) GetExpireMonitorStatus(ctx context.Context, driver port.DeviceDriver) (port.ExpireMonitorStatus, error) {
+func (u *UseCase) GetExpireMonitorStatus(ctx context.Context, driver port.DeviceDriver) (domainHotspot.ExpireMonitorStatus, error) {
 	return u.gateway.GetExpireMonitorStatus(ctx, driver)
 }
 
@@ -123,7 +124,7 @@ func (u *UseCase) RemoveExpireMonitor(ctx context.Context, driver port.DeviceDri
 }
 
 // GetReports fetches all Mikhmon report records from /system/script.
-func (u *UseCase) GetReports(ctx context.Context, driver port.DeviceDriver) ([]port.MikhmonTransaction, error) {
+func (u *UseCase) GetReports(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.MikhmonTransaction, error) {
 	return u.gateway.ListReports(ctx, driver, port.ReportFilter{})
 }
 
@@ -155,7 +156,7 @@ func (u *UseCase) GetTodayIncome(ctx context.Context, driver port.DeviceDriver) 
 // GetReportsByFilter delegates report filtering to the gateway using legacy
 // Mikhmon semantics: date → ?source=, month (owner "aug2026") → ?owner=,
 // year → date-suffix post-filter. All three empty returns every mikhmon record.
-func (u *UseCase) GetReportsByFilter(ctx context.Context, driver port.DeviceDriver, date, month, year string) ([]port.MikhmonTransaction, error) {
+func (u *UseCase) GetReportsByFilter(ctx context.Context, driver port.DeviceDriver, date, month, year string) ([]domainHotspot.MikhmonTransaction, error) {
 	return u.gateway.ListReports(ctx, driver, port.ReportFilter{
 		Day:   date,
 		Month: month,
@@ -199,7 +200,7 @@ func (u *UseCase) GetDashboardSummary(ctx context.Context, driver port.DeviceDri
 }
 
 // GetIPBindings fetches all /ip/hotspot/ip-binding entries.
-func (u *UseCase) GetIPBindings(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotIPBinding, error) {
+func (u *UseCase) GetIPBindings(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotIPBinding, error) {
 	return u.gateway.ListIPBindings(ctx, driver)
 }
 
@@ -219,7 +220,7 @@ func (u *UseCase) DeleteIPBinding(ctx context.Context, driver port.DeviceDriver,
 }
 
 // GetCookies fetches all /ip/hotspot/cookie entries.
-func (u *UseCase) GetCookies(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotCookie, error) {
+func (u *UseCase) GetCookies(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotCookie, error) {
 	return u.gateway.ListCookies(ctx, driver)
 }
 

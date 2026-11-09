@@ -19,7 +19,7 @@ func ListLeases(ctx context.Context, driver port.DeviceDriver, exec port.Command
 }
 
 // SetLeaseBlock updates the block status and comment of a DHCP lease in RouterOS.
-func SetLeaseBlock(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor, rosID string, p DHCPLeaseBlockParams) (command.Result, error) {
+func SetLeaseBlock(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor, rosID string, p LeaseBlockParams) (command.Result, error) {
 	cmd := NewSetLeaseBlockCommand(rosID, p)
 	return exec(ctx, driver, cmd)
 }

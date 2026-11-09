@@ -15,38 +15,18 @@ set -euo pipefail
 # When removing an alias, delete its name below in the same change.
 
 allowed_aliases=(
-  AuditEvent
-  CharSet
   DHCPLease
-  DHCPLeaseBlockParams
-  ExpireMonitorStatus
-  GeneratedVoucher
   HotspotActiveSession
-  HotspotActiveStat
-  HotspotCookie
-  HotspotIPBinding
   HotspotUser
   HotspotUserProfile
   Interface
   InterfaceTrafficStats
-  IPPool
-  ISPSettings
-  LogEntry
-  MikhmonComment
-  MikhmonTransaction
   PPPActiveSession
   PPPoESecret
   PPPProfile
   SimpleQueue
   SubscriberAccount
-  SystemClock
-  SystemHealth
-  SystemIdentity
   SystemResource
-  SystemRouterboard
-  VoucherBatch
-  VoucherGenerateParams
-  VoucherStatusDetails
 )
 
 actual="$(

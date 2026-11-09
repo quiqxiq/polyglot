@@ -16,4 +16,8 @@ var (
 	ErrONUNotFound = fault.New(fault.KindNotFound, "olt: onu not found")
 	// ErrInvalidInput indicates invalid OLT/ONU parameters.
 	ErrInvalidInput = fault.New(fault.KindInvalidInput, "olt: invalid input")
+	// ErrQueueNotConfigured indicates the router job queue is not configured.
+	ErrQueueNotConfigured = fault.New(fault.KindFailedPrecondition, "olt: job queue not configured")
+	// ErrActionNotConfigured indicates OLT actions executor is not configured.
+	ErrActionNotConfigured = fault.New(fault.KindFailedPrecondition, "olt: action executor not configured")
 )

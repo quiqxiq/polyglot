@@ -27,7 +27,7 @@ func TestNewStreamLeasesCommand(t *testing.T) {
 }
 
 func TestNewSetLeaseBlockCommand(t *testing.T) {
-	cmd := NewSetLeaseBlockCommand("*1", DHCPLeaseBlockParams{
+	cmd := NewSetLeaseBlockCommand("*1", LeaseBlockParams{
 		Blocked: true,
 		Comment: "SUSPENDED",
 	})

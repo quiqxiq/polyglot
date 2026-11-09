@@ -1,6 +1,7 @@
 package dhcp
 
 import (
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -8,9 +9,9 @@ import (
 // Canonical definition lives in internal/port.
 type DHCPLease = port.DHCPLease
 
-// DHCPLeaseBlockParams is the vendor-neutral DHCP lease block/unblock parameter set.
-// Canonical definition lives in internal/port.
-type DHCPLeaseBlockParams = port.DHCPLeaseBlockParams
+// LeaseBlockParams is the vendor-neutral DHCP lease block/unblock parameter set.
+// Canonical definition lives in internal/domain/device.
+type LeaseBlockParams = domainDevice.DHCPLeaseBlockParams
 
 // DHCPServer represents one row returned by /ip/dhcp-server/print.
 // Servers are read for monitoring only — no create/modify/delete.

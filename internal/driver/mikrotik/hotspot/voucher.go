@@ -8,12 +8,11 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
 // CharSet defines character set types used for generating voucher usernames and passwords.
-// Canonical definition lives in internal/port (see port.CharSet).
-type CharSet = port.CharSet
+// Canonical definition lives in internal/domain/hotspot.
+type CharSet = domainHotspot.CharSet
 
 const (
 	CharSetNumeric  CharSet = "numeric"  // "1234567890"
@@ -34,8 +33,8 @@ var charSetMap = map[CharSet]string{
 }
 
 // VoucherGenerateParams is the vendor-neutral voucher generation parameter set.
-// Canonical definition lives in internal/port (see port.VoucherGenerateParams docs).
-type VoucherGenerateParams = port.VoucherGenerateParams
+// Canonical definition lives in internal/domain/hotspot.
+type VoucherGenerateParams = domainHotspot.VoucherGenerateParams
 
 // GeneratedVoucher holds the details of one generated voucher.
 type GeneratedVoucher struct {

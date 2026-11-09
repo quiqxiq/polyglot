@@ -6,6 +6,3 @@ import (
 
 // HotspotActiveSession alias to domain model.
 type HotspotActiveSession = domainHotspot.HotspotActiveSession
-
-// HotspotActiveStat alias to domain model.
-type HotspotActiveStat = domainHotspot.HotspotActiveStat

@@ -757,7 +757,7 @@ Jika generated output harus committed, CI harus gagal ketika hasil generate berb
 
 | Task | Status | Bukti atau sisa |
 |---|---|---|
-| 5.1 Static boundary check | **PARTIAL** | `check-connect-errors.sh` tersedia; static check domain/usecase imports adapter/driver belum dibuat menyeluruh. |
+| 5.1 Static boundary check | **DONE** | `check-connect-errors.sh`, `check-layer-boundaries.sh`, `check-tenant-literals.sh`, dan depguard rules di `.golangci.yml` aktif di CI dan Makefile. |
 | 5.2 Pindahkan integration test | **PARTIAL** | `router_live_e2e_test.go` sudah berada di `test/integration` dengan tag `integration`; beberapa unit test usecase masih perlu dipisahkan dari adapter/driver. |
 | 5.3 Metrics worker | **PARTIAL** | Resolver melalui port/function, lifecycle test Start/Stop, dan integration compile sudah ada; coverage restart/leak/active stream masih perlu ditambah. |
 | 5.4 Composition root | **PARTIAL** | `app.go` tetap composition root dan logging lifecycle sudah dirapikan; file masih besar dan perlu pemisahan wiring bila bertambah. |

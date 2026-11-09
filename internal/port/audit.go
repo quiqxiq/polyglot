@@ -6,14 +6,11 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/audit"
 )
 
-// AuditEvent alias to domain model per DEVELOPMENT-GUIDELINES.md §4.2.
-type AuditEvent = audit.Event
-
 // AuditWriter records command executions and device-level operations.
 // Implementations write to Postgres; the MCP adapter calls Write after
 // every tool execution for a full audit trail.
 type AuditWriter interface {
-	Write(ctx context.Context, event AuditEvent) error
+	Write(ctx context.Context, event audit.Event) error
 }
 
 // AuditLogWriter records business-critical application activity to the audit_logs table

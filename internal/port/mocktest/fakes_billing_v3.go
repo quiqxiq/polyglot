@@ -1,3 +1,4 @@
+// DEVIASI: centralized mock test fakes for billing v3 repository contracts
 package mocktest
 
 import (

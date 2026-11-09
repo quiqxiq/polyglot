@@ -1,3 +1,4 @@
+// DEVIASI: code generator CLI tool for RouterOS schema inspection
 package main
 
 import (

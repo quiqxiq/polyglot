@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	domainRouterJob "github.com/quixiq/polyglot/internal/domain/routerjob"
+	domainSetting "github.com/quixiq/polyglot/internal/domain/setting"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	oltUC "github.com/quixiq/polyglot/internal/usecase/olt"
@@ -200,7 +201,7 @@ func syncProfileHandler(deps HandlerDeps) Handler {
 			PlanID string `json:"plan_id"`
 		}
 		if err := json.Unmarshal(job.Payload, &payload); err != nil || payload.PlanID == "" {
-			return fmt.Errorf("payload plan_id tidak valid")
+			return fmt.Errorf("%w: payload plan_id invalid", domainRouterJob.ErrInvalidInput)
 		}
 		pl, err := deps.Plans.FindByID(ctx, payload.PlanID)
 		if err != nil {
@@ -224,17 +225,17 @@ func payloadSubscriptionID(job domainRouterJob.Job) (string, error) {
 		SubscriptionID string `json:"subscription_id"`
 	}
 	if err := json.Unmarshal(job.Payload, &payload); err != nil {
-		return "", fmt.Errorf("payload tidak valid: %w", err)
+		return "", fmt.Errorf("%w: payload invalid: %w", domainRouterJob.ErrInvalidInput, err)
 	}
 	if payload.SubscriptionID == "" {
-		return "", fmt.Errorf("payload subscription_id wajib")
+		return "", fmt.Errorf("%w: payload subscription_id required", domainRouterJob.ErrInvalidInput)
 	}
 	return payload.SubscriptionID, nil
 }
 
 // redirectConfig menurunkan konfigurasi dst-nat isolir dari setting
 // isp.payment_redirect_url (format host:port).
-func redirectConfig(cfg port.ISPSettings) *port.IsolationRedirectConfig {
+func redirectConfig(cfg domainSetting.ISPSettings) *port.IsolationRedirectConfig {
 	host, portStr := splitHostPort(cfg.PaymentRedirectURL)
 	if host == "" {
 		return nil

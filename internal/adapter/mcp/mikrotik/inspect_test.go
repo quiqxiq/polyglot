@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/quixiq/polyglot/internal/adapter/mcp/mcptest"
+	"github.com/quixiq/polyglot/internal/domain/audit"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
@@ -17,10 +18,10 @@ import (
 )
 
 type mockAuditWriter struct {
-	events []port.AuditEvent
+	events []audit.Event
 }
 
-func (m *mockAuditWriter) Write(_ context.Context, ev port.AuditEvent) error {
+func (m *mockAuditWriter) Write(_ context.Context, ev audit.Event) error {
 	m.events = append(m.events, ev)
 	return nil
 }

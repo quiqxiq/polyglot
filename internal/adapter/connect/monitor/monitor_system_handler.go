@@ -9,6 +9,7 @@ import (
 
 	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -18,14 +19,14 @@ import (
 // so this state is always a complete view of the last received frame.
 type systemSnapshotState struct {
 	mu          sync.Mutex
-	clock       port.SystemClock
+	clock       domainDevice.SystemClock
 	resource    port.SystemResource
-	routerboard port.SystemRouterboard
+	routerboard domainDevice.SystemRouterboard
 	identity    string
-	health      port.SystemHealth
+	health      domainDevice.SystemHealth
 }
 
-func (s *systemSnapshotState) setClock(c port.SystemClock) {
+func (s *systemSnapshotState) setClock(c domainDevice.SystemClock) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.clock = c
@@ -37,7 +38,7 @@ func (s *systemSnapshotState) setResource(r port.SystemResource) {
 	s.resource = r
 }
 
-func (s *systemSnapshotState) setRouterboard(r port.SystemRouterboard) {
+func (s *systemSnapshotState) setRouterboard(r domainDevice.SystemRouterboard) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.routerboard = r
@@ -49,7 +50,7 @@ func (s *systemSnapshotState) setIdentity(name string) {
 	s.identity = name
 }
 
-func (s *systemSnapshotState) setHealth(h port.SystemHealth) {
+func (s *systemSnapshotState) setHealth(h domainDevice.SystemHealth) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.health = h

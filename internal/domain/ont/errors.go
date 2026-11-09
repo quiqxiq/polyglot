@@ -18,4 +18,6 @@ var (
 	ErrACSNotConfigured = fault.New(fault.KindFailedPrecondition, "ont: acs not configured")
 	// ErrACSTaskFailed indicates a GenieACS task faulted or never completed.
 	ErrACSTaskFailed = fault.New(fault.KindUnavailable, "ont: acs task failed")
+	// ErrQueueNotConfigured indicates the router job queue is not configured.
+	ErrQueueNotConfigured = fault.New(fault.KindFailedPrecondition, "ont: job queue not configured")
 )

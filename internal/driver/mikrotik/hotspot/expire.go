@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
 // MikhmonExpireMonitorName is the standard RouterOS scheduler name used by Mikhmon.
@@ -29,11 +29,11 @@ var ExpireMonitorSchedulerNames = []string{
 // classifyExpireMonitorSchedulers maps raw scheduler rows to an
 // ExpireMonitorStatus, preferring the legacy scheduler when both forms are
 // present. Returns zero status (not installed) when no name matches.
-func classifyExpireMonitorSchedulers(schedulers []system.SystemScheduler) port.ExpireMonitorStatus {
+func classifyExpireMonitorSchedulers(schedulers []system.SystemScheduler) domainHotspot.ExpireMonitorStatus {
 	for _, s := range schedulers {
 		for _, name := range ExpireMonitorSchedulerNames {
 			if s.Name == name {
-				return port.ExpireMonitorStatus{
+				return domainHotspot.ExpireMonitorStatus{
 					IsInstalled:   true,
 					IsEnabled:     !s.Disabled,
 					SchedulerID:   s.RosID,
@@ -42,7 +42,7 @@ func classifyExpireMonitorSchedulers(schedulers []system.SystemScheduler) port.E
 			}
 		}
 	}
-	return port.ExpireMonitorStatus{}
+	return domainHotspot.ExpireMonitorStatus{}
 }
 
 // BuildExpireMonitorScript generates the RouterOS script source for Mikhmon v4's
