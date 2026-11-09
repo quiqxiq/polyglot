@@ -14,8 +14,8 @@ export function Logo({
 }: LogoProps) {
   const imageSrc =
     variant === 'bg'
-      ? '/images/logo-bg.png'
-      : '/images/logo.png'
+      ? '/images/apple-touch-icon.png'
+      : '/images/favicon.svg'
 
   return (
     <img
@@ -49,7 +49,7 @@ export function PolyglotBrand({
   return (
     <div className={cn('flex items-center gap-2.5 select-none', className)}>
       <img
-        src='/images/logo.png'
+        src='/images/favicon.svg'
         alt='Polyglot'
         className={cn(sizeClasses.img, 'w-auto object-contain drop-shadow-[0_0_12px_rgba(0,242,254,0.3)]')}
       />
