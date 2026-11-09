@@ -32,10 +32,6 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 	req *connect.Request[polyglotv1.StreamDeviceStatusRequest],
 	stream *connect.ServerStream[polyglotv1.DeviceStatusFrame],
 ) error {
-	if req.Msg.Id == "" {
-		return response.InvalidArgument("device id is required")
-	}
-
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
 		return response.MapDomainError(err)
@@ -267,10 +263,6 @@ func (h *DeviceConnectHandler) StreamPing(
 	req *connect.Request[polyglotv1.StreamDevicePingRequest],
 	stream *connect.ServerStream[polyglotv1.StreamDevicePingFrame],
 ) error {
-	if req.Msg.Id == "" {
-		return response.InvalidArgument("device id is required")
-	}
-
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
 		return response.MapDomainError(err)
@@ -373,10 +365,6 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 	req *connect.Request[polyglotv1.StreamDeviceTrafficRequest],
 	stream *connect.ServerStream[polyglotv1.StreamDeviceTrafficFrame],
 ) error {
-	if req.Msg.Id == "" {
-		return response.InvalidArgument("device id is required")
-	}
-
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
 		return response.MapDomainError(err)

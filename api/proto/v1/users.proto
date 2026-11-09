@@ -107,7 +107,7 @@ message AssignDevicesResponse {
 }
 
 message ListUserDevicesRequest {
-  uint64 user_id = 1;
+  uint64 user_id = 1 [(buf.validate.field).uint64.gt = 0];
 }
 
 message ListUserDevicesResponse {

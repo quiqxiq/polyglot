@@ -7,6 +7,7 @@
 package polyglotv1
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -1346,7 +1347,7 @@ var File_v1_ont_proto protoreflect.FileDescriptor
 
 const file_v1_ont_proto_rawDesc = "" +
 	"\n" +
-	"\fv1/ont.proto\x12\vpolyglot.v1\"\xc3\x01\n" +
+	"\fv1/ont.proto\x12\vpolyglot.v1\x1a\x1bbuf/validate/validate.proto\"\xc3\x01\n" +
 	"\tAcsConfig\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12(\n" +
 	"\x10server_device_id\x18\x02 \x01(\tR\x0eserverDeviceId\x12\x17\n" +
@@ -1378,47 +1379,47 @@ const file_v1_ont_proto_rawDesc = "" +
 	"\x06search\x18\x02 \x01(\tR\x06search\x12\x14\n" +
 	"\x05limit\x18\x03 \x01(\x05R\x05limit\"J\n" +
 	"\x16ListAcsDevicesResponse\x120\n" +
-	"\adevices\x18\x01 \x03(\v2\x16.polyglot.v1.AcsDeviceR\adevices\"3\n" +
-	"\x1aRefreshOntTelemetryRequest\x12\x15\n" +
-	"\x06ont_id\x18\x01 \x01(\tR\x05ontId\"4\n" +
+	"\adevices\x18\x01 \x03(\v2\x16.polyglot.v1.AcsDeviceR\adevices\"<\n" +
+	"\x1aRefreshOntTelemetryRequest\x12\x1e\n" +
+	"\x06ont_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05ontId\"4\n" +
 	"\x1bRefreshOntTelemetryResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\")\n" +
-	"\x10RebootOntRequest\x12\x15\n" +
-	"\x06ont_id\x18\x01 \x01(\tR\x05ontId\"*\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"2\n" +
+	"\x10RebootOntRequest\x12\x1e\n" +
+	"\x06ont_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05ontId\"*\n" +
 	"\x11RebootOntResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"n\n" +
-	"\x11SetOntWifiRequest\x12\x15\n" +
-	"\x06ont_id\x18\x01 \x01(\tR\x05ontId\x12\x12\n" +
-	"\x04ssid\x18\x02 \x01(\tR\x04ssid\x12\x1a\n" +
-	"\bpassword\x18\x03 \x01(\tR\bpassword\x12\x12\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"\x89\x01\n" +
+	"\x11SetOntWifiRequest\x12\x1e\n" +
+	"\x06ont_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05ontId\x12\x1b\n" +
+	"\x04ssid\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04ssid\x12#\n" +
+	"\bpassword\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bpassword\x12\x12\n" +
 	"\x04band\x18\x04 \x01(\tR\x04band\"+\n" +
 	"\x12SetOntWifiResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"d\n" +
-	"\x13PushOntPppoeRequest\x12\x15\n" +
-	"\x06ont_id\x18\x01 \x01(\tR\x05ontId\x12\x1a\n" +
-	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x03 \x01(\tR\bpassword\"-\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"\x7f\n" +
+	"\x13PushOntPppoeRequest\x12\x1e\n" +
+	"\x06ont_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05ontId\x12#\n" +
+	"\busername\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\busername\x12#\n" +
+	"\bpassword\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bpassword\"-\n" +
 	"\x14PushOntPppoeResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"\x98\x01\n" +
-	"\x0eLinkOntRequest\x12\x15\n" +
-	"\x06ont_id\x18\x01 \x01(\tR\x05ontId\x12\x1f\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"\xa1\x01\n" +
+	"\x0eLinkOntRequest\x12\x1e\n" +
+	"\x06ont_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05ontId\x12\x1f\n" +
 	"\vcustomer_id\x18\x02 \x01(\tR\n" +
 	"customerId\x12'\n" +
 	"\x0fsubscription_id\x18\x03 \x01(\tR\x0esubscriptionId\x12%\n" +
 	"\x0epppoe_username\x18\x04 \x01(\tR\rpppoeUsername\"+\n" +
 	"\x0fLinkOntResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\")\n" +
-	"\x10UnlinkOntRequest\x12\x15\n" +
-	"\x06ont_id\x18\x01 \x01(\tR\x05ontId\"-\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"2\n" +
+	"\x10UnlinkOntRequest\x12\x1e\n" +
+	"\x06ont_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05ontId\"-\n" +
 	"\x11UnlinkOntResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"P\n" +
-	"\x13PinAcsDeviceRequest\x12\x15\n" +
-	"\x06ont_id\x18\x01 \x01(\tR\x05ontId\x12\"\n" +
-	"\racs_device_id\x18\x02 \x01(\tR\vacsDeviceId\"0\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"b\n" +
+	"\x13PinAcsDeviceRequest\x12\x1e\n" +
+	"\x06ont_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05ontId\x12+\n" +
+	"\racs_device_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vacsDeviceId\"0\n" +
 	"\x14PinAcsDeviceResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\".\n" +
-	"\x15UnpinAcsDeviceRequest\x12\x15\n" +
-	"\x06ont_id\x18\x01 \x01(\tR\x05ontId\"2\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"7\n" +
+	"\x15UnpinAcsDeviceRequest\x12\x1e\n" +
+	"\x06ont_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05ontId\"2\n" +
 	"\x16UnpinAcsDeviceResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"\x18\n" +
 	"\x16EnsureAcsPresetRequest\"3\n" +

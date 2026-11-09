@@ -4250,19 +4250,19 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\vactive_only\x18\x01 \x01(\bR\n" +
 	"activeOnly\"a\n" +
 	"\x1aListPaymentMethodsResponse\x12C\n" +
-	"\x0fpayment_methods\x18\x01 \x03(\v2\x1a.polyglot.v1.PaymentMethodR\x0epaymentMethods\"]\n" +
-	"\x18SavePaymentMethodRequest\x12A\n" +
-	"\x0epayment_method\x18\x01 \x01(\v2\x1a.polyglot.v1.PaymentMethodR\rpaymentMethod\"^\n" +
+	"\x0fpayment_methods\x18\x01 \x03(\v2\x1a.polyglot.v1.PaymentMethodR\x0epaymentMethods\"e\n" +
+	"\x18SavePaymentMethodRequest\x12I\n" +
+	"\x0epayment_method\x18\x01 \x01(\v2\x1a.polyglot.v1.PaymentMethodB\x06\xbaH\x03\xc8\x01\x01R\rpaymentMethod\"^\n" +
 	"\x19SavePaymentMethodResponse\x12A\n" +
-	"\x0epayment_method\x18\x01 \x01(\v2\x1a.polyglot.v1.PaymentMethodR\rpaymentMethod\",\n" +
-	"\x1aDeletePaymentMethodRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"7\n" +
+	"\x0epayment_method\x18\x01 \x01(\v2\x1a.polyglot.v1.PaymentMethodR\rpaymentMethod\"5\n" +
+	"\x1aDeletePaymentMethodRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"7\n" +
 	"\x1bDeletePaymentMethodResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"}\n" +
-	"\x18CreateMassPaymentRequest\x12\x1f\n" +
-	"\vinvoice_ids\x18\x01 \x03(\tR\n" +
-	"invoiceIds\x12*\n" +
-	"\x11payment_method_id\x18\x02 \x01(\tR\x0fpaymentMethodId\x12\x14\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\x90\x01\n" +
+	"\x18CreateMassPaymentRequest\x12)\n" +
+	"\vinvoice_ids\x18\x01 \x03(\tB\b\xbaH\x05\x92\x01\x02\b\x01R\n" +
+	"invoiceIds\x123\n" +
+	"\x11payment_method_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0fpaymentMethodId\x12\x14\n" +
 	"\x05notes\x18\x03 \x01(\tR\x05notes\"r\n" +
 	"\x19CreateMassPaymentResponse\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12\x15\n" +
@@ -4288,9 +4288,9 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\x05error\x18\x05 \x01(\tR\x05error\x12\x1d\n" +
 	"\n" +
 	"payment_id\x18\x06 \x01(\tR\tpaymentId\x12*\n" +
-	"\x11processed_at_unix\x18\a \x01(\x03R\x0fprocessedAtUnix\"2\n" +
-	"\x15GetMassPaymentRequest\x12\x19\n" +
-	"\bbatch_id\x18\x01 \x01(\tR\abatchId\"\x81\x01\n" +
+	"\x11processed_at_unix\x18\a \x01(\x03R\x0fprocessedAtUnix\";\n" +
+	"\x15GetMassPaymentRequest\x12\"\n" +
+	"\bbatch_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\abatchId\"\x81\x01\n" +
 	"\x16GetMassPaymentResponse\x123\n" +
 	"\x05batch\x18\x01 \x01(\v2\x1d.polyglot.v1.BulkPaymentBatchR\x05batch\x122\n" +
 	"\x05items\x18\x02 \x03(\v2\x1c.polyglot.v1.BulkPaymentItemR\x05items\"\x80\x03\n" +
@@ -4346,10 +4346,10 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\agateway\x18\x01 \x01(\tR\agateway\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\"b\n" +
 	"\x1eListGatewaySettlementsResponse\x12@\n" +
-	"\vsettlements\x18\x01 \x03(\v2\x1e.polyglot.v1.GatewaySettlementR\vsettlements\"^\n" +
-	"\x1cSaveGatewaySettlementRequest\x12>\n" +
+	"\vsettlements\x18\x01 \x03(\v2\x1e.polyglot.v1.GatewaySettlementR\vsettlements\"f\n" +
+	"\x1cSaveGatewaySettlementRequest\x12F\n" +
 	"\n" +
-	"settlement\x18\x01 \x01(\v2\x1e.polyglot.v1.GatewaySettlementR\n" +
+	"settlement\x18\x01 \x01(\v2\x1e.polyglot.v1.GatewaySettlementB\x06\xbaH\x03\xc8\x01\x01R\n" +
 	"settlement\"_\n" +
 	"\x1dSaveGatewaySettlementResponse\x12>\n" +
 	"\n" +

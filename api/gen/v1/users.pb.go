@@ -1118,9 +1118,9 @@ const file_v1_users_proto_rawDesc = "" +
 	"device_ids\x18\x02 \x03(\tR\tdeviceIds\"a\n" +
 	"\x15AssignDevicesResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12.\n" +
-	"\x13assigned_device_ids\x18\x02 \x03(\tR\x11assignedDeviceIds\"1\n" +
-	"\x16ListUserDevicesRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x04R\x06userId\"8\n" +
+	"\x13assigned_device_ids\x18\x02 \x03(\tR\x11assignedDeviceIds\":\n" +
+	"\x16ListUserDevicesRequest\x12 \n" +
+	"\auser_id\x18\x01 \x01(\x04B\a\xbaH\x042\x02 \x00R\x06userId\"8\n" +
 	"\x17ListUserDevicesResponse\x12\x1d\n" +
 	"\n" +
 	"device_ids\x18\x01 \x03(\tR\tdeviceIds2\xb9\x05\n" +

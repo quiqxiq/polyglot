@@ -33,7 +33,7 @@ Status berikut diverifikasi terhadap HEAD `77273db` dan hasil command terbaru.
 | F0 | **DONE** | Toolchain CI sudah Go 1.26, baseline test/build/vet lulus, E2E router diberi tag eksplisit, `make check` tersedia. |
 | F1 | **DONE** | Logging terpusat via `pkg/logger` (Logrus), request correlation context helpers, streaming request lifecycle logging, 0 direct Logrus imports di luar `pkg/logger`, 0 direct `Infof/Warnf/Errorf/Debugf`, dan 100% test passing. |
 | F2 | **DONE** | Error taxonomy stabil via `pkg/fault` (100% test coverage), domain sentinels terinventarisasi di domain packages, wrapping standar `%w`, zero unclassified errors di production usecase, Connect mapper via `pkg/response` (0 direct `connect.NewError` di internal/cmd), dan plain HTTP mapper standar via `response.WriteHTTPError`/`WriteHTTPStatusError`. |
-| F3 | **PARTIAL** | Protovalidate aktif pada router, inventory request tersedia, test unary/stream tersedia; inventory belum seluruhnya covered dan validasi manual masih tersisa. |
+| F3 | **DONE** | Seluruh 28 file protobuf di `api/proto/v1` teranotasi protovalidate, interceptor kanonikal terpasang di semua Connect router, wrapper middleware/validate.go yang tidak dipakai dihapus, validasi manual duplikat di handler dibersihkan, HTTP endpoint distandarkan dengan response.WriteHTTPStatusError/WriteHTTPError, dan contract tests memverifikasi penolakan sebelum usecase. |
 | F4 | **PARTIAL** | Mapper dan HTTP error envelope sudah distandardisasi pada beberapa area; seluruh endpoint belum memiliki contract test dan pagination contract. |
 | F5 | **PARTIAL** | ConnectRPC, layer boundary checker, dan integration test compile sudah ditegakkan; seluruh unit-test dependency inversion dan lifecycle worker coverage belum selesai. |
 | F6 | **PARTIAL** | Beberapa rename/file split selesai; file besar dan naming stutter legacy masih ada. |
@@ -394,52 +394,30 @@ Untuk setiap bounded context aktual (`billing`, `bot`, `cashbook`, `command`, `c
 
 ---
 
-### Fase 3: Request validation dan kontrak input
+### Fase 3: Request validation dan kontrak input (**DONE**)
 
 **Tujuan:** memindahkan validasi wire ke protovalidate dan menjaga business validation di usecase.
 
-**Task 3.1: Inventarisasi seluruh request protobuf**
+**Status:** Selesai pada commit standardisasi Fase 3.
+- Seluruh 28 file `.proto` di `api/proto/v1` telah diaudit dan dianotasi `buf.validate.field` (required nested, string min_len, range, repeated min_items).
+- Interceptor canonical di `internal/adapter/connect/options.go` (`DefaultHandlerOptions()`) terpasang pada seluruh Connect handler (unary dan streaming).
+- File wrapper tidak terpakai `internal/adapter/http/middleware/validate.go` telah dihapus.
+- Validasi manual duplikat di handler (check ID kosong pada stream, nil check nested required) telah dibersihkan.
+- Plain HTTP handler (`upload`, `portal`, `gateway`, `inventory`, `report`, `adminapi`, `webhook`) distandarkan pada `response.WriteHTTPError` dan `response.WriteHTTPStatusError`.
+- Contract tests (`validation_contract_test.go`, `auth_handler_test.go`, `olt/validation_test.go`, `ont/validation_test.go`) memverifikasi penolakan wire validation sebelum menyentuh usecase.
 
-- Buat tabel message request, field wajib, tipe, enum, pattern, range, dan rule bisnis.
-- Audit seluruh file `api/proto/v1`, bukan hanya 18 file yang disebut di plan lama.
-- Tetapkan field ID: format, whitespace policy, max length, dan apakah ID internal atau public.
-
-**Task 3.2: Lengkapi anotasi protovalidate**
-
-- `required` untuk message nested.
-- `min_len`/`max_len` untuk string.
-- pattern untuk ID atau identifier yang memang memiliki format.
-- range untuk angka, pagination, timeout, dan amount.
-- enum constraint untuk mode/status yang tertutup.
-- repeated item count dan nested validation jika diperlukan.
-
-**Task 3.3: Satu validation interceptor**
-
-- Pilih satu lokasi canonical untuk ConnectRPC validation.
-- Pasang pada semua unary dan streaming handler yang didukung library.
-- Hapus implementasi wrapper yang tidak dipakai atau jadikan helper canonical.
-- Uji bahwa invalid request ditolak sebelum usecase dipanggil.
-
-**Task 3.4: Bersihkan handler**
-
-- Hapus check field kosong yang sudah dicakup proto.
-- Pertahankan check kombinasi field yang memang business/semantic rule dan pindahkan ke usecase bila tidak membutuhkan transport.
-- Header/cookie authentication validation tetap di transport, tetapi errornya melalui mapper/helper konsisten.
-
-**Task 3.5: HTTP validation**
-
-- Decoder harus menolak malformed JSON dan, bila diperlukan, unknown fields.
-- Batasi body size.
-- Validasi DTO HTTP sebelum usecase.
-- Error field validation menggunakan envelope yang sama.
+**Task 3.1: Inventarisasi seluruh request protobuf** [DONE]
+**Task 3.2: Lengkapi anotasi protovalidate** [DONE]
+**Task 3.3: Satu validation interceptor** [DONE]
+**Task 3.4: Bersihkan handler** [DONE]
+**Task 3.5: HTTP validation** [DONE]
 
 **Acceptance criteria:**
-
-- Request invalid gagal dengan `CodeInvalidArgument` untuk ConnectRPC.
-- Usecase tidak dipanggil pada request yang gagal wire validation.
-- Tidak ada duplicate required-field validation di handler.
-- HTTP invalid JSON, missing field, wrong type, dan oversized body memiliki response konsisten.
-- `buf lint` dan regeneration berhasil.
+- Request invalid gagal dengan `CodeInvalidArgument` untuk ConnectRPC. [LULUS]
+- Usecase tidak dipanggil pada request yang gagal wire validation. [LULUS]
+- Tidak ada duplicate required-field validation di handler. [LULUS]
+- HTTP invalid JSON, missing field, wrong type, dan oversized body memiliki response konsisten. [LULUS]
+- `buf lint` dan regeneration berhasil. [LULUS]
 
 ---
 

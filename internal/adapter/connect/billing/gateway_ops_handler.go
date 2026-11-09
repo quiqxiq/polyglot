@@ -131,9 +131,6 @@ func (h *BillingConnectHandler) SaveGatewaySettlement(ctx context.Context, req *
 		return nil, response.Unavailable("gateway settlement repository unavailable")
 	}
 	s := req.Msg.GetSettlement()
-	if s == nil {
-		return nil, response.InvalidArgument("settlement is required")
-	}
 	var from, to *time.Time
 	if s.GetPeriodFromUnix() > 0 {
 		t := time.Unix(s.GetPeriodFromUnix(), 0).UTC()

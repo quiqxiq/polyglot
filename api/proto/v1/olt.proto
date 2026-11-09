@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;polyglotv1";
 
 // OltDevice adalah inventori OLT EPON HiOSO.
@@ -90,7 +92,7 @@ message ListOltsResponse {
 }
 
 message GetOltRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetOltResponse {
@@ -100,7 +102,7 @@ message GetOltResponse {
 
 message CreateOltRequest {
   string name = 1;
-  string host = 2;
+  string host = 2 [(buf.validate.field).string.min_len = 1];
   int32 telnet_port = 3;
   int32 ssh_port = 4;
   int32 snmp_port = 5;
@@ -109,7 +111,7 @@ message CreateOltRequest {
   int32 pon_count = 8;
   string username = 9;
   string password = 10;
-  string community_ro = 11;
+  string community_ro = 11 [(buf.validate.field).string.min_len = 1];
   string community_rw = 12;
   bool enabled = 13;
 }
@@ -119,9 +121,9 @@ message CreateOltResponse {
 }
 
 message UpdateOltRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string name = 2;
-  string host = 3;
+  string host = 3 [(buf.validate.field).string.min_len = 1];
   int32 telnet_port = 4;
   int32 ssh_port = 5;
   int32 snmp_port = 6;
@@ -140,7 +142,7 @@ message UpdateOltResponse {
 }
 
 message DeleteOltRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteOltResponse {
@@ -148,7 +150,7 @@ message DeleteOltResponse {
 }
 
 message TestOltConnectionRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message TestOltConnectionResponse {
@@ -172,7 +174,7 @@ message ListOnusResponse {
 }
 
 message GetOnuRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetOnuResponse {
@@ -180,7 +182,7 @@ message GetOnuResponse {
 }
 
 message ListOnuEventsRequest {
-  string onu_id = 1;
+  string onu_id = 1 [(buf.validate.field).string.min_len = 1];
   int32 limit = 2;
 }
 
@@ -189,7 +191,7 @@ message ListOnuEventsResponse {
 }
 
 message GetOnuOpticalHistoryRequest {
-  string onu_id = 1;
+  string onu_id = 1 [(buf.validate.field).string.min_len = 1];
   int32 hours = 2;
 }
 
@@ -200,7 +202,7 @@ message GetOnuOpticalHistoryResponse {
 // ---- Aksi tulis (async job) ----
 
 message SyncOltRequest {
-  string olt_device_id = 1;
+  string olt_device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message SyncOltResponse {
@@ -208,7 +210,7 @@ message SyncOltResponse {
 }
 
 message SaveOltConfigRequest {
-  string olt_device_id = 1;
+  string olt_device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message SaveOltConfigResponse {
@@ -216,8 +218,8 @@ message SaveOltConfigResponse {
 }
 
 message RenameOnuRequest {
-  string onu_id = 1;
-  string name = 2;
+  string onu_id = 1 [(buf.validate.field).string.min_len = 1];
+  string name = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message RenameOnuResponse {
@@ -225,7 +227,7 @@ message RenameOnuResponse {
 }
 
 message RebootOnuRequest {
-  string onu_id = 1;
+  string onu_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message RebootOnuResponse {
@@ -233,7 +235,7 @@ message RebootOnuResponse {
 }
 
 message SetOnuAdminStateRequest {
-  string onu_id = 1;
+  string onu_id = 1 [(buf.validate.field).string.min_len = 1];
   bool enabled = 2;
 }
 
@@ -242,7 +244,7 @@ message SetOnuAdminStateResponse {
 }
 
 message DeleteOnuRequest {
-  string onu_id = 1;
+  string onu_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteOnuResponse {

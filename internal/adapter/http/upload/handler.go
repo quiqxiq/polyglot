@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 const (
@@ -142,5 +143,5 @@ func writeJSON(w http.ResponseWriter, status int, v any) {
 }
 
 func writeErr(w http.ResponseWriter, status int, msg string) {
-	writeJSON(w, status, map[string]string{"error": msg})
+	response.WriteHTTPStatusError(w, status, msg)
 }

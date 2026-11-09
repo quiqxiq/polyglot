@@ -49,9 +49,6 @@ func (h *BillingConnectHandler) SavePaymentMethod(ctx context.Context, req *conn
 		return nil, response.Unavailable("payment method usecase unavailable")
 	}
 	pm := req.Msg.GetPaymentMethod()
-	if pm == nil {
-		return nil, response.InvalidArgument("payment_method is required")
-	}
 	saved, err := h.payMethodUC.SavePaymentMethod(ctx, domainBilling.PaymentMethod{
 		ID:            pm.GetId(),
 		TenantID:      domainTenant.DefaultID,

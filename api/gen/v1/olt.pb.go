@@ -7,6 +7,7 @@
 package polyglotv1
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -2375,7 +2376,7 @@ var File_v1_olt_proto protoreflect.FileDescriptor
 
 const file_v1_olt_proto_rawDesc = "" +
 	"\n" +
-	"\fv1/olt.proto\x12\vpolyglot.v1\"\xb4\x03\n" +
+	"\fv1/olt.proto\x12\vpolyglot.v1\x1a\x1bbuf/validate/validate.proto\"\xb4\x03\n" +
 	"\tOltDevice\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -2470,15 +2471,15 @@ const file_v1_olt_proto_rawDesc = "" +
 	"\v_distance_m\"\x11\n" +
 	"\x0fListOltsRequest\">\n" +
 	"\x10ListOltsResponse\x12*\n" +
-	"\x04olts\x18\x01 \x03(\v2\x16.polyglot.v1.OltDeviceR\x04olts\"\x1f\n" +
-	"\rGetOltRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"j\n" +
+	"\x04olts\x18\x01 \x03(\v2\x16.polyglot.v1.OltDeviceR\x04olts\"(\n" +
+	"\rGetOltRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"j\n" +
 	"\x0eGetOltResponse\x12(\n" +
 	"\x03olt\x18\x01 \x01(\v2\x16.polyglot.v1.OltDeviceR\x03olt\x12.\n" +
-	"\x06health\x18\x02 \x01(\v2\x16.polyglot.v1.OltHealthR\x06health\"\x80\x03\n" +
+	"\x06health\x18\x02 \x01(\v2\x16.polyglot.v1.OltHealthR\x06health\"\x92\x03\n" +
 	"\x10CreateOltRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
-	"\x04host\x18\x02 \x01(\tR\x04host\x12\x1f\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
+	"\x04host\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04host\x12\x1f\n" +
 	"\vtelnet_port\x18\x03 \x01(\x05R\n" +
 	"telnetPort\x12\x19\n" +
 	"\bssh_port\x18\x04 \x01(\x05R\asshPort\x12\x1b\n" +
@@ -2488,16 +2489,16 @@ const file_v1_olt_proto_rawDesc = "" +
 	"\tpon_count\x18\b \x01(\x05R\bponCount\x12\x1a\n" +
 	"\busername\x18\t \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\n" +
-	" \x01(\tR\bpassword\x12!\n" +
-	"\fcommunity_ro\x18\v \x01(\tR\vcommunityRo\x12!\n" +
+	" \x01(\tR\bpassword\x12*\n" +
+	"\fcommunity_ro\x18\v \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vcommunityRo\x12!\n" +
 	"\fcommunity_rw\x18\f \x01(\tR\vcommunityRw\x12\x18\n" +
 	"\aenabled\x18\r \x01(\bR\aenabled\"=\n" +
 	"\x11CreateOltResponse\x12(\n" +
-	"\x03olt\x18\x01 \x01(\v2\x16.polyglot.v1.OltDeviceR\x03olt\"\x90\x03\n" +
-	"\x10UpdateOltRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
-	"\x04host\x18\x03 \x01(\tR\x04host\x12\x1f\n" +
+	"\x03olt\x18\x01 \x01(\v2\x16.polyglot.v1.OltDeviceR\x03olt\"\xa2\x03\n" +
+	"\x10UpdateOltRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
+	"\x04host\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04host\x12\x1f\n" +
 	"\vtelnet_port\x18\x04 \x01(\x05R\n" +
 	"telnetPort\x12\x19\n" +
 	"\bssh_port\x18\x05 \x01(\x05R\asshPort\x12\x1b\n" +
@@ -2512,13 +2513,13 @@ const file_v1_olt_proto_rawDesc = "" +
 	"\fcommunity_rw\x18\r \x01(\tR\vcommunityRw\x12\x18\n" +
 	"\aenabled\x18\x0e \x01(\bR\aenabled\"=\n" +
 	"\x11UpdateOltResponse\x12(\n" +
-	"\x03olt\x18\x01 \x01(\v2\x16.polyglot.v1.OltDeviceR\x03olt\"\"\n" +
-	"\x10DeleteOltRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"-\n" +
+	"\x03olt\x18\x01 \x01(\v2\x16.polyglot.v1.OltDeviceR\x03olt\"+\n" +
+	"\x10DeleteOltRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"-\n" +
 	"\x11DeleteOltResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"*\n" +
-	"\x18TestOltConnectionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"K\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"3\n" +
+	"\x18TestOltConnectionRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"K\n" +
 	"\x19TestOltConnectionResponse\x12.\n" +
 	"\x06health\x18\x01 \x01(\v2\x16.polyglot.v1.OltHealthR\x06health\"\xae\x01\n" +
 	"\x0fListOnusRequest\x12\"\n" +
@@ -2530,45 +2531,45 @@ const file_v1_olt_proto_rawDesc = "" +
 	"\x06offset\x18\x06 \x01(\x05R\x06offset\"N\n" +
 	"\x10ListOnusResponse\x12$\n" +
 	"\x04onus\x18\x01 \x03(\v2\x10.polyglot.v1.OnuR\x04onus\x12\x14\n" +
-	"\x05total\x18\x02 \x01(\x05R\x05total\"\x1f\n" +
-	"\rGetOnuRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"4\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"(\n" +
+	"\rGetOnuRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\"4\n" +
 	"\x0eGetOnuResponse\x12\"\n" +
-	"\x03onu\x18\x01 \x01(\v2\x10.polyglot.v1.OnuR\x03onu\"C\n" +
-	"\x14ListOnuEventsRequest\x12\x15\n" +
-	"\x06onu_id\x18\x01 \x01(\tR\x05onuId\x12\x14\n" +
+	"\x03onu\x18\x01 \x01(\v2\x10.polyglot.v1.OnuR\x03onu\"L\n" +
+	"\x14ListOnuEventsRequest\x12\x1e\n" +
+	"\x06onu_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05onuId\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit\"F\n" +
 	"\x15ListOnuEventsResponse\x12-\n" +
-	"\x06events\x18\x01 \x03(\v2\x15.polyglot.v1.OnuEventR\x06events\"J\n" +
-	"\x1bGetOnuOpticalHistoryRequest\x12\x15\n" +
-	"\x06onu_id\x18\x01 \x01(\tR\x05onuId\x12\x14\n" +
+	"\x06events\x18\x01 \x03(\v2\x15.polyglot.v1.OnuEventR\x06events\"S\n" +
+	"\x1bGetOnuOpticalHistoryRequest\x12\x1e\n" +
+	"\x06onu_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05onuId\x12\x14\n" +
 	"\x05hours\x18\x02 \x01(\x05R\x05hours\"V\n" +
 	"\x1cGetOnuOpticalHistoryResponse\x126\n" +
-	"\asamples\x18\x01 \x03(\v2\x1c.polyglot.v1.OnuMetricSampleR\asamples\"4\n" +
-	"\x0eSyncOltRequest\x12\"\n" +
-	"\rolt_device_id\x18\x01 \x01(\tR\voltDeviceId\"(\n" +
+	"\asamples\x18\x01 \x03(\v2\x1c.polyglot.v1.OnuMetricSampleR\asamples\"=\n" +
+	"\x0eSyncOltRequest\x12+\n" +
+	"\rolt_device_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\voltDeviceId\"(\n" +
 	"\x0fSyncOltResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\":\n" +
-	"\x14SaveOltConfigRequest\x12\"\n" +
-	"\rolt_device_id\x18\x01 \x01(\tR\voltDeviceId\".\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"C\n" +
+	"\x14SaveOltConfigRequest\x12+\n" +
+	"\rolt_device_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\voltDeviceId\".\n" +
 	"\x15SaveOltConfigResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"=\n" +
-	"\x10RenameOnuRequest\x12\x15\n" +
-	"\x06onu_id\x18\x01 \x01(\tR\x05onuId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"*\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"O\n" +
+	"\x10RenameOnuRequest\x12\x1e\n" +
+	"\x06onu_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05onuId\x12\x1b\n" +
+	"\x04name\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04name\"*\n" +
 	"\x11RenameOnuResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\")\n" +
-	"\x10RebootOnuRequest\x12\x15\n" +
-	"\x06onu_id\x18\x01 \x01(\tR\x05onuId\"*\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"2\n" +
+	"\x10RebootOnuRequest\x12\x1e\n" +
+	"\x06onu_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05onuId\"*\n" +
 	"\x11RebootOnuResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"J\n" +
-	"\x17SetOnuAdminStateRequest\x12\x15\n" +
-	"\x06onu_id\x18\x01 \x01(\tR\x05onuId\x12\x18\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"S\n" +
+	"\x17SetOnuAdminStateRequest\x12\x1e\n" +
+	"\x06onu_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05onuId\x12\x18\n" +
 	"\aenabled\x18\x02 \x01(\bR\aenabled\"1\n" +
 	"\x18SetOnuAdminStateResponse\x12\x15\n" +
-	"\x06job_id\x18\x01 \x01(\tR\x05jobId\")\n" +
-	"\x10DeleteOnuRequest\x12\x15\n" +
-	"\x06onu_id\x18\x01 \x01(\tR\x05onuId\"*\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"2\n" +
+	"\x10DeleteOnuRequest\x12\x1e\n" +
+	"\x06onu_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05onuId\"*\n" +
 	"\x11DeleteOnuResponse\x12\x15\n" +
 	"\x06job_id\x18\x01 \x01(\tR\x05jobId2\x94\n" +
 	"\n" +

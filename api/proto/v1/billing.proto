@@ -272,14 +272,14 @@ message ListPaymentMethodsResponse {
 }
 
 message SavePaymentMethodRequest {
-  PaymentMethod payment_method = 1;
+  PaymentMethod payment_method = 1 [(buf.validate.field).required = true];
 }
 message SavePaymentMethodResponse {
   PaymentMethod payment_method = 1;
 }
 
 message DeletePaymentMethodRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message DeletePaymentMethodResponse {
   string message = 1;
@@ -288,8 +288,8 @@ message DeletePaymentMethodResponse {
 // ─── Mass Payment ──────────────────────────────────────────────────────
 
 message CreateMassPaymentRequest {
-  repeated string invoice_ids = 1;
-  string payment_method_id = 2;
+  repeated string invoice_ids = 1 [(buf.validate.field).repeated.min_items = 1];
+  string payment_method_id = 2 [(buf.validate.field).string.min_len = 1];
   string notes = 3;
 }
 message CreateMassPaymentResponse {
@@ -325,7 +325,7 @@ message BulkPaymentItem {
 }
 
 message GetMassPaymentRequest {
-  string batch_id = 1;
+  string batch_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message GetMassPaymentResponse {
   BulkPaymentBatch batch = 1;
@@ -389,7 +389,7 @@ message ListGatewaySettlementsResponse {
 }
 
 message SaveGatewaySettlementRequest {
-  GatewaySettlement settlement = 1;
+  GatewaySettlement settlement = 1 [(buf.validate.field).required = true];
 }
 message SaveGatewaySettlementResponse {
   GatewaySettlement settlement = 1;

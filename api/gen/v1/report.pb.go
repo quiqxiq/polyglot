@@ -2513,9 +2513,9 @@ const file_v1_report_proto_rawDesc = "" +
 	"\x05as_of\x18\x01 \x01(\tR\x04asOf\x12/\n" +
 	"\x04rows\x18\x02 \x03(\v2\x1b.polyglot.v1.AgingDetailRowR\x04rows\x12'\n" +
 	"\x0ftotal_customers\x18\x03 \x01(\x05R\x0etotalCustomers\x12+\n" +
-	"\x11total_outstanding\x18\x04 \x01(\x01R\x10totalOutstanding\".\n" +
-	"\x14ClosingReportRequest\x12\x16\n" +
-	"\x06period\x18\x01 \x01(\tR\x06period\"\x80\x03\n" +
+	"\x11total_outstanding\x18\x04 \x01(\x01R\x10totalOutstanding\"7\n" +
+	"\x14ClosingReportRequest\x12\x1f\n" +
+	"\x06period\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06period\"\x80\x03\n" +
 	"\x15ClosingReportResponse\x12\x16\n" +
 	"\x06period\x18\x01 \x01(\tR\x06period\x12*\n" +
 	"\x11closing_date_unix\x18\x02 \x01(\x03R\x0fclosingDateUnix\x12%\n" +
@@ -2525,11 +2525,11 @@ const file_v1_report_proto_rawDesc = "" +
 	"\x11total_outstanding\x18\x06 \x01(\x01R\x10totalOutstanding\x12)\n" +
 	"\x10active_customers\x18\a \x01(\x05R\x0factiveCustomers\x12+\n" +
 	"\x11new_subscriptions\x18\b \x01(\x05R\x10newSubscriptions\x12+\n" +
-	"\x11debts_outstanding\x18\t \x01(\x01R\x10debtsOutstanding\"\xcf\x01\n" +
-	"\x13ExportReportRequest\x12\x1f\n" +
-	"\vreport_type\x18\x01 \x01(\tR\n" +
-	"reportType\x12\x16\n" +
-	"\x06format\x18\x02 \x01(\tR\x06format\x12D\n" +
+	"\x11debts_outstanding\x18\t \x01(\x01R\x10debtsOutstanding\"\xe1\x01\n" +
+	"\x13ExportReportRequest\x12(\n" +
+	"\vreport_type\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
+	"reportType\x12\x1f\n" +
+	"\x06format\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06format\x12D\n" +
 	"\x06params\x18\x03 \x03(\v2,.polyglot.v1.ExportReportRequest.ParamsEntryR\x06params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +

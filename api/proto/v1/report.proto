@@ -239,7 +239,7 @@ message AgingDetailResponse {
 // ─── Laporan Tutup Buku ─────────────────────────────────────────────────
 
 message ClosingReportRequest {
-  string period = 1;
+  string period = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ClosingReportResponse {
@@ -257,8 +257,8 @@ message ClosingReportResponse {
 // ─── Ekspor Laporan ─────────────────────────────────────────────────────
 
 message ExportReportRequest {
-  string report_type = 1; // TAX | SALES | CASHFLOW | AGING_DETAIL
-  string format = 2; // csv | xlsx
+  string report_type = 1 [(buf.validate.field).string.min_len = 1]; // TAX | SALES | CASHFLOW | AGING_DETAIL
+  string format = 2 [(buf.validate.field).string.min_len = 1]; // csv | xlsx
   map<string, string> params = 3;
 }
 

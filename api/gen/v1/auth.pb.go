@@ -758,10 +758,10 @@ const file_v1_auth_proto_rawDesc = "" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12&\n" +
 	"\x0especialization\x18\x04 \x01(\tR\x0especialization\"@\n" +
 	"\x10UpdateMeResponse\x12,\n" +
-	"\x04user\x18\x01 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\"]\n" +
-	"\x15ChangePasswordRequest\x12!\n" +
-	"\fold_password\x18\x01 \x01(\tR\voldPassword\x12!\n" +
-	"\fnew_password\x18\x02 \x01(\tR\vnewPassword\"L\n" +
+	"\x04user\x18\x01 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\"o\n" +
+	"\x15ChangePasswordRequest\x12*\n" +
+	"\fold_password\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\voldPassword\x12*\n" +
+	"\fnew_password\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\bR\vnewPassword\"L\n" +
 	"\x16ChangePasswordResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\":\n" +

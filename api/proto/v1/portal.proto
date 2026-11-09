@@ -30,7 +30,7 @@ message PortalLoginResponse {
   Customer customer = 3;
 }
 
-message PortalOverviewRequest { string token = 1; }
+message PortalOverviewRequest { string token = 1 [(buf.validate.field).string.min_len = 1]; }
 
 message UnpaidInvoiceSummary {
   string id = 1;
@@ -63,7 +63,7 @@ message PortalOverviewResponse {
 }
 
 message MyInvoicesRequest {
-  string token = 1;
+  string token = 1 [(buf.validate.field).string.min_len = 1];
   int32 limit = 2; // 0 = 50
 }
 message MyInvoicesResponse {
@@ -71,7 +71,7 @@ message MyInvoicesResponse {
 }
 
 message MyPaymentsRequest {
-  string token = 1;
+  string token = 1 [(buf.validate.field).string.min_len = 1];
   int32 limit = 2;
 }
 message MyPaymentsResponse {
@@ -89,7 +89,7 @@ message PaymentEntry {
   string reference = 7;
 }
 
-message PortalLogoutRequest { string token = 1; }
+message PortalLogoutRequest { string token = 1 [(buf.validate.field).string.min_len = 1]; }
 message PortalLogoutResponse { string message = 1; }
 
 service PortalService {

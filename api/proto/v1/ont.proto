@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;polyglotv1";
 
 // AcsConfig adalah konfigurasi integrasi GenieACS yang terbaca.
@@ -47,23 +49,23 @@ message ListAcsDevicesResponse {
 }
 
 message RefreshOntTelemetryRequest {
-  string ont_id = 1;
+  string ont_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message RefreshOntTelemetryResponse {
   string job_id = 1;
 }
 
 message RebootOntRequest {
-  string ont_id = 1;
+  string ont_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message RebootOntResponse {
   string job_id = 1;
 }
 
 message SetOntWifiRequest {
-  string ont_id = 1;
-  string ssid = 2;
-  string password = 3;
+  string ont_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ssid = 2 [(buf.validate.field).string.min_len = 1];
+  string password = 3 [(buf.validate.field).string.min_len = 1];
   string band = 4;
 }
 message SetOntWifiResponse {
@@ -71,16 +73,16 @@ message SetOntWifiResponse {
 }
 
 message PushOntPppoeRequest {
-  string ont_id = 1;
-  string username = 2;
-  string password = 3;
+  string ont_id = 1 [(buf.validate.field).string.min_len = 1];
+  string username = 2 [(buf.validate.field).string.min_len = 1];
+  string password = 3 [(buf.validate.field).string.min_len = 1];
 }
 message PushOntPppoeResponse {
   string job_id = 1;
 }
 
 message LinkOntRequest {
-  string ont_id = 1;
+  string ont_id = 1 [(buf.validate.field).string.min_len = 1];
   string customer_id = 2;
   string subscription_id = 3;
   string pppoe_username = 4;
@@ -90,22 +92,22 @@ message LinkOntResponse {
 }
 
 message UnlinkOntRequest {
-  string ont_id = 1;
+  string ont_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message UnlinkOntResponse {
   string message = 1;
 }
 
 message PinAcsDeviceRequest {
-  string ont_id = 1;
-  string acs_device_id = 2;
+  string ont_id = 1 [(buf.validate.field).string.min_len = 1];
+  string acs_device_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 message PinAcsDeviceResponse {
   string message = 1;
 }
 
 message UnpinAcsDeviceRequest {
-  string ont_id = 1;
+  string ont_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message UnpinAcsDeviceResponse {
   string message = 1;

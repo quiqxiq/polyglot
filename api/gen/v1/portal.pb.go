@@ -943,9 +943,9 @@ const file_v1_portal_proto_rawDesc = "" +
 	"\x13PortalLoginResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12&\n" +
 	"\x0fexpires_at_unix\x18\x02 \x01(\x03R\rexpiresAtUnix\x121\n" +
-	"\bcustomer\x18\x03 \x01(\v2\x15.polyglot.v1.CustomerR\bcustomer\"-\n" +
-	"\x15PortalOverviewRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"\xa1\x02\n" +
+	"\bcustomer\x18\x03 \x01(\v2\x15.polyglot.v1.CustomerR\bcustomer\"6\n" +
+	"\x15PortalOverviewRequest\x12\x1d\n" +
+	"\x05token\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05token\"\xa1\x02\n" +
 	"\x14UnpaidInvoiceSummary\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
 	"\x0einvoice_number\x18\x02 \x01(\tR\rinvoiceNumber\x12\x16\n" +
@@ -973,14 +973,14 @@ const file_v1_portal_proto_rawDesc = "" +
 	"\fsubscription\x18\x03 \x01(\v2&.polyglot.v1.PortalSubscriptionSummaryR\fsubscription\x12J\n" +
 	"\x0funpaid_invoices\x18\x04 \x03(\v2!.polyglot.v1.UnpaidInvoiceSummaryR\x0eunpaidInvoices\x12\x1f\n" +
 	"\vpayment_url\x18\x05 \x01(\tR\n" +
-	"paymentUrl\"?\n" +
-	"\x11MyInvoicesRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\x12\x14\n" +
+	"paymentUrl\"H\n" +
+	"\x11MyInvoicesRequest\x12\x1d\n" +
+	"\x05token\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05token\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit\"F\n" +
 	"\x12MyInvoicesResponse\x120\n" +
-	"\binvoices\x18\x01 \x03(\v2\x14.polyglot.v1.InvoiceR\binvoices\"?\n" +
-	"\x11MyPaymentsRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\x12\x14\n" +
+	"\binvoices\x18\x01 \x03(\v2\x14.polyglot.v1.InvoiceR\binvoices\"H\n" +
+	"\x11MyPaymentsRequest\x12\x1d\n" +
+	"\x05token\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05token\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit\"K\n" +
 	"\x12MyPaymentsResponse\x125\n" +
 	"\bpayments\x18\x01 \x03(\v2\x19.polyglot.v1.PaymentEntryR\bpayments\"\xe7\x01\n" +
@@ -993,9 +993,9 @@ const file_v1_portal_proto_rawDesc = "" +
 	"\x11payment_date_unix\x18\x05 \x01(\x03R\x0fpaymentDateUnix\x12\x1f\n" +
 	"\vscan_method\x18\x06 \x01(\tR\n" +
 	"scanMethod\x12\x1c\n" +
-	"\treference\x18\a \x01(\tR\treference\"+\n" +
-	"\x13PortalLogoutRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"0\n" +
+	"\treference\x18\a \x01(\tR\treference\"4\n" +
+	"\x13PortalLogoutRequest\x12\x1d\n" +
+	"\x05token\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05token\"0\n" +
 	"\x14PortalLogoutResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage2\xec\x03\n" +
 	"\rPortalService\x12M\n" +

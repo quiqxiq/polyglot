@@ -62,6 +62,23 @@ func TestDeviceServiceValidationRejectsInvalidUnaryRequest(t *testing.T) {
 	}
 }
 
+func TestDeviceServiceValidationRejectsMissingRequiredNestedMessage(t *testing.T) {
+	_, handler := connectDevice.NewDeviceServiceHandler(nil, nil, nil, nil, nil, nil)
+	recorder := httptest.NewRecorder()
+	req := httptest.NewRequest(
+		http.MethodPost,
+		"/polyglot.v1.DeviceService/UpdateDevice",
+		bytes.NewBufferString(`{}`),
+	)
+	req.Header.Set("Content-Type", "application/json")
+
+	handler.ServeHTTP(recorder, req)
+
+	if got, want := recorder.Code, http.StatusBadRequest; got != want {
+		t.Errorf("UpdateDevice missing required device status = %d, want %d", got, want)
+	}
+}
+
 func TestDeviceServiceValidationRejectsInvalidStreamingRequest(t *testing.T) {
 	_, handler := connectDevice.NewDeviceServiceHandler(nil, nil, nil, nil, nil, nil)
 
