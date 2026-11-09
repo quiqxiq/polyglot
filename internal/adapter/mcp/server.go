@@ -9,7 +9,6 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/mcp/device"
 	"github.com/quixiq/polyglot/internal/adapter/mcp/mikrotik"
 	"github.com/quixiq/polyglot/internal/adapter/mcp/olt"
-	"github.com/quixiq/polyglot/internal/adapter/mcp/skill"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
@@ -26,7 +25,6 @@ type Server struct {
 	mikhmonUC    *hotspotUC.UseCase
 	oltSvc       *oltUC.Service
 	customerRepo port.CustomerRepository
-	skillRepo    port.SkillRepository
 	deviceRepo   port.DeviceRepository
 }
 
@@ -68,12 +66,6 @@ func (s *Server) WithCustomerRepository(repo port.CustomerRepository) *Server {
 	return s
 }
 
-// WithSkillRepository sets the SkillRepository dependency.
-func (s *Server) WithSkillRepository(sr port.SkillRepository) *Server {
-	s.skillRepo = sr
-	return s
-}
-
 func (s *Server) registerTools() {
 	deviceH := device.NewHandler(s.registry, func() port.DeviceRepository { return s.deviceRepo }, s.audit)
 	device.Register(s.mcpServer, deviceH)
@@ -86,9 +78,6 @@ func (s *Server) registerTools() {
 
 	customerH := customer.NewHandler(func() port.CustomerRepository { return s.customerRepo })
 	customer.Register(s.mcpServer, customerH)
-
-	skillH := skill.NewHandler(func() port.SkillRepository { return s.skillRepo })
-	skill.Register(s.mcpServer, skillH)
 }
 
 // HTTPHandler returns an http.Handler that serves the MCP streamable-HTTP

@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 
-	domainBot "github.com/quixiq/polyglot/internal/domain/bot"
 	domainWA "github.com/quixiq/polyglot/internal/domain/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	ucWA "github.com/quixiq/polyglot/internal/usecase/whatsapp"
@@ -43,6 +42,7 @@ func (h *Handler) RegisterProtected(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/whatsapp/session/pair-code", h.handleGetPairingCode)
 	mux.HandleFunc("POST /api/whatsapp/session/reconnect", h.handleReconnectSession)
 	mux.HandleFunc("POST /api/whatsapp/session/logout", h.handleLogoutSession)
+	mux.HandleFunc("POST /api/whatsapp/session/purge", h.handlePurgeSession)
 
 	mux.HandleFunc("POST /api/whatsapp/send/message", h.handleSendMessage)
 	mux.HandleFunc("POST /api/whatsapp/send/image", h.handleSendImage)
@@ -99,10 +99,9 @@ func (h *Handler) handleCreateSession(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	session := &domainBot.WASession{
-		DeviceName:   name,
-		PhoneNumber:  strings.TrimSpace(req.PhoneNumber),
-		IsBotEnabled: true,
+	session := &domainWA.WASession{
+		DeviceName:  name,
+		PhoneNumber: strings.TrimSpace(req.PhoneNumber),
 	}
 
 	if err := h.sessionRepo.CreateSession(r.Context(), session); err != nil {
@@ -251,6 +250,38 @@ func (h *Handler) handleLogoutSession(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(GenericSuccessResponse{
 		Success: true,
 		Message: "session logged out",
+	})
+}
+
+func (h *Handler) handlePurgeSession(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var req SessionActionRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		response.WriteHTTPStatusError(w, http.StatusBadRequest, "Invalid JSON payload")
+		return
+	}
+
+	if req.SessionID == 0 {
+		response.WriteHTTPStatusError(w, http.StatusBadRequest, "session_id is required")
+		return
+	}
+
+	if h.waGateway != nil {
+		if err := h.waGateway.Purge(req.SessionID); err != nil {
+			response.WriteHTTPError(w, err)
+			return
+		}
+	}
+	if h.sessionRepo != nil {
+		if err := h.sessionRepo.DeleteSession(r.Context(), req.SessionID); err != nil {
+			response.WriteHTTPError(w, err)
+			return
+		}
+	}
+
+	_ = json.NewEncoder(w).Encode(GenericSuccessResponse{
+		Success: true,
+		Message: "session purged",
 	})
 }
 

@@ -6,7 +6,7 @@ import { useHotspotActiveSessionsQuery } from '@/features/hotspot/api/use-hotspo
 import { useHotspotUsersQuery } from '@/features/hotspot/api/use-hotspot-users'
 import { usePPPActiveSessionsQuery } from '@/features/ppp/api/use-ppp-active'
 import { usePPPSecretsQuery } from '@/features/ppp/api/use-ppp-secrets'
-import { useWASessionsQuery, useConversationsQuery } from '@/features/chats/api/use-chats'
+import { useWASessionsQuery } from '@/features/whatsapp/api/use-whatsapp'
 import { Banknote, MessageCircleMore, Network, Wifi, TrendingUp } from 'lucide-react'
 
 interface KPICardsProps {
@@ -79,13 +79,10 @@ export function KPICards({ deviceId }: KPICardsProps) {
   const pppSecretsQuery = usePPPSecretsQuery(deviceId)
   const pppSecrets = pppSecretsQuery.data ?? []
 
-  // 4. WhatsApp & Bot
+  // 4. WhatsApp
   const waSessionsQuery = useWASessionsQuery()
   const waSessions = waSessionsQuery.data ?? []
-  const connectedSessions = waSessions.filter((s) => s.status === 'connected')
-  const conversationsQuery = useConversationsQuery()
-  const conversations = conversationsQuery.data ?? []
-  const escalatedCount = conversations.filter((c) => c.status === 'escalation').length
+  const connectedSessions = waSessions.filter((s) => s.status === 'online')
 
   const isLoading =
     reportsQuery.isLoading ||
@@ -180,10 +177,10 @@ export function KPICards({ deviceId }: KPICardsProps) {
         </CardContent>
       </Card>
 
-      {/* ── 4. WhatsApp AI Assistant & CS ─────────────────── */}
+      {/* ── 4. WhatsApp Gateway ─────────────────── */}
       <Card className='shadow-xs hover:border-primary/40 transition-colors'>
         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-          <CardTitle className='text-sm font-medium'>WhatsApp AI Assistant</CardTitle>
+          <CardTitle className='text-sm font-medium'>WhatsApp Gateway</CardTitle>
           <div className='flex size-8 items-center justify-center rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'>
             <MessageCircleMore className='size-4' />
           </div>
@@ -207,7 +204,7 @@ export function KPICards({ deviceId }: KPICardsProps) {
                 )}
               </div>
               <p className='mt-1 text-xs text-muted-foreground'>
-                {conversations.length} chat ({escalatedCount} eskalasi CS aktif)
+                {waSessions.length} perangkat terdaftar
               </p>
             </>
           )}

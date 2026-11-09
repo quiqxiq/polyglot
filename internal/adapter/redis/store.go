@@ -2,14 +2,11 @@ package redis
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
 
 	"github.com/redis/go-redis/v9"
-
-	"github.com/quixiq/polyglot/internal/domain/llm"
 )
 
 // Store provides Redis-backed cache and session operations.
@@ -46,83 +43,13 @@ func (s *Store) Delete(ctx context.Context, key string) error {
 	return s.client.Del(ctx, key).Err()
 }
 
-func sessionKey(customerNumber string) string {
-	return fmt.Sprintf("session:%s:messages", customerNumber)
+func rateLimitKey(scope string, window string) string {
+	return fmt.Sprintf("rl:%s:%s", scope, window)
 }
 
-func summaryKey(customerNumber string) string {
-	return fmt.Sprintf("session:%s:summary", customerNumber)
-}
-
-func (s *Store) SaveSessionMessages(ctx context.Context, customerNumber string, messages []llm.ChatMessage, ttl time.Duration) error {
-	data, err := json.Marshal(messages)
-	if err != nil {
-		return fmt.Errorf("failed to marshal messages: %w", err)
-	}
-	return s.client.Set(ctx, sessionKey(customerNumber), data, ttl).Err()
-}
-
-func (s *Store) GetSessionMessages(ctx context.Context, customerNumber string) ([]llm.ChatMessage, error) {
-	data, err := s.client.Get(ctx, sessionKey(customerNumber)).Bytes()
-	if err != nil {
-		if errors.Is(err, redis.Nil) {
-			return nil, nil
-		}
-		return nil, err
-	}
-
-	var messages []llm.ChatMessage
-	if err := json.Unmarshal(data, &messages); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal messages: %w", err)
-	}
-	return messages, nil
-}
-
-func (s *Store) DeleteSession(ctx context.Context, customerNumber string) error {
-	pipe := s.client.Pipeline()
-	pipe.Del(ctx, sessionKey(customerNumber))
-	pipe.Del(ctx, summaryKey(customerNumber))
-	_, err := pipe.Exec(ctx)
-	return err
-}
-
-func (s *Store) SetSessionSummary(ctx context.Context, customerNumber string, summary string, ttl time.Duration) error {
-	return s.client.Set(ctx, summaryKey(customerNumber), summary, ttl).Err()
-}
-
-func (s *Store) GetSessionSummary(ctx context.Context, customerNumber string) (string, error) {
-	result, err := s.client.Get(ctx, summaryKey(customerNumber)).Result()
-	if err != nil {
-		if errors.Is(err, redis.Nil) {
-			return "", nil
-		}
-		return "", err
-	}
-	return result, nil
-}
-
-func (s *Store) RefreshSessionTTL(ctx context.Context, customerNumber string, ttl time.Duration) error {
-	pipe := s.client.Pipeline()
-	pipe.Expire(ctx, sessionKey(customerNumber), ttl)
-	pipe.Expire(ctx, summaryKey(customerNumber), ttl)
-	_, err := pipe.Exec(ctx)
-	return err
-}
-
-func rateLimitKey(customerNumber string, window string) string {
-	return fmt.Sprintf("rl:%s:%s", customerNumber, window)
-}
-
-func muteKey(customerNumber string) string {
-	return fmt.Sprintf("mute:%s", customerNumber)
-}
-
-func spamKey(customerNumber string) string {
-	return fmt.Sprintf("spam:%s", customerNumber)
-}
-
-func (s *Store) IncrementRateLimit(ctx context.Context, customerNumber string, window string, ttl time.Duration) (int64, error) {
-	key := rateLimitKey(customerNumber, window)
+// IncrementRateLimit increments the hit counter for the given scope and window.
+func (s *Store) IncrementRateLimit(ctx context.Context, scope string, window string, ttl time.Duration) (int64, error) {
+	key := rateLimitKey(scope, window)
 	pipe := s.client.Pipeline()
 	incr := pipe.Incr(ctx, key)
 	pipe.Expire(ctx, key, ttl)
@@ -133,8 +60,9 @@ func (s *Store) IncrementRateLimit(ctx context.Context, customerNumber string, w
 	return incr.Val(), nil
 }
 
-func (s *Store) GetRateLimitCount(ctx context.Context, customerNumber string, window string) (int64, error) {
-	count, err := s.client.Get(ctx, rateLimitKey(customerNumber, window)).Int64()
+// GetRateLimitCount returns the current hit counter for the given scope and window.
+func (s *Store) GetRateLimitCount(ctx context.Context, scope string, window string) (int64, error) {
+	count, err := s.client.Get(ctx, rateLimitKey(scope, window)).Int64()
 	if err != nil {
 		if errors.Is(err, redis.Nil) {
 			return 0, nil
@@ -145,39 +73,6 @@ func (s *Store) GetRateLimitCount(ctx context.Context, customerNumber string, wi
 }
 
 // ResetRateLimit clears a rate-limit counter (e.g. after a successful login).
-func (s *Store) ResetRateLimit(ctx context.Context, customerNumber string, window string) error {
-	return s.client.Del(ctx, rateLimitKey(customerNumber, window)).Err()
-}
-
-func (s *Store) MuteNumber(ctx context.Context, customerNumber string, duration time.Duration) error {
-	return s.client.Set(ctx, muteKey(customerNumber), "1", duration).Err()
-}
-
-func (s *Store) IsMuted(ctx context.Context, customerNumber string) (bool, error) {
-	exists, err := s.client.Exists(ctx, muteKey(customerNumber)).Result()
-	if err != nil {
-		return false, err
-	}
-	return exists > 0, nil
-}
-
-func (s *Store) UnmuteNumber(ctx context.Context, customerNumber string) error {
-	return s.client.Del(ctx, muteKey(customerNumber)).Err()
-}
-
-func (s *Store) RecordMessageForSpamDetection(ctx context.Context, customerNumber string, messageHash string) (int64, error) {
-	key := spamKey(customerNumber)
-	pipe := s.client.Pipeline()
-	pipe.ZAdd(ctx, key, redis.Z{
-		Score:  float64(time.Now().Unix()),
-		Member: messageHash,
-	})
-	pipe.ZRemRangeByScore(ctx, key, "-inf", fmt.Sprintf("%d", time.Now().Add(-60*time.Second).Unix()))
-	count := pipe.ZCard(ctx, key)
-	pipe.Expire(ctx, key, 2*time.Minute)
-	_, err := pipe.Exec(ctx)
-	if err != nil {
-		return 0, err
-	}
-	return count.Val(), nil
+func (s *Store) ResetRateLimit(ctx context.Context, scope string, window string) error {
+	return s.client.Del(ctx, rateLimitKey(scope, window)).Err()
 }

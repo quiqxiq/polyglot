@@ -12,14 +12,12 @@ import (
 )
 
 type mockSettingRepo struct {
-	settings    map[string]setting.Setting
-	botSettings *setting.BotSettings
+	settings map[string]setting.Setting
 }
 
 func newMockSettingRepo() *mockSettingRepo {
 	return &mockSettingRepo{
-		settings:    make(map[string]setting.Setting),
-		botSettings: setting.DefaultBotSettings(),
+		settings: make(map[string]setting.Setting),
 	}
 }
 
@@ -72,15 +70,6 @@ func (m *mockSettingRepo) BatchSet(ctx context.Context, settings []setting.Setti
 	return nil
 }
 
-func (m *mockSettingRepo) GetBotSettings(ctx context.Context) (*setting.BotSettings, error) {
-	return m.botSettings, nil
-}
-
-func (m *mockSettingRepo) SaveBotSettings(ctx context.Context, s *setting.BotSettings) error {
-	m.botSettings = s
-	return nil
-}
-
 func TestManageSettingUseCase(t *testing.T) {
 	ctx := context.Background()
 	repo := newMockSettingRepo()
@@ -94,21 +83,4 @@ func TestManageSettingUseCase(t *testing.T) {
 	require.NoError(t, err)
 	assert.Len(t, val, 1)
 	assert.Equal(t, "Polyglot NetOps", val[0].Value)
-
-	// Test Bot Settings
-	botCfg, err := uc.GetBotSettings(ctx)
-	require.NoError(t, err)
-	assert.Equal(t, 3, botCfg.BurstLimit)
-
-	botCfg.BurstLimit = 5
-	botCfg.DailyChatLimit = 25
-	botCfg.CustomWhitelistPhones = "628111222333"
-	err = uc.UpdateBotSettings(ctx, botCfg)
-	require.NoError(t, err)
-
-	updated, err := uc.GetBotSettings(ctx)
-	require.NoError(t, err)
-	assert.Equal(t, 5, updated.BurstLimit)
-	assert.Equal(t, 25, updated.DailyChatLimit)
-	assert.Equal(t, "628111222333", updated.CustomWhitelistPhones)
 }

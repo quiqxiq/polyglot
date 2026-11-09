@@ -9,7 +9,7 @@ import (
 	"go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
 
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
@@ -50,7 +50,7 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 
 	senderJID := normalizeJIDFromLID(context.Background(), evt.Info.Sender, c.waClient).String()
 
-	msg := &bot.WAMessage{
+	msg := &whatsapp.WAMessage{
 		SessionID:   c.SessionID,
 		ChatJID:     chatJID,
 		WAMessageID: evt.Info.ID,
@@ -73,7 +73,7 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to mirror message")
 	}
 
-	chat := &bot.WAChat{
+	chat := &whatsapp.WAChat{
 		SessionID:          c.SessionID,
 		ChatJID:            chatJID,
 		DisplayName:        displayName,
@@ -109,7 +109,7 @@ func (c *Client) recordOutgoingMessage(jid types.JID, waMessageID string, conten
 	}
 	now := time.Now()
 
-	msg := &bot.WAMessage{
+	msg := &whatsapp.WAMessage{
 		SessionID:   c.SessionID,
 		ChatJID:     chatJID,
 		WAMessageID: waMessageID,
@@ -123,7 +123,7 @@ func (c *Client) recordOutgoingMessage(jid types.JID, waMessageID string, conten
 		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to mirror outgoing message")
 	}
 
-	chat := &bot.WAChat{
+	chat := &whatsapp.WAChat{
 		SessionID:          c.SessionID,
 		ChatJID:            chatJID,
 		LastMessageID:      waMessageID,

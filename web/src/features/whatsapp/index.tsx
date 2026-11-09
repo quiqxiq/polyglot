@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { WASession } from '@/gen/v1/whatsapp_pb'
+import type { WASession } from './types'
 import {
   MessageCircleMore,
   Plus,
@@ -76,7 +76,7 @@ function statusMeta(status: string): {
   }
 }
 
-function formatJid(jid: string): string {
+function formatJid(jid?: string): string {
   if (!jid) return ''
   return jid.split('@')[0] || jid
 }
@@ -250,10 +250,6 @@ export function WhatsAppDevices() {
                         <span className='max-w-40 truncate font-mono text-xs'>
                           {s.jid || '—'}
                         </span>
-                      </div>
-                      <div className='flex items-center justify-between'>
-                        <span className='text-muted-foreground'>Bot</span>
-                        <span>{s.isBotActive ? 'Aktif' : 'Nonaktif'}</span>
                       </div>
                       {s.connectedAt && (
                         <div className='flex items-center justify-between'>

@@ -9,21 +9,17 @@ import (
 
 	acsmanager "github.com/quixiq/polyglot/internal/adapter/acsmanager"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
-	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
-	"github.com/quixiq/polyglot/internal/adapter/llm/genkit"
 	"github.com/quixiq/polyglot/internal/adapter/midtrans"
 	oltmanager "github.com/quixiq/polyglot/internal/adapter/oltmanager"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/provisioner"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
-	storageAdapter "github.com/quixiq/polyglot/internal/adapter/storage"
 	tripay "github.com/quixiq/polyglot/internal/adapter/tripay"
 	waAdapter "github.com/quixiq/polyglot/internal/adapter/whatsapp"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/adapter/xendit"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
-	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/driver/genericssh"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
 	"github.com/quixiq/polyglot/internal/driver/hioso"
@@ -34,16 +30,12 @@ import (
 	"github.com/quixiq/polyglot/internal/registry"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
-	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
 	cashbookUC "github.com/quixiq/polyglot/internal/usecase/cashbook"
-	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
-	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 	debtUC "github.com/quixiq/polyglot/internal/usecase/debt"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
-	llmUC "github.com/quixiq/polyglot/internal/usecase/llm"
 	metricsUC "github.com/quixiq/polyglot/internal/usecase/metrics"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
@@ -56,7 +48,6 @@ import (
 	reportUC "github.com/quixiq/polyglot/internal/usecase/report"
 	jobUCRouter "github.com/quixiq/polyglot/internal/usecase/routerjob"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
-	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -117,44 +108,17 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	sseHub := wsAdapter.NewSSEHub()
 
 	eventHandler := whatsapp.NewEventHandler(pgStore, sseHub)
-	chatService := chatUC.NewChatUseCase(pgStore)
 	waManager, err := whatsapp.NewSessionManager(cfg.DatabaseURL, pgStore, nil, eventHandler.MakeStatusCallback())
 	if err != nil {
 		logger.WithComponent("App").WithError(err).Warn("failed to initialize WhatsApp session manager")
 	}
 
-	convService := convUC.NewConversationUseCase(pgStore)
-	convService.SetPublisher(sseHub)
-
-	fsSkillStore, err := storageAdapter.NewFSSkillStore("data")
-	if err != nil {
-		logger.WithComponent("App").WithError(err).Warn("Failed to initialize FSSkillStore")
-	}
-	gitSyncer := storageAdapter.NewGitSyncer(2 * time.Minute)
-	skillUseCase := skillUC.NewManageSkillUseCase(pgStore, fsSkillStore, gitSyncer)
-
-	llmFactory := func(c *domainllm.Config) (port.LLMProvider, error) {
-		return llmadapter.NewProvider(c, cfg.EncryptionKey)
-	}
 	userRepo := postgres.NewUserRepository(pgStore.DB())
 	settingRepo := postgres.NewSettingRepository(pgStore.DB()).
 		WithVault(postgres.NewCredentialVault(pgStore.DB(), cfg.EncryptionKey))
-	botEngine := botUC.NewEngine(
-		redisStore,
-		waManager,
-		convService,
-		skillUseCase.Provider(),
-		skillUseCase,
-		pgStore,
-		pgStore,
-		userRepo,
-		settingRepo,
-		sseHub,
-		llmFactory,
-	)
 
 	if waManager != nil {
-		waManager.SetMessageCallback(eventHandler.MakeMessageCallback(botEngine.HandleIncomingMessage))
+		waManager.SetMessageCallback(eventHandler.MakeMessageCallback(nil))
 		waManager.SetChatUpdateCallback(eventHandler.MakeChatUpdateCallback())
 		waManager.SetChatPresenceCallback(eventHandler.MakeChatPresenceCallback())
 		sessions, err := pgStore.FindAllSessions(context.Background())
@@ -313,10 +277,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	})
 	pingStreamMgr.Start(ctx)
 
-	// Pembersih media sementara bot (PDF/gambar hasil generate) — F6-14.
-	mediaCleaner := botUC.NewMediaCleanerWorker(botUC.MediaCleanerConfig{})
-	go mediaCleaner.Start(ctx)
-
 	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
 		callerID, callerRoles, hasIdentity := auth.IdentityFromContext(ctx)
 		if hasIdentity && deviceAuthorizer != nil {
@@ -332,16 +292,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	}
 
 	cashbookUseCase := cashbookUC.NewManageCashbookUseCase(cashRepo)
-	llmConfigUseCase := llmUC.NewManageConfigUseCase(pgStore, cfg.EncryptionKey, func(c context.Context, llmCfg *domainllm.Config, apiKey string) error {
-		prov, err := genkit.NewProvider(c, llmCfg, apiKey)
-		if err != nil {
-			return fmt.Errorf("init genkit provider: %w", err)
-		}
-		if err := prov.TestConnection(c); err != nil {
-			return fmt.Errorf("test genkit connection: %w", err)
-		}
-		return nil
-	})
 
 	driverResolverConnect := func(ctx context.Context, deviceID string) (port.DeviceDriver, bool) {
 		drv, err := reg.Get(ctx, deviceID)
@@ -374,11 +324,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		waManager:              waManager,
 		sseHub:                 sseHub,
 		waSender:               waSender,
-		chatService:            chatService,
-		skillUseCase:           skillUseCase,
-		convService:            convService,
-		botEngine:              botEngine,
-		llmConfigUseCase:       llmConfigUseCase,
 		authUseCase:            authUseCase,
 		refreshUseCase:         refreshUseCase,
 		manageUserUseCase:      manageUserUseCase,

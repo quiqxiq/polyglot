@@ -9,7 +9,7 @@ import (
 	"go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
 
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 )
 
 // historyMessageBatchSize membatasi jumlah baris per statement INSERT multi-row
@@ -102,7 +102,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 		// — satu statement INSERT multi-row per chunk, bukan satu query per
 		// pesan. Tanpa ini INITIAL_BOOTSTRAP dengan ribuan pesan = ribuan
 		// round-trip ke database.
-		var batch []*bot.WAMessage
+		var batch []*whatsapp.WAMessage
 		flush := func() {
 			if len(batch) == 0 {
 				return
@@ -168,7 +168,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 			}
 
 			ts := time.Unix(int64(info.GetMessageTimestamp()), 0)
-			batch = append(batch, &bot.WAMessage{
+			batch = append(batch, &whatsapp.WAMessage{
 				SessionID:   c.SessionID,
 				ChatJID:     chatJID,
 				WAMessageID: key.GetID(),
@@ -201,7 +201,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 			displayName = jid.User
 		}
 
-		chat := &bot.WAChat{
+		chat := &whatsapp.WAChat{
 			SessionID:          c.SessionID,
 			ChatJID:            chatJID,
 			DisplayName:        displayName,
@@ -257,7 +257,7 @@ func (c *Client) processHistoryPushNames(data *waHistorySync.HistorySync) {
 		jid = normalizeJIDFromLID(context.Background(), jid, c.waClient)
 		// Baris chat @lid basi untuk kontak ini juga digabung ke nomor HP.
 		c.reconcileLIDChat(context.Background(), jid)
-		chat := &bot.WAChat{
+		chat := &whatsapp.WAChat{
 			SessionID:   c.SessionID,
 			ChatJID:     jid.String(),
 			DisplayName: name,

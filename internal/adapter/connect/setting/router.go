@@ -20,8 +20,6 @@ func NewSettingServiceHandler(uc *settingUC.ManageSettingUseCase) (string, http.
 	mux.Handle("/"+serviceName+"/GetSettingsByCategory", connect.NewUnaryHandler("/"+serviceName+"/GetSettingsByCategory", handler.GetSettingsByCategory, opts...))
 	mux.Handle("/"+serviceName+"/UpdateSetting", connect.NewUnaryHandler("/"+serviceName+"/UpdateSetting", handler.UpdateSetting, opts...))
 	mux.Handle("/"+serviceName+"/BatchUpdateSettings", connect.NewUnaryHandler("/"+serviceName+"/BatchUpdateSettings", handler.BatchUpdateSettings, opts...))
-	mux.Handle("/"+serviceName+"/GetBotSettings", connect.NewUnaryHandler("/"+serviceName+"/GetBotSettings", handler.GetBotSettings, opts...))
-	mux.Handle("/"+serviceName+"/UpdateBotSettings", connect.NewUnaryHandler("/"+serviceName+"/UpdateBotSettings", handler.UpdateBotSettings, opts...))
 
 	return "/" + serviceName + "/", mux
 }

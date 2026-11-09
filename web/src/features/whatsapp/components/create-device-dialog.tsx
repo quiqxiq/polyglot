@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import { useCreateWASessionMutation, useWASessionsQuery } from '../api/use-whatsapp'
 import { QRModal } from './qr-modal'
-import type { WASession } from '@/gen/v1/whatsapp_pb'
+import type { WASession } from '../types'
 
 interface CreateDeviceDialogProps {
   open: boolean

@@ -15,7 +15,7 @@ import (
 	"go.mau.fi/whatsmeow/types/events"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -23,8 +23,8 @@ import (
 // history sync mirror tanpa database nyata.
 type fakeHistoryRepo struct {
 	mu            sync.Mutex
-	chats         map[string]*bot.WAChat
-	messages      map[string][]*bot.WAMessage
+	chats         map[string]*whatsapp.WAChat
+	messages      map[string][]*whatsapp.WAMessage
 	unread        map[string]uint32
 	statusUpdates []statusUpdate
 	batchCalls    int
@@ -40,20 +40,20 @@ type statusUpdate struct {
 
 func newFakeHistoryRepo() *fakeHistoryRepo {
 	return &fakeHistoryRepo{
-		chats:    make(map[string]*bot.WAChat),
-		messages: make(map[string][]*bot.WAMessage),
+		chats:    make(map[string]*whatsapp.WAChat),
+		messages: make(map[string][]*whatsapp.WAMessage),
 		unread:   make(map[string]uint32),
 	}
 }
 
-func (f *fakeHistoryRepo) UpsertChat(_ context.Context, c *bot.WAChat) error {
+func (f *fakeHistoryRepo) UpsertChat(_ context.Context, c *whatsapp.WAChat) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.chats[c.ChatJID] = c
 	return nil
 }
 
-func (f *fakeHistoryRepo) UpsertMessage(_ context.Context, m *bot.WAMessage) (bool, error) {
+func (f *fakeHistoryRepo) UpsertMessage(_ context.Context, m *whatsapp.WAMessage) (bool, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.singleCalls++
@@ -61,7 +61,7 @@ func (f *fakeHistoryRepo) UpsertMessage(_ context.Context, m *bot.WAMessage) (bo
 	return true, nil
 }
 
-func (f *fakeHistoryRepo) UpsertMessagesBatch(_ context.Context, msgs []*bot.WAMessage) (int, error) {
+func (f *fakeHistoryRepo) UpsertMessagesBatch(_ context.Context, msgs []*whatsapp.WAMessage) (int, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.batchCalls++
@@ -79,10 +79,10 @@ func (f *fakeHistoryRepo) SetChatUnread(_ context.Context, _ uint, chatJID strin
 	f.unread[chatJID] = count
 	return nil
 }
-func (f *fakeHistoryRepo) ListChats(_ context.Context, _ uint, _, _ int, _ string) ([]bot.WAChat, error) {
+func (f *fakeHistoryRepo) ListChats(_ context.Context, _ uint, _, _ int, _ string) ([]whatsapp.WAChat, error) {
 	return nil, nil
 }
-func (f *fakeHistoryRepo) ListChatMessages(_ context.Context, _ uint, _ string, _, _ int) ([]bot.WAMessage, error) {
+func (f *fakeHistoryRepo) ListChatMessages(_ context.Context, _ uint, _ string, _, _ int) ([]whatsapp.WAMessage, error) {
 	return nil, nil
 }
 func (f *fakeHistoryRepo) SetChatBotEnabled(_ context.Context, _ uint, _ string, _ bool) error {

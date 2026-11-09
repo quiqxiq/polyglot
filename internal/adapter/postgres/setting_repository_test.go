@@ -64,19 +64,6 @@ func TestSettingRepository_CRUD(t *testing.T) {
 	all, err := repo.GetAll(ctx)
 	require.NoError(t, err)
 	assert.Len(t, all, 3)
-
-	// 7. BotSettings
-	botSettings, err := repo.GetBotSettings(ctx)
-	require.NoError(t, err)
-	assert.NotNil(t, botSettings)
-
-	botSettings.BurstLimit = 10
-	err = repo.SaveBotSettings(ctx, botSettings)
-	require.NoError(t, err)
-
-	updatedBotSettings, err := repo.GetBotSettings(ctx)
-	require.NoError(t, err)
-	assert.Equal(t, 10, updatedBotSettings.BurstLimit)
 }
 
 // TestSettingRepository_EncryptsSecretSettings membuktikan key sensitif

@@ -11,7 +11,7 @@ import (
 	"go.mau.fi/whatsmeow/store/sqlstore"
 	waLog "go.mau.fi/whatsmeow/util/log"
 
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -45,7 +45,8 @@ func NewSessionManager(postgresConnStr string, chatRepo port.ChatRepository, onM
 	}, nil
 }
 
-func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *bot.WASession) error {
+// ConnectWithContext initializes or connects a WhatsApp client for a session using the provided context.
+func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *whatsapp.WASession) error {
 	if sm == nil {
 		return nil
 	}
@@ -111,7 +112,8 @@ func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *bot.W
 	return client.Connect(ctx)
 }
 
-func (sm *SessionManager) Connect(session *bot.WASession) error {
+// Connect initializes or connects a WhatsApp client for a session with a background context.
+func (sm *SessionManager) Connect(session *whatsapp.WASession) error {
 	return sm.ConnectWithContext(context.Background(), session)
 }
 
@@ -194,7 +196,7 @@ func (sm *SessionManager) Reconnect(sessionID uint) error {
 	sm.mutex.Unlock()
 
 	if !ok {
-		sess := &bot.WASession{ID: sessionID}
+		sess := &whatsapp.WASession{ID: sessionID}
 		return sm.Connect(sess)
 	}
 	return client.Reconnect(context.Background())
@@ -339,7 +341,8 @@ func (sm *SessionManager) GetPairingCode(sessionID uint, phoneNumber string) (st
 	return client.GetPairingCode(ctx, phoneNumber)
 }
 
-func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
+// RestoreAllSessions reconnects any active or previously authenticated sessions upon startup.
+func (sm *SessionManager) RestoreAllSessions(sessions []whatsapp.WASession) error {
 	if sm == nil {
 		return nil
 	}
@@ -349,7 +352,7 @@ func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
 		// Hanya session yang pernah online/logged-in yang di-restore otomatis.
 		// Session needs_rescan (belum pernah paired / sudah logout) dibiarkan
 		// menunggu scan manual dari UI.
-		if sess.Status == bot.StatusOnline || sess.JID != "" {
+		if sess.Status == whatsapp.StatusOnline || sess.JID != "" {
 			if err := sm.Connect(sess); err != nil {
 				logger.WithComponent("SessionManager").WithError(err).WithField("session_id", sess.ID).Warn("failed to connect WhatsApp session")
 			}

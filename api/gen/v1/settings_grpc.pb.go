@@ -23,8 +23,6 @@ const (
 	SettingService_GetSettingsByCategory_FullMethodName = "/polyglot.v1.SettingService/GetSettingsByCategory"
 	SettingService_UpdateSetting_FullMethodName         = "/polyglot.v1.SettingService/UpdateSetting"
 	SettingService_BatchUpdateSettings_FullMethodName   = "/polyglot.v1.SettingService/BatchUpdateSettings"
-	SettingService_GetBotSettings_FullMethodName        = "/polyglot.v1.SettingService/GetBotSettings"
-	SettingService_UpdateBotSettings_FullMethodName     = "/polyglot.v1.SettingService/UpdateBotSettings"
 )
 
 // SettingServiceClient is the client API for SettingService service.
@@ -35,8 +33,6 @@ type SettingServiceClient interface {
 	GetSettingsByCategory(ctx context.Context, in *GetSettingsByCategoryRequest, opts ...grpc.CallOption) (*GetSettingsByCategoryResponse, error)
 	UpdateSetting(ctx context.Context, in *UpdateSettingRequest, opts ...grpc.CallOption) (*UpdateSettingResponse, error)
 	BatchUpdateSettings(ctx context.Context, in *BatchUpdateSettingsRequest, opts ...grpc.CallOption) (*BatchUpdateSettingsResponse, error)
-	GetBotSettings(ctx context.Context, in *GetBotSettingsRequest, opts ...grpc.CallOption) (*GetBotSettingsResponse, error)
-	UpdateBotSettings(ctx context.Context, in *UpdateBotSettingsRequest, opts ...grpc.CallOption) (*UpdateBotSettingsResponse, error)
 }
 
 type settingServiceClient struct {
@@ -87,26 +83,6 @@ func (c *settingServiceClient) BatchUpdateSettings(ctx context.Context, in *Batc
 	return out, nil
 }
 
-func (c *settingServiceClient) GetBotSettings(ctx context.Context, in *GetBotSettingsRequest, opts ...grpc.CallOption) (*GetBotSettingsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetBotSettingsResponse)
-	err := c.cc.Invoke(ctx, SettingService_GetBotSettings_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingServiceClient) UpdateBotSettings(ctx context.Context, in *UpdateBotSettingsRequest, opts ...grpc.CallOption) (*UpdateBotSettingsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateBotSettingsResponse)
-	err := c.cc.Invoke(ctx, SettingService_UpdateBotSettings_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // SettingServiceServer is the server API for SettingService service.
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
@@ -115,8 +91,6 @@ type SettingServiceServer interface {
 	GetSettingsByCategory(context.Context, *GetSettingsByCategoryRequest) (*GetSettingsByCategoryResponse, error)
 	UpdateSetting(context.Context, *UpdateSettingRequest) (*UpdateSettingResponse, error)
 	BatchUpdateSettings(context.Context, *BatchUpdateSettingsRequest) (*BatchUpdateSettingsResponse, error)
-	GetBotSettings(context.Context, *GetBotSettingsRequest) (*GetBotSettingsResponse, error)
-	UpdateBotSettings(context.Context, *UpdateBotSettingsRequest) (*UpdateBotSettingsResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -138,12 +112,6 @@ func (UnimplementedSettingServiceServer) UpdateSetting(context.Context, *UpdateS
 }
 func (UnimplementedSettingServiceServer) BatchUpdateSettings(context.Context, *BatchUpdateSettingsRequest) (*BatchUpdateSettingsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method BatchUpdateSettings not implemented")
-}
-func (UnimplementedSettingServiceServer) GetBotSettings(context.Context, *GetBotSettingsRequest) (*GetBotSettingsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetBotSettings not implemented")
-}
-func (UnimplementedSettingServiceServer) UpdateBotSettings(context.Context, *UpdateBotSettingsRequest) (*UpdateBotSettingsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateBotSettings not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 func (UnimplementedSettingServiceServer) testEmbeddedByValue()                        {}
@@ -238,42 +206,6 @@ func _SettingService_BatchUpdateSettings_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SettingService_GetBotSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetBotSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingServiceServer).GetBotSettings(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SettingService_GetBotSettings_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingServiceServer).GetBotSettings(ctx, req.(*GetBotSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SettingService_UpdateBotSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateBotSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingServiceServer).UpdateBotSettings(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SettingService_UpdateBotSettings_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingServiceServer).UpdateBotSettings(ctx, req.(*UpdateBotSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // SettingService_ServiceDesc is the grpc.ServiceDesc for SettingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -296,14 +228,6 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchUpdateSettings",
 			Handler:    _SettingService_BatchUpdateSettings_Handler,
-		},
-		{
-			MethodName: "GetBotSettings",
-			Handler:    _SettingService_GetBotSettings_Handler,
-		},
-		{
-			MethodName: "UpdateBotSettings",
-			Handler:    _SettingService_UpdateBotSettings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

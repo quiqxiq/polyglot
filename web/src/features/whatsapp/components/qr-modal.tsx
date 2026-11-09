@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
 import { useWASessionQRQuery, useGetPairingCodeMutation } from '../api/use-whatsapp'
-import type { WASession } from '@/gen/v1/whatsapp_pb'
+import type { WASession } from '../types'
 
 interface QRModalProps {
   session: WASession | null

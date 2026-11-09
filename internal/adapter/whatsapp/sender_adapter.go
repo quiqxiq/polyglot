@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/notification"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 	driverWA "github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/phone"
@@ -19,13 +19,13 @@ var ErrNoConnectedSession = notification.ErrNoWASession
 
 type SenderAdapter struct {
 	sessions *driverWA.SessionManager
-	list     func(ctx context.Context) ([]bot.WASession, error)
+	list     func(ctx context.Context) ([]whatsapp.WASession, error)
 }
 
 var _ port.NotificationSender = (*SenderAdapter)(nil)
 
 // NewSenderAdapter constructs the adapter. list biasanya pgStore.FindAllSessions.
-func NewSenderAdapter(sessions *driverWA.SessionManager, list func(ctx context.Context) ([]bot.WASession, error)) *SenderAdapter {
+func NewSenderAdapter(sessions *driverWA.SessionManager, list func(ctx context.Context) ([]whatsapp.WASession, error)) *SenderAdapter {
 	return &SenderAdapter{sessions: sessions, list: list}
 }
 
@@ -61,7 +61,7 @@ func (a *SenderAdapter) connectedSessionID(ctx context.Context) (uint, error) {
 
 func isConnectedStatus(status string) bool {
 	switch strings.ToLower(status) {
-	case string(bot.StatusOnline):
+	case string(whatsapp.StatusOnline):
 		return true
 	default:
 		return false

@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import {
   BadgeCheck,
-  Bot,
   ChevronsUpDown,
   LogOut,
   UserCheck,
@@ -97,12 +96,6 @@ export function NavUser({ user }: NavUserProps) {
                   <Link to='/settings/account'>
                     <BadgeCheck />
                     Account Security
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to='/settings/bot'>
-                    <Bot />
-                    Bot & Anti-Spam
                   </Link>
                 </DropdownMenuItem>
                 {/* <DropdownMenuItem asChild>

@@ -6,7 +6,6 @@ import {
   ReceiptText,
   Wrench,
   UserCog,
-  Bot,
   CreditCard,
   RadioTower,
   WalletCards,
@@ -38,11 +37,6 @@ export function Settings() {
         title: t('nav.account_security'),
         href: '/settings/account',
         icon: <Wrench size={18} />,
-      },
-      {
-        title: t('nav.bot_anti_spam'),
-        href: '/settings/bot',
-        icon: <Bot size={18} />,
       },
       ...(canReadOnt
         ? [

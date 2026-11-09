@@ -30,7 +30,7 @@ import (
 	"gorm.io/gorm"
 
 	apppg "github.com/quixiq/polyglot/internal/adapter/postgres"
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 )
 
 // TestUpsertMessagesBatch verifies multi-row insert semantics against a real
@@ -85,7 +85,7 @@ func TestUpsertMessagesBatch(t *testing.T) {
 	const chatB = "6289876543210@s.whatsapp.net"
 	base := time.Now().UTC().Truncate(time.Second)
 
-	msgs := []*bot.WAMessage{
+	msgs := []*whatsapp.WAMessage{
 		waTestMessage(sessionID, chatA, "m1", "pesan satu", false, base),
 		waTestMessage(sessionID, chatA, "m2", "pesan dua", false, base.Add(time.Minute)),
 		waTestMessage(sessionID, chatB, "m3", "pesan tiga", true, base.Add(2*time.Minute)),
@@ -110,7 +110,7 @@ func TestUpsertMessagesBatch(t *testing.T) {
 	}
 
 	// 3) Batch campuran: 1 baru (m4) + 2 lama (m1, m2) -> hanya 1 yang masuk.
-	mixed := []*bot.WAMessage{
+	mixed := []*whatsapp.WAMessage{
 		waTestMessage(sessionID, chatA, "m4", "pesan baru", false, base.Add(3*time.Minute)),
 		msgs[0],
 		msgs[1],
@@ -155,8 +155,8 @@ func TestUpsertMessagesBatch(t *testing.T) {
 }
 
 // waTestMessage builds a minimal WAMessage mirror row for the batch test.
-func waTestMessage(sessionID uint, chatJID, waID, content string, fromMe bool, ts time.Time) *bot.WAMessage {
-	return &bot.WAMessage{
+func waTestMessage(sessionID uint, chatJID, waID, content string, fromMe bool, ts time.Time) *whatsapp.WAMessage {
+	return &whatsapp.WAMessage{
 		SessionID:   sessionID,
 		ChatJID:     chatJID,
 		WAMessageID: waID,
@@ -184,7 +184,6 @@ func ensureWAMirrorSchema(t *testing.T, db *gorm.DB) {
 			phone_number VARCHAR(50),
 			jid VARCHAR(255),
 			status VARCHAR(50) DEFAULT 'offline',
-			is_bot_enabled BOOLEAN DEFAULT TRUE,
 			connected_at TIMESTAMP WITH TIME ZONE,
 			created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 			updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP

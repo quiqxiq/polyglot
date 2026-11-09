@@ -14,7 +14,6 @@ import (
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/domain/llm"
 	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -41,7 +40,6 @@ func main() {
 
 	ctx := context.Background()
 	seedUsers(ctx, pgStore)
-	seedLLMConfig(ctx, pgStore, cfg)
 	seedCasbin(ctx, pgStore)
 	seedDevices(ctx, pgStore, cfg)
 
@@ -253,35 +251,4 @@ func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
 	}
 	auth.EnsureUserRoleAssignments(enforcer, refs)
 	logger.WithComponent("Seeder").Info("synced user role assignments into casbin grouping policies")
-}
-
-func seedLLMConfig(ctx context.Context, pgStore *postgres.Store, cfg config.Config) {
-	configs, _ := pgStore.FindAll(ctx)
-	if len(configs) > 0 {
-		logger.WithComponent("Seeder").Info("llm configs already exist, skipping")
-		return
-	}
-
-	encryptedPlaceholder, err := config.Encrypt("REPLACE_WITH_YOUR_GEMINI_API_KEY", cfg.EncryptionKey)
-	if err != nil {
-		logger.WithComponent("Seeder").WithError(err).Error("failed to encrypt default api key")
-		return
-	}
-
-	defaultConfig := &llm.Config{
-		Provider:        "gemini",
-		Model:           "gemini-2.0-flash",
-		APIKeyEncrypted: encryptedPlaceholder,
-		MaxOutputTokens: 512,
-		IsActive:        true,
-	}
-
-	if err := pgStore.Create(ctx, defaultConfig); err != nil {
-		logger.WithComponent("Seeder").WithError(err).Error("failed to seed llm config")
-	} else {
-		logger.WithComponent("Seeder").WithFields(map[string]any{
-			"provider": defaultConfig.Provider,
-			"model":    defaultConfig.Model,
-		}).Info("created default llm config")
-	}
 }

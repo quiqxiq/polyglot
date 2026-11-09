@@ -31,7 +31,6 @@ import { Route as PortalIsolateIndexRouteImport } from './routes/portal/isolate/
 import { Route as AuthenticatedWhatsappIndexRouteImport } from './routes/_authenticated/whatsapp/index'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
 import { Route as AuthenticatedSubscriptionsIndexRouteImport } from './routes/_authenticated/subscriptions/index'
-import { Route as AuthenticatedSkillsIndexRouteImport } from './routes/_authenticated/skills/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
 import { Route as AuthenticatedRegistrationsIndexRouteImport } from './routes/_authenticated/registrations/index'
@@ -47,7 +46,6 @@ import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedDevicesIndexRouteImport } from './routes/_authenticated/devices/index'
 import { Route as AuthenticatedDebtsIndexRouteImport } from './routes/_authenticated/debts/index'
 import { Route as AuthenticatedCustomersIndexRouteImport } from './routes/_authenticated/customers/index'
-import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedCashbookIndexRouteImport } from './routes/_authenticated/cashbook/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
 import { Route as PortalIsolatePppoeRouteImport } from './routes/portal/isolate/pppoe'
@@ -56,7 +54,6 @@ import { Route as AuthenticatedSettingsPaymentMethodsRouteImport } from './route
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
 import { Route as AuthenticatedSettingsGatewayRouteImport } from './routes/_authenticated/settings/gateway'
 import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
-import { Route as AuthenticatedSettingsBotRouteImport } from './routes/_authenticated/settings/bot'
 import { Route as AuthenticatedSettingsBillingRouteImport } from './routes/_authenticated/settings/billing'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAcsRouteImport } from './routes/_authenticated/settings/acs'
@@ -180,12 +177,6 @@ const AuthenticatedSubscriptionsIndexRoute =
     path: '/subscriptions/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedSkillsIndexRoute =
-  AuthenticatedSkillsIndexRouteImport.update({
-    id: '/skills/',
-    path: '/skills/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedSettingsIndexRoute =
   AuthenticatedSettingsIndexRouteImport.update({
     id: '/',
@@ -270,11 +261,6 @@ const AuthenticatedCustomersIndexRoute =
     path: '/customers/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedChatsIndexRoute = AuthenticatedChatsIndexRouteImport.update({
-  id: '/chats/',
-  path: '/chats/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedCashbookIndexRoute =
   AuthenticatedCashbookIndexRouteImport.update({
     id: '/cashbook/',
@@ -318,12 +304,6 @@ const AuthenticatedSettingsDisplayRoute =
   AuthenticatedSettingsDisplayRouteImport.update({
     id: '/display',
     path: '/display',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
-  } as any)
-const AuthenticatedSettingsBotRoute =
-  AuthenticatedSettingsBotRouteImport.update({
-    id: '/bot',
-    path: '/bot',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
 const AuthenticatedSettingsBillingRoute =
@@ -414,7 +394,6 @@ export interface FileRoutesByFullPath {
   '/settings/acs': typeof AuthenticatedSettingsAcsRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/billing': typeof AuthenticatedSettingsBillingRoute
-  '/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/gateway': typeof AuthenticatedSettingsGatewayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -423,7 +402,6 @@ export interface FileRoutesByFullPath {
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/apps/': typeof AuthenticatedAppsIndexRoute
   '/cashbook/': typeof AuthenticatedCashbookIndexRoute
-  '/chats/': typeof AuthenticatedChatsIndexRoute
   '/customers/': typeof AuthenticatedCustomersIndexRoute
   '/debts/': typeof AuthenticatedDebtsIndexRoute
   '/devices/': typeof AuthenticatedDevicesIndexRoute
@@ -439,7 +417,6 @@ export interface FileRoutesByFullPath {
   '/registrations/': typeof AuthenticatedRegistrationsIndexRoute
   '/reports/': typeof AuthenticatedReportsIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/skills/': typeof AuthenticatedSkillsIndexRoute
   '/subscriptions/': typeof AuthenticatedSubscriptionsIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
   '/whatsapp/': typeof AuthenticatedWhatsappIndexRoute
@@ -472,7 +449,6 @@ export interface FileRoutesByTo {
   '/settings/acs': typeof AuthenticatedSettingsAcsRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/billing': typeof AuthenticatedSettingsBillingRoute
-  '/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/gateway': typeof AuthenticatedSettingsGatewayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -481,7 +457,6 @@ export interface FileRoutesByTo {
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/cashbook': typeof AuthenticatedCashbookIndexRoute
-  '/chats': typeof AuthenticatedChatsIndexRoute
   '/customers': typeof AuthenticatedCustomersIndexRoute
   '/debts': typeof AuthenticatedDebtsIndexRoute
   '/devices': typeof AuthenticatedDevicesIndexRoute
@@ -497,7 +472,6 @@ export interface FileRoutesByTo {
   '/registrations': typeof AuthenticatedRegistrationsIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
-  '/skills': typeof AuthenticatedSkillsIndexRoute
   '/subscriptions': typeof AuthenticatedSubscriptionsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
   '/whatsapp': typeof AuthenticatedWhatsappIndexRoute
@@ -533,7 +507,6 @@ export interface FileRoutesById {
   '/_authenticated/settings/acs': typeof AuthenticatedSettingsAcsRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/billing': typeof AuthenticatedSettingsBillingRoute
-  '/_authenticated/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/_authenticated/settings/gateway': typeof AuthenticatedSettingsGatewayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -542,7 +515,6 @@ export interface FileRoutesById {
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/cashbook/': typeof AuthenticatedCashbookIndexRoute
-  '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
   '/_authenticated/customers/': typeof AuthenticatedCustomersIndexRoute
   '/_authenticated/debts/': typeof AuthenticatedDebtsIndexRoute
   '/_authenticated/devices/': typeof AuthenticatedDevicesIndexRoute
@@ -558,7 +530,6 @@ export interface FileRoutesById {
   '/_authenticated/registrations/': typeof AuthenticatedRegistrationsIndexRoute
   '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/_authenticated/skills/': typeof AuthenticatedSkillsIndexRoute
   '/_authenticated/subscriptions/': typeof AuthenticatedSubscriptionsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
   '/_authenticated/whatsapp/': typeof AuthenticatedWhatsappIndexRoute
@@ -594,7 +565,6 @@ export interface FileRouteTypes {
     | '/settings/acs'
     | '/settings/appearance'
     | '/settings/billing'
-    | '/settings/bot'
     | '/settings/display'
     | '/settings/gateway'
     | '/settings/notifications'
@@ -603,7 +573,6 @@ export interface FileRouteTypes {
     | '/portal/isolate/pppoe'
     | '/apps/'
     | '/cashbook/'
-    | '/chats/'
     | '/customers/'
     | '/debts/'
     | '/devices/'
@@ -619,7 +588,6 @@ export interface FileRouteTypes {
     | '/registrations/'
     | '/reports/'
     | '/settings/'
-    | '/skills/'
     | '/subscriptions/'
     | '/users/'
     | '/whatsapp/'
@@ -652,7 +620,6 @@ export interface FileRouteTypes {
     | '/settings/acs'
     | '/settings/appearance'
     | '/settings/billing'
-    | '/settings/bot'
     | '/settings/display'
     | '/settings/gateway'
     | '/settings/notifications'
@@ -661,7 +628,6 @@ export interface FileRouteTypes {
     | '/portal/isolate/pppoe'
     | '/apps'
     | '/cashbook'
-    | '/chats'
     | '/customers'
     | '/debts'
     | '/devices'
@@ -677,7 +643,6 @@ export interface FileRouteTypes {
     | '/registrations'
     | '/reports'
     | '/settings'
-    | '/skills'
     | '/subscriptions'
     | '/users'
     | '/whatsapp'
@@ -712,7 +677,6 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/acs'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/billing'
-    | '/_authenticated/settings/bot'
     | '/_authenticated/settings/display'
     | '/_authenticated/settings/gateway'
     | '/_authenticated/settings/notifications'
@@ -721,7 +685,6 @@ export interface FileRouteTypes {
     | '/portal/isolate/pppoe'
     | '/_authenticated/apps/'
     | '/_authenticated/cashbook/'
-    | '/_authenticated/chats/'
     | '/_authenticated/customers/'
     | '/_authenticated/debts/'
     | '/_authenticated/devices/'
@@ -737,7 +700,6 @@ export interface FileRouteTypes {
     | '/_authenticated/registrations/'
     | '/_authenticated/reports/'
     | '/_authenticated/settings/'
-    | '/_authenticated/skills/'
     | '/_authenticated/subscriptions/'
     | '/_authenticated/users/'
     | '/_authenticated/whatsapp/'
@@ -921,13 +883,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSubscriptionsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/skills/': {
-      id: '/_authenticated/skills/'
-      path: '/skills'
-      fullPath: '/skills/'
-      preLoaderRoute: typeof AuthenticatedSkillsIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/settings/': {
       id: '/_authenticated/settings/'
       path: '/'
@@ -1033,13 +988,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCustomersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/chats/': {
-      id: '/_authenticated/chats/'
-      path: '/chats'
-      fullPath: '/chats/'
-      preLoaderRoute: typeof AuthenticatedChatsIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/cashbook/': {
       id: '/_authenticated/cashbook/'
       path: '/cashbook'
@@ -1094,13 +1042,6 @@ declare module '@tanstack/react-router' {
       path: '/display'
       fullPath: '/settings/display'
       preLoaderRoute: typeof AuthenticatedSettingsDisplayRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
-    }
-    '/_authenticated/settings/bot': {
-      id: '/_authenticated/settings/bot'
-      path: '/bot'
-      fullPath: '/settings/bot'
-      preLoaderRoute: typeof AuthenticatedSettingsBotRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
     '/_authenticated/settings/billing': {
@@ -1181,7 +1122,6 @@ interface AuthenticatedSettingsRouteRouteChildren {
   AuthenticatedSettingsAcsRoute: typeof AuthenticatedSettingsAcsRoute
   AuthenticatedSettingsAppearanceRoute: typeof AuthenticatedSettingsAppearanceRoute
   AuthenticatedSettingsBillingRoute: typeof AuthenticatedSettingsBillingRoute
-  AuthenticatedSettingsBotRoute: typeof AuthenticatedSettingsBotRoute
   AuthenticatedSettingsDisplayRoute: typeof AuthenticatedSettingsDisplayRoute
   AuthenticatedSettingsGatewayRoute: typeof AuthenticatedSettingsGatewayRoute
   AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
@@ -1195,7 +1135,6 @@ const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteCh
     AuthenticatedSettingsAcsRoute: AuthenticatedSettingsAcsRoute,
     AuthenticatedSettingsAppearanceRoute: AuthenticatedSettingsAppearanceRoute,
     AuthenticatedSettingsBillingRoute: AuthenticatedSettingsBillingRoute,
-    AuthenticatedSettingsBotRoute: AuthenticatedSettingsBotRoute,
     AuthenticatedSettingsDisplayRoute: AuthenticatedSettingsDisplayRoute,
     AuthenticatedSettingsGatewayRoute: AuthenticatedSettingsGatewayRoute,
     AuthenticatedSettingsNotificationsRoute:
@@ -1221,7 +1160,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedReportsFinanceRoute: typeof AuthenticatedReportsFinanceRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
   AuthenticatedCashbookIndexRoute: typeof AuthenticatedCashbookIndexRoute
-  AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
   AuthenticatedCustomersIndexRoute: typeof AuthenticatedCustomersIndexRoute
   AuthenticatedDebtsIndexRoute: typeof AuthenticatedDebtsIndexRoute
   AuthenticatedDevicesIndexRoute: typeof AuthenticatedDevicesIndexRoute
@@ -1236,7 +1174,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedRbacIndexRoute: typeof AuthenticatedRbacIndexRoute
   AuthenticatedRegistrationsIndexRoute: typeof AuthenticatedRegistrationsIndexRoute
   AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
-  AuthenticatedSkillsIndexRoute: typeof AuthenticatedSkillsIndexRoute
   AuthenticatedSubscriptionsIndexRoute: typeof AuthenticatedSubscriptionsIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
   AuthenticatedWhatsappIndexRoute: typeof AuthenticatedWhatsappIndexRoute
@@ -1253,7 +1190,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedReportsFinanceRoute: AuthenticatedReportsFinanceRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
   AuthenticatedCashbookIndexRoute: AuthenticatedCashbookIndexRoute,
-  AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
   AuthenticatedCustomersIndexRoute: AuthenticatedCustomersIndexRoute,
   AuthenticatedDebtsIndexRoute: AuthenticatedDebtsIndexRoute,
   AuthenticatedDevicesIndexRoute: AuthenticatedDevicesIndexRoute,
@@ -1268,7 +1204,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedRbacIndexRoute: AuthenticatedRbacIndexRoute,
   AuthenticatedRegistrationsIndexRoute: AuthenticatedRegistrationsIndexRoute,
   AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
-  AuthenticatedSkillsIndexRoute: AuthenticatedSkillsIndexRoute,
   AuthenticatedSubscriptionsIndexRoute: AuthenticatedSubscriptionsIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
   AuthenticatedWhatsappIndexRoute: AuthenticatedWhatsappIndexRoute,

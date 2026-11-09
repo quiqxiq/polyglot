@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { BatchUpdateSettingsRequest, BatchUpdateSettingsResponse, GetAllSettingsRequest, GetAllSettingsResponse, GetBotSettingsRequest, GetBotSettingsResponse, GetSettingsByCategoryRequest, GetSettingsByCategoryResponse, UpdateBotSettingsRequest, UpdateBotSettingsResponse, UpdateSettingRequest, UpdateSettingResponse } from "./settings_pb.js";
+import { BatchUpdateSettingsRequest, BatchUpdateSettingsResponse, GetAllSettingsRequest, GetAllSettingsResponse, GetSettingsByCategoryRequest, GetSettingsByCategoryResponse, UpdateSettingRequest, UpdateSettingResponse } from "./settings_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -46,24 +46,6 @@ export const SettingService = {
       name: "BatchUpdateSettings",
       I: BatchUpdateSettingsRequest,
       O: BatchUpdateSettingsResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.SettingService.GetBotSettings
-     */
-    getBotSettings: {
-      name: "GetBotSettings",
-      I: GetBotSettingsRequest,
-      O: GetBotSettingsResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.SettingService.UpdateBotSettings
-     */
-    updateBotSettings: {
-      name: "UpdateBotSettings",
-      I: UpdateBotSettingsRequest,
-      O: UpdateBotSettingsResponse,
       kind: MethodKind.Unary,
     },
   }

@@ -3,7 +3,7 @@ package port
 import (
 	"context"
 
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 )
 
 // WhatsAppGateway defines the interface for WA connectivity operations.
@@ -19,7 +19,7 @@ import (
 //     mirror chat dilakukan oleh caller (handler) karena gateway tidak
 //     memiliki akses ke repository session.
 type WhatsAppGateway interface {
-	Connect(session *bot.WASession) error
+	Connect(session *whatsapp.WASession) error
 	Disconnect(sessionID uint) error
 	Logout(sessionID uint) error
 	Purge(sessionID uint) error
@@ -32,5 +32,5 @@ type WhatsAppGateway interface {
 	GetStatus(sessionID uint) (string, error)
 	GetQRCode(sessionID uint) (string, error)
 	GetPairingCode(sessionID uint, phoneNumber string) (string, error)
-	RestoreAllSessions(sessions []bot.WASession) error
+	RestoreAllSessions(sessions []whatsapp.WASession) error
 }

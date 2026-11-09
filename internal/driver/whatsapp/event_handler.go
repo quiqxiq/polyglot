@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/adapter/ws"
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -70,8 +70,8 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 	ctx := context.Background()
 	sess, err := eh.sessionRepo.FindSessionByID(ctx, sessionID)
 	if err == nil {
-		sess.Status = bot.WASessionStatus(status)
-		if status == string(bot.StatusOnline) {
+		sess.Status = whatsapp.WASessionStatus(status)
+		if status == string(whatsapp.StatusOnline) {
 			sess.ConnectedAt = time.Now()
 		}
 		if jid != "" {
@@ -90,13 +90,17 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 			"qr_code":      qrCode,
 			"jid":          jid,
 			"phone_number": phoneNumber,
-			"is_logged_in": status == string(bot.StatusOnline),
+			"is_logged_in": status == string(whatsapp.StatusOnline),
 		})
 	}
 }
 
-func (eh *EventHandler) MakeMessageCallback(engineHandler func(ctx context.Context, sessionID uint, chatJID string, customerNumber string, content string) error) MessageCallback {
+// MakeMessageCallback wraps an asynchronous message handler function into a MessageCallback.
+func (eh *EventHandler) MakeMessageCallback(handler func(ctx context.Context, sessionID uint, chatJID string, customerNumber string, content string) error) MessageCallback {
 	return func(sessionID uint, chatJID string, customerNumber string, content string) {
+		if handler == nil {
+			return
+		}
 		go func() {
 			defer func() {
 				if r := recover(); r != nil {
@@ -107,7 +111,7 @@ func (eh *EventHandler) MakeMessageCallback(engineHandler func(ctx context.Conte
 				}
 			}()
 			ctx := context.Background()
-			if err := engineHandler(ctx, sessionID, chatJID, customerNumber, content); err != nil {
+			if err := handler(ctx, sessionID, chatJID, customerNumber, content); err != nil {
 				logger.WithComponent("EventHandler").WithError(err).WithField("session_id", sessionID).Error("failed to process incoming message")
 			}
 		}()

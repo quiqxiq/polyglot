@@ -1,13 +1,11 @@
 import { AuthService } from '@/gen/v1/auth_connect'
 import { BillingService } from '@/gen/v1/billing_connect'
-import { BotService } from '@/gen/v1/bot_connect'
 import { CashbookService } from '@/gen/v1/cashbook_connect'
 import { CustomerService } from '@/gen/v1/customer_connect'
 import { DebtService } from '@/gen/v1/debt_connect'
 import { DeviceService } from '@/gen/v1/device_connect'
 import { HotspotService } from '@/gen/v1/hotspot_connect'
 import { IspAdminService } from '@/gen/v1/ispadmin_connect'
-import { LLMConfigService } from '@/gen/v1/llm_connect'
 import { NetworkService } from '@/gen/v1/network_connect'
 import { NetworkMonitorService } from '@/gen/v1/network_monitor_connect'
 import { NotificationService } from '@/gen/v1/notification_connect'
@@ -21,10 +19,8 @@ import { RBACService } from '@/gen/v1/rbac_connect'
 import { RegistrationService } from '@/gen/v1/registration_connect'
 import { ReportService } from '@/gen/v1/report_connect'
 import { SettingService } from '@/gen/v1/settings_connect'
-import { SkillService } from '@/gen/v1/skill_connect'
 import { SubscriptionService } from '@/gen/v1/subscription_connect'
 import { UserService } from '@/gen/v1/users_connect'
-import { WhatsAppService } from '@/gen/v1/whatsapp_connect'
 import { createPromiseClient, Code, ConnectError } from '@connectrpc/connect'
 import { createConnectTransport } from '@connectrpc/connect-web'
 import { useAuthStore } from '@/stores/auth-store'
@@ -103,14 +99,12 @@ const transport = createConnectTransport({
 
 export const authClient = createPromiseClient(AuthService, transport)
 export const billingClient = createPromiseClient(BillingService, transport)
-export const botClient = createPromiseClient(BotService, transport)
 export const cashbookClient = createPromiseClient(CashbookService, transport)
 export const customerClient = createPromiseClient(CustomerService, transport)
 export const debtClient = createPromiseClient(DebtService, transport)
 export const deviceClient = createPromiseClient(DeviceService, transport)
 export const hotspotClient = createPromiseClient(HotspotService, transport)
 export const ispAdminClient = createPromiseClient(IspAdminService, transport)
-export const llmConfigClient = createPromiseClient(LLMConfigService, transport)
 export const networkClient = createPromiseClient(NetworkService, transport)
 export const networkMonitorClient = createPromiseClient(
   NetworkMonitorService,
@@ -133,10 +127,8 @@ export const registrationClient = createPromiseClient(
 )
 export const reportClient = createPromiseClient(ReportService, transport)
 export const settingClient = createPromiseClient(SettingService, transport)
-export const skillClient = createPromiseClient(SkillService, transport)
 export const subscriptionClient = createPromiseClient(
   SubscriptionService,
   transport
 )
 export const userClient = createPromiseClient(UserService, transport)
-export const whatsappClient = createPromiseClient(WhatsAppService, transport)

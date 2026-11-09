@@ -1,4 +1,4 @@
-package bot
+package whatsapp
 
 import "time"
 
@@ -19,13 +19,12 @@ const (
 
 // WASession represents a connected WhatsApp session/device in the domain layer.
 type WASession struct {
-	ID           uint            `json:"id"`
-	DeviceName   string          `json:"device_name"`
-	PhoneNumber  string          `json:"phone_number"`
-	JID          string          `json:"jid"`
-	Status       WASessionStatus `json:"status"`
-	IsBotEnabled bool            `json:"is_bot_enabled"`
-	ConnectedAt  time.Time       `json:"connected_at"`
-	CreatedAt    time.Time       `json:"created_at"`
-	UpdatedAt    time.Time       `json:"updated_at"`
+	ID          uint            `json:"id"`
+	DeviceName  string          `json:"device_name"`
+	PhoneNumber string          `json:"phone_number"`
+	JID         string          `json:"jid"`
+	Status      WASessionStatus `json:"status"`
+	ConnectedAt time.Time       `json:"connected_at"`
+	CreatedAt   time.Time       `json:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at"`
 }

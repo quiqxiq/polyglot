@@ -41,66 +41,6 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.CustomerService/GetCustomer360":     "customer:read",
 	"/polyglot.v1.CustomerService/ListSubscriptions":  "customer:read",
 
-	// WhatsAppService
-	"/polyglot.v1.WhatsAppService/ListSessions":     "whatsapp:read",
-	"/polyglot.v1.WhatsAppService/CreateSession":    "whatsapp:manage",
-	"/polyglot.v1.WhatsAppService/GetQRCode":        "whatsapp:manage",
-	"/polyglot.v1.WhatsAppService/GetPairingCode":   "whatsapp:manage",
-	"/polyglot.v1.WhatsAppService/ToggleBot":        "whatsapp:manage",
-	"/polyglot.v1.WhatsAppService/ReconnectSession": "whatsapp:manage",
-	"/polyglot.v1.WhatsAppService/LogoutSession":    "whatsapp:manage",
-	"/polyglot.v1.WhatsAppService/PurgeSession":     "whatsapp:manage",
-	"/polyglot.v1.WhatsAppService/SendTextMessage":  "whatsapp:message",
-	"/polyglot.v1.WhatsAppService/ListChats":        "whatsapp:read",
-	"/polyglot.v1.WhatsAppService/GetChatMessages":  "whatsapp:read",
-	"/polyglot.v1.WhatsAppService/MarkChatRead":     "whatsapp:write",
-	"/polyglot.v1.WhatsAppService/ToggleChatBot":    "whatsapp:write",
-
-	// BotService (conversations & rate limits & technicians)
-	"/polyglot.v1.BotService/ListConversations":      "conversation:read",
-	"/polyglot.v1.BotService/GetConversation":        "conversation:read",
-	"/polyglot.v1.BotService/GetConversationContext": "conversation:read",
-	"/polyglot.v1.BotService/TakeOverConversation":   "conversation:write",
-	"/polyglot.v1.BotService/ResetConversationBot":   "conversation:write",
-	"/polyglot.v1.BotService/CloseConversation":      "conversation:write",
-	"/polyglot.v1.BotService/ResetRateLimit":         "conversation:write",
-	"/polyglot.v1.BotService/GetRateLimitStatus":     "conversation:read",
-	"/polyglot.v1.BotService/ListTechnicians":        "technician:read",
-	"/polyglot.v1.BotService/CreateTechnician":       "technician:manage",
-	"/polyglot.v1.BotService/UpdateTechnician":       "technician:manage",
-	"/polyglot.v1.BotService/ToggleTechnicianActive": "technician:manage",
-	"/polyglot.v1.BotService/DeleteTechnician":       "technician:manage",
-
-	// SkillService (LocalAI Standard)
-	"/polyglot.v1.SkillService/ListSkills":       "skill:read",
-	"/polyglot.v1.SkillService/GetSkill":         "skill:read",
-	"/polyglot.v1.SkillService/CreateSkill":      "skill:manage",
-	"/polyglot.v1.SkillService/UpdateSkill":      "skill:manage",
-	"/polyglot.v1.SkillService/DeleteSkill":      "skill:manage",
-	"/polyglot.v1.SkillService/ExportSkill":      "skill:read",
-	"/polyglot.v1.SkillService/ImportSkill":      "skill:manage",
-	"/polyglot.v1.SkillService/ListResources":    "skill:read",
-	"/polyglot.v1.SkillService/GetResource":      "skill:read",
-	"/polyglot.v1.SkillService/SaveResource":     "skill:manage",
-	"/polyglot.v1.SkillService/DeleteResource":   "skill:manage",
-	"/polyglot.v1.SkillService/ListGitRepos":     "skill:read",
-	"/polyglot.v1.SkillService/AddGitRepo":       "skill:manage",
-	"/polyglot.v1.SkillService/UpdateGitRepo":    "skill:manage",
-	"/polyglot.v1.SkillService/DeleteGitRepo":    "skill:manage",
-	"/polyglot.v1.SkillService/SyncGitRepo":      "skill:manage",
-	"/polyglot.v1.SkillService/ToggleGitRepo":    "skill:manage",
-	"/polyglot.v1.SkillService/ToggleSkill":      "skill:manage",
-	"/polyglot.v1.SkillService/GetGlobalPrompt":  "skill:read",
-	"/polyglot.v1.SkillService/SaveGlobalPrompt": "skill:manage",
-
-	// LLMConfigService
-	"/polyglot.v1.LLMConfigService/ListLLMConfigs":    "llmconfig:read",
-	"/polyglot.v1.LLMConfigService/CreateLLMConfig":   "llmconfig:manage",
-	"/polyglot.v1.LLMConfigService/UpdateLLMConfig":   "llmconfig:manage",
-	"/polyglot.v1.LLMConfigService/ActivateLLMConfig": "llmconfig:manage",
-	"/polyglot.v1.LLMConfigService/TestLLMConfig":     "llmconfig:manage",
-	"/polyglot.v1.LLMConfigService/DeleteLLMConfig":   "llmconfig:manage",
-
 	// HotspotService (Mikhmon)
 	"/polyglot.v1.HotspotService/ListProfiles":           "hotspot:profile:read",
 	"/polyglot.v1.HotspotService/CreateProfile":          "hotspot:profile:write",
@@ -203,10 +143,8 @@ var ProcedurePermissions = map[string]string{
 	// SettingService — konfigurasi sistem & bot dinamis
 	"/polyglot.v1.SettingService/GetAllSettings":        "setting:read",
 	"/polyglot.v1.SettingService/GetSettingsByCategory": "setting:read",
-	"/polyglot.v1.SettingService/GetBotSettings":        "setting:read",
 	"/polyglot.v1.SettingService/UpdateSetting":         "setting:manage",
 	"/polyglot.v1.SettingService/BatchUpdateSettings":   "setting:manage",
-	"/polyglot.v1.SettingService/UpdateBotSettings":     "setting:manage",
 
 	// ─── PlanService ────────────────────────────────────────────────────────
 	"/polyglot.v1.PlanService/ListPlans":  "plan:read",

@@ -98,122 +98,6 @@ func (x *SettingItem) GetUpdatedAtUnix() int64 {
 	return 0
 }
 
-type BotSettings struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	BurstLimit            int32                  `protobuf:"varint,1,opt,name=burst_limit,json=burstLimit,proto3" json:"burst_limit,omitempty"`
-	BurstWindowSecs       int32                  `protobuf:"varint,2,opt,name=burst_window_secs,json=burstWindowSecs,proto3" json:"burst_window_secs,omitempty"`
-	Mute_1HSecs           int32                  `protobuf:"varint,3,opt,name=mute_1h_secs,json=mute1hSecs,proto3" json:"mute_1h_secs,omitempty"`
-	Ban_24HSecs           int32                  `protobuf:"varint,4,opt,name=ban_24h_secs,json=ban24hSecs,proto3" json:"ban_24h_secs,omitempty"`
-	DailyChatLimit        int32                  `protobuf:"varint,5,opt,name=daily_chat_limit,json=dailyChatLimit,proto3" json:"daily_chat_limit,omitempty"`
-	SessionTimeoutMinutes int32                  `protobuf:"varint,6,opt,name=session_timeout_minutes,json=sessionTimeoutMinutes,proto3" json:"session_timeout_minutes,omitempty"`
-	SlidingWindowSize     int32                  `protobuf:"varint,7,opt,name=sliding_window_size,json=slidingWindowSize,proto3" json:"sliding_window_size,omitempty"`
-	LlmMaxOutputTokens    int32                  `protobuf:"varint,8,opt,name=llm_max_output_tokens,json=llmMaxOutputTokens,proto3" json:"llm_max_output_tokens,omitempty"`
-	WhitelistAllStaff     bool                   `protobuf:"varint,9,opt,name=whitelist_all_staff,json=whitelistAllStaff,proto3" json:"whitelist_all_staff,omitempty"`
-	CustomWhitelistPhones string                 `protobuf:"bytes,10,opt,name=custom_whitelist_phones,json=customWhitelistPhones,proto3" json:"custom_whitelist_phones,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
-}
-
-func (x *BotSettings) Reset() {
-	*x = BotSettings{}
-	mi := &file_v1_settings_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BotSettings) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BotSettings) ProtoMessage() {}
-
-func (x *BotSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BotSettings.ProtoReflect.Descriptor instead.
-func (*BotSettings) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *BotSettings) GetBurstLimit() int32 {
-	if x != nil {
-		return x.BurstLimit
-	}
-	return 0
-}
-
-func (x *BotSettings) GetBurstWindowSecs() int32 {
-	if x != nil {
-		return x.BurstWindowSecs
-	}
-	return 0
-}
-
-func (x *BotSettings) GetMute_1HSecs() int32 {
-	if x != nil {
-		return x.Mute_1HSecs
-	}
-	return 0
-}
-
-func (x *BotSettings) GetBan_24HSecs() int32 {
-	if x != nil {
-		return x.Ban_24HSecs
-	}
-	return 0
-}
-
-func (x *BotSettings) GetDailyChatLimit() int32 {
-	if x != nil {
-		return x.DailyChatLimit
-	}
-	return 0
-}
-
-func (x *BotSettings) GetSessionTimeoutMinutes() int32 {
-	if x != nil {
-		return x.SessionTimeoutMinutes
-	}
-	return 0
-}
-
-func (x *BotSettings) GetSlidingWindowSize() int32 {
-	if x != nil {
-		return x.SlidingWindowSize
-	}
-	return 0
-}
-
-func (x *BotSettings) GetLlmMaxOutputTokens() int32 {
-	if x != nil {
-		return x.LlmMaxOutputTokens
-	}
-	return 0
-}
-
-func (x *BotSettings) GetWhitelistAllStaff() bool {
-	if x != nil {
-		return x.WhitelistAllStaff
-	}
-	return false
-}
-
-func (x *BotSettings) GetCustomWhitelistPhones() string {
-	if x != nil {
-		return x.CustomWhitelistPhones
-	}
-	return ""
-}
-
 type GetAllSettingsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -222,7 +106,7 @@ type GetAllSettingsRequest struct {
 
 func (x *GetAllSettingsRequest) Reset() {
 	*x = GetAllSettingsRequest{}
-	mi := &file_v1_settings_proto_msgTypes[2]
+	mi := &file_v1_settings_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -234,7 +118,7 @@ func (x *GetAllSettingsRequest) String() string {
 func (*GetAllSettingsRequest) ProtoMessage() {}
 
 func (x *GetAllSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[2]
+	mi := &file_v1_settings_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -247,7 +131,7 @@ func (x *GetAllSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllSettingsRequest.ProtoReflect.Descriptor instead.
 func (*GetAllSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{2}
+	return file_v1_settings_proto_rawDescGZIP(), []int{1}
 }
 
 type GetAllSettingsResponse struct {
@@ -259,7 +143,7 @@ type GetAllSettingsResponse struct {
 
 func (x *GetAllSettingsResponse) Reset() {
 	*x = GetAllSettingsResponse{}
-	mi := &file_v1_settings_proto_msgTypes[3]
+	mi := &file_v1_settings_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -271,7 +155,7 @@ func (x *GetAllSettingsResponse) String() string {
 func (*GetAllSettingsResponse) ProtoMessage() {}
 
 func (x *GetAllSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[3]
+	mi := &file_v1_settings_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -284,7 +168,7 @@ func (x *GetAllSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllSettingsResponse.ProtoReflect.Descriptor instead.
 func (*GetAllSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{3}
+	return file_v1_settings_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetAllSettingsResponse) GetSettings() []*SettingItem {
@@ -303,7 +187,7 @@ type GetSettingsByCategoryRequest struct {
 
 func (x *GetSettingsByCategoryRequest) Reset() {
 	*x = GetSettingsByCategoryRequest{}
-	mi := &file_v1_settings_proto_msgTypes[4]
+	mi := &file_v1_settings_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -315,7 +199,7 @@ func (x *GetSettingsByCategoryRequest) String() string {
 func (*GetSettingsByCategoryRequest) ProtoMessage() {}
 
 func (x *GetSettingsByCategoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[4]
+	mi := &file_v1_settings_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -328,7 +212,7 @@ func (x *GetSettingsByCategoryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSettingsByCategoryRequest.ProtoReflect.Descriptor instead.
 func (*GetSettingsByCategoryRequest) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{4}
+	return file_v1_settings_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetSettingsByCategoryRequest) GetCategory() string {
@@ -347,7 +231,7 @@ type GetSettingsByCategoryResponse struct {
 
 func (x *GetSettingsByCategoryResponse) Reset() {
 	*x = GetSettingsByCategoryResponse{}
-	mi := &file_v1_settings_proto_msgTypes[5]
+	mi := &file_v1_settings_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -359,7 +243,7 @@ func (x *GetSettingsByCategoryResponse) String() string {
 func (*GetSettingsByCategoryResponse) ProtoMessage() {}
 
 func (x *GetSettingsByCategoryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[5]
+	mi := &file_v1_settings_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -372,7 +256,7 @@ func (x *GetSettingsByCategoryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSettingsByCategoryResponse.ProtoReflect.Descriptor instead.
 func (*GetSettingsByCategoryResponse) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{5}
+	return file_v1_settings_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetSettingsByCategoryResponse) GetSettings() []*SettingItem {
@@ -392,7 +276,7 @@ type UpdateSettingRequest struct {
 
 func (x *UpdateSettingRequest) Reset() {
 	*x = UpdateSettingRequest{}
-	mi := &file_v1_settings_proto_msgTypes[6]
+	mi := &file_v1_settings_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -404,7 +288,7 @@ func (x *UpdateSettingRequest) String() string {
 func (*UpdateSettingRequest) ProtoMessage() {}
 
 func (x *UpdateSettingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[6]
+	mi := &file_v1_settings_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -417,7 +301,7 @@ func (x *UpdateSettingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSettingRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSettingRequest) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{6}
+	return file_v1_settings_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateSettingRequest) GetKey() string {
@@ -443,7 +327,7 @@ type UpdateSettingResponse struct {
 
 func (x *UpdateSettingResponse) Reset() {
 	*x = UpdateSettingResponse{}
-	mi := &file_v1_settings_proto_msgTypes[7]
+	mi := &file_v1_settings_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -455,7 +339,7 @@ func (x *UpdateSettingResponse) String() string {
 func (*UpdateSettingResponse) ProtoMessage() {}
 
 func (x *UpdateSettingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[7]
+	mi := &file_v1_settings_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -468,7 +352,7 @@ func (x *UpdateSettingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSettingResponse.ProtoReflect.Descriptor instead.
 func (*UpdateSettingResponse) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{7}
+	return file_v1_settings_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdateSettingResponse) GetSetting() *SettingItem {
@@ -487,7 +371,7 @@ type BatchUpdateSettingsRequest struct {
 
 func (x *BatchUpdateSettingsRequest) Reset() {
 	*x = BatchUpdateSettingsRequest{}
-	mi := &file_v1_settings_proto_msgTypes[8]
+	mi := &file_v1_settings_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -499,7 +383,7 @@ func (x *BatchUpdateSettingsRequest) String() string {
 func (*BatchUpdateSettingsRequest) ProtoMessage() {}
 
 func (x *BatchUpdateSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[8]
+	mi := &file_v1_settings_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -512,7 +396,7 @@ func (x *BatchUpdateSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchUpdateSettingsRequest.ProtoReflect.Descriptor instead.
 func (*BatchUpdateSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{8}
+	return file_v1_settings_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *BatchUpdateSettingsRequest) GetSettings() []*SettingItem {
@@ -531,7 +415,7 @@ type BatchUpdateSettingsResponse struct {
 
 func (x *BatchUpdateSettingsResponse) Reset() {
 	*x = BatchUpdateSettingsResponse{}
-	mi := &file_v1_settings_proto_msgTypes[9]
+	mi := &file_v1_settings_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -543,7 +427,7 @@ func (x *BatchUpdateSettingsResponse) String() string {
 func (*BatchUpdateSettingsResponse) ProtoMessage() {}
 
 func (x *BatchUpdateSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[9]
+	mi := &file_v1_settings_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -556,178 +440,10 @@ func (x *BatchUpdateSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchUpdateSettingsResponse.ProtoReflect.Descriptor instead.
 func (*BatchUpdateSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{9}
+	return file_v1_settings_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *BatchUpdateSettingsResponse) GetSettings() []*SettingItem {
-	if x != nil {
-		return x.Settings
-	}
-	return nil
-}
-
-type GetBotSettingsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetBotSettingsRequest) Reset() {
-	*x = GetBotSettingsRequest{}
-	mi := &file_v1_settings_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetBotSettingsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetBotSettingsRequest) ProtoMessage() {}
-
-func (x *GetBotSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetBotSettingsRequest.ProtoReflect.Descriptor instead.
-func (*GetBotSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{10}
-}
-
-type GetBotSettingsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Settings      *BotSettings           `protobuf:"bytes,1,opt,name=settings,proto3" json:"settings,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetBotSettingsResponse) Reset() {
-	*x = GetBotSettingsResponse{}
-	mi := &file_v1_settings_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetBotSettingsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetBotSettingsResponse) ProtoMessage() {}
-
-func (x *GetBotSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetBotSettingsResponse.ProtoReflect.Descriptor instead.
-func (*GetBotSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *GetBotSettingsResponse) GetSettings() *BotSettings {
-	if x != nil {
-		return x.Settings
-	}
-	return nil
-}
-
-type UpdateBotSettingsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Settings      *BotSettings           `protobuf:"bytes,1,opt,name=settings,proto3" json:"settings,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateBotSettingsRequest) Reset() {
-	*x = UpdateBotSettingsRequest{}
-	mi := &file_v1_settings_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateBotSettingsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateBotSettingsRequest) ProtoMessage() {}
-
-func (x *UpdateBotSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateBotSettingsRequest.ProtoReflect.Descriptor instead.
-func (*UpdateBotSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *UpdateBotSettingsRequest) GetSettings() *BotSettings {
-	if x != nil {
-		return x.Settings
-	}
-	return nil
-}
-
-type UpdateBotSettingsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Settings      *BotSettings           `protobuf:"bytes,1,opt,name=settings,proto3" json:"settings,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateBotSettingsResponse) Reset() {
-	*x = UpdateBotSettingsResponse{}
-	mi := &file_v1_settings_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateBotSettingsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateBotSettingsResponse) ProtoMessage() {}
-
-func (x *UpdateBotSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_settings_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateBotSettingsResponse.ProtoReflect.Descriptor instead.
-func (*UpdateBotSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_settings_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *UpdateBotSettingsResponse) GetSettings() *BotSettings {
 	if x != nil {
 		return x.Settings
 	}
@@ -744,22 +460,7 @@ const file_v1_settings_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\tR\x05value\x12\x1a\n" +
 	"\bcategory\x18\x03 \x01(\tR\bcategory\x12 \n" +
 	"\vdescription\x18\x04 \x01(\tR\vdescription\x12&\n" +
-	"\x0fupdated_at_unix\x18\x05 \x01(\x03R\rupdatedAtUnix\"\xcb\x03\n" +
-	"\vBotSettings\x12\x1f\n" +
-	"\vburst_limit\x18\x01 \x01(\x05R\n" +
-	"burstLimit\x12*\n" +
-	"\x11burst_window_secs\x18\x02 \x01(\x05R\x0fburstWindowSecs\x12 \n" +
-	"\fmute_1h_secs\x18\x03 \x01(\x05R\n" +
-	"mute1hSecs\x12 \n" +
-	"\fban_24h_secs\x18\x04 \x01(\x05R\n" +
-	"ban24hSecs\x12(\n" +
-	"\x10daily_chat_limit\x18\x05 \x01(\x05R\x0edailyChatLimit\x126\n" +
-	"\x17session_timeout_minutes\x18\x06 \x01(\x05R\x15sessionTimeoutMinutes\x12.\n" +
-	"\x13sliding_window_size\x18\a \x01(\x05R\x11slidingWindowSize\x121\n" +
-	"\x15llm_max_output_tokens\x18\b \x01(\x05R\x12llmMaxOutputTokens\x12.\n" +
-	"\x13whitelist_all_staff\x18\t \x01(\bR\x11whitelistAllStaff\x126\n" +
-	"\x17custom_whitelist_phones\x18\n" +
-	" \x01(\tR\x15customWhitelistPhones\"\x17\n" +
+	"\x0fupdated_at_unix\x18\x05 \x01(\x03R\rupdatedAtUnix\"\x17\n" +
 	"\x15GetAllSettingsRequest\"N\n" +
 	"\x16GetAllSettingsResponse\x124\n" +
 	"\bsettings\x18\x01 \x03(\v2\x18.polyglot.v1.SettingItemR\bsettings\"C\n" +
@@ -775,21 +476,12 @@ const file_v1_settings_proto_rawDesc = "" +
 	"\x1aBatchUpdateSettingsRequest\x12>\n" +
 	"\bsettings\x18\x01 \x03(\v2\x18.polyglot.v1.SettingItemB\b\xbaH\x05\x92\x01\x02\b\x01R\bsettings\"S\n" +
 	"\x1bBatchUpdateSettingsResponse\x124\n" +
-	"\bsettings\x18\x01 \x03(\v2\x18.polyglot.v1.SettingItemR\bsettings\"\x17\n" +
-	"\x15GetBotSettingsRequest\"N\n" +
-	"\x16GetBotSettingsResponse\x124\n" +
-	"\bsettings\x18\x01 \x01(\v2\x18.polyglot.v1.BotSettingsR\bsettings\"X\n" +
-	"\x18UpdateBotSettingsRequest\x12<\n" +
-	"\bsettings\x18\x01 \x01(\v2\x18.polyglot.v1.BotSettingsB\x06\xbaH\x03\xc8\x01\x01R\bsettings\"Q\n" +
-	"\x19UpdateBotSettingsResponse\x124\n" +
-	"\bsettings\x18\x01 \x01(\v2\x18.polyglot.v1.BotSettingsR\bsettings2\xdc\x04\n" +
+	"\bsettings\x18\x01 \x03(\v2\x18.polyglot.v1.SettingItemR\bsettings2\x9d\x03\n" +
 	"\x0eSettingService\x12Y\n" +
 	"\x0eGetAllSettings\x12\".polyglot.v1.GetAllSettingsRequest\x1a#.polyglot.v1.GetAllSettingsResponse\x12n\n" +
 	"\x15GetSettingsByCategory\x12).polyglot.v1.GetSettingsByCategoryRequest\x1a*.polyglot.v1.GetSettingsByCategoryResponse\x12V\n" +
 	"\rUpdateSetting\x12!.polyglot.v1.UpdateSettingRequest\x1a\".polyglot.v1.UpdateSettingResponse\x12h\n" +
-	"\x13BatchUpdateSettings\x12'.polyglot.v1.BatchUpdateSettingsRequest\x1a(.polyglot.v1.BatchUpdateSettingsResponse\x12Y\n" +
-	"\x0eGetBotSettings\x12\".polyglot.v1.GetBotSettingsRequest\x1a#.polyglot.v1.GetBotSettingsResponse\x12b\n" +
-	"\x11UpdateBotSettings\x12%.polyglot.v1.UpdateBotSettingsRequest\x1a&.polyglot.v1.UpdateBotSettingsResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
+	"\x13BatchUpdateSettings\x12'.polyglot.v1.BatchUpdateSettingsRequest\x1a(.polyglot.v1.BatchUpdateSettingsResponseB2Z0github.com/quixiq/polyglot/api/gen/v1;polyglotv1b\x06proto3"
 
 var (
 	file_v1_settings_proto_rawDescOnce sync.Once
@@ -803,49 +495,37 @@ func file_v1_settings_proto_rawDescGZIP() []byte {
 	return file_v1_settings_proto_rawDescData
 }
 
-var file_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_v1_settings_proto_goTypes = []any{
 	(*SettingItem)(nil),                   // 0: polyglot.v1.SettingItem
-	(*BotSettings)(nil),                   // 1: polyglot.v1.BotSettings
-	(*GetAllSettingsRequest)(nil),         // 2: polyglot.v1.GetAllSettingsRequest
-	(*GetAllSettingsResponse)(nil),        // 3: polyglot.v1.GetAllSettingsResponse
-	(*GetSettingsByCategoryRequest)(nil),  // 4: polyglot.v1.GetSettingsByCategoryRequest
-	(*GetSettingsByCategoryResponse)(nil), // 5: polyglot.v1.GetSettingsByCategoryResponse
-	(*UpdateSettingRequest)(nil),          // 6: polyglot.v1.UpdateSettingRequest
-	(*UpdateSettingResponse)(nil),         // 7: polyglot.v1.UpdateSettingResponse
-	(*BatchUpdateSettingsRequest)(nil),    // 8: polyglot.v1.BatchUpdateSettingsRequest
-	(*BatchUpdateSettingsResponse)(nil),   // 9: polyglot.v1.BatchUpdateSettingsResponse
-	(*GetBotSettingsRequest)(nil),         // 10: polyglot.v1.GetBotSettingsRequest
-	(*GetBotSettingsResponse)(nil),        // 11: polyglot.v1.GetBotSettingsResponse
-	(*UpdateBotSettingsRequest)(nil),      // 12: polyglot.v1.UpdateBotSettingsRequest
-	(*UpdateBotSettingsResponse)(nil),     // 13: polyglot.v1.UpdateBotSettingsResponse
+	(*GetAllSettingsRequest)(nil),         // 1: polyglot.v1.GetAllSettingsRequest
+	(*GetAllSettingsResponse)(nil),        // 2: polyglot.v1.GetAllSettingsResponse
+	(*GetSettingsByCategoryRequest)(nil),  // 3: polyglot.v1.GetSettingsByCategoryRequest
+	(*GetSettingsByCategoryResponse)(nil), // 4: polyglot.v1.GetSettingsByCategoryResponse
+	(*UpdateSettingRequest)(nil),          // 5: polyglot.v1.UpdateSettingRequest
+	(*UpdateSettingResponse)(nil),         // 6: polyglot.v1.UpdateSettingResponse
+	(*BatchUpdateSettingsRequest)(nil),    // 7: polyglot.v1.BatchUpdateSettingsRequest
+	(*BatchUpdateSettingsResponse)(nil),   // 8: polyglot.v1.BatchUpdateSettingsResponse
 }
 var file_v1_settings_proto_depIdxs = []int32{
-	0,  // 0: polyglot.v1.GetAllSettingsResponse.settings:type_name -> polyglot.v1.SettingItem
-	0,  // 1: polyglot.v1.GetSettingsByCategoryResponse.settings:type_name -> polyglot.v1.SettingItem
-	0,  // 2: polyglot.v1.UpdateSettingResponse.setting:type_name -> polyglot.v1.SettingItem
-	0,  // 3: polyglot.v1.BatchUpdateSettingsRequest.settings:type_name -> polyglot.v1.SettingItem
-	0,  // 4: polyglot.v1.BatchUpdateSettingsResponse.settings:type_name -> polyglot.v1.SettingItem
-	1,  // 5: polyglot.v1.GetBotSettingsResponse.settings:type_name -> polyglot.v1.BotSettings
-	1,  // 6: polyglot.v1.UpdateBotSettingsRequest.settings:type_name -> polyglot.v1.BotSettings
-	1,  // 7: polyglot.v1.UpdateBotSettingsResponse.settings:type_name -> polyglot.v1.BotSettings
-	2,  // 8: polyglot.v1.SettingService.GetAllSettings:input_type -> polyglot.v1.GetAllSettingsRequest
-	4,  // 9: polyglot.v1.SettingService.GetSettingsByCategory:input_type -> polyglot.v1.GetSettingsByCategoryRequest
-	6,  // 10: polyglot.v1.SettingService.UpdateSetting:input_type -> polyglot.v1.UpdateSettingRequest
-	8,  // 11: polyglot.v1.SettingService.BatchUpdateSettings:input_type -> polyglot.v1.BatchUpdateSettingsRequest
-	10, // 12: polyglot.v1.SettingService.GetBotSettings:input_type -> polyglot.v1.GetBotSettingsRequest
-	12, // 13: polyglot.v1.SettingService.UpdateBotSettings:input_type -> polyglot.v1.UpdateBotSettingsRequest
-	3,  // 14: polyglot.v1.SettingService.GetAllSettings:output_type -> polyglot.v1.GetAllSettingsResponse
-	5,  // 15: polyglot.v1.SettingService.GetSettingsByCategory:output_type -> polyglot.v1.GetSettingsByCategoryResponse
-	7,  // 16: polyglot.v1.SettingService.UpdateSetting:output_type -> polyglot.v1.UpdateSettingResponse
-	9,  // 17: polyglot.v1.SettingService.BatchUpdateSettings:output_type -> polyglot.v1.BatchUpdateSettingsResponse
-	11, // 18: polyglot.v1.SettingService.GetBotSettings:output_type -> polyglot.v1.GetBotSettingsResponse
-	13, // 19: polyglot.v1.SettingService.UpdateBotSettings:output_type -> polyglot.v1.UpdateBotSettingsResponse
-	14, // [14:20] is the sub-list for method output_type
-	8,  // [8:14] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	0, // 0: polyglot.v1.GetAllSettingsResponse.settings:type_name -> polyglot.v1.SettingItem
+	0, // 1: polyglot.v1.GetSettingsByCategoryResponse.settings:type_name -> polyglot.v1.SettingItem
+	0, // 2: polyglot.v1.UpdateSettingResponse.setting:type_name -> polyglot.v1.SettingItem
+	0, // 3: polyglot.v1.BatchUpdateSettingsRequest.settings:type_name -> polyglot.v1.SettingItem
+	0, // 4: polyglot.v1.BatchUpdateSettingsResponse.settings:type_name -> polyglot.v1.SettingItem
+	1, // 5: polyglot.v1.SettingService.GetAllSettings:input_type -> polyglot.v1.GetAllSettingsRequest
+	3, // 6: polyglot.v1.SettingService.GetSettingsByCategory:input_type -> polyglot.v1.GetSettingsByCategoryRequest
+	5, // 7: polyglot.v1.SettingService.UpdateSetting:input_type -> polyglot.v1.UpdateSettingRequest
+	7, // 8: polyglot.v1.SettingService.BatchUpdateSettings:input_type -> polyglot.v1.BatchUpdateSettingsRequest
+	2, // 9: polyglot.v1.SettingService.GetAllSettings:output_type -> polyglot.v1.GetAllSettingsResponse
+	4, // 10: polyglot.v1.SettingService.GetSettingsByCategory:output_type -> polyglot.v1.GetSettingsByCategoryResponse
+	6, // 11: polyglot.v1.SettingService.UpdateSetting:output_type -> polyglot.v1.UpdateSettingResponse
+	8, // 12: polyglot.v1.SettingService.BatchUpdateSettings:output_type -> polyglot.v1.BatchUpdateSettingsResponse
+	9, // [9:13] is the sub-list for method output_type
+	5, // [5:9] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_v1_settings_proto_init() }
@@ -859,7 +539,7 @@ func file_v1_settings_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_settings_proto_rawDesc), len(file_v1_settings_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

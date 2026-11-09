@@ -75,30 +75,3 @@ func (h *SettingConnectHandler) BatchUpdateSettings(ctx context.Context, req *co
 		Settings: DomainSettingsToPb(allSettings),
 	}), nil
 }
-
-func (h *SettingConnectHandler) GetBotSettings(ctx context.Context, req *connect.Request[polyglotv1.GetBotSettingsRequest]) (*connect.Response[polyglotv1.GetBotSettingsResponse], error) {
-	s, err := h.settingUC.GetBotSettings(ctx)
-	if err != nil {
-		return nil, response.MapDomainError(err)
-	}
-
-	return connect.NewResponse(&polyglotv1.GetBotSettingsResponse{
-		Settings: DomainBotSettingsToPb(s),
-	}), nil
-}
-
-func (h *SettingConnectHandler) UpdateBotSettings(ctx context.Context, req *connect.Request[polyglotv1.UpdateBotSettingsRequest]) (*connect.Response[polyglotv1.UpdateBotSettingsResponse], error) {
-	domainSettings := PbBotSettingsToDomain(req.Msg.Settings)
-	if err := h.settingUC.UpdateBotSettings(ctx, domainSettings); err != nil {
-		return nil, response.MapDomainError(err)
-	}
-
-	latest, err := h.settingUC.GetBotSettings(ctx)
-	if err != nil {
-		return nil, response.MapDomainError(err)
-	}
-
-	return connect.NewResponse(&polyglotv1.UpdateBotSettingsResponse{
-		Settings: DomainBotSettingsToPb(latest),
-	}), nil
-}

@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -221,66 +220,6 @@ func (r *SettingRepository) BatchSet(ctx context.Context, settings []setting.Set
 		r.invalidateCache()
 		return nil
 	})
-}
-
-func (r *SettingRepository) GetBotSettings(ctx context.Context) (*setting.BotSettings, error) {
-	s := setting.DefaultBotSettings()
-
-	s.BurstLimit = r.getIntValue(ctx, "bot.burst_limit", s.BurstLimit)
-	s.BurstWindowSecs = r.getIntValue(ctx, "bot.burst_window_secs", s.BurstWindowSecs)
-	s.Mute1HourSecs = r.getIntValue(ctx, "bot.mute_1h_secs", s.Mute1HourSecs)
-	s.Ban24HourSecs = r.getIntValue(ctx, "bot.ban_24h_secs", s.Ban24HourSecs)
-	s.DailyChatLimit = r.getIntValue(ctx, "bot.daily_chat_limit", s.DailyChatLimit)
-	s.SessionTimeoutMinutes = r.getIntValue(ctx, "bot.session_timeout_minutes", s.SessionTimeoutMinutes)
-	s.SlidingWindowSize = r.getIntValue(ctx, "bot.sliding_window_size", s.SlidingWindowSize)
-	s.LLMMaxOutputTokens = r.getIntValue(ctx, "bot.llm_max_output_tokens", s.LLMMaxOutputTokens)
-	s.WhitelistAllStaff = r.getBoolValue(ctx, "bot.whitelist_all_staff", s.WhitelistAllStaff)
-	s.CustomWhitelistPhones = r.GetValue(ctx, "bot.custom_whitelist_phones", s.CustomWhitelistPhones)
-
-	return s, nil
-}
-
-func (r *SettingRepository) SaveBotSettings(ctx context.Context, s *setting.BotSettings) error {
-	if s == nil {
-		return errors.New("bot settings cannot be nil")
-	}
-
-	items := []setting.Setting{
-		{Key: "bot.burst_limit", Value: strconv.Itoa(s.BurstLimit), Category: "bot_rate_limit", Description: "Jumlah pesan burst spam"},
-		{Key: "bot.burst_window_secs", Value: strconv.Itoa(s.BurstWindowSecs), Category: "bot_rate_limit", Description: "Rentang waktu deteksi burst spam (detik)"},
-		{Key: "bot.mute_1h_secs", Value: strconv.Itoa(s.Mute1HourSecs), Category: "bot_rate_limit", Description: "Durasi mute spam level 1"},
-		{Key: "bot.ban_24h_secs", Value: strconv.Itoa(s.Ban24HourSecs), Category: "bot_rate_limit", Description: "Durasi ban spam level 2"},
-		{Key: "bot.daily_chat_limit", Value: strconv.Itoa(s.DailyChatLimit), Category: "bot_rate_limit", Description: "Batas chat harian per nomor"},
-		{Key: "bot.session_timeout_minutes", Value: strconv.Itoa(s.SessionTimeoutMinutes), Category: "bot_session", Description: "Timeout sesi obrolan (menit)"},
-		{Key: "bot.sliding_window_size", Value: strconv.Itoa(s.SlidingWindowSize), Category: "bot_session", Description: "Jumlah history pesan ke LLM"},
-		{Key: "bot.llm_max_output_tokens", Value: strconv.Itoa(s.LLMMaxOutputTokens), Category: "bot_session", Description: "Maksimal token output LLM"},
-		{Key: "bot.whitelist_all_staff", Value: strconv.FormatBool(s.WhitelistAllStaff), Category: "bot_whitelist", Description: "Bebaskan limit untuk semua staf tabel users"},
-		{Key: "bot.custom_whitelist_phones", Value: strings.TrimSpace(s.CustomWhitelistPhones), Category: "bot_whitelist", Description: "Nomor WhatsApp bebas limit"},
-	}
-
-	return r.BatchSet(ctx, items)
-}
-
-func (r *SettingRepository) getIntValue(ctx context.Context, key string, fallback int) int {
-	valStr := r.GetValue(ctx, key, "")
-	if valStr == "" {
-		return fallback
-	}
-	if n, err := strconv.Atoi(valStr); err == nil {
-		return n
-	}
-	return fallback
-}
-
-func (r *SettingRepository) getBoolValue(ctx context.Context, key string, fallback bool) bool {
-	valStr := r.GetValue(ctx, key, "")
-	if valStr == "" {
-		return fallback
-	}
-	if b, err := strconv.ParseBool(valStr); err == nil {
-		return b
-	}
-	return fallback
 }
 
 func (r *SettingRepository) invalidateCache() {

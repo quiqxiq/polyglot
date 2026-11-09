@@ -8,7 +8,6 @@ import {
   HandCoins,
   LayoutDashboard,
   MessageCircleMore,
-  MessagesSquare,
   Monitor,
   Network,
   Package,
@@ -19,7 +18,6 @@ import {
   ScrollText,
   Settings,
   ShieldCheck,
-  Sparkles,
   UserPlus,
   Users,
   Wallet,
@@ -181,18 +179,6 @@ export const getSidebarData = (t: (key: string) => string): SidebarData => ({
           permission: 'whatsapp:read',
         },
         {
-          title: t('nav.chats'),
-          url: '/chats',
-          icon: MessagesSquare,
-          permission: 'conversation:read',
-        },
-        {
-          title: t('nav.skills'),
-          url: '/skills',
-          icon: Sparkles,
-          permission: 'skill:read',
-        },
-        {
           title: t('nav.broadcast'),
           url: '/broadcast',
           icon: BellRing,
@@ -236,11 +222,6 @@ export const getSidebarData = (t: (key: string) => string): SidebarData => ({
             {
               title: t('nav.account_security'),
               url: '/settings/account',
-            },
-            {
-              title: t('nav.bot_anti_spam'),
-              url: '/settings/bot',
-              permission: 'setting:read',
             },
             {
               title: t('nav.appearance'),

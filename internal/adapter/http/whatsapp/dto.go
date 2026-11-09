@@ -1,7 +1,8 @@
 package whatsapp
 
 import (
-	domainBot "github.com/quixiq/polyglot/internal/domain/bot"
+	"time"
+
 	domainWA "github.com/quixiq/polyglot/internal/domain/whatsapp"
 )
 
@@ -10,8 +11,10 @@ type SessionDTO struct {
 	ID          uint   `json:"id"`
 	DeviceName  string `json:"device_name"`
 	PhoneNumber string `json:"phone_number,omitempty"`
+	JID         string `json:"jid,omitempty"`
 	Status      string `json:"status"`
-	BotEnabled  bool   `json:"bot_enabled"`
+	ConnectedAt string `json:"connected_at,omitempty"`
+	CreatedAt   string `json:"created_at,omitempty"`
 }
 
 // CreateSessionRequest represents input for creating a new session slot.
@@ -85,13 +88,29 @@ type GenericSuccessResponse struct {
 	Message string `json:"message,omitempty"`
 }
 
-func toSessionDTO(s domainBot.WASession, status string) SessionDTO {
+func toSessionDTO(s domainWA.WASession, status string) SessionDTO {
+	if status == "" {
+		status = string(s.Status)
+	}
+	if status == "" {
+		status = "offline"
+	}
+	var connectedAt string
+	if !s.ConnectedAt.IsZero() {
+		connectedAt = s.ConnectedAt.Format(time.RFC3339)
+	}
+	var createdAt string
+	if !s.CreatedAt.IsZero() {
+		createdAt = s.CreatedAt.Format(time.RFC3339)
+	}
 	return SessionDTO{
 		ID:          s.ID,
 		DeviceName:  s.DeviceName,
 		PhoneNumber: s.PhoneNumber,
+		JID:         s.JID,
 		Status:      status,
-		BotEnabled:  s.IsBotEnabled,
+		ConnectedAt: connectedAt,
+		CreatedAt:   createdAt,
 	}
 }
 

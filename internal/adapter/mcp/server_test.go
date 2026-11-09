@@ -200,7 +200,7 @@ func TestMCP_ListTools(t *testing.T) {
 		"get_device_status", "run_command", "push_config",
 		"mikhmon_get_dashboard", "mikhmon_generate_voucher", "mikhmon_kick_session",
 		"routeros_list_menu", "routeros_describe_command", "routeros_suggest", "routeros_validate", "routeros_run",
-		"customer_lookup", "list_skills", "list_devices",
+		"customer_lookup", "list_devices",
 	}, names)
 }
 

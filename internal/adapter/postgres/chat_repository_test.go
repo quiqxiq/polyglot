@@ -12,7 +12,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 )
 
 func setupChatTestDB(t *testing.T) *gorm.DB {
@@ -35,7 +35,7 @@ func TestChatRepository_UpsertAndList(t *testing.T) {
 	ctx := context.Background()
 
 	now := time.Now().UTC()
-	chat := &bot.WAChat{
+	chat := &whatsapp.WAChat{
 		SessionID:          1,
 		ChatJID:            "628111222333@s.whatsapp.net",
 		DisplayName:        "Pelanggan VIP",
@@ -55,7 +55,7 @@ func TestChatRepository_UpsertAndList(t *testing.T) {
 	assert.Equal(t, "Pelanggan VIP", chats[0].DisplayName)
 
 	// 3. UpsertMessage
-	msg := &bot.WAMessage{
+	msg := &whatsapp.WAMessage{
 		SessionID:   1,
 		ChatJID:     "628111222333@s.whatsapp.net",
 		WAMessageID: "WAMID-001",
@@ -68,7 +68,7 @@ func TestChatRepository_UpsertAndList(t *testing.T) {
 	assert.True(t, isNew)
 
 	// 4. Batch Messages
-	msg2 := &bot.WAMessage{
+	msg2 := &whatsapp.WAMessage{
 		SessionID:   1,
 		ChatJID:     "628111222333@s.whatsapp.net",
 		WAMessageID: "WAMID-002",
@@ -76,7 +76,7 @@ func TestChatRepository_UpsertAndList(t *testing.T) {
 		Content:     "Pesan kedua",
 		Timestamp:   now.Add(time.Second),
 	}
-	inserted, err := repo.UpsertMessagesBatch(ctx, []*bot.WAMessage{msg2})
+	inserted, err := repo.UpsertMessagesBatch(ctx, []*whatsapp.WAMessage{msg2})
 	require.NoError(t, err)
 	assert.Equal(t, 1, inserted)
 
@@ -98,12 +98,4 @@ func TestChatRepository_UpsertAndList(t *testing.T) {
 	// 7. Mark Messages Status
 	err = repo.MarkMessagesStatus(ctx, 1, "628111222333@s.whatsapp.net", []string{"WAMID-001"}, "read")
 	require.NoError(t, err)
-
-	// 8. Bot Enabled Toggle & Check
-	err = repo.SetChatBotEnabled(ctx, 1, "628111222333@s.whatsapp.net", false)
-	require.NoError(t, err)
-
-	enabled, err := repo.IsChatBotEnabled(ctx, 1, "628111222333@s.whatsapp.net")
-	require.NoError(t, err)
-	assert.False(t, enabled)
 }

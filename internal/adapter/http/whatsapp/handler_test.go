@@ -11,7 +11,6 @@ import (
 	"testing"
 
 	httpWA "github.com/quixiq/polyglot/internal/adapter/http/whatsapp"
-	domainBot "github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	domainWA "github.com/quixiq/polyglot/internal/domain/whatsapp"
 	ucWA "github.com/quixiq/polyglot/internal/usecase/whatsapp"
@@ -20,27 +19,27 @@ import (
 )
 
 type mockSessionRepo struct {
-	sessions []domainBot.WASession
+	sessions []domainWA.WASession
 }
 
-func (m *mockSessionRepo) FindAllSessions(context.Context) ([]domainBot.WASession, error) {
+func (m *mockSessionRepo) FindAllSessions(context.Context) ([]domainWA.WASession, error) {
 	return m.sessions, nil
 }
-func (m *mockSessionRepo) FindSessionByID(_ context.Context, id uint) (*domainBot.WASession, error) {
+func (m *mockSessionRepo) FindSessionByID(_ context.Context, id uint) (*domainWA.WASession, error) {
 	for _, s := range m.sessions {
 		if s.ID == id {
 			return &s, nil
 		}
 	}
-	return nil, domainBot.ErrNotFound
+	return nil, domainWA.ErrNotFound
 }
-func (m *mockSessionRepo) CreateSession(_ context.Context, s *domainBot.WASession) error {
+func (m *mockSessionRepo) CreateSession(_ context.Context, s *domainWA.WASession) error {
 	s.ID = uint(len(m.sessions) + 1)
 	m.sessions = append(m.sessions, *s)
 	return nil
 }
-func (m *mockSessionRepo) UpdateSession(context.Context, *domainBot.WASession) error { return nil }
-func (m *mockSessionRepo) DeleteSession(context.Context, uint) error                 { return nil }
+func (m *mockSessionRepo) UpdateSession(context.Context, *domainWA.WASession) error { return nil }
+func (m *mockSessionRepo) DeleteSession(context.Context, uint) error                { return nil }
 
 type mockUserRepo struct {
 	users map[string]*customer.User
@@ -95,11 +94,11 @@ type mockGateway struct {
 	markedRead  []string
 }
 
-func (m *mockGateway) Connect(*domainBot.WASession) error { return nil }
-func (m *mockGateway) Disconnect(uint) error              { return nil }
-func (m *mockGateway) Logout(uint) error                  { return nil }
-func (m *mockGateway) Purge(uint) error                   { return nil }
-func (m *mockGateway) Reconnect(uint) error               { return nil }
+func (m *mockGateway) Connect(*domainWA.WASession) error { return nil }
+func (m *mockGateway) Disconnect(uint) error             { return nil }
+func (m *mockGateway) Logout(uint) error                 { return nil }
+func (m *mockGateway) Purge(uint) error                  { return nil }
+func (m *mockGateway) Reconnect(uint) error              { return nil }
 func (m *mockGateway) SendMessage(_ uint, _ string, content string) error {
 	m.sentMsg = content
 	return nil
@@ -132,12 +131,12 @@ func (m *mockGateway) GetQRCode(uint) (string, error) {
 func (m *mockGateway) GetPairingCode(uint, string) (string, error) {
 	return m.pairingCode, nil
 }
-func (m *mockGateway) RestoreAllSessions([]domainBot.WASession) error { return nil }
+func (m *mockGateway) RestoreAllSessions([]domainWA.WASession) error { return nil }
 
 func setupTestRouter() (*http.ServeMux, *mockGateway, *mockSessionRepo) {
 	repo := &mockSessionRepo{
-		sessions: []domainBot.WASession{
-			{ID: 1, DeviceName: "HQ Bot", PhoneNumber: "628111111111", IsBotEnabled: true},
+		sessions: []domainWA.WASession{
+			{ID: 1, DeviceName: "HQ Bot", PhoneNumber: "628111111111"},
 		},
 	}
 	gw := &mockGateway{status: "online", qrCode: "qr-base64-data", pairingCode: "1234-5678"}

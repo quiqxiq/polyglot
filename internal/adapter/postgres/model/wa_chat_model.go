@@ -3,15 +3,10 @@ package model
 import (
 	"time"
 
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 )
 
 // WAChatModel is the GORM database model for the WhatsApp chat mirror.
-// Catatan: kolom yang memuat akronim diberi tag `column:` eksplisit karena
-// NamingStrategy GORM mengubah `ChatJID` menjadi `chat_j_id` (akronim J + ID
-// dipecah jadi dua kata), sementara migrasi 000004 dan query raw repo
-// memakai `chat_jid`. Tanpa tag ini skema AutoMigrate (dev) divergen dari
-// migrasi (prod) dan query memakai kolom `chat_jid` akan gagal.
 type WAChatModel struct {
 	ID                 uint   `gorm:"primaryKey"`
 	SessionID          uint   `gorm:"uniqueIndex:uq_wa_chats_session_jid"`
@@ -21,8 +16,7 @@ type WAChatModel struct {
 	LastMessageID      string
 	LastMessagePreview string `gorm:"type:text"`
 	LastMessageTime    time.Time
-	UnreadCount        int  `gorm:"default:0"`
-	BotEnabled         bool `gorm:"default:true"`
+	UnreadCount        int `gorm:"default:0"`
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 }
@@ -30,11 +24,12 @@ type WAChatModel struct {
 // TableName maps WAChatModel ke tabel migrasi `wa_chats`.
 func (WAChatModel) TableName() string { return "wa_chats" }
 
-func (m *WAChatModel) ToDomain() *bot.WAChat {
+// ToDomain converts a WAChatModel database record to a domain WAChat.
+func (m *WAChatModel) ToDomain() *whatsapp.WAChat {
 	if m == nil {
 		return nil
 	}
-	return &bot.WAChat{
+	return &whatsapp.WAChat{
 		ID:                 m.ID,
 		SessionID:          m.SessionID,
 		ChatJID:            m.ChatJID,
@@ -44,13 +39,13 @@ func (m *WAChatModel) ToDomain() *bot.WAChat {
 		LastMessagePreview: m.LastMessagePreview,
 		LastMessageTime:    m.LastMessageTime,
 		UnreadCount:        m.UnreadCount,
-		BotEnabled:         m.BotEnabled,
 		CreatedAt:          m.CreatedAt,
 		UpdatedAt:          m.UpdatedAt,
 	}
 }
 
-func WAChatModelFromDomain(c *bot.WAChat) *WAChatModel {
+// WAChatModelFromDomain converts a domain WAChat to a WAChatModel database record.
+func WAChatModelFromDomain(c *whatsapp.WAChat) *WAChatModel {
 	if c == nil {
 		return nil
 	}
@@ -64,15 +59,12 @@ func WAChatModelFromDomain(c *bot.WAChat) *WAChatModel {
 		LastMessagePreview: c.LastMessagePreview,
 		LastMessageTime:    c.LastMessageTime,
 		UnreadCount:        c.UnreadCount,
-		BotEnabled:         c.BotEnabled,
 		CreatedAt:          c.CreatedAt,
 		UpdatedAt:          c.UpdatedAt,
 	}
 }
 
 // WAMessageModel is the GORM database model for the WhatsApp message mirror.
-// Sama seperti WAChatModel: `ChatJID`/`SenderJID` perlu tag `column:` eksplisit
-// agar sesuai dengan migrasi 000004 (`chat_jid`, `sender_jid`).
 type WAMessageModel struct {
 	ID          uint   `gorm:"primaryKey"`
 	SessionID   uint   `gorm:"uniqueIndex:uq_wa_messages_session_wa_id"`
@@ -92,11 +84,12 @@ type WAMessageModel struct {
 // TableName maps WAMessageModel ke tabel migrasi `wa_messages`.
 func (WAMessageModel) TableName() string { return "wa_messages" }
 
-func (m *WAMessageModel) ToDomain() *bot.WAMessage {
+// ToDomain converts a WAMessageModel database record to a domain WAMessage.
+func (m *WAMessageModel) ToDomain() *whatsapp.WAMessage {
 	if m == nil {
 		return nil
 	}
-	return &bot.WAMessage{
+	return &whatsapp.WAMessage{
 		ID:          m.ID,
 		SessionID:   m.SessionID,
 		ChatJID:     m.ChatJID,
@@ -113,7 +106,8 @@ func (m *WAMessageModel) ToDomain() *bot.WAMessage {
 	}
 }
 
-func WAMessageModelFromDomain(m *bot.WAMessage) *WAMessageModel {
+// WAMessageModelFromDomain converts a domain WAMessage to a WAMessageModel database record.
+func WAMessageModelFromDomain(m *whatsapp.WAMessage) *WAMessageModel {
 	if m == nil {
 		return nil
 	}

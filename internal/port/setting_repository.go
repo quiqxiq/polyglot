@@ -14,8 +14,4 @@ type SettingRepository interface {
 	GetByCategory(ctx context.Context, category string) ([]setting.Setting, error)
 	GetAll(ctx context.Context) ([]setting.Setting, error)
 	BatchSet(ctx context.Context, settings []setting.Setting) error
-
-	// Typed helper for Bot operational parameters
-	GetBotSettings(ctx context.Context) (*setting.BotSettings, error)
-	SaveBotSettings(ctx context.Context, s *setting.BotSettings) error
 }

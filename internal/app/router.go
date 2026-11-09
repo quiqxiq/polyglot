@@ -9,14 +9,12 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
 	billingConnect "github.com/quixiq/polyglot/internal/adapter/connect/billing"
-	botConnect "github.com/quixiq/polyglot/internal/adapter/connect/bot"
 	cashbookConnect "github.com/quixiq/polyglot/internal/adapter/connect/cashbook"
 	customerConnect "github.com/quixiq/polyglot/internal/adapter/connect/customer"
 	debtConnect "github.com/quixiq/polyglot/internal/adapter/connect/debt"
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
 	ispadminConnect "github.com/quixiq/polyglot/internal/adapter/connect/ispadmin"
-	llmConnect "github.com/quixiq/polyglot/internal/adapter/connect/llm"
 	monitorConnect "github.com/quixiq/polyglot/internal/adapter/connect/monitor"
 	networkConnect "github.com/quixiq/polyglot/internal/adapter/connect/network"
 	notificationConnect "github.com/quixiq/polyglot/internal/adapter/connect/notification"
@@ -29,7 +27,6 @@ import (
 	reportConnect "github.com/quixiq/polyglot/internal/adapter/connect/report"
 	routerjobConnect "github.com/quixiq/polyglot/internal/adapter/connect/routerjob"
 	settingConnect "github.com/quixiq/polyglot/internal/adapter/connect/setting"
-	skillConnect "github.com/quixiq/polyglot/internal/adapter/connect/skill"
 	subConnect "github.com/quixiq/polyglot/internal/adapter/connect/subscription"
 	adminapi "github.com/quixiq/polyglot/internal/adapter/http/adminapi"
 	gatewayHTTP "github.com/quixiq/polyglot/internal/adapter/http/gateway"
@@ -49,16 +46,12 @@ import (
 	"github.com/quixiq/polyglot/internal/registry"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
-	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
 	cashbookUC "github.com/quixiq/polyglot/internal/usecase/cashbook"
-	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
-	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 	debtUC "github.com/quixiq/polyglot/internal/usecase/debt"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
-	llmUC "github.com/quixiq/polyglot/internal/usecase/llm"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
 	oltUC "github.com/quixiq/polyglot/internal/usecase/olt"
@@ -70,7 +63,6 @@ import (
 	reportUC "github.com/quixiq/polyglot/internal/usecase/report"
 	jobUCRouter "github.com/quixiq/polyglot/internal/usecase/routerjob"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
-	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	whatsappUC "github.com/quixiq/polyglot/internal/usecase/whatsapp"
@@ -92,11 +84,6 @@ type routerDeps struct {
 	waManager              *whatsapp.SessionManager
 	sseHub                 *wsAdapter.SSEHub
 	waSender               port.NotificationSender
-	chatService            *chatUC.ChatUseCase
-	skillUseCase           *skillUC.ManageSkillUseCase
-	convService            *convUC.ConversationUseCase
-	botEngine              *botUC.Engine
-	llmConfigUseCase       *llmUC.ManageConfigUseCase
 	authUseCase            *authUC.AuthUseCase
 	refreshUseCase         *authUC.RefreshTokenUseCase
 	manageUserUseCase      *userUC.ManageUserUseCase
@@ -283,18 +270,6 @@ func buildRouter(d routerDeps) (http.Handler, error) {
 
 	pppPath, pppHandler := pppConnect.NewPPPServiceHandler(d.pppUseCase, d.connectDriverProvider, d.streamGW)
 	registerProtected(pppPath, pppHandler)
-
-	waPath, waHandler := botConnect.NewWhatsAppServiceHandler(d.pgStore, d.waManager, d.chatService)
-	registerProtected(waPath, waHandler)
-
-	skillPath, skillHandler := skillConnect.NewSkillServiceHandler(d.skillUseCase)
-	registerProtected(skillPath, skillHandler)
-
-	llmPath, llmHandler := llmConnect.NewLLMConfigServiceHandler(d.llmConfigUseCase)
-	registerProtected(llmPath, llmHandler)
-
-	botPath, botHandler := botConnect.NewBotServiceHandler(d.convService, d.botEngine)
-	registerProtected(botPath, botHandler)
 
 	probePath, probeHandler := deviceConnect.NewProbeServiceHandler()
 	registerProtected(probePath, probeHandler)

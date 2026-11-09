@@ -2,14 +2,13 @@ package postgres
 
 import (
 	"context"
-	"errors"
 	"strings"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
-	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -31,7 +30,7 @@ func NewChatRepository(db *gorm.DB) *ChatRepository {
 }
 
 // UpsertChat writes or updates one WhatsApp chat mirror row.
-func (r *ChatRepository) UpsertChat(ctx context.Context, chat *bot.WAChat) error {
+func (r *ChatRepository) UpsertChat(ctx context.Context, chat *whatsapp.WAChat) error {
 	m := model.WAChatModelFromDomain(chat)
 	if m == nil {
 		return nil
@@ -53,7 +52,7 @@ func (r *ChatRepository) UpsertChat(ctx context.Context, chat *bot.WAChat) error
 }
 
 // UpsertMessage writes one WhatsApp message mirror row.
-func (r *ChatRepository) UpsertMessage(ctx context.Context, msg *bot.WAMessage) (bool, error) {
+func (r *ChatRepository) UpsertMessage(ctx context.Context, msg *whatsapp.WAMessage) (bool, error) {
 	m := model.WAMessageModelFromDomain(msg)
 	if m == nil {
 		return false, nil
@@ -67,7 +66,7 @@ func (r *ChatRepository) UpsertMessage(ctx context.Context, msg *bot.WAMessage) 
 
 // UpsertMessagesBatch writes many message mirror rows in a single multi-row
 // INSERT ... ON CONFLICT DO NOTHING statement.
-func (r *ChatRepository) UpsertMessagesBatch(ctx context.Context, msgs []*bot.WAMessage) (int, error) {
+func (r *ChatRepository) UpsertMessagesBatch(ctx context.Context, msgs []*whatsapp.WAMessage) (int, error) {
 	if len(msgs) == 0 {
 		return 0, nil
 	}
@@ -161,7 +160,7 @@ func (r *ChatRepository) MergeChatLID(ctx context.Context, sessionID uint, lidJI
 }
 
 // ListChats returns the chat mirror list ordered by most recent activity.
-func (r *ChatRepository) ListChats(ctx context.Context, sessionID uint, limit, offset int, search string) ([]bot.WAChat, error) {
+func (r *ChatRepository) ListChats(ctx context.Context, sessionID uint, limit, offset int, search string) ([]whatsapp.WAChat, error) {
 	if limit <= 0 || limit > maxChatListLimit {
 		limit = defaultChatListLimit
 	}
@@ -184,7 +183,7 @@ func (r *ChatRepository) ListChats(ctx context.Context, sessionID uint, limit, o
 		return nil, err
 	}
 
-	res := make([]bot.WAChat, 0, len(mList))
+	res := make([]whatsapp.WAChat, 0, len(mList))
 	for _, m := range mList {
 		if d := m.ToDomain(); d != nil {
 			res = append(res, *d)
@@ -193,30 +192,8 @@ func (r *ChatRepository) ListChats(ctx context.Context, sessionID uint, limit, o
 	return res, nil
 }
 
-// SetChatBotEnabled toggles the per-chat bot auto-reply flag.
-func (r *ChatRepository) SetChatBotEnabled(ctx context.Context, sessionID uint, chatJID string, enabled bool) error {
-	return r.db.WithContext(ctx).Model(&model.WAChatModel{}).
-		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
-		Update("bot_enabled", enabled).Error
-}
-
-// IsChatBotEnabled reports the per-chat bot auto-reply flag.
-func (r *ChatRepository) IsChatBotEnabled(ctx context.Context, sessionID uint, chatJID string) (bool, error) {
-	var m model.WAChatModel
-	err := r.db.WithContext(ctx).Select("bot_enabled").
-		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
-		First(&m).Error
-	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return true, nil
-		}
-		return true, err
-	}
-	return m.BotEnabled, nil
-}
-
 // ListChatMessages returns the messages of one chat in ascending order.
-func (r *ChatRepository) ListChatMessages(ctx context.Context, sessionID uint, chatJID string, limit, offset int) ([]bot.WAMessage, error) {
+func (r *ChatRepository) ListChatMessages(ctx context.Context, sessionID uint, chatJID string, limit, offset int) ([]whatsapp.WAMessage, error) {
 	if limit <= 0 || limit > maxChatListLimit {
 		limit = defaultChatListLimit
 	}
@@ -227,7 +204,7 @@ func (r *ChatRepository) ListChatMessages(ctx context.Context, sessionID uint, c
 		return nil, err
 	}
 
-	res := make([]bot.WAMessage, 0, len(mList))
+	res := make([]whatsapp.WAMessage, 0, len(mList))
 	for _, m := range mList {
 		if d := m.ToDomain(); d != nil {
 			res = append(res, *d)
@@ -238,50 +215,52 @@ func (r *ChatRepository) ListChatMessages(ctx context.Context, sessionID uint, c
 
 // ─── Backward compatibility delegations on Store ──────────────────────────────
 
-func (s *Store) UpsertChat(ctx context.Context, chat *bot.WAChat) error {
+// UpsertChat creates or updates a WhatsApp chat in the store.
+func (s *Store) UpsertChat(ctx context.Context, chat *whatsapp.WAChat) error {
 	return NewChatRepository(s.db).UpsertChat(ctx, chat)
 }
 
-func (s *Store) UpsertMessage(ctx context.Context, msg *bot.WAMessage) (bool, error) {
+// UpsertMessage creates or updates a WhatsApp message in the store.
+func (s *Store) UpsertMessage(ctx context.Context, msg *whatsapp.WAMessage) (bool, error) {
 	return NewChatRepository(s.db).UpsertMessage(ctx, msg)
 }
 
-func (s *Store) UpsertMessagesBatch(ctx context.Context, msgs []*bot.WAMessage) (int, error) {
+// UpsertMessagesBatch bulk creates or updates WhatsApp messages in the store.
+func (s *Store) UpsertMessagesBatch(ctx context.Context, msgs []*whatsapp.WAMessage) (int, error) {
 	return NewChatRepository(s.db).UpsertMessagesBatch(ctx, msgs)
 }
 
+// IncrementUnread increments the unread message count for a chat.
 func (s *Store) IncrementUnread(ctx context.Context, sessionID uint, chatJID string) error {
 	return NewChatRepository(s.db).IncrementUnread(ctx, sessionID, chatJID)
 }
 
+// MarkChatRead resets the unread count of a chat to zero.
 func (s *Store) MarkChatRead(ctx context.Context, sessionID uint, chatJID string) error {
 	return NewChatRepository(s.db).MarkChatRead(ctx, sessionID, chatJID)
 }
 
+// SetChatUnread sets an explicit unread count for a chat.
 func (s *Store) SetChatUnread(ctx context.Context, sessionID uint, chatJID string, count uint32) error {
 	return NewChatRepository(s.db).SetChatUnread(ctx, sessionID, chatJID, count)
 }
 
+// MarkMessagesStatus updates delivery status for messages.
 func (s *Store) MarkMessagesStatus(ctx context.Context, sessionID uint, chatJID string, messageIDs []string, status string) error {
 	return NewChatRepository(s.db).MarkMessagesStatus(ctx, sessionID, chatJID, messageIDs, status)
 }
 
+// MergeChatLID reconciles a WhatsApp LID with a phone number JID.
 func (s *Store) MergeChatLID(ctx context.Context, sessionID uint, lidJID, pnJID string) error {
 	return NewChatRepository(s.db).MergeChatLID(ctx, sessionID, lidJID, pnJID)
 }
 
-func (s *Store) ListChats(ctx context.Context, sessionID uint, limit, offset int, search string) ([]bot.WAChat, error) {
+// ListChats retrieves WhatsApp chats for a given session.
+func (s *Store) ListChats(ctx context.Context, sessionID uint, limit, offset int, search string) ([]whatsapp.WAChat, error) {
 	return NewChatRepository(s.db).ListChats(ctx, sessionID, limit, offset, search)
 }
 
-func (s *Store) SetChatBotEnabled(ctx context.Context, sessionID uint, chatJID string, enabled bool) error {
-	return NewChatRepository(s.db).SetChatBotEnabled(ctx, sessionID, chatJID, enabled)
-}
-
-func (s *Store) IsChatBotEnabled(ctx context.Context, sessionID uint, chatJID string) (bool, error) {
-	return NewChatRepository(s.db).IsChatBotEnabled(ctx, sessionID, chatJID)
-}
-
-func (s *Store) ListChatMessages(ctx context.Context, sessionID uint, chatJID string, limit, offset int) ([]bot.WAMessage, error) {
+// ListChatMessages retrieves WhatsApp messages for a given chat.
+func (s *Store) ListChatMessages(ctx context.Context, sessionID uint, chatJID string, limit, offset int) ([]whatsapp.WAMessage, error) {
 	return NewChatRepository(s.db).ListChatMessages(ctx, sessionID, chatJID, limit, offset)
 }

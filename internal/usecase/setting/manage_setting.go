@@ -68,22 +68,3 @@ func (u *ManageSettingUseCase) BatchUpdateSettings(ctx context.Context, settings
 	logger.WithComponent("SettingUseCase").WithField("setting_count", len(settings)).Info("settings batch updated")
 	return nil
 }
-
-func (u *ManageSettingUseCase) GetBotSettings(ctx context.Context) (*setting.BotSettings, error) {
-	if u.repo == nil {
-		return setting.DefaultBotSettings(), nil
-	}
-	return u.repo.GetBotSettings(ctx)
-}
-
-func (u *ManageSettingUseCase) UpdateBotSettings(ctx context.Context, s *setting.BotSettings) error {
-	if u.repo == nil {
-		return setting.ErrRepositoryNotConfigured
-	}
-	if err := u.repo.SaveBotSettings(ctx, s); err != nil {
-		return err
-	}
-
-	logger.WithComponent("SettingUseCase").Info("bot operational settings updated successfully")
-	return nil
-}
