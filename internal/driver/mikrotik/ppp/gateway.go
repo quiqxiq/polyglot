@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -21,7 +22,7 @@ func NewGateway(exec port.CommandExecutor) *Gateway {
 var _ port.PPPGateway = (*Gateway)(nil)
 
 // ListSecrets implements port.PPPGateway.
-func (g *Gateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPoESecret, error) {
+func (g *Gateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.PPPoESecret, error) {
 	res, err := g.exec(ctx, driver, NewPrintSecretsCommand(nameFilter))
 	if err != nil {
 		return nil, err
@@ -30,18 +31,18 @@ func (g *Gateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, nam
 }
 
 // GetSecret implements port.PPPGateway.
-func (g *Gateway) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPoESecret, error) {
+func (g *Gateway) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (domainPPP.PPPoESecret, error) {
 	cmd := command.Command{
 		Raw:  "/ppp/secret/print",
 		Args: map[string]string{"?.id": rosID},
 	}
 	res, err := g.exec(ctx, driver, cmd)
 	if err != nil {
-		return port.PPPoESecret{}, err
+		return domainPPP.PPPoESecret{}, err
 	}
 	secrets := ParseSecrets(res)
 	if len(secrets) == 0 {
-		return port.PPPoESecret{}, fmt.Errorf("ppp secret %q not found", rosID)
+		return domainPPP.PPPoESecret{}, fmt.Errorf("ppp secret %q not found", rosID)
 	}
 	return secrets[0], nil
 }
@@ -67,7 +68,7 @@ func (g *Gateway) SetSecretDisabled(ctx context.Context, driver port.DeviceDrive
 }
 
 // ListProfiles implements port.PPPGateway.
-func (g *Gateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPProfile, error) {
+func (g *Gateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.Profile, error) {
 	res, err := g.exec(ctx, driver, NewPrintProfilesCommand(nameFilter))
 	if err != nil {
 		return nil, err
@@ -76,18 +77,18 @@ func (g *Gateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, na
 }
 
 // GetProfile implements port.PPPGateway.
-func (g *Gateway) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPProfile, error) {
+func (g *Gateway) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (domainPPP.Profile, error) {
 	cmd := command.Command{
 		Raw:  "/ppp/profile/print",
 		Args: map[string]string{"?.id": rosID},
 	}
 	res, err := g.exec(ctx, driver, cmd)
 	if err != nil {
-		return port.PPPProfile{}, err
+		return domainPPP.Profile{}, err
 	}
 	profiles := ParseProfiles(res)
 	if len(profiles) == 0 {
-		return port.PPPProfile{}, fmt.Errorf("ppp profile %q not found", rosID)
+		return domainPPP.Profile{}, fmt.Errorf("ppp profile %q not found", rosID)
 	}
 	return profiles[0], nil
 }
@@ -108,7 +109,7 @@ func (g *Gateway) RemoveProfile(ctx context.Context, driver port.DeviceDriver, r
 }
 
 // ListActive implements port.PPPGateway.
-func (g *Gateway) ListActive(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPActiveSession, error) {
+func (g *Gateway) ListActive(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.ActiveSession, error) {
 	res, err := g.exec(ctx, driver, NewPrintActiveCommand(nameFilter))
 	if err != nil {
 		return nil, err
@@ -129,7 +130,7 @@ func (g *Gateway) KickActive(ctx context.Context, driver port.DeviceDriver, rosI
 }
 
 // ListInactive implements port.PPPGateway.
-func (g *Gateway) ListInactive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error) {
+func (g *Gateway) ListInactive(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.PPPoESecret, error) {
 	secRes, err := g.exec(ctx, driver, NewPrintSecretsCommand(""))
 	if err != nil {
 		return nil, err

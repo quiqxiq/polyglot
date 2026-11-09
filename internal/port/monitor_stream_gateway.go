@@ -6,6 +6,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 )
 
 // QueueStreamParams defines filter and duration parameters for streaming queue statistics.
@@ -39,8 +40,8 @@ type MonitorStreamGateway interface {
 	ParseIdentity(res command.Result) domainDevice.SystemIdentity
 	ParseLogEntries(res command.Result) []domainDevice.LogEntry
 	ParseQueues(res command.Result) []domainDevice.SimpleQueue
-	ParsePPPActive(res command.Result) []PPPActiveSession
-	ParseHotspotActive(res command.Result) []HotspotActiveSession
+	ParsePPPActive(res command.Result) []domainPPP.ActiveSession
+	ParseHotspotActive(res command.Result) []domainHotspot.HotspotActiveSession
 	ParseHotspotActiveStats(res command.Result) []domainHotspot.HotspotActiveStat
 	ParseClock(res command.Result) domainDevice.SystemClock
 	ParseRouterboard(res command.Result) domainDevice.SystemRouterboard

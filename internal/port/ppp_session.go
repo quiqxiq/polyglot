@@ -1,18 +1,5 @@
 package port
 
-import (
-	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
-)
-
-// PPPActiveSession alias to domain struct.
-type PPPActiveSession = domainPPP.ActiveSession
-
-// PPPoESecret alias to domain struct.
-type PPPoESecret = domainPPP.PPPoESecret
-
-// PPPProfile alias to domain struct.
-type PPPProfile = domainPPP.Profile
-
 // PPPoESecretParams holds parameters for creating or updating a PPPoE secret.
 type PPPoESecretParams struct {
 	Name          string

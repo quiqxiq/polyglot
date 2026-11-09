@@ -8,8 +8,8 @@ import (
 )
 
 // ParseSecrets converts command.Result rows from /ppp/secret/print into typed PPPoESecret values.
-func ParseSecrets(result command.Result) []PPPoESecret {
-	secrets := make([]PPPoESecret, 0, len(result.Rows))
+func ParseSecrets(result command.Result) []domainPPP.PPPoESecret {
+	secrets := make([]domainPPP.PPPoESecret, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		name := row["name"]
@@ -20,7 +20,7 @@ func ParseSecrets(result command.Result) []PPPoESecret {
 		if callerID == "" {
 			callerID = row["last-caller-id"]
 		}
-		secrets = append(secrets, PPPoESecret{
+		secrets = append(secrets, domainPPP.PPPoESecret{
 			RosID:         id,
 			Name:          name,
 			Profile:       row["profile"],
@@ -36,16 +36,16 @@ func ParseSecrets(result command.Result) []PPPoESecret {
 	return secrets
 }
 
-// ParseActiveSessions converts command.Result rows from /ppp/active/print into typed PPPActiveSession values.
-func ParseActiveSessions(result command.Result) []PPPActiveSession {
-	sessions := make([]PPPActiveSession, 0, len(result.Rows))
+// ParseActiveSessions converts command.Result rows from /ppp/active/print into typed ActiveSession values.
+func ParseActiveSessions(result command.Result) []domainPPP.ActiveSession {
+	sessions := make([]domainPPP.ActiveSession, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		name := row["name"]
 		if id == "" || name == "" {
 			continue
 		}
-		sessions = append(sessions, PPPActiveSession{
+		sessions = append(sessions, domainPPP.ActiveSession{
 			RosID:     id,
 			Name:      name,
 			Service:   row["service"],
@@ -61,16 +61,16 @@ func ParseActiveSessions(result command.Result) []PPPActiveSession {
 	return sessions
 }
 
-// ParseProfiles converts command.Result rows from /ppp/profile/print into typed PPPProfile values.
-func ParseProfiles(result command.Result) []PPPProfile {
-	profiles := make([]PPPProfile, 0, len(result.Rows))
+// ParseProfiles converts command.Result rows from /ppp/profile/print into typed Profile values.
+func ParseProfiles(result command.Result) []domainPPP.Profile {
+	profiles := make([]domainPPP.Profile, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		name := row["name"]
 		if id == "" || name == "" {
 			continue
 		}
-		profiles = append(profiles, PPPProfile{
+		profiles = append(profiles, domainPPP.Profile{
 			RosID:          id,
 			Name:           name,
 			RateLimit:      row["rate-limit"],
@@ -95,11 +95,11 @@ func ParseProfiles(result command.Result) []PPPProfile {
 }
 
 // FilterInactiveSecrets returns the secrets of subscribers who are currently offline.
-func FilterInactiveSecrets(secrets []PPPoESecret, active []PPPActiveSession) []PPPoESecret {
+func FilterInactiveSecrets(secrets []domainPPP.PPPoESecret, active []domainPPP.ActiveSession) []domainPPP.PPPoESecret {
 	return domainPPP.FilterInactiveSecrets(secrets, active)
 }
 
 // EnrichActiveSessionsWithProfiles enriches PPP active sessions with profile from /ppp/secret.
-func EnrichActiveSessionsWithProfiles(active []PPPActiveSession, secrets []PPPoESecret) []PPPActiveSession {
+func EnrichActiveSessionsWithProfiles(active []domainPPP.ActiveSession, secrets []domainPPP.PPPoESecret) []domainPPP.ActiveSession {
 	return domainPPP.EnrichActiveSessionsWithProfiles(active, secrets)
 }

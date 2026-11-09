@@ -2,11 +2,12 @@ package ppp
 
 import (
 	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// toProtoPPPSecret converts a domain port.PPPoESecret to protobuf PPPSecret.
-func toProtoPPPSecret(s port.PPPoESecret) *polyglotv1.PPPSecret {
+// toProtoPPPSecret converts a domain PPPoESecret to protobuf PPPSecret.
+func toProtoPPPSecret(s domainPPP.PPPoESecret) *polyglotv1.PPPSecret {
 	return &polyglotv1.PPPSecret{
 		Id:            s.RosID,
 		Name:          s.Name,
@@ -22,8 +23,8 @@ func toProtoPPPSecret(s port.PPPoESecret) *polyglotv1.PPPSecret {
 	}
 }
 
-// toProtoPPPSecrets converts a slice of domain port.PPPoESecret to protobuf PPPSecrets.
-func toProtoPPPSecrets(secrets []port.PPPoESecret) []*polyglotv1.PPPSecret {
+// toProtoPPPSecrets converts a slice of domain PPPoESecret to protobuf PPPSecrets.
+func toProtoPPPSecrets(secrets []domainPPP.PPPoESecret) []*polyglotv1.PPPSecret {
 	res := make([]*polyglotv1.PPPSecret, len(secrets))
 	for i, s := range secrets {
 		res[i] = toProtoPPPSecret(s)
@@ -31,8 +32,8 @@ func toProtoPPPSecrets(secrets []port.PPPoESecret) []*polyglotv1.PPPSecret {
 	return res
 }
 
-// toProtoPPPProfile converts a domain port.PPPProfile to protobuf PPPProfile.
-func toProtoPPPProfile(p port.PPPProfile) *polyglotv1.PPPProfile {
+// toProtoPPPProfile converts a domain Profile to protobuf PPPProfile.
+func toProtoPPPProfile(p domainPPP.Profile) *polyglotv1.PPPProfile {
 	return &polyglotv1.PPPProfile{
 		Id:             p.RosID,
 		Name:           p.Name,
@@ -53,8 +54,8 @@ func toProtoPPPProfile(p port.PPPProfile) *polyglotv1.PPPProfile {
 	}
 }
 
-// toProtoPPPProfiles converts a slice of domain port.PPPProfile to protobuf PPPProfiles.
-func toProtoPPPProfiles(profiles []port.PPPProfile) []*polyglotv1.PPPProfile {
+// toProtoPPPProfiles converts a slice of domain Profile to protobuf PPPProfiles.
+func toProtoPPPProfiles(profiles []domainPPP.Profile) []*polyglotv1.PPPProfile {
 	res := make([]*polyglotv1.PPPProfile, len(profiles))
 	for i, p := range profiles {
 		res[i] = toProtoPPPProfile(p)
@@ -62,8 +63,8 @@ func toProtoPPPProfiles(profiles []port.PPPProfile) []*polyglotv1.PPPProfile {
 	return res
 }
 
-// toProtoPPPActiveSession converts a domain port.PPPActiveSession to protobuf PPPActiveSession.
-func toProtoPPPActiveSession(s port.PPPActiveSession) *polyglotv1.PPPActiveSession {
+// toProtoPPPActiveSession converts a domain ActiveSession to protobuf PPPActiveSession.
+func toProtoPPPActiveSession(s domainPPP.ActiveSession) *polyglotv1.PPPActiveSession {
 	return &polyglotv1.PPPActiveSession{
 		Id:        s.RosID,
 		Name:      s.Name,
@@ -78,8 +79,8 @@ func toProtoPPPActiveSession(s port.PPPActiveSession) *polyglotv1.PPPActiveSessi
 	}
 }
 
-// toProtoPPPActiveSessions converts a slice of domain port.PPPActiveSession to protobuf PPPActiveSessions.
-func toProtoPPPActiveSessions(sessions []port.PPPActiveSession) []*polyglotv1.PPPActiveSession {
+// toProtoPPPActiveSessions converts a slice of domain ActiveSession to protobuf PPPActiveSessions.
+func toProtoPPPActiveSessions(sessions []domainPPP.ActiveSession) []*polyglotv1.PPPActiveSession {
 	res := make([]*polyglotv1.PPPActiveSession, len(sessions))
 	for i, s := range sessions {
 		res[i] = toProtoPPPActiveSession(s)

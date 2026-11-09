@@ -1,12 +1,5 @@
 package port
 
-import (
-	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
-)
-
-// HotspotUserProfile alias to domain model.
-type HotspotUserProfile = domainHotspot.HotspotUserProfile
-
 // ExpireMode defines how expired vouchers are handled by Mikhmon's expire monitor script.
 type ExpireMode string
 

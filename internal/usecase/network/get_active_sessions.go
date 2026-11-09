@@ -5,6 +5,8 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -21,12 +23,12 @@ func NewActiveSessionsUseCase(gateway port.SessionGateway) *ActiveSessionsUseCas
 }
 
 // GetPPPActiveSessions fetches all active PPPoE sessions from the router.
-func (u *ActiveSessionsUseCase) GetPPPActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.PPPActiveSession, error) {
+func (u *ActiveSessionsUseCase) GetPPPActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.ActiveSession, error) {
 	return u.gateway.ListPPPActive(ctx, driver)
 }
 
 // GetPPPInactiveSessions fetches all offline PPPoE subscriber secrets from the router.
-func (u *ActiveSessionsUseCase) GetPPPInactiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error) {
+func (u *ActiveSessionsUseCase) GetPPPInactiveSessions(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.PPPoESecret, error) {
 	return u.gateway.ListPPPInactive(ctx, driver)
 }
 
@@ -36,12 +38,12 @@ func (u *ActiveSessionsUseCase) KickPPPSession(ctx context.Context, driver port.
 }
 
 // GetHotspotActiveSessions fetches all active Hotspot sessions from the router.
-func (u *ActiveSessionsUseCase) GetHotspotActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+func (u *ActiveSessionsUseCase) GetHotspotActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotActiveSession, error) {
 	return u.gateway.ListHotspotActive(ctx, driver)
 }
 
 // GetHotspotInactiveUsers fetches all offline Hotspot users from the router.
-func (u *ActiveSessionsUseCase) GetHotspotInactiveUsers(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUser, error) {
+func (u *ActiveSessionsUseCase) GetHotspotInactiveUsers(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUser, error) {
 	return u.gateway.ListHotspotInactiveUsers(ctx, driver)
 }
 

@@ -47,7 +47,7 @@ func (u *UseCase) GetSystemIdentity(ctx context.Context, driver port.DeviceDrive
 }
 
 // GetActiveSessions fetches all currently connected hotspot active sessions.
-func (u *UseCase) GetActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+func (u *UseCase) GetActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotActiveSession, error) {
 	return u.gateway.ListActiveSessions(ctx, driver)
 }
 

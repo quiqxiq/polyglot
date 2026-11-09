@@ -55,7 +55,8 @@ yang dapat diverifikasi, tanpa mengubah wire compatibility:
   keputusan serta batas kompatibilitas kolom/proto legacy.
 - **Lint dan CI:** baseline `golangci-lint` dipin ke `0653671`; `depguard`
   menegakkan batas `domain`, `usecase`, dan `port`; `scripts/check-port-
-  aliases.sh` membekukan 32 alias legacy agar tidak bertambah; workflow
+  aliases.sh` menegakkan ratchet 0 alias legacy (seluruh 32 alias port telah
+  dihapus dan digantikan referensi langsung tipe domain); workflow
   `.github/workflows/backend-ci.yml` menjalankan build, vet, lint, test, dan
   pemeriksaan generated Go protobuf.
 - **Kontrak route dan RBAC:** `internal/app/router_contract_test.go` memastikan
@@ -773,7 +774,7 @@ Jika generated output harus committed, CI harus gagal ketika hasil generate berb
 
 | Task | Status | Bukti atau sisa |
 |---|---|---|
-| 7.1 Model relocation | **PARTIAL** | Banyak model sudah berada di domain dan port memakai alias/parameter; audit penghapusan alias jangka panjang belum selesai. |
+| 7.1 Model relocation | **DONE** | Seluruh model domain telah dipindahkan; seluruh 32 port alias legacy telah dihapus hingga 0 alias dan dikunci oleh ratchet `scripts/check-port-aliases.sh`. |
 | 7.2 Interface overlap | **PARTIAL** | Audit writer dan payment interfaces sudah didokumentasikan; consumer/ownership semua interface belum diverifikasi. |
 | 7.3 Pecah gateway besar | **PARTIAL** | Capability gateway sudah terbagi pada beberapa file; ukuran dan cohesion semua gateway belum selesai diaudit. |
 

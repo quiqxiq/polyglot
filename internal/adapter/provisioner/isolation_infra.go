@@ -8,6 +8,8 @@ import (
 
 	domainCommand "github.com/quixiq/polyglot/internal/domain/command"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -211,7 +213,7 @@ func (p *Provisioner) ApplyIntegrationScript(ctx context.Context, deviceID, prof
 		if err != nil {
 			return fmt.Errorf("get hotspot user profiles: %w", err)
 		}
-		var targetProf *port.HotspotUserProfile
+		var targetProf *domainHotspot.HotspotUserProfile
 		for i := range profs {
 			if strings.EqualFold(profs[i].Name, profileName) {
 				targetProf = &profs[i]
@@ -241,7 +243,7 @@ func (p *Provisioner) ApplyIntegrationScript(ctx context.Context, deviceID, prof
 	if err != nil {
 		return fmt.Errorf("list ppp profiles: %w", err)
 	}
-	var targetProf *port.PPPProfile
+	var targetProf *domainPPP.Profile
 	for i := range profs {
 		if strings.EqualFold(profs[i].Name, profileName) {
 			targetProf = &profs[i]

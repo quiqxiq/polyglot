@@ -6,7 +6,9 @@ import (
 	"strconv"
 	"strings"
 
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -227,7 +229,7 @@ func (p *Provisioner) SyncPlanProfile(ctx context.Context, deviceID string, pl d
 		if err != nil {
 			return fmt.Errorf("list ppp profiles: %w", err)
 		}
-		var existing *port.PPPProfile
+		var existing *domainPPP.Profile
 		for i := range profs {
 			if strings.EqualFold(profs[i].Name, pl.RouterProfile()) {
 				existing = &profs[i]
@@ -290,7 +292,7 @@ func (p *Provisioner) SyncPlanProfile(ctx context.Context, deviceID string, pl d
 	if err != nil {
 		return fmt.Errorf("list hotspot profiles: %w", err)
 	}
-	var existing *port.HotspotUserProfile
+	var existing *domainHotspot.HotspotUserProfile
 	for i := range profs {
 		if strings.EqualFold(profs[i].Name, pl.RouterProfile()) {
 			existing = &profs[i]

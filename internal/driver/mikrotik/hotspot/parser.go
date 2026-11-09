@@ -8,15 +8,15 @@ import (
 )
 
 // ParseActiveSessions converts command.Result rows from /ip/hotspot/active/print into typed HotspotActiveSession values.
-func ParseActiveSessions(result command.Result) []HotspotActiveSession {
-	sessions := make([]HotspotActiveSession, 0, len(result.Rows))
+func ParseActiveSessions(result command.Result) []domainHotspot.HotspotActiveSession {
+	sessions := make([]domainHotspot.HotspotActiveSession, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		user := row["user"]
 		if id == "" || user == "" {
 			continue
 		}
-		sessions = append(sessions, HotspotActiveSession{
+		sessions = append(sessions, domainHotspot.HotspotActiveSession{
 			RosID:      id,
 			Server:     row["server"],
 			User:       user,
@@ -28,15 +28,15 @@ func ParseActiveSessions(result command.Result) []HotspotActiveSession {
 	return sessions
 }
 
-// ParseActiveStats converts command.Result rows from /ip/hotspot/active/print stats into typed ActiveStat values.
-func ParseActiveStats(result command.Result) []ActiveStat {
-	stats := make([]ActiveStat, 0, len(result.Rows))
+// ParseActiveStats converts command.Result rows from /ip/hotspot/active/print stats into typed HotspotActiveStat values.
+func ParseActiveStats(result command.Result) []domainHotspot.HotspotActiveStat {
+	stats := make([]domainHotspot.HotspotActiveStat, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		if id == "" {
 			continue
 		}
-		stats = append(stats, ActiveStat{
+		stats = append(stats, domainHotspot.HotspotActiveStat{
 			RosID:           id,
 			Uptime:          row["uptime"],
 			SessionTimeLeft: row["session-time-left"],
@@ -72,15 +72,15 @@ func ParseServers(result command.Result) []HotspotServer {
 }
 
 // ParseUsers converts command.Result rows from /ip/hotspot/user/print into typed HotspotUser values.
-func ParseUsers(result command.Result) []HotspotUser {
-	users := make([]HotspotUser, 0, len(result.Rows))
+func ParseUsers(result command.Result) []domainHotspot.HotspotUser {
+	users := make([]domainHotspot.HotspotUser, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		name := row["name"]
 		if id == "" || name == "" {
 			continue
 		}
-		users = append(users, HotspotUser{
+		users = append(users, domainHotspot.HotspotUser{
 			RosID:         id,
 			Server:        row["server"],
 			Name:          name,
@@ -102,15 +102,15 @@ func ParseUsers(result command.Result) []HotspotUser {
 }
 
 // ParseUserProfiles converts command.Result rows from /ip/hotspot/user/profile/print into typed HotspotUserProfile values.
-func ParseUserProfiles(result command.Result) []HotspotUserProfile {
-	profiles := make([]HotspotUserProfile, 0, len(result.Rows))
+func ParseUserProfiles(result command.Result) []domainHotspot.HotspotUserProfile {
+	profiles := make([]domainHotspot.HotspotUserProfile, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		name := row["name"]
 		if id == "" || name == "" {
 			continue
 		}
-		profiles = append(profiles, HotspotUserProfile{
+		profiles = append(profiles, domainHotspot.HotspotUserProfile{
 			RosID:          id,
 			Name:           name,
 			SharedUsers:    row["shared-users"],
@@ -127,6 +127,6 @@ func ParseUserProfiles(result command.Result) []HotspotUserProfile {
 }
 
 // FilterInactiveUsers compares all registered Hotspot users against active sessions and returns inactive users.
-func FilterInactiveUsers(users []HotspotUser, active []HotspotActiveSession) []HotspotUser {
+func FilterInactiveUsers(users []domainHotspot.HotspotUser, active []domainHotspot.HotspotActiveSession) []domainHotspot.HotspotUser {
 	return domainHotspot.FilterInactiveUsers(users, active)
 }

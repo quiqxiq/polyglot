@@ -81,13 +81,13 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 	}
 
 	// Gather voucher users: single by .id or batch by comment tag.
-	var users []port.HotspotUser
+	var users []domainHotspot.HotspotUser
 	if req.Msg.UserId != "" {
 		u, err := h.useCase.GetUser(ctx, driver, req.Msg.UserId)
 		if err != nil {
 			return nil, response.MapDomainError(err)
 		}
-		users = []port.HotspotUser{u}
+		users = []domainHotspot.HotspotUser{u}
 	} else {
 		// In legacy Mikhmon, comment filtering matches against the comment or batch tag.
 		// Try first with exact comment / tag. We don't force OnlyUnused if it limits existing vouchers.

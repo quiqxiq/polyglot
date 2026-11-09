@@ -5,6 +5,8 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/dhcp"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/firewall"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
@@ -48,81 +50,100 @@ var _ port.FirewallGateway = (*Gateway)(nil)
 
 // ─── port.PPPGateway Delegation ───────────────────────────────────────────────
 
-func (g *Gateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPoESecret, error) {
+// ListSecrets lists PPP secrets, optionally filtered by name.
+func (g *Gateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.PPPoESecret, error) {
 	return g.pppGW.ListSecrets(ctx, driver, nameFilter)
 }
 
-func (g *Gateway) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPoESecret, error) {
+// GetSecret fetches a single PPP secret by its RouterOS identifier.
+func (g *Gateway) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (domainPPP.PPPoESecret, error) {
 	return g.pppGW.GetSecret(ctx, driver, rosID)
 }
 
+// AddSecret creates a new PPP secret on the router.
 func (g *Gateway) AddSecret(ctx context.Context, driver port.DeviceDriver, p port.PPPoESecretParams) (command.Result, error) {
 	return g.pppGW.AddSecret(ctx, driver, p)
 }
 
+// UpdateSecret updates an existing PPP secret on the router.
 func (g *Gateway) UpdateSecret(ctx context.Context, driver port.DeviceDriver, rosID string, p port.PPPoESecretParams) (command.Result, error) {
 	return g.pppGW.UpdateSecret(ctx, driver, rosID, p)
 }
 
+// RemoveSecret deletes a PPP secret by its RouterOS identifier.
 func (g *Gateway) RemoveSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	return g.pppGW.RemoveSecret(ctx, driver, rosID)
 }
 
+// SetSecretDisabled enables or disables a PPP secret.
 func (g *Gateway) SetSecretDisabled(ctx context.Context, driver port.DeviceDriver, rosID string, disabled bool) (command.Result, error) {
 	return g.pppGW.SetSecretDisabled(ctx, driver, rosID, disabled)
 }
 
-func (g *Gateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPProfile, error) {
+// ListProfiles lists PPP profiles, optionally filtered by name.
+func (g *Gateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.Profile, error) {
 	return g.pppGW.ListProfiles(ctx, driver, nameFilter)
 }
 
-func (g *Gateway) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPProfile, error) {
+// GetProfile fetches a single PPP profile by its RouterOS identifier.
+func (g *Gateway) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (domainPPP.Profile, error) {
 	return g.pppGW.GetProfile(ctx, driver, rosID)
 }
 
+// AddProfile creates a new PPP profile on the router.
 func (g *Gateway) AddProfile(ctx context.Context, driver port.DeviceDriver, p port.PPPProfileParams) (command.Result, error) {
 	return g.pppGW.AddProfile(ctx, driver, p)
 }
 
+// UpdateProfile updates an existing PPP profile on the router.
 func (g *Gateway) UpdateProfile(ctx context.Context, driver port.DeviceDriver, rosID string, p port.PPPProfileParams) (command.Result, error) {
 	return g.pppGW.UpdateProfile(ctx, driver, rosID, p)
 }
 
+// RemoveProfile deletes a PPP profile by its RouterOS identifier.
 func (g *Gateway) RemoveProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	return g.pppGW.RemoveProfile(ctx, driver, rosID)
 }
 
-func (g *Gateway) ListActive(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPActiveSession, error) {
+// ListActive lists active PPP sessions, optionally filtered by name.
+func (g *Gateway) ListActive(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.ActiveSession, error) {
 	return g.pppGW.ListActive(ctx, driver, nameFilter)
 }
 
+// KickActive forcibly terminates an active PPP session by its RouterOS identifier.
 func (g *Gateway) KickActive(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	return g.pppGW.KickActive(ctx, driver, rosID)
 }
 
-func (g *Gateway) ListInactive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error) {
+// ListInactive lists all offline PPPoE subscriber secrets.
+func (g *Gateway) ListInactive(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.PPPoESecret, error) {
 	return g.pppGW.ListInactive(ctx, driver)
 }
 
 // ─── port.SessionGateway Delegation ──────────────────────────────────────────
 
-func (g *Gateway) ListPPPActive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPActiveSession, error) {
+// ListPPPActive fetches all active PPPoE sessions from the router.
+func (g *Gateway) ListPPPActive(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.ActiveSession, error) {
 	return g.pppGW.ListActive(ctx, driver, "")
 }
 
-func (g *Gateway) ListPPPInactive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error) {
+// ListPPPInactive fetches all offline PPPoE subscriber secrets from the router.
+func (g *Gateway) ListPPPInactive(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.PPPoESecret, error) {
 	return g.pppGW.ListInactive(ctx, driver)
 }
 
+// KickPPPSession forcibly disconnects an active PPPoE session by RouterOS identifier.
 func (g *Gateway) KickPPPSession(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	return g.pppGW.KickActive(ctx, driver, rosID)
 }
 
-func (g *Gateway) ListHotspotActive(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+// ListHotspotActive fetches all active Hotspot sessions from the router.
+func (g *Gateway) ListHotspotActive(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotActiveSession, error) {
 	return g.hotGW.ListActiveSessions(ctx, driver)
 }
 
-func (g *Gateway) ListHotspotInactiveUsers(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUser, error) {
+// ListHotspotInactiveUsers fetches all offline Hotspot users from the router.
+func (g *Gateway) ListHotspotInactiveUsers(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUser, error) {
 	uRes, err := g.exec(ctx, driver, hotspot.NewPrintUsersCommand(""))
 	if err != nil {
 		return nil, err

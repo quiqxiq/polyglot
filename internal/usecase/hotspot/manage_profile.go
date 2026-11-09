@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -13,7 +14,7 @@ func (u *UseCase) CreateProfile(ctx context.Context, driver port.DeviceDriver, p
 }
 
 // GetProfiles fetches all Hotspot User Profiles.
-func (u *UseCase) GetProfiles(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error) {
+func (u *UseCase) GetProfiles(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUserProfile, error) {
 	return u.gateway.GetUserProfiles(ctx, driver)
 }
 

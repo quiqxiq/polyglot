@@ -15,17 +15,11 @@ set -euo pipefail
 # When removing an alias, delete its name below in the same change.
 
 allowed_aliases=(
-  HotspotActiveSession
-  HotspotUser
-  HotspotUserProfile
-  PPPActiveSession
-  PPPoESecret
-  PPPProfile
 )
 
 actual="$(
-  rg --no-filename --only-matching --replace '$1' '^type ([A-Za-z0-9_]+) =' \
-    internal/port --glob '*.go' --glob '!**/*_test.go' --max-depth 1 | sort -u
+  (rg --no-filename --only-matching --replace '$1' '^type ([A-Za-z0-9_]+) =' \
+    internal/port --glob '*.go' --glob '!**/*_test.go' --max-depth 1 || true) | sort -u
 )"
 expected="$(printf '%s\n' "${allowed_aliases[@]}" | sort -u)"
 

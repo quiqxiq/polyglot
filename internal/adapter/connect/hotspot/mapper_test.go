@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -105,7 +106,7 @@ func TestToProtoHotspotServers(t *testing.T) {
 }
 
 func TestToProtoHotspotProfile(t *testing.T) {
-	p := toProtoHotspotProfile(port.HotspotUserProfile{
+	p := toProtoHotspotProfile(domainHotspot.HotspotUserProfile{
 		RosID:       "*1",
 		Name:        "1Day_10K",
 		SharedUsers: "1",

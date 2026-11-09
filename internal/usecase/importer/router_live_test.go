@@ -8,24 +8,25 @@ import (
 	"github.com/stretchr/testify/require"
 
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 )
 
 type mockPPPGateway struct {
 	port.PPPGateway
-	listSecretsFn  func(ctx context.Context, driver port.DeviceDriver, service string) ([]port.PPPoESecret, error)
-	listProfilesFn func(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPProfile, error)
+	listSecretsFn  func(ctx context.Context, driver port.DeviceDriver, service string) ([]domainPPP.PPPoESecret, error)
+	listProfilesFn func(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.Profile, error)
 }
 
-func (m *mockPPPGateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, service string) ([]port.PPPoESecret, error) {
+func (m *mockPPPGateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, service string) ([]domainPPP.PPPoESecret, error) {
 	if m.listSecretsFn != nil {
 		return m.listSecretsFn(ctx, driver, service)
 	}
 	return nil, nil
 }
 
-func (m *mockPPPGateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPProfile, error) {
+func (m *mockPPPGateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.Profile, error) {
 	if m.listProfilesFn != nil {
 		return m.listProfilesFn(ctx, driver, nameFilter)
 	}
@@ -34,12 +35,12 @@ func (m *mockPPPGateway) ListProfiles(ctx context.Context, driver port.DeviceDri
 
 type mockHotspotGateway struct {
 	port.HotspotGateway
-	getUserProfilesFn func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error)
+	getUserProfilesFn func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUserProfile, error)
 	listIPBindingsFn  func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotIPBinding, error)
-	listUsersFn       func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error)
+	listUsersFn       func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error)
 }
 
-func (m *mockHotspotGateway) GetUserProfiles(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error) {
+func (m *mockHotspotGateway) GetUserProfiles(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUserProfile, error) {
 	if m.getUserProfilesFn != nil {
 		return m.getUserProfilesFn(ctx, driver)
 	}
@@ -53,7 +54,7 @@ func (m *mockHotspotGateway) ListIPBindings(ctx context.Context, driver port.Dev
 	return nil, nil
 }
 
-func (m *mockHotspotGateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
+func (m *mockHotspotGateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error) {
 	if m.listUsersFn != nil {
 		return m.listUsersFn(ctx, driver, f)
 	}
@@ -62,20 +63,20 @@ func (m *mockHotspotGateway) ListUsers(ctx context.Context, driver port.DeviceDr
 
 func TestIsVoucherProfile(t *testing.T) {
 	// Profil voucher Mikhmon: ada script on-login
-	voucherProfile1 := port.HotspotUserProfile{
+	voucherProfile1 := domainHotspot.HotspotUserProfile{
 		Name:    "Paket-2Jam",
 		OnLogin: `/tool fetch mode=http address=192.168.88.1 src-path=("/mikhmon/status.php?user=".$user) dst-path=test.txt`,
 	}
 	assert.True(t, importer.IsVoucherProfile(voucherProfile1))
 
-	voucherProfile2 := port.HotspotUserProfile{
+	voucherProfile2 := domainHotspot.HotspotUserProfile{
 		Name:    "Voucher-1Hari",
 		Comment: "validity=1d,price=5000",
 	}
 	assert.True(t, importer.IsVoucherProfile(voucherProfile2))
 
 	// Profil permanen: on-login kosong
-	permProfile := port.HotspotUserProfile{
+	permProfile := domainHotspot.HotspotUserProfile{
 		Name:    "Member-Bulanan",
 		OnLogin: "",
 		Comment: "Pelanggan Tetap Kos",
@@ -86,8 +87,8 @@ func TestIsVoucherProfile(t *testing.T) {
 func TestPullHotspotRows_PermanentVsVoucher(t *testing.T) {
 	ctx := context.Background()
 	hgw := &mockHotspotGateway{
-		getUserProfilesFn: func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error) {
-			return []port.HotspotUserProfile{
+		getUserProfilesFn: func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUserProfile, error) {
+			return []domainHotspot.HotspotUserProfile{
 				{Name: "Paket-2Jam", OnLogin: `/tool fetch mode=http ... mikhmon`},
 				{Name: "Member-Bulanan", OnLogin: ""},
 			}, nil
@@ -103,8 +104,8 @@ func TestPullHotspotRows_PermanentVsVoucher(t *testing.T) {
 				},
 			}, nil
 		},
-		listUsersFn: func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
-			return []port.HotspotUser{
+		listUsersFn: func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error) {
+			return []domainHotspot.HotspotUser{
 				// User voucher sementara
 				{
 					Name:        "a89k",
@@ -152,23 +153,23 @@ func TestPullHotspotRows_PermanentVsVoucher(t *testing.T) {
 func TestPullRouterRows_Unified(t *testing.T) {
 	ctx := context.Background()
 	pgw := &mockPPPGateway{
-		listSecretsFn: func(ctx context.Context, driver port.DeviceDriver, service string) ([]port.PPPoESecret, error) {
-			return []port.PPPoESecret{
+		listSecretsFn: func(ctx context.Context, driver port.DeviceDriver, service string) ([]domainPPP.PPPoESecret, error) {
+			return []domainPPP.PPPoESecret{
 				{Name: "user-pppoe", Profile: "10Mbps", Comment: "Rp 150.000 0857123456"},
 			}, nil
 		},
 	}
 	hgw := &mockHotspotGateway{
-		getUserProfilesFn: func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error) {
-			return []port.HotspotUserProfile{
+		getUserProfilesFn: func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUserProfile, error) {
+			return []domainHotspot.HotspotUserProfile{
 				{Name: "Hotspot-Member", OnLogin: ""},
 			}, nil
 		},
 		listIPBindingsFn: func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotIPBinding, error) {
 			return nil, nil
 		},
-		listUsersFn: func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
-			return []port.HotspotUser{
+		listUsersFn: func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error) {
+			return []domainHotspot.HotspotUser{
 				{Name: "user-hotspot", Profile: "Hotspot-Member", Comment: "Rp 50.000"},
 			}, nil
 		},

@@ -9,7 +9,7 @@ import (
 )
 
 // toProtoHotspotUser converts a single mikrotik user to proto.
-func toProtoHotspotUser(u port.HotspotUser) *polyglotv1.HotspotUser {
+func toProtoHotspotUser(u domainHotspot.HotspotUser) *polyglotv1.HotspotUser {
 	limitBytes := u.LimitBytesOut
 	if limitBytes == "" {
 		limitBytes = u.LimitBytesIn

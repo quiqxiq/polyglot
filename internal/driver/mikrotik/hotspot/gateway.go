@@ -50,7 +50,7 @@ func (g *Gateway) GetSystemIdentity(ctx context.Context, driver port.DeviceDrive
 }
 
 // GetUserProfiles implements port.HotspotGateway.
-func (g *Gateway) GetUserProfiles(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error) {
+func (g *Gateway) GetUserProfiles(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUserProfile, error) {
 	res, err := g.exec(ctx, driver, NewPrintUserProfilesCommand(""))
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (g *Gateway) GenerateVouchers(ctx context.Context, driver port.DeviceDriver
 }
 
 // ListUsers implements port.HotspotGateway.
-func (g *Gateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
+func (g *Gateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error) {
 	cmd := command.Command{Raw: "/ip/hotspot/user/print", Args: map[string]string{}}
 	if f.Name != "" {
 		cmd.Args["?name"] = f.Name
@@ -115,18 +115,18 @@ func (g *Gateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f por
 }
 
 // GetUser implements port.HotspotGateway.
-func (g *Gateway) GetUser(ctx context.Context, driver port.DeviceDriver, rosID string) (port.HotspotUser, error) {
+func (g *Gateway) GetUser(ctx context.Context, driver port.DeviceDriver, rosID string) (domainHotspot.HotspotUser, error) {
 	cmd := command.Command{
 		Raw:  "/ip/hotspot/user/print",
 		Args: map[string]string{"?.id": rosID},
 	}
 	res, err := g.exec(ctx, driver, cmd)
 	if err != nil {
-		return port.HotspotUser{}, err
+		return domainHotspot.HotspotUser{}, err
 	}
 	users := ParseUsers(res)
 	if len(users) == 0 {
-		return port.HotspotUser{}, fmt.Errorf("user %q not found", rosID)
+		return domainHotspot.HotspotUser{}, fmt.Errorf("user %q not found", rosID)
 	}
 	return users[0], nil
 }
@@ -178,7 +178,7 @@ func (g *Gateway) ResetUserCounters(ctx context.Context, driver port.DeviceDrive
 }
 
 // ListActiveSessions implements port.HotspotGateway.
-func (g *Gateway) ListActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+func (g *Gateway) ListActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotActiveSession, error) {
 	res, err := g.exec(ctx, driver, NewPrintActiveCommand(""))
 	if err != nil {
 		return nil, err

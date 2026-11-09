@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"strings"
 
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // DeleteUsersByFilter deletes hotspot users matching mode ("profile", "comment", "expired").
 func (g *Gateway) DeleteUsersByFilter(ctx context.Context, driver port.DeviceDriver, mode, value string) (int, error) {
-	var usersToDelete []port.HotspotUser
+	var usersToDelete []domainHotspot.HotspotUser
 	switch strings.ToLower(mode) {
 	case "profile", "by_profile":
 		if value == "" {
@@ -64,7 +65,7 @@ func (g *Gateway) DeleteUsersByFilter(ctx context.Context, driver port.DeviceDri
 	return deletedCount, nil
 }
 
-func isUserExpired(u port.HotspotUser) bool {
+func isUserExpired(u domainHotspot.HotspotUser) bool {
 	if u.LimitUptime == "1s" {
 		return true
 	}

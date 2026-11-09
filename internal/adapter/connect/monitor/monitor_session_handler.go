@@ -28,7 +28,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context,
 		return response.Unimplemented("driver does not support streaming")
 	}
 
-	activeMap := make(map[string]port.HotspotActiveSession)
+	activeMap := make(map[string]domainHotspot.HotspotActiveSession)
 
 	// Pre-populate with initial snapshot from one-shot query
 	if h.hotspotUC != nil {
@@ -39,7 +39,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context,
 		}
 	}
 
-	initialSessions := make([]port.HotspotActiveSession, 0, len(activeMap))
+	initialSessions := make([]domainHotspot.HotspotActiveSession, 0, len(activeMap))
 	for _, s := range activeMap {
 		initialSessions = append(initialSessions, s)
 	}
@@ -95,7 +95,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context,
 				if user == "" {
 					continue
 				}
-				activeMap[id] = port.HotspotActiveSession{
+				activeMap[id] = domainHotspot.HotspotActiveSession{
 					RosID:      id,
 					Server:     row["server"],
 					User:       user,
@@ -105,7 +105,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context,
 				}
 			}
 
-			sessions := make([]port.HotspotActiveSession, 0, len(activeMap))
+			sessions := make([]domainHotspot.HotspotActiveSession, 0, len(activeMap))
 			for _, s := range activeMap {
 				sessions = append(sessions, s)
 			}
@@ -174,14 +174,14 @@ func (h *NetworkMonitorConnectHandler) StreamActiveStats(ctx context.Context, re
 
 type hotspotSessionState struct {
 	mu        sync.Mutex
-	userMap   map[string]port.HotspotUser
-	activeMap map[string]port.HotspotActiveSession
+	userMap   map[string]domainHotspot.HotspotUser
+	activeMap map[string]domainHotspot.HotspotActiveSession
 }
 
 func newHotspotSessionState() *hotspotSessionState {
 	return &hotspotSessionState{
-		userMap:   make(map[string]port.HotspotUser),
-		activeMap: make(map[string]port.HotspotActiveSession),
+		userMap:   make(map[string]domainHotspot.HotspotUser),
+		activeMap: make(map[string]domainHotspot.HotspotActiveSession),
 	}
 }
 
@@ -200,7 +200,7 @@ func (s *hotspotSessionState) updateUser(row map[string]string) {
 	if name == "" {
 		return
 	}
-	s.userMap[id] = port.HotspotUser{
+	s.userMap[id] = domainHotspot.HotspotUser{
 		RosID:         id,
 		Name:          name,
 		Password:      row["password"],
@@ -234,7 +234,7 @@ func (s *hotspotSessionState) updateActive(row map[string]string) {
 	if user == "" {
 		return
 	}
-	s.activeMap[id] = port.HotspotActiveSession{
+	s.activeMap[id] = domainHotspot.HotspotActiveSession{
 		RosID:      id,
 		Server:     row["server"],
 		User:       user,
@@ -244,14 +244,14 @@ func (s *hotspotSessionState) updateActive(row map[string]string) {
 	}
 }
 
-func (s *hotspotSessionState) inactive() []port.HotspotUser {
+func (s *hotspotSessionState) inactive() []domainHotspot.HotspotUser {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	users := make([]port.HotspotUser, 0, len(s.userMap))
+	users := make([]domainHotspot.HotspotUser, 0, len(s.userMap))
 	for _, u := range s.userMap {
 		users = append(users, u)
 	}
-	active := make([]port.HotspotActiveSession, 0, len(s.activeMap))
+	active := make([]domainHotspot.HotspotActiveSession, 0, len(s.activeMap))
 	for _, a := range s.activeMap {
 		active = append(active, a)
 	}

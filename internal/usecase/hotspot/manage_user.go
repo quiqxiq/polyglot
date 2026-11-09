@@ -5,18 +5,19 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // GetUsers lists hotspot users, optionally filtered (profile, comment batch
 // tag, exact name, only-unused). Pass zero-value port.ListUsersFilter to
 // list all users.
-func (u *UseCase) GetUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
+func (u *UseCase) GetUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error) {
 	return u.gateway.ListUsers(ctx, driver, f)
 }
 
 // GetUser fetches a single hotspot user by RouterOS .id.
-func (u *UseCase) GetUser(ctx context.Context, driver port.DeviceDriver, rosID string) (port.HotspotUser, error) {
+func (u *UseCase) GetUser(ctx context.Context, driver port.DeviceDriver, rosID string) (domainHotspot.HotspotUser, error) {
 	return u.gateway.GetUser(ctx, driver, rosID)
 }
 
@@ -48,13 +49,13 @@ func (u *UseCase) ResetUserCounters(ctx context.Context, driver port.DeviceDrive
 }
 
 // GetUsersByTag fetches all hotspot users whose comment contains tag.
-func (u *UseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDriver, tag string) ([]port.HotspotUser, error) {
+func (u *UseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDriver, tag string) ([]domainHotspot.HotspotUser, error) {
 	users, err := u.GetUsers(ctx, driver, port.ListUsersFilter{})
 	if err != nil {
 		return nil, err
 	}
 
-	filtered := make([]port.HotspotUser, 0)
+	filtered := make([]domainHotspot.HotspotUser, 0)
 	for _, usr := range users {
 		if usr.Comment == "" {
 			continue

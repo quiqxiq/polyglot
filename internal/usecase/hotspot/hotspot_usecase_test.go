@@ -36,8 +36,8 @@ type mockHotspotGateway struct {
 	generateVouchersFn   func(ctx context.Context, driver port.DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error)
 	getSystemResourceFn  func(ctx context.Context, driver port.DeviceDriver) (domainDevice.SystemResource, error)
 	getSystemIdentityFn  func(ctx context.Context, driver port.DeviceDriver) (string, error)
-	listUsersFn          func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error)
-	listActiveSessionsFn func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error)
+	listUsersFn          func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error)
+	listActiveSessionsFn func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotActiveSession, error)
 	listReportsFn        func(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]domainHotspot.MikhmonTransaction, error)
 }
 
@@ -76,14 +76,14 @@ func (m *mockHotspotGateway) GetSystemIdentity(ctx context.Context, driver port.
 	return "", nil
 }
 
-func (m *mockHotspotGateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
+func (m *mockHotspotGateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error) {
 	if m.listUsersFn != nil {
 		return m.listUsersFn(ctx, driver, f)
 	}
 	return nil, nil
 }
 
-func (m *mockHotspotGateway) ListActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+func (m *mockHotspotGateway) ListActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotActiveSession, error) {
 	if m.listActiveSessionsFn != nil {
 		return m.listActiveSessionsFn(ctx, driver)
 	}
@@ -144,14 +144,14 @@ func TestHotspotUseCase(t *testing.T) {
 			getSystemIdentityFn: func(ctx context.Context, drv port.DeviceDriver) (string, error) {
 				return "Router-Hotspot", nil
 			},
-			listUsersFn: func(ctx context.Context, drv port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
-				return []port.HotspotUser{
+			listUsersFn: func(ctx context.Context, drv port.DeviceDriver, f port.ListUsersFilter) ([]domainHotspot.HotspotUser, error) {
+				return []domainHotspot.HotspotUser{
 					{RosID: "*1", Name: "user1"},
 					{RosID: "*2", Name: "user2"},
 				}, nil
 			},
-			listActiveSessionsFn: func(ctx context.Context, drv port.DeviceDriver) ([]port.HotspotActiveSession, error) {
-				return []port.HotspotActiveSession{
+			listActiveSessionsFn: func(ctx context.Context, drv port.DeviceDriver) ([]domainHotspot.HotspotActiveSession, error) {
+				return []domainHotspot.HotspotActiveSession{
 					{RosID: "*1", User: "user1"},
 				}, nil
 			},

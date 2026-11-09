@@ -25,6 +25,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
@@ -103,7 +104,7 @@ func TestProvisioner_E2E(t *testing.T) {
 
 	// 1. Provision: auto-buat profil paket + secret.
 	requireNoErr(t, mgr.Provision(ctx, deviceID, "PPPOE", acct), "provision")
-	assertSecret(t, ctx, gw, drv, username, func(s port.PPPoESecret) bool {
+	assertSecret(t, ctx, gw, drv, username, func(s domainPPP.PPPoESecret) bool {
 		return s.Profile == planProfile && !s.Disabled
 	}, "setelah provision")
 
@@ -132,19 +133,19 @@ func TestProvisioner_E2E(t *testing.T) {
 		},
 	}
 	requireNoErr(t, mgr.Isolate(ctx, deviceID, "PPPOE", username, opt), "isolate")
-	assertSecret(t, ctx, gw, drv, username, func(s port.PPPoESecret) bool {
+	assertSecret(t, ctx, gw, drv, username, func(s domainPPP.PPPoESecret) bool {
 		return s.Profile == isolirProfile
 	}, "setelah isolate")
 
 	// 3. Restore: kembali ke profil paket.
 	requireNoErr(t, mgr.Restore(ctx, deviceID, "PPPOE", username, planProfile, addressList), "restore")
-	assertSecret(t, ctx, gw, drv, username, func(s port.PPPoESecret) bool {
+	assertSecret(t, ctx, gw, drv, username, func(s domainPPP.PPPoESecret) bool {
 		return s.Profile == planProfile
 	}, "setelah restore")
 
 	// 4. Suspend: disabled=true.
 	requireNoErr(t, mgr.Suspend(ctx, deviceID, "PPPOE", username), "suspend")
-	assertSecret(t, ctx, gw, drv, username, func(s port.PPPoESecret) bool {
+	assertSecret(t, ctx, gw, drv, username, func(s domainPPP.PPPoESecret) bool {
 		return s.Disabled
 	}, "setelah suspend")
 
@@ -178,7 +179,7 @@ func requireTrue(t *testing.T, cond bool, format string, args ...any) {
 	}
 }
 
-func findSecretByName(ctx context.Context, gw *mikrotik.Gateway, drv port.DeviceDriver, name string) (*port.PPPoESecret, error) {
+func findSecretByName(ctx context.Context, gw *mikrotik.Gateway, drv port.DeviceDriver, name string) (*domainPPP.PPPoESecret, error) {
 	secrets, err := gw.ListSecrets(ctx, drv, name)
 	if err != nil {
 		return nil, err
@@ -192,7 +193,7 @@ func findSecretByName(ctx context.Context, gw *mikrotik.Gateway, drv port.Device
 	return nil, nil
 }
 
-func assertSecret(t *testing.T, ctx context.Context, gw *mikrotik.Gateway, drv port.DeviceDriver, name string, cond func(port.PPPoESecret) bool, when string) {
+func assertSecret(t *testing.T, ctx context.Context, gw *mikrotik.Gateway, drv port.DeviceDriver, name string, cond func(domainPPP.PPPoESecret) bool, when string) {
 	t.Helper()
 	s, err := findSecretByName(ctx, gw, drv, name)
 	requireNoErr(t, err, "find secret "+when)

@@ -7,7 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 )
@@ -37,8 +39,8 @@ func TestPullRouterPlans_Unified(t *testing.T) {
 	ctx := context.Background()
 
 	pgw := &mockPPPGateway{
-		listProfilesFn: func(_ context.Context, _ port.DeviceDriver, _ string) ([]port.PPPProfile, error) {
-			return []port.PPPProfile{
+		listProfilesFn: func(_ context.Context, _ port.DeviceDriver, _ string) ([]domainPPP.Profile, error) {
+			return []domainPPP.Profile{
 				{Name: "default", RateLimit: "1M/2M", Comment: ""},
 				{Name: "default-encryption", RateLimit: "1M/2M"}, // harus dilewati
 				{Name: "Paket-Home-10M", RateLimit: "10M/5M", Comment: "Tagihan Rp 150.000", ParentQueue: "parent-all"},
@@ -47,8 +49,8 @@ func TestPullRouterPlans_Unified(t *testing.T) {
 	}
 
 	hgw := &mockHotspotGateway{
-		getUserProfilesFn: func(_ context.Context, _ port.DeviceDriver) ([]port.HotspotUserProfile, error) {
-			return []port.HotspotUserProfile{
+		getUserProfilesFn: func(_ context.Context, _ port.DeviceDriver) ([]domainHotspot.HotspotUserProfile, error) {
+			return []domainHotspot.HotspotUserProfile{
 				{Name: "Hotspot-Bulanan", RateLimit: "2M/5M", Comment: "Rp 100000", SharedUsers: "2", SessionTimeout: "30d"},
 			}, nil
 		},

@@ -9,6 +9,7 @@ import (
 	"connectrpc.com/connect"
 
 	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -25,7 +26,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 		return response.Unimplemented("driver does not support streaming")
 	}
 
-	activeMap := make(map[string]port.PPPActiveSession)
+	activeMap := make(map[string]domainPPP.ActiveSession)
 
 	// Pre-populate with initial snapshot
 	if initial, err := h.useCase.ListActive(ctx, driver, req.Msg.NameFilter); err == nil {
@@ -102,7 +103,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 						profile = p
 					}
 				}
-				activeMap[id] = port.PPPActiveSession{
+				activeMap[id] = domainPPP.ActiveSession{
 					RosID:     id,
 					Name:      name,
 					Service:   row["service"],
@@ -156,7 +157,7 @@ func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *conn
 		return response.MapDomainError(err)
 	}
 
-	secretsMap := make(map[string]port.PPPoESecret)
+	secretsMap := make(map[string]domainPPP.PPPoESecret)
 	for _, s := range secretsList {
 		secretsMap[s.RosID] = s
 	}
@@ -289,7 +290,7 @@ func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *conn
 					callerID = row["last-caller-id"]
 				}
 				disabled := strings.EqualFold(row["disabled"], "yes") || strings.EqualFold(row["disabled"], "true")
-				secretsMap[id] = port.PPPoESecret{
+				secretsMap[id] = domainPPP.PPPoESecret{
 					RosID:         id,
 					Name:          name,
 					Profile:       row["profile"],

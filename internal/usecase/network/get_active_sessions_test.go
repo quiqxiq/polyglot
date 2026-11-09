@@ -6,6 +6,8 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -36,28 +38,28 @@ func (m *mockDriver) Close() error {
 
 type mockSessionGateway struct {
 	port.SessionGateway
-	listPPPActiveFn            func(ctx context.Context, driver port.DeviceDriver) ([]port.PPPActiveSession, error)
-	listPPPInactiveFn          func(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error)
-	listHotspotInactiveUsersFn func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUser, error)
+	listPPPActiveFn            func(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.ActiveSession, error)
+	listPPPInactiveFn          func(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.PPPoESecret, error)
+	listHotspotInactiveUsersFn func(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUser, error)
 	listDHCPLeasesFn           func(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]domainDevice.DHCPLease, error)
 	setDHCPLeaseBlockFn        func(ctx context.Context, driver port.DeviceDriver, rosID string, blocked bool, comment string) (command.Result, error)
 }
 
-func (m *mockSessionGateway) ListPPPActive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPActiveSession, error) {
+func (m *mockSessionGateway) ListPPPActive(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.ActiveSession, error) {
 	if m.listPPPActiveFn != nil {
 		return m.listPPPActiveFn(ctx, driver)
 	}
 	return nil, nil
 }
 
-func (m *mockSessionGateway) ListPPPInactive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error) {
+func (m *mockSessionGateway) ListPPPInactive(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.PPPoESecret, error) {
 	if m.listPPPInactiveFn != nil {
 		return m.listPPPInactiveFn(ctx, driver)
 	}
 	return nil, nil
 }
 
-func (m *mockSessionGateway) ListHotspotInactiveUsers(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUser, error) {
+func (m *mockSessionGateway) ListHotspotInactiveUsers(ctx context.Context, driver port.DeviceDriver) ([]domainHotspot.HotspotUser, error) {
 	if m.listHotspotInactiveUsersFn != nil {
 		return m.listHotspotInactiveUsersFn(ctx, driver)
 	}
@@ -84,8 +86,8 @@ func TestActiveSessionsUseCase(t *testing.T) {
 
 	t.Run("GetPPPActiveSessions", func(t *testing.T) {
 		gw := &mockSessionGateway{
-			listPPPActiveFn: func(ctx context.Context, drv port.DeviceDriver) ([]port.PPPActiveSession, error) {
-				return []port.PPPActiveSession{
+			listPPPActiveFn: func(ctx context.Context, drv port.DeviceDriver) ([]domainPPP.ActiveSession, error) {
+				return []domainPPP.ActiveSession{
 					{RosID: "*1", Name: "user_ppp1", Address: "192.168.10.2", Profile: "10Mbps_Plan"},
 				}, nil
 			},
@@ -101,8 +103,8 @@ func TestActiveSessionsUseCase(t *testing.T) {
 
 	t.Run("GetPPPInactiveSessions", func(t *testing.T) {
 		gw := &mockSessionGateway{
-			listPPPInactiveFn: func(ctx context.Context, drv port.DeviceDriver) ([]port.PPPoESecret, error) {
-				return []port.PPPoESecret{
+			listPPPInactiveFn: func(ctx context.Context, drv port.DeviceDriver) ([]domainPPP.PPPoESecret, error) {
+				return []domainPPP.PPPoESecret{
 					{RosID: "*2", Name: "user_offline", Service: "pppoe"},
 				}, nil
 			},
@@ -116,8 +118,8 @@ func TestActiveSessionsUseCase(t *testing.T) {
 
 	t.Run("GetHotspotInactiveUsers", func(t *testing.T) {
 		gw := &mockSessionGateway{
-			listHotspotInactiveUsersFn: func(ctx context.Context, drv port.DeviceDriver) ([]port.HotspotUser, error) {
-				return []port.HotspotUser{
+			listHotspotInactiveUsersFn: func(ctx context.Context, drv port.DeviceDriver) ([]domainHotspot.HotspotUser, error) {
+				return []domainHotspot.HotspotUser{
 					{RosID: "*2", Name: "vouc2"},
 				}, nil
 			},

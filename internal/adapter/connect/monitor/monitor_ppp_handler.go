@@ -29,7 +29,7 @@ func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req 
 		return response.Unimplemented("driver does not support streaming")
 	}
 
-	activeMap := make(map[string]port.PPPActiveSession)
+	activeMap := make(map[string]domainPPP.ActiveSession)
 
 	// Pre-populate with initial snapshot from one-shot query
 	if h.activeSessionsUseCase != nil {
@@ -88,7 +88,7 @@ func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req 
 				if name == "" {
 					continue
 				}
-				activeMap[id] = port.PPPActiveSession{
+				activeMap[id] = domainPPP.ActiveSession{
 					RosID:     id,
 					Name:      name,
 					Service:   row["service"],
@@ -130,14 +130,14 @@ func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req 
 // directory and the active session list via live map tracking.
 type pppSessionState struct {
 	mu        sync.Mutex
-	secretMap map[string]port.PPPoESecret
-	activeMap map[string]port.PPPActiveSession
+	secretMap map[string]domainPPP.PPPoESecret
+	activeMap map[string]domainPPP.ActiveSession
 }
 
 func newPPPSessionState() *pppSessionState {
 	return &pppSessionState{
-		secretMap: make(map[string]port.PPPoESecret),
-		activeMap: make(map[string]port.PPPActiveSession),
+		secretMap: make(map[string]domainPPP.PPPoESecret),
+		activeMap: make(map[string]domainPPP.ActiveSession),
 	}
 }
 
@@ -156,7 +156,7 @@ func (s *pppSessionState) updateSecret(row map[string]string) {
 	if name == "" {
 		return
 	}
-	s.secretMap[id] = port.PPPoESecret{
+	s.secretMap[id] = domainPPP.PPPoESecret{
 		RosID:         id,
 		Name:          name,
 		Profile:       row["profile"],
@@ -185,7 +185,7 @@ func (s *pppSessionState) updateActive(row map[string]string) {
 	if name == "" {
 		return
 	}
-	s.activeMap[id] = port.PPPActiveSession{
+	s.activeMap[id] = domainPPP.ActiveSession{
 		RosID:     id,
 		Name:      name,
 		Service:   row["service"],
@@ -198,14 +198,14 @@ func (s *pppSessionState) updateActive(row map[string]string) {
 }
 
 // inactive returns subscriber secrets without an active session.
-func (s *pppSessionState) inactive() []port.PPPoESecret {
+func (s *pppSessionState) inactive() []domainPPP.PPPoESecret {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	secrets := make([]port.PPPoESecret, 0, len(s.secretMap))
+	secrets := make([]domainPPP.PPPoESecret, 0, len(s.secretMap))
 	for _, sec := range s.secretMap {
 		secrets = append(secrets, sec)
 	}
-	active := make([]port.PPPActiveSession, 0, len(s.activeMap))
+	active := make([]domainPPP.ActiveSession, 0, len(s.activeMap))
 	for _, a := range s.activeMap {
 		active = append(active, a)
 	}

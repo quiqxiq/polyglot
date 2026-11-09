@@ -11,6 +11,7 @@ import (
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
@@ -26,16 +27,16 @@ func (m *mockDriver) Execute(_ context.Context, _ command.Command) (command.Resu
 
 type mockPPPGateway struct {
 	port.PPPGateway
-	secrets  []port.PPPoESecret
-	profiles []port.PPPProfile
+	secrets  []domainPPP.PPPoESecret
+	profiles []domainPPP.Profile
 }
 
-func (m *mockPPPGateway) ListSecrets(_ context.Context, _ port.DeviceDriver, _ string) ([]port.PPPoESecret, error) {
+func (m *mockPPPGateway) ListSecrets(_ context.Context, _ port.DeviceDriver, _ string) ([]domainPPP.PPPoESecret, error) {
 	return m.secrets, nil
 }
 
 func (m *mockPPPGateway) AddSecret(_ context.Context, _ port.DeviceDriver, p port.PPPoESecretParams) (command.Result, error) {
-	m.secrets = append(m.secrets, port.PPPoESecret{
+	m.secrets = append(m.secrets, domainPPP.PPPoESecret{
 		RosID:   "*1",
 		Name:    p.Name,
 		Profile: p.Profile,
@@ -72,19 +73,19 @@ func (m *mockPPPGateway) RemoveSecret(_ context.Context, _ port.DeviceDriver, ro
 	return command.Result{Output: "ok"}, nil
 }
 
-func (m *mockPPPGateway) ListProfiles(_ context.Context, _ port.DeviceDriver, _ string) ([]port.PPPProfile, error) {
+func (m *mockPPPGateway) ListProfiles(_ context.Context, _ port.DeviceDriver, _ string) ([]domainPPP.Profile, error) {
 	return m.profiles, nil
 }
 
 func (m *mockPPPGateway) AddProfile(_ context.Context, _ port.DeviceDriver, p port.PPPProfileParams) (command.Result, error) {
-	m.profiles = append(m.profiles, port.PPPProfile{
+	m.profiles = append(m.profiles, domainPPP.Profile{
 		RosID: "*p1",
 		Name:  p.Name,
 	})
 	return command.Result{Output: "ok"}, nil
 }
 
-func (m *mockPPPGateway) ListActive(_ context.Context, _ port.DeviceDriver, _ string) ([]port.PPPActiveSession, error) {
+func (m *mockPPPGateway) ListActive(_ context.Context, _ port.DeviceDriver, _ string) ([]domainPPP.ActiveSession, error) {
 	return nil, nil
 }
 
@@ -244,19 +245,19 @@ func TestProvisioner_SyncPlanProfile(t *testing.T) {
 
 type mockHotspotGateway struct {
 	port.HotspotGateway
-	users              []port.HotspotUser
-	profiles           []port.HotspotUserProfile
+	users              []domainHotspot.HotspotUser
+	profiles           []domainHotspot.HotspotUserProfile
 	seq                int
 	walledGardenRemove int
 }
 
-func (m *mockHotspotGateway) ListUsers(_ context.Context, _ port.DeviceDriver, _ port.ListUsersFilter) ([]port.HotspotUser, error) {
+func (m *mockHotspotGateway) ListUsers(_ context.Context, _ port.DeviceDriver, _ port.ListUsersFilter) ([]domainHotspot.HotspotUser, error) {
 	return m.users, nil
 }
 
 func (m *mockHotspotGateway) AddUser(_ context.Context, _ port.DeviceDriver, p port.HotspotUserParams) (command.Result, error) {
 	m.seq++
-	m.users = append(m.users, port.HotspotUser{
+	m.users = append(m.users, domainHotspot.HotspotUser{
 		RosID: "*h" + strconv.Itoa(m.seq), Name: p.Name, Profile: p.Profile, Disabled: p.Disabled,
 	})
 	return command.Result{Output: "ok"}, nil
@@ -272,7 +273,7 @@ func (m *mockHotspotGateway) UpdateUser(_ context.Context, _ port.DeviceDriver, 
 	return command.Result{Output: "ok"}, nil
 }
 
-func (m *mockHotspotGateway) ListActiveSessions(_ context.Context, _ port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+func (m *mockHotspotGateway) ListActiveSessions(_ context.Context, _ port.DeviceDriver) ([]domainHotspot.HotspotActiveSession, error) {
 	return nil, nil
 }
 
@@ -280,12 +281,12 @@ func (m *mockHotspotGateway) ListCookies(_ context.Context, _ port.DeviceDriver)
 	return nil, nil
 }
 
-func (m *mockHotspotGateway) GetUserProfiles(_ context.Context, _ port.DeviceDriver) ([]port.HotspotUserProfile, error) {
+func (m *mockHotspotGateway) GetUserProfiles(_ context.Context, _ port.DeviceDriver) ([]domainHotspot.HotspotUserProfile, error) {
 	return m.profiles, nil
 }
 
 func (m *mockHotspotGateway) CreateUserProfile(_ context.Context, _ port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error) {
-	m.profiles = append(m.profiles, port.HotspotUserProfile{Name: p.Name})
+	m.profiles = append(m.profiles, domainHotspot.HotspotUserProfile{Name: p.Name})
 	return command.Result{Output: "ok"}, nil
 }
 
@@ -486,8 +487,8 @@ func TestProvisioner_IsolateInstallsFilter(t *testing.T) {
 
 func TestProvisioner_DeleteIsolationInfrastructure(t *testing.T) {
 	ctx := context.Background()
-	pppGW := &mockPPPGateway{profiles: []port.PPPProfile{{RosID: "*p1", Name: "ISOLIR"}}}
-	hotGW := &mockHotspotGateway{profiles: []port.HotspotUserProfile{{RosID: "*h1", Name: "ISOLIR"}}}
+	pppGW := &mockPPPGateway{profiles: []domainPPP.Profile{{RosID: "*p1", Name: "ISOLIR"}}}
+	hotGW := &mockHotspotGateway{profiles: []domainHotspot.HotspotUserProfile{{RosID: "*h1", Name: "ISOLIR"}}}
 	fwGW := &mockFirewallGateway{}
 	prov := NewWithResolver(
 		func(_ context.Context, _ string) (port.DeviceDriver, error) { return &mockDriver{}, nil },

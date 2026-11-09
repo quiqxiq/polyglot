@@ -28,7 +28,7 @@ func ProfileParamsFromProto(p *polyglotv1.HotspotProfileParams) port.MikhmonProf
 
 // toProtoHotspotProfile converts a single hotspot profile to proto, parsing
 // the Mikhmon metadata out of the on-login script (mode/price/validity/locks).
-func toProtoHotspotProfile(p port.HotspotUserProfile) *polyglotv1.HotspotProfile {
+func toProtoHotspotProfile(p domainHotspot.HotspotUserProfile) *polyglotv1.HotspotProfile {
 	meta, _ := domainHotspot.ParseOnLoginScript(p.OnLogin)
 	return &polyglotv1.HotspotProfile{
 		Id:           p.RosID,
@@ -48,7 +48,7 @@ func toProtoHotspotProfile(p port.HotspotUserProfile) *polyglotv1.HotspotProfile
 }
 
 // toProtoHotspotProfiles converts hotspot profile list to proto list.
-func toProtoHotspotProfiles(profiles []port.HotspotUserProfile) []*polyglotv1.HotspotProfile {
+func toProtoHotspotProfiles(profiles []domainHotspot.HotspotUserProfile) []*polyglotv1.HotspotProfile {
 	pbProfiles := make([]*polyglotv1.HotspotProfile, len(profiles))
 	for i, p := range profiles {
 		pbProfiles[i] = toProtoHotspotProfile(p)

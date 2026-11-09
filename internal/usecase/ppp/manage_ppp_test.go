@@ -5,31 +5,32 @@ import (
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/ppp"
 )
 
 type mockPPPGateway struct {
-	secrets  []port.PPPoESecret
-	profiles []port.PPPProfile
-	active   []port.PPPActiveSession
+	secrets  []domainPPP.PPPoESecret
+	profiles []domainPPP.Profile
+	active   []domainPPP.ActiveSession
 }
 
-func (m *mockPPPGateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPoESecret, error) {
+func (m *mockPPPGateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.PPPoESecret, error) {
 	return m.secrets, nil
 }
 
-func (m *mockPPPGateway) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPoESecret, error) {
+func (m *mockPPPGateway) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (domainPPP.PPPoESecret, error) {
 	for _, s := range m.secrets {
 		if s.RosID == rosID {
 			return s, nil
 		}
 	}
-	return port.PPPoESecret{}, nil
+	return domainPPP.PPPoESecret{}, nil
 }
 
 func (m *mockPPPGateway) AddSecret(ctx context.Context, driver port.DeviceDriver, p port.PPPoESecretParams) (command.Result, error) {
-	m.secrets = append(m.secrets, port.PPPoESecret{
+	m.secrets = append(m.secrets, domainPPP.PPPoESecret{
 		RosID:   "*1",
 		Name:    p.Name,
 		Profile: p.Profile,
@@ -50,21 +51,21 @@ func (m *mockPPPGateway) SetSecretDisabled(ctx context.Context, driver port.Devi
 	return command.Result{Output: "set"}, nil
 }
 
-func (m *mockPPPGateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPProfile, error) {
+func (m *mockPPPGateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.Profile, error) {
 	return m.profiles, nil
 }
 
-func (m *mockPPPGateway) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPProfile, error) {
+func (m *mockPPPGateway) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (domainPPP.Profile, error) {
 	for _, p := range m.profiles {
 		if p.RosID == rosID {
 			return p, nil
 		}
 	}
-	return port.PPPProfile{}, nil
+	return domainPPP.Profile{}, nil
 }
 
 func (m *mockPPPGateway) AddProfile(ctx context.Context, driver port.DeviceDriver, p port.PPPProfileParams) (command.Result, error) {
-	m.profiles = append(m.profiles, port.PPPProfile{
+	m.profiles = append(m.profiles, domainPPP.Profile{
 		RosID:     "*p1",
 		Name:      p.Name,
 		RateLimit: p.RateLimit,
@@ -80,7 +81,7 @@ func (m *mockPPPGateway) RemoveProfile(ctx context.Context, driver port.DeviceDr
 	return command.Result{Output: "removed"}, nil
 }
 
-func (m *mockPPPGateway) ListActive(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPActiveSession, error) {
+func (m *mockPPPGateway) ListActive(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.ActiveSession, error) {
 	return m.active, nil
 }
 
@@ -88,13 +89,13 @@ func (m *mockPPPGateway) KickActive(ctx context.Context, driver port.DeviceDrive
 	return command.Result{Output: "kicked"}, nil
 }
 
-func (m *mockPPPGateway) ListInactive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error) {
+func (m *mockPPPGateway) ListInactive(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.PPPoESecret, error) {
 	return m.secrets, nil
 }
 
 func TestPPPUseCase_Secrets(t *testing.T) {
 	mockGW := &mockPPPGateway{
-		secrets: []port.PPPoESecret{
+		secrets: []domainPPP.PPPoESecret{
 			{RosID: "*1", Name: "client1", Profile: "10M", Service: "pppoe"},
 		},
 	}

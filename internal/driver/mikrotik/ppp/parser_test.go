@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 )
 
 func TestParseSecrets(t *testing.T) {
@@ -66,10 +67,10 @@ func TestParseActiveSessions(t *testing.T) {
 }
 
 func TestEnrichActiveSessionsWithProfiles(t *testing.T) {
-	active := []PPPActiveSession{
+	active := []domainPPP.ActiveSession{
 		{RosID: "*1", Name: "user1"},
 	}
-	secrets := []PPPoESecret{
+	secrets := []domainPPP.PPPoESecret{
 		{RosID: "*A", Name: "user1", Profile: "premium"},
 	}
 	enriched := EnrichActiveSessionsWithProfiles(active, secrets)

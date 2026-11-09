@@ -1,22 +1,5 @@
 package hotspot
 
-import (
-	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
-	"github.com/quixiq/polyglot/internal/port"
-)
-
-// HotspotActiveSession is the vendor-neutral hotspot active session row.
-type HotspotActiveSession = port.HotspotActiveSession
-
-// ActiveStat is the vendor-neutral hotspot active session telemetry stats row.
-type ActiveStat = domainHotspot.HotspotActiveStat
-
-// HotspotUser is the vendor-neutral hotspot user row.
-type HotspotUser = port.HotspotUser
-
-// HotspotUserProfile is the vendor-neutral hotspot user profile row.
-type HotspotUserProfile = port.HotspotUserProfile
-
 // HotspotServer represents one row returned by /ip/hotspot/print.
 type HotspotServer struct {
 	RosID       string

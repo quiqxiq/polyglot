@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	domainTenant "github.com/quixiq/polyglot/internal/domain/tenant"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -45,7 +46,7 @@ type PullResult struct {
 
 // IsVoucherProfile mendeteksi apakah profil hotspot merupakan profil voucher Mikhmon
 // berdasarkan skrip on-login atau pola validity pada komentar profil.
-func IsVoucherProfile(p port.HotspotUserProfile) bool {
+func IsVoucherProfile(p domainHotspot.HotspotUserProfile) bool {
 	combined := strings.ToLower(p.OnLogin)
 	if strings.Contains(combined, "mikhmon") ||
 		strings.Contains(combined, "fetch") ||

@@ -22,14 +22,14 @@ func New(gateway port.PPPGateway) *UseCase {
 }
 
 // ListSecrets retrieves all PPPoE secrets, optionally filtered by username.
-func (u *UseCase) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPoESecret, error) {
+func (u *UseCase) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.PPPoESecret, error) {
 	return u.gateway.ListSecrets(ctx, driver, nameFilter)
 }
 
 // GetSecret fetches a single PPPoE secret by its RouterOS ID.
-func (u *UseCase) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPoESecret, error) {
+func (u *UseCase) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (domainPPP.PPPoESecret, error) {
 	if rosID == "" {
-		return port.PPPoESecret{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
+		return domainPPP.PPPoESecret{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.GetSecret(ctx, driver, rosID)
 }
@@ -67,14 +67,14 @@ func (u *UseCase) SetSecretDisabled(ctx context.Context, driver port.DeviceDrive
 }
 
 // ListProfiles retrieves all PPP profiles, optionally filtered by name.
-func (u *UseCase) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPProfile, error) {
+func (u *UseCase) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.Profile, error) {
 	return u.gateway.ListProfiles(ctx, driver, nameFilter)
 }
 
 // GetProfile fetches a single PPP profile by its RouterOS ID.
-func (u *UseCase) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPProfile, error) {
+func (u *UseCase) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (domainPPP.Profile, error) {
 	if rosID == "" {
-		return port.PPPProfile{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
+		return domainPPP.Profile{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.GetProfile(ctx, driver, rosID)
 }
@@ -104,7 +104,7 @@ func (u *UseCase) RemoveProfile(ctx context.Context, driver port.DeviceDriver, r
 }
 
 // ListActive retrieves currently active PPP sessions.
-func (u *UseCase) ListActive(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPActiveSession, error) {
+func (u *UseCase) ListActive(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainPPP.ActiveSession, error) {
 	return u.gateway.ListActive(ctx, driver, nameFilter)
 }
 
@@ -131,6 +131,6 @@ func (u *UseCase) KickActiveBatch(ctx context.Context, driver port.DeviceDriver,
 }
 
 // ListInactive calculates and returns offline subscribers (secrets without active sessions).
-func (u *UseCase) ListInactive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error) {
+func (u *UseCase) ListInactive(ctx context.Context, driver port.DeviceDriver) ([]domainPPP.PPPoESecret, error) {
 	return u.gateway.ListInactive(ctx, driver)
 }

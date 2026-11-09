@@ -2,11 +2,11 @@ package hotspot
 
 import (
 	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/port"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 )
 
 // toProtoHotspotUsers converts hotspot user list to proto list.
-func toProtoHotspotUsers(users []port.HotspotUser) []*polyglotv1.HotspotUser {
+func toProtoHotspotUsers(users []domainHotspot.HotspotUser) []*polyglotv1.HotspotUser {
 	pbUsers := make([]*polyglotv1.HotspotUser, len(users))
 	for i, u := range users {
 		pbUsers[i] = toProtoHotspotUser(u)
@@ -15,7 +15,7 @@ func toProtoHotspotUsers(users []port.HotspotUser) []*polyglotv1.HotspotUser {
 }
 
 // toProtoHotspotActiveSession converts a single active session to proto.
-func toProtoHotspotActiveSession(s port.HotspotActiveSession) *polyglotv1.HotspotActiveSession {
+func toProtoHotspotActiveSession(s domainHotspot.HotspotActiveSession) *polyglotv1.HotspotActiveSession {
 	return &polyglotv1.HotspotActiveSession{
 		Id:         s.RosID,
 		Server:     s.Server,
@@ -26,7 +26,7 @@ func toProtoHotspotActiveSession(s port.HotspotActiveSession) *polyglotv1.Hotspo
 }
 
 // toProtoActiveSessions converts hotspot active sessions to proto list.
-func toProtoActiveSessions(sessions []port.HotspotActiveSession) []*polyglotv1.HotspotActiveSession {
+func toProtoActiveSessions(sessions []domainHotspot.HotspotActiveSession) []*polyglotv1.HotspotActiveSession {
 	pbSessions := make([]*polyglotv1.HotspotActiveSession, len(sessions))
 	for i, s := range sessions {
 		pbSessions[i] = toProtoHotspotActiveSession(s)

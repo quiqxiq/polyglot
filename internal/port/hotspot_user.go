@@ -1,9 +1,5 @@
 package port
 
-import (
-	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
-)
-
 // ListUsersFilter holds optional filters for /ip/hotspot/user/print.
 // Mirrors the legacy Mikhmon list/query filters: profile, comment (batch tag)
 // and only_unused (uptime=0s — vouchers that have never logged in).
@@ -29,6 +25,3 @@ type HotspotUserParams struct {
 	Comment       string
 	Disabled      bool
 }
-
-// HotspotUser alias to domain model.
-type HotspotUser = domainHotspot.HotspotUser

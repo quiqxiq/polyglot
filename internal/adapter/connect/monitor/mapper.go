@@ -3,10 +3,9 @@ package monitor
 import (
 	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
-func toProtoActiveSessions(sessions []port.HotspotActiveSession) []*polyglotv1.HotspotActiveSession {
+func toProtoActiveSessions(sessions []domainHotspot.HotspotActiveSession) []*polyglotv1.HotspotActiveSession {
 	out := make([]*polyglotv1.HotspotActiveSession, len(sessions))
 	for i, s := range sessions {
 		out[i] = &polyglotv1.HotspotActiveSession{
@@ -37,7 +36,7 @@ func toProtoActiveStats(stats []domainHotspot.HotspotActiveStat) []*polyglotv1.H
 	return out
 }
 
-func toProtoHotspotUsers(users []port.HotspotUser) []*polyglotv1.HotspotUser {
+func toProtoHotspotUsers(users []domainHotspot.HotspotUser) []*polyglotv1.HotspotUser {
 	out := make([]*polyglotv1.HotspotUser, len(users))
 	for i, u := range users {
 		out[i] = &polyglotv1.HotspotUser{

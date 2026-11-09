@@ -20,7 +20,7 @@ type HotspotGateway interface {
 	// GetSystemIdentity fetches the router's configured identity (name).
 	GetSystemIdentity(ctx context.Context, driver DeviceDriver) (string, error)
 	// GetUserProfiles lists all hotspot user profiles.
-	GetUserProfiles(ctx context.Context, driver DeviceDriver) ([]HotspotUserProfile, error)
+	GetUserProfiles(ctx context.Context, driver DeviceDriver) ([]domainHotspot.HotspotUserProfile, error)
 	// CreateUserProfile creates a hotspot user profile with Mikhmon metadata.
 	CreateUserProfile(ctx context.Context, driver DeviceDriver, p MikhmonProfileParams) (command.Result, error)
 	// UpdateUserProfile updates an existing profile by RouterOS .id.
@@ -31,9 +31,9 @@ type HotspotGateway interface {
 	// creation commands, returning the generated voucher metadata.
 	GenerateVouchers(ctx context.Context, driver DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error)
 	// ListUsers lists hotspot users, optionally filtered (profile/comment/name/only_unused).
-	ListUsers(ctx context.Context, driver DeviceDriver, f ListUsersFilter) ([]HotspotUser, error)
+	ListUsers(ctx context.Context, driver DeviceDriver, f ListUsersFilter) ([]domainHotspot.HotspotUser, error)
 	// GetUser fetches a single hotspot user by RouterOS .id.
-	GetUser(ctx context.Context, driver DeviceDriver, rosID string) (HotspotUser, error)
+	GetUser(ctx context.Context, driver DeviceDriver, rosID string) (domainHotspot.HotspotUser, error)
 	// AddUser creates a new hotspot user directly (non-batch).
 	AddUser(ctx context.Context, driver DeviceDriver, p HotspotUserParams) (command.Result, error)
 	// UpdateUser modifies an existing hotspot user by RouterOS .id.
@@ -43,7 +43,7 @@ type HotspotGateway interface {
 	// ResetUserCounters resets byte/time counters for a hotspot user.
 	ResetUserCounters(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// ListActiveSessions fetches all currently connected hotspot active sessions.
-	ListActiveSessions(ctx context.Context, driver DeviceDriver) ([]HotspotActiveSession, error)
+	ListActiveSessions(ctx context.Context, driver DeviceDriver) ([]domainHotspot.HotspotActiveSession, error)
 	// RemoveActiveSession kicks an active session by its RouterOS .id.
 	RemoveActiveSession(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// ListHosts fetches all /ip/hotspot/host entries.

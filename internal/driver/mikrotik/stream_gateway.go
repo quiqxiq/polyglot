@@ -6,6 +6,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
 	mikrotikppp "github.com/quixiq/polyglot/internal/driver/mikrotik/ppp"
@@ -101,11 +102,11 @@ func (g *monitorStreamGateway) ParseQueues(res command.Result) []domainDevice.Si
 	return mikrotikqueue.ParseSimpleQueues(res)
 }
 
-func (g *monitorStreamGateway) ParsePPPActive(res command.Result) []port.PPPActiveSession {
+func (g *monitorStreamGateway) ParsePPPActive(res command.Result) []domainPPP.ActiveSession {
 	return mikrotikppp.ParseActiveSessions(res)
 }
 
-func (g *monitorStreamGateway) ParseHotspotActive(res command.Result) []port.HotspotActiveSession {
+func (g *monitorStreamGateway) ParseHotspotActive(res command.Result) []domainHotspot.HotspotActiveSession {
 	return hotspot.ParseActiveSessions(res)
 }
 
