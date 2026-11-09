@@ -9,10 +9,10 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
-// ParseResource converts a command.Result from /system/resource/print into a SystemResource struct.
-func ParseResource(result command.Result) SystemResource {
+// ParseResource converts a command.Result from /system/resource/print into a Resource struct.
+func ParseResource(result command.Result) Resource {
 	if len(result.Rows) == 0 {
-		return SystemResource{}
+		return Resource{}
 	}
 	row := result.Rows[0]
 	cpuLoad, _ := strconv.Atoi(row["cpu-load"])
@@ -23,7 +23,7 @@ func ParseResource(result command.Result) SystemResource {
 		voltage = row["board-voltage"]
 	}
 
-	return SystemResource{
+	return Resource{
 		CPULoad:       cpuLoad,
 		CPUCount:      cpuCount,
 		CPUFrequency:  row["cpu-frequency"],

@@ -16,7 +16,7 @@ import (
 // instead of importing driver packages directly.
 type HotspotGateway interface {
 	// GetSystemResource fetches router system resource metrics.
-	GetSystemResource(ctx context.Context, driver DeviceDriver) (SystemResource, error)
+	GetSystemResource(ctx context.Context, driver DeviceDriver) (domainDevice.SystemResource, error)
 	// GetSystemIdentity fetches the router's configured identity (name).
 	GetSystemIdentity(ctx context.Context, driver DeviceDriver) (string, error)
 	// GetUserProfiles lists all hotspot user profiles.
@@ -55,7 +55,7 @@ type HotspotGateway interface {
 	// ListIPPools fetches all /ip/pool entries.
 	ListIPPools(ctx context.Context, driver DeviceDriver) ([]domainDevice.IPPool, error)
 	// ListParentQueues fetches all parent /queue/simple entries.
-	ListParentQueues(ctx context.Context, driver DeviceDriver) ([]SimpleQueue, error)
+	ListParentQueues(ctx context.Context, driver DeviceDriver) ([]domainDevice.SimpleQueue, error)
 	// ListNATRules fetches all /ip/firewall/nat entries.
 	ListNATRules(ctx context.Context, driver DeviceDriver) ([]map[string]string, error)
 	// DeleteUsersByFilter deletes hotspot users matching filter mode (by_profile, by_comment, expired).

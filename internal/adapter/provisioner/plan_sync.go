@@ -17,7 +17,7 @@ func hotspotExpireMode(m string) port.ExpireMode {
 	return port.ExpireMode(m)
 }
 
-func hotspotProfileParams(a port.SubscriberAccount) port.MikhmonProfileParams {
+func hotspotProfileParams(a domainSub.SubscriberAccount) port.MikhmonProfileParams {
 	return port.MikhmonProfileParams{
 		Name:         a.Profile,
 		AddressPool:  a.AddressPool,
@@ -35,7 +35,7 @@ func hotspotProfileParams(a port.SubscriberAccount) port.MikhmonProfileParams {
 	}
 }
 
-func pppProfileParams(a port.SubscriberAccount) port.PPPProfileParams {
+func pppProfileParams(a domainSub.SubscriberAccount) port.PPPProfileParams {
 	return port.PPPProfileParams{
 		Name:          a.Profile,
 		RateLimit:     a.RateLimit,
@@ -84,8 +84,8 @@ func hotspotProfileParamsFromSpec(spec domainSub.HotspotProfileSpec) port.Mikhmo
 	}
 }
 
-func isolirAccount(profileName, rateLimit, addressList string) port.SubscriberAccount {
-	return port.SubscriberAccount{Profile: profileName, RateLimit: rateLimit, AddressList: addressList}
+func isolirAccount(profileName, rateLimit, addressList string) domainSub.SubscriberAccount {
+	return domainSub.SubscriberAccount{Profile: profileName, RateLimit: rateLimit, AddressList: addressList}
 }
 
 // profileSnapshot adalah subset field profil di router yang dibandingkan
@@ -100,7 +100,7 @@ type profileSnapshot struct {
 // planProfileDiffers melaporkan apakah profil existing berbeda dari yang
 // diinginkan akun. Field yang kosong pada akun tidak dianggap perbedaan agar
 // profil yang dibuat dashboard/isoli tidak tertimpa nilai kosong.
-func planProfileDiffers(pr profileSnapshot, acct port.SubscriberAccount) bool {
+func planProfileDiffers(pr profileSnapshot, acct domainSub.SubscriberAccount) bool {
 	if acct.RateLimit != "" && pr.rate != acct.RateLimit {
 		return true
 	}
@@ -133,7 +133,7 @@ func (p *Provisioner) EnsureProfile(ctx context.Context, deviceID, serviceType, 
 		return err
 	}
 	_, err = p.ensurePlanProfile(ctx, driver, serviceType,
-		port.SubscriberAccount{Profile: profileName, RateLimit: rateLimit})
+		domainSub.SubscriberAccount{Profile: profileName, RateLimit: rateLimit})
 	return err
 }
 
@@ -141,7 +141,7 @@ func (p *Provisioner) EnsureProfile(ctx context.Context, deviceID, serviceType, 
 // nama profil AKTUAL yang dipakai router — pencocokan nama case-insensitive
 // agar "isolir" vs "ISOLIR" tidak membuat profil duplikat (F1-9). Profil yang
 // sudah ada di-update bila rate/address-list berbeda (F1-10/F1-11).
-func (p *Provisioner) ensurePlanProfile(ctx context.Context, driver port.DeviceDriver, serviceType string, acct port.SubscriberAccount) (string, error) {
+func (p *Provisioner) ensurePlanProfile(ctx context.Context, driver port.DeviceDriver, serviceType string, acct domainSub.SubscriberAccount) (string, error) {
 	if acct.Profile == "" || acct.RateLimit == "" {
 		return acct.Profile, nil
 	}

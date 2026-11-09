@@ -2,6 +2,8 @@ package port
 
 import (
 	"context"
+
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 )
 
 // DeviceDiagnostics abstracts vendor-specific live diagnostics operations
@@ -10,12 +12,12 @@ import (
 // CommandExecutor.
 type DeviceDiagnostics interface {
 	// GetSystemResource fetches router system resource metrics.
-	GetSystemResource(ctx context.Context, driver DeviceDriver) (SystemResource, error)
+	GetSystemResource(ctx context.Context, driver DeviceDriver) (domainDevice.SystemResource, error)
 	// GetSystemIdentity fetches the router's configured identity (name).
 	GetSystemIdentity(ctx context.Context, driver DeviceDriver) (string, error)
 	// ListInterfaces fetches /interface/print entries with optional type and name filters.
-	ListInterfaces(ctx context.Context, driver DeviceDriver, typeFilter, nameFilter string) ([]Interface, error)
+	ListInterfaces(ctx context.Context, driver DeviceDriver, typeFilter, nameFilter string) ([]domainDevice.Interface, error)
 	// MonitorTrafficOnce returns a single snapshot of current traffic rates
 	// for the given interface.
-	MonitorTrafficOnce(ctx context.Context, driver DeviceDriver, ifaceName string) (InterfaceTrafficStats, error)
+	MonitorTrafficOnce(ctx context.Context, driver DeviceDriver, ifaceName string) (domainDevice.InterfaceTrafficStats, error)
 }

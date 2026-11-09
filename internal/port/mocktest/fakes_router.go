@@ -34,7 +34,8 @@ func (f *FakeRouterAccountManager) record(op string) error {
 	return nil
 }
 
-func (f *FakeRouterAccountManager) Provision(_ context.Context, _, _ string, a port.SubscriberAccount) error {
+// Provision records a mock provisioning call.
+func (f *FakeRouterAccountManager) Provision(_ context.Context, _, _ string, a domainSub.SubscriberAccount) error {
 	return f.record("Provision:" + a.Username + "@" + a.Profile)
 }
 

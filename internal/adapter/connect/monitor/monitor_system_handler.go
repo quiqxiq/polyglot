@@ -20,7 +20,7 @@ import (
 type systemSnapshotState struct {
 	mu          sync.Mutex
 	clock       domainDevice.SystemClock
-	resource    port.SystemResource
+	resource    domainDevice.SystemResource
 	routerboard domainDevice.SystemRouterboard
 	identity    string
 	health      domainDevice.SystemHealth
@@ -32,7 +32,7 @@ func (s *systemSnapshotState) setClock(c domainDevice.SystemClock) {
 	s.clock = c
 }
 
-func (s *systemSnapshotState) setResource(r port.SystemResource) {
+func (s *systemSnapshotState) setResource(r domainDevice.SystemResource) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.resource = r

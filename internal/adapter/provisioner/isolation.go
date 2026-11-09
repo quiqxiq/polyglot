@@ -14,7 +14,7 @@ import (
 )
 
 // Provision provisions a subscriber account on the router according to service type.
-func (p *Provisioner) Provision(ctx context.Context, deviceID, serviceType string, acct port.SubscriberAccount) error {
+func (p *Provisioner) Provision(ctx context.Context, deviceID, serviceType string, acct domainSubscription.SubscriberAccount) error {
 	driver, err := p.resolve(ctx, deviceID)
 	if err != nil {
 		return fmt.Errorf("resolve driver %s: %w", deviceID, err)

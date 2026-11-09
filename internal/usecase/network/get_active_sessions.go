@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -50,7 +51,7 @@ func (u *ActiveSessionsUseCase) KickHotspotSession(ctx context.Context, driver p
 }
 
 // GetDHCPLeases fetches all DHCP server leases from the router.
-func (u *ActiveSessionsUseCase) GetDHCPLeases(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]port.DHCPLease, error) {
+func (u *ActiveSessionsUseCase) GetDHCPLeases(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]domainDevice.DHCPLease, error) {
 	return u.gateway.ListDHCPLeases(ctx, driver, macFilter)
 }
 

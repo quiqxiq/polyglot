@@ -2,11 +2,10 @@ package system
 
 import (
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
-// SystemResource is the vendor-neutral router system resource snapshot.
-type SystemResource = port.SystemResource
+// Resource is the vendor-neutral router system resource snapshot.
+type Resource = domainDevice.SystemResource
 
 // Health holds the parsed sensor data from /system/health/print.
 type Health = domainDevice.SystemHealth

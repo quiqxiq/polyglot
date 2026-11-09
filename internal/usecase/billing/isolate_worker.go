@@ -354,8 +354,8 @@ func (w *IsolateWorker) normalProfile(ctx context.Context, sub domainSubscriptio
 }
 
 // accountForRetry membangun akun lengkap dari plan untuk retry provisioning.
-func (w *IsolateWorker) accountForRetry(ctx context.Context, sub domainSubscription.Subscription) port.SubscriberAccount {
-	acct := port.SubscriberAccount{
+func (w *IsolateWorker) accountForRetry(ctx context.Context, sub domainSubscription.Subscription) domainSubscription.SubscriberAccount {
+	acct := domainSubscription.SubscriberAccount{
 		Username: sub.RemoteUsername,
 		Password: sub.RemotePassword,
 		Profile:  w.normalProfile(ctx, sub),

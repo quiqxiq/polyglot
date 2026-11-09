@@ -77,15 +77,15 @@ func (g *monitorStreamGateway) StreamHealth(ctx context.Context, driver port.Str
 	return driver.Stream(ctx, mikrotiksystem.NewStreamHealthCommand(interval))
 }
 
-func (g *monitorStreamGateway) ParseInterfaceTraffic(res command.Result) port.InterfaceTrafficStats {
+func (g *monitorStreamGateway) ParseInterfaceTraffic(res command.Result) domainDevice.InterfaceTrafficStats {
 	return iface.ParseInterfaceTrafficStats(res)
 }
 
-func (g *monitorStreamGateway) ParseResource(res command.Result) port.SystemResource {
+func (g *monitorStreamGateway) ParseResource(res command.Result) domainDevice.SystemResource {
 	return mikrotiksystem.ParseResource(res)
 }
 
-func (g *monitorStreamGateway) ParseInterfaces(res command.Result) []port.Interface {
+func (g *monitorStreamGateway) ParseInterfaces(res command.Result) []domainDevice.Interface {
 	return iface.ParseInterfaces(res)
 }
 
@@ -97,7 +97,7 @@ func (g *monitorStreamGateway) ParseLogEntries(res command.Result) []domainDevic
 	return mikrotiksystem.ParseLogs(res)
 }
 
-func (g *monitorStreamGateway) ParseQueues(res command.Result) []port.SimpleQueue {
+func (g *monitorStreamGateway) ParseQueues(res command.Result) []domainDevice.SimpleQueue {
 	return mikrotikqueue.ParseSimpleQueues(res)
 }
 

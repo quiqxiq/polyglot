@@ -159,7 +159,7 @@ func TestProvisioner_PPPoELifecycle(t *testing.T) {
 	)
 
 	// 1. Provision
-	acct := port.SubscriberAccount{
+	acct := domainSubscription.SubscriberAccount{
 		Username:  "user1",
 		Password:  "pass1",
 		Profile:   "PLAN-10M",
@@ -315,7 +315,7 @@ func TestProvisioner_PPPoEResumeReEnablesSecret(t *testing.T) {
 		pppGW, nil, nil, nil,
 	)
 
-	acct := port.SubscriberAccount{Username: "user1", Password: "pass1", Profile: "PLAN-10M"}
+	acct := domainSubscription.SubscriberAccount{Username: "user1", Password: "pass1", Profile: "PLAN-10M"}
 	if err := prov.Provision(ctx, "dev1", "PPPOE", acct); err != nil {
 		t.Fatalf("Provision: %v", err)
 	}
@@ -343,7 +343,7 @@ func TestProvisioner_HotspotRestoreClearsDisabled(t *testing.T) {
 		nil, hotGW, nil, nil,
 	)
 
-	acct := port.SubscriberAccount{Username: "hs1", Password: "pw", Profile: "PLAN-HS"}
+	acct := domainSubscription.SubscriberAccount{Username: "hs1", Password: "pw", Profile: "PLAN-HS"}
 	if err := prov.Provision(ctx, "dev1", "HOTSPOT", acct); err != nil {
 		t.Fatalf("Provision: %v", err)
 	}
@@ -463,7 +463,7 @@ func TestProvisioner_IsolateInstallsFilter(t *testing.T) {
 		func(_ context.Context, _ string) (port.DeviceDriver, error) { return &mockDriver{}, nil },
 		pppGW, nil, fwGW, nil,
 	)
-	acct := port.SubscriberAccount{Username: "user1", Password: "pass1", Profile: "PLAN-10M"}
+	acct := domainSubscription.SubscriberAccount{Username: "user1", Password: "pass1", Profile: "PLAN-10M"}
 	if err := prov.Provision(ctx, "dev1", "PPPOE", acct); err != nil {
 		t.Fatalf("Provision: %v", err)
 	}

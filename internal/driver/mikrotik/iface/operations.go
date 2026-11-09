@@ -8,7 +8,7 @@ import (
 )
 
 // ListInterfaces queries RouterOS for interface details.
-func ListInterfaces(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor, typeFilter, nameFilter string) ([]port.Interface, error) {
+func ListInterfaces(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor, typeFilter, nameFilter string) ([]Interface, error) {
 	cmd := NewPrintInterfacesCommand(typeFilter, nameFilter)
 	res, err := exec(ctx, driver, cmd)
 	if err != nil {
@@ -18,11 +18,11 @@ func ListInterfaces(ctx context.Context, driver port.DeviceDriver, exec port.Com
 }
 
 // MonitorTrafficOnce queries RouterOS for a single snapshot of interface traffic rates.
-func MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor, ifaceName string) (port.InterfaceTrafficStats, error) {
+func MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor, ifaceName string) (InterfaceTrafficStats, error) {
 	cmd := NewMonitorTrafficOnceCommand(ifaceName)
 	res, err := exec(ctx, driver, cmd)
 	if err != nil {
-		return port.InterfaceTrafficStats{}, fmt.Errorf("mikrotik monitor traffic %q: %w", ifaceName, err)
+		return InterfaceTrafficStats{}, fmt.Errorf("mikrotik monitor traffic %q: %w", ifaceName, err)
 	}
 	return ParseInterfaceTrafficStats(res), nil
 }

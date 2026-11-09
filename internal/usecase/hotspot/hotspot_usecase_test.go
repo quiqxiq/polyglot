@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
@@ -33,7 +34,7 @@ type mockHotspotGateway struct {
 	port.HotspotGateway
 	createUserProfileFn  func(ctx context.Context, driver port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error)
 	generateVouchersFn   func(ctx context.Context, driver port.DeviceDriver, p domainHotspot.VoucherGenerateParams, count int) (domainHotspot.VoucherBatch, error)
-	getSystemResourceFn  func(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error)
+	getSystemResourceFn  func(ctx context.Context, driver port.DeviceDriver) (domainDevice.SystemResource, error)
 	getSystemIdentityFn  func(ctx context.Context, driver port.DeviceDriver) (string, error)
 	listUsersFn          func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error)
 	listActiveSessionsFn func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error)
@@ -61,11 +62,11 @@ func (m *mockHotspotGateway) GenerateVouchers(ctx context.Context, driver port.D
 	return domainHotspot.VoucherBatch{}, nil
 }
 
-func (m *mockHotspotGateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
+func (m *mockHotspotGateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (domainDevice.SystemResource, error) {
 	if m.getSystemResourceFn != nil {
 		return m.getSystemResourceFn(ctx, driver)
 	}
-	return port.SystemResource{}, nil
+	return domainDevice.SystemResource{}, nil
 }
 
 func (m *mockHotspotGateway) GetSystemIdentity(ctx context.Context, driver port.DeviceDriver) (string, error) {
@@ -132,8 +133,8 @@ func TestHotspotUseCase(t *testing.T) {
 
 	t.Run("GetDashboardSummary", func(t *testing.T) {
 		gw := &mockHotspotGateway{
-			getSystemResourceFn: func(ctx context.Context, drv port.DeviceDriver) (port.SystemResource, error) {
-				return port.SystemResource{
+			getSystemResourceFn: func(ctx context.Context, drv port.DeviceDriver) (domainDevice.SystemResource, error) {
+				return domainDevice.SystemResource{
 					CPULoad:   12,
 					Uptime:    "1d",
 					Version:   "7.10",

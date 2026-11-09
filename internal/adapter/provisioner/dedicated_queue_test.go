@@ -3,6 +3,7 @@ package provisioner
 import (
 	"testing"
 
+	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -13,7 +14,7 @@ func TestDedicatedQueueName(t *testing.T) {
 }
 
 func TestDedicatedQueueFromAccount_WithBurst(t *testing.T) {
-	acct := port.SubscriberAccount{
+	acct := domainSub.SubscriberAccount{
 		Username:      "budi",
 		RateLimit:     "10M/5M/20M/10M/4M/4M/8s/8s",
 		BaseRateLimit: "10M/5M",
@@ -35,7 +36,7 @@ func TestDedicatedQueueFromAccount_WithBurst(t *testing.T) {
 }
 
 func TestDedicatedQueueFromAccount_NoBurst(t *testing.T) {
-	acct := port.SubscriberAccount{
+	acct := domainSub.SubscriberAccount{
 		Username:      "ani",
 		RateLimit:     "10M/5M",
 		BaseRateLimit: "10M/5M",
@@ -65,7 +66,7 @@ func TestIsDedicated(t *testing.T) {
 }
 
 func TestSplitBurstSegments(t *testing.T) {
-	acct := port.SubscriberAccount{
+	acct := domainSub.SubscriberAccount{
 		Username:      "x",
 		RateLimit:     "10M/5M/20M/10M/4M/4M/8s/8s",
 		BaseRateLimit: "10M/5M",

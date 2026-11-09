@@ -15,18 +15,12 @@ set -euo pipefail
 # When removing an alias, delete its name below in the same change.
 
 allowed_aliases=(
-  DHCPLease
   HotspotActiveSession
   HotspotUser
   HotspotUserProfile
-  Interface
-  InterfaceTrafficStats
   PPPActiveSession
   PPPoESecret
   PPPProfile
-  SimpleQueue
-  SubscriberAccount
-  SystemResource
 )
 
 actual="$(

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -22,7 +23,7 @@ func isDedicated(serviceType string) bool {
 
 // dedicatedQueueFromAccount builds simple queue parameters from subscriber account.
 // LimitAt = base rate limit (guaranteed CIR); MaxLimit = full rate limit (including burst segments).
-func dedicatedQueueFromAccount(a port.SubscriberAccount, comment string) port.DedicatedQueueParams {
+func dedicatedQueueFromAccount(a domainSub.SubscriberAccount, comment string) port.DedicatedQueueParams {
 	p := port.DedicatedQueueParams{
 		Name:     dedicatedQueueName(a.Username),
 		Target:   a.Username,
@@ -67,7 +68,7 @@ func (p *Provisioner) ProvisionDedicated(ctx context.Context, deviceID string, s
 	return nil
 }
 
-func (p *Provisioner) ensureDedicatedQueue(ctx context.Context, driver port.DeviceDriver, acct port.SubscriberAccount) error {
+func (p *Provisioner) ensureDedicatedQueue(ctx context.Context, driver port.DeviceDriver, acct domainSub.SubscriberAccount) error {
 	if p.q == nil || acct.Username == "" || acct.RateLimit == "" {
 		return nil
 	}
@@ -97,20 +98,20 @@ func (p *Provisioner) ensureDedicatedQueue(ctx context.Context, driver port.Devi
 }
 
 func (p *Provisioner) setDedicatedQueueEnabled(ctx context.Context, driver port.DeviceDriver, username string, enabled bool) {
-	p.withDedicatedQueue(ctx, driver, username, func(qy port.SimpleQueue) error {
+	p.withDedicatedQueue(ctx, driver, username, func(qy domainDevice.SimpleQueue) error {
 		_, err := p.q.SetQueueEnabled(ctx, driver, qy.RosID, enabled)
 		return err
 	})
 }
 
 func (p *Provisioner) removeDedicatedQueue(ctx context.Context, driver port.DeviceDriver, username string) {
-	p.withDedicatedQueue(ctx, driver, username, func(qy port.SimpleQueue) error {
+	p.withDedicatedQueue(ctx, driver, username, func(qy domainDevice.SimpleQueue) error {
 		_, err := p.q.RemoveQueue(ctx, driver, qy.RosID)
 		return err
 	})
 }
 
-func (p *Provisioner) withDedicatedQueue(ctx context.Context, driver port.DeviceDriver, username string, action func(port.SimpleQueue) error) {
+func (p *Provisioner) withDedicatedQueue(ctx context.Context, driver port.DeviceDriver, username string, action func(domainDevice.SimpleQueue) error) {
 	if p.q == nil || username == "" {
 		return
 	}

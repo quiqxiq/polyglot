@@ -25,6 +25,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -85,7 +86,7 @@ func TestProvisioner_E2E(t *testing.T) {
 		isolirProfile = "e2e-test-isolir"
 		addressList   = "E2E_ISOLIR_USERS"
 	)
-	acct := port.SubscriberAccount{
+	acct := subscription.SubscriberAccount{
 		Username: username, Password: password,
 		Profile: planProfile, RateLimit: "2M/2M",
 		Comment: "polyglot:e2e",

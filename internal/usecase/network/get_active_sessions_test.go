@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -38,7 +39,7 @@ type mockSessionGateway struct {
 	listPPPActiveFn            func(ctx context.Context, driver port.DeviceDriver) ([]port.PPPActiveSession, error)
 	listPPPInactiveFn          func(ctx context.Context, driver port.DeviceDriver) ([]port.PPPoESecret, error)
 	listHotspotInactiveUsersFn func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUser, error)
-	listDHCPLeasesFn           func(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]port.DHCPLease, error)
+	listDHCPLeasesFn           func(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]domainDevice.DHCPLease, error)
 	setDHCPLeaseBlockFn        func(ctx context.Context, driver port.DeviceDriver, rosID string, blocked bool, comment string) (command.Result, error)
 }
 
@@ -63,7 +64,7 @@ func (m *mockSessionGateway) ListHotspotInactiveUsers(ctx context.Context, drive
 	return nil, nil
 }
 
-func (m *mockSessionGateway) ListDHCPLeases(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]port.DHCPLease, error) {
+func (m *mockSessionGateway) ListDHCPLeases(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]domainDevice.DHCPLease, error) {
 	if m.listDHCPLeasesFn != nil {
 		return m.listDHCPLeasesFn(ctx, driver, macFilter)
 	}
@@ -131,8 +132,8 @@ func TestActiveSessionsUseCase(t *testing.T) {
 	t.Run("GetDHCPLeases and SetDHCPLeaseBlock", func(t *testing.T) {
 		blockCalled := false
 		gw := &mockSessionGateway{
-			listDHCPLeasesFn: func(ctx context.Context, drv port.DeviceDriver, macFilter string) ([]port.DHCPLease, error) {
-				return []port.DHCPLease{
+			listDHCPLeasesFn: func(ctx context.Context, drv port.DeviceDriver, macFilter string) ([]domainDevice.DHCPLease, error) {
+				return []domainDevice.DHCPLease{
 					{RosID: "*1", Address: "10.0.0.5", MACAddress: "00:11:22:33:44:55", Status: "bound"},
 				}, nil
 			},

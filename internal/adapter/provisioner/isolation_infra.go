@@ -8,6 +8,7 @@ import (
 
 	domainCommand "github.com/quixiq/polyglot/internal/domain/command"
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -83,7 +84,7 @@ func (p *Provisioner) EnsureIsolationInfrastructure(ctx context.Context, deviceI
 	}
 
 	// 3. Ensure PPPoE isolation profile
-	if _, err := p.ensurePlanProfile(ctx, driver, "PPPOE", port.SubscriberAccount{
+	if _, err := p.ensurePlanProfile(ctx, driver, "PPPOE", domainSubscription.SubscriberAccount{
 		Profile:           pppoeProf,
 		RateLimit:         rate,
 		AddressList:       addrList,
@@ -95,7 +96,7 @@ func (p *Provisioner) EnsureIsolationInfrastructure(ctx context.Context, deviceI
 	}
 
 	// 4. Ensure Hotspot isolation profile
-	if _, err := p.ensurePlanProfile(ctx, driver, "HOTSPOT", port.SubscriberAccount{
+	if _, err := p.ensurePlanProfile(ctx, driver, "HOTSPOT", domainSubscription.SubscriberAccount{
 		Profile:     hotspotProf,
 		RateLimit:   rate,
 		AddressList: addrList,

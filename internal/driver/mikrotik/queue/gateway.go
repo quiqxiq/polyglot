@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -20,7 +21,7 @@ func NewGateway(exec port.CommandExecutor) *Gateway {
 var _ port.QueueGateway = (*Gateway)(nil)
 
 // ListQueues implements port.QueueGateway.
-func (g *Gateway) ListQueues(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.SimpleQueue, error) {
+func (g *Gateway) ListQueues(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]domainDevice.SimpleQueue, error) {
 	res, err := g.exec(ctx, driver, NewPrintSimpleQueuesCommand(nameFilter))
 	if err != nil {
 		return nil, err

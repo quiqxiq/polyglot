@@ -32,10 +32,10 @@ func NewGateway(exec port.CommandExecutor) *Gateway {
 var _ port.HotspotGateway = (*Gateway)(nil)
 
 // GetSystemResource implements port.HotspotGateway.
-func (g *Gateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
+func (g *Gateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (domainDevice.SystemResource, error) {
 	res, err := g.exec(ctx, driver, system.NewPrintResourceCommand())
 	if err != nil {
-		return port.SystemResource{}, err
+		return domainDevice.SystemResource{}, err
 	}
 	return system.ParseResource(res), nil
 }
@@ -241,13 +241,13 @@ func (g *Gateway) ListIPPools(ctx context.Context, driver port.DeviceDriver) ([]
 }
 
 // ListParentQueues implements port.HotspotGateway.
-func (g *Gateway) ListParentQueues(ctx context.Context, driver port.DeviceDriver) ([]port.SimpleQueue, error) {
+func (g *Gateway) ListParentQueues(ctx context.Context, driver port.DeviceDriver) ([]domainDevice.SimpleQueue, error) {
 	res, err := g.exec(ctx, driver, queue.NewPrintSimpleQueuesCommand(""))
 	if err != nil {
 		return nil, err
 	}
 	queues := queue.ParseSimpleQueues(res)
-	parents := make([]port.SimpleQueue, 0)
+	parents := make([]domainDevice.SimpleQueue, 0)
 	for _, q := range queues {
 		if q.Parent == "none" || q.Parent == "" {
 			parents = append(parents, q)

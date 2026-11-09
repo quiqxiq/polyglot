@@ -3,11 +3,12 @@ package provisioner
 import (
 	"testing"
 
+	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 func TestHotspotProfileParams(t *testing.T) {
-	acct := port.SubscriberAccount{
+	acct := domainSub.SubscriberAccount{
 		Profile: "HS-30D", RateLimit: "10M/5M",
 		AddressPool: "pool-hs", SharedUsers: 2, ParentQueue: "pq",
 		Price: "50000", SellingPrice: "40000", Validity: "30d",
@@ -28,7 +29,7 @@ func TestHotspotProfileParams(t *testing.T) {
 
 func TestHotspotProfileParams_Defaults(t *testing.T) {
 	// SharedUsers kosong → default 1; field opsional kosong tetap kosong.
-	got := hotspotProfileParams(port.SubscriberAccount{Profile: "MIN"})
+	got := hotspotProfileParams(domainSub.SubscriberAccount{Profile: "MIN"})
 	if got.SharedUsers != "1" {
 		t.Errorf("SharedUsers default=%q want 1", got.SharedUsers)
 	}
@@ -38,7 +39,7 @@ func TestHotspotProfileParams_Defaults(t *testing.T) {
 }
 
 func TestPPPProfileParams(t *testing.T) {
-	acct := port.SubscriberAccount{
+	acct := domainSub.SubscriberAccount{
 		Profile: "PPPOE-10M", RateLimit: "10M/5M/20M/10M/4M/4M/8s/8s",
 		ParentQueue: "pq", AddressList: "paid", RemoteAddressPool: "pool-pppoe",
 	}
@@ -79,7 +80,7 @@ func TestIsolirAccount(t *testing.T) {
 }
 
 func TestPlanProfileDiffers(t *testing.T) {
-	acct := port.SubscriberAccount{
+	acct := domainSub.SubscriberAccount{
 		Profile: "PLAN", RateLimit: "10M/10M", ParentQueue: "pq",
 		AddressList: "paid", RemoteAddressPool: "pool-pppoe",
 	}
@@ -101,7 +102,7 @@ func TestPlanProfileDiffers(t *testing.T) {
 
 	// Field kosong pada akun tidak dianggap perbedaan (tidak menimpa profil
 	// dashboard dengan nilai kosong).
-	sparse := port.SubscriberAccount{Profile: "PLAN", RateLimit: "10M/10M"}
+	sparse := domainSub.SubscriberAccount{Profile: "PLAN", RateLimit: "10M/10M"}
 	if planProfileDiffers(profileSnapshot{rate: "10M/10M", parentQueue: "pq"}, sparse) {
 		t.Fatalf("field kosong tidak boleh memicu update")
 	}

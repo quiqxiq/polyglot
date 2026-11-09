@@ -120,17 +120,17 @@ func (m *mockDriver) Close() error {
 }
 
 type mockDeviceDiagnostics struct {
-	getSystemResourceFn  func(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error)
+	getSystemResourceFn  func(ctx context.Context, driver port.DeviceDriver) (device.SystemResource, error)
 	getSystemIdentityFn  func(ctx context.Context, driver port.DeviceDriver) (string, error)
-	listInterfacesFn     func(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]port.Interface, error)
-	monitorTrafficOnceFn func(ctx context.Context, driver port.DeviceDriver, ifaceName string) (port.InterfaceTrafficStats, error)
+	listInterfacesFn     func(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]device.Interface, error)
+	monitorTrafficOnceFn func(ctx context.Context, driver port.DeviceDriver, ifaceName string) (device.InterfaceTrafficStats, error)
 }
 
-func (m *mockDeviceDiagnostics) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
+func (m *mockDeviceDiagnostics) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (device.SystemResource, error) {
 	if m.getSystemResourceFn != nil {
 		return m.getSystemResourceFn(ctx, driver)
 	}
-	return port.SystemResource{}, nil
+	return device.SystemResource{}, nil
 }
 
 func (m *mockDeviceDiagnostics) GetSystemIdentity(ctx context.Context, driver port.DeviceDriver) (string, error) {
@@ -140,26 +140,26 @@ func (m *mockDeviceDiagnostics) GetSystemIdentity(ctx context.Context, driver po
 	return "", nil
 }
 
-func (m *mockDeviceDiagnostics) ListInterfaces(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]port.Interface, error) {
+func (m *mockDeviceDiagnostics) ListInterfaces(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]device.Interface, error) {
 	if m.listInterfacesFn != nil {
 		return m.listInterfacesFn(ctx, driver, typeFilter, nameFilter)
 	}
 	return nil, nil
 }
 
-func (m *mockDeviceDiagnostics) MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriver, ifaceName string) (port.InterfaceTrafficStats, error) {
+func (m *mockDeviceDiagnostics) MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriver, ifaceName string) (device.InterfaceTrafficStats, error) {
 	if m.monitorTrafficOnceFn != nil {
 		return m.monitorTrafficOnceFn(ctx, driver, ifaceName)
 	}
-	return port.InterfaceTrafficStats{}, nil
+	return device.InterfaceTrafficStats{}, nil
 }
 
 func TestManageDeviceUseCase(t *testing.T) {
 	repo := newMockDeviceRepo()
 	vault := newMockVault()
 	diag := &mockDeviceDiagnostics{
-		getSystemResourceFn: func(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
-			return port.SystemResource{
+		getSystemResourceFn: func(ctx context.Context, driver port.DeviceDriver) (device.SystemResource, error) {
+			return device.SystemResource{
 				Uptime:    "3d",
 				Version:   "7.10",
 				BoardName: "hEX",

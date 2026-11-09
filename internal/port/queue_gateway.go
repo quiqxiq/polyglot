@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 )
 
 // DedicatedQueueParams berisi parameter simple queue khusus pelanggan
@@ -23,7 +24,7 @@ type DedicatedQueueParams struct {
 // CIR langganan DEDICATED. Implementasi vendor: internal/driver/mikrotik.
 type QueueGateway interface {
 	// ListQueues mengambil daftar simple queue, opsional difilter nama.
-	ListQueues(ctx context.Context, driver DeviceDriver, nameFilter string) ([]SimpleQueue, error)
+	ListQueues(ctx context.Context, driver DeviceDriver, nameFilter string) ([]domainDevice.SimpleQueue, error)
 	// AddQueue membuat simple queue baru dari parameter dedicated.
 	AddQueue(ctx context.Context, driver DeviceDriver, p DedicatedQueueParams) (command.Result, error)
 	// RemoveQueue menghapus queue by RouterOS .id.

@@ -9,7 +9,7 @@ import (
 )
 
 // ListLeases queries RouterOS for DHCP leases with optional MAC filtering.
-func ListLeases(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor, macFilter string) ([]port.DHCPLease, error) {
+func ListLeases(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor, macFilter string) ([]Lease, error) {
 	cmd := NewPrintLeasesCommand(macFilter)
 	res, err := exec(ctx, driver, cmd)
 	if err != nil {

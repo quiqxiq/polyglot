@@ -2,12 +2,11 @@ package dhcp
 
 import (
 	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
-// DHCPLease is the vendor-neutral DHCP lease row.
-// Canonical definition lives in internal/port.
-type DHCPLease = port.DHCPLease
+// Lease is the vendor-neutral DHCP lease row.
+// Canonical definition lives in internal/domain/device.
+type Lease = domainDevice.DHCPLease
 
 // LeaseBlockParams is the vendor-neutral DHCP lease block/unblock parameter set.
 // Canonical definition lives in internal/domain/device.

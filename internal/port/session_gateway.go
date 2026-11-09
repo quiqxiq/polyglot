@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 )
 
 // SessionGateway abstracts vendor-specific session monitoring operations
@@ -24,7 +25,7 @@ type SessionGateway interface {
 	// KickHotspotSession forcibly disconnects an active Hotspot session by RouterOS .id.
 	KickHotspotSession(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// ListDHCPLeases fetches all DHCP server leases from the router.
-	ListDHCPLeases(ctx context.Context, driver DeviceDriver, macFilter string) ([]DHCPLease, error)
+	ListDHCPLeases(ctx context.Context, driver DeviceDriver, macFilter string) ([]domainDevice.DHCPLease, error)
 	// SetDHCPLeaseBlock blocks or unblocks a DHCP lease by RouterOS .id.
 	SetDHCPLeaseBlock(ctx context.Context, driver DeviceDriver, rosID string, blocked bool, comment string) (command.Result, error)
 }

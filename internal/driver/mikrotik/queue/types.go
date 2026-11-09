@@ -1,12 +1,13 @@
 package queue
 
 import (
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // SimpleQueue is the vendor-neutral simple queue row.
-// Canonical definition lives in internal/port.
-type SimpleQueue = port.SimpleQueue
+// Canonical definition lives in internal/domain/device.
+type SimpleQueue = domainDevice.SimpleQueue
 
 // DedicatedQueueParams is the vendor-neutral dedicated queue params.
 // Canonical definition lives in internal/port.

@@ -37,7 +37,7 @@ func New(gateway port.HotspotGateway) *UseCase {
 }
 
 // GetSystemResource retrieves system resource metrics from the device.
-func (u *UseCase) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
+func (u *UseCase) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (domainDevice.SystemResource, error) {
 	return u.gateway.GetSystemResource(ctx, driver)
 }
 
@@ -77,7 +77,7 @@ func (u *UseCase) GetIPPools(ctx context.Context, driver port.DeviceDriver) ([]d
 }
 
 // GetParentQueues fetches all parent /queue/simple entries.
-func (u *UseCase) GetParentQueues(ctx context.Context, driver port.DeviceDriver) ([]port.SimpleQueue, error) {
+func (u *UseCase) GetParentQueues(ctx context.Context, driver port.DeviceDriver) ([]domainDevice.SimpleQueue, error) {
 	return u.gateway.ListParentQueues(ctx, driver)
 }
 

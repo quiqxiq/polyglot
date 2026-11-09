@@ -7,15 +7,15 @@ import (
 )
 
 // ParseLeases converts command.Result rows from /ip/dhcp-server/lease/print
-// into typed DHCPLease values. Rows missing ".id" are skipped.
-func ParseLeases(result command.Result) []DHCPLease {
-	leases := make([]DHCPLease, 0, len(result.Rows))
+// into typed Lease values. Rows missing ".id" are skipped.
+func ParseLeases(result command.Result) []Lease {
+	leases := make([]Lease, 0, len(result.Rows))
 	for _, row := range result.Rows {
 		id := row[".id"]
 		if id == "" {
 			continue
 		}
-		leases = append(leases, DHCPLease{
+		leases = append(leases, Lease{
 			RosID:         id,
 			Address:       row["address"],
 			MACAddress:    row["mac-address"],

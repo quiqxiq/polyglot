@@ -8,11 +8,11 @@ import (
 )
 
 // GetSystemResource fetches system resources from RouterOS.
-func GetSystemResource(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor) (port.SystemResource, error) {
+func GetSystemResource(ctx context.Context, driver port.DeviceDriver, exec port.CommandExecutor) (Resource, error) {
 	cmd := NewPrintResourceCommand()
 	res, err := exec(ctx, driver, cmd)
 	if err != nil {
-		return port.SystemResource{}, fmt.Errorf("mikrotik get system resource: %w", err)
+		return Resource{}, fmt.Errorf("mikrotik get system resource: %w", err)
 	}
 	return ParseResource(res), nil
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/dhcp"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/firewall"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
@@ -137,14 +138,17 @@ func (g *Gateway) ListHotspotInactiveUsers(ctx context.Context, driver port.Devi
 	return hotspot.FilterInactiveUsers(users, active), nil
 }
 
+// KickHotspotSession forcibly disconnects an active Hotspot session.
 func (g *Gateway) KickHotspotSession(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	return g.hotGW.RemoveActiveSession(ctx, driver, rosID)
 }
 
-func (g *Gateway) ListDHCPLeases(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]port.DHCPLease, error) {
+// ListDHCPLeases fetches all DHCP server leases from the router.
+func (g *Gateway) ListDHCPLeases(ctx context.Context, driver port.DeviceDriver, macFilter string) ([]domainDevice.DHCPLease, error) {
 	return dhcp.ListLeases(ctx, driver, g.exec, macFilter)
 }
 
+// SetDHCPLeaseBlock blocks or unblocks a DHCP lease.
 func (g *Gateway) SetDHCPLeaseBlock(ctx context.Context, driver port.DeviceDriver, rosID string, blocked bool, comment string) (command.Result, error) {
 	return dhcp.SetLeaseBlock(ctx, driver, g.exec, rosID, dhcp.LeaseBlockParams{
 		Blocked: blocked,
@@ -154,10 +158,12 @@ func (g *Gateway) SetDHCPLeaseBlock(ctx context.Context, driver port.DeviceDrive
 
 // ─── port.DeviceDiagnostics Delegation ────────────────────────────────────────
 
-func (g *Gateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
+// GetSystemResource fetches router system resource metrics.
+func (g *Gateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (domainDevice.SystemResource, error) {
 	return system.GetSystemResource(ctx, driver, g.exec)
 }
 
+// GetSystemIdentity fetches the router's configured identity.
 func (g *Gateway) GetSystemIdentity(ctx context.Context, driver port.DeviceDriver) (string, error) {
 	ident, err := system.GetSystemIdentity(ctx, driver, g.exec)
 	if err != nil {
@@ -166,11 +172,13 @@ func (g *Gateway) GetSystemIdentity(ctx context.Context, driver port.DeviceDrive
 	return ident.Name, nil
 }
 
-func (g *Gateway) ListInterfaces(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]port.Interface, error) {
+// ListInterfaces fetches /interface/print entries.
+func (g *Gateway) ListInterfaces(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]domainDevice.Interface, error) {
 	return iface.ListInterfaces(ctx, driver, g.exec, typeFilter, nameFilter)
 }
 
-func (g *Gateway) MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriver, ifaceName string) (port.InterfaceTrafficStats, error) {
+// MonitorTrafficOnce returns a single snapshot of interface traffic rates.
+func (g *Gateway) MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriver, ifaceName string) (domainDevice.InterfaceTrafficStats, error) {
 	return iface.MonitorTrafficOnce(ctx, driver, g.exec, ifaceName)
 }
 

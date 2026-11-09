@@ -3,7 +3,6 @@ package plan
 import (
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
 // BuildPPPoEProvisionSpec membangun spesifikasi terisolasi untuk provisi PPPoE.
@@ -162,10 +161,10 @@ func BuildDedicatedProvisionSpec(sub domainSubscription.Subscription, pl domainP
 	}
 }
 
-// SubscriberAccountFromPlan adalah titik mapping ServicePlan + Subscription -> port.SubscriberAccount.
+// SubscriberAccountFromPlan adalah titik mapping ServicePlan + Subscription -> domainSubscription.SubscriberAccount.
 func SubscriberAccountFromPlan(
 	sub domainSubscription.Subscription, pl domainPlan.ServicePlan,
-) port.SubscriberAccount {
+) domainSubscription.SubscriberAccount {
 	rate := pl.RateLimitWithBurst()
 	if sub.RateLimit != "" {
 		rate = sub.RateLimit
@@ -191,7 +190,7 @@ func SubscriberAccountFromPlan(
 		sharedUsers = pl.SharedUsers
 	}
 
-	return port.SubscriberAccount{
+	return domainSubscription.SubscriberAccount{
 		Username:          sub.RemoteUsername,
 		Password:          sub.RemotePassword,
 		Profile:           pl.RouterProfile(),

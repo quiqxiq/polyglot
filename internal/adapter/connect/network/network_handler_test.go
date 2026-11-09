@@ -11,6 +11,7 @@ import (
 	polyglotv1 "github.com/quixiq/polyglot/api/gen/v1"
 	connectNetwork "github.com/quixiq/polyglot/internal/adapter/connect/network"
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
@@ -40,17 +41,17 @@ type mockHotspotGateway struct {
 
 type mockSessionGateway struct {
 	port.SessionGateway
-	leases []port.DHCPLease
+	leases []domainDevice.DHCPLease
 }
 
-func (m *mockSessionGateway) ListDHCPLeases(ctx context.Context, driver port.DeviceDriver, server string) ([]port.DHCPLease, error) {
+func (m *mockSessionGateway) ListDHCPLeases(ctx context.Context, driver port.DeviceDriver, server string) ([]domainDevice.DHCPLease, error) {
 	return m.leases, nil
 }
 
 func TestNetworkConnectHandler_ListDHCPLeases(t *testing.T) {
 	fakeDriver := &mockDriver{}
 	activeGW := &mockSessionGateway{
-		leases: []port.DHCPLease{
+		leases: []domainDevice.DHCPLease{
 			{
 				RosID:      "*1",
 				Address:    "192.168.88.10",

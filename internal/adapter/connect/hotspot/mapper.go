@@ -33,25 +33,3 @@ func toProtoActiveSessions(sessions []port.HotspotActiveSession) []*polyglotv1.H
 	}
 	return pbSessions
 }
-
-// toProtoDHCPLease converts a single port.DHCPLease to proto.
-func toProtoDHCPLease(l port.DHCPLease) *polyglotv1.DHCPLease {
-	return &polyglotv1.DHCPLease{
-		Id:         l.RosID,
-		Address:    l.Address,
-		MacAddress: l.MACAddress,
-		HostName:   l.HostName,
-		Status:     l.Status,
-		Blocked:    l.Blocked,
-		Comment:    l.Comment,
-	}
-}
-
-// toProtoDHCPLeases converts a slice of port.DHCPLease to proto slice.
-func toProtoDHCPLeases(leases []port.DHCPLease) []*polyglotv1.DHCPLease {
-	pbLeases := make([]*polyglotv1.DHCPLease, len(leases))
-	for i, l := range leases {
-		pbLeases[i] = toProtoDHCPLease(l)
-	}
-	return pbLeases
-}

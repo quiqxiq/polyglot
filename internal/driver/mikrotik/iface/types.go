@@ -1,13 +1,13 @@
 package iface
 
 import (
-	"github.com/quixiq/polyglot/internal/port"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 )
 
 // Interface is the vendor-neutral network interface row.
-// Canonical definition lives in internal/port.
-type Interface = port.Interface
+// Canonical definition lives in internal/domain/device.
+type Interface = domainDevice.Interface
 
 // InterfaceTrafficStats is the vendor-neutral interface traffic rate snapshot.
-// Canonical definition lives in internal/port.
-type InterfaceTrafficStats = port.InterfaceTrafficStats
+// Canonical definition lives in internal/domain/device.
+type InterfaceTrafficStats = domainDevice.InterfaceTrafficStats

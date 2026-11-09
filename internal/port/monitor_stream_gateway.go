@@ -33,12 +33,12 @@ type MonitorStreamGateway interface {
 	StreamRouterboard(ctx context.Context, driver StreamingDeviceDriver, interval string) (StreamHandle, error)
 	StreamHealth(ctx context.Context, driver StreamingDeviceDriver, interval string) (StreamHandle, error)
 
-	ParseInterfaceTraffic(res command.Result) InterfaceTrafficStats
-	ParseResource(res command.Result) SystemResource
-	ParseInterfaces(res command.Result) []Interface
+	ParseInterfaceTraffic(res command.Result) domainDevice.InterfaceTrafficStats
+	ParseResource(res command.Result) domainDevice.SystemResource
+	ParseInterfaces(res command.Result) []domainDevice.Interface
 	ParseIdentity(res command.Result) domainDevice.SystemIdentity
 	ParseLogEntries(res command.Result) []domainDevice.LogEntry
-	ParseQueues(res command.Result) []SimpleQueue
+	ParseQueues(res command.Result) []domainDevice.SimpleQueue
 	ParsePPPActive(res command.Result) []PPPActiveSession
 	ParseHotspotActive(res command.Result) []HotspotActiveSession
 	ParseHotspotActiveStats(res command.Result) []domainHotspot.HotspotActiveStat

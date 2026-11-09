@@ -8,9 +8,6 @@ import (
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 )
 
-// SubscriberAccount alias to domain subscription model.
-type SubscriberAccount = domainSub.SubscriberAccount
-
 // IsolationOptions membawa parameter isolation yang berasal dari
 // system_settings (bukan konstanta kode).
 type IsolationOptions struct {
@@ -29,7 +26,7 @@ type IsolationOptions struct {
 // ISOLIR ≠ disable: akun dipindah ke profil isolir, sesi di-kick, dan IP
 // ditandai address-list agar rule dst-nat redirect ke halaman bayar bekerja.
 type RouterAccountManager interface {
-	Provision(ctx context.Context, deviceID, serviceType string, acct SubscriberAccount) error
+	Provision(ctx context.Context, deviceID, serviceType string, acct domainSub.SubscriberAccount) error
 	ProvisionPPPoE(ctx context.Context, deviceID string, spec domainSub.PPPoEProvisionSpec) error
 	ProvisionHotspot(ctx context.Context, deviceID string, spec domainSub.HotspotProvisionSpec) error
 	ProvisionDedicated(ctx context.Context, deviceID string, spec domainSub.DedicatedProvisionSpec) error
