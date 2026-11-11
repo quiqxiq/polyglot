@@ -13,4 +13,6 @@ type WASessionRepository interface {
 	FindAllSessions(ctx context.Context) ([]whatsapp.WASession, error)
 	UpdateSession(ctx context.Context, session *whatsapp.WASession) error
 	DeleteSession(ctx context.Context, id uint) error
+	// PurgeSession removes a session and its mirrored chat history atomically.
+	PurgeSession(ctx context.Context, id uint) error
 }

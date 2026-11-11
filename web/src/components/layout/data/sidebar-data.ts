@@ -1,6 +1,7 @@
 import {
   BarChart3,
   BellRing,
+  Bot,
   ClipboardList,
   Contact,
   FileText,
@@ -52,6 +53,12 @@ export const getSidebarData = (t: (key: string) => string): SidebarData => ({
           url: '/devices',
           icon: Monitor,
           permission: 'device:read',
+        },
+        {
+          title: t('nav.netops'),
+          url: '/netops',
+          icon: Bot,
+          permission: 'harness:admin',
         },
         {
           title: t('nav.hotspot'),

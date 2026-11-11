@@ -39,6 +39,7 @@ import { Route as AuthenticatedPppIndexRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedPlansIndexRouteImport } from './routes/_authenticated/plans/index'
 import { Route as AuthenticatedPaymentsIndexRouteImport } from './routes/_authenticated/payments/index'
 import { Route as AuthenticatedOltIndexRouteImport } from './routes/_authenticated/olt/index'
+import { Route as AuthenticatedNetopsIndexRouteImport } from './routes/_authenticated/netops/index'
 import { Route as AuthenticatedLogsIndexRouteImport } from './routes/_authenticated/logs/index'
 import { Route as AuthenticatedInvoicesIndexRouteImport } from './routes/_authenticated/invoices/index'
 import { Route as AuthenticatedHotspotIndexRouteImport } from './routes/_authenticated/hotspot/index'
@@ -221,6 +222,12 @@ const AuthenticatedOltIndexRoute = AuthenticatedOltIndexRouteImport.update({
   path: '/olt/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNetopsIndexRoute =
+  AuthenticatedNetopsIndexRouteImport.update({
+    id: '/netops/',
+    path: '/netops/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedLogsIndexRoute = AuthenticatedLogsIndexRouteImport.update({
   id: '/logs/',
   path: '/logs/',
@@ -409,6 +416,7 @@ export interface FileRoutesByFullPath {
   '/hotspot/': typeof AuthenticatedHotspotIndexRoute
   '/invoices/': typeof AuthenticatedInvoicesIndexRoute
   '/logs/': typeof AuthenticatedLogsIndexRoute
+  '/netops/': typeof AuthenticatedNetopsIndexRoute
   '/olt/': typeof AuthenticatedOltIndexRoute
   '/payments/': typeof AuthenticatedPaymentsIndexRoute
   '/plans/': typeof AuthenticatedPlansIndexRoute
@@ -464,6 +472,7 @@ export interface FileRoutesByTo {
   '/hotspot': typeof AuthenticatedHotspotIndexRoute
   '/invoices': typeof AuthenticatedInvoicesIndexRoute
   '/logs': typeof AuthenticatedLogsIndexRoute
+  '/netops': typeof AuthenticatedNetopsIndexRoute
   '/olt': typeof AuthenticatedOltIndexRoute
   '/payments': typeof AuthenticatedPaymentsIndexRoute
   '/plans': typeof AuthenticatedPlansIndexRoute
@@ -522,6 +531,7 @@ export interface FileRoutesById {
   '/_authenticated/hotspot/': typeof AuthenticatedHotspotIndexRoute
   '/_authenticated/invoices/': typeof AuthenticatedInvoicesIndexRoute
   '/_authenticated/logs/': typeof AuthenticatedLogsIndexRoute
+  '/_authenticated/netops/': typeof AuthenticatedNetopsIndexRoute
   '/_authenticated/olt/': typeof AuthenticatedOltIndexRoute
   '/_authenticated/payments/': typeof AuthenticatedPaymentsIndexRoute
   '/_authenticated/plans/': typeof AuthenticatedPlansIndexRoute
@@ -580,6 +590,7 @@ export interface FileRouteTypes {
     | '/hotspot/'
     | '/invoices/'
     | '/logs/'
+    | '/netops/'
     | '/olt/'
     | '/payments/'
     | '/plans/'
@@ -635,6 +646,7 @@ export interface FileRouteTypes {
     | '/hotspot'
     | '/invoices'
     | '/logs'
+    | '/netops'
     | '/olt'
     | '/payments'
     | '/plans'
@@ -692,6 +704,7 @@ export interface FileRouteTypes {
     | '/_authenticated/hotspot/'
     | '/_authenticated/invoices/'
     | '/_authenticated/logs/'
+    | '/_authenticated/netops/'
     | '/_authenticated/olt/'
     | '/_authenticated/payments/'
     | '/_authenticated/plans/'
@@ -939,6 +952,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOltIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/netops/': {
+      id: '/_authenticated/netops/'
+      path: '/netops'
+      fullPath: '/netops/'
+      preLoaderRoute: typeof AuthenticatedNetopsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/logs/': {
       id: '/_authenticated/logs/'
       path: '/logs'
@@ -1167,6 +1187,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedHotspotIndexRoute: typeof AuthenticatedHotspotIndexRoute
   AuthenticatedInvoicesIndexRoute: typeof AuthenticatedInvoicesIndexRoute
   AuthenticatedLogsIndexRoute: typeof AuthenticatedLogsIndexRoute
+  AuthenticatedNetopsIndexRoute: typeof AuthenticatedNetopsIndexRoute
   AuthenticatedOltIndexRoute: typeof AuthenticatedOltIndexRoute
   AuthenticatedPaymentsIndexRoute: typeof AuthenticatedPaymentsIndexRoute
   AuthenticatedPlansIndexRoute: typeof AuthenticatedPlansIndexRoute
@@ -1197,6 +1218,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHotspotIndexRoute: AuthenticatedHotspotIndexRoute,
   AuthenticatedInvoicesIndexRoute: AuthenticatedInvoicesIndexRoute,
   AuthenticatedLogsIndexRoute: AuthenticatedLogsIndexRoute,
+  AuthenticatedNetopsIndexRoute: AuthenticatedNetopsIndexRoute,
   AuthenticatedOltIndexRoute: AuthenticatedOltIndexRoute,
   AuthenticatedPaymentsIndexRoute: AuthenticatedPaymentsIndexRoute,
   AuthenticatedPlansIndexRoute: AuthenticatedPlansIndexRoute,

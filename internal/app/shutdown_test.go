@@ -13,11 +13,15 @@ import (
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
 )
 
+type allowStreamAuth struct{}
+
+func (allowStreamAuth) AuthenticateAdmin(*http.Request) (uint, error) { return 1, nil }
+
 // TestShutdownCompletesWithSSEClients regression test for clean shutdown with active SSE streams.
 func TestShutdownCompletesWithSSEClients(t *testing.T) {
 	sseHub := wsAdapter.NewSSEHub()
 	mux := http.NewServeMux()
-	wsAdapter.RegisterEventRoutes(mux, sseHub, nil)
+	wsAdapter.RegisterEventRoutes(mux, sseHub, nil, allowStreamAuth{}, nil)
 
 	ln, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {

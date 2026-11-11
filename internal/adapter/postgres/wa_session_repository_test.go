@@ -19,7 +19,7 @@ func setupWASessionTestDB(t *testing.T) *gorm.DB {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	require.NoError(t, err)
 
-	err = db.AutoMigrate(&model.WASessionModel{})
+	err = db.AutoMigrate(&model.WASessionModel{}, &model.WAChatModel{}, &model.WAMessageModel{})
 	require.NoError(t, err)
 
 	return db
@@ -66,4 +66,55 @@ func TestWASessionRepository_CRUD(t *testing.T) {
 
 	_, err = repo.FindSessionByID(ctx, session.ID)
 	assert.ErrorIs(t, err, postgres.ErrNotFound)
+}
+
+func TestWASessionRepository_UpdateDoesNotResurrectDeletedSession(t *testing.T) {
+	db := setupWASessionTestDB(t)
+	repo := postgres.NewWASessionRepository(db)
+	ctx := context.Background()
+
+	session := &whatsapp.WASession{DeviceName: "Gateway 3", Status: whatsapp.StatusOnline}
+	require.NoError(t, repo.CreateSession(ctx, session))
+
+	loaded, err := repo.FindSessionByID(ctx, session.ID)
+	require.NoError(t, err)
+	require.NoError(t, repo.DeleteSession(ctx, session.ID))
+
+	loaded.Status = whatsapp.StatusNeedsRescan
+	err = repo.UpdateSession(ctx, loaded)
+	assert.ErrorIs(t, err, postgres.ErrNotFound)
+
+	var count int64
+	require.NoError(t, db.Model(&model.WASessionModel{}).Where("id = ?", session.ID).Count(&count).Error)
+	assert.Zero(t, count)
+}
+
+func TestWASessionRepository_PurgeSession(t *testing.T) {
+	db := setupWASessionTestDB(t)
+	repo := postgres.NewWASessionRepository(db)
+	ctx := context.Background()
+
+	session := &whatsapp.WASession{DeviceName: "Gateway 2", Status: whatsapp.StatusOnline}
+	require.NoError(t, repo.CreateSession(ctx, session))
+
+	require.NoError(t, db.Create(&model.WAChatModel{
+		SessionID: session.ID,
+		ChatJID:   "628123456789@s.whatsapp.net",
+	}).Error)
+	require.NoError(t, db.Create(&model.WAMessageModel{
+		SessionID:   session.ID,
+		ChatJID:     "628123456789@s.whatsapp.net",
+		WAMessageID: "msg-1",
+	}).Error)
+
+	require.NoError(t, repo.PurgeSession(ctx, session.ID))
+
+	_, err := repo.FindSessionByID(ctx, session.ID)
+	assert.ErrorIs(t, err, postgres.ErrNotFound)
+
+	var chats, messages int64
+	require.NoError(t, db.Model(&model.WAChatModel{}).Where("session_id = ?", session.ID).Count(&chats).Error)
+	require.NoError(t, db.Model(&model.WAMessageModel{}).Where("session_id = ?", session.ID).Count(&messages).Error)
+	assert.Zero(t, chats)
+	assert.Zero(t, messages)
 }

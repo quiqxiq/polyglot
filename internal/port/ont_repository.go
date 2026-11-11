@@ -13,6 +13,7 @@ type ONTFilter struct {
 	PONIndex    int
 	State       string
 	Search      string
+	CustomerID  string
 	Linked      *bool
 	ACSMatched  *bool
 	Limit       int

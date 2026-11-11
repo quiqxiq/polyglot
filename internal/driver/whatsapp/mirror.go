@@ -42,6 +42,9 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 	}
 
 	content := extractMessageBody(evt.Message)
+	if content == "" && evt.Message.GetPollCreationMessage() != nil {
+		content = evt.Message.GetPollCreationMessage().GetName()
+	}
 	mediaType := extractMediaType(evt.Message)
 
 	if evt.Message == nil || (content == "" && (mediaType == "unknown" || mediaType == "reaction" || mediaType == "system")) {
@@ -192,6 +195,8 @@ func previewOf(content, mediaType string) string {
 		return "👤 Kontak"
 	case "call":
 		return "📞 Panggilan"
+	case "poll":
+		return "📊 Poll"
 	default:
 		return "[media]"
 	}

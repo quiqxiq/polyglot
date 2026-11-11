@@ -15,6 +15,16 @@ const (
 	ctxKeyRoles  ctxKey = "auth.roles"
 )
 
+const (
+	// ServiceUserID is the synthetic identity a loopback service caller receives
+	// after presenting a configured service token. It is outside the range of
+	// database user IDs so it cannot collide with a real account.
+	ServiceUserID uint = 1<<32 - 1
+	// RoleService is the RBAC role granted to service callers. The policy seeder
+	// gives it only the read permissions the harness needs.
+	RoleService = "service"
+)
+
 // WithIdentity stores the authenticated user ID and roles in ctx.
 func WithIdentity(ctx context.Context, userID uint, roles []string) context.Context {
 	ctx = context.WithValue(ctx, ctxKeyUserID, userID)

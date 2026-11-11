@@ -188,6 +188,20 @@ func ClearRefreshCookieHeader(h http.Header, secure bool) {
 	}
 }
 
+// ClearNetOpsCookieHeader adds an expired NetOps proxy session cookie to a header map.
+func ClearNetOpsCookieHeader(h http.Header, secure bool) {
+	c := &http.Cookie{
+		Name:     "polyglot_netops",
+		Value:    "",
+		Path:     "/netops",
+		MaxAge:   -1,
+		HttpOnly: true,
+		Secure:   secure,
+		SameSite: http.SameSiteLaxMode,
+	}
+	h.Add("Set-Cookie", c.String())
+}
+
 func refreshCookie(token string, ttl time.Duration, secure bool) *http.Cookie {
 	return &http.Cookie{
 		Name:     RefreshTokenCookieName,

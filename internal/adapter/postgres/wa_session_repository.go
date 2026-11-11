@@ -65,7 +65,14 @@ func (r *WASessionRepository) FindAllSessions(ctx context.Context) ([]whatsapp.W
 // UpdateSession saves updates to an existing WhatsApp session.
 func (r *WASessionRepository) UpdateSession(ctx context.Context, session *whatsapp.WASession) error {
 	m := model.WASessionModelFromDomain(session)
-	res := r.db.WithContext(ctx).Save(m)
+	// Update the existing row instead of Save: Save upserts, so an
+	// asynchronous status callback that read the row just before a purge could
+	// otherwise re-create the deleted session.
+	res := r.db.WithContext(ctx).
+		Model(m).
+		Select("*").
+		Omit("id").
+		Updates(m)
 	if res.Error != nil {
 		return res.Error
 	}
@@ -85,6 +92,29 @@ func (r *WASessionRepository) DeleteSession(ctx context.Context, id uint) error 
 		return ErrNotFound
 	}
 	return nil
+}
+
+// PurgeSession removes a session together with its mirrored chat history in a
+// single transaction. The runtime schema is created by AutoMigrate and does not
+// carry the migration's ON DELETE CASCADE, so the child rows are deleted
+// explicitly.
+func (r *WASessionRepository) PurgeSession(ctx context.Context, id uint) error {
+	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("session_id = ?", id).Delete(&model.WAMessageModel{}).Error; err != nil {
+			return err
+		}
+		if err := tx.Where("session_id = ?", id).Delete(&model.WAChatModel{}).Error; err != nil {
+			return err
+		}
+		res := tx.Delete(&model.WASessionModel{}, id)
+		if res.Error != nil {
+			return res.Error
+		}
+		if res.RowsAffected == 0 {
+			return ErrNotFound
+		}
+		return nil
+	})
 }
 
 // ─── Backward compatibility delegations on Store ──────────────────────────────
@@ -107,6 +137,11 @@ func (s *Store) FindAllSessions(ctx context.Context) ([]whatsapp.WASession, erro
 // UpdateSession updates an existing WhatsApp session in the store.
 func (s *Store) UpdateSession(ctx context.Context, session *whatsapp.WASession) error {
 	return NewWASessionRepository(s.db).UpdateSession(ctx, session)
+}
+
+// PurgeSession removes a session and its mirrored chat history.
+func (s *Store) PurgeSession(ctx context.Context, id uint) error {
+	return NewWASessionRepository(s.db).PurgeSession(ctx, id)
 }
 
 // DeleteSession deletes a WhatsApp session from the store.

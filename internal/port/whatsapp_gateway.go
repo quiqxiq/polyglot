@@ -23,8 +23,9 @@ type WhatsAppGateway interface {
 	Disconnect(sessionID uint) error
 	Logout(sessionID uint) error
 	Purge(sessionID uint) error
-	Reconnect(sessionID uint) error
+	Reconnect(session *whatsapp.WASession) error
 	SendMessage(sessionID uint, to string, content string) error
+	SendPoll(ctx context.Context, sessionID uint, to string, question string, options []string, selectable int) (string, error)
 	SendDocument(ctx context.Context, sessionID uint, to string, fileBytes []byte, fileName string, contentType string, caption string) error
 	SendImage(ctx context.Context, sessionID uint, to string, imageBytes []byte, contentType string, caption string) error
 	SendChatPresence(ctx context.Context, sessionID uint, to string, state string, media string) error

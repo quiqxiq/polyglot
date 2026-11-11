@@ -3,6 +3,7 @@ package config
 import (
 	_ "embed"
 	"fmt"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -37,6 +38,26 @@ type Config struct {
 
 	WAStoreDir string
 	UploadDir  string
+
+	// Admin-only integrations. Empty values fail closed.
+	MCPAdminToken string // POLYGLOT_MCP_TOKEN: full read/write MCP bearer token
+	MCPReadToken  string // POLYGLOT_MCP_READ_TOKEN: read-only token for the harness
+	WSToken       string // POLYGLOT_WS_TOKEN: optional static token for non-browser terminal clients
+
+	// DeepSeek harness (admin-only NetOps and WhatsApp assistant).
+	HarnessDSHPath        string // HARNESS_DSH_BIN: dsh executable name or path
+	HarnessCSPatchPath    string // HARNESS_CS_PATCH: read-only customer-service overlay
+	HarnessWorkDir        string // HARNESS_WORK_DIR: child process working directory
+	HarnessMCPURL         string // POLYGLOT_MCP_URL: MCP endpoint exported to the harness
+	HarnessTimeoutSeconds int    // HARNESS_TIMEOUT_SECONDS: one complete run
+	HarnessMaxConcurrent  int    // HARNESS_MAX_CONCURRENT: simultaneous harness processes
+	WAAssistantSessionID  uint   // WA_ASSISTANT_SESSION_ID: dedicated session; 0 disables
+
+	// NetOps web UI (admin-only reverse proxy to the harness web app).
+	HarnessWebURL      string // HARNESS_WEB_URL: loopback URL of `dsh web`
+	HarnessWebToken    string // HARNESS_WEB_TOKEN: launch token printed by `dsh web`
+	HarnessProxySecret string // HARNESS_PROXY_SECRET: HMAC key for NetOps cookies/header
+	NetOpsSessionHours int    // NETOPS_SESSION_HOURS: browser session lifetime
 
 	CORSOrigins []string
 
@@ -78,8 +99,10 @@ func Load() Config {
 		}
 	}
 
+	port := getEnv("PORT", "8080")
+
 	return Config{
-		Port:                 getEnv("PORT", "8080"),
+		Port:                 port,
 		AppEnv:               getEnv("APP_ENV", "development"),
 		LogLevel:             getEnv("LOG_LEVEL", "info"),
 		DatabaseURL:          getEnv("DATABASE_URL", defaultDatabaseURL),
@@ -90,7 +113,23 @@ func Load() Config {
 		RefreshTokenTTLHours: getEnvAsInt("REFRESH_TOKEN_TTL_HOURS", 168),
 		WAStoreDir:           getEnv("WA_STORE_DIR", "./data/whatsapp"),
 		UploadDir:            getEnv("UPLOAD_DIR", "data/uploads"),
+		MCPAdminToken:        getEnv("POLYGLOT_MCP_TOKEN", ""),
+		MCPReadToken:         getEnv("POLYGLOT_MCP_READ_TOKEN", ""),
+		WSToken:              getEnv("POLYGLOT_WS_TOKEN", ""),
 		CORSOrigins:          origins,
+
+		HarnessDSHPath:        getEnv("HARNESS_DSH_BIN", "dsh"),
+		HarnessCSPatchPath:    getEnv("HARNESS_CS_PATCH", "deepseek-harness/packages/bundle/netops-app/netops-cs.patch.yml"),
+		HarnessWorkDir:        getEnv("HARNESS_WORK_DIR", ""),
+		HarnessMCPURL:         getEnv("POLYGLOT_MCP_URL", "http://127.0.0.1:"+port+"/mcp"),
+		HarnessTimeoutSeconds: getEnvAsInt("HARNESS_TIMEOUT_SECONDS", 120),
+		HarnessMaxConcurrent:  getEnvAsInt("HARNESS_MAX_CONCURRENT", 2),
+		WAAssistantSessionID:  getEnvAsUint("WA_ASSISTANT_SESSION_ID", 0),
+
+		HarnessWebURL:      getEnv("HARNESS_WEB_URL", "http://127.0.0.1:3080"),
+		HarnessWebToken:    getEnv("HARNESS_WEB_TOKEN", ""),
+		HarnessProxySecret: getEnv("HARNESS_PROXY_SECRET", ""),
+		NetOpsSessionHours: getEnvAsInt("NETOPS_SESSION_HOURS", 8),
 
 		// Scheduler ISP (fase 3). Kosongkan spesifikasi untuk menonaktifkan
 		// job terkait.
@@ -143,6 +182,53 @@ func (c *Config) Validate() error {
 	if c.RefreshTokenTTLHours <= 0 {
 		return fmt.Errorf("REFRESH_TOKEN_TTL_HOURS must be positive (got %d)", c.RefreshTokenTTLHours)
 	}
+	if c.HarnessTimeoutSeconds < 0 {
+		return fmt.Errorf("HARNESS_TIMEOUT_SECONDS must not be negative (got %d)", c.HarnessTimeoutSeconds)
+	}
+	if c.HarnessMaxConcurrent < 0 {
+		return fmt.Errorf("HARNESS_MAX_CONCURRENT must not be negative (got %d)", c.HarnessMaxConcurrent)
+	}
+	if c.NetOpsSessionHours <= 0 {
+		return fmt.Errorf("NETOPS_SESSION_HOURS must be positive (got %d)", c.NetOpsSessionHours)
+	}
+	if c.NetOpsSessionHours > 24*7 {
+		return fmt.Errorf("NETOPS_SESSION_HOURS must not exceed 168 (got %d)", c.NetOpsSessionHours)
+	}
+	if secret := strings.TrimSpace(c.HarnessProxySecret); secret != "" && len(secret) < 16 {
+		return fmt.Errorf("HARNESS_PROXY_SECRET must be at least 16 characters")
+	}
+	if webURL := strings.TrimSpace(c.HarnessWebURL); webURL != "" {
+		parsed, err := url.Parse(webURL)
+		if err != nil || (parsed.Scheme != "http" && parsed.Scheme != "https") || parsed.Host == "" {
+			return fmt.Errorf("HARNESS_WEB_URL must be an absolute http(s) URL")
+		}
+	}
+	if strings.TrimSpace(c.HarnessWebToken) != "" && strings.TrimSpace(c.HarnessWebURL) == "" {
+		return fmt.Errorf("HARNESS_WEB_URL must be set when HARNESS_WEB_TOKEN is set")
+	}
+	if c.MCPAdminToken != "" && c.MCPReadToken != "" && c.MCPAdminToken == c.MCPReadToken {
+		return fmt.Errorf("POLYGLOT_MCP_READ_TOKEN must differ from POLYGLOT_MCP_TOKEN")
+	}
+	if c.WAAssistantSessionID > 0 {
+		if strings.TrimSpace(c.HarnessDSHPath) == "" {
+			return fmt.Errorf("HARNESS_DSH_BIN must be set when WA_ASSISTANT_SESSION_ID is enabled")
+		}
+		if strings.TrimSpace(c.HarnessCSPatchPath) == "" {
+			return fmt.Errorf("HARNESS_CS_PATCH must be set when WA_ASSISTANT_SESSION_ID is enabled")
+		}
+		if strings.TrimSpace(c.HarnessMCPURL) == "" {
+			return fmt.Errorf("POLYGLOT_MCP_URL must be set when WA_ASSISTANT_SESSION_ID is enabled")
+		}
+		if c.HarnessTimeoutSeconds <= 0 {
+			return fmt.Errorf("HARNESS_TIMEOUT_SECONDS must be positive when WA_ASSISTANT_SESSION_ID is enabled")
+		}
+		if c.HarnessMaxConcurrent <= 0 {
+			return fmt.Errorf("HARNESS_MAX_CONCURRENT must be positive when WA_ASSISTANT_SESSION_ID is enabled")
+		}
+		if strings.TrimSpace(c.MCPReadToken) == "" {
+			return fmt.Errorf("POLYGLOT_MCP_READ_TOKEN must be set when WA_ASSISTANT_SESSION_ID is enabled")
+		}
+	}
 
 	if !c.IsProduction() {
 		return nil
@@ -178,4 +264,17 @@ func getEnvAsInt(key string, defaultVal int) int {
 		return val
 	}
 	return defaultVal
+}
+
+func getEnvAsUint(key string, defaultVal uint) uint {
+	valStr := getEnv(key, "")
+	if valStr == "" {
+		return defaultVal
+	}
+	val, err := strconv.ParseUint(valStr, 10, 32)
+	if err != nil {
+		logger.WithComponent("Config").WithField("key", key).Warn("invalid unsigned integer; using default")
+		return defaultVal
+	}
+	return uint(val)
 }

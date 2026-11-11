@@ -62,6 +62,39 @@ func (eh *EventHandler) MakeChatPresenceCallback() ChatPresenceCallback {
 	}
 }
 
+// MakePollVoteCallback wraps an asynchronous poll-vote handler into a
+// PollVoteCallback. The handler runs outside the whatsmeow event loop so a
+// harness turn cannot block message processing.
+func (eh *EventHandler) MakePollVoteCallback(handler func(ctx context.Context, sessionID uint, chatJID string, pollID string, voterNumber string, optionHashes [][]byte) error) PollVoteCallback {
+	return func(sessionID uint, chatJID string, pollID string, voterNumber string, optionHashes [][]byte) {
+		if handler == nil {
+			return
+		}
+		hashes := make([][]byte, len(optionHashes))
+		for i, hash := range optionHashes {
+			hashes[i] = append([]byte(nil), hash...)
+		}
+		go func() {
+			defer func() {
+				if r := recover(); r != nil {
+					logger.WithComponent("EventHandler").WithFields(map[string]any{
+						"session_id": sessionID,
+						"poll_id":    pollID,
+						"panic":      r,
+					}).Error("panic during poll vote processing")
+				}
+			}()
+			ctx := context.Background()
+			if err := handler(ctx, sessionID, chatJID, pollID, voterNumber, hashes); err != nil {
+				logger.WithComponent("EventHandler").WithError(err).WithFields(map[string]any{
+					"session_id": sessionID,
+					"poll_id":    pollID,
+				}).Error("failed to process poll vote")
+			}
+		}()
+	}
+}
+
 func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode string, jid string, phoneNumber string) {
 	if eh.sessionRepo == nil {
 		return
@@ -74,7 +107,12 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 		if status == string(whatsapp.StatusOnline) {
 			sess.ConnectedAt = time.Now()
 		}
-		if jid != "" {
+		if status == string(whatsapp.StatusNeedsRescan) {
+			// Logout removed the local device, so the previous JID no longer
+			// identifies a paired device and must not be matched on the next
+			// connect.
+			sess.JID = ""
+		} else if jid != "" {
 			sess.JID = jid
 		}
 		if phoneNumber != "" {
@@ -96,8 +134,8 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 }
 
 // MakeMessageCallback wraps an asynchronous message handler function into a MessageCallback.
-func (eh *EventHandler) MakeMessageCallback(handler func(ctx context.Context, sessionID uint, chatJID string, customerNumber string, content string) error) MessageCallback {
-	return func(sessionID uint, chatJID string, customerNumber string, content string) {
+func (eh *EventHandler) MakeMessageCallback(handler func(ctx context.Context, sessionID uint, messageID string, chatJID string, customerNumber string, content string) error) MessageCallback {
+	return func(sessionID uint, messageID string, chatJID string, customerNumber string, content string) {
 		if handler == nil {
 			return
 		}
@@ -106,13 +144,17 @@ func (eh *EventHandler) MakeMessageCallback(handler func(ctx context.Context, se
 				if r := recover(); r != nil {
 					logger.WithComponent("EventHandler").WithFields(map[string]any{
 						"session_id": sessionID,
+						"message_id": messageID,
 						"panic":      r,
 					}).Error("panic during incoming message processing")
 				}
 			}()
 			ctx := context.Background()
-			if err := handler(ctx, sessionID, chatJID, customerNumber, content); err != nil {
-				logger.WithComponent("EventHandler").WithError(err).WithField("session_id", sessionID).Error("failed to process incoming message")
+			if err := handler(ctx, sessionID, messageID, chatJID, customerNumber, content); err != nil {
+				logger.WithComponent("EventHandler").WithError(err).WithFields(map[string]any{
+					"session_id": sessionID,
+					"message_id": messageID,
+				}).Error("failed to process incoming message")
 			}
 		}()
 	}

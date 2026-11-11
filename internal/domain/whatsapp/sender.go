@@ -7,8 +7,10 @@ type SenderRole string
 const (
 	RoleAdmin      SenderRole = "admin"      // Full access (owner, superadmin, admin)
 	RoleTechnician SenderRole = "technician" // Network ops, device diagnostics, ONT ops (teknisi)
+	RoleCS         SenderRole = "cs"         // Customer service (agent): customer & billing read
+	RoleFinance    SenderRole = "finance"    // Finance: billing & customer read
 	RoleCustomer   SenderRole = "customer"   // Self-service (invoices, subscriptions, tickets)
-	RoleGuest      SenderRole = "guest"      // Unrecognized or public inquiry
+	RoleGuest      SenderRole = "guest"      // Unrecognized, inactive, or public inquiry
 )
 
 // Standard permission scopes for sender roles.
@@ -23,6 +25,10 @@ const (
 	ScopeSelfBilling    = "self:billing"
 	ScopeSelfTicket     = "self:ticket"
 	ScopePublicInfo     = "public:info"
+	// ScopeHarnessAdmin grants access to the DeepSeek harness, NetOps UI,
+	// WhatsApp assistant, MCP tools, terminal WS, and SSE. Only the admin
+	// role receives it; owner and superadmin inherit it through ScopeAll.
+	ScopeHarnessAdmin = "harness:admin"
 )
 
 // DefaultScopesForRole returns the authorized permission scopes granted to a role.
@@ -35,6 +41,16 @@ func DefaultScopesForRole(role SenderRole) []string {
 			ScopeDeviceRead,
 			ScopeDeviceDiagnose,
 			ScopeOntOps,
+			ScopeCustomerRead,
+			ScopeBillingRead,
+		}
+	case RoleCS:
+		return []string{
+			ScopeCustomerRead,
+			ScopeBillingRead,
+		}
+	case RoleFinance:
+		return []string{
 			ScopeCustomerRead,
 			ScopeBillingRead,
 		}

@@ -28,7 +28,7 @@ type Item struct {
 	Tags       []string          `json:"tags,omitempty"`
 	Enabled    bool              `json:"enabled"`
 	Extra      map[string]string `json:"extra,omitempty"`
-	Status     string            `json:"status"`
+	Status     string            `json:"status" jsonschema:"inventory registration status only ('active' or 'disabled' in database); does NOT indicate live physical reachability. Call get_device_status to probe actual connectivity."`
 }
 
 // ListDevicesOutput is the response payload for list_devices.
@@ -95,7 +95,7 @@ func (h *Handler) ListDevices(ctx context.Context, _ *mcp.CallToolRequest, args 
 
 	return mcputil.ToolOK(ListDevicesOutput{
 		Status:  "success",
-		Summary: fmt.Sprintf("Found %d devices", len(items)),
+		Summary: fmt.Sprintf("Found %d registered device(s) in inventory (use get_device_status to probe live connectivity)", len(items)),
 		Devices: items,
 	})
 }

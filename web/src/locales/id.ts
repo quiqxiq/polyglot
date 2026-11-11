@@ -91,6 +91,7 @@ export const id: TranslationSchema = {
     billing_settings: 'Billing & Keuangan',
     debts: 'Hutang Pelanggan',
     gateway_ops: 'Operasional Gateway',
+    netops: 'Asisten NetOps',
   },
   auth: {
     sign_in: 'Masuk',
@@ -445,6 +446,14 @@ export const id: TranslationSchema = {
     language_desc: 'Pilih antara Bahasa Inggris dan Bahasa Indonesia.',
     update_preferences: 'Simpan preferensi',
     update_display: 'Simpan pengaturan layar',
+  },
+  netops: {
+    opening: 'Membuka Asisten NetOps',
+    opening_desc:
+      'Menyiapkan sesi admin sekali pakai. Anda akan dialihkan secara otomatis.',
+    failed:
+      'Asisten NetOps tidak dapat dibuka. Pastikan harness berjalan lalu coba lagi.',
+    retry: 'Coba lagi',
   },
   table: {
     rows_per_page: 'Baris per halaman',

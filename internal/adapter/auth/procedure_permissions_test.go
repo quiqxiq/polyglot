@@ -136,6 +136,7 @@ func TestIspProceduresMapped(t *testing.T) {
 		"/api/whatsapp/session/pair-code",
 		"/api/whatsapp/session/reconnect",
 		"/api/whatsapp/session/logout",
+		"/api/whatsapp/session/purge",
 		"/api/whatsapp/send/message",
 		"/api/whatsapp/send/image",
 		"/api/whatsapp/send/document",

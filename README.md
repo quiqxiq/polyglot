@@ -53,9 +53,9 @@ Berikut adalah daftar dokumen acuan teknis, arsitektur, dan pedoman pengembangan
                       ┌─────────────────────────────────────────┐
                       │          Polyglot Web Frontend          │
                       │       (React 19 + Vite + Tailwind)      │
-                      └────────────────────┬────────────────────┘
-                                           │ ConnectRPC / SSE
-                                           ▼
+                      └────────────┬───────────────────┬────────┘
+                                   │ ConnectRPC / SSE  │ Reverse Proxy (/netops/)
+                                   ▼                   ▼
 ┌────────────────────────────────────────────────────────────────────────────────┐
 │                          Polyglot NetOps Core Engine                           │
 │  ┌───────────────────────┬───────────────────────┬──────────────────────────┐  │
@@ -68,15 +68,16 @@ Berikut adalah daftar dokumen acuan teknis, arsitektur, dan pedoman pengembangan
 │  ┌──────────────────────────────────────────────────────────────────────────┐  │
 │  │                       Clean Architecture Use Cases                       │  │
 │  │  • Hotspot & Voucher  • PPP / PPPoE Secrets  • AI WhatsApp Customer Care │  │
-│  │  • Billing & Invoices • Device Management    • Knowledge Base (RAG)      │  │
-│  └───────────────────────────────────┬──────────────────────────────────────┘  │
-│                                      │                                         │
-│                                      ▼                                         │
-│  ┌──────────────────────────────────────────────────────────────────────────┐  │
-│  │                     Hardware & External Drivers Layer                    │  │
-│  │  • MikroTik RouterOS  • Cisco IOS (CLI)      • Generic SSH/Telnet        │  │
-│  │  • WhatsApp (whatsmeow)• ZTE / Huawei OLT    • GenieACS (TR-069)         │  │
-│  └──────────────────────────────────────────────────────────────────────────┘  │
+│  │  • Billing & Invoices • Device Management    • NetOps Proxy & Ticket Auth│  │
+│  └───────────────┬───────────────────┬──────────────────────────────────────┘  │
+│                  │                   │                                         │
+│                  ▼                   ▼                                         │
+│  ┌───────────────────────────────┐ ┌────────────────────────────────────────┐  │
+│  │  DeepSeek Harness Subsystem   │ │   Hardware & External Drivers Layer    │  │
+│  │  • Web NetOps Assistant       │ │   • MikroTik RouterOS • Cisco IOS (CLI)│  │
+│  │  • Headless CS WA Bot         │ │   • WhatsApp (whatsmeow) • OLT (ZTE/HW)│  │
+│  │  • Read-Only Safety Guards    │ │   • GenieACS TR-069 CPE Provisioning   │  │
+│  └───────────────────────────────┘ └────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -91,12 +92,18 @@ Berikut adalah daftar dokumen acuan teknis, arsitektur, dan pedoman pengembangan
    - PPPoE Secrets & Profiles management.
    - Pemantauan sesi aktif secara realtime (Stream & Kick active PPPoE sessions).
    - Inactive secrets detector untuk mendeteksi pelanggan offline/isolir.
-3. **WhatsApp Bot & AI Customer Service Agent**:
-   - Integrasi WhatsApp multi-session via `whatsmeow` dengan pairing QR code.
-   - LLM Provider fleksibel (OpenAI, Gemini, Ollama, DeepSeek).
-   - Dynamic Tools: Ping Host, Get Current Time, dan Notifikasi Otomatis ke WhatsApp Teknisi Lapangan.
-   - Multi-tier rate limiting dan anti-spam guardrails.
-4. **Multi-Vendor Network Automation**:
+3. **WhatsApp Bot & AI Assistant (Dual Mode)**:
+   - **Headless WhatsApp Assistant**: Ditenagai oleh subproses DeepSeek Harness (`dsh --profile headless`) dengan overlay `netops-cs.patch.yml`.
+   - **Strict Read-Only & RBAC**: Akses bot via WhatsApp dibatasi hanya untuk pengirim terverifikasi (Owner/Admin) dan tool read-only; operasi berbahaya (shell, file write) dinonaktifkan.
+   - **Interactive WhatsApp Polls**: Dukungan output `wa-poll` untuk menanyakan konfirmasi pilihan perangkat/tindakan secara interaktif di WhatsApp.
+   - **Multi-session Management**: Integrasi WhatsApp multi-session via `whatsmeow` dengan pairing QR code di dashboard.
+4. **DeepSeek Harness NetOps Assistant (Web UI)**:
+   - **Single Sign-On Reverse Proxy**: Dashboard Polyglot me-reverse-proxy interface NetOps di `/netops/` tanpa perlu login ulang atau popup kredensial tambahan.
+   - **One-Time Ticket Auth**: Autentikasi one-time ticket (`/api/netops/ticket`, TTL 60 detik) yang langsung dimusnahkan setelah ditukar dengan cookie `polyglot_netops`.
+   - **Per-Device Workspace & Context**: Terisolasi dalam workspace per perangkat dengan Device Picker modal yang menampilkan status inventaris dan konektivitas live.
+   - **Sinkronisasi Logout**: Sesi NetOps otomatis hangus seketika saat pengguna menekan tombol Logout di Polyglot.
+5. **Multi-Vendor Network Automation & MCP Server**:
+   - **Model Context Protocol (MCP)**: Server MCP di `/mcp` mengekspos tools diagnostik jaringan (`list_devices`, `get_device_status`, dll.) ke agen AI dengan otorisasi berbasis token (`POLYGLOT_MCP_TOKEN`, `POLYGLOT_MCP_READ_TOKEN`).
    - MikroTik (RouterOS API v6/v7).
    - Cisco IOS / Scrapligo generic SSH & Telnet engine.
    - ZTE OLT & Huawei OLT optical diagnostics.
@@ -137,6 +144,16 @@ npm run dev
 ```
 Akses web dashboard di `http://localhost:5173`.
 
+### 5. Menjalankan DeepSeek Harness (NetOps Assistant)
+DeepSeek Harness berjalan sebagai background daemon lokal untuk melayani antarmuka NetOps Assistant via reverse proxy Polyglot:
+```bash
+cd deepseek-harness
+pnpm install
+pnpm run build:artifacts
+pnpm start:netops --port 3100
+```
+*Catatan:* Pastikan `HARNESS_WEB_URL=http://127.0.0.1:3100` dan `HARNESS_WEB_TOKEN` diset sama di `.env` root Polyglot dan `deepseek-harness/.env`. Di dashboard Polyglot, klik menu **"NetOps Assistant"** di sidebar untuk langsung mengakses antarmuka NetOps dengan sesi admin terotentikasi.
+
 ---
 
 ## 🧪 Pengujian & Quality Assurance
@@ -145,8 +162,11 @@ Akses web dashboard di `http://localhost:5173`.
 # Menjalankan seluruh Unit Tests
 make test
 
-# Menjalankan Linter Go
+# Menjalankan Linter Go & Architectural Boundary Checks
 make lint
+
+# Menjalankan boundary checks spesifik
+make check-connect-errors check-layer-boundaries check-tenant-literals check-port-aliases
 
 # Menjalankan Test Integrasi ke Perangkat MikroTik Fisik
 MIKROTIK_TEST_HOST=192.168.88.1 \

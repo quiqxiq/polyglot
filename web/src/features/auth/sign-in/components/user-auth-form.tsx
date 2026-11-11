@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link, useNavigate } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 import { LoginRequest } from '@/gen/v1/auth_pb'
 import { Loader2, LogIn } from 'lucide-react'
 import { toast } from 'sonner'
@@ -115,12 +115,6 @@ export function UserAuthForm({
             <FormItem>
               <div className='flex items-center justify-between'>
                 <FormLabel>Password</FormLabel>
-                <Link
-                  to='/forgot-password'
-                  className='text-sm font-medium text-muted-foreground hover:opacity-75'
-                >
-                  Forgot password?
-                </Link>
               </div>
               <FormControl>
                 <PasswordInput placeholder='••••••••' {...field} />

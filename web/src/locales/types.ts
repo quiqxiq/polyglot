@@ -91,6 +91,7 @@ export interface TranslationSchema {
     billing_settings: string
     debts: string
     gateway_ops: string
+    netops: string
   }
   auth: {
     sign_in: string
@@ -432,6 +433,12 @@ export interface TranslationSchema {
     language_desc: string
     update_preferences: string
     update_display: string
+  }
+  netops: {
+    opening: string
+    opening_desc: string
+    failed: string
+    retry: string
   }
   table: {
     rows_per_page: string

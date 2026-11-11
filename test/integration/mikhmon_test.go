@@ -11,6 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
@@ -98,7 +99,7 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 	printUsers, err := drv.Execute(ctx, mikhmon.NewPrintUsersCommand(""))
 	require.NoError(t, err)
 	allUsers := mikhmon.ParseUsers(printUsers)
-	var createdUsers []mikhmon.HotspotUser
+	var createdUsers []domainHotspot.HotspotUser
 	for _, u := range allUsers {
 		if u.Profile == testProfileName {
 			createdUsers = append(createdUsers, u)

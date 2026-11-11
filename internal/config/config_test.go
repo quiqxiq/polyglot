@@ -15,6 +15,7 @@ func validDevelopmentConfig() Config {
 		JWTExpiryHours:       24,
 		RefreshTokenTTLHours: 168,
 		CORSOrigins:          []string{"http://localhost:5173"},
+		NetOpsSessionHours:   8,
 	}
 }
 
@@ -24,6 +25,18 @@ func validProductionConfig() Config {
 	cfg.DatabaseURL = "postgres://polyglot:secret@db.internal:5432/polyglot?sslmode=require"
 	cfg.JWTSecret = strings.Repeat("j", 32)
 	cfg.CORSOrigins = []string{"https://console.example.com"}
+	return cfg
+}
+
+func validAssistantConfig() Config {
+	cfg := validDevelopmentConfig()
+	cfg.WAAssistantSessionID = 7
+	cfg.HarnessDSHPath = "dsh"
+	cfg.HarnessCSPatchPath = "netops-cs.patch.yml"
+	cfg.HarnessMCPURL = "http://127.0.0.1:8080/mcp"
+	cfg.HarnessTimeoutSeconds = 120
+	cfg.HarnessMaxConcurrent = 2
+	cfg.MCPReadToken = "read-token"
 	return cfg
 }
 
@@ -40,6 +53,89 @@ func TestValidate(t *testing.T) {
 		{
 			name:   "valid production config",
 			mutate: func(c *Config) { *c = validProductionConfig() },
+		},
+		{
+			name:   "valid assistant config",
+			mutate: func(c *Config) { *c = validAssistantConfig() },
+		},
+		{
+			name: "assistant requires read token",
+			mutate: func(c *Config) {
+				*c = validAssistantConfig()
+				c.MCPReadToken = ""
+			},
+			wantErr: "POLYGLOT_MCP_READ_TOKEN",
+		},
+		{
+			name: "MCP read token must differ from admin token",
+			mutate: func(c *Config) {
+				*c = validAssistantConfig()
+				c.MCPAdminToken = "same-token"
+				c.MCPReadToken = "same-token"
+			},
+			wantErr: "POLYGLOT_MCP_READ_TOKEN",
+		},
+		{
+			name: "assistant requires customer-service patch",
+			mutate: func(c *Config) {
+				*c = validAssistantConfig()
+				c.HarnessCSPatchPath = ""
+			},
+			wantErr: "HARNESS_CS_PATCH",
+		},
+		{
+			name: "assistant requires positive timeout",
+			mutate: func(c *Config) {
+				*c = validAssistantConfig()
+				c.HarnessTimeoutSeconds = 0
+			},
+			wantErr: "HARNESS_TIMEOUT_SECONDS",
+		},
+		{
+			name: "assistant requires positive concurrency",
+			mutate: func(c *Config) {
+				*c = validAssistantConfig()
+				c.HarnessMaxConcurrent = 0
+			},
+			wantErr: "HARNESS_MAX_CONCURRENT",
+		},
+		{
+			name:    "negative harness timeout",
+			mutate:  func(c *Config) { c.HarnessTimeoutSeconds = -1 },
+			wantErr: "HARNESS_TIMEOUT_SECONDS",
+		},
+		{
+			name:    "negative harness concurrency",
+			mutate:  func(c *Config) { c.HarnessMaxConcurrent = -1 },
+			wantErr: "HARNESS_MAX_CONCURRENT",
+		},
+		{
+			name:    "netops session must be positive",
+			mutate:  func(c *Config) { c.NetOpsSessionHours = 0 },
+			wantErr: "NETOPS_SESSION_HOURS",
+		},
+		{
+			name:    "netops session must be bounded",
+			mutate:  func(c *Config) { c.NetOpsSessionHours = 24*7 + 1 },
+			wantErr: "NETOPS_SESSION_HOURS",
+		},
+		{
+			name:    "netops proxy secret must be long enough",
+			mutate:  func(c *Config) { c.HarnessProxySecret = "short" },
+			wantErr: "HARNESS_PROXY_SECRET",
+		},
+		{
+			name:    "harness web URL must be absolute",
+			mutate:  func(c *Config) { c.HarnessWebURL = "127.0.0.1:3080" },
+			wantErr: "HARNESS_WEB_URL",
+		},
+		{
+			name: "harness web token requires a URL",
+			mutate: func(c *Config) {
+				c.HarnessWebURL = ""
+				c.HarnessWebToken = "launch-token"
+			},
+			wantErr: "HARNESS_WEB_URL",
 		},
 		{
 			name:    "encryption key must be 32 bytes",

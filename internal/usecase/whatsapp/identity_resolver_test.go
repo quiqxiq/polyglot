@@ -15,7 +15,8 @@ import (
 )
 
 type mockUserRepoForResolver struct {
-	users map[string]*customer.User
+	users      map[string]*customer.User
+	allByPhone map[string][]*customer.User
 }
 
 func (m *mockUserRepoForResolver) Create(context.Context, *customer.User) error { return nil }
@@ -33,6 +34,15 @@ func (m *mockUserRepoForResolver) FindByPhone(_ context.Context, phone string) (
 		return u, nil
 	}
 	return nil, errors.New("not found")
+}
+func (m *mockUserRepoForResolver) FindAllByPhone(_ context.Context, phone string) ([]*customer.User, error) {
+	if us, ok := m.allByPhone[phone]; ok {
+		return us, nil
+	}
+	if u, ok := m.users[phone]; ok {
+		return []*customer.User{u}, nil
+	}
+	return nil, nil
 }
 func (m *mockUserRepoForResolver) Count(context.Context) (int64, error) { return 0, nil }
 func (m *mockUserRepoForResolver) List(context.Context, int, int, string) ([]*customer.User, int64, error) {
@@ -97,7 +107,7 @@ func (m *mockCacheStore) Get(_ context.Context, key string) (string, error) {
 	if v, ok := m.store[key]; ok {
 		return v, nil
 	}
-	return "", errors.New("miss")
+	return "", port.ErrCacheMiss
 }
 func (m *mockCacheStore) Set(_ context.Context, key string, val string, _ int) error {
 	m.store[key] = val
@@ -106,6 +116,13 @@ func (m *mockCacheStore) Set(_ context.Context, key string, val string, _ int) e
 func (m *mockCacheStore) Delete(_ context.Context, key string) error {
 	delete(m.store, key)
 	return nil
+}
+func (m *mockCacheStore) Take(_ context.Context, key string) (string, error) {
+	if v, ok := m.store[key]; ok {
+		delete(m.store, key)
+		return v, nil
+	}
+	return "", port.ErrCacheMiss
 }
 
 func TestIdentityResolver(t *testing.T) {
@@ -117,6 +134,7 @@ func TestIdentityResolver(t *testing.T) {
 				FullName:    "Super Admin",
 				Role:        "admin",
 				PhoneNumber: "628111111111",
+				IsActive:    true,
 			},
 			"082222222222": {
 				ID:          2,
@@ -124,6 +142,45 @@ func TestIdentityResolver(t *testing.T) {
 				FullName:    "Agus Teknisi",
 				Role:        "teknisi",
 				PhoneNumber: "082222222222",
+				IsActive:    true,
+			},
+			"628444444444": {
+				ID:          3,
+				Username:    "sari_cs",
+				FullName:    "Sari CS",
+				Role:        "agent",
+				PhoneNumber: "628444444444",
+				IsActive:    true,
+			},
+			"628555555555": {
+				ID:          4,
+				Username:    "budi_fin",
+				FullName:    "Budi Finance",
+				Role:        "finance",
+				PhoneNumber: "628555555555",
+				IsActive:    true,
+			},
+			"628666666666": {
+				ID:          5,
+				Username:    "mystery_user",
+				FullName:    "Mystery User",
+				Role:        "custom-role",
+				PhoneNumber: "628666666666",
+				IsActive:    true,
+			},
+			"628777777777": {
+				ID:          6,
+				Username:    "inactive_admin",
+				FullName:    "Inactive Admin",
+				Role:        "admin",
+				PhoneNumber: "628777777777",
+				IsActive:    false,
+			},
+		},
+		allByPhone: map[string][]*customer.User{
+			"628888888888": {
+				{ID: 7, Username: "dup_a", Role: "admin", PhoneNumber: "628888888888", IsActive: true},
+				{ID: 8, Username: "dup_b", Role: "admin", PhoneNumber: "628888888888", IsActive: true},
 			},
 		},
 	}
@@ -162,6 +219,44 @@ func TestIdentityResolver(t *testing.T) {
 		assert.False(t, ident.HasScope("arbitrary"))
 	})
 
+	t.Run("Resolve CS as non-admin role", func(t *testing.T) {
+		ident, err := resolver.Resolve(ctx, "628444444444")
+		require.NoError(t, err)
+		assert.Equal(t, domainWA.RoleCS, ident.Role)
+		assert.True(t, ident.HasScope(domainWA.ScopeCustomerRead))
+		assert.False(t, ident.HasScope(domainWA.ScopeHarnessAdmin))
+		assert.False(t, ident.HasScope(domainWA.ScopeAll))
+	})
+
+	t.Run("Resolve Finance as non-admin role", func(t *testing.T) {
+		ident, err := resolver.Resolve(ctx, "628555555555")
+		require.NoError(t, err)
+		assert.Equal(t, domainWA.RoleFinance, ident.Role)
+		assert.True(t, ident.HasScope(domainWA.ScopeBillingRead))
+		assert.False(t, ident.HasScope(domainWA.ScopeHarnessAdmin))
+	})
+
+	t.Run("Unknown role maps to guest", func(t *testing.T) {
+		ident, err := resolver.Resolve(ctx, "628666666666")
+		require.NoError(t, err)
+		assert.Equal(t, domainWA.RoleGuest, ident.Role)
+		assert.False(t, ident.HasScope(domainWA.ScopeHarnessAdmin))
+	})
+
+	t.Run("Inactive user maps to guest", func(t *testing.T) {
+		ident, err := resolver.Resolve(ctx, "628777777777")
+		require.NoError(t, err)
+		assert.Equal(t, domainWA.RoleGuest, ident.Role)
+		assert.Nil(t, ident.UserID)
+	})
+
+	t.Run("Ambiguous active users map to guest", func(t *testing.T) {
+		ident, err := resolver.Resolve(ctx, "628888888888")
+		require.NoError(t, err)
+		assert.Equal(t, domainWA.RoleGuest, ident.Role)
+		assert.Nil(t, ident.UserID)
+	})
+
 	t.Run("Resolve Customer stored with local 08 prefix", func(t *testing.T) {
 		ident, err := resolver.Resolve(ctx, "6283333333333@s.whatsapp.net")
 		require.NoError(t, err)
@@ -191,4 +286,70 @@ func TestIdentityResolver(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, domainWA.RoleGuest, ident.Role)
 	})
+}
+
+func TestIdentityResolverResolveFresh(t *testing.T) {
+	admin := &customer.User{
+		ID:          1,
+		Username:    "boss_admin",
+		FullName:    "Super Admin",
+		Role:        "admin",
+		PhoneNumber: "628111111111",
+		IsActive:    true,
+	}
+	uRepo := &mockUserRepoForResolver{
+		users: map[string]*customer.User{"628111111111": admin},
+	}
+	cache := &mockCacheStore{store: make(map[string]string)}
+	resolver := ucWA.NewIdentityResolver(uRepo, nil, cache)
+	ctx := context.Background()
+
+	ident, err := resolver.Resolve(ctx, "628111111111")
+	require.NoError(t, err)
+	require.Equal(t, domainWA.RoleAdmin, ident.Role)
+
+	// Deactivation must not be masked by the identity cache.
+	admin.IsActive = false
+
+	ident, err = resolver.Resolve(ctx, "628111111111")
+	require.NoError(t, err)
+	assert.Equal(t, domainWA.RoleAdmin, ident.Role, "cached resolution is expected to stay stale")
+
+	ident, err = resolver.ResolveFresh(ctx, "628111111111")
+	require.NoError(t, err)
+	assert.Equal(t, domainWA.RoleGuest, ident.Role)
+	assert.Nil(t, ident.UserID)
+
+	// A fresh lookup refreshes the cache for subsequent non-fresh callers.
+	ident, err = resolver.Resolve(ctx, "628111111111")
+	require.NoError(t, err)
+	assert.Equal(t, domainWA.RoleGuest, ident.Role)
+}
+
+func TestIdentityResolverResolveFreshPicksUpRoleChange(t *testing.T) {
+	uRepo := &mockUserRepoForResolver{
+		users: map[string]*customer.User{
+			"628111111111": {
+				ID:          1,
+				Username:    "boss_admin",
+				FullName:    "Super Admin",
+				Role:        "admin",
+				PhoneNumber: "628111111111",
+				IsActive:    true,
+			},
+		},
+	}
+	resolver := ucWA.NewIdentityResolver(uRepo, nil, &mockCacheStore{store: make(map[string]string)})
+	ctx := context.Background()
+
+	ident, err := resolver.Resolve(ctx, "628111111111")
+	require.NoError(t, err)
+	require.Equal(t, domainWA.RoleAdmin, ident.Role)
+
+	uRepo.users["628111111111"].Role = "teknisi"
+
+	ident, err = resolver.ResolveFresh(ctx, "628111111111")
+	require.NoError(t, err)
+	assert.Equal(t, domainWA.RoleTechnician, ident.Role)
+	assert.False(t, ident.HasScope(domainWA.ScopeHarnessAdmin))
 }

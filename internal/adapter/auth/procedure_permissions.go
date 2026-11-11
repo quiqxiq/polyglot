@@ -316,6 +316,9 @@ var ProcedurePermissions = map[string]string{
 	"/api/admin/export":           "ispadmin:manage",
 	"/api/admin/snapshot/refresh": "ispadmin:manage",
 
+	// ─── Plain-HTTP NetOps Endpoints (JWT Guarded) ───────────────────────────
+	"/api/netops/ticket": "harness:admin",
+
 	// ─── Plain-HTTP WhatsApp Endpoints (JWT Guarded) ─────────────────────────
 	"/api/whatsapp/sessions":          "whatsapp:read",
 	"/api/whatsapp/session/status":    "whatsapp:read",
@@ -323,6 +326,7 @@ var ProcedurePermissions = map[string]string{
 	"/api/whatsapp/session/pair-code": "whatsapp:manage",
 	"/api/whatsapp/session/reconnect": "whatsapp:manage",
 	"/api/whatsapp/session/logout":    "whatsapp:manage",
+	"/api/whatsapp/session/purge":     "whatsapp:manage",
 	"/api/whatsapp/send/message":      "whatsapp:manage",
 	"/api/whatsapp/send/image":        "whatsapp:manage",
 	"/api/whatsapp/send/document":     "whatsapp:manage",

@@ -110,6 +110,9 @@ func (r *ONTRepository) List(ctx context.Context, f port.ONTFilter) ([]ont.ONT, 
 	if f.State != "" {
 		q = q.Where("state = ?", f.State)
 	}
+	if f.CustomerID != "" {
+		q = q.Where("customer_id = ?", f.CustomerID)
+	}
 	if s := strings.TrimSpace(f.Search); s != "" {
 		like := "%" + s + "%"
 		op := likeOperator(r.db)

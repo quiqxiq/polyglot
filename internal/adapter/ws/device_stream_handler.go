@@ -21,13 +21,22 @@ type TerminalMessage struct {
 }
 
 type TerminalHandler struct {
-	openTermUC *network.OpenTerminalUseCase
+	openTermUC     *network.OpenTerminalUseCase
+	originPatterns []string
 }
 
 func NewTerminalHandler(openTermUC *network.OpenTerminalUseCase) *TerminalHandler {
 	return &TerminalHandler{
 		openTermUC: openTermUC,
 	}
+}
+
+// WithAllowedOrigins configures cross-origin WebSocket origins. The request
+// host is always allowed by the websocket library; this list only adds dev or
+// gateway origins explicitly configured through CORS_ORIGINS.
+func (h *TerminalHandler) WithAllowedOrigins(origins []string) *TerminalHandler {
+	h.originPatterns = OriginPatterns(origins)
+	return h
 }
 
 func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +47,7 @@ func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	conn, err := websocket.Accept(w, r, &websocket.AcceptOptions{
-		InsecureSkipVerify: true,
+		OriginPatterns: h.originPatterns,
 	})
 	if err != nil {
 		logger.WithComponent("TerminalWS").WithError(err).Error("websocket accept failed")

@@ -92,6 +92,25 @@ func (r *UserRepository) FindByPhone(ctx context.Context, phone string) (*custom
 	return u, nil
 }
 
+// FindAllByPhone retrieves every user with an exact phone number match. It
+// returns an empty slice when no row matches, allowing callers to distinguish
+// "not found" from "ambiguous phone ownership".
+func (r *UserRepository) FindAllByPhone(ctx context.Context, phone string) ([]*customer.User, error) {
+	phone = strings.TrimSpace(phone)
+	if phone == "" {
+		return nil, nil
+	}
+	var ms []model.UserModel
+	if err := r.db.WithContext(ctx).Where("phone_number = ?", phone).Order("id ASC").Find(&ms).Error; err != nil {
+		return nil, err
+	}
+	users := make([]*customer.User, 0, len(ms))
+	for i := range ms {
+		users = append(users, ms[i].ToDomain())
+	}
+	return users, nil
+}
+
 func (r *UserRepository) Count(ctx context.Context) (int64, error) {
 	var count int64
 	err := r.db.WithContext(ctx).Model(&model.UserModel{}).Count(&count).Error

@@ -214,8 +214,18 @@ func (h *Handler) handleReconnectSession(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	if h.sessionRepo == nil {
+		response.WriteHTTPStatusError(w, http.StatusServiceUnavailable, "Session repository unavailable")
+		return
+	}
+	session, err := h.sessionRepo.FindSessionByID(r.Context(), req.SessionID)
+	if err != nil {
+		response.WriteHTTPError(w, err)
+		return
+	}
+
 	if h.waGateway != nil {
-		if err := h.waGateway.Reconnect(req.SessionID); err != nil {
+		if err := h.waGateway.Reconnect(session); err != nil {
 			response.WriteHTTPError(w, err)
 			return
 		}
@@ -273,7 +283,7 @@ func (h *Handler) handlePurgeSession(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if h.sessionRepo != nil {
-		if err := h.sessionRepo.DeleteSession(r.Context(), req.SessionID); err != nil {
+		if err := h.sessionRepo.PurgeSession(r.Context(), req.SessionID); err != nil {
 			response.WriteHTTPError(w, err)
 			return
 		}

@@ -23,6 +23,7 @@ type SessionManager struct {
 	onStatus   StatusCallback
 	onChatUpd  ChatUpdateCallback
 	onChatPres ChatPresenceCallback
+	onPollVote PollVoteCallback
 	chatRepo   port.ChatRepository
 }
 
@@ -62,39 +63,24 @@ func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *whats
 		return fmt.Errorf("failed to get device stores: %w", err)
 	}
 
+	// Only reuse a device explicitly owned by this session. Falling back to
+	// the first device in the store makes a freshly created session silently
+	// connect as an already-paired number; logging out that new session then
+	// unlinks the original session's device.
 	var deviceStore *store.Device
-
 	for _, d := range devices {
-		if d.ID != nil {
-			if session.JID != "" && (d.ID.String() == session.JID || d.ID.User == session.JID) {
-				deviceStore = d
-				break
-			}
-			if session.PhoneNumber != "" && d.ID.User == session.PhoneNumber {
-				deviceStore = d
-				break
-			}
+		if d.ID == nil {
+			continue
+		}
+		if session.JID != "" && (d.ID.String() == session.JID || d.ID.User == session.JID) {
+			deviceStore = d
+			break
+		}
+		if session.PhoneNumber != "" && d.ID.User == session.PhoneNumber {
+			deviceStore = d
+			break
 		}
 	}
-
-	if deviceStore == nil && len(devices) > 0 {
-		for _, d := range devices {
-			if d.ID != nil {
-				deviceStore = d
-				break
-			}
-		}
-	}
-
-	if deviceStore == nil {
-		for _, d := range devices {
-			if d.ID == nil {
-				deviceStore = d
-				break
-			}
-		}
-	}
-
 	if deviceStore == nil {
 		deviceStore = sm.container.NewDevice()
 	}
@@ -107,6 +93,7 @@ func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *whats
 	// tidak pernah terkirim untuk session tersebut.
 	client.SetChatUpdateCallback(sm.onChatUpd)
 	client.SetChatPresenceCallback(sm.onChatPres)
+	client.SetPollVoteCallback(sm.onPollVote)
 	sm.clients[session.ID] = client
 
 	return client.Connect(ctx)
@@ -181,25 +168,29 @@ func (sm *SessionManager) Logout(sessionID uint) error {
 
 // Purge sama dengan Logout pada sisi gateway (unlink + hapus session lokal +
 // lepas dari registry). Penghapusan baris DB dan mirror chat (wa_chats,
-// wa_messages, conversations) dilakukan oleh caller (handler) yang punya
-// akses repository.
+// wa_messages) dilakukan oleh caller (handler) yang punya akses repository.
 func (sm *SessionManager) Purge(sessionID uint) error {
 	return sm.Logout(sessionID)
 }
 
-func (sm *SessionManager) Reconnect(sessionID uint) error {
+// Reconnect resumes an existing client or connects the supplied session. The
+// full session row is required so a disconnected-but-paired session can find
+// its own device instead of creating a fresh, unpaired one.
+func (sm *SessionManager) Reconnect(session *whatsapp.WASession) error {
 	if sm == nil {
 		return nil
 	}
-	sm.mutex.Lock()
-	client, ok := sm.clients[sessionID]
-	sm.mutex.Unlock()
-
-	if !ok {
-		sess := &whatsapp.WASession{ID: sessionID}
-		return sm.Connect(sess)
+	if session == nil {
+		return fmt.Errorf("session is required")
 	}
-	return client.Reconnect(context.Background())
+
+	sm.mutex.RLock()
+	client, ok := sm.clients[session.ID]
+	sm.mutex.RUnlock()
+	if ok {
+		return client.Reconnect(context.Background())
+	}
+	return sm.Connect(session)
 }
 
 func (sm *SessionManager) SendMessage(sessionID uint, to string, content string) error {
@@ -219,6 +210,23 @@ func (sm *SessionManager) SendMessageContext(ctx context.Context, sessionID uint
 	}
 
 	return client.SendMessage(ctx, to, content)
+}
+
+// SendPoll forwards a native WhatsApp poll to the targeted session client and
+// returns its message ID.
+func (sm *SessionManager) SendPoll(ctx context.Context, sessionID uint, to string, question string, options []string, selectable int) (string, error) {
+	if sm == nil {
+		return "", fmt.Errorf("session manager not initialized")
+	}
+	sm.mutex.RLock()
+	client, ok := sm.clients[sessionID]
+	sm.mutex.RUnlock()
+
+	if !ok {
+		return "", fmt.Errorf("session %d is not connected or registered", sessionID)
+	}
+
+	return client.SendPoll(ctx, to, question, options, selectable)
 }
 
 func (sm *SessionManager) SendDocument(ctx context.Context, sessionID uint, to string, fileBytes []byte, fileName string, contentType string, caption string) error {
@@ -404,5 +412,19 @@ func (sm *SessionManager) SetChatPresenceCallback(cb ChatPresenceCallback) {
 	sm.onChatPres = cb
 	for _, c := range sm.clients {
 		c.SetChatPresenceCallback(cb)
+	}
+}
+
+// SetPollVoteCallback registers (or replaces) the decrypted poll-vote handler
+// for all clients, including clients that are already connected.
+func (sm *SessionManager) SetPollVoteCallback(cb PollVoteCallback) {
+	if sm == nil {
+		return
+	}
+	sm.mutex.Lock()
+	defer sm.mutex.Unlock()
+	sm.onPollVote = cb
+	for _, c := range sm.clients {
+		c.SetPollVoteCallback(cb)
 	}
 }

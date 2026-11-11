@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
+	"time"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
@@ -32,6 +34,7 @@ import (
 	gatewayHTTP "github.com/quixiq/polyglot/internal/adapter/http/gateway"
 	inventoryHTTP "github.com/quixiq/polyglot/internal/adapter/http/inventory"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
+	netopsHTTP "github.com/quixiq/polyglot/internal/adapter/http/netops"
 	portalHTTP "github.com/quixiq/polyglot/internal/adapter/http/portal"
 	reportHTTP "github.com/quixiq/polyglot/internal/adapter/http/report"
 	uploadHTTP "github.com/quixiq/polyglot/internal/adapter/http/upload"
@@ -66,11 +69,13 @@ import (
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	whatsappUC "github.com/quixiq/polyglot/internal/usecase/whatsapp"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type routerDeps struct {
 	cfg                    config.Config
 	jwtService             *auth.JWTService
+	refreshTokenSvc        *auth.RefreshTokenService
 	casbinEnforcer         *auth.CasbinEnforcer
 	reportingRepo          *postgres.ReportingRepository
 	userRepo               port.UserRepository
@@ -82,6 +87,7 @@ type routerDeps struct {
 	pgStore                *postgres.Store
 	reg                    *registry.Registry
 	waManager              *whatsapp.SessionManager
+	waResolver             *whatsappUC.IdentityResolver
 	sseHub                 *wsAdapter.SSEHub
 	waSender               port.NotificationSender
 	authUseCase            *authUC.AuthUseCase
@@ -121,6 +127,7 @@ type routerDeps struct {
 	manageIsolationUseCase *deviceUC.ManageIsolationUseCase
 	oltService             *oltUC.Service
 	ontService             *ontUC.Service
+	ontRepo                port.ONTRepository
 	settingReader          port.SettingReader
 	cacheStore             port.CacheStore
 	notifManagerUC         *notificationUC.ManageNotificationUseCase
@@ -142,12 +149,14 @@ var protectedPlainPaths = []string{
 	"/api/reports/daily", "/api/reports/monthly", "/api/reports/yearly",
 	"/api/admin/import", "/api/admin/import-router", "/api/admin/reconcile",
 	"/api/admin/export", "/api/admin/snapshot/refresh",
+	"/api/netops/ticket",
 	"/api/whatsapp/sessions",
 	"/api/whatsapp/session/status",
 	"/api/whatsapp/session/qr",
 	"/api/whatsapp/session/pair-code",
 	"/api/whatsapp/session/reconnect",
 	"/api/whatsapp/session/logout",
+	"/api/whatsapp/session/purge",
 	"/api/whatsapp/send/message",
 	"/api/whatsapp/send/image",
 	"/api/whatsapp/send/document",
@@ -189,10 +198,59 @@ func buildRouter(d routerDeps) (http.Handler, error) {
 		WithMikhmonUseCase(d.hotUC).
 		WithOLTService(d.oltService).
 		WithCustomerRepository(d.customerRepo).
-		WithDeviceRepository(d.deviceRepo)
+		WithDeviceRepository(d.deviceRepo).
+		WithONTRepository(d.ontRepo).
+		WithBearerAuth(d.cfg.MCPAdminToken, d.cfg.MCPReadToken)
+	if !mcpServer.AuthConfigured() {
+		logger.WithComponent("Router").Warn("MCP bearer token is not configured; /mcp will reject all requests")
+	}
 	rootMux.Handle("/mcp", mcpServer.HTTPHandler())
 
-	wsAdapter.RegisterEventRoutes(rootMux, d.sseHub, d.openTermUC)
+	streamAuth := auth.NewStreamAuthenticator(d.jwtService, d.refreshTokenSvc, d.userRepo, d.cfg.WSToken)
+	wsAdapter.RegisterEventRoutes(rootMux, d.sseHub, d.openTermUC, streamAuth, d.cfg.CORSOrigins)
+
+	netopsTicketHandler := netopsHTTP.NewTicketHandler(nil, nil)
+	if strings.TrimSpace(d.cfg.HarnessWebURL) != "" && d.cacheStore != nil && d.jwtService != nil && d.userRepo != nil {
+		upstream, parseErr := url.Parse(d.cfg.HarnessWebURL)
+		if parseErr != nil {
+			return nil, fmt.Errorf("parse HARNESS_WEB_URL: %w", parseErr)
+		}
+		secret := strings.TrimSpace(d.cfg.HarnessProxySecret)
+		if secret == "" {
+			secret = "polyglot-netops:" + d.cfg.JWTSecret
+		}
+		sessionCodec, err := netopsHTTP.NewSessionCodec(secret, time.Duration(d.cfg.NetOpsSessionHours)*time.Hour)
+		if err != nil {
+			return nil, fmt.Errorf("initialize netops session codec: %w", err)
+		}
+		tickets, err := netopsHTTP.NewTicketStore(d.cacheStore, 60*time.Second)
+		if err != nil {
+			return nil, fmt.Errorf("initialize netops ticket store: %w", err)
+		}
+		signer, err := netopsHTTP.NewProxySigner(secret)
+		if err != nil {
+			return nil, fmt.Errorf("initialize netops proxy signer: %w", err)
+		}
+		netopsHandler, err := netopsHTTP.NewHandler(netopsHTTP.Options{
+			Upstream:      upstream,
+			WebToken:      d.cfg.HarnessWebToken,
+			Session:       sessionCodec,
+			Tickets:       tickets,
+			Signer:        signer,
+			Authorizer:    streamAuth,
+			SecureCookies: d.cfg.IsProduction(),
+		})
+		if err != nil {
+			return nil, fmt.Errorf("initialize netops proxy: %w", err)
+		}
+		if strings.TrimSpace(d.cfg.HarnessWebToken) == "" {
+			logger.WithComponent("Router").Warn("HARNESS_WEB_TOKEN is empty; NetOps index authentication will fail")
+		}
+		rootMux.Handle(netopsHTTP.MountPrefix, netopsHandler)
+		netopsTicketHandler = netopsHTTP.NewTicketHandler(tickets, streamAuth)
+	} else {
+		rootMux.Handle(netopsHTTP.MountPrefix, netopsHTTP.NotConfiguredHandler())
+	}
 
 	protectedMux := http.NewServeMux()
 
@@ -279,12 +337,15 @@ func buildRouter(d routerDeps) (http.Handler, error) {
 	reportHTTP.NewHandler(d.reportingRepo).Register(protectedMux)
 	adminapi.NewHandler(d.upsertImport, d.routerSource, d.reconciler, d.reportingRepo, d.exportUC, d.driverResolverConnect).
 		RegisterProtected(protectedMux)
-	whatsappResolver := whatsappUC.NewIdentityResolver(d.userRepo, d.customerRepo, d.cacheStore)
-	whatsappHTTP.NewHandler(d.pgStore, d.waManager, whatsappResolver).RegisterProtected(protectedMux)
+	whatsappHTTP.NewHandler(d.pgStore, d.waManager, d.waResolver).RegisterProtected(protectedMux)
+	protectedMux.Handle(netopsHTTP.TicketPath, netopsTicketHandler)
 
 	protectedHandler := middleware.Chain(
 		protectedMux,
-		middleware.AuthenticateJWT(d.jwtService),
+		middleware.AuthenticateJWTOrServiceToken(d.jwtService, d.cfg.MCPReadToken, []string{
+			"/api/devices",
+			"/api/v1/devices",
+		}),
 		middleware.AuthorizeProcedure(d.casbinEnforcer),
 	)
 

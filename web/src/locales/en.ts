@@ -91,6 +91,7 @@ export const en: TranslationSchema = {
     billing_settings: 'Billing & Finance',
     debts: 'Customer Debts',
     gateway_ops: 'Gateway Operations',
+    netops: 'NetOps Assistant',
   },
   auth: {
     sign_in: 'Sign In',
@@ -444,6 +445,14 @@ export const en: TranslationSchema = {
     language_desc: 'Choose between English and Bahasa Indonesia.',
     update_preferences: 'Update preferences',
     update_display: 'Update display',
+  },
+  netops: {
+    opening: 'Opening NetOps Assistant',
+    opening_desc:
+      'Preparing a one-time admin session. You will be redirected automatically.',
+    failed:
+      'The NetOps Assistant could not be opened. Make sure the harness is running and try again.',
+    retry: 'Try again',
   },
   table: {
     rows_per_page: 'Rows per page',

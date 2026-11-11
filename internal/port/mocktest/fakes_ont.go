@@ -137,6 +137,9 @@ func (f *FakeONTRepository) List(_ context.Context, filter port.ONTFilter) ([]do
 		if filter.State != "" && string(o.State) != filter.State {
 			continue
 		}
+		if filter.CustomerID != "" && (o.CustomerID == nil || *o.CustomerID != filter.CustomerID) {
+			continue
+		}
 		if filter.Linked != nil && o.ISOLinked() != *filter.Linked {
 			continue
 		}

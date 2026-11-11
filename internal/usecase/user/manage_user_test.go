@@ -67,6 +67,17 @@ func (m *mockUserRepo) FindByPhone(ctx context.Context, phone string) (*customer
 	return nil, errors.New("not found")
 }
 
+func (m *mockUserRepo) FindAllByPhone(ctx context.Context, phone string) ([]*customer.User, error) {
+	var matches []*customer.User
+	for _, u := range m.users {
+		if u.PhoneNumber == phone {
+			copyU := *u
+			matches = append(matches, &copyU)
+		}
+	}
+	return matches, nil
+}
+
 func (m *mockUserRepo) Count(ctx context.Context) (int64, error) {
 	return int64(len(m.users)), nil
 }

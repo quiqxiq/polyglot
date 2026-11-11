@@ -24,6 +24,27 @@ func IsBuiltInRole(role string) bool {
 	return ok
 }
 
+// IsAdminRole reports whether role is one of the harness/NetOps administrator
+// roles: owner, superadmin, or admin.
+func IsAdminRole(role string) bool {
+	switch strings.ToLower(strings.TrimSpace(role)) {
+	case "owner", "superadmin", "admin":
+		return true
+	default:
+		return false
+	}
+}
+
+// HasAdminRole reports whether any role in roles is an administrator role.
+func HasAdminRole(roles []string) bool {
+	for _, role := range roles {
+		if IsAdminRole(role) {
+			return true
+		}
+	}
+	return false
+}
+
 // User represents an admin, agent, or technician who can access the system.
 type User struct {
 	ID                uint      `json:"id"`

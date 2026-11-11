@@ -15,7 +15,7 @@ import (
 )
 
 // MessageCallback meneruskan pesan masuk ke handler (Engine bot).
-type MessageCallback func(sessionID uint, chatJID string, customerNumber string, content string)
+type MessageCallback func(sessionID uint, messageID string, chatJID string, customerNumber string, content string)
 type StatusCallback func(sessionID uint, status string, qrCode string, jid string, phoneNumber string)
 
 // ChatUpdateCallback memberitahukan bahwa mirror chat berubah (pesan masuk/keluar).
@@ -23,6 +23,10 @@ type ChatUpdateCallback func(sessionID uint, chatJID string)
 
 // ChatPresenceCallback memberitahukan event typing/recording dari kontak.
 type ChatPresenceCallback func(sessionID uint, chatJID, senderJID, state, media string, isGroup bool)
+
+// PollVoteCallback meneruskan suara poll yang sudah didekripsi. optionHashes
+// adalah SHA-256 dari label opsi yang dipilih.
+type PollVoteCallback func(sessionID uint, chatJID string, pollID string, voterNumber string, optionHashes [][]byte)
 
 func init() {
 	store.SetOSInfo("Polyglot NetOps WA Bot", [3]uint32{2, 3000, 1015901307})
@@ -40,6 +44,7 @@ type Client struct {
 	onStatus    StatusCallback
 	onChatUpd   ChatUpdateCallback
 	onChatPres  ChatPresenceCallback
+	onPollVote  PollVoteCallback
 	chatRepo    port.ChatRepository
 
 	qrFlowMu     sync.Mutex
@@ -108,6 +113,19 @@ func (c *Client) getChatPresenceCallback() ChatPresenceCallback {
 	c.callbackMu.RLock()
 	defer c.callbackMu.RUnlock()
 	return c.onChatPres
+}
+
+// SetPollVoteCallback swaps the decrypted-poll-vote handler at runtime.
+func (c *Client) SetPollVoteCallback(cb PollVoteCallback) {
+	c.callbackMu.Lock()
+	defer c.callbackMu.Unlock()
+	c.onPollVote = cb
+}
+
+func (c *Client) getPollVoteCallback() PollVoteCallback {
+	c.callbackMu.RLock()
+	defer c.callbackMu.RUnlock()
+	return c.onPollVote
 }
 
 func (c *Client) Connect(ctx context.Context) error {

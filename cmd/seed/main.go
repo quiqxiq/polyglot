@@ -141,7 +141,7 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 			password:       ownerPassword,
 			role:           "owner",
 			fullName:       "System Owner",
-			phoneNumber:    "628111111111",
+			phoneNumber:    "6285954154437",
 			specialization: "Superadmin",
 		},
 		{

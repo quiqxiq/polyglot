@@ -36,6 +36,35 @@ func (c *Client) SendMessage(ctx context.Context, to string, content string) err
 	return nil
 }
 
+// SendPoll sends a native WhatsApp poll and returns its message ID so poll
+// votes can be matched back to the request that created the poll.
+func (c *Client) SendPoll(ctx context.Context, to string, question string, options []string, selectable int) (string, error) {
+	if !c.waClient.IsConnected() {
+		return "", fmt.Errorf("WA client for session %d is disconnected", c.SessionID)
+	}
+	if len(options) < 2 {
+		return "", fmt.Errorf("WA poll requires at least two options")
+	}
+	if selectable < 1 || selectable > len(options) {
+		selectable = 1
+	}
+
+	jid, err := parseJID(to)
+	if err != nil {
+		return "", fmt.Errorf("invalid recipient JID (%s): %w", to, err)
+	}
+
+	msg := c.waClient.BuildPollCreation(question, options, selectable)
+	respID, err := c.waClient.SendMessage(ctx, jid, msg)
+	if err != nil {
+		return "", fmt.Errorf("failed to send WA poll: %w", err)
+	}
+
+	messageID := string(respID.ID)
+	c.recordOutgoingMessage(jid, messageID, question, "poll")
+	return messageID, nil
+}
+
 func (c *Client) SendDocument(ctx context.Context, to string, fileBytes []byte, fileName string, contentType string, caption string) error {
 	if !c.waClient.IsConnected() {
 		return fmt.Errorf("WA client for session %d is disconnected", c.SessionID)

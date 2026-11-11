@@ -8,7 +8,7 @@ func Register(server *mcp.Server, h *Handler) {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_device_status",
-		Description: "Get the current status of a network device. Read-only — no approval needed.",
+		Description: "Check live connectivity and operational status of a network device by directly probing it via API/SSH. Returns live status (online or error/timeout with diagnostic summary). Read-only — no approval needed.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
 	}, h.GetDeviceStatus)
 
@@ -26,7 +26,7 @@ func Register(server *mcp.Server, h *Handler) {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_devices",
-		Description: "List registered network devices (MikroTik, OLT, Switch) from inventory. Read-only.",
+		Description: "List registered network devices (MikroTik, OLT, Switch) from inventory database. NOTE: Device status in the list is only the inventory registration state (active/inactive in DB). To verify live physical connectivity and operational health, you must call 'get_device_status'. Read-only.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
 	}, h.ListDevices)
 }

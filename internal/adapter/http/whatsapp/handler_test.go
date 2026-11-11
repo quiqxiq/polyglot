@@ -40,6 +40,7 @@ func (m *mockSessionRepo) CreateSession(_ context.Context, s *domainWA.WASession
 }
 func (m *mockSessionRepo) UpdateSession(context.Context, *domainWA.WASession) error { return nil }
 func (m *mockSessionRepo) DeleteSession(context.Context, uint) error                { return nil }
+func (m *mockSessionRepo) PurgeSession(context.Context, uint) error                 { return nil }
 
 type mockUserRepo struct {
 	users map[string]*customer.User
@@ -56,6 +57,12 @@ func (m *mockUserRepo) FindByEmail(context.Context, string) (*customer.User, err
 func (m *mockUserRepo) FindByPhone(_ context.Context, phone string) (*customer.User, error) {
 	if u, ok := m.users[phone]; ok {
 		return u, nil
+	}
+	return nil, nil
+}
+func (m *mockUserRepo) FindAllByPhone(_ context.Context, phone string) ([]*customer.User, error) {
+	if u, ok := m.users[phone]; ok {
+		return []*customer.User{u}, nil
 	}
 	return nil, nil
 }
@@ -94,14 +101,17 @@ type mockGateway struct {
 	markedRead  []string
 }
 
-func (m *mockGateway) Connect(*domainWA.WASession) error { return nil }
-func (m *mockGateway) Disconnect(uint) error             { return nil }
-func (m *mockGateway) Logout(uint) error                 { return nil }
-func (m *mockGateway) Purge(uint) error                  { return nil }
-func (m *mockGateway) Reconnect(uint) error              { return nil }
+func (m *mockGateway) Connect(*domainWA.WASession) error   { return nil }
+func (m *mockGateway) Disconnect(uint) error               { return nil }
+func (m *mockGateway) Logout(uint) error                   { return nil }
+func (m *mockGateway) Purge(uint) error                    { return nil }
+func (m *mockGateway) Reconnect(*domainWA.WASession) error { return nil }
 func (m *mockGateway) SendMessage(_ uint, _ string, content string) error {
 	m.sentMsg = content
 	return nil
+}
+func (m *mockGateway) SendPoll(_ context.Context, _ uint, _ string, _ string, _ []string, _ int) (string, error) {
+	return "poll-id", nil
 }
 func (m *mockGateway) SendDocument(_ context.Context, _ uint, _ string, fileBytes []byte, _, _, _ string) error {
 	m.sentDoc = fileBytes
@@ -315,6 +325,7 @@ func TestWhatsAppREST_Identity(t *testing.T) {
 				FullName:    "Agus Lapangan",
 				Role:        "teknisi",
 				PhoneNumber: "6281299998888",
+				IsActive:    true,
 			},
 		},
 	}

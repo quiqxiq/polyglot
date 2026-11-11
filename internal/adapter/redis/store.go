@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -32,15 +33,38 @@ func NewStore(url string) (*Store, error) {
 }
 
 func (s *Store) Get(ctx context.Context, key string) (string, error) {
-	return s.client.Get(ctx, key).Result()
+	value, err := s.client.Get(ctx, key).Result()
+	if errors.Is(err, redis.Nil) {
+		return "", port.ErrCacheMiss
+	}
+	if err != nil {
+		return "", fmt.Errorf("read cache key: %w", err)
+	}
+	return value, nil
 }
 
 func (s *Store) Set(ctx context.Context, key string, value string, expirationSeconds int) error {
+	if expirationSeconds <= 0 {
+		return s.client.Set(ctx, key, value, 0).Err()
+	}
 	return s.client.Set(ctx, key, value, time.Duration(expirationSeconds)*time.Second).Err()
 }
 
 func (s *Store) Delete(ctx context.Context, key string) error {
 	return s.client.Del(ctx, key).Err()
+}
+
+// Take consumes key atomically with GETDEL so a one-time value cannot be
+// redeemed twice.
+func (s *Store) Take(ctx context.Context, key string) (string, error) {
+	value, err := s.client.GetDel(ctx, key).Result()
+	if errors.Is(err, redis.Nil) {
+		return "", port.ErrCacheMiss
+	}
+	if err != nil {
+		return "", fmt.Errorf("consume cache key: %w", err)
+	}
+	return value, nil
 }
 
 func rateLimitKey(scope string, window string) string {

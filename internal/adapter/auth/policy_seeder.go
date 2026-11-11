@@ -64,6 +64,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "olt:.*", "*"},
 		{"admin", "ont:.*", "*"},
 		{"admin", "dial:.*", "*"},
+		{"admin", "harness:admin", "*"},
 
 		// Agent / CS — customer service, voucher generator, & knowledge lookup.
 		{"agent", "conversation:.*", "*"},
@@ -123,6 +124,11 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "dial:ppp-profiles:read", "*"},
 		{"teknisi", "dial:logs:read", "*"},
 		{"teknisi", "dial:monitor:read", "*"},
+
+		// Service — loopback callers that authenticate with a configured service
+		// token (for example the DeepSeek harness inventory read). It carries only
+		// the read permission the caller needs, never device mutation.
+		{"service", "device:read", "*"},
 	}
 
 	added := 0

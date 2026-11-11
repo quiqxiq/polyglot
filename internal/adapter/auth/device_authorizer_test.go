@@ -26,6 +26,9 @@ func (m *mockUserRepoForDeviceAuth) FindByEmail(ctx context.Context, email strin
 func (m *mockUserRepoForDeviceAuth) FindByPhone(ctx context.Context, phone string) (*customer.User, error) {
 	return nil, nil
 }
+func (m *mockUserRepoForDeviceAuth) FindAllByPhone(ctx context.Context, phone string) ([]*customer.User, error) {
+	return nil, nil
+}
 func (m *mockUserRepoForDeviceAuth) Count(ctx context.Context) (int64, error) { return 0, nil }
 func (m *mockUserRepoForDeviceAuth) List(ctx context.Context, page, pageSize int, search string) ([]*customer.User, int64, error) {
 	return nil, 0, nil

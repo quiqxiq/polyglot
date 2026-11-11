@@ -197,6 +197,7 @@ func (h *AuthConnectHandler) Logout(ctx context.Context, req *connect.Request[po
 		Success: true,
 	})
 	iauth.ClearRefreshTokenCookie(resp.Header(), h.secure)
+	iauth.ClearNetOpsCookieHeader(resp.Header(), h.secure)
 
 	return resp, nil
 }

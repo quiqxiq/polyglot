@@ -121,8 +121,9 @@ func (c *Client) GetPairingCode(ctx context.Context, phoneNumber string) (string
 			return "", fmt.Errorf("failed to connect for pairing: %w", err)
 		}
 	}
-	code, err := c.waClient.PairPhone(ctx, phoneNumber, true, whatsmeow.PairClientChrome, "Chrome (Polyglot NetOps)")
+	code, err := c.waClient.PairPhone(ctx, phoneNumber, true, whatsmeow.PairClientChrome, "Chrome (Linux)")
 	if err != nil {
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to request pairing code")
 		return "", fmt.Errorf("failed to request pairing code: %w", err)
 	}
 	return code, nil

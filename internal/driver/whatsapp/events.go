@@ -14,6 +14,10 @@ import (
 func (c *Client) handleEvent(evt any) {
 	switch v := evt.(type) {
 	case *events.Message:
+		if v.Message.GetPollUpdateMessage() != nil {
+			c.handlePollVoteEvent(v)
+			return
+		}
 		c.persistMirrorMessage(v)
 		if !v.Info.IsFromMe {
 			c.handleIncomingMessage(v)
@@ -95,8 +99,45 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 	}).Debug("incoming direct message received")
 
 	if cb := c.getMessageCallback(); cb != nil {
-		cb(c.SessionID, chatJID, senderNumber, body)
+		cb(c.SessionID, string(evt.Info.ID), chatJID, senderNumber, body)
 	}
+}
+
+func (c *Client) handlePollVoteEvent(evt *events.Message) {
+	if evt == nil || evt.Message == nil || evt.Info.IsFromMe {
+		return
+	}
+	cb := c.getPollVoteCallback()
+	if cb == nil {
+		return
+	}
+
+	vote, err := c.waClient.DecryptPollVote(context.Background(), evt)
+	if err != nil {
+		logger.WithComponent("WhatsAppDriver").
+			WithError(err).
+			WithField("session_id", c.SessionID).
+			Debug("failed to decrypt poll vote")
+		return
+	}
+
+	pollUpdate := evt.Message.GetPollUpdateMessage()
+	pollID := pollUpdate.GetPollCreationMessageKey().GetID()
+	if pollID == "" {
+		return
+	}
+
+	chatJID := normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).ToNonAD().String()
+	voter := normalizeJIDFromLID(context.Background(), evt.Info.Sender, c.waClient).ToNonAD()
+	voterNumber := voter.User
+	if voterNumber == "" {
+		voterNumber = evt.Info.Sender.User
+	}
+	if chatJID == "" || voterNumber == "" {
+		return
+	}
+
+	cb(c.SessionID, chatJID, pollID, voterNumber, vote.GetSelectedOptions())
 }
 
 func (c *Client) sendPresenceAvailable() {

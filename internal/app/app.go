@@ -9,6 +9,7 @@ import (
 
 	acsmanager "github.com/quixiq/polyglot/internal/adapter/acsmanager"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
+	"github.com/quixiq/polyglot/internal/adapter/memorycache"
 	"github.com/quixiq/polyglot/internal/adapter/midtrans"
 	oltmanager "github.com/quixiq/polyglot/internal/adapter/oltmanager"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
@@ -22,6 +23,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/genericssh"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
+	"github.com/quixiq/polyglot/internal/driver/harness"
 	"github.com/quixiq/polyglot/internal/driver/hioso"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
@@ -50,6 +52,7 @@ import (
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
+	waUC "github.com/quixiq/polyglot/internal/usecase/whatsapp"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -78,16 +81,17 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	redisURL := strings.TrimSpace(cfg.RedisURL)
 	redisStore, err := redisAdapter.NewStore(redisURL)
+	var cacheStore port.CacheStore
 	if err != nil {
 		logger.WithComponent("App").WithError(err).Warn("failed to connect to Redis; falling back to in-memory cache")
+		cacheStore = memorycache.NewStore()
+	} else {
+		cacheStore = redisStore
 	}
 
 	jwtService := auth.NewJWTService(cfg.JWTSecret, cfg.JWTExpiryHours)
 
-	var refreshSvc *auth.RefreshTokenService
-	if redisStore != nil {
-		refreshSvc = auth.NewRefreshTokenService(redisStore, time.Duration(cfg.RefreshTokenTTLHours)*time.Hour)
-	}
+	refreshSvc := auth.NewRefreshTokenService(cacheStore, time.Duration(cfg.RefreshTokenTTLHours)*time.Hour)
 
 	casbinEnforcer, err := auth.NewCasbinEnforcer(ctx, pgStore.DB())
 	if err != nil {
@@ -114,11 +118,43 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	}
 
 	userRepo := postgres.NewUserRepository(pgStore.DB())
+	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
+	whatsappResolver := waUC.NewIdentityResolver(userRepo, customerRepo, cacheStore)
 	settingRepo := postgres.NewSettingRepository(pgStore.DB()).
 		WithVault(postgres.NewCredentialVault(pgStore.DB(), cfg.EncryptionKey))
 
+	var waAssistant *waUC.Assistant
+	if waManager != nil && cfg.WAAssistantSessionID > 0 {
+		harnessClient, harnessErr := harness.New(harness.Config{
+			Bin:           cfg.HarnessDSHPath,
+			PatchPath:     cfg.HarnessCSPatchPath,
+			WorkDir:       cfg.HarnessWorkDir,
+			MCPURL:        cfg.HarnessMCPURL,
+			MCPReadToken:  cfg.MCPReadToken,
+			Timeout:       time.Duration(cfg.HarnessTimeoutSeconds) * time.Second,
+			MaxConcurrent: cfg.HarnessMaxConcurrent,
+		})
+		if harnessErr != nil {
+			return nil, fmt.Errorf("initialize WhatsApp harness assistant: %w", harnessErr)
+		}
+		waAssistant = waUC.NewAssistant(whatsappResolver, harnessClient, waManager, cfg.WAAssistantSessionID)
+		logger.WithComponent("App").
+			WithField("session_id", cfg.WAAssistantSessionID).
+			Info("WhatsApp harness assistant enabled")
+	} else if cfg.WAAssistantSessionID > 0 {
+		logger.WithComponent("App").
+			WithField("session_id", cfg.WAAssistantSessionID).
+			Warn("WhatsApp harness assistant requested but the session manager is unavailable")
+	}
+
 	if waManager != nil {
-		waManager.SetMessageCallback(eventHandler.MakeMessageCallback(nil))
+		if waAssistant != nil {
+			waManager.SetMessageCallback(eventHandler.MakeMessageCallback(waAssistant.HandleIncoming))
+			waManager.SetPollVoteCallback(eventHandler.MakePollVoteCallback(waAssistant.HandlePollVote))
+		} else {
+			waManager.SetMessageCallback(eventHandler.MakeMessageCallback(nil))
+			waManager.SetPollVoteCallback(nil)
+		}
 		waManager.SetChatUpdateCallback(eventHandler.MakeChatUpdateCallback())
 		waManager.SetChatPresenceCallback(eventHandler.MakeChatPresenceCallback())
 		sessions, err := pgStore.FindAllSessions(context.Background())
@@ -147,7 +183,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	queueGateway := mikrotik.NewQueueGateway(exec)
 
 	// ─── 1. Repositories ────────────────────────────────────────────────────
-	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
 	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
 	subRepo := postgres.NewSubscriptionRepository(pgStore.DB(), vault)
 	planRepo := postgres.NewServicePlanRepository(pgStore.DB())
@@ -205,7 +240,13 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	routerJobExporter := jobUCRouter.NewExporter(routerJobRepo, subRepo, planRepo)
 
 	// ─── 2. Use Cases ───────────────────────────────────────────────────────
-	authUseCase := authUC.NewAuthUseCase(userRepo, jwtService, refreshSvc, redisStore, casbinEnforcer)
+	// Keep the rate limiter as a nil interface when Redis is unavailable;
+	// a typed nil *redis.Store would pass the != nil check and panic.
+	var rateLimiter port.RateLimiter
+	if redisStore != nil {
+		rateLimiter = redisStore
+	}
+	authUseCase := authUC.NewAuthUseCase(userRepo, jwtService, refreshSvc, rateLimiter, casbinEnforcer)
 	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
 	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
 	manageSettingUseCase := settingUC.NewManageSettingUseCase(settingRepo)
@@ -308,6 +349,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	routerHandler, err := buildRouter(routerDeps{
 		cfg:                    cfg,
 		jwtService:             jwtService,
+		refreshTokenSvc:        refreshSvc,
 		casbinEnforcer:         casbinEnforcer,
 		reportingRepo:          reportingRepo,
 		reportManagerUC:        reportManagerUC,
@@ -322,6 +364,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		pgStore:                pgStore,
 		reg:                    reg,
 		waManager:              waManager,
+		waResolver:             whatsappResolver,
 		sseHub:                 sseHub,
 		waSender:               waSender,
 		authUseCase:            authUseCase,
@@ -361,8 +404,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		manageIsolationUseCase: manageIsolationUseCase,
 		oltService:             oltService,
 		ontService:             ontService,
+		ontRepo:                ontRepo,
 		settingReader:          settingRepo,
-		cacheStore:             redisStore,
+		cacheStore:             cacheStore,
 		connectDriverProvider:  connectDriverProvider,
 		driverResolverConnect:  driverResolverConnect,
 	})
